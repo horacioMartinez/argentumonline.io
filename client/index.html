@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+        <link rel="icon" type="image/png" href="img/common/favicon.png">
+        <meta property="og:title" content="BrowserQuest">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="http://browserquest.mozilla.org/">
+        <meta property="og:image" content="http://browserquest.mozilla.org/img/common/promo-title.jpg">
+        <meta property="og:site_name" content="BrowserQuest">
+        <meta property="og:description" content="Play Mozilla's BrowserQuest, an HTML5 massively multiplayer game demo powered by WebSockets!">
+        <link rel="stylesheet" href="css/main.css" type="text/css">
+
+        <link href="img/common/apple-touch-icon-57x57.png" rel="apple-touch-icon-precomposed" sizes="57x57">
+        <link href="img/common/apple-touch-icon-72x72.png" rel="apple-touch-icon-precomposed" sizes="72x72">
+        <link href="img/common/apple-touch-icon-114x114.png" rel="apple-touch-icon-precomposed" sizes="114x114">
+        <link href="img/common/apple-touch-icon-144x144.png" rel="apple-touch-icon-precomposed" sizes="144x144">
+
+        <link href="img/common/apple-touch-startup-image-320x460.png" rel="apple-touch-startup-image" media="(device-width: 320px)">
+        <link href="img/common/apple-touch-startup-image-640x920.png" rel="apple-touch-startup-image" media="(device-width: 320px) and (-webkit-device-pixel-ratio: 2)">
+        <link href="img/common/apple-touch-startup-image-768x1004.png" rel="apple-touch-startup-image" media="(device-width: 768px) and (orientation: portrait)">
+        <link href="img/common/apple-touch-startup-image-748x1024.png" rel="apple-touch-startup-image" media="(device-width: 768px) and (orientation: landscape)">
+        <link href="img/common/apple-touch-startup-image-1536x2008.png" rel="apple-touch-startup-image" media="(device-width: 1536px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)">
+        <link href="img/common/apple-touch-startup-image-1496x2048.png" rel="apple-touch-startup-image" media="(device-width: 1536px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2)">
+
+        <script src="js/lib/modernizr.js" type="text/javascript"></script>
+        <!--[if lt IE 9]>
+                <link rel="stylesheet" href="css/ie.css" type="text/css">
+                <script src="js/lib/css3-mediaqueries.js" type="text/javascript"></script>
+                <script type="text/javascript">
+                document.getElementById('parchment').className = ('error');
+                </script>
+        <![endif]-->
+        <script src="js/detect.js" type="text/javascript"></script>
+        <title>Dakara online</title>
+	</head>
+    <!--[if lt IE 9]>
+	<body class="intro upscaled">
+    <![endif]-->
+	<body class="intro">
+	    <noscript>
+	       <div class="alert">
+	           You need to enable JavaScript to play BrowserQuest.
+	       </div>
+	    </noscript>
+
+		<div id="container">
+                <div id="gamecanvas">
+                    <canvas id="background"></canvas>
+                    <canvas id="entities"></canvas>
+                    <canvas id="foreground"></canvas>
+                </div>
+                <canvas id="interfaz" class="clickable"></canvas>
+                <div id="chatbox">
+                    <form action="none" method="get" accept-charset="utf-8">
+                        <input id="chatinput" class="gp" type="text" maxlength="60">
+                    </form>
+                </div>
+        </div>
+		<footer>
+		    <div id="sharing" class="clickable">
+		      Comparti en
+              <a href="https://twitter.com/home?status=Estoy%20jugando%20%23DakaraOnline%20un%20servidor%20de%20%23ArgentumOnline%20completamente%20web.%20Jugalo%20en%20...!" class="twitter"></a>
+              <a href="https://www.facebook.com/DakaraOnline?fref=ts" class="facebook"></a>
+		    </div>
+		    <div id="privacy-link" class="clickable">
+		      <span class="dash">&ndash;</span> <a class="clickable" target="_blank" href="http://foros.dakaraonline.org/">Reporte de errores</a>
+		    </div>
+		    <div id="legal-link" class="clickable">
+		      <span class="dash">&ndash;</span> <a class="clickable" target="_blank" href="http://foros.dakaraonline.org/">Foro</a>
+		    </div>
+		    <div id="credits-link" class="clickable">
+		      <span class="dash">&ndash;</span> <a class="clickable" target="_blank" href="http://wiki.dakaraonline.org/wiki/start">Wiki</a>
+		    </div>
+		</footer>
+
+        <img src="img/common/thingy.png" alt="" class="preload">
+
+        <script type="text/javascript">
+            var ctx = document.querySelector('canvas').getContext('2d');
+
+            if(!Detect.supportsWebSocket()) {
+                alert("Tu navegador no soporta websockets, para jugar debes actualizar tu navegador!")
+            }
+        </script>
+
+        <script src="js/lib/log.js"></script>
+        <script>
+                var require = { waitSeconds: 60 };
+        </script>
+        <script data-main="js/home" src="js/lib/require-jquery.js"></script>
+	</body>
+</html>

@@ -1,0 +1,13 @@
+{
+	"id": "3067",
+	"width": 32,
+	"height": 96,
+	"animations": {
+		"1": {
+			"length": 3,
+			"row": 0
+		}
+	},
+	"offset_x": 0,
+	"offset_y": 0
+}
