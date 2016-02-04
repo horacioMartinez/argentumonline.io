@@ -6,6 +6,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
             this.game = game;
             this.host = host;
             this.port = port;
+            this.conectado = false;
 
             this.protocolo = new Protocolo();
             this.ws = new Websock();
@@ -13,19 +14,12 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
 
         },
 
-
-        connect: function (nombre,pw) {
+        connect: function (conectarse_callback) {
             //alert("connecting to: " + "ws://localhost:7666");
             this.ws.open("ws://localhost:7666");
             var self = this;
             this.ws.on('open', function () {
-                self.game.started = true;
-                var array = new Uint8Array(10);
-                packet = self.protocolo.BuildLoginExistingChar(nombre, pw, 0, 13, 0);
-                packet.serialize(self.byteQueue);
-                self.game.start();
-                //if(started_callback)
-                //    started_callback({success: true});
+                conectarse_callback();
             });
 
             this.ws.on('message', function () {
@@ -41,7 +35,24 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
                 //log.error("Disconnected");
             });
 
+        },
 
+        logearse: function (nombre, pw,callback) {
+            var self = this;
+            this.connect(function () {
+                self.game.started = true;
+                self.sendLoginExistingChar(nombre, pw, 0, 13, 0);
+                callback();
+                self.game.start();
+            });
+        },
+
+        crearPersonaje: function (callback){
+            var self = this;
+            this.connect(function () {
+                callback();
+                self.sendThrowDices();
+            });
         },
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -143,12 +154,12 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleChatOverHead: function (Chat, CharIndex, R, G, B) {
-            this.game.escribirChat(Chat,CharIndex,R,G,B);
+            this.game.escribirChat(Chat, CharIndex, R, G, B);
             console.log("TODO: handleChatOverHead ");
         },
 
         handleConsoleMsg: function (Chat, FontIndex) {
-            this.game.escribirMsgConsola(Chat,FontIndex);
+            this.game.escribirMsgConsola(Chat, FontIndex);
         },
 
         handleGuildChat: function (Chat) {
@@ -257,7 +268,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleChangeSpellSlot: function (Slot, SpellID, Name) {
-            this.game.cambiarSlotHechizos(Slot,SpellID,Name);
+            this.game.cambiarSlotHechizos(Slot, SpellID, Name);
         },
 
         handleAtributes: function (Fuerza, Agilidad, Inteligencia, Carisma, Constitucion) {
@@ -355,7 +366,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleDiceRoll: function (Fuerza, Agilidad, Inteligencia, Carisma, Constitucion) {
-            console.log("TODO: handleDiceRoll ");
+            this.game.updateDados(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion);
         },
 
         handleMeditateToggle: function () {

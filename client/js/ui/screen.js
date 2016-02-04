@@ -5,42 +5,73 @@
 define(['jquery'],
     function ($) {
 
-        var ListaMultiple = Class.extend({
+        var Lista = Class.extend({
 
-            init: function(x,y,w,h,id){
+            init: function (multiple,x, y, w, h) {
+
+                this.multiple = multiple;
+
                 var pX = x * __ESCALA__ + 'px';
                 var pY = y * __ESCALA__ + 'px';
                 var pW = w * __ESCALA__ + 'px';
                 var pH = h * __ESCALA__ + 'px';
-                this.id = id;
-                this.sel = $('<select id=' + this.id+ ' multiple="yes">');
-                $(this.sel).css({position: "absolute", left: pX, top:pY, width:pW,height:pH, background:"black",color:'white',/*border:'none',"border-style":'none',*/outline:'none'});
+                this.id = _.uniqueId('lista_');
+
+                if (this.multiple)
+                    this.sel = $('<select id=' + this.id + ' multiple="yes">');
+                else
+                    this.sel = $('<select id=' + this.id + '>');
+
+                $(this.sel).css({
+                    position: "absolute",
+                    left: pX,
+                    top: pY,
+                    background: "black",
+                    color: 'white', /*border:'none',"border-style":'none',*/
+                    outline: 'none'
+                });
+                if (h)
+                    $(this.sel).css({height: pH, width: pW});
                 $(this.sel).appendTo('#container');
             },
 
-            getSelectedSlot: function(){
-                return $( '#' + this.id).val()[0];
+            getSelectedSlot: function () {
+                res = $('#' + this.id).val();
+                if (res) {
+                    if (this.multiple)
+                        return res[0];
+                    return res;
+                }
+                else
+                    return 0;
             },
 
-            modificarSlot: function(slot,texto){
+            getSelectedText: function(){
+                if (this.multiple)
+                    log.error("TODO");
+                else
+                    return $('#' + this.id + ' option:selected').text();
+            },
+
+            modificarSlot: function (slot, texto) {
                 var elemento = $('#' + this.id + ' option[value=' + slot + ']');
-                if (!elemento.length){ // nuevo elemento
-                    this.sel.append($("<option>").attr('value',slot).text(texto));
+                if (!elemento.length) { // nuevo elemento
+                    this.sel.append($("<option>").attr('value', slot).text(texto));
                 }
-                else{
+                else {
                     $(elemento).text(texto);
                 }
             },
 
-            remove: function(){
+            remove: function () {
                 this.sel.remove();
             },
 
-            hide: function(){
+            hide: function () {
                 this.sel.hide();
             },
 
-            show: function(){
+            show: function () {
                 this.sel.show();
             }
         });
@@ -90,7 +121,7 @@ define(['jquery'],
             remove: function () {
                 for (var i = 1; i < this.items.length; i++)
                     $(this.items[i]).remove();
-            },
+            }
 
         });
 
@@ -210,11 +241,10 @@ define(['jquery'],
                 return input;
             },
 
-            agregarListaMultiple: function(x,y,w,h,id){
-
-                var listaMultiple = new ListaMultiple(x,y,w,h,id);
-                this.elementos.push(this.listaMultiple);
-                return listaMultiple;
+            agregarLista: function (multiple,x, y, w, h) {
+                var lista = new Lista(multiple,x, y, w, h);
+                this.elementos.push(lista);
+                return lista;
             },
 
             delete: function () {
@@ -223,8 +253,6 @@ define(['jquery'],
                     this.elementos[i] = null;
                 }
             },
-
-
 
         });
         return Screen;

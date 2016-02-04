@@ -1,10 +1,10 @@
 define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
-         'gameclient', 'audio', 'updater', 'transition',
-         'item',  'player', 'character',
+        'gameclient', 'audio', 'updater', 'transition',
+        'item', 'player', 'character',
         'config', '../shared/js/gametypes', 'loader', 'uirenderer'],
     function (Enums, Animacion, Mapa, InfoManager, Renderer,
-               GameClient, AudioManager, Updater, Transition,
-              Item, Player, Character,  config, __gametypes__, Loader, UIRenderer) {
+              GameClient, AudioManager, Updater, Transition,
+              Item, Player, Character, config, __gametypes__, Loader, UIRenderer) {
         var Game = Class.extend({
             init: function (app) {
                 this.MAXIMO_LARGO_CHAT = 15; // maximo largo en caracters hasta hacer nueva linea de chat (notar las palabras se escriben completa, por lo que puede pasar los 10 caracteres)
@@ -55,10 +55,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 // combat
                 this.infoManager = new InfoManager(this);
 
-
                 this.cursors = {};
-
-
 
             },
 
@@ -79,7 +76,6 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
             setUpdater: function (updater) {
                 this.updater = updater;
             },
-
 
             setChatInput: function (element) {
                 this.chatinput = element;
@@ -285,7 +281,6 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     }
                 });
 
-
                 if (this.storage.hasAlreadyPlayed()) {
                     //this.app.initUnlockedAchievements(this.storage.data.achievements.unlocked);
                 }
@@ -294,19 +289,19 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
             setSpriteScale: function (scale) {
                 var self = this;
                 /*
-                if (this.renderer.upscaledRendering) {
-                    this.sprites = this.spritesets[0];
-                } else {
-                    this.sprites = this.spritesets[2];//scale - 1]; modificiado por mi
+                 if (this.renderer.upscaledRendering) {
+                 this.sprites = this.spritesets[0];
+                 } else {
+                 this.sprites = this.spritesets[2];//scale - 1]; modificiado por mi
 
-                    _.each(this.entities, function (entity) {
-                        entity.sprite = null;
-                        entity.setSprite(self.sprites[entity.getSpriteName()]);
-                    });
-                    //this.initHurtSprites();
-                    this.initShadows();
-                    //this.initCursors();
-                }*/
+                 _.each(this.entities, function (entity) {
+                 entity.sprite = null;
+                 entity.setSprite(self.sprites[entity.getSpriteName()]);
+                 });
+                 //this.initHurtSprites();
+                 this.initShadows();
+                 //this.initCursors();
+                 }*/
             },
 
             setCursor: function (name, orientation) {
@@ -320,44 +315,44 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
 
             updateCursorLogic: function () {
                 /*
-                if (this.hoveringCollidingTile && this.started) {
-                    this.targetColor = "rgba(255, 50, 50, 0.5)";
-                }
-                else {
-                    this.targetColor = "rgba(255, 255, 255, 0.5)";
-                }
+                 if (this.hoveringCollidingTile && this.started) {
+                 this.targetColor = "rgba(255, 50, 50, 0.5)";
+                 }
+                 else {
+                 this.targetColor = "rgba(255, 255, 255, 0.5)";
+                 }
 
-                if (this.hoveringPlayer && this.started) {
-                    if (this.pvpFlag)
-                        this.setCursor("sword");
-                    else
-                        this.setCursor("hand");
-                    this.hoveringTarget = false;
-                    this.hoveringMob = false;
-                    this.targetCellVisible = false;
-                } else if (this.hoveringMob && this.started) {
-                    this.setCursor("sword");
-                    this.hoveringTarget = false;
-                    this.hoveringPlayer = false;
-                    this.targetCellVisible = false;
+                 if (this.hoveringPlayer && this.started) {
+                 if (this.pvpFlag)
+                 this.setCursor("sword");
+                 else
+                 this.setCursor("hand");
+                 this.hoveringTarget = false;
+                 this.hoveringMob = false;
+                 this.targetCellVisible = false;
+                 } else if (this.hoveringMob && this.started) {
+                 this.setCursor("sword");
+                 this.hoveringTarget = false;
+                 this.hoveringPlayer = false;
+                 this.targetCellVisible = false;
 
-                }
-                else if (this.hoveringNpc && this.started) {
-                    this.setCursor("talk");
-                    this.hoveringTarget = false;
-                    this.targetCellVisible = false;
-                }
-                else if ((this.hoveringItem || this.hoveringChest) && this.started) {
-                    this.setCursor("loot");
-                    this.hoveringTarget = false;
-                    this.targetCellVisible = true;
-                }
-                else {
-                    this.setCursor("hand");
-                    this.hoveringTarget = false;
-                    this.hoveringPlayer = false;
-                    this.targetCellVisible = true;
-                }*/
+                 }
+                 else if (this.hoveringNpc && this.started) {
+                 this.setCursor("talk");
+                 this.hoveringTarget = false;
+                 this.targetCellVisible = false;
+                 }
+                 else if ((this.hoveringItem || this.hoveringChest) && this.started) {
+                 this.setCursor("loot");
+                 this.hoveringTarget = false;
+                 this.targetCellVisible = true;
+                 }
+                 else {
+                 this.setCursor("hand");
+                 this.hoveringTarget = false;
+                 this.hoveringPlayer = false;
+                 this.targetCellVisible = true;
+                 }*/
             },
 
             /*            binaryPosSearch: function (list, item) { // devuelve indice donde insertar si no lo encuentra (esto deberia estar en utils o en otro lado)
@@ -404,35 +399,35 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
 
              },*/
 
-            realizarDanio: function (CharIndex,danio) {
-                this.infoManager.addDamageInfo(-danio, this.characters[CharIndex].x + 15, this.characters[CharIndex].y - 25 , "received");
-                this.infoManager.addConsoleInfo("TODO: daño en consola!:"+danio);
+            realizarDanio: function (CharIndex, danio) {
+                this.infoManager.addDamageInfo(-danio, this.characters[CharIndex].x + 15, this.characters[CharIndex].y - 25, "received");
+                this.infoManager.addConsoleInfo("TODO: daño en consola!:" + danio);
             },
 
-            escribirMsgConsola: function (texto,fontIndex){ //TODO: fontindex
+            escribirMsgConsola: function (texto, fontIndex) { //TODO: fontindex
                 this.infoManager.addConsoleInfo(texto);
             },
 
-            formatearChat: function(str){
+            formatearChat: function (str) {
                 var resultado = [];
-                while ( (str.length > this.MAXIMO_LARGO_CHAT) && (str.indexOf(' ') > (-1)) ){
+                while ((str.length > this.MAXIMO_LARGO_CHAT) && (str.indexOf(' ') > (-1))) {
                     var idx = str.indexOf(' ');
                     var posUltimoEspacioPrimerBloque = idx;
-                    while ( (idx != -1) && (idx < this.MAXIMO_LARGO_CHAT - 1 ) ) {
+                    while ((idx != -1) && (idx < this.MAXIMO_LARGO_CHAT - 1 )) {
                         idx = str.indexOf(' ', idx + 1);
                         if (idx > 0)
                             posUltimoEspacioPrimerBloque = idx;
                     }
-                    if (posUltimoEspacioPrimerBloque > 0 )
+                    if (posUltimoEspacioPrimerBloque > 0)
                         resultado.push(str.slice(0, posUltimoEspacioPrimerBloque));
-                    str = str.slice(posUltimoEspacioPrimerBloque+1,str.length);
+                    str = str.slice(posUltimoEspacioPrimerBloque + 1, str.length);
                 }
                 resultado.push(str);
                 return resultado;
             },
 
             escribirChat: function (chat, charIndex, r, g, b) { // TODO: colores?
-                if (this.characters[charIndex]){
+                if (this.characters[charIndex]) {
                     this.characters[charIndex].chat = this.formatearChat(chat);
                     this.characters[charIndex].tiempoChatInicial = this.currentTime;
                 }
@@ -2073,7 +2068,6 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     var item = this.items[entity.id];
                     this.entityGrid[item.gridX][item.gridY][0] = null;
                     this.items[entity.id] = null;
-                    //this.items.splice(index, 1);
                 }
             },
 
@@ -2082,7 +2076,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     return 0;
 
                 if (this.indices[numGrh].frames) {   // es animacion
-                    if ( (!loops) && (loops !== 0))
+                    if ((!loops) && (loops !== 0))
                         loops = 1;
                     return new Animacion(this.indices[numGrh].frames, this.indices[numGrh].velocidad, loops);
                 }
@@ -2113,7 +2107,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 else {
                     var c = this.characters[CharIndex];
                     if (!c) {
-                        log.error("mover character inexistente: " + CharIndex);
+                        log.error("mover character inexistente:");// + CharIndex);
                         return;
                     }
                     var dir = c.esPosAdyacente(gridX, gridY);
@@ -2184,7 +2178,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 var id = 0;
                 while (this.items[id])
                     id++;
-                item = new Item(id,this.getGrhOAnim(grhIndex,0), gridX, gridY);
+                item = new Item(id, this.getGrhOAnim(grhIndex, 0), gridX, gridY);
                 this.entityGrid[gridX][gridY][0] = item;
                 this.items[id] = item;
             },
@@ -2195,16 +2189,26 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.entityGrid[gridX][gridY][0] = null;
             },
 
-            cambiarSlotInventario: function(Slot, ObjIndex, ObjName, Amount, Equiped, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice){
-                this.inventario[Slot] = {objIndex: ObjIndex, objName: ObjName, cantidad: Amount, equipado: Equiped, grh: GrhIndex, objType: ObjType, maxHit: MaxHit,minHit: MinHit,maxDef: MaxDef, minDef: MinDef,precioVenta: ObjSalePrice };
-                if (this.logeado)
-                    this.uiRenderer.dibujarSlotInventario(Slot,GrhIndex,Amount,Equiped);
+            cambiarSlotInventario: function (Slot, ObjIndex, ObjName, Amount, Equiped, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) {
+                this.inventario[Slot] = {
+                    objIndex: ObjIndex,
+                    objName: ObjName,
+                    cantidad: Amount,
+                    equipado: Equiped,
+                    grh: GrhIndex,
+                    objType: ObjType,
+                    maxHit: MaxHit,
+                    minHit: MinHit,
+                    maxDef: MaxDef,
+                    minDef: MinDef,
+                    precioVenta: ObjSalePrice
+                };
+                this.uiRenderer.dibujarSlotInventario(Slot, GrhIndex, Amount, Equiped);
             },
 
-            cambiarSlotHechizos: function(slot,spellID,nombre){
-                this.hechizos[slot] = {id:spellID ,nombre:nombre};
-                if (this.logeado)
-                    this.uiRenderer.dibujarSlotHechizos(slot,nombre);
+            cambiarSlotHechizos: function (slot, spellID, nombre) {
+                this.hechizos[slot] = {id: spellID, nombre: nombre};
+                this.uiRenderer.modificarSlotHechizos(slot, nombre);
             },
 
             inicializarPlayer: function () { // Es necesario porque el server manda el charindex de tu pj despues de crear characters TODO: esto anda siempre? si tira algun comando cuando recien entra que use this.player puede que no este seteado? (ACEPTAR COMANDOS DESPUES DE LOGGED)
@@ -2551,6 +2555,8 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.username = username;
                 this.userpw = userpw;
                 this.email = email;
+
+                this.client = new GameClient(this, this.host, this.port);
             },
 
             loadAudio: function () {
@@ -2596,9 +2602,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                         //self.setPathfinder(new Pathfinder(self.map.width, self.map.height));
 
                         //self.connect(action, started_callback);
-                        self.uiRenderer.setLoginScreen(function(nombre,password) {
-                                self.connect(nombre,password);
-                            });
+                        self.setLoginScreen();
                         started_callback({success: true}); // <--- TODO
 
                         clearInterval(wait);
@@ -2644,16 +2648,6 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 }
             },
 
-
-            connect: function (nombre,pw) {
-
-                this.client = new GameClient(this, this.host, this.port);
-                //this.client.connect(started_callback);
-                this.client.connect(nombre,pw);
-
-            },
-
-
             /**
              * Converts the current mouse position on the screen to world grid coordinates.
              * @returns {Object} An object containing x and y properties.
@@ -2671,7 +2665,6 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 return {x: x, y: y};
             },
 
-
             /**
              * Loops through all the entities currently present in the game.
              * @param {Function} callback The function to call back (must accept one entity argument).
@@ -2683,8 +2676,8 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 });
 
                 _.each(this.items, function (entity, index) {
-                   if (entity)
-                      callback(entity, index);
+                    if (entity)
+                        callback(entity, index);
                 });
 
             },
@@ -2711,7 +2704,6 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.cursorVisible = true;
             },
 
-
             click: function () {
                 var gridPos = this.getMouseGridPosition();
 
@@ -2735,7 +2727,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     this.client.sendLeftClick(gridPos.x, gridPos.y);
             },
 
-             say: function (message) {
+            say: function (message) {
                 //#cli guilds
                 var regexp = /^\/guild\ (invite|create|accept)\s+([^\s]*)|(guild:)\s*(.*)$|^\/guild\ (leave)$/i;
                 var args = message.match(regexp);
@@ -2846,21 +2838,57 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.invincible_callback = callback
             },
 
+            updateDados: function(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion){
+                this.uiRenderer.drawDados(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion);
+            },
+
+            setLoginScreen: function () {
+                var self = this;
+                this.uiRenderer.setLoginScreen(
+                    function (nombre, password) {
+
+                        self.client.logearse(nombre, password, function () {
+                            self.setGameScreen();
+                        });
+
+                    },
+                    function () {
+
+                        self.client.crearPersonaje(function () {
+                            self.setCrearPjScreen();
+                        });
+
+                    }
+                );
+            },
+
+            setGameScreen: function () {
+                this.uiRenderer.setGameScreen();
+            },
+
+            setCrearPjScreen: function () {
+                var self = this;
+                this.uiRenderer.setCrearPjScreen(
+                    function () {
+                        self.client.sendThrowDices();
+                    }
+                );
+            },
+
             resize: function () {
                 this.renderer.rescale();
                 this.uiRenderer.rescale();
                 if (this.started)
-                    this.uiRenderer.setGameScreen();
+                    this.setGameScreen();
                 else
-                    this.uiRenderer.setLoginScreen();
+                    this.setLoginScreen();
                 //this.renderer.drawMapaIni();
             },
 
-            logearPlayer: function(){
+            logearPlayer: function () {
                 log.error("logear player");
                 this.inicializarPlayer();
                 this.renderer.drawMapaIni(this.player.gridX, this.player.gridY);
-                this.uiRenderer.setGameScreen();
                 log.error("<--- logear player");
                 this.logeado = true;
             },

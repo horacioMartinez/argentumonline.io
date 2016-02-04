@@ -1,5 +1,5 @@
-define(['jquery', 'ui/loginscreen', 'ui/gamescreen'],
-    function ($, LoginScreen, GameScreen) {
+define(['jquery', 'ui/loginscreen', 'ui/gamescreen', 'ui/crearpjscreen'],
+    function ($, LoginScreen, GameScreen, CrearPjScreen) {
 
         var UIRenderer = Class.extend({
             init: function (game, context, loader) {
@@ -22,6 +22,8 @@ define(['jquery', 'ui/loginscreen', 'ui/gamescreen'],
                 this.drawConsoleInfos();
             },
 
+
+
             drawConsoleInfos: function () {
                 if (this.game.infoManager.consolaDirty) {
                     this.uicontext.clearRect(this.CONSOLA_RECT.x, this.CONSOLA_RECT.y, this.CONSOLA_RECT.w, this.CONSOLA_RECT.h);
@@ -43,12 +45,66 @@ define(['jquery', 'ui/loginscreen', 'ui/gamescreen'],
                     this.game.infoManager.consolaDirty = false;
                 }
             },
-            setLoginScreen: function (conectarse_callback) {
-                this.clearCanvas();
+
+            setLoginScreen: function (conectarse_callback, crear_callback) {
+                log.info("Creando login screen");
                 if (this.currentScreen)
                     this.currentScreen.delete();
-                this.currentScreen = new LoginScreen(conectarse_callback);
-                this.uicontext.drawImage(this.graficosUI.login, 0, 0);
+                this.currentScreen = new LoginScreen(conectarse_callback, crear_callback);
+                this.drawCurrentScreen();
+            },
+
+            setCrearPjScreen: function (tirar_dados_callback, crear_callback, volver_callback) {
+                log.info("Creando crearPj screen");
+                if (this.currentScreen)
+                    this.currentScreen.delete();
+                this.currentScreen = new CrearPjScreen(tirar_dados_callback, crear_callback, volver_callback);
+                this.drawCurrentScreen();
+            },
+
+            setGameScreen: function () {
+                log.info("Creando game screen");
+                log.error("AAAAAAAAAAAAAAAAAAAA");
+                var self = this;
+                if (this.currentScreen)
+                    this.currentScreen.delete();
+                this.currentScreen = new GameScreen(this.drawInventario.bind(this), this.drawHechizos.bind(this), function () {
+                    log.error(self.currentScreen.hechizos.getSelectedSlot());
+                    log.error(self.currentScreen.hechizos.getSelectedText);
+                });
+                this.drawCurrentScreen();
+                this.setearSlotsHechizos();
+            },
+
+            drawCurrentScreen: function(){
+                this.clearCanvas();
+                if (this.currentScreen instanceof LoginScreen) {
+                    this.uicontext.drawImage(this.graficosUI.login, 0, 0);
+                }
+                else if (this.currentScreen instanceof CrearPjScreen) {
+                    this.uicontext.drawImage(this.graficosUI.crearpj, 0, 0);
+                }
+                else if (this.currentScreen instanceof GameScreen){
+                    this.uicontext.drawImage(this.graficosUI.interfaz, 0, 0);
+                    this.drawBarras();
+                    this.drawInventario();
+                    this.drawSlotsInventario();
+                }
+            },
+
+            drawDados: function (Fuerza, Agilidad, Inteligencia, Carisma, Constitucion) {
+                if (!(this.currentScreen instanceof CrearPjScreen)) {
+                    log.error("lanzar dados fuera de crear pj screen!");
+                    return;
+                }
+                this.drawCurrentScreen();
+                this.uicontext.fillStyle = "white";
+                var xDados= 300;
+                this.uicontext.fillText(Fuerza, xDados, 195);
+                this.uicontext.fillText(Agilidad, xDados, 218);
+                this.uicontext.fillText(Inteligencia, xDados, 241);
+                this.uicontext.fillText(Carisma, xDados, 264);
+                this.uicontext.fillText(Constitucion, xDados, 287);
             },
 
             setFont: function () {
@@ -56,21 +112,6 @@ define(['jquery', 'ui/loginscreen', 'ui/gamescreen'],
                 this.uicontext.font = "bold " + tamFont + "px Arial";
             },
 
-            setGameScreen: function () {
-                log.info("DRAW INTERFAZ JUEGO INICIAL");
-                var self = this; // sacar
-                this.clearCanvas();
-                if (this.currentScreen)
-                    this.currentScreen.delete();
-                this.currentScreen = new GameScreen(this.drawInventario.bind(this), this.drawHechizos.bind(this), function () {
-                    log.error(self.currentScreen.hechizos.getSelectedSlot());
-                });
-                this.uicontext.drawImage(this.graficosUI.interfaz, 0, 0);
-                this.drawBarras();
-                this.drawInventario();
-                this.drawSlotsInventario();
-                this.setearSlotsHechizos();
-            },
 
             drawGrh: function (grh, x, y) {
 
@@ -96,6 +137,7 @@ define(['jquery', 'ui/loginscreen', 'ui/gamescreen'],
                 var tamSlot = 32,
                     x = boxX + ( (slot - 1) % cantSlotsPorFila) * tamSlot,
                     y = boxY + (((slot - 1) / cantSlotsPorFila ) | 0) * tamSlot;
+                this.uicontext.clearRect(x,y, tamSlot, tamSlot);
                 if (grh) {
                     this.drawGrh(grh, x, y);
                     this.uicontext.fillStyle = "white";
@@ -108,20 +150,21 @@ define(['jquery', 'ui/loginscreen', 'ui/gamescreen'],
                         this.uicontext.fillText("E", eX, eY);
                     }
                 }
+                log.info("draw slot inventario");
             },
 
             dibujarSlotInventario: function (Slot, GrhIndex, Amount, Equiped) {
                 this._drawSlot(600, 55, Slot, 5, GrhIndex, Amount, Equiped);
             },
 
-            dibujarSlotHechizos: function (slot, nombre) {
+            modificarSlotHechizos: function (slot, nombre) {
                 this.currentScreen.hechizos.modificarSlot(slot, nombre);
             },
 
             setearSlotsHechizos: function () {
                 for (var i = 0; i < this.game.hechizos.length; i++) {
                     if (this.game.hechizos[i])
-                        this.dibujarSlotHechizos(i, this.game.hechizos[i].nombre);
+                        this.modificarSlotHechizos(i, this.game.hechizos[i].nombre);
                 }
             },
 

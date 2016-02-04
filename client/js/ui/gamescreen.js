@@ -36,7 +36,7 @@ define(['jquery','ui/screen'],
                 this.botonHechizos = this.agregarBotonInivisible(677,15,86,32,botonHechizos_callback);
                 this.botonLanzar = this.agregarBotonInivisible(575,245,95,35,botonLanzar_callback);
                 this.botonInfo = this.agregarBotonInivisible(705,245,61,35,botonInfo_callback);
-                this.hechizos = this.agregarListaMultiple(590,53,185,190,"hechizosGame");
+                this.hechizos = this.agregarLista(true,590,53,185,190);
 
             }
         });

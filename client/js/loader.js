@@ -104,7 +104,7 @@ define(['text!../indices/graficos.json',
                     log.error("graficos ui tratados de cargar dos veces!");
                     return;
                 }
-                var graficos = ["interfaz.png","login.jpg","barraexp.png","barraEnergia.png","barraMana.png","barraVida.png","barraHambre.png","barraSed.png","centroInventario.jpg","centroHechizos.jpg"];
+                var graficos = ["interfaz.png","login.jpg","crearpj.jpg","barraexp.png","barraEnergia.png","barraMana.png","barraVida.png","barraHambre.png","barraSed.png","centroInventario.jpg","centroHechizos.jpg"];
                 this.loadGraficosUI(graficos);
                 this.UIloaded = true;
             },
