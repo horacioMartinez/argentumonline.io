@@ -2144,6 +2144,13 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 c.setWeaponGrh(this.desindexear(Weapon, this.armas));
                 c.setShieldGrh(this.desindexear(Shield, this.escudos));
                 c.setHelmetGrh(this.desindexear(Helmet, this.cascos));
+
+                if ( (Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal) ) {
+                    c.muerto = true;
+                    log.info("Muerto!!");
+                }
+                else
+                    c.muerto = false;
             },
 
             agregarCharacter: function (CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, Name,
@@ -2169,6 +2176,11 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     this.desindexear(Helmet, this.cascos),
                     this.getGrhOAnim(this.fxs[FX].animacion, FXLoops), this.fxs[FX].offX, this.fxs[FX].offY, FXLoops,
                     Name, NickColor, Privileges);
+
+                if ( (Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal) )
+                    c.muerto = true;
+                else
+                    c.muerto = false;
 
                 this.entityGrid[X][Y][1] = c;
                 this.characters[CharIndex] = c;
@@ -2223,8 +2235,9 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
 
                 this.player = new Player(char.id, char.bodyGrhs, char.headGrhs, char.offHeadX, char.offHeadY, char.heading, char.gridX, char.gridY, char.weaponGrhs,
                     char.shieldGrhs, char.helmetGrhs, char.FX, char.FXoffX, char.FXoffY, char.FXLoops, char.Name, char.NickColor, char.Privileges);
-                this.characters[this.playerId] = this.player;
+                this.player.muerto = char.muerto;
 
+                this.characters[this.playerId] = this.player;
                 this.entityGrid[this.player.gridX][this.player.gridY][1] = this.player;
                 var self = this;
 
@@ -2343,6 +2356,26 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                  }
                  */
                 this.player.forceCaminar(direccion);
+            },
+
+            agarrar:function(){
+
+                if (this.player.muerto) {
+                    this.escribirMsgConsola(Enums.MensajeConsola.estasMuerto);
+                }
+                else {
+                    this.client.sendPickUp();
+                }
+            },
+
+            ocultarse:function(){
+
+                if (this.player.muerto) {
+                    this.escribirMsgConsola(Enums.MensajeConsola.estasMuerto);
+                }
+                else {
+                    this.client.sendWork(Enums.Skill.ocultarse);
+                }
             },
 
             addEntity: function (entity) {

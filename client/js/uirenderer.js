@@ -16,6 +16,8 @@ define(['jquery', 'ui/loginscreen', 'ui/gamescreen', 'ui/crearpjscreen'],
 
                 this.rescale(); // TODO <-----------
                 this.setFont();
+
+                this.popUpActivo = false; // hacerlo como una clase de css y checkear asi directamente
             },
 
             renderFrame: function () {

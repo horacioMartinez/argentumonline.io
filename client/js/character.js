@@ -41,6 +41,7 @@ define(['entity', 'transition', 'timer', 'animacion', 'enums'], function (Entity
             this.tiempoChatInicial = 0;
             this.DURACION_CHAT = 4000;
 
+            this.muerto = false;
             this.movement = new Transition();
         },
 

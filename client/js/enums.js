@@ -1,6 +1,33 @@
 define(function () {
 
     var Enums = {
+
+        Keys: {
+            ENTER: 13,
+            CONTROL: 17,
+            UP: 38,
+            DOWN: 40,
+            LEFT: 37,
+            RIGHT: 39,
+            W: 87,
+            A: 65,
+            S: 83,
+            D: 68,
+            E: 69,
+            SPACE: 32,
+            I: 73,
+            H: 72,
+            L: 76,
+            M: 77,
+            O: 79,
+            P: 80,
+            R: 82,
+            U: 85,
+            KEYPAD_4: 100,
+            KEYPAD_6: 102,
+            KEYPAD_8: 104,
+            KEYPAD_2: 98
+        },
         Heading: {
             norte: 1,
             este: 2,
@@ -53,32 +80,65 @@ define(function () {
 
         Clase: {
             mago: 1,
-            clerigo:2,
-            guerrero:3,
-            asesino:4,
-            ladron:5,
-            bardo:6,
-            druida:7,
-            bandido:8,
-            paladin:9,
-            cazador:10,
-            trabajador:11,
-            pirata:12
+            clerigo: 2,
+            guerrero: 3,
+            asesino: 4,
+            ladron: 5,
+            bardo: 6,
+            druida: 7,
+            bandido: 8,
+            paladin: 9,
+            cazador: 10,
+            trabajador: 11,
+            pirata: 12
         },
 
         Genero: {
-            hombre : 1,
-            mujer : 2
+            hombre: 1,
+            mujer: 2
         },
 
         PartesCuerpo: {
-            cabeza : 1,
+            cabeza: 1,
             piernaIzquierda: 2,
             piernaDerecha: 3,
             brazoDerecho: 4,
-            brazoIzquierdo:5,
-            torso:6
+            brazoIzquierdo: 5,
+            torso: 6
+        },
+
+        Skill: {
+            magia: 1,
+            robar: 2,
+            tacticas: 3,
+            armas: 4,
+            meditar: 5,
+            apuñalar: 6,
+            ocultarse: 7,
+            supervivencia: 8,
+            talar: 9,
+            comerciar: 10,
+            defensa: 11,
+            pesca: 12,
+            mineria: 13,
+            carpinteria: 14,
+            herreria: 15,
+            liderazgo: 16,
+            domar: 17,
+            proyectiles: 18,
+            wrestling: 19,
+            navegacion: 20
+        },
+
+        Muerto: {
+            cabezaCasper: 500,
+            cuerpoFragataFantasmal: 87
+        },
+
+        MensajeConsola: {
+            estasMuerto: "¡¡¡Estás muerto!!!",
         }
+
     };
     return Enums;
 });

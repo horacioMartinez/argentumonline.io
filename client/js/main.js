@@ -3,13 +3,12 @@ define(['jquery', 'app', 'enums'], function ($, App, Enums) {
 
     var initApp = function () {
         $(document).ready(function () {
-            __ESCALA__ = ( $('#container').height() /500 );
+            __ESCALA__ = ( $('#container').height() / 500 );
             $('#container').width(__ESCALA__ * 800);
-            $('#chatbox input').css("font-size", Math.floor(12* __ESCALA__ ) + 'px');
-            log.error("ESCALA: "+__ESCALA__); // TODO: no usar una variable global!
+            $('#chatbox input').css("font-size", Math.floor(12 * __ESCALA__) + 'px');
+            log.error("ESCALA: " + __ESCALA__); // TODO: no usar una variable global!
             app = new App();
             app.center();
-
 
             if (Detect.isWindows()) {
                 // Workaround for graphical glitches on text
@@ -73,7 +72,6 @@ define(['jquery', 'app', 'enums'], function ($, App, Enums) {
         });
     };
 
-
     var initGame = function () {
         require(['game'], function (Game) {
 
@@ -84,7 +82,7 @@ define(['jquery', 'app', 'enums'], function ($, App, Enums) {
                 input = document.getElementById("chatinput");
 
             game = new Game(app);
-            game.setup(canvas, background, foreground,interfaz, input);
+            game.setup(canvas, background, foreground, interfaz, input);
             game.setStorage(app.storage);
             app.setGame(game);
 
@@ -128,7 +126,7 @@ define(['jquery', 'app', 'enums'], function ($, App, Enums) {
 
             _prevKeyDown = {};
 
-            function _downKey(e, doKeyUp) {
+            function _downKey(e) {
                 var wh = e.which;
                 var kC = e.keyCode;
                 if (_prevKeyDown[wh] == null) {
@@ -162,29 +160,26 @@ define(['jquery', 'app', 'enums'], function ($, App, Enums) {
 
             $(document).keyup(function (e) {
                 var key = e.which;
-                if (game.started ) {
+                _upKey(e);
+                if (game.started) {
                     switch (key) {
-                        case Types.Keys.LEFT:
-                        case Types.Keys.KEYPAD_4:
-                            _upKey(e);
+                        case Enums.Keys.LEFT:
+                        case Enums.Keys.KEYPAD_4:
                             game.terminarDeCaminar(Enums.Heading.oeste);
                             game.player.disableKeyboardNpcTalk = false;
                             break;
-                        case Types.Keys.RIGHT:
-                        case Types.Keys.KEYPAD_6:
-                            _upKey(e);
+                        case Enums.Keys.RIGHT:
+                        case Enums.Keys.KEYPAD_6:
                             game.terminarDeCaminar(Enums.Heading.este);
                             game.player.disableKeyboardNpcTalk = false;
                             break;
-                        case Types.Keys.UP:
-                        case Types.Keys.KEYPAD_8:
-                            _upKey(e);
+                        case Enums.Keys.UP:
+                        case Enums.Keys.KEYPAD_8:
                             game.terminarDeCaminar(Enums.Heading.norte);
                             game.player.disableKeyboardNpcTalk = false;
                             break;
-                        case Types.Keys.DOWN:
-                        case Types.Keys.KEYPAD_2:
-                            _upKey(e);
+                        case Enums.Keys.DOWN:
+                        case Enums.Keys.KEYPAD_2:
                             game.terminarDeCaminar(Enums.Heading.sur);
                             game.player.disableKeyboardNpcTalk = false;
                             break;
@@ -195,10 +190,13 @@ define(['jquery', 'app', 'enums'], function ($, App, Enums) {
             });
 
             $(document).keydown(function (e) {
+                if (!game.started)
+                    return;
+
                 var key = e.which,
                     $chat = $('#chatinput');
 
-                if (key === Types.Keys.ENTER) {
+                if (key === Enums.Keys.ENTER) {
                     if ($('#chatbox').hasClass('active')) {
                         app.hideChat();
                     } else {
@@ -206,112 +204,72 @@ define(['jquery', 'app', 'enums'], function ($, App, Enums) {
                     }
                 }
 
-                else if (key === 16)
-                    game.pvpFlag = true;
+                // maneja las flechas, asi se las puede usar cuando tenes algun menu o el chat abierto
+                if (!_isKeyDown(e)) {
+                    var continuar = false;
+                    switch (key) {
+                        case Enums.Keys.LEFT:
+                        case Enums.Keys.KEYPAD_4:
+                            game.caminar(Enums.Heading.oeste);
+                            break;
+                        case Enums.Keys.RIGHT:
+                        case Enums.Keys.KEYPAD_6:
+                            game.caminar(Enums.Heading.este);
+                            break;
+                        case Enums.Keys.UP:
+                        case Enums.Keys.KEYPAD_8:
+                            game.caminar(Enums.Heading.norte);
+                            break;
+                        case Enums.Keys.DOWN:
+                        case Enums.Keys.KEYPAD_2:
+                            game.caminar(Enums.Heading.sur);
+                            break;
+                        default:
+                            continuar = true;
+                            break;
+                    }
+                    if (!continuar) {
+                        _downKey(e);
+                        e.preventDefault();
+                        return;
+                    }
+                }
 
-                if (game.started) {
+                if (!$('#chatbox').hasClass('active') /* && !this.game.uiRenderer.popUpActivo*/) {
+                    if (_isKeyDown(e))
+                        return;
+                    _downKey(e);
+                    e.preventDefault();
+                    switch (key){
+                        case Enums.Keys.A:
+                            game.agarrar();
+                            break;
+                        case Enums.Keys.O:
+                            game.ocultarse();
+                            break;
 
-                    switch (key) { // esta usando el chat o no
-                        case Types.Keys.LEFT:
-                        case Types.Keys.KEYPAD_4:
-                            if (!_isKeyDown(e)) {
-                                game.caminar(Enums.Heading.oeste);
-                                _downKey(e);
-                            }
-                            break;
-                        case Types.Keys.RIGHT:
-                        case Types.Keys.KEYPAD_6:
-                            if (!_isKeyDown(e)) {
-                                game.caminar(Enums.Heading.este);
-                                _downKey(e);
-                            }
-                            break;
-                        case Types.Keys.UP:
-                        case Types.Keys.KEYPAD_8:
-                            if (!_isKeyDown(e)) {
-                                game.caminar(Enums.Heading.norte);
-                                _downKey(e);
-                            }
-                            break;
-                        case Types.Keys.DOWN:
-                        case Types.Keys.KEYPAD_2:
-                            if (!_isKeyDown(e)) {
-                                game.caminar(Enums.Heading.sur);
-                                _downKey(e);
-                            }
-                            break;
                         default:
                             break;
                     }
-
-                    if (!$('#chatbox').hasClass('active')) { // esta usando el chat
-                        pos = {
-                            x: game.player.gridX,
-                            y: game.player.gridY
-                        };
-                        switch (key) {
-                            case Types.Keys.A:
-                                if (!_isKeyDown(e)) {
-                                    // agarrar.. game.caminar(Enums.Heading.oeste);
-                                    _downKey(e);
-                                }
-                                break;
-                            case Types.Keys.D:
-                                if (!_isKeyDown(e)) {
-                                    //game.caminar(Enums.Heading.este);
-                                    _downKey(e);
-                                }
-                                break;
-                            case Types.Keys.W:
-                                if (!_isKeyDown(e)) {
-                                    //game.caminar(Enums.Heading.norte);
-                                    _downKey(e);
-                                }
-                                break;
-                            case Types.Keys.S:
-                                if (!_isKeyDown(e)) {
-                                    //game.caminar(Enums.Heading.sur);
-                                    _downKey(e);
-                                }
-                                break;
-                            case Types.Keys.SPACE:
-                                game.makePlayerAttackNext();
-                                break;
-                            case Types.Keys.I:
-                                $('#achievementsbutton').click();
-                                break;
-                            case Types.Keys.H:
-                                $('#helpbutton').click();
-                                break;
-                            case Types.Keys.M:
-                                $('#mutebutton').click();
-                                break;
-                            case Types.Keys.P:
-                                $('#playercount').click();
-                                break;
-                            default:
-                                break;
-                        }
-                    }
                 }
             });
-/*
-            function handleMouseDown(evt) { //
-                evt.preventDefault();
-                evt.stopPropagation();
 
-                // you can change the cursor if you want
-                // just remember to handle the mouse up and put it back :)
-                //evt.target.style.cursor = 'move';
+            /*
+             function handleMouseDown(evt) { //
+             evt.preventDefault();
+             evt.stopPropagation();
 
-                // rest of code goes here
-            }
+             // you can change the cursor if you want
+             // just remember to handle the mouse up and put it back :)
+             //evt.target.style.cursor = 'move';
 
-            document.addEventListener('mousedown', handleMouseDown, false);// */
+             // rest of code goes here
+             }
+
+             document.addEventListener('mousedown', handleMouseDown, false);// */
 
             $('#chatinput').keydown(function (e) {
 
-                // hacer keydown y keyup con las felchas como en document
                 var key = e.which,
                     $chat = $('#chatinput'),
                     placeholder = $(this).attr("placeholder");

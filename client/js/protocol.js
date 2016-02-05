@@ -7707,7 +7707,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
                     console.log("TODO: Multimessage: "+msgIdx);
 				   	break;
 
-                case Enums.eMessage.UserHittedBy12User:
+                case Enums.eMessage.UserHittedByUser:
                     /* 'AttackerIndex */
                     args[0]=buffer.ReadInteger();
                     /* 'Target */
