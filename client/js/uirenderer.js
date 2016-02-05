@@ -64,13 +64,11 @@ define(['jquery', 'ui/loginscreen', 'ui/gamescreen', 'ui/crearpjscreen'],
 
             setGameScreen: function () {
                 log.info("Creando game screen");
-                log.error("AAAAAAAAAAAAAAAAAAAA");
                 var self = this;
                 if (this.currentScreen)
                     this.currentScreen.delete();
                 this.currentScreen = new GameScreen(this.drawInventario.bind(this), this.drawHechizos.bind(this), function () {
                     log.error(self.currentScreen.hechizos.getSelectedSlot());
-                    log.error(self.currentScreen.hechizos.getSelectedText);
                 });
                 this.drawCurrentScreen();
                 this.setearSlotsHechizos();

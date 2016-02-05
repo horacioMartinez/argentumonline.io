@@ -6341,6 +6341,7 @@ function HigherAdminsMessage (buffer) {
 function ServerPacketDecodeAndDispatch(buffer, handler) {
     if (buffer.length() < 1) return;
     var PacketID = buffer.PeekByte();
+
     switch (PacketID) {
 
         case 0:
@@ -7678,6 +7679,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 104:
         {
+            
             var args=[];
             buffer.ReadByte(); /* PacketID */
             var msgIdx=buffer.ReadByte();
@@ -7688,29 +7690,33 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
                     args[0]=buffer.ReadByte();
                     /* 'damage */
                     args[1]=buffer.ReadInteger();
-                    handler.handleMultiMessage(msgIdx,args);
-                    break;
+                     
+                    handler.handleNPCHitUser(args[0],args[1]);
+				   	break;
 
                 case Enums.eMessage.UserHitNPC:
                     /* 'damage */
                     args[0]=buffer.ReadLong();
-                    handler.handleMultiMessage(msgIdx,args);
-                    break;
+                     
+                    console.log("TODO: Multimessage: "+msgIdx);
+				   	break;
 
                 case Enums.eMessage.UserAttackedSwing:
                     args[0]=buffer.ReadInteger();
-                    handler.handleMultiMessage(msgIdx,args);
-                    break;
+                     
+                    console.log("TODO: Multimessage: "+msgIdx);
+				   	break;
 
-                case Enums.eMessage.UserHittedByUser:
+                case Enums.eMessage.UserHittedBy12User:
                     /* 'AttackerIndex */
                     args[0]=buffer.ReadInteger();
                     /* 'Target */
                     args[1]=buffer.ReadByte();
                     /* 'damage */
                     args[2]=buffer.ReadInteger();
-                    handler.handleMultiMessage(msgIdx,args);
-                    break;
+                     
+                    console.log("TODO: Multimessage: "+msgIdx);
+				   	break;
 
                 case Enums.eMessage.UserHittedUser:
                     /* 'AttackerIndex */
@@ -7720,14 +7726,16 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
                     /* 'damage */
                     args[2]=buffer.ReadInteger();
 
-                    handler.handleMultiMessage(msgIdx,args);
-                    break;
+                     
+                    console.log("TODO: Multimessage: "+msgIdx);
+				   	break;
 
                 case Enums.eMessage.WorkRequestTarget:
                     /* 'skill */
                     args[0]=buffer.ReadByte();
-                    handler.handleMultiMessage(msgIdx,args);
-                    break;
+                     
+                    console.log("TODO: Multimessage: "+msgIdx);
+				   	break;
 
                 case Enums.eMessage.HaveKilledUser:
                     /* 'VictimIndex */
@@ -7736,26 +7744,111 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
                     args[1]=buffer.ReadLong();
 
                     /* '"¡" & .name & " te ha matado!" */
-                    handler.handleMultiMessage(msgIdx,args);
-                    break;
+                     
+                    console.log("TODO: Multimessage: "+msgIdx);
+				   	break;
 
                 case Enums.eMessage.UserKill:
                     /* 'AttackerIndex */
                     args[0]=buffer.ReadInteger();
 
-                    handler.handleMultiMessage(msgIdx,args);
-                    break;
+                     
+                    console.log("TODO: Multimessage: "+msgIdx);
+				   	break;
 
                 case Enums.eMessage.Home:
                     args[0]=buffer.ReadByte();
                     args[1]=buffer.ReadInteger();
                     /* 'El cliente no conoce nada sobre nombre de mapas y hogares, por lo tanto _
                      hasta que no se pasen los dats e .INFs al cliente, esto queda así. */
-                    /* 'Call .ReadInteger(CByte()) */
+                    /* '      //Call .ReadInteger(CByte()) */
                     args[2]=buffer.ReadUnicodeString();
 
-                    handler.handleMultiMessage(msgIdx,args);
-                    break;
+                     
+                    console.log("TODO: Multimessage: "+msgIdx);
+				   	break;
+
+                 
+				case Enums.eMessage.DontSeeAnything:
+             		 
+					console.log("TODO: Multimessage: "+msgIdx);
+				   	break;
+             
+				case Enums.eMessage.NPCSwing:
+             		 
+					console.log("TODO: Multimessage: "+msgIdx);
+				   	break;
+
+             
+				case Enums.eMessage.NPCKillUser:
+             		 
+					console.log("TODO: Multimessage: "+msgIdx);
+				   	break;
+
+             
+				case Enums.eMessage.BlockedWithShieldUser:
+             		 
+					console.log("TODO: Multimessage: "+msgIdx);
+				   	break;
+
+             
+				case Enums.eMessage.BlockedWithShieldOther:
+             		 
+					console.log("TODO: Multimessage: "+msgIdx);
+				   	break;
+             
+				case Enums.eMessage.UserSwing:
+             	     
+					console.log("TODO: Multimessage: "+msgIdx);
+				   	break;
+             
+				case Enums.eMessage.SafeModeOn:
+             	     
+					console.log("TODO: Multimessage: "+msgIdx);
+				   	break;
+             
+				case Enums.eMessage.SafeModeOff:
+					 
+					console.log("TODO: Multimessage: "+msgIdx);
+				   	break;
+             
+				case Enums.eMessage.ResuscitationSafeOff:
+                   	 
+					console.log("TODO: Multimessage: "+msgIdx);
+				   	break;
+             
+				case Enums.eMessage.ResuscitationSafeOn:
+                   	 
+				   	console.log("TODO: Multimessage: "+msgIdx);
+				   	break;
+             
+				case Enums.eMessage.NobilityLost:
+                   	 
+					console.log("TODO: Multimessage: "+msgIdx);
+				   	break;
+             
+				case Enums.eMessage.CantUseWhileMeditating:
+                    
+					console.log("TODO: Multimessage: "+msgIdx);
+				   	break;
+           
+				case Enums.eMessage.EarnExp:
+             		 
+					console.log("TODO: Multimessage: "+msgIdx);
+				   	break;
+
+				case Enums.eMessage.FinishHome:
+             		 
+					console.log("TODO: Multimessage: "+msgIdx);
+				   	break;
+             
+				case Enums.eMessage.CancelHome:
+					 
+					console.log("TODO: Multimessage: "+msgIdx);
+				   	break;
+
+				default:
+					log.error("Multimessage: "+msgIdx+" no reconocido por el protocolo");
             }
 
             break;

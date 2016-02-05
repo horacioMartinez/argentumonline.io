@@ -41,7 +41,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 // Player
                 this.playerId = null; //charindex
                 this.player = {}; // se inicializa con el msj logged, ver la funcion inicializarPlayer
-                this.logeado = false;
+                this.logeado = false; // NOTA: se pone logeado cuando llega el mensaje de logged, este es el ultimo de los mensajes al conectarse, asi que antes llega los mensajes de hechizos inventarios, etc. Deberia primero llegar esto y listo.. tambien deberia llegar el chardinex de tu pj al principio con este mensaje
                 this.inventario = [];
                 this.hechizos = [];
 
@@ -2203,12 +2203,15 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     minDef: MinDef,
                     precioVenta: ObjSalePrice
                 };
-                this.uiRenderer.dibujarSlotInventario(Slot, GrhIndex, Amount, Equiped);
+                if (this.logeado)
+                    this.uiRenderer.dibujarSlotInventario(Slot, GrhIndex, Amount, Equiped);
             },
 
             cambiarSlotHechizos: function (slot, spellID, nombre) {
                 this.hechizos[slot] = {id: spellID, nombre: nombre};
-                this.uiRenderer.modificarSlotHechizos(slot, nombre);
+
+                if (this.logeado)
+                    this.uiRenderer.modificarSlotHechizos(slot, nombre);
             },
 
             inicializarPlayer: function () { // Es necesario porque el server manda el charindex de tu pj despues de crear characters TODO: esto anda siempre? si tira algun comando cuando recien entra que use this.player puede que no este seteado? (ACEPTAR COMANDOS DESPUES DE LOGGED)
@@ -2625,6 +2628,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
             },
 
             start: function () {
+                this.started = true;
                 this.tick();
                 this.hasNeverStarted = false;
                 log.info("Game loop started.");
@@ -2847,14 +2851,12 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.uiRenderer.setLoginScreen(
                     function (nombre, password) {
 
-                        self.client.logearse(nombre, password, function () {
-                            self.setGameScreen();
-                        });
+                        self.client.intentarLogear(nombre, password);
 
                     },
                     function () {
 
-                        self.client.crearPersonaje(function () {
+                        self.client.intentarCrearPersonaje(function () {
                             self.setCrearPjScreen();
                         });
 
@@ -2871,6 +2873,13 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.uiRenderer.setCrearPjScreen(
                     function () {
                         self.client.sendThrowDices();
+                    },
+                    function () {
+                        self.setLoginScreen();
+                    },
+                    function (nombre,password,raza,genero,clase,cabeza,mail,ciudad) {
+                        log.error(nombre + " " + password+ " " + 0+ " " + 13+ " " + 0+ " " + raza+ " " + genero+ " " + clase+ " " + cabeza+ " " + mail+ " " + ciudad);
+                        self.client.sendLoginNewChar(nombre,password,0,13,0,raza,genero,clase,cabeza,mail,ciudad);
                     }
                 );
             },
@@ -2886,9 +2895,12 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
             },
 
             logearPlayer: function () {
+                if (!this.started)
+                    this.start();
                 log.error("logear player");
                 this.inicializarPlayer();
                 this.renderer.drawMapaIni(this.player.gridX, this.player.gridY);
+                this.setGameScreen();
                 log.error("<--- logear player");
                 this.logeado = true;
             },

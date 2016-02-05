@@ -88,6 +88,10 @@ define(['entity', 'transition', 'timer', 'animacion', 'enums'], function (Entity
             this.moviendose = true;
         },
 
+        hasMoved: function(){ // se ejecuta al finalizar de caminar
+            this.moviendose = false;
+        },
+
         cambiarHeading: function (heading) {
             this.resetMovement();
             this.heading = heading;

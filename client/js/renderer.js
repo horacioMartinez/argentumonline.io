@@ -388,8 +388,8 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
                             break;
                         case Enums.Heading.este:
                             this.drawGrh(this.context, char.getShieldGrh(), char.x, char.y);
-                            this.drawGrh(this.context, char.getWeaponGrh(), char.x, char.y);
                             this.drawGrh(this.context, char.getBodyGrh(), char.x, char.y);
+                            this.drawGrh(this.context, char.getWeaponGrh(), char.x, char.y);
                             break;
                         case Enums.Heading.oeste:
                             this.drawGrh(this.context, char.getBodyGrh(), char.x, char.y);

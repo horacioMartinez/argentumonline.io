@@ -26,10 +26,13 @@ define(['jquery'],
                     position: "absolute",
                     left: pX,
                     top: pY,
-                    background: "black",
-                    color: 'white', /*border:'none',"border-style":'none',*/
+                    /*color: 'white', /*border:'none',"border-style":'none',*/
                     outline: 'none'
                 });
+                if (multiple)
+                    $(this.sel).css({color: "white",background: "black"});
+
+
                 if (h)
                     $(this.sel).css({height: pH, width: pW});
                 $(this.sel).appendTo('#container');
@@ -47,8 +50,10 @@ define(['jquery'],
             },
 
             getSelectedText: function(){
-                if (this.multiple)
+                if (this.multiple) {
                     log.error("TODO");
+                    return;
+                }
                 else
                     return $('#' + this.id + ' option:selected').text();
             },
@@ -64,15 +69,15 @@ define(['jquery'],
             },
 
             remove: function () {
-                this.sel.remove();
+                $(this.sel).remove();
             },
 
             hide: function () {
-                this.sel.hide();
+                $(this.sel).hide();
             },
 
             show: function () {
-                this.sel.show();
+                $(this.sel).show();
             }
         });
 
@@ -249,10 +254,12 @@ define(['jquery'],
 
             delete: function () {
                 for (var i = 0; i < this.elementos.length; i++) {
-                    $(this.elementos[i]).remove();
+                    this.elementos[i].remove();
                     this.elementos[i] = null;
                 }
             },
+
+
 
         });
         return Screen;

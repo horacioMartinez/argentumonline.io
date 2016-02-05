@@ -2,68 +2,107 @@
  * Created by horacio on 2/2/16.
  */
 
-define(['jquery','ui/screen','enums'],
-    function ($,Screen,Enums) {
+define(['jquery', 'ui/screen', 'enums'],
+    function ($, Screen, Enums) {
         var CrearPjScreen = Screen.extend({
-            init: function(tirar_dados_callback, crear_callback, volver_callback){
+            init: function (tirar_dados_callback, volver_callback, crear_callback) {
                 this._super();
+                this.LARGO_MINIMO_PASSWORD = 5;
 
-                this.crear = crear_callback;
-                this.volver = volver_callback;
-                this.tirarDados = tirar_dados_callback;
-                var nombreInput = this.agregarInput(235,40,300,15,15);
-                var passwordInput = this.agregarInput(235,75,120,15,15,"",true);
-                var repetirPasswordInput = this.agregarInput(375,75,120,15,15,"",true);
-                var mailInput = this.agregarInput(235,107,300,15,15);
+                this.nombreInput = this.agregarInput(235, 40, 300, 15, 15);
+                this.passwordInput = this.agregarInput(235, 75, 120, 15, 15, "", true);
+                this.repetirPasswordInput = this.agregarInput(375, 75, 120, 15, 15, "", true);
+                this.mailInput = this.agregarInput(235, 107, 300, 15, 15);
 
-                //this.agregarBotonInivisible(20,140,65,65,this.tirarDados);
-                var self = this;
-                this.agregarBotonInivisible(20,140,65,65,function(){
-                    log.error("hola");
-                    log.error(self.ciudad.getSelectedSlot());
-                    log.error(self.ciudad.getSelectedText());
-                    });
+                this.agregarBotonInivisible(20, 140, 65, 65, tirar_dados_callback);
+                this.agregarBotonInivisible(70, 440, 100, 30, volver_callback);
+                this.agregarBotonInivisible(610, 440, 176, 30, this.crearPJFunc(crear_callback));
 
-                var xListas= 400;
+                var xListas = 400;
                 var yListas = 160;
                 var deltaListas = 30;
-                this.ciudad = this.agregarLista(false,xListas,yListas);
-                this.ciudad.modificarSlot(Enums.Ciudad.Ullathorpe,"Ullathorpe");
-                this.ciudad.modificarSlot(Enums.Ciudad.Nix,"Nix");
-                this.ciudad.modificarSlot(Enums.Ciudad.Banderbill,"Banderbill");
-                this.ciudad.modificarSlot(Enums.Ciudad.Lindos,"Lindos");
-                this.ciudad.modificarSlot(Enums.Ciudad.Arghal,"Arghal");
 
-                this.raza = this.agregarLista(false,xListas,yListas + deltaListas);
-                this.raza.modificarSlot(Enums.Raza.humano,"Humano");
-                this.raza.modificarSlot(Enums.Raza.elfo,"Elfo");
-                this.raza.modificarSlot(Enums.Raza.elfoOscuro,"Elfo Oscuro");
-                this.raza.modificarSlot(Enums.Raza.gnomo,"Gnome");
-                this.raza.modificarSlot(Enums.Raza.enano,"Enano");
+                this.ciudad = this.agregarLista(false, xListas, yListas);
+                this.ciudad.modificarSlot(Enums.Ciudad.Ullathorpe, "Ullathorpe");
+                this.ciudad.modificarSlot(Enums.Ciudad.Nix, "Nix");
+                this.ciudad.modificarSlot(Enums.Ciudad.Banderbill, "Banderbill");
+                this.ciudad.modificarSlot(Enums.Ciudad.Lindos, "Lindos");
+                this.ciudad.modificarSlot(Enums.Ciudad.Arghal, "Arghal");
 
-                this.clase = this.agregarLista(false,xListas,yListas + deltaListas*2);
-                this.clase.modificarSlot(Enums.Clase.mago,"Mago");
-                this.clase.modificarSlot(Enums.Clase.clerigo,"Clérigo");
-                this.clase.modificarSlot(Enums.Clase.guerrero,"Guerrero");
-                this.clase.modificarSlot(Enums.Clase.asesino,"Asesino");
-                this.clase.modificarSlot(Enums.Clase.ladron,"Ladrón");
-                this.clase.modificarSlot(Enums.Clase.bardo,"Bardo");
-                this.clase.modificarSlot(Enums.Clase.druida,"Druida");
-                this.clase.modificarSlot(Enums.Clase.bandido,"Bandido");
-                this.clase.modificarSlot(Enums.Clase.paladin,"Paladín");
-                this.clase.modificarSlot(Enums.Clase.cazador,"Cazador");
-                this.clase.modificarSlot(Enums.Clase.trabajador,"Trabajador");
-                this.clase.modificarSlot(Enums.Clase.pirata,"Pirata");
+                this.raza = this.agregarLista(false, xListas, yListas + deltaListas);
+                this.raza.modificarSlot(Enums.Raza.humano, "Humano");
+                this.raza.modificarSlot(Enums.Raza.elfo, "Elfo");
+                this.raza.modificarSlot(Enums.Raza.elfoOscuro, "Elfo Oscuro");
+                this.raza.modificarSlot(Enums.Raza.gnomo, "Gnome");
+                this.raza.modificarSlot(Enums.Raza.enano, "Enano");
 
-                this.genero =  this.agregarLista(false,xListas,yListas + deltaListas*3);
+                this.clase = this.agregarLista(false, xListas, yListas + deltaListas * 2);
+                this.clase.modificarSlot(Enums.Clase.mago, "Mago");
+                this.clase.modificarSlot(Enums.Clase.clerigo, "Clérigo");
+                this.clase.modificarSlot(Enums.Clase.guerrero, "Guerrero");
+                this.clase.modificarSlot(Enums.Clase.asesino, "Asesino");
+                this.clase.modificarSlot(Enums.Clase.ladron, "Ladrón");
+                this.clase.modificarSlot(Enums.Clase.bardo, "Bardo");
+                this.clase.modificarSlot(Enums.Clase.druida, "Druida");
+                this.clase.modificarSlot(Enums.Clase.bandido, "Bandido");
+                this.clase.modificarSlot(Enums.Clase.paladin, "Paladín");
+                this.clase.modificarSlot(Enums.Clase.cazador, "Cazador");
+                this.clase.modificarSlot(Enums.Clase.trabajador, "Trabajador");
+                this.clase.modificarSlot(Enums.Clase.pirata, "Pirata");
+
+                this.genero = this.agregarLista(false, xListas, yListas + deltaListas * 3);
                 this.genero.modificarSlot(Enums.Genero.hombre, "Hombre");
                 this.genero.modificarSlot(Enums.Genero.mujer, "Mujer");
 
-            }
+            },
+
+            crearPJFunc: function (callback) {
+                var self = this;
+                return function () {
+                    var nombre = $(self.nombreInput).val();
+                    var password = $(self.passwordInput).val();
+                    var password2 = $(self.repetirPasswordInput).val();
+                    var mail = $(self.mailInput).val();
+                    var raza = self.raza.getSelectedSlot();
+                    var genero = self.genero.getSelectedSlot();
+                    var clase = self.clase.getSelectedSlot();
+                    var cabeza = 40; // todo!!! <----
+                    var ciudad = self.ciudad.getSelectedSlot();
+
+                    if (!(nombre && password && password2 && raza && genero && clase && cabeza && mail && ciudad)) {
+                        log.error("Debes completar todos los campos");
+                        return;
+                    }
+                    if (!self.emailValido(mail)) {
+                        log.error("Mail invalido");
+                        return;
+                    }
+                    if (!self.passwordValido(password)) {
+                        log.error("El password contener " + self.LARGO_MINIMO_PASSWORD + " o mas caracteres");
+                        return;
+                    }
+
+                    if (!( password === password2)) {
+                        log.error("Los passwords ingresados no coinciden");
+                        return;
+                    }
+
+                    callback(nombre, password, raza, genero, clase, cabeza, mail, ciudad);
+                }
+            },
+
+            emailValido: function (email) {
+                // Regex borrowed from http://stackoverflow.com/a/46181/393005
+                var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(email);
+            },
+
+            passwordValido: function (pw) {
+                return (! (pw.length < this.LARGO_MINIMO_PASSWORD))
+            },
         });
         return CrearPjScreen;
     });
-
 
 /*
 

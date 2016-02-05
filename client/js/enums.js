@@ -69,8 +69,16 @@ define(function () {
         Genero: {
             hombre : 1,
             mujer : 2
-        }
+        },
 
+        PartesCuerpo: {
+            cabeza : 1,
+            piernaIzquierda: 2,
+            piernaDerecha: 3,
+            brazoDerecho: 4,
+            brazoIzquierdo:5,
+            torso:6
+        }
     };
     return Enums;
 });
