@@ -3,9 +3,9 @@ define(['character',  'enums'], function (Character, Enums) {
     var Player = Character.extend({
         MAX_LEVEL: 10,
 
-        init: function (CharIndex, Body, Head, offHeadX, offHeadY, Heading, X, Y, Weapon, Shield, Helmet, FX, FXoffX, FXoffY, FXLoops, Name, NickColor, Privileges) {
+        init: function (CharIndex, Body, Head, offHeadX, offHeadY, Heading, X, Y, Weapon, Shield, Helmet, FX, Name, NickColor, Privileges) {
 
-            this._super(CharIndex, Body, Head, offHeadX, offHeadY, Heading, X, Y, Weapon, Shield, Helmet, FX, FXoffX, FXoffY, FXLoops, Name, NickColor, Privileges);
+            this._super(CharIndex, Body, Head, offHeadX, offHeadY, Heading, X, Y, Weapon, Shield, Helmet, FX, Name, NickColor, Privileges);
 
             this.pw = "SACAME";
 

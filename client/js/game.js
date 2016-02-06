@@ -26,6 +26,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.app.config = config;
                 this.ready = false;
                 this.started = false;
+                this.isPaused = false;
 
                 this.uiRenderer = null;
                 this.renderer = null;
@@ -2145,7 +2146,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 c.setShieldGrh(this.desindexear(Shield, this.escudos));
                 c.setHelmetGrh(this.desindexear(Helmet, this.cascos));
 
-                if ( (Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal) ) {
+                if ((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal)) {
                     c.muerto = true;
                     log.info("Muerto!!");
                 }
@@ -2174,16 +2175,18 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     this.desindexear(Weapon, this.armas),
                     this.desindexear(Shield, this.escudos),
                     this.desindexear(Helmet, this.cascos),
-                    this.getGrhOAnim(this.fxs[FX].animacion, FXLoops), this.fxs[FX].offX, this.fxs[FX].offY, FXLoops,
+                    0, // TODO <----
                     Name, NickColor, Privileges);
 
-                if ( (Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal) )
+                if ((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal))
                     c.muerto = true;
                 else
                     c.muerto = false;
 
                 this.entityGrid[X][Y][1] = c;
                 this.characters[CharIndex] = c;
+
+                this.setCharacterFX(CharIndex, FX, FXLoops);
             },
 
             agregarItem: function (grhIndex, gridX, gridY) {
@@ -2234,8 +2237,13 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 char = this.characters[this.playerId];
 
                 this.player = new Player(char.id, char.bodyGrhs, char.headGrhs, char.offHeadX, char.offHeadY, char.heading, char.gridX, char.gridY, char.weaponGrhs,
-                    char.shieldGrhs, char.helmetGrhs, char.FX, char.FXoffX, char.FXoffY, char.FXLoops, char.Name, char.NickColor, char.Privileges);
+                    char.shieldGrhs, char.helmetGrhs, char.Name, char.NickColor, char.Privileges);
                 this.player.muerto = char.muerto;
+
+                for (var i = 0; i < char.getFXs().length; i++){
+                    if (char.getFXs()[i])
+                        this.player.setFX(char.getFXs()[i].anim, char.getFXs()[i].offX, char.getFXs()[i].offY);
+                }
 
                 this.characters[this.playerId] = this.player;
                 this.entityGrid[this.player.gridX][this.player.gridY][1] = this.player;
@@ -2358,7 +2366,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.player.forceCaminar(direccion);
             },
 
-            agarrar:function(){
+            agarrar: function () {
 
                 if (this.player.muerto) {
                     this.escribirMsgConsola(Enums.MensajeConsola.estasMuerto);
@@ -2368,7 +2376,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 }
             },
 
-            ocultarse:function(){
+            ocultarse: function () {
 
                 if (this.player.muerto) {
                     this.escribirMsgConsola(Enums.MensajeConsola.estasMuerto);
@@ -2376,6 +2384,30 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 else {
                     this.client.sendWork(Enums.Skill.ocultarse);
                 }
+            },
+
+            togglePausa: function () {
+                this.isPaused = !(this.isPaused);
+
+            },
+
+            setCharacterFX: function (CharIndex, FX, FXLoops) {
+                if (!this.characters[CharIndex]) {
+                    log.error("crear fx en character inexistente");
+                    return;
+                }
+                log.error("FX:" + FX+ " loops:" + FXLoops);
+                if (FX === 0) {
+                    this.characters[CharIndex].stopFXsInfinitos();
+                    return;
+                }
+
+                var numGrh = this.fxs[FX].animacion;
+                if (FXLoops === 0)
+                    FXLoops = 1; // mandan loops 0 cuando tiene un solo loop (WTF?) <-- TODO: esta bugeado el server y manda la cantidad de loops -1, cuando deberia mandar 0 manda 65535, una vez arreglado cambiar tambien en stopFXsInfinitos()
+                var fx = new Animacion(this.indices[numGrh].frames, this.indices[numGrh].velocidad, FXLoops);
+                fx.start();
+                this.characters[CharIndex].setFX(  fx ,this.fxs[FX].offX,this.fxs[FX].offY);
             },
 
             addEntity: function (entity) {
@@ -2875,7 +2907,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.invincible_callback = callback
             },
 
-            updateDados: function(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion){
+            updateDados: function (Fuerza, Agilidad, Inteligencia, Carisma, Constitucion) {
                 this.uiRenderer.drawDados(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion);
             },
 
@@ -2910,9 +2942,9 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     function () {
                         self.setLoginScreen();
                     },
-                    function (nombre,password,raza,genero,clase,cabeza,mail,ciudad) {
-                        log.error(nombre + " " + password+ " " + 0+ " " + 13+ " " + 0+ " " + raza+ " " + genero+ " " + clase+ " " + cabeza+ " " + mail+ " " + ciudad);
-                        self.client.sendLoginNewChar(nombre,password,0,13,0,raza,genero,clase,cabeza,mail,ciudad);
+                    function (nombre, password, raza, genero, clase, cabeza, mail, ciudad) {
+                        log.error(nombre + " " + password + " " + 0 + " " + 13 + " " + 0 + " " + raza + " " + genero + " " + clase + " " + cabeza + " " + mail + " " + ciudad);
+                        self.client.sendLoginNewChar(nombre, password, 0, 13, 0, raza, genero, clase, cabeza, mail, ciudad);
                     }
                 );
             },

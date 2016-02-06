@@ -398,14 +398,21 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
                             break;
                         default:
                             log.error("character heading invalido");
+                            break;
                     }
 
                     this.drawGrh(this.context, char.getHeadGrh(), char.x, char.y, char.offHeadX, char.offHeadY);
                     this.drawGrh(this.context, char.getHelmetGrh(), char.x, char.y);
                     this.drawEntityName(char);
                 }
+
+                for (var i = 0; i < char.getFXs().length; i++){
+                    if (char.getFXs()[i])
+                        this.drawGrh(this.context, char.getFXs()[i].anim.getCurrentFrame(), char.x, char.y, char.getFXs()[i].offX, char.getFXs()[i].offY);
+                }
+
                 if (char.chat){
-                    for (var i = 0; i < char.chat.length; i++) {
+                    for (var i = 0; i < char.chat.length; i++) { // TODO: usar un foreach dentro de character como con los demas (y que el currenframe lo llame character)
                         this.drawText(char.chat[i], char.x + this.tilesize / 2, char.y - this.ALTO_LETRAS_CHAT * ((char.chat.length-i)+2)+ 6, true, "white");
                     }
                 }

@@ -237,7 +237,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handlePauseToggle: function () {
-            console.log("TODO: handlePauseToggle ");
+            this.game.togglePausa();
         },
 
         handleRainToggle: function () {
@@ -245,7 +245,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleCreateFX: function (CharIndex, FX, FXLoops) {
-            console.log("TODO: handleCreateFX ");
+            this.game.setCharacterFX(CharIndex, FX, FXLoops);
         },
 
         handleUpdateUserStats: function (MaxHp, MinHp, MaxMan, MinMan, MaxSta, MinSta, Gld, Elv, Elu, Exp) {

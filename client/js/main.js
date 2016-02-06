@@ -94,12 +94,17 @@ define(['jquery', 'app', 'enums'], function ($, App, Enums) {
 
             if (game.renderer.mobile || game.renderer.tablet) {
                 $('#interfaz').bind('touchstart', function (event) {
+                    if ( (!game.started) || (game.isPaused))
+                        return;
                     app.center();
                     app.setMouseCoordinates(event.originalEvent.touches[0]);
                     game.click();
                 });
             } else {
                 $('#interfaz').click(function (event) {
+                    if ( (!game.started) || (game.isPaused))
+                        return;
+
                     app.center();
                     app.setMouseCoordinates(event);
                     if (game && !app.dropDialogPopuped) {
@@ -190,7 +195,7 @@ define(['jquery', 'app', 'enums'], function ($, App, Enums) {
             });
 
             $(document).keydown(function (e) {
-                if (!game.started)
+                if ( (!game.started) || (game.isPaused))
                     return;
 
                 var key = e.which,

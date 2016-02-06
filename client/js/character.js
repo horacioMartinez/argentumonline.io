@@ -1,7 +1,7 @@
 define(['entity', 'transition', 'timer', 'animacion', 'enums'], function (Entity, Transition, Timer, Animacion, Enums) {
 
     var Character = Entity.extend({
-        init: function (CharIndex, BodyGrh, HeadGrh, offHeadX, offHeadY, Heading, gridX, gridY, WeaponGrh, ShieldGrh, HelmetGrh, FX, FXoffX, FXoffY, FXLoops, Name, NickColor, Privileges) {
+        init: function (CharIndex, BodyGrh, HeadGrh, offHeadX, offHeadY, Heading, gridX, gridY, WeaponGrh, ShieldGrh, HelmetGrh, Name, NickColor, Privileges) {
             var self = this;
 
             this._super(gridX, gridY);
@@ -12,11 +12,13 @@ define(['entity', 'transition', 'timer', 'animacion', 'enums'], function (Entity
                 this.moveSpeed = 230; // PJ TODO: setear bien estos valores, fijarse que en lo posible no haya resetmovements (esto pasa si la animacion es mas lenta que el llamado a cambiar de pos)
 
             this.id = CharIndex;
-            this.bodyGrhs = {};
-            this.headGrhs = {};
-            this.weaponGrhs = {};
-            this.shieldGrhs = {};
-            this.helmetGrhs = {};
+            this.bodyGrhs = null;
+            this.headGrhs = null;
+            this.weaponGrhs = null;
+            this.shieldGrhs = null;
+            this.helmetGrhs = null;
+            this.FXs = [];
+
             this.setBodyGrh(BodyGrh);
             this.setHeadGrh(HeadGrh);
             this.setWeaponGrh(WeaponGrh);
@@ -25,11 +27,10 @@ define(['entity', 'transition', 'timer', 'animacion', 'enums'], function (Entity
 
             this.offHeadX = offHeadX;
             this.offHeadY = offHeadY;
+            this.offFxX = 0;
+            this.offFxY = 0;
+
             this.heading = Heading;
-            this.FX = FX;
-            this.FXoffX = FXoffX;
-            this.FXoffY = FXoffY;
-            this.FXLoops = FXLoops;
 
             this.Name = Name;
             this.NickColor = NickColor;
@@ -79,6 +80,10 @@ define(['entity', 'transition', 'timer', 'animacion', 'enums'], function (Entity
             return this._getGrh(this.shieldGrhs);
         },
 
+        getFXs: function () {
+            return this.FXs;
+        },
+
         puedeCaminar: function () {
             return true;
         },
@@ -89,7 +94,7 @@ define(['entity', 'transition', 'timer', 'animacion', 'enums'], function (Entity
             this.moviendose = true;
         },
 
-        hasMoved: function(){ // se ejecuta al finalizar de caminar
+        hasMoved: function () { // se ejecuta al finalizar de caminar
             this.moviendose = false;
         },
 
@@ -146,6 +151,45 @@ define(['entity', 'transition', 'timer', 'animacion', 'enums'], function (Entity
             this.helmetGrhs = this._corregirVelocidad(grhs);
         },
 
+        setFX: function (anim, offFxX, offFxY) {
+
+            if (!anim)
+                return;
+
+            var id = 0;
+            while (this.FXs[id])
+                id++;
+
+            var self = this;
+            anim.onFinAnim(this.crearFinFxFunc(id));
+            this.FXs[id] = {};
+            this.FXs[id].anim = anim;
+
+            this.FXs[id].offX = offFxX;
+            this.FXs[id].offY = offFxY;
+
+        },
+        crearFinFxFunc: function(id){
+            var self = this;
+            return function(){
+                self.deleteFX(id)
+            };
+        },
+
+        deleteFX: function(id){
+            if (!this.FXs[id])
+                return;
+            this.FXs[id] = null;
+        },
+
+        stopFXsInfinitos: function(){ // por ej, para de meditar
+            for (var i = 0; i < this.FXs.length; i++){
+                if (this.FXs[i])
+                    if ( (this.FXs[i].anim.loops < 0) || (this.FXs[i].anim.loops === 65535) ) // probablemente este bugeado el server y mande -1 de loops, 65535 lo manda cuando son inifnitos
+                        this.FXs[i] = null;
+            }
+        },
+
         hasShadow: function () {
             return true;
         },
@@ -179,7 +223,10 @@ define(['entity', 'transition', 'timer', 'animacion', 'enums'], function (Entity
                 this.shieldGrhs[this.heading].update(time);
             if (this.helmetGrhs[this.heading] instanceof Animacion)
                 this.helmetGrhs[this.heading].update(time);
-
+            for (var i = 0; i < this.FXs.length; i++) {
+                if (this.FXs[i])
+                    this.FXs[i].anim.update(time);
+            }
             // chat
             if (this.chat) {
                 if (time > this.tiempoChatInicial + this.DURACION_CHAT)
