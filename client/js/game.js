@@ -2056,6 +2056,10 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 // hacer para que se vea animacion y demas... de los characters
             },
 
+            actualizarBajoTecho: function(){
+                this.renderer.setBajoTecho(this.map.isBajoTecho(this.player.gridX,this.player.gridY));
+            },
+
             sacarEntity: function (entity) {
                 if (entity instanceof Character) {
                     if (entity === this.player) {
@@ -2108,7 +2112,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 else {
                     var c = this.characters[CharIndex];
                     if (!c) {
-                        log.error("mover character inexistente:");// + CharIndex);
+                        //log.error("mover character inexistente:");// + CharIndex);
                         return;
                     }
                     var dir = c.esPosAdyacente(gridX, gridY);
@@ -2131,7 +2135,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 c = this.characters[CharIndex];
 
                 if (!c) {
-                    log.error(" cambiar character inexistente ");
+                    //log.error(" cambiar character inexistente ");
                     return;
                 }
                 if (Heading !== c.heading)
@@ -2175,7 +2179,6 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     this.desindexear(Weapon, this.armas),
                     this.desindexear(Shield, this.escudos),
                     this.desindexear(Helmet, this.cascos),
-                    0, // TODO <----
                     Name, NickColor, Privileges);
 
                 if ((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal))
@@ -2240,7 +2243,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     char.shieldGrhs, char.helmetGrhs, char.Name, char.NickColor, char.Privileges);
                 this.player.muerto = char.muerto;
 
-                for (var i = 0; i < char.getFXs().length; i++){
+                for (var i = 0; i < char.getFXs().length; i++) {
                     if (char.getFXs()[i])
                         this.player.setFX(char.getFXs()[i].anim, char.getFXs()[i].offX, char.getFXs()[i].offY);
                 }
@@ -2250,11 +2253,14 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 var self = this;
 
                 this.player.onCaminar(function (direccion, forced) {
-                    if (forced)
+                    if (forced) {
                         self.actualizarMovPos(self.player, direccion, true);
+                        self.actualizarBajoTecho();
+                    }
                     else {
                         self.client.sendWalk(direccion);
                         self.actualizarMovPos(self.player, direccion);
+                        self.actualizarBajoTecho();
                     }
                 });
 
@@ -2396,18 +2402,15 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     log.error("crear fx en character inexistente");
                     return;
                 }
-                log.error("FX:" + FX+ " loops:" + FXLoops);
                 if (FX === 0) {
                     this.characters[CharIndex].stopFXsInfinitos();
                     return;
                 }
-
+                FXLoops = FXLoops + 1;
                 var numGrh = this.fxs[FX].animacion;
-                if (FXLoops === 0)
-                    FXLoops = 1; // mandan loops 0 cuando tiene un solo loop (WTF?) <-- TODO: esta bugeado el server y manda la cantidad de loops -1, cuando deberia mandar 0 manda 65535, una vez arreglado cambiar tambien en stopFXsInfinitos()
                 var fx = new Animacion(this.indices[numGrh].frames, this.indices[numGrh].velocidad, FXLoops);
                 fx.start();
-                this.characters[CharIndex].setFX(  fx ,this.fxs[FX].offX,this.fxs[FX].offY);
+                this.characters[CharIndex].setFX(fx, this.fxs[FX].offX, this.fxs[FX].offY);
             },
 
             addEntity: function (entity) {
@@ -2476,35 +2479,13 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
              */
             initEntityGrid: function () {
                 this.entityGrid = [];
-                for (var i = 1; i < this.map.height; i += 1) {
+                for (var i = 1; i < this.map.height + 1; i += 1) {
                     this.entityGrid[i] = [];
-                    for (var j = 1; j < this.map.width; j += 1) {
+                    for (var j = 1; j < this.map.width+ 1; j += 1) {
                         this.entityGrid[i][j] = []; // [1] = son cosas que bloquena (PJS,NPCS, ETC) , [0] son cosas pisables, items , etc
                     }
                 }
                 log.info("Initialized the entity grid.");
-            },
-
-            initRenderingGrid: function () {
-                this.renderingGrid = [];
-                for (var i = 1; i < this.map.height; i += 1) {
-                    this.renderingGrid[i] = [];
-                    for (var j = 1; j < this.map.width; j += 1) {
-                        this.renderingGrid[i][j] = {};
-                    }
-                }
-                log.info("Initialized the rendering grid.");
-            },
-
-            initItemGrid: function () {
-                this.itemGrid = [];
-                for (var i = 1; i < this.map.height; i += 1) {
-                    this.itemGrid[i] = [];
-                    for (var j = 1; j < this.map.width; j += 1) {
-                        this.itemGrid[i][j] = {};
-                    }
-                }
-                log.info("Initialized the item grid.");
             },
 
             /**
@@ -2664,8 +2645,6 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                         }
 
                         self.initEntityGrid();
-                        self.initItemGrid();
-                        self.initRenderingGrid();
 
                         //self.setPathfinder(new Pathfinder(self.map.width, self.map.height));
 
@@ -2776,24 +2755,16 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
             click: function () {
                 var gridPos = this.getMouseGridPosition();
 
-                /*if (pos.x === this.previousClickPosition.x
-                 && pos.y === this.previousClickPosition.y) {
-                 return;
-                 } else*/
                 this.previousClickPosition = gridPos;
-
-                this.processInput(gridPos);
-            },
-
-            /**
-             * Processes game logic when the user triggers a click/touch event during the game.
-             */
-            processInput: function (gridPos) {
-
-                // pasar pos normal, fijarse si eso toca la interfaz y sino convertir a gridpos y seguir con lo de abajo
-
                 if (this.logeado)
                     this.client.sendLeftClick(gridPos.x, gridPos.y);
+            },
+
+            doubleclick: function(){
+                var gridPos = this.getMouseGridPosition();
+                this.previousClickPosition = gridPos;
+                if (this.logeado)
+                    this.client.sendDoubleClick(gridPos.x, gridPos.y);
             },
 
             say: function (message) {

@@ -139,7 +139,11 @@ define(function () {
         },
 
         ReadInteger: function () {
-            return this.ws.rQshift16();
+
+            var int= this.ws.rQshift16();
+            if (int & 0x8000) // ultimo bit de los 16 es 1 -> numero negativo, extiendo los demas bits
+                int = int | 0xFFFF0000;
+            return int;
         },
 
         ReadLong: function () {
@@ -175,7 +179,7 @@ define(function () {
         },
 
         ReadUnicodeString: function () {
-            largo = this.ReadInteger();
+            largo = this.ws.rQshift16();
             utf8array = this.ws.rQshiftBytes(largo);
             return UTF8arrayToString(utf8array);
         },

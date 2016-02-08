@@ -16,7 +16,7 @@ for fn in os.listdir('.'):
 
 	origen.read(256+17)  # saco header
 
-	mapa = [[[0 for x in range(5)] for x in range(101)] for x in range(101)] 
+	mapa = [[[0 for x in range(6)] for x in range(101)] for x in range(101)] 
 	y = 1
 	while ( y < 101):
 		x = 1
@@ -46,7 +46,9 @@ for fn in os.listdir('.'):
 				layer4=0
 
 			if (flags & 16):
-				trigger = struct.unpack('<H', (origen.read(2)))[0] # l1	
+				trigger = struct.unpack('<H', (origen.read(2)))[0] # l1
+				if ( (trigger != 1) and (trigger != 4) ):
+					trigger = 0
 			else:
 				trigger=0
 
@@ -56,6 +58,7 @@ for fn in os.listdir('.'):
 			mapa[x][y][2] = layer2
 			mapa[x][y][3] = layer3
 			mapa[x][y][4] = layer4
+			mapa[x][y][5] = trigger
 			x = x+1
 
 		y = y+1

@@ -26,7 +26,6 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
                 this.context = (canvas && canvas.getContext) ? canvas.getContext("2d") : null;
                 this.background = (background && background.getContext) ? background.getContext("2d") : null;
                 this.foreground = (foreground && foreground.getContext) ? foreground.getContext("2d") : null;
-                this.interfaz = (interfaz && interfaz.getContext) ? interfaz.getContext("2d") : null;
 
                 this.canvas = canvas;
                 this.backcanvas = background;
@@ -34,6 +33,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
 
                 this.initFPS();
                 this.tilesize = 32;
+                this.bajoTecho = false;
 
                 this.upscaledRendering = this.context.mozImageSmoothingEnabled !== undefined;
                 this.supportsSilhouettes = this.upscaledRendering;
@@ -91,7 +91,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
                 this.scale = __ESCALA__;
                 this.createCamera();
                 if (this.game.player)
-                    this.resetPos(this.game.player.gridX,this.game.player.gridY);
+                    this.resetPos(this.game.player.gridX, this.game.player.gridY);
                 else
                     this.resetCanvases();
             },
@@ -346,14 +346,16 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
                 var self = this;
 
                 //terreno:
-                if (this.dibujarTerrenoYTechos)
+                if (this.dibujarTerrenoYTechos && (!this.bajoTecho))
                     this.clearScreen(this.foreground); // el background no se limpia porque contal siempre se dibuja entero
                 this.camera.forEachVisiblePosition(function (gridX, gridY) {
 
                     if (self.dibujarTerrenoYTechos) {
                         self.drawLayer(1, gridX, gridY);
                         self.drawLayer(2, gridX, gridY);
-                        self.drawLayer(4, gridX, gridY);
+                        if (!self.bajoTecho) {
+                            self.drawLayer(4, gridX, gridY);
+                        }
                     }
 
                     if (self.game.entityGrid[gridX][gridY][0])
@@ -362,11 +364,11 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
                         self.drawCharacter(self.game.entityGrid[gridX][gridY][1]);
                     self.drawTilesAnimados(gridX, gridY);
 
-                    //layers de arriba:
+                    //layer de arriba de pj (si el Y es mayor):
                     self.drawLayer(3, gridX, gridY);
                 }, this.POSICIONES_EXTRA_RENDER_X, this.POSICIONES_EXTRA_RENDER_Y);
                 this.dibujarTerrenoYTechos = false;
-                this.drawCombatInfo(); // MAL, esto tiene que ir en interfaz, ver TODO en infomangaer
+                this.drawCombatInfo(); // MAL, esto tiene que ir en interfaz ??, ver TODO en infomangaer
             },
 
             drawCharacter: function (char) {
@@ -406,14 +408,14 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
                     this.drawEntityName(char);
                 }
 
-                for (var i = 0; i < char.getFXs().length; i++){
+                for (var i = 0; i < char.getFXs().length; i++) {
                     if (char.getFXs()[i])
                         this.drawGrh(this.context, char.getFXs()[i].anim.getCurrentFrame(), char.x, char.y, char.getFXs()[i].offX, char.getFXs()[i].offY);
                 }
 
-                if (char.chat){
+                if (char.chat) {
                     for (var i = 0; i < char.chat.length; i++) { // TODO: usar un foreach dentro de character como con los demas (y que el currenframe lo llame character)
-                        this.drawText(char.chat[i], char.x + this.tilesize / 2, char.y - this.ALTO_LETRAS_CHAT * ((char.chat.length-i)+2)+ 6, true, "white");
+                        this.drawText(char.chat[i], char.x + this.tilesize / 2, char.y - this.ALTO_LETRAS_CHAT * ((char.chat.length - i) + 2) + 6, true, "white");
                     }
                 }
             },
@@ -538,14 +540,14 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
                 var entityW = this.indices[entity.getBodyGrh()].width;
                 var sombraW = entityW < 32 ? 32 : entityW;
                 var sombraH = sombraW;
-                var x = entity.x + (this.tilesize - sombraW) / 2 + this.INTERFAZ_OFFSET_X + entity.offHeadX;
-                var y = entity.y + this.tilesize - sombraH + this.INTERFAZ_OFFSET_Y + 2;
+                var x = entity.x + (this.tilesize - sombraW) / 2 + entity.offHeadX;
+                var y = entity.y + this.tilesize - sombraH + 2;
                 if (entity.heading === Enums.Heading.este)
                     x += 3;
                 else if (entity.heading === Enums.Heading.oeste)
                     x += 2;
                 else
-                    x+=1;
+                    x += 1;
                 this.context.drawImage(this.graficos[numGrafico].imagen, x, y, sombraW, sombraH);
             },
 
@@ -599,7 +601,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
                 if (w <= 0 || h <= 0)
                     return;
 
-                ctx.drawImage(grafico, sx, sy, w, h, x + this.INTERFAZ_OFFSET_X, y + this.INTERFAZ_OFFSET_Y, w, h);
+                ctx.drawImage(grafico, sx, sy, w, h, x, y, w, h);
             },
 
             drawTile: function (ctx, tileid, tileset, setW, gridW, cellid) {
@@ -855,7 +857,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
             drawEntityName: function (entity) {
                 if (entity.Name) {
                     var color = (entity.id === this.game.playerId) ? "#fcda5c" : "white";
-                    this.drawText(entity.Name, entity.x + this.tilesize / 2 , entity.y + this.tilesize + this.tilesize / 3, true, color);
+                    this.drawText(entity.Name, entity.x + this.tilesize / 2, entity.y + this.tilesize + this.tilesize / 3, true, color);
                 }
             },
 
@@ -888,6 +890,18 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
                 }
                 else
                     return false;
+            },
+
+            setBajoTecho: function (bajoT) {
+                if (bajoT === this.bajoTecho)
+                    return;
+                if (bajoT){
+                    this.clearScreen(this.foreground);
+                }
+                else{
+                    this.dibujarTerrenoYTechos = true;
+                }
+                this.bajoTecho = bajoT;
             },
 
             drawLayer: function (numLayer, gridX, gridY) {
@@ -994,7 +1008,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
 
             },
 
-            resetCanvases: function(){
+            resetCanvases: function () {
                 this.background.setTransform(1, 0, 0, 1, 0, 0);
                 this.context.setTransform(1, 0, 0, 1, 0, 0);
                 this.foreground.setTransform(1, 0, 0, 1, 0, 0);

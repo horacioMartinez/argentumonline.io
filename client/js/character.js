@@ -108,7 +108,7 @@ define(['entity', 'transition', 'timer', 'animacion', 'enums'], function (Entity
                 this.movement.stop();
                 if (this.movement.stopFunction)
                     this.movement.stopFunction();
-                log.error("resetmovemente!, name: " + this.Name);
+                //log.error("resetmovemente!, name: " + this.Name);
             }
         },
 
@@ -185,7 +185,7 @@ define(['entity', 'transition', 'timer', 'animacion', 'enums'], function (Entity
         stopFXsInfinitos: function(){ // por ej, para de meditar
             for (var i = 0; i < this.FXs.length; i++){
                 if (this.FXs[i])
-                    if ( (this.FXs[i].anim.loops < 0) || (this.FXs[i].anim.loops === 65535) ) // probablemente este bugeado el server y mande -1 de loops, 65535 lo manda cuando son inifnitos
+                    if ( (this.FXs[i].anim.loops < 1) )
                         this.FXs[i] = null;
             }
         },

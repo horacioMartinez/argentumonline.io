@@ -97,8 +97,8 @@ define(['jquery', 'app', 'enums'], function ($, App, Enums) {
                     if ( (!game.started) || (game.isPaused))
                         return;
                     app.center();
-                    app.setMouseCoordinates(event.originalEvent.touches[0]);
-                    game.click();
+                    if (app.setMouseCoordinates(event.originalEvent.touches[0]))
+                        game.click();
                 });
             } else {
                 $('#interfaz').click(function (event) {
@@ -106,21 +106,23 @@ define(['jquery', 'app', 'enums'], function ($, App, Enums) {
                         return;
 
                     app.center();
-                    app.setMouseCoordinates(event);
-                    if (game && !app.dropDialogPopuped) {
-                        game.pvpFlag = event.shiftKey;
-                        game.click();
+                    if (app.setMouseCoordinates(event)) {
+                            game.click();
                     }
-                    // TODO: si haces click afuera del menu pop up que lo cierre
+                    // TODO: si haces click afuera del menu pop up que lo cierre?
+                });
+
+                $('#interfaz').dblclick(function (event) {
+                    if ( (!game.started) || (game.isPaused))
+                        return;
+
+                    app.center();
+                    if (app.setMouseCoordinates(event)) {
+                        game.doubleclick();
+                    }
+                    // TODO: si haces click afuera del menu pop up que lo cierre?
                 });
             }
-
-            $('body').unbind('click');
-            $('body').click(function (event) {
-                if (game.started && !game.renderer.mobile && game.player) {
-                    game.click();
-                }
-            });
 
             $(document).mousemove(function (event) {
                 app.setMouseCoordinates(event);

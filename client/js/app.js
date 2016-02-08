@@ -257,17 +257,23 @@ define(['jquery', 'storage'], function ($, Storage) {
             mouse.x = event.pageX - gamePos.left - (this.isMobile ? 0 : 5 * scale);
             mouse.y = event.pageY - gamePos.top - (this.isMobile ? 0 : 7 * scale);
 
+            var posEnGameCanvas = true;
             if (mouse.x <= 0) {
                 mouse.x = 0;
+                posEnGameCanvas = false;
             } else if (mouse.x >= width) {
                 mouse.x = width - 1;
+                posEnGameCanvas = false;
             }
 
             if (mouse.y <= 0) {
                 mouse.y = 0;
+                posEnGameCanvas = false;
             } else if (mouse.y >= height) {
                 mouse.y = height - 1;
+                posEnGameCanvas = false;
             }
+            return posEnGameCanvas;
         },
         //Init the hud that makes it show what creature you are mousing over and attacking
         initTargetHud: function () {

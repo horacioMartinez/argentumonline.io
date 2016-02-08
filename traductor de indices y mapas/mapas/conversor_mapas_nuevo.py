@@ -19,7 +19,7 @@ for fn in os.listdir('.'):
 
 	origen.read(256+17)  # saco header
 
-	mapa = [[[0 for y in range(5)] for y in range(101)] for y in range(101)] 
+	mapa = [[[0 for y in range(6)] for y in range(101)] for y in range(101)] 
 	x = 1
 	while ( x < 101):
 		y = 1
@@ -49,7 +49,9 @@ for fn in os.listdir('.'):
 				layer4=0
 
 			if (flags & 16):
-				trigger = struct.unpack('<H', (origen.read(2)))[0] # l1	
+				trigger = struct.unpack('<H', (origen.read(2)))[0] # l1
+				if ( (trigger != 1) and (trigger != 4) ):
+					trigger = 0
 			else:
 				trigger=0
 			
@@ -57,7 +59,8 @@ for fn in os.listdir('.'):
 			mapa[y][x][1] = layer1	
 			mapa[y][x][2] = layer2
 			mapa[y][x][3] = layer3				
-			mapa[y][x][4] = layer4				
+			mapa[y][x][4] = layer4
+			mapa[y][x][5] = trigger
 			y = y+1
 		x = x+1
 	x = 1
@@ -90,11 +93,18 @@ for fn in os.listdir('.'):
 				destino.write(""""3":""")
 				destino.write(str(mapa[x][y][3]))
 			#mapa[x][y][4] = layer4
-			if layer4 != 0:
+			if mapa[x][y][4] != 0:
 				if ( ((mapa[x][y][0] != 0 or mapa[x][y][1] != 0) or mapa[x][y][2] != 0) or mapa[x][y][3] != 0):
 					destino.write(",")
 				destino.write(""""4":""")
-				destino.write(str(layer4))
+				destino.write(str(mapa[x][y][4]))
+
+			if mapa[x][y][5] != 0:
+				if ((((mapa[x][y][0] != 0 or mapa[x][y][1] != 0) or mapa[x][y][2] != 0) or mapa[x][y][3] != 0) or mapa[x][y][4] != 0):
+					destino.write(",")
+				destino.write(""""5":""")
+				destino.write(str(mapa[x][y][5]))
+
 			if y==100:
 				destino.write("}")
 			else:

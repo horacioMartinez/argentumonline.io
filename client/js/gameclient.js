@@ -217,7 +217,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleBlockPosition: function (X, Y, Blocked) {
-            console.log("TODO: handleBlockPosition ");
+            this.game.map.setBlockPosition(X,Y,Blocked);
         },
 
         handlePlayMidi: function (MidiID, Loops) {
