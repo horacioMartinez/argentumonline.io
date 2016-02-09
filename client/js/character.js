@@ -84,7 +84,7 @@ define(['entity', 'transition', 'timer', 'animacion', 'enums'], function (Entity
             return this.FXs;
         },
 
-        puedeCaminar: function () {
+        tratarDeCaminar: function () {
             return true;
         },
 
@@ -104,12 +104,13 @@ define(['entity', 'transition', 'timer', 'animacion', 'enums'], function (Entity
         },
 
         resetMovement: function () {
-            if (this.moviendose) {
+            if (this.movement.inProgress) {
                 this.movement.stop();
                 if (this.movement.stopFunction)
                     this.movement.stopFunction();
                 //log.error("resetmovemente!, name: " + this.Name);
             }
+            this.moviendose = false;
         },
 
         setGridPositionOnly: function (gridX, gridY) {

@@ -2027,10 +2027,12 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
              */
 
 
-            actualizarMovPos: function (char, direccion, preservarEntity) {
+            actualizarMovPos: function (char, direccion) {
                 // Se setea la pos del grid nomas porque la (x,y) la usa para la animacion el character ( y la actualiza el al final)
-                if (!preservarEntity)
-                    this.entityGrid[char.gridX][char.gridY][1] = null;
+                if (this.entityGrid[char.gridX][char.gridY][1])
+                    if (this.entityGrid[char.gridX][char.gridY][1].id === char.id) // es necesario checkear que sean iguales porque puede que haya otro char que piso la dir de este (pisar caspers)
+                        this.entityGrid[char.gridX][char.gridY][1] = null;
+
                 switch (direccion) {
                     case  Enums.Heading.oeste:
                         this.entityGrid[char.gridX - 1][char.gridY][1] = char;
@@ -2056,8 +2058,8 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 // hacer para que se vea animacion y demas... de los characters
             },
 
-            actualizarBajoTecho: function(){
-                this.renderer.setBajoTecho(this.map.isBajoTecho(this.player.gridX,this.player.gridY));
+            actualizarBajoTecho: function () {
+                this.renderer.setBajoTecho(this.map.isBajoTecho(this.player.gridX, this.player.gridY));
             },
 
             sacarEntity: function (entity) {
@@ -2121,10 +2123,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     }
                     else {
                         c.mover(dir);
-                        if (this.entityGrid[c.gridX][c.gridY][1] !== c) // hay otro pj en la pos de este (pasa al pisar caspers)
-                            this.actualizarMovPos(c, dir, true);
-                        else
-                            this.actualizarMovPos(c, dir);
+                        this.actualizarMovPos(c, dir);
                     }
 
                 }
@@ -2150,10 +2149,8 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 c.setShieldGrh(this.desindexear(Shield, this.escudos));
                 c.setHelmetGrh(this.desindexear(Helmet, this.cascos));
 
-                if ((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal)) {
+                if ((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal))
                     c.muerto = true;
-                    log.info("Muerto!!");
-                }
                 else
                     c.muerto = false;
             },
@@ -2253,12 +2250,9 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 var self = this;
 
                 this.player.onCaminar(function (direccion, forced) {
-                    if (forced) {
-                        self.actualizarMovPos(self.player, direccion, true);
-                        self.actualizarBajoTecho();
-                    }
-                    else {
-                        self.client.sendWalk(direccion);
+                    {
+                        if (!forced)
+                            self.client.sendWalk(direccion);
                         self.actualizarMovPos(self.player, direccion);
                         self.actualizarBajoTecho();
                     }
@@ -2272,24 +2266,33 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     var x = self.player.gridX;
                     var y = self.player.gridY;
                     if (direccion === Enums.Heading.oeste) {
-                        if (self.map.isBlocked(x - 1, y) || self.entityGrid[x - 1][y][1]) {
+                        if (self.map.isBlocked(x - 1, y))
                             return false;
-                        }
+
+                        if (self.entityGrid[x - 1][y][1])
+                            if (!self.entityGrid[x - 1][y][1].muerto)
+                                return false;
                     }
                     else if (direccion === Enums.Heading.este) {
-                        if (self.map.isBlocked(x + 1, y) || self.entityGrid[x + 1][y][1]) {
+                        if (self.map.isBlocked(x + 1, y))
                             return false;
-                        }
+                        if (self.entityGrid[x + 1][y][1])
+                            if (!self.entityGrid[x + 1][y][1].muerto)
+                                return false;
                     }
                     else if (direccion === Enums.Heading.norte) {
-                        if (self.map.isBlocked(x, y - 1) || self.entityGrid[x][y - 1][1]) {
+                        if (self.map.isBlocked(x, y - 1))
                             return false;
-                        }
+                        if (self.entityGrid[x][y - 1][1])
+                            if (!self.entityGrid[x][y - 1][1].muerto)
+                                return false;
                     }
                     else if (direccion === Enums.Heading.sur) {
-                        if (self.map.isBlocked(x, y + 1) || self.entityGrid[x][y + 1][1]) {
+                        if (self.map.isBlocked(x, y + 1))
                             return false;
-                        }
+                        if (self.entityGrid[x][y + 1][1])
+                            if (!self.entityGrid[x][y + 1][1].muerto)
+                                return false;
                     }
                     return true;
                 });
@@ -2391,7 +2394,10 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     this.client.sendWork(Enums.Skill.ocultarse);
                 }
             },
-
+            requestPosUpdate: function () {
+                //todo: intervalos
+                this.client.sendRequestPositionUpdate();
+            },
             togglePausa: function () {
                 this.isPaused = !(this.isPaused);
 
@@ -2481,7 +2487,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.entityGrid = [];
                 for (var i = 1; i < this.map.height + 1; i += 1) {
                     this.entityGrid[i] = [];
-                    for (var j = 1; j < this.map.width+ 1; j += 1) {
+                    for (var j = 1; j < this.map.width + 1; j += 1) {
                         this.entityGrid[i][j] = []; // [1] = son cosas que bloquena (PJS,NPCS, ETC) , [0] son cosas pisables, items , etc
                     }
                 }
@@ -2760,7 +2766,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     this.client.sendLeftClick(gridPos.x, gridPos.y);
             },
 
-            doubleclick: function(){
+            doubleclick: function () {
                 var gridPos = this.getMouseGridPosition();
                 this.previousClickPosition = gridPos;
                 if (this.logeado)

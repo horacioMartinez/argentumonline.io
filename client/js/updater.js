@@ -135,7 +135,7 @@ define(['character', 'player', 'timer', 'enums'], function (Character, Player, T
             var tick = Math.round(32 / Math.round((c.moveSpeed / (1000 / this.game.renderer.FPS))));
 
             if (c.moviendose && c.movement.inProgress === false) {
-                if (!c.puedeCaminar())
+                if (!c.tratarDeCaminar())
                     return;
                 c.animarMovimiento();
                 if (c.getDirMov() === Enums.Heading.oeste) {

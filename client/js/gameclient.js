@@ -145,8 +145,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handlePosUpdate: function (X, Y) {
-            this.game.resetPosCharacter(this.game.player, X, Y);
-            log.error(" pos update ( como si hubiese apretado la L) ");
+            this.game.resetPosCharacter(this.game.player.id, X, Y);
             console.log("TODO: handlePosUpdate ");
         },
 

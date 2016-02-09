@@ -254,7 +254,8 @@ define(['jquery', 'app', 'enums'], function ($, App, Enums) {
                         case Enums.Keys.O:
                             game.ocultarse();
                             break;
-
+                        case Enums.Keys.L:
+                            game.requestPosUpdate();
                         default:
                             break;
                     }
