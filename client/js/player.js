@@ -14,7 +14,7 @@ define(['character',  'enums'], function (Character, Enums) {
             this.caminarCallback = {};
             this.puedeCaminarCallback = {};
             this.cambioHeadingCallback = {};
-
+            this.lastAttackedTarget = null;
         },
 
         comenzarCaminar: function (direccion) {

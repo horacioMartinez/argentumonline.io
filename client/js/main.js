@@ -256,6 +256,10 @@ define(['jquery', 'app', 'enums'], function ($, App, Enums) {
                             break;
                         case Enums.Keys.L:
                             game.requestPosUpdate();
+                            break;
+                        case Enums.Keys.CONTROL:
+                            game.atacar();
+                            break;
                         default:
                             break;
                     }

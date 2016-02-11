@@ -10,11 +10,11 @@ define(function() {
             this.consolaDirty = false;
         },
 
-        addDamageInfo: function(value, x, y, type, duration) {
+        addDamageInfo: function(value, char, type, duration) {
             var time = this.game.currentTime,
-                id = time+""+(isNaN(value*1)?value:value*1)+""+x+""+y,
+                id = time+""+(isNaN(value*1)?value:value*1)+""+char.x+""+char.y,
                 self = this,
-                info = new HoveringInfo(id, value, x, y, (duration)?duration:1000, type);
+                info = new DamageInfo(id, value,char, (duration)?duration:1000, type);
             info.onDestroy(function(id) {
                 self.destroyQueue.push(id);
             });
@@ -108,15 +108,14 @@ define(function() {
     };
 
 
-    var HoveringInfo = Class.extend({
+    var DamageInfo = Class.extend({
         DURATION: 1000,
 
-        init: function(id, value, x, y, duration, type) {
+        init: function(id, value, char, duration, type) {
             this.id = id;
             this.value = value;
             this.duration = duration;
-            this.x = x;
-            this.y = y;
+            this.char = char;
             this.opacity = 1.0;
             this.lastTime = 0;
             this.speed = 100;
@@ -155,7 +154,7 @@ define(function() {
         }
     });
 
-    var ConsoleInfo = Class.extend({ // TODO: (MUY IMPORTANTE) dibujar estos en interfaz ( y solo cuando estan dirty y usar clearrect). Como esta ahora los dibuja todos los frames al pedo, ver si sacar lo de opacity de los de consola asi dibuja aun menos. Si hay un menu abierto dibujarl odevuelta despues del clear y las letras, contal va a estar quieto por lo que no va a a haber draws del terreno
+    var ConsoleInfo = Class.extend({
 
         init: function(id, msg,x,y) {
             this.id = id;

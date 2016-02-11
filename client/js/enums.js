@@ -137,7 +137,22 @@ define(function () {
 
         MensajeConsola: {
             estasMuerto: "¡¡¡Estás muerto!!!",
-        }
+        },
+
+        Intervalo: {
+            macroHechizos: 2788,
+            macroTrabajo: 900,
+            ataque: 1500,
+            ataqueConArco: 1400,
+            hechizo: 1400,
+            ataqueHechizo: 1000,
+            hechizoAtaque: 1000,
+            trabajar: 700,
+            usarItemConU: 450,
+            usarItemConDobleClick: 125,
+            requestPostionUpdate: 2000
+
+        },
 
     };
     return Enums;

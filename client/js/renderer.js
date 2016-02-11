@@ -1000,7 +1000,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
                         self.context.save();
                         self.context.globalAlpha = info.opacity;
                     }
-                    self.drawText(info.value, info.x, info.y, info.centered, info.fillColor, info.strokeColor);
+                    self.drawText(info.value, info.char.x+ 15, info.char.y - 25, info.centered, info.fillColor, info.strokeColor);
 
                     if (info.opacity < 1)
                         self.context.restore();

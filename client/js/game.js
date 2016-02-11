@@ -1,10 +1,10 @@
 define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
         'gameclient', 'audio', 'updater', 'transition',
         'item', 'player', 'character',
-        'config', '../shared/js/gametypes', 'loader', 'uirenderer'],
+        'config', '../shared/js/gametypes', 'loader', 'uirenderer', 'intervalos'],
     function (Enums, Animacion, Mapa, InfoManager, Renderer,
               GameClient, AudioManager, Updater, Transition,
-              Item, Player, Character, config, __gametypes__, Loader, UIRenderer) {
+              Item, Player, Character, config, __gametypes__, Loader, UIRenderer, Intervalos) {
         var Game = Class.extend({
             init: function (app) {
                 this.MAXIMO_LARGO_CHAT = 15; // maximo largo en caracters hasta hacer nueva linea de chat (notar las palabras se escriben completa, por lo que puede pasar los 10 caracteres)
@@ -45,6 +45,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.logeado = false; // NOTA: se pone logeado cuando llega el mensaje de logged, este es el ultimo de los mensajes al conectarse, asi que antes llega los mensajes de hechizos inventarios, etc. Deberia primero llegar esto y listo.. tambien deberia llegar el chardinex de tu pj al principio con este mensaje
                 this.inventario = [];
                 this.hechizos = [];
+                this.intervalos = new Intervalos(0);
 
                 // Game state
                 this.itemGrid = null;
@@ -400,9 +401,17 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
 
              },*/
 
-            realizarDanio: function (CharIndex, danio) {
-                this.infoManager.addDamageInfo(-danio, this.characters[CharIndex].x + 15, this.characters[CharIndex].y - 25, "received");
+            recibirDanio: function (CharIndex, danio) {
+                this.infoManager.addDamageInfo(-danio, this.characters[CharIndex], "received");
                 this.infoManager.addConsoleInfo("TODO: daño en consola!:" + danio);
+            },
+
+            realizarDanio: function (danio){
+                var char = this.player.lastAttackedTarget;
+                if (char){
+                    this.infoManager.addDamageInfo(-danio, char, "received");
+                    this.infoManager.addConsoleInfo("TODO: daño en consola!:" + danio);
+                }
             },
 
             escribirMsgConsola: function (texto, fontIndex) { //TODO: fontindex
@@ -2395,9 +2404,33 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 }
             },
             requestPosUpdate: function () {
-                //todo: intervalos
-                this.client.sendRequestPositionUpdate();
+                if (this.intervalos.requestPosUpdate(this.currentTime))
+                    this.client.sendRequestPositionUpdate();
             },
+
+            atacar: function(){
+                if (this.intervalos.requestAtacar(this.currentTime)) {
+                    this.client.sendAttack();
+                    switch (this.player.heading) { // todo: hacerlo con el arco y con hechizos tambien
+                        case  Enums.Heading.oeste:
+                            this.player.lastAttackedTarget = this.entityGrid[this.player.gridX - 1][this.player.gridY][1];
+                            break;
+                        case  Enums.Heading.este:
+                            this.player.lastAttackedTarget = this.entityGrid[this.player.gridX + 1][this.player.gridY][1];
+                            break;
+                        case  Enums.Heading.norte:
+                            this.player.lastAttackedTarget =this.entityGrid[this.player.gridX][this.player.gridY - 1][1];
+                            break;
+                        case  Enums.Heading.sur:
+                            this.player.lastAttackedTarget = this.entityGrid[this.player.gridX][this.player.gridY + 1][1];
+                            break;
+                        default:
+                            log.error(" Direccion de player invalida!");
+                    }
+                }
+
+            },
+
             togglePausa: function () {
                 this.isPaused = !(this.isPaused);
 
