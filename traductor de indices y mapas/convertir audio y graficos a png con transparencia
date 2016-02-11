@@ -1,0 +1,32 @@
+for i in *.BMP ; do convert "$i" -transparent black "${i%.*}.png" ; done
+
+
+----------------------------- AUDIO: ------------------------------------
+
+AAC:
+
+for i in *.mid ; do timidity "$i" -Ow -o - |  ffmpeg -i - -c:a libfdk_aac -vbr 4 "${i%.*}.m4a" ; done
+
+calidad vs peso:
+
+This is the most basic FFmpeg command to convert input to AAC audio using the highest quality AAC FFmpeg has. libfdk_aac is the Fraunhofer AAC encoder, and it is available when you compiled FFmpeg with support for it.
+
+ffmpeg -i input.mp3 -c:a libfdk_aac output.m4a
+To change the quality, you have two options:
+
+For variable bitrate (VBR), use the -vbr option. For example, -vbr 4 is a good choice (roughly 128 kBit/s for stereo audio). Higher means better. Values range from 1 to 5.
+
+ffmpeg -i input.mp3 -c:a libfdk_aac -vbr 4 output.m4a
+
+For fixed bitrate (CBR), use the -b:a option, for example -b:a 128k. 128 kBit/s should be good enough for most situations. You can often choose something lower as well.
+
+ffmpeg -i input.mp3 -c:a libfdk_aac -b:a 128k output.m4a
+
+
+MP3:
+
+ffmpeg: $ for i in *.mid ; do timidity "$i" -Ow -o - | ffmpeg -i - -acodec libmp3lame -ab 64k "${i%.*}.mp3" ; done
+
+lame: $ for i in *.mid ; do timidity "$i" -Ow -o - | lame - -b 64 "${i%.*}.mp3" ; done
+
+

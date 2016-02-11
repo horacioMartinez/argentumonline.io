@@ -220,11 +220,11 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handlePlayMidi: function (MidiID, Loops) {
-            console.log("TODO: handlePlayMidi ");
+            this.game.audioManager.setMusic(MidiID);
         },
 
         handlePlayWave: function (WaveID, X, Y) {
-            console.log("TODO: handlePlayWave ");
+            this.game.audioManager.playSound(WaveID);
         },
 
         handleGuildList: function (Data) {

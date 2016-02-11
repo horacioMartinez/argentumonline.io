@@ -1,4 +1,0 @@
-$ for i in *.BMP ; do convert "$i" -transparent black "${i%.*}.png" ; done
-
-si son muchos quizas no lo tome de una, ir haciendolo de a pedazos
-

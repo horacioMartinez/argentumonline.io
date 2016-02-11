@@ -1,5 +1,5 @@
 define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
-        'gameclient', 'audio', 'updater', 'transition',
+        'gameclient', 'audiomanager', 'updater', 'transition',
         'item', 'player', 'character',
         'config', '../shared/js/gametypes', 'loader', 'uirenderer', 'intervalos'],
     function (Enums, Animacion, Mapa, InfoManager, Renderer,
@@ -32,7 +32,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.renderer = null;
                 this.updater = null;
                 this.chatinput = null;
-                this.audioManager = null;
+                this.audioManager = new AudioManager();
 
                 // items: se ven abajo de tod0 (items, sprites de sangre, etc) , characters: npcs, bichos, jugadores (incluye el propio) ambos osn entity
                 this.entityGrid = null;
@@ -2647,17 +2647,6 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.client = new GameClient(this, this.host, this.port);
             },
 
-            loadAudio: function () {
-                this.audioManager = new AudioManager(this);
-            },
-            /*
-             initMusicAreas: function () {
-             var self = this;
-             _.each(this.map.musicAreas, function (area) {
-             self.audioManager.addArea(area.x, area.y, area.w, area.h, area.id);
-             });
-             },
-             */
             run: function (action, started_callback) {
                 var self = this;
 
@@ -2672,7 +2661,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                         self.ready = true;
                         log.debug('All sprites loaded.');
 
-                        self.loadAudio();
+                        self.audioManager.loadSounds();
 
                         self.initAchievements();
                         self.initCursors();
