@@ -8,11 +8,7 @@ define(['character', 'player', 'timer', 'enums'], function (Character, Player, T
             this.game = game;
             this.playerAggroTimer = new Timer(1000);
         },
-        /* TODO: checkear bajo techo:
-         bTecho = IIf(MapData(UserPos.X, UserPos.Y).Trigger = 1 Or _
-         MapData(UserPos.X, UserPos.Y).Trigger = 2 Or _
-         MapData(UserPos.X, UserPos.Y).Trigger = 4, True, False)
-         */
+
         update: function () {
             if (this.game.logeado) {
                 //this.updateZoning();

@@ -139,31 +139,36 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
                 this.background.font = font;
             },
 
-            drawText: function (text, x, y, centered, color, strokeColor) {
+            drawText: function (text, x, y, centered, font) {
                 var ctx = this.context,
                     strokeSize;
 
-                switch (this.scale) {
-                    case 1:
-                        strokeSize = 3;
-                        break;
-                    case 2:
-                        strokeSize = 3;
-                        break;
-                    case 3:
-                        strokeSize = 5;
-                }
+                /*switch (this.scale) {
+                 case 1:
+                 strokeSize = 3;
+                 break;
+                 case 2:
+                 strokeSize = 3;
+                 break;
+                 case 3:
+                 strokeSize = 5;
+                 }*/
                 if (text && x && y) {
+
                     ctx.save();
                     if (centered) {
                         ctx.textAlign = "center";
                     }
-                    ctx.strokeStyle = strokeColor || "#373737";
-                    ctx.lineWidth = strokeSize;
-                    ctx.strokeText(text, x, y);
-                    ctx.fillStyle = color || "white";
+                    if (font) {
+                        // TODO: font.italic , bold (require mterlo el nombre de la font)
+                        ctx.strokeStyle = font.stroke || "#373737";
+                        //ctx.lineWidth = strokeSize;
+                        ctx.strokeText(text, x, y);
+                        ctx.fillStyle = font.fill;
+                    }
                     ctx.fillText(text, x, y);
                     ctx.restore();
+
                 }
             },
 
@@ -415,7 +420,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
 
                 if (char.chat) {
                     for (var i = 0; i < char.chat.length; i++) { // TODO: usar un foreach dentro de character como con los demas (y que el currenframe lo llame character)
-                        this.drawText(char.chat[i], char.x + this.tilesize / 2, char.y - this.ALTO_LETRAS_CHAT * ((char.chat.length - i) + 2) + 6, true, "white");
+                        this.drawText(char.chat[i], char.x + this.tilesize / 2, char.y - this.ALTO_LETRAS_CHAT * ((char.chat.length - i) + 2) + 6, true, Enums.Font.TALK);
                     }
                 }
             },
@@ -856,8 +861,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
 
             drawEntityName: function (entity) {
                 if (entity.Name) {
-                    var color = (entity.id === this.game.playerId) ? "#fcda5c" : "white";
-                    this.drawText(entity.Name, entity.x + this.tilesize / 2, entity.y + this.tilesize + this.tilesize / 3, true, color);
+                    this.drawText(entity.Name, entity.x + this.tilesize / 2, entity.y + this.tilesize + this.tilesize / 3, true, Enums.Font.TALK/*entity.fontIndex*/);
                 }
             },
 
@@ -895,10 +899,10 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
             setBajoTecho: function (bajoT) {
                 if (bajoT === this.bajoTecho)
                     return;
-                if (bajoT){
+                if (bajoT) {
                     this.clearScreen(this.foreground);
                 }
-                else{
+                else {
                     this.dibujarTerrenoYTechos = true;
                 }
                 this.bajoTecho = bajoT;
@@ -995,12 +999,12 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
                  this.setFontSize(30);
                  break;
                  }*/
-                this.game.infoManager.forEachDamageInfo(function (info) {
+                this.game.infoManager.forEachHoveringInfo(function (info) {
                     if (info.opacity < 1) {
                         self.context.save();
                         self.context.globalAlpha = info.opacity;
                     }
-                    self.drawText(info.value, info.char.x+ 15, info.char.y - 25, info.centered, info.fillColor, info.strokeColor);
+                    self.drawText(info.value, info.char.x + 15, info.char.y - 25, info.centered, info.font);
 
                     if (info.opacity < 1)
                         self.context.restore();

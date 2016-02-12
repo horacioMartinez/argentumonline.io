@@ -155,7 +155,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleConsoleMsg: function (Chat, FontIndex) {
-            this.game.escribirMsgConsola(Chat, FontIndex);
+            this.game.escribirMsgConsola(Chat, Enums.Font[Enums.FontIndex[FontIndex]]);
         },
 
         handleGuildChat: function (Chat) {
@@ -510,8 +510,8 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
             console.log("TODO: handleAddSlots ");
         },
 
-        handleNPCHitUser: function (charIndex, danio) {
-            this.game.recibirDanio(this.game.player.id, danio);
+        handleNPCHitUser: function (parteCuerpo, danio) {
+            this.game.recibirDanio(parteCuerpo, danio);
         },
 
         handleUserHitNPC: function (danio) {
@@ -578,7 +578,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleNPCSwing: function () {
-            console.log("TODO: handleNPCSwing");
+            this.game.escribirMsgConsola(Enums.MensajeConsola.CRIATURA_FALLA_GOLPE, Enums.Font.FIGHT);
         },
 
         handleNPCKillUser: function () {

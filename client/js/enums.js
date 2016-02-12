@@ -98,7 +98,7 @@ define(function () {
             mujer: 2
         },
 
-        PartesCuerpo: {
+        ParteCuerpo: {
             cabeza: 1,
             piernaIzquierda: 2,
             piernaDerecha: 3,
@@ -136,7 +136,29 @@ define(function () {
         },
 
         MensajeConsola: {
-            estasMuerto: "¡¡¡Estás muerto!!!",
+            ESTAS_MUERTO: "¡¡¡Estás muerto!!!",
+            MENSAJE_1: "¡¡",
+            MENSAJE_2: "!!",
+            MENSAJE_11: "¡",
+            MENSAJE_22: "!",
+            MENSAJE_GOLPE_CRIATURA_1: "¡¡Le has pegado a la criatura por ",
+            MENSAJE_GOLPE_CABEZA: "¡¡La criatura te ha pegado en la cabeza por ",
+            MENSAJE_GOLPE_BRAZO_IZQ: "¡¡La criatura te ha pegado el brazo izquierdo por ",
+            MENSAJE_GOLPE_BRAZO_DER: "¡¡La criatura te ha pegado el brazo derecho por ",
+            MENSAJE_GOLPE_PIERNA_IZQ: "¡¡La criatura te ha pegado la pierna izquierda por ",
+            MENSAJE_GOLPE_PIERNA_DER: "¡¡La criatura te ha pegado la pierna derecha por ",
+            MENSAJE_GOLPE_TORSO: "¡¡La criatura te ha pegado en el torso por ",
+            CRIATURA_FALLA_GOLPE: "¡¡¡La criatura falló el golpe!!!",
+            CRIATURA_MATADO: "¡¡¡La criatura te ha matado!!!",
+            RECHAZO_ATAQUE_ESCUDO: "¡¡¡Has rechazado el ataque con el escudo!!!",
+            USUARIO_RECHAZO_ATAQUE_ESCUDO: "¡¡¡El usuario rechazó el ataque con su escudo!!!",
+            FALLADO_GOLPE: "¡¡¡Has fallado el golpe!!!",
+            SEGURO_ACTIVADO: ">>SEGURO ACTIVADO<<",
+            SEGURO_DESACTIVADO: ">>SEGURO DESACTIVADO<<",
+            PIERDE_NOBLEZA: "¡¡Has perdido puntaje de nobleza y ganado puntaje de criminalidad!! Si sigues ayudando a criminales te convertirás en uno de ellos y serás perseguido por las tropas de las ciudades.",
+            USAR_MEDITANDO: "¡Estás meditando! Debes dejar de meditar para usar objetos.",
+            SEGURO_RESU_ON: "SEGURO DE RESURRECCION ACTIVADO",
+            SEGURO_RESU_OFF: "SEGURO DE RESURRECCION DESACTIVADO"
         },
 
         Intervalo: {
@@ -153,6 +175,174 @@ define(function () {
             requestPostionUpdate: 2000
 
         },
+
+        FontIndex: [
+            "TALK",
+            "FIGHT",
+            "WARNING",
+            "INFO",
+            "INFOBOLD",
+            "EJECUCION",
+            "PARTY",
+            "VENENO",
+            "GUILD",
+            "SERVER",
+            "GUILDMSG",
+            "CONSEJO",
+            "CONSEJOCAOS",
+            "CONSEJOVesA",
+            "CONSEJOCAOSVesA",
+            "CENTINELA",
+            "GMMSG",
+            "GM",
+            "CITIZEN",
+            "CONSE",
+            "DIOS"
+        ],
+
+        Font: {
+            TALK: {
+                fill: "rgb(255, 255, 255)"
+            },
+            FIGHT: {
+                fill: "rgb(255, 0, 0)",
+                bold: 1
+            },
+            WARNING: {
+                fill: "rgb(32, 51, 223)",
+                bold: 1,
+                italic: 1
+            },
+
+            INFO: {
+                fill: "rgb(65, 190, 156)"
+            },
+
+            INFOBOLD: {
+                fill: "rgb(65, 190, 156)",
+                bold: 1
+            },
+
+            EJECUCION: {
+                fill: "rgb(130, 130, 130)",
+                bold: 1
+            },
+
+            PARTY: {
+                fill: "rgb(255, 180, 250)"
+            },
+
+            VENENO: {
+                fill: "rgb(0, 255, 0)"
+            },
+
+            GUILD: {
+                fill: "rgb(255, 255, 255)",
+                bold: 1
+            },
+
+            SERVER: {
+                fill: "rgb(0, 185, 0)"
+            },
+
+            GUILDMSG: {
+                fill: "rgb(228, 199, 27)"
+            },
+
+            CONSEJO: {
+                fill: "rgb(130, 130, 255)",
+                bold: 1
+            },
+
+            CONSEJOCAOS: {
+                fill: "rgb(255, 60, 0)",
+                bold: 1
+            },
+
+            CONSEJOVesA: {
+                fill: "rgb(0, 200, 255)",
+                bold: 1
+            },
+
+            CONSEJOCAOSVesA: {
+                fill: "rgb(255, 50, 0)",
+                bold: 1
+            },
+
+            CENTINELA: {
+                fill: "rgb(0, 255, 0)",
+                bold: 1
+            },
+
+            GMMSG: {
+                fill: "rgb(255, 255, 255)",
+                italic: 1
+            },
+
+            GM: {
+                fill: "rgb(30, 255, 30)",
+                bold: 1
+            },
+
+            CITIZEN: {
+                fill: "rgb(0, 0, 200)",
+                bold: 1
+            },
+
+            CONSE: {
+                fill: "rgb(30, 150, 30)",
+                bold: 1
+            },
+
+            DIOS: {
+                fill: "rgb(250, 250, 150)",
+                bold: 1
+            },
+
+            CANVAS_DANIO_RECIBIDO: {
+                fill: "rgb(255, 50, 50)",
+                stroke: "rgb(255, 180, 180)"
+            },
+            CANVAS_DANIO_REALIZADO: {
+                fill: "white",
+                stroke: "#373737"
+            },
+            CANVAS_CURAR: {
+                fill: "rgb(80, 255, 80)",
+                stroke: "rgb(50, 120, 50)"
+            },
+            "health": {
+                fill: "white",
+                stroke: "#373737"
+            },
+            CANVAS_EXP: {
+                fill: "rgb(80, 80, 255)",
+                stroke: "rgb(50, 50, 255)"
+            }
+        }
+        /*
+         FONTTYPE_TALK1
+         FONTTYPE_FIGHT2
+         FONTTYPE_WARNING3
+         FONTTYPE_INFO4
+         FONTTYPE_INFOBOLD5
+         FONTTYPE_EJECUCION6
+         FONTTYPE_PARTY7
+         FONTTYPE_VENENO8
+         FONTTYPE_GUILD9
+         FONTTYPE_SERVER10
+         FONTTYPE_GUILDMSG11
+         FONTTYPE_CONSEJO12
+         FONTTYPE_CONSEJOCAOS13
+         FONTTYPE_CONSEJOVesA14
+         FONTTYPE_CONSEJOCAOSVesA15
+         FONTTYPE_CENTINELA16
+         FONTTYPE_GMMSG17
+         FONTTYPE_GM18
+         FONTTYPE_CITI1ZEN19
+         FONTTYPE_CONSE20
+         FONTTYPE_DIOS
+         */
 
     };
     return Enums;
@@ -658,25 +848,9 @@ define(function () {
  ' MENSAJE_*  --> Mensajes de texto que se muestran en el cuadro de texto
  '
 
- Public Const MENSAJE_CRIATURA_FALLA_GOLPE As String = "¡¡¡La criatura falló el golpe!!!"
- Public Const MENSAJE_CRIATURA_MATADO As String = "¡¡¡La criatura te ha matado!!!"
- Public Const MENSAJE_RECHAZO_ATAQUE_ESCUDO As String = "¡¡¡Has rechazado el ataque con el escudo!!!"
- Public Const MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO  As String = "¡¡¡El usuario rechazó el ataque con su escudo!!!"
- Public Const MENSAJE_FALLADO_GOLPE As String = "¡¡¡Has fallado el golpe!!!"
- Public Const MENSAJE_SEGURO_ACTIVADO As String = ">>SEGURO ACTIVADO<<"
- Public Const MENSAJE_SEGURO_DESACTIVADO As String = ">>SEGURO DESACTIVADO<<"
- Public Const MENSAJE_PIERDE_NOBLEZA As String = "¡¡Has perdido puntaje de nobleza y ganado puntaje de criminalidad!! Si sigues ayudando a criminales te convertirás en uno de ellos y serás perseguido por las tropas de las ciudades."
- Public Const MENSAJE_USAR_MEDITANDO As String = "¡Estás meditando! Debes dejar de meditar para usar objetos."
 
- Public Const MENSAJE_SEGURO_RESU_ON As String = "SEGURO DE RESURRECCION ACTIVADO"
- Public Const MENSAJE_SEGURO_RESU_OFF As String = "SEGURO DE RESURRECCION DESACTIVADO"
 
- Public Const MENSAJE_GOLPE_CABEZA As String = "¡¡La criatura te ha pegado en la cabeza por "
- Public Const MENSAJE_GOLPE_BRAZO_IZQ As String = "¡¡La criatura te ha pegado el brazo izquierdo por "
- Public Const MENSAJE_GOLPE_BRAZO_DER As String = "¡¡La criatura te ha pegado el brazo derecho por "
- Public Const MENSAJE_GOLPE_PIERNA_IZQ As String = "¡¡La criatura te ha pegado la pierna izquierda por "
- Public Const MENSAJE_GOLPE_PIERNA_DER As String = "¡¡La criatura te ha pegado la pierna derecha por "
- Public Const MENSAJE_GOLPE_TORSO  As String = "¡¡La criatura te ha pegado en el torso por "
+
 
  ' MENSAJE_[12]: Aparecen antes y despues del valor de los mensajes anteriores (MENSAJE_GOLPE_*)
  Public Const MENSAJE_1 As String = "¡¡"
@@ -684,7 +858,7 @@ define(function () {
  Public Const MENSAJE_11 As String = "¡"
  Public Const MENSAJE_22 As String = "!"
 
- Public Const MENSAJE_GOLPE_CRIATURA_1 As String = "¡¡Le has pegado a la criatura por "
+
 
  Public Const MENSAJE_ATAQUE_FALLO As String = " te atacó y falló!!"
 

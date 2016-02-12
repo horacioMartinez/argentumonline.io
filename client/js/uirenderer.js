@@ -24,8 +24,6 @@ define(['jquery', 'ui/loginscreen', 'ui/gamescreen', 'ui/crearpjscreen'],
                 this.drawConsoleInfos();
             },
 
-
-
             drawConsoleInfos: function () {
                 if (this.game.infoManager.consolaDirty) {
                     this.uicontext.clearRect(this.CONSOLA_RECT.x, this.CONSOLA_RECT.y, this.CONSOLA_RECT.w, this.CONSOLA_RECT.h);
@@ -33,14 +31,10 @@ define(['jquery', 'ui/loginscreen', 'ui/gamescreen', 'ui/crearpjscreen'],
                     var self = this;
                     this.game.infoManager.forEachConsoleInfo(function (info) {
                         if (info.valid) {
-                            if (info.opacity < 1) {
-                                self.uicontext.save();
-                                self.uicontext.globalAlpha = info.opacity;
-                            }
-                            self.uicontext.fillText(info.value, info.x + self.CONSOLA_RECT.x, info.y + self.CONSOLA_RECT.y + 14); // sumar a y largo de letras
+                            var x = info.x + self.CONSOLA_RECT.x;
+                            var y = info.y + self.CONSOLA_RECT.y + 14;// sumar a y largo de letras
 
-                            if (info.opacity < 1)
-                                self.uicontext.restore();
+                            self.drawText(info.value, x, y, false, info.font);
                         }
                     });
 
@@ -76,7 +70,7 @@ define(['jquery', 'ui/loginscreen', 'ui/gamescreen', 'ui/crearpjscreen'],
                 this.setearSlotsHechizos();
             },
 
-            drawCurrentScreen: function(){
+            drawCurrentScreen: function () {
                 this.clearCanvas();
                 if (this.currentScreen instanceof LoginScreen) {
                     this.uicontext.drawImage(this.graficosUI.login, 0, 0);
@@ -84,7 +78,7 @@ define(['jquery', 'ui/loginscreen', 'ui/gamescreen', 'ui/crearpjscreen'],
                 else if (this.currentScreen instanceof CrearPjScreen) {
                     this.uicontext.drawImage(this.graficosUI.crearpj, 0, 0);
                 }
-                else if (this.currentScreen instanceof GameScreen){
+                else if (this.currentScreen instanceof GameScreen) {
                     this.uicontext.drawImage(this.graficosUI.interfaz, 0, 0);
                     this.drawBarras();
                     this.drawInventario();
@@ -99,7 +93,7 @@ define(['jquery', 'ui/loginscreen', 'ui/gamescreen', 'ui/crearpjscreen'],
                 }
                 this.drawCurrentScreen();
                 this.uicontext.fillStyle = "white";
-                var xDados= 300;
+                var xDados = 300;
                 this.uicontext.fillText(Fuerza, xDados, 195);
                 this.uicontext.fillText(Agilidad, xDados, 218);
                 this.uicontext.fillText(Inteligencia, xDados, 241);
@@ -111,7 +105,6 @@ define(['jquery', 'ui/loginscreen', 'ui/gamescreen', 'ui/crearpjscreen'],
                 var tamFont = (this.LARGO_FONT);// * __ESCALA__); no va por escala ya que los canvas se dibujan siempre del mismo tamaño y se agrandan con setscale
                 this.uicontext.font = "bold " + tamFont + "px Arial";
             },
-
 
             drawGrh: function (grh, x, y) {
 
@@ -137,7 +130,7 @@ define(['jquery', 'ui/loginscreen', 'ui/gamescreen', 'ui/crearpjscreen'],
                 var tamSlot = 32,
                     x = boxX + ( (slot - 1) % cantSlotsPorFila) * tamSlot,
                     y = boxY + (((slot - 1) / cantSlotsPorFila ) | 0) * tamSlot;
-                this.uicontext.clearRect(x,y, tamSlot, tamSlot);
+                this.uicontext.clearRect(x, y, tamSlot, tamSlot);
                 if (grh) {
                     this.drawGrh(grh, x, y);
                     this.uicontext.fillStyle = "white";
@@ -211,6 +204,38 @@ define(['jquery', 'ui/loginscreen', 'ui/gamescreen', 'ui/crearpjscreen'],
                 this.currentScreen.botonInfo.show();
                 this.currentScreen.hechizos.show();
                 this.uicontext.drawImage(this.graficosUI.centroHechizos, 581, 14);
+            },
+
+            drawText: function (text, x, y, centered, font) {
+                var ctx = this.uicontext;
+
+                /*switch (this.scale) {
+                 case 1:
+                 strokeSize = 3;
+                 break;
+                 case 2:
+                 strokeSize = 3;
+                 break;
+                 case 3:
+                 strokeSize = 5;
+                 }*/
+                if (text && x && y) {
+
+                    ctx.save();
+                    if (centered) {
+                        ctx.textAlign = "center";
+                    }
+                    if (font) {
+                        // TODO: font.italic , bold (require mterlo el nombre de la font)
+                        ctx.strokeStyle = font.stroke || "#373737";
+                        //ctx.lineWidth = strokeSize;
+                        ctx.strokeText(text, x, y);
+                        ctx.fillStyle = font.fill;
+                    }
+                    ctx.fillText(text, x, y);
+                    ctx.restore();
+
+                }
             },
 
             clearCanvas: function () {

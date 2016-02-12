@@ -4,29 +4,29 @@ define(function() {
     var InfoManager = Class.extend({
         init: function(game) {
             this.game = game;
-            this.damageInfos = {};
+            this.hoveringInfos = {};
             this.consoleInfos = {};
             this.destroyQueue = [];
             this.consolaDirty = false;
         },
 
-        addDamageInfo: function(value, char, type, duration) {
+        addHoveringInfo: function(value, char, font, duration) {
             var time = this.game.currentTime,
-                id = time+""+(isNaN(value*1)?value:value*1)+""+char.x+""+char.y,
+                id = _.uniqueId(),
                 self = this,
-                info = new DamageInfo(id, value,char, (duration)?duration:1000, type);
+                info = new HoveringInfo(id, value,char, (duration)?duration:1000,font);
             info.onDestroy(function(id) {
                 self.destroyQueue.push(id);
             });
-            this.damageInfos[id] = info;
+            this.hoveringInfos[id] = info;
         },
 
-        addConsoleInfo: function(texto){
+        addConsoleInfo: function(texto, font){
             var time = this.game.currentTime,
-                id = time+""+texto,
+                id = _.uniqueId(),
                 self = this;
 
-            var info = new ConsoleInfo(id, texto, 5, 60);
+            var info = new ConsoleInfo(id, texto, 5, 60, font);
             info.onDestroy(function(id) {
                 self.destroyQueue.push(id);
                 self.consolaDirty = true;
@@ -50,10 +50,10 @@ define(function() {
             });
         },
 
-        forEachDamageInfo: function(callback){
+        forEachHoveringInfo: function(callback){
             var self = this;
 
-            _.each(this.damageInfos, function(info, id) {
+            _.each(this.hoveringInfos, function(info, id) {
                 callback(info);
             });
         },
@@ -69,49 +69,25 @@ define(function() {
                 }
             });
 
-            this.forEachDamageInfo(function(info) {
+            this.forEachHoveringInfo(function(info) {
                 info.update(time);
             });
 
             _.each(this.destroyQueue, function(id) {
                 if (self.consoleInfos[id])
                     delete self.consoleInfos[id];
-                else if (self.damageInfos[id])
-                    delete self.damageInfos[id];
+                else if (self.hoveringInfos[id])
+                    delete self.hoveringInfos[id];
             });
             this.destroyQueue = [];
         }
     });
 
 
-    var damageInfoColors = {
-        "received": {
-            fill: "rgb(255, 50, 50)",
-            stroke: "rgb(255, 180, 180)"
-        },
-        "inflicted": {
-            fill: "white",
-            stroke: "#373737"
-        },
-        "healed": {
-            fill: "rgb(80, 255, 80)",
-            stroke: "rgb(50, 120, 50)"
-         },
-        "health": {
-            fill: "white",
-            stroke: "#373737"
-        },
-        "exp": {
-            fill: "rgb(80, 80, 255)",
-            stroke: "rgb(50, 50, 255)"
-       }
-    };
-
-
-    var DamageInfo = Class.extend({
+    var HoveringInfo = Class.extend({
         DURATION: 1000,
 
-        init: function(id, value, char, duration, type) {
+        init: function(id, value, char, duration,font) {
             this.id = id;
             this.value = value;
             this.duration = duration;
@@ -119,8 +95,7 @@ define(function() {
             this.opacity = 1.0;
             this.lastTime = 0;
             this.speed = 100;
-            this.fillColor = damageInfoColors[type].fill;
-            this.strokeColor = damageInfoColors[type].stroke;
+            this.font = font;
             this.centered = true;
         },
 
@@ -156,7 +131,7 @@ define(function() {
 
     var ConsoleInfo = Class.extend({
 
-        init: function(id, msg,x,y) {
+        init: function(id, msg,x,y,font) {
             this.id = id;
             this.value = msg;
             this.duration = 6000;
@@ -167,9 +142,8 @@ define(function() {
             this.opacity = 1.0;
             this.lastTime = 0;
             this.speed = 200;
-            this.fillColor = "white";
-            this.strokeColor = "#373737";
             this.centered = false;
+            this.font = font;
             this.dirty = true;
             this.valid = true;
         },

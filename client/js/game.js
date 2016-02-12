@@ -21,6 +21,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
 
                 this.loader.loadUI();
                 this.loader.loadGraficos();
+                this.audioManager = new AudioManager();
 
                 this.app = app;
                 this.app.config = config;
@@ -32,7 +33,6 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.renderer = null;
                 this.updater = null;
                 this.chatinput = null;
-                this.audioManager = new AudioManager();
 
                 // items: se ven abajo de tod0 (items, sprites de sangre, etc) , characters: npcs, bichos, jugadores (incluye el propio) ambos osn entity
                 this.entityGrid = null;
@@ -401,21 +401,46 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
 
              },*/
 
-            recibirDanio: function (CharIndex, danio) {
-                this.infoManager.addDamageInfo(-danio, this.characters[CharIndex], "received");
-                this.infoManager.addConsoleInfo("TODO: daño en consola!:" + danio);
+            recibirDanio: function (parteCuerpo, danio) {
+
+                var txt = "";
+                switch (parteCuerpo) {
+                    case Enums.ParteCuerpo.cabeza:
+                        txt = Enums.MensajeConsola.MENSAJE_GOLPE_CABEZA + danio + Enums.MensajeConsola.MENSAJE_2;
+                        break;
+                    case Enums.ParteCuerpo.brazoIzquierdo:
+                        txt = Enums.MensajeConsola.MENSAJE_GOLPE_BRAZO_IZQ + danio + Enums.MensajeConsola.MENSAJE_2;
+                        break;
+                    case Enums.ParteCuerpo.brazoDerecho:
+                        txt = Enums.MensajeConsola.MENSAJE_GOLPE_BRAZO_DER + danio + Enums.MensajeConsola.MENSAJE_2;
+                        break;
+                    case Enums.ParteCuerpo.piernaIzquierda:
+                        txt = Enums.MensajeConsola.MENSAJE_GOLPE_PIERNA_IZQ + danio + Enums.MensajeConsola.MENSAJE_2;
+                        break;
+                    case Enums.ParteCuerpo.piernaDerecha:
+                        txt = Enums.MensajeConsola.MENSAJE_GOLPE_PIERNA_DER + danio + Enums.MensajeConsola.MENSAJE_2;
+                        break;
+                    case Enums.ParteCuerpo.torso:
+                        txt = Enums.MensajeConsola.MENSAJE_GOLPE_TORSO + danio + Enums.MensajeConsola.MENSAJE_2;
+                        break;
+                    default:
+                        log.error("Mensaje de parte de cuerpo invalido");
+                }
+
+                this.infoManager.addHoveringInfo(-danio, this.player, Enums.Font.CANVAS_DANIO_RECIBIDO);
+                this.infoManager.addConsoleInfo(txt , Enums.Font.FIGHT);
             },
 
-            realizarDanio: function (danio){
+            realizarDanio: function (danio) {
                 var char = this.player.lastAttackedTarget;
-                if (char){
-                    this.infoManager.addDamageInfo(-danio, char, "received");
-                    this.infoManager.addConsoleInfo("TODO: daño en consola!:" + danio);
+                if (char) {
+                    this.infoManager.addHoveringInfo(-danio, char, Enums.Font.CANVAS_DANIO_RECIBIDO);
+                    this.infoManager.addConsoleInfo(Enums.MensajeConsola.MENSAJE_GOLPE_CRIATURA_1 + danio + Enums.MensajeConsola.MENSAJE_2, Enums.Font.FIGHT);
                 }
             },
 
-            escribirMsgConsola: function (texto, fontIndex) { //TODO: fontindex
-                this.infoManager.addConsoleInfo(texto);
+            escribirMsgConsola: function (texto, font) { //TODO: fontindex
+                this.infoManager.addConsoleInfo(texto, font);
             },
 
             formatearChat: function (str) {
@@ -2387,7 +2412,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
             agarrar: function () {
 
                 if (this.player.muerto) {
-                    this.escribirMsgConsola(Enums.MensajeConsola.estasMuerto);
+                    this.escribirMsgConsola(Enums.MensajeConsola.ESTAS_MUERTO);
                 }
                 else {
                     this.client.sendPickUp();
@@ -2397,7 +2422,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
             ocultarse: function () {
 
                 if (this.player.muerto) {
-                    this.escribirMsgConsola(Enums.MensajeConsola.estasMuerto);
+                    this.escribirMsgConsola(Enums.MensajeConsola.ESTAS_MUERTO);
                 }
                 else {
                     this.client.sendWork(Enums.Skill.ocultarse);
@@ -2408,7 +2433,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     this.client.sendRequestPositionUpdate();
             },
 
-            atacar: function(){
+            atacar: function () {
                 if (this.intervalos.requestAtacar(this.currentTime)) {
                     this.client.sendAttack();
                     switch (this.player.heading) { // todo: hacerlo con el arco y con hechizos tambien
@@ -2419,7 +2444,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                             this.player.lastAttackedTarget = this.entityGrid[this.player.gridX + 1][this.player.gridY][1];
                             break;
                         case  Enums.Heading.norte:
-                            this.player.lastAttackedTarget =this.entityGrid[this.player.gridX][this.player.gridY - 1][1];
+                            this.player.lastAttackedTarget = this.entityGrid[this.player.gridX][this.player.gridY - 1][1];
                             break;
                         case  Enums.Heading.sur:
                             this.player.lastAttackedTarget = this.entityGrid[this.player.gridX][this.player.gridY + 1][1];
