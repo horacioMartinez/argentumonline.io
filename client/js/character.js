@@ -1,4 +1,4 @@
-define(['entity', 'transition', 'timer', 'animacion', 'enums'], function (Entity, Transition, Timer, Animacion, Enums) {
+define(['entity', 'transition', 'timer', 'animacion'], function (Entity, Transition, Timer, Animacion) {
 
     var Character = Entity.extend({
         init: function (CharIndex, BodyGrh, HeadGrh, offHeadX, offHeadY, Heading, gridX, gridY, WeaponGrh, ShieldGrh, HelmetGrh, Name, NickColor, Privileges) {
@@ -225,8 +225,9 @@ define(['entity', 'transition', 'timer', 'animacion', 'enums'], function (Entity
             if (this.helmetGrhs[this.heading] instanceof Animacion)
                 this.helmetGrhs[this.heading].update(time);
             for (var i = 0; i < this.FXs.length; i++) {
-                if (this.FXs[i])
+                if (this.FXs[i]) {
                     this.FXs[i].anim.update(time);
+                }
             }
             // chat
             if (this.chat) {

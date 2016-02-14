@@ -2,7 +2,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
         'gameclient', 'audiomanager', 'updater', 'transition',
         'item', 'player', 'character',
         'config', '../shared/js/gametypes', 'loader', 'uirenderer', 'intervalos'],
-    function (Enums, Animacion, Mapa, InfoManager, Renderer,
+    function (__enums__, Animacion, Mapa, InfoManager, Renderer,
               GameClient, AudioManager, Updater, Transition,
               Item, Player, Character, config, __gametypes__, Loader, UIRenderer, Intervalos) {
         var Game = Class.extend({
@@ -428,18 +428,20 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 }
 
                 this.infoManager.addHoveringInfo(-danio, this.player, Enums.Font.CANVAS_DANIO_RECIBIDO);
-                this.infoManager.addConsoleInfo(txt , Enums.Font.FIGHT);
+                this.infoManager.addConsoleInfo(txt, Enums.Font.FIGHT);
             },
 
             realizarDanio: function (danio) {
                 var char = this.player.lastAttackedTarget;
                 if (char) {
-                    this.infoManager.addHoveringInfo(-danio, char, Enums.Font.CANVAS_DANIO_RECIBIDO);
+                    this.infoManager.addHoveringInfo(-danio, char, Enums.Font.CANVAS_DANIO_REALIZADO);
                     this.infoManager.addConsoleInfo(Enums.MensajeConsola.MENSAJE_GOLPE_CRIATURA_1 + danio + Enums.MensajeConsola.MENSAJE_2, Enums.Font.FIGHT);
                 }
             },
 
-            escribirMsgConsola: function (texto, font) { //TODO: fontindex
+            escribirMsgConsola: function (texto, font) {
+                if (!font)
+                    font = Enums.Font.INFO;
                 this.infoManager.addConsoleInfo(texto, font);
             },
 
@@ -469,461 +471,359 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 //this.createBubble(charIndex, chat);
             },
 
+            checkearYescribirMuerto: function () {
+                if (this.player.muerto) {
+                    this.escribirMsgConsola(Enums.MensajeConsola.ESTAS_MUERTO, Enums.Font.INFO);
+                    return true;
+                }
+                return false;
+            },
+
             enviarChat: function (message) {
                 //#cli guilds
-                var regexp = /^\/guild\ (invite|create|accept)\s+([^\s]*)|(guild:)\s*(.*)$|^\/guild\ (leave)$/i;
-                var args = message.match(regexp);
-                if (args != undefined) {
-                    switch (args[1]) {
-                        case "invite":
-                            if (this.player.hasGuild()) {
-                                this.client.sendGuildInvite(args[2]);
-                            }
-                            else {
-                                this.showNotification("Invite " + args[2] + " to where?");
-                            }
-                            break;
-                        case "create":
-                            this.client.sendNewGuild(args[2]);
-                            break;
-                        case undefined:
-                            if (args[5] === "leave") {
-                                this.client.sendLeaveGuild();
-                            }
-                            else if (this.player.hasGuild()) {
-                                this.client.talkToGuild(args[4]);
-                            }
-                            else {
-                                this.showNotification("You got no-one to talk to…");
-                            }
-                            break;
-                        case "accept":
-                            var status;
-                            if (args[2] === "yes") {
-                                status = this.player.checkInvite();
-                                if (status === false) {
-                                    this.showNotification("You were not invited anyway…");
-                                }
-                                else if (status < 0) {
-                                    this.showNotification("Sorry to say it's too late…");
-                                    setTimeout(function () {
-                                        self.showNotification("Find someone and ask for another invite.")
-                                    }, 2500);
-                                }
+                if (message[0] === '/') {
+                    var args = message.match(/\S+/g);
+                    var valido = true;
+                    if (args != undefined) {
+                        var comando = args[0].toUpperCase();
+                        args.shift();
+                        switch (comando) {
+                            case "/ONLINE":
+                                this.client.sendOnline();
+                                break;
+
+                            case "/SALIR":
+                                if (this.player.paralizado)
+                                    this.escribirMsgConsola("No puedes salir estando paralizado.", Enums.Font.WARNING);
                                 else {
-                                    this.client.sendGuildInviteReply(this.player.invite.guildId, true);
+                                    if (this.macroActivado)
+                                        this.desactivarMacro();
+                                    this.client.sendQuit();
                                 }
-                            }
-                            else if (args[2] === "no") {
-                                status = this.player.checkInvite();
-                                if (status !== false) {
-                                    this.client.sendGuildInviteReply(this.player.invite.guildId, false);
-                                    this.player.deleteInvite();
+                                break;
+
+                            case "/SALIRCLAN":
+                                this.client.sendGuildLeave();
+                                break;
+                            case "/BALANCE":
+                                if (!this.checkearYescribirMuerto())
+                                    this.client.sendRequestAccountState();
+                                break;
+
+                            case "/QUIETO":
+                                if (!this.checkearYescribirMuerto())
+                                    this.client.sendPetStand();
+                                break;
+
+                            case "/ACOMPAÑAR":
+                                if (!this.checkearYescribirMuerto())
+                                    this.client.sendPetFollow();
+                                break;
+
+                            case "/LIBERAR":
+                                if (!this.checkearYescribirMuerto())
+                                    this.client.sendReleasePet();
+                                break;
+
+                            case "/ENTRENAR":
+                                if (!this.checkearYescribirMuerto())
+                                    this.client.sendTrainList();
+                                break;
+
+                            case "/DESCANSAR":
+                                if (!this.checkearYescribirMuerto())
+                                    this.client.sendRest();
+                                break;
+
+                            case "/MEDITAR":
+
+                                if (!this.checkearYescribirMuerto()) {
+                                    if (this.player.mana === this.player.maxMana)
+                                        this.escribirMsgConsola("Tu mana ya está llena", Enums.Font.INFO);
+                                    else
+                                        this.client.sendMeditate();
                                 }
+                                break;
+
+                            case "/CONSULTA":
+                                this.client.sendConsultation();
+
+                                break;
+                            case "/RESUCITAR":
+                                this.client.sendResucitate();
+
+                                break;
+                            case "/CURAR":
+                                this.client.sendHeal();
+
+                                break;
+                            case "/EST":
+                                this.client.sendRequestStats();
+
+                                break;
+                            case "/AYUDA":
+                                this.client.sendHelp();
+
+                                break;
+                            case "/COMERCIAR":
+                                if (!this.checkearYescribirMuerto) {
+
+                                    if (this.comerciando)
+                                        this.escribirMsgConsola("Ya estás comerciando", Enums.Font.INFO);
+                                    else
+                                        this.client.sendCommerceStart();
+                                }
+
+                                break;
+                            case "/BOVEDA":
+                                if (!this.checkearYescribirMuerto)
+                                    this.client.sendBankStart();
+
+                                break;
+                            case "/ENLISTAR":
+                                this.client.sendEnlist();
+
+                                break;
+                            case "/INFORMACION":
+                                this.client.sendInformation();
+
+                                break;
+                            case "/RECOMPENSA":
+                                this.client.sendReward();
+
+                                break;
+                            case "/MOTD":
+                                this.client.sendRequestMOTD();
+
+                                break;
+                            case "/UPTIME":
+                                this.client.sendUpTime();
+
+                                break;
+                            case "/SALIRPARTY":
+                                this.client.sendPartyLeave();
+
+                                break;
+                            case "/CREARPARTY":
+                                if (!this.checkearYescribirMuerto)
+                                    this.client.sendPartyCreate();
+
+                                break;
+                            case "/PARTY":
+                                if (!this.checkearYescribirMuerto)
+                                    this.client.sendPartyJoin();
+                                break;
+
+                            case "/COMPARTIRNPC":
+                                if (!this.checkearYescribirMuerto)
+                                    this.client.sendShareNpc();
+
+                                break;
+                            case "/NOCOMPARTIRNPC":
+                                if (!this.checkearYescribirMuerto)
+                                    this.client.sendStopSharingNpc();
+
+                                break;
+                            case "/ENCUESTA":
+                                if (args.length === 0)
+                                    this.client.sendInquiry();
                                 else {
-                                    this.showNotification("Whatever…");
+                                    if (!isNaN(args[0]) && (args[0] < 256))
+                                        this.client.sendInquiryVote(args[0]);
+                                    else
+                                        this.escribirMsgConsola("Para votar una opción, escribe /encuesta NUMERODEOPCION, por ejemplo para votar la opcion 1, escribe /encuesta 1.", Enums.Font.WARNING);
                                 }
-                            }
-                            else {
-                                this.showNotification("“guild accept” is a YES or NO question!!");
-                            }
-                            break;
+
+                                break;
+                            case "/CMSG":
+                                if (args.length)
+                                    this.client.sendGuildMessage(args.join(" "));
+                                else
+                                    this.escribirMsgConsola("Escriba un mensaje.", Enums.Font.INFO);
+
+                                break;
+                            case "/PMSG":
+                                if (args.length)
+                                    this.client.sendPartyMessage(args.join(" "));
+                                else
+                                    this.escribirMsgConsola("Escriba un mensaje.");
+
+                                break;
+                            case "/CENTINELA":
+                                if (args.length) {
+                                    if (!isNaN(args[0]) && (args[0] < 65536))
+                                        this.client.sendCentinelReport(CInt(ArgumentosRaw))();
+                                    else
+                                        this.escribirMsgConsola("El código de verificación debe ser numérico. Utilice /centinela X, siendo X el código de verificación.");
+                                }
+                                else
+                                    this.escribirMsgConsola("Faltan parámetros. Utilice /centinela X, siendo X el código de verificación.");
+                                break;
+
+                            case "/ONLINECLAN":
+                                this.client.sendGuildOnline();
+
+                                break;
+                            case "/ONLINEPARTY":
+                                this.client.sendPartyOnline();
+
+                                break;
+                            case "/BMSG":
+                                if (args.length)
+                                    this.client.sendCouncilMessage(args.join(" "));
+                                else
+                                    this.escribirMsgConsola("Escriba un mensaje.");
+
+                                break;
+                            case "/ROL":
+                                if (args.length)
+                                    this.client.sendRoleMasterRequest(args.join(" "));
+                                else
+                                    this.escribirMsgConsola("Escriba una pregunta.");
+
+                                break;
+                            case "/GM":
+                                this.client.sendGMRequest();
+
+                                break;
+                            case "/_BUG":
+                                if (args.length)
+                                    this.client.sendBugReport(args.join(" "));
+                                else
+                                    this.escribirMsgConsola("Escriba una descripción del bug.");
+
+                                break;
+                            case "/DESC":
+                                if (!this.checkearYescribirMuerto())
+                                    this.client.sendChangeDescription(args.join(" "));
+
+                                break;
+                            case "/VOTO":
+                                if (args.length)
+                                    this.client.sendGuildVote(args.join(" "));
+                                else
+
+                                    this.escribirMsgConsola("Faltan parámetros. Utilice /voto NICKNAME.");
+
+                                break;
+                            case "/PENAS":
+                                if (args.length)
+                                    this.client.sendPunishments(args.join(" "));
+                                else
+
+                                    this.escribirMsgConsola("Faltan parámetros. Utilice /penas NICKNAME.");
+
+                                break;
+                            case "/CONTRASEÑA":
+                                this.client.frmNewPassword.Show(vbModal, frmMain);
+
+                                break;
+                            case "/APOSTAR":
+                                if (!this.checkearYescribirMuerto()) {
+                                    if (args.length) {
+                                        if (!isNaN(args[0]) && (args[0] < 65536))
+                                            this.client.sendGamble(args[0]);
+                                        else
+                                            this.escribirMsgConsola("Cantidad incorrecta. Utilice /apostar CANTIDAD.");
+                                    }
+                                    else
+                                        this.escribirMsgConsola("Faltan parámetros. Utilice /apostar CANTIDAD.");
+                                }
+
+                                break;
+                            case "/RETIRARFACCION":
+                                if (!this.checkearYescribirMuerto())
+                                    this.client.sendLeaveFaction();
+
+                                break;
+                            case "/RETIRAR":
+                                if (!this.checkearYescribirMuerto()) {
+
+                                    if (args.length) {
+                                        if (!isNaN(args[0]))
+                                            this.client.sendBankExtractGold(args[0]);
+                                        else
+                                            this.escribirMsgConsola("Cantidad incorrecta. Utilice /retirar CANTIDAD.");
+                                    }
+                                    else
+                                        this.escribirMsgConsola("Cantidad incorrecta. Utilice /retirar CANTIDAD.");
+
+                                }
+
+                                break;
+                            case "/DEPOSITAR":
+                                if (!this.checkearYescribirMuerto()) {
+
+                                    if (args.length) {
+                                        if (!isNaN(args[0]))
+                                            this.client.sendBankDepositGold(args[0]);
+                                        else
+                                            this.escribirMsgConsola("Cantidad incorecta. Utilice /depositar CANTIDAD.");
+                                    }
+                                    else
+                                        this.escribirMsgConsola("Faltan parámetros. Utilice /depositar CANTIDAD.");
+                                }
+
+                                break;
+                            case "/DENUNCIAR":
+                                if (args.length)
+                                    this.client.sendDenounce(args.join(" "));
+                                else
+                                    this.escribirMsgConsola("Formule su denuncia.");
+
+                                break;
+                            case "/FUNDARCLAN":
+                                if (this.player.nivel > 24)
+                                    this.client.sendGuildFundate();
+                                else
+                                    this.escribirMsgConsola("Para fundar un clan tienes que ser nivel 25 y tener 90 skills en liderazgo.");
+
+                                break;
+                            case "/FUNDARCLANGM":
+                                this.client.sendGuildFundation(eClanType.ct_GM);
+                                break;
+
+                            case "/ECHARPARTY":
+                                if (args.length)
+                                    this.client.sendPartyKick(args.join(" "));
+                                else
+                                    this.escribirMsgConsola("Faltan parámetros. Utilice /echarparty NICKNAME.");
+
+                                break;
+                            case "/PARTYLIDER":
+                                if (args.length)
+                                    this.client.sendPartySetLeader(args.join(" "));
+                                else
+
+                                    this.escribirMsgConsola("Faltan parámetros. Utilice /partylider NICKNAME.");
+
+                                break;
+                            case "/ACCEPTPARTY":
+                                if (args.length)
+                                    this.client.sendPartyAcceptMember(args.join(" "));
+                                else
+
+                                    this.escribirMsgConsola("Faltan parámetros. Utilice /acceptparty NICKNAME.");
+                                break;
+
+                            default:
+                                valido = false;
+                                break;
+
+                        }
+
                     }
+                    else
+                        valido = false;
+                    if (!valido)
+                        this.escribirMsgConsola("Comando invalido", Enums.Font.WARNING);
                 }
 
-                this.client.sendTalk(message);
+                else {
+                    this.client.sendTalk(message);
+                }
             },
-            /*            Case "/ONLINE"
-             Call WriteOnline
-
-             Case "/SALIR"
-             If UserParalizado Then 'Inmo
-             With FontTypes(FontTypeNames.FONTTYPE_WARNING)
-             Call ShowConsoleMsg("No puedes salir estando paralizado.", .red, .green, .blue, .bold, .italic)
-             End With
-             Exit Sub
-             End If
-             If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
-             Call WriteQuit
-
-             Case "/SALIRCLAN"
-             Call WriteGuildLeave
-
-             Case "/BALANCE"
-             If UserEstado = 1 Then 'Muerto
-             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-             Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
-             End With
-             Exit Sub
-             End If
-             Call WriteRequestAccountState
-
-             Case "/QUIETO"
-             If UserEstado = 1 Then 'Muerto
-             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-             Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
-             End With
-             Exit Sub
-             End If
-             Call WritePetStand
-
-             Case "/ACOMPAÑAR"
-             If UserEstado = 1 Then 'Muerto
-             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-             Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
-             End With
-             Exit Sub
-             End If
-             Call WritePetFollow
-
-             Case "/LIBERAR"
-             If UserEstado = 1 Then 'Muerto
-             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-             Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
-             End With
-             Exit Sub
-             End If
-             Call WriteReleasePet
-
-             Case "/ENTRENAR"
-             If UserEstado = 1 Then 'Muerto
-             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-             Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
-             End With
-             Exit Sub
-             End If
-             Call WriteTrainList
-
-             Case "/DESCANSAR"
-             If UserEstado = 1 Then 'Muerto
-             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-             Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
-             End With
-             Exit Sub
-             End If
-             Call WriteRest
-
-             Case "/MEDITAR"
-             If UserMinMAN = UserMaxMAN Then Exit Sub
-
-             If UserEstado = 1 Then 'Muerto
-             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-             Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
-             End With
-             Exit Sub
-             End If
-             Call WriteMeditate
-
-             Case "/CONSULTA"
-             Call WriteConsultation
-
-             Case "/RESUCITAR"
-             Call WriteResucitate
-
-             Case "/CURAR"
-             Call WriteHeal
-
-             Case "/EST"
-             Call WriteRequestStats
-
-             Case "/AYUDA"
-             Call WriteHelp
-
-             Case "/COMERCIAR"
-             If UserEstado = 1 Then 'Muerto
-             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-             Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
-             End With
-             Exit Sub
-
-             ElseIf Comerciando Then 'Comerciando
-             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-             Call ShowConsoleMsg("Ya estás comerciando", .red, .green, .blue, .bold, .italic)
-             End With
-             Exit Sub
-             End If
-             Call WriteCommerceStart
-
-             Case "/BOVEDA"
-             If UserEstado = 1 Then 'Muerto
-             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-             Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
-             End With
-             Exit Sub
-             End If
-             Call WriteBankStart
-
-             Case "/ENLISTAR"
-             Call WriteEnlist
-
-             Case "/INFORMACION"
-             Call WriteInformation
-
-             Case "/RECOMPENSA"
-             Call WriteReward
-
-             Case "/MOTD"
-             Call WriteRequestMOTD
-
-             Case "/UPTIME"
-             Call WriteUpTime
-
-             Case "/SALIRPARTY"
-             Call WritePartyLeave
-
-             Case "/CREARPARTY"
-             If UserEstado = 1 Then 'Muerto
-             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-             Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
-             End With
-             Exit Sub
-             End If
-             Call WritePartyCreate
-
-             Case "/PARTY"
-             If UserEstado = 1 Then 'Muerto
-             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-             Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
-             End With
-             Exit Sub
-             End If
-             Call WritePartyJoin
-
-             Case "/COMPARTIRNPC"
-             If UserEstado = 1 Then 'Muerto
-             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-             Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
-             End With
-             Exit Sub
-             End If
-
-             Call WriteShareNpc
-
-             Case "/NOCOMPARTIRNPC"
-             If UserEstado = 1 Then 'Muerto
-             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-             Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
-             End With
-             Exit Sub
-             End If
-
-             Call WriteStopSharingNpc
-
-             Case "/ENCUESTA"
-             If CantidadArgumentos = 0 Then
-             ' Version sin argumentos: Inquiry
-             Call WriteInquiry
-             Else
-             ' Version con argumentos: InquiryVote
-             If ValidNumber(ArgumentosRaw, eNumber_Types.ent_Byte) Then
-             Call WriteInquiryVote(ArgumentosRaw)
-             Else
-             'No es numerico
-             Call ShowConsoleMsg("Para votar una opción, escribe /encuesta NUMERODEOPCION, por ejemplo para votar la opcion 1, escribe /encuesta 1.")
-             End If
-             End If
-
-             Case "/CMSG"
-             'Ojo, no usar notNullArguments porque se usa el string vacio para borrar cartel.
-             If CantidadArgumentos > 0 Then
-             Call WriteGuildMessage(ArgumentosRaw)
-             Else
-             'Avisar que falta el parametro
-             Call ShowConsoleMsg("Escriba un mensaje.")
-             End If
-
-             Case "/PMSG"
-             'Ojo, no usar notNullArguments porque se usa el string vacio para borrar cartel.
-             If CantidadArgumentos > 0 Then
-             Call WritePartyMessage(ArgumentosRaw)
-             Else
-             'Avisar que falta el parametro
-             Call ShowConsoleMsg("Escriba un mensaje.")
-             End If
-
-             Case "/CENTINELA"
-             If notNullArguments Then
-             If ValidNumber(ArgumentosRaw, eNumber_Types.ent_Integer) Then
-             Call WriteCentinelReport(CInt(ArgumentosRaw))
-             Else
-             'No es numerico
-             Call ShowConsoleMsg("El código de verificación debe ser numérico. Utilice /centinela X, siendo X el código de verificación.")
-             End If
-             Else
-             'Avisar que falta el parametro
-             Call ShowConsoleMsg("Faltan parámetros. Utilice /centinela X, siendo X el código de verificación.")
-             End If
-
-             Case "/ONLINECLAN"
-             Call WriteGuildOnline
-
-             Case "/ONLINEPARTY"
-             Call WritePartyOnline
-
-             Case "/BMSG"
-             If notNullArguments Then
-             Call WriteCouncilMessage(ArgumentosRaw)
-             Else
-             'Avisar que falta el parametro
-             Call ShowConsoleMsg("Escriba un mensaje.")
-             End If
-
-             Case "/ROL"
-             If notNullArguments Then
-             Call WriteRoleMasterRequest(ArgumentosRaw)
-             Else
-             'Avisar que falta el parametro
-             Call ShowConsoleMsg("Escriba una pregunta.")
-             End If
-
-             Case "/GM"
-             Call WriteGMRequest
-
-             Case "/_BUG"
-             If notNullArguments Then
-             Call WriteBugReport(ArgumentosRaw)
-             Else
-             'Avisar que falta el parametro
-             Call ShowConsoleMsg("Escriba una descripción del bug.")
-             End If
-
-             Case "/DESC"
-             If UserEstado = 1 Then 'Muerto
-             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-             Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
-             End With
-             Exit Sub
-             End If
-
-             Call WriteChangeDescription(ArgumentosRaw)
-
-             Case "/VOTO"
-             If notNullArguments Then
-             Call WriteGuildVote(ArgumentosRaw)
-             Else
-             'Avisar que falta el parametro
-             Call ShowConsoleMsg("Faltan parámetros. Utilice /voto NICKNAME.")
-             End If
-
-             Case "/PENAS"
-             If notNullArguments Then
-             Call WritePunishments(ArgumentosRaw)
-             Else
-             'Avisar que falta el parametro
-             Call ShowConsoleMsg("Faltan parámetros. Utilice /penas NICKNAME.")
-             End If
-
-             Case "/CONTRASEÑA"
-             Call frmNewPassword.Show(vbModal, frmMain)
-
-             Case "/APOSTAR"
-             If UserEstado = 1 Then 'Muerto
-             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-             Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
-             End With
-             Exit Sub
-             End If
-             If notNullArguments Then
-             If ValidNumber(ArgumentosRaw, eNumber_Types.ent_Integer) Then
-             Call WriteGamble(ArgumentosRaw)
-             Else
-             'No es numerico
-             Call ShowConsoleMsg("Cantidad incorrecta. Utilice /apostar CANTIDAD.")
-             End If
-             Else
-             'Avisar que falta el parametro
-             Call ShowConsoleMsg("Faltan parámetros. Utilice /apostar CANTIDAD.")
-             End If
-
-             Case "/RETIRARFACCION"
-             If UserEstado = 1 Then 'Muerto
-             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-             Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
-             End With
-             Exit Sub
-             End If
-
-             Call WriteLeaveFaction
-
-             Case "/RETIRAR"
-             If UserEstado = 1 Then 'Muerto
-             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-             Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
-             End With
-             Exit Sub
-             End If
-
-             If notNullArguments Then
-             ' Version con argumentos: BankExtractGold
-             If ValidNumber(ArgumentosRaw, eNumber_Types.ent_Long) Then
-             Call WriteBankExtractGold(ArgumentosRaw)
-             Else
-             'No es numerico
-             Call ShowConsoleMsg("Cantidad incorrecta. Utilice /retirar CANTIDAD.")
-             End If
-             End If
-
-             Case "/DEPOSITAR"
-             If UserEstado = 1 Then 'Muerto
-             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-             Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
-             End With
-             Exit Sub
-             End If
-
-             If notNullArguments Then
-             If ValidNumber(ArgumentosRaw, eNumber_Types.ent_Long) Then
-             Call WriteBankDepositGold(ArgumentosRaw)
-             Else
-             'No es numerico
-             Call ShowConsoleMsg("Cantidad incorecta. Utilice /depositar CANTIDAD.")
-             End If
-             Else
-             'Avisar que falta el parametro
-             Call ShowConsoleMsg("Faltan parámetros. Utilice /depositar CANTIDAD.")
-             End If
-
-             Case "/DENUNCIAR"
-             If notNullArguments Then
-             Call WriteDenounce(ArgumentosRaw)
-             Else
-             'Avisar que falta el parametro
-             Call ShowConsoleMsg("Formule su denuncia.")
-             End If
-
-             Case "/FUNDARCLAN"
-             If UserLvl >= 25 Then
-             Call WriteGuildFundate
-             Else
-             Call ShowConsoleMsg("Para fundar un clan tienes que ser nivel 25 y tener 90 skills en liderazgo.")
-             End If
-
-             Case "/FUNDARCLANGM"
-             Call WriteGuildFundation(eClanType.ct_GM)
-
-             Case "/ECHARPARTY"
-             If notNullArguments Then
-             Call WritePartyKick(ArgumentosRaw)
-             Else
-             'Avisar que falta el parametro
-             Call ShowConsoleMsg("Faltan parámetros. Utilice /echarparty NICKNAME.")
-             End If
-
-             Case "/PARTYLIDER"
-             If notNullArguments Then
-             Call WritePartySetLeader(ArgumentosRaw)
-             Else
-             'Avisar que falta el parametro
-             Call ShowConsoleMsg("Faltan parámetros. Utilice /partylider NICKNAME.")
-             End If
-
-             Case "/ACCEPTPARTY"
-             If notNullArguments Then
-             Call WritePartyAcceptMember(ArgumentosRaw)
-             Else
-             'Avisar que falta el parametro
-             Call ShowConsoleMsg("Faltan parámetros. Utilice /acceptparty NICKNAME.")
-             End If
+            /*
 
              '
              ' BEGIN GM COMMANDS
@@ -2233,7 +2133,6 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
             },
 
             sacarItem: function (gridX, gridY) {
-                log.error("SACAR ITEM!! : " + this.entityGrid[gridX][gridY][0].id);
                 this.items[this.entityGrid[gridX][gridY][0].id] = null;
                 this.entityGrid[gridX][gridY][0] = null;
             },
@@ -2714,7 +2613,9 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.currentTime = Date.now();
                 if (this.started) {
                     this.updateCursorLogic();
-                    this.updater.update();
+
+                    if (!this.isPaused)
+                        this.updater.update();
                     this.renderer.renderFrame();
                     this.uiRenderer.renderFrame();
                 }
@@ -2987,7 +2888,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 if (!this.started)
                     this.start();
                 log.error("logear player");
-                this.inicializarPlayer();
+                //this.inicializarPlayer();
                 this.renderer.drawMapaIni(this.player.gridX, this.player.gridY);
                 this.setGameScreen();
                 log.error("<--- logear player");

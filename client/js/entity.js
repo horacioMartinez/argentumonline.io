@@ -1,5 +1,5 @@
 
-define(['enums'], function (Enums){
+define([], function (){
 
     var Entity = Class.extend({
         init: function(gridX, gridY) {

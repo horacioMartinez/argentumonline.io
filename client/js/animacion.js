@@ -5,7 +5,7 @@ define(function () {
             this.frames = frames;
             this.velocidad = velocidad;
             this.length = frames.length;
-            if (!loops) {
+            if (!loops || loops < 0) {
                 this.loops = -1;
                 this.elapsedLoops = -2;
             }
@@ -83,7 +83,8 @@ define(function () {
 
         start: function () {
             this.lastTime = 0;
-            this.elapsedLoops = 0;
+            if (this.elapsedLoops > 0)
+                this.elapsedLoops = 0;
             this.frameIndex = 0;
             this.finished = false;
         }

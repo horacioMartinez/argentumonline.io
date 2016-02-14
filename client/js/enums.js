@@ -1,352 +1,383 @@
-define(function () {
+Enums = {
 
-    var Enums = {
+    Keys: {
+        ENTER: 13,
+        CONTROL: 17,
+        UP: 38,
+        DOWN: 40,
+        LEFT: 37,
+        RIGHT: 39,
+        W: 87,
+        A: 65,
+        S: 83,
+        D: 68,
+        E: 69,
+        SPACE: 32,
+        I: 73,
+        H: 72,
+        L: 76,
+        M: 77,
+        O: 79,
+        P: 80,
+        R: 82,
+        U: 85,
+        KEYPAD_4: 100,
+        KEYPAD_6: 102,
+        KEYPAD_8: 104,
+        KEYPAD_2: 98
+    },
+    Heading: {
+        norte: 1,
+        este: 2,
+        sur: 3,
+        oeste: 4
+    },
 
-        Keys: {
-            ENTER: 13,
-            CONTROL: 17,
-            UP: 38,
-            DOWN: 40,
-            LEFT: 37,
-            RIGHT: 39,
-            W: 87,
-            A: 65,
-            S: 83,
-            D: 68,
-            E: 69,
-            SPACE: 32,
-            I: 73,
-            H: 72,
-            L: 76,
-            M: 77,
-            O: 79,
-            P: 80,
-            R: 82,
-            U: 85,
-            KEYPAD_4: 100,
-            KEYPAD_6: 102,
-            KEYPAD_8: 104,
-            KEYPAD_2: 98
+    eMessage: {
+        DontSeeAnything: 0,
+        NPCSwing: 1,
+        NPCKillUser: 2,
+        BlockedWithShieldUser: 3,
+        BlockedWithShieldother: 4,
+        UserSwing: 5,
+        SafeModeOn: 6,
+        SafeModeOff: 7,
+        ResuscitationSafeOff: 8,
+        ResuscitationSafeOn: 9,
+        NobilityLost: 10,
+        CantUseWhileMeditating: 11,
+        NPCHitUser: 12,
+        UserHitNPC: 13,
+        UserAttackedSwing: 14,
+        UserHittedByUser: 15,
+        UserHittedUser: 16,
+        WorkRequestTarget: 17,
+        HaveKilledUser: 18,
+        UserKill: 19,
+        EarnExp: 20,
+        Home: 21,
+        CancelHome: 22,
+        FinishHome: 23
+    },
+
+    Ciudad: {
+        Ullathorpe: 1,
+        Nix: 2,
+        Banderbill: 3,
+        Lindos: 4,
+        Arghal: 5
+    },
+
+    Raza: {
+        humano: 1,
+        elfo: 2,
+        elfoOscuro: 3,
+        gnomo: 4,
+        enano: 5
+    },
+
+    Clase: {
+        mago: 1,
+        clerigo: 2,
+        guerrero: 3,
+        asesino: 4,
+        ladron: 5,
+        bardo: 6,
+        druida: 7,
+        bandido: 8,
+        paladin: 9,
+        cazador: 10,
+        trabajador: 11,
+        pirata: 12
+    },
+
+    Genero: {
+        hombre: 1,
+        mujer: 2
+    },
+
+    ParteCuerpo: {
+        cabeza: 1,
+        piernaIzquierda: 2,
+        piernaDerecha: 3,
+        brazoDerecho: 4,
+        brazoIzquierdo: 5,
+        torso: 6
+    },
+
+    Skill: {
+        magia: 1,
+        robar: 2,
+        tacticas: 3,
+        armas: 4,
+        meditar: 5,
+        apuñalar: 6,
+        ocultarse: 7,
+        supervivencia: 8,
+        talar: 9,
+        comerciar: 10,
+        defensa: 11,
+        pesca: 12,
+        mineria: 13,
+        carpinteria: 14,
+        herreria: 15,
+        liderazgo: 16,
+        domar: 17,
+        proyectiles: 18,
+        wrestling: 19,
+        navegacion: 20
+    },
+
+    Muerto: {
+        cabezaCasper: 500,
+        cuerpoFragataFantasmal: 87
+    },
+
+    MensajeConsola: {
+        ESTAS_MUERTO: "¡¡¡Estás muerto!!!",
+        MENSAJE_1: "¡¡",
+        MENSAJE_2: "!!",
+        MENSAJE_11: "¡",
+        MENSAJE_22: "!",
+        MENSAJE_GOLPE_CRIATURA_1: "¡¡Le has pegado a la criatura por ",
+        MENSAJE_GOLPE_CABEZA: "¡¡La criatura te ha pegado en la cabeza por ",
+        MENSAJE_GOLPE_BRAZO_IZQ: "¡¡La criatura te ha pegado el brazo izquierdo por ",
+        MENSAJE_GOLPE_BRAZO_DER: "¡¡La criatura te ha pegado el brazo derecho por ",
+        MENSAJE_GOLPE_PIERNA_IZQ: "¡¡La criatura te ha pegado la pierna izquierda por ",
+        MENSAJE_GOLPE_PIERNA_DER: "¡¡La criatura te ha pegado la pierna derecha por ",
+        MENSAJE_GOLPE_TORSO: "¡¡La criatura te ha pegado en el torso por ",
+        CRIATURA_FALLA_GOLPE: "¡¡¡La criatura falló el golpe!!!",
+        CRIATURA_MATADO: "¡¡¡La criatura te ha matado!!!",
+        RECHAZO_ATAQUE_ESCUDO: "¡¡¡Has rechazado el ataque con el escudo!!!",
+        USUARIO_RECHAZO_ATAQUE_ESCUDO: "¡¡¡El usuario rechazó el ataque con su escudo!!!",
+        FALLADO_GOLPE: "¡¡¡Has fallado el golpe!!!",
+        SEGURO_ACTIVADO: ">>SEGURO ACTIVADO<<",
+        SEGURO_DESACTIVADO: ">>SEGURO DESACTIVADO<<",
+        PIERDE_NOBLEZA: "¡¡Has perdido puntaje de nobleza y ganado puntaje de criminalidad!! Si sigues ayudando a criminales te convertirás en uno de ellos y serás perseguido por las tropas de las ciudades.",
+        USAR_MEDITANDO: "¡Estás meditando! Debes dejar de meditar para usar objetos.",
+        SEGURO_RESU_ON: "SEGURO DE RESURRECCION ACTIVADO",
+        SEGURO_RESU_OFF: "SEGURO DE RESURRECCION DESACTIVADO",
+        ATAQUE_FALLO: " te atacó y falló!!",
+        RECIBE_IMPACTO_CABEZA: " te ha pegado en la cabeza por ",
+        RECIBE_IMPACTO_BRAZO_IZQ: " te ha pegado el brazo izquierdo por ",
+        RECIBE_IMPACTO_BRAZO_DER: " te ha pegado el brazo derecho por ",
+        RECIBE_IMPACTO_PIERNA_IZQ: " te ha pegado la pierna izquierda por ",
+        RECIBE_IMPACTO_PIERNA_DER: " te ha pegado la pierna derecha por ",
+        RECIBE_IMPACTO_TORSO: " te ha pegado en el torso por ",
+        PRODUCE_IMPACTO_1: "¡¡Le has pegado a ",
+        PRODUCE_IMPACTO_CABEZA: " en la cabeza por ",
+        PRODUCE_IMPACTO_BRAZO_IZQ: " en el brazo izquierdo por ",
+        PRODUCE_IMPACTO_BRAZO_DER: " en el brazo derecho por ",
+        PRODUCE_IMPACTO_PIERNA_IZQ: " en la pierna izquierda por ",
+        PRODUCE_IMPACTO_PIERNA_DER: " en la pierna derecha por ",
+        PRODUCE_IMPACTO_TORSO: " en el torso por ",
+        TRABAJO_MAGIA: "Haz click sobre el objetivo...",
+        TRABAJO_PESCA: "Haz click sobre el sitio donde quieres pescar...",
+        TRABAJO_ROBAR: "Haz click sobre la víctima...",
+        TRABAJO_TALAR: "Haz click sobre el árbol...",
+        TRABAJO_MINERIA: "Haz click sobre el yacimiento...",
+        TRABAJO_FUNDIRMETAL: "Haz click sobre la fragua...",
+        TRABAJO_PROYECTILES: "Haz click sobre la víctima...",
+        ENTRAR_PARTY_1: "Si deseas entrar en una party con ",
+        ENTRAR_PARTY_2: ", escribe /entrarparty",
+        NENE: "Cantidad de NPCs: ",
+        FRAGSHOOTER_TE_HA_MATADO: "te ha matado!",
+        FRAGSHOOTER_HAS_MATADO: "Has matado a",
+        FRAGSHOOTER_HAS_GANADO: "Has ganado ",
+        FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA: "puntos de experiencia.",
+        NO_VES_NADA_INTERESANTE: "No ves nada interesante.",
+        HAS_MATADO_A: "Has matado a ",
+        HAS_GANADO_EXPE_1: "Has ganado ",
+        HAS_GANADO_EXPE_2: " puntos de experiencia.",
+        TE_HA_MATADO: " te ha matado!",
+        HOGAR: "Has llegado a tu hogar. El viaje ha finalizado.",
+        HOGAR_CANCEL: "Tu viaje ha sido cancelado.",
+    },
+
+    Intervalo: {
+        macroHechizos: 2788,
+        macroTrabajo: 900,
+        ataque: 1500,
+        ataqueConArco: 1400,
+        hechizo: 1400,
+        ataqueHechizo: 1000,
+        hechizoAtaque: 1000,
+        trabajar: 700,
+        usarItemConU: 450,
+        usarItemConDobleClick: 125,
+        requestPostionUpdate: 2000
+
+    },
+
+    FontIndex: [
+        "TALK",
+        "FIGHT",
+        "WARNING",
+        "INFO",
+        "INFOBOLD",
+        "EJECUCION",
+        "PARTY",
+        "VENENO",
+        "GUILD",
+        "SERVER",
+        "GUILDMSG",
+        "CONSEJO",
+        "CONSEJOCAOS",
+        "CONSEJOVesA",
+        "CONSEJOCAOSVesA",
+        "CENTINELA",
+        "GMMSG",
+        "GM",
+        "CITIZEN",
+        "CONSE",
+        "DIOS"
+    ],
+
+    Font: {
+        TALK: {
+            fill: "rgb(255, 255, 255)"
         },
-        Heading: {
-            norte: 1,
-            este: 2,
-            sur: 3,
-            oeste: 4
+        FIGHT: {
+            fill: "rgb(255, 0, 0)",
+            bold: 1
+        },
+        WARNING: {
+            fill: "rgb(32, 51, 223)",
+            bold: 1,
+            italic: 1
         },
 
-        eMessage: {
-            DontSeeAnything: 0,
-            NPCSwing: 1,
-            NPCKillUser: 2,
-            BlockedWithShieldUser: 3,
-            BlockedWithShieldother: 4,
-            UserSwing: 5,
-            SafeModeOn: 6,
-            SafeModeOff: 7,
-            ResuscitationSafeOff: 8,
-            ResuscitationSafeOn: 9,
-            NobilityLost: 10,
-            CantUseWhileMeditating: 11,
-            NPCHitUser: 12,
-            UserHitNPC: 13,
-            UserAttackedSwing: 14,
-            UserHittedByUser: 15,
-            UserHittedUser: 16,
-            WorkRequestTarget: 17,
-            HaveKilledUser: 18,
-            UserKill: 19,
-            EarnExp: 20,
-            Home: 21,
-            CancelHome: 22,
-            FinishHome: 23
+        INFO: {
+            fill: "rgb(65, 190, 156)"
         },
 
-        Ciudad: {
-            Ullathorpe: 1,
-            Nix: 2,
-            Banderbill: 3,
-            Lindos: 4,
-            Arghal: 5
+        INFOBOLD: {
+            fill: "rgb(65, 190, 156)",
+            bold: 1
         },
 
-        Raza: {
-            humano: 1,
-            elfo: 2,
-            elfoOscuro: 3,
-            gnomo: 4,
-            enano: 5
+        EJECUCION: {
+            fill: "rgb(130, 130, 130)",
+            bold: 1
         },
 
-        Clase: {
-            mago: 1,
-            clerigo: 2,
-            guerrero: 3,
-            asesino: 4,
-            ladron: 5,
-            bardo: 6,
-            druida: 7,
-            bandido: 8,
-            paladin: 9,
-            cazador: 10,
-            trabajador: 11,
-            pirata: 12
+        PARTY: {
+            fill: "rgb(255, 180, 250)"
         },
 
-        Genero: {
-            hombre: 1,
-            mujer: 2
+        VENENO: {
+            fill: "rgb(0, 255, 0)"
         },
 
-        ParteCuerpo: {
-            cabeza: 1,
-            piernaIzquierda: 2,
-            piernaDerecha: 3,
-            brazoDerecho: 4,
-            brazoIzquierdo: 5,
-            torso: 6
+        GUILD: {
+            fill: "rgb(255, 255, 255)",
+            bold: 1
         },
 
-        Skill: {
-            magia: 1,
-            robar: 2,
-            tacticas: 3,
-            armas: 4,
-            meditar: 5,
-            apuñalar: 6,
-            ocultarse: 7,
-            supervivencia: 8,
-            talar: 9,
-            comerciar: 10,
-            defensa: 11,
-            pesca: 12,
-            mineria: 13,
-            carpinteria: 14,
-            herreria: 15,
-            liderazgo: 16,
-            domar: 17,
-            proyectiles: 18,
-            wrestling: 19,
-            navegacion: 20
+        SERVER: {
+            fill: "rgb(0, 185, 0)"
         },
 
-        Muerto: {
-            cabezaCasper: 500,
-            cuerpoFragataFantasmal: 87
+        GUILDMSG: {
+            fill: "rgb(228, 199, 27)"
         },
 
-        MensajeConsola: {
-            ESTAS_MUERTO: "¡¡¡Estás muerto!!!",
-            MENSAJE_1: "¡¡",
-            MENSAJE_2: "!!",
-            MENSAJE_11: "¡",
-            MENSAJE_22: "!",
-            MENSAJE_GOLPE_CRIATURA_1: "¡¡Le has pegado a la criatura por ",
-            MENSAJE_GOLPE_CABEZA: "¡¡La criatura te ha pegado en la cabeza por ",
-            MENSAJE_GOLPE_BRAZO_IZQ: "¡¡La criatura te ha pegado el brazo izquierdo por ",
-            MENSAJE_GOLPE_BRAZO_DER: "¡¡La criatura te ha pegado el brazo derecho por ",
-            MENSAJE_GOLPE_PIERNA_IZQ: "¡¡La criatura te ha pegado la pierna izquierda por ",
-            MENSAJE_GOLPE_PIERNA_DER: "¡¡La criatura te ha pegado la pierna derecha por ",
-            MENSAJE_GOLPE_TORSO: "¡¡La criatura te ha pegado en el torso por ",
-            CRIATURA_FALLA_GOLPE: "¡¡¡La criatura falló el golpe!!!",
-            CRIATURA_MATADO: "¡¡¡La criatura te ha matado!!!",
-            RECHAZO_ATAQUE_ESCUDO: "¡¡¡Has rechazado el ataque con el escudo!!!",
-            USUARIO_RECHAZO_ATAQUE_ESCUDO: "¡¡¡El usuario rechazó el ataque con su escudo!!!",
-            FALLADO_GOLPE: "¡¡¡Has fallado el golpe!!!",
-            SEGURO_ACTIVADO: ">>SEGURO ACTIVADO<<",
-            SEGURO_DESACTIVADO: ">>SEGURO DESACTIVADO<<",
-            PIERDE_NOBLEZA: "¡¡Has perdido puntaje de nobleza y ganado puntaje de criminalidad!! Si sigues ayudando a criminales te convertirás en uno de ellos y serás perseguido por las tropas de las ciudades.",
-            USAR_MEDITANDO: "¡Estás meditando! Debes dejar de meditar para usar objetos.",
-            SEGURO_RESU_ON: "SEGURO DE RESURRECCION ACTIVADO",
-            SEGURO_RESU_OFF: "SEGURO DE RESURRECCION DESACTIVADO"
+        CONSEJO: {
+            fill: "rgb(130, 130, 255)",
+            bold: 1
         },
 
-        Intervalo: {
-            macroHechizos: 2788,
-            macroTrabajo: 900,
-            ataque: 1500,
-            ataqueConArco: 1400,
-            hechizo: 1400,
-            ataqueHechizo: 1000,
-            hechizoAtaque: 1000,
-            trabajar: 700,
-            usarItemConU: 450,
-            usarItemConDobleClick: 125,
-            requestPostionUpdate: 2000
-
+        CONSEJOCAOS: {
+            fill: "rgb(255, 60, 0)",
+            bold: 1
         },
 
-        FontIndex: [
-            "TALK",
-            "FIGHT",
-            "WARNING",
-            "INFO",
-            "INFOBOLD",
-            "EJECUCION",
-            "PARTY",
-            "VENENO",
-            "GUILD",
-            "SERVER",
-            "GUILDMSG",
-            "CONSEJO",
-            "CONSEJOCAOS",
-            "CONSEJOVesA",
-            "CONSEJOCAOSVesA",
-            "CENTINELA",
-            "GMMSG",
-            "GM",
-            "CITIZEN",
-            "CONSE",
-            "DIOS"
-        ],
+        CONSEJOVesA: {
+            fill: "rgb(0, 200, 255)",
+            bold: 1
+        },
 
-        Font: {
-            TALK: {
-                fill: "rgb(255, 255, 255)"
-            },
-            FIGHT: {
-                fill: "rgb(255, 0, 0)",
-                bold: 1
-            },
-            WARNING: {
-                fill: "rgb(32, 51, 223)",
-                bold: 1,
-                italic: 1
-            },
+        CONSEJOCAOSVesA: {
+            fill: "rgb(255, 50, 0)",
+            bold: 1
+        },
 
-            INFO: {
-                fill: "rgb(65, 190, 156)"
-            },
+        CENTINELA: {
+            fill: "rgb(0, 255, 0)",
+            bold: 1
+        },
 
-            INFOBOLD: {
-                fill: "rgb(65, 190, 156)",
-                bold: 1
-            },
+        GMMSG: {
+            fill: "rgb(255, 255, 255)",
+            italic: 1
+        },
 
-            EJECUCION: {
-                fill: "rgb(130, 130, 130)",
-                bold: 1
-            },
+        GM: {
+            fill: "rgb(30, 255, 30)",
+            bold: 1
+        },
 
-            PARTY: {
-                fill: "rgb(255, 180, 250)"
-            },
+        CITIZEN: {
+            fill: "rgb(0, 0, 200)",
+            bold: 1
+        },
 
-            VENENO: {
-                fill: "rgb(0, 255, 0)"
-            },
+        CONSE: {
+            fill: "rgb(30, 150, 30)",
+            bold: 1
+        },
 
-            GUILD: {
-                fill: "rgb(255, 255, 255)",
-                bold: 1
-            },
+        DIOS: {
+            fill: "rgb(250, 250, 150)",
+            bold: 1
+        },
 
-            SERVER: {
-                fill: "rgb(0, 185, 0)"
-            },
-
-            GUILDMSG: {
-                fill: "rgb(228, 199, 27)"
-            },
-
-            CONSEJO: {
-                fill: "rgb(130, 130, 255)",
-                bold: 1
-            },
-
-            CONSEJOCAOS: {
-                fill: "rgb(255, 60, 0)",
-                bold: 1
-            },
-
-            CONSEJOVesA: {
-                fill: "rgb(0, 200, 255)",
-                bold: 1
-            },
-
-            CONSEJOCAOSVesA: {
-                fill: "rgb(255, 50, 0)",
-                bold: 1
-            },
-
-            CENTINELA: {
-                fill: "rgb(0, 255, 0)",
-                bold: 1
-            },
-
-            GMMSG: {
-                fill: "rgb(255, 255, 255)",
-                italic: 1
-            },
-
-            GM: {
-                fill: "rgb(30, 255, 30)",
-                bold: 1
-            },
-
-            CITIZEN: {
-                fill: "rgb(0, 0, 200)",
-                bold: 1
-            },
-
-            CONSE: {
-                fill: "rgb(30, 150, 30)",
-                bold: 1
-            },
-
-            DIOS: {
-                fill: "rgb(250, 250, 150)",
-                bold: 1
-            },
-
-            CANVAS_DANIO_RECIBIDO: {
-                fill: "rgb(255, 50, 50)",
-                stroke: "rgb(255, 180, 180)"
-            },
-            CANVAS_DANIO_REALIZADO: {
-                fill: "white",
-                stroke: "#373737"
-            },
-            CANVAS_CURAR: {
-                fill: "rgb(80, 255, 80)",
-                stroke: "rgb(50, 120, 50)"
-            },
-            "health": {
-                fill: "white",
-                stroke: "#373737"
-            },
-            CANVAS_EXP: {
-                fill: "rgb(80, 80, 255)",
-                stroke: "rgb(50, 50, 255)"
-            }
+        CANVAS_DANIO_RECIBIDO: {
+            fill: "rgb(255, 50, 50)",
+            stroke: "rgb(255, 180, 180)"
+        },
+        CANVAS_DANIO_REALIZADO: {
+            fill: "white",
+            stroke: "#373737"
+        },
+        CANVAS_CURAR: {
+            fill: "rgb(80, 255, 80)",
+            stroke: "rgb(50, 120, 50)"
+        },
+        "health": {
+            fill: "white",
+            stroke: "#373737"
+        },
+        CANVAS_EXP: {
+            fill: "rgb(80, 80, 255)",
+            stroke: "rgb(50, 50, 255)"
         }
-        /*
-         FONTTYPE_TALK1
-         FONTTYPE_FIGHT2
-         FONTTYPE_WARNING3
-         FONTTYPE_INFO4
-         FONTTYPE_INFOBOLD5
-         FONTTYPE_EJECUCION6
-         FONTTYPE_PARTY7
-         FONTTYPE_VENENO8
-         FONTTYPE_GUILD9
-         FONTTYPE_SERVER10
-         FONTTYPE_GUILDMSG11
-         FONTTYPE_CONSEJO12
-         FONTTYPE_CONSEJOCAOS13
-         FONTTYPE_CONSEJOVesA14
-         FONTTYPE_CONSEJOCAOSVesA15
-         FONTTYPE_CENTINELA16
-         FONTTYPE_GMMSG17
-         FONTTYPE_GM18
-         FONTTYPE_CITI1ZEN19
-         FONTTYPE_CONSE20
-         FONTTYPE_DIOS
-         */
+    }
+    /*
+     FONTTYPE_TALK1
+     FONTTYPE_FIGHT2
+     FONTTYPE_WARNING3
+     FONTTYPE_INFO4
+     FONTTYPE_INFOBOLD5
+     FONTTYPE_EJECUCION6
+     FONTTYPE_PARTY7
+     FONTTYPE_VENENO8
+     FONTTYPE_GUILD9
+     FONTTYPE_SERVER10
+     FONTTYPE_GUILDMSG11
+     FONTTYPE_CONSEJO12
+     FONTTYPE_CONSEJOCAOS13
+     FONTTYPE_CONSEJOVesA14
+     FONTTYPE_CONSEJOCAOSVesA15
+     FONTTYPE_CENTINELA16
+     FONTTYPE_GMMSG17
+     FONTTYPE_GM18
+     FONTTYPE_CITI1ZEN19
+     FONTTYPE_CONSE20
+     FONTTYPE_DIOS
+     */
 
-    };
-    return Enums;
-});
+};
 
 /*
  'Objetos públicos
@@ -852,57 +883,10 @@ define(function () {
 
 
 
- ' MENSAJE_[12]: Aparecen antes y despues del valor de los mensajes anteriores (MENSAJE_GOLPE_*)
- Public Const MENSAJE_1 As String = "¡¡"
- Public Const MENSAJE_2 As String = "!!"
- Public Const MENSAJE_11 As String = "¡"
- Public Const MENSAJE_22 As String = "!"
 
 
 
- Public Const MENSAJE_ATAQUE_FALLO As String = " te atacó y falló!!"
 
- Public Const MENSAJE_RECIBE_IMPACTO_CABEZA As String = " te ha pegado en la cabeza por "
- Public Const MENSAJE_RECIBE_IMPACTO_BRAZO_IZQ As String = " te ha pegado el brazo izquierdo por "
- Public Const MENSAJE_RECIBE_IMPACTO_BRAZO_DER As String = " te ha pegado el brazo derecho por "
- Public Const MENSAJE_RECIBE_IMPACTO_PIERNA_IZQ As String = " te ha pegado la pierna izquierda por "
- Public Const MENSAJE_RECIBE_IMPACTO_PIERNA_DER As String = " te ha pegado la pierna derecha por "
- Public Const MENSAJE_RECIBE_IMPACTO_TORSO As String = " te ha pegado en el torso por "
-
- Public Const MENSAJE_PRODUCE_IMPACTO_1 As String = "¡¡Le has pegado a "
- Public Const MENSAJE_PRODUCE_IMPACTO_CABEZA As String = " en la cabeza por "
- Public Const MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ As String = " en el brazo izquierdo por "
- Public Const MENSAJE_PRODUCE_IMPACTO_BRAZO_DER As String = " en el brazo derecho por "
- Public Const MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ As String = " en la pierna izquierda por "
- Public Const MENSAJE_PRODUCE_IMPACTO_PIERNA_DER As String = " en la pierna derecha por "
- Public Const MENSAJE_PRODUCE_IMPACTO_TORSO As String = " en el torso por "
-
- Public Const MENSAJE_TRABAJO_MAGIA As String = "Haz click sobre el objetivo..."
- Public Const MENSAJE_TRABAJO_PESCA As String = "Haz click sobre el sitio donde quieres pescar..."
- Public Const MENSAJE_TRABAJO_ROBAR As String = "Haz click sobre la víctima..."
- Public Const MENSAJE_TRABAJO_TALAR As String = "Haz click sobre el árbol..."
- Public Const MENSAJE_TRABAJO_MINERIA As String = "Haz click sobre el yacimiento..."
- Public Const MENSAJE_TRABAJO_FUNDIRMETAL As String = "Haz click sobre la fragua..."
- Public Const MENSAJE_TRABAJO_PROYECTILES As String = "Haz click sobre la víctima..."
-
- Public Const MENSAJE_ENTRAR_PARTY_1 As String = "Si deseas entrar en una party con "
- Public Const MENSAJE_ENTRAR_PARTY_2 As String = ", escribe /entrarparty"
-
- Public Const MENSAJE_NENE As String = "Cantidad de NPCs: "
-
- Public Const MENSAJE_FRAGSHOOTER_TE_HA_MATADO As String = "te ha matado!"
- Public Const MENSAJE_FRAGSHOOTER_HAS_MATADO As String = "Has matado a"
- Public Const MENSAJE_FRAGSHOOTER_HAS_GANADO As String = "Has ganado "
- Public Const MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA As String = "puntos de experiencia."
-
- Public Const MENSAJE_NO_VES_NADA_INTERESANTE As String = "No ves nada interesante."
- Public Const MENSAJE_HAS_MATADO_A As String = "Has matado a "
- Public Const MENSAJE_HAS_GANADO_EXPE_1 As String = "Has ganado "
- Public Const MENSAJE_HAS_GANADO_EXPE_2 As String = " puntos de experiencia."
- Public Const MENSAJE_TE_HA_MATADO As String = " te ha matado!"
-
- Public Const MENSAJE_HOGAR As String = "Has llegado a tu hogar. El viaje ha finalizado."
- Public Const MENSAJE_HOGAR_CANCEL As String = "Tu viaje ha sido cancelado."
 
  Public Enum eMessages
  DontSeeAnything

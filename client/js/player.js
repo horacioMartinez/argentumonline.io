@@ -1,4 +1,4 @@
-define(['character',  'enums'], function (Character, Enums) {
+define(['character',  'enums'], function (Character) {
 
     var Player = Character.extend({
         MAX_LEVEL: 10,
@@ -15,6 +15,16 @@ define(['character',  'enums'], function (Character, Enums) {
             this.puedeCaminarCallback = {};
             this.cambioHeadingCallback = {};
             this.lastAttackedTarget = null;
+            this.hp = 0;
+            this.maxHp = 0;
+            this.mana = 0;
+            this.maxMana = 0;
+            this.stamina = 0;
+            this.maxStamina = 0;
+            this.oro = 0;
+            this.nivel = 0;
+            this.maxExp = 0;
+            this.exp = 0;
         },
 
         comenzarCaminar: function (direccion) {

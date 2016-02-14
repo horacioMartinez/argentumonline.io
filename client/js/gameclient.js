@@ -1,4 +1,4 @@
-define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Player, Protocolo, ByteQueue, __websock, Enums) { // TODO: sacar BISON, no se usa mas
+define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Player, Protocolo, ByteQueue, __websock) { // TODO: sacar BISON, no se usa mas
 
     var GameClient = Class.extend({
         init: function (game, host, port) {
@@ -172,10 +172,13 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
 
         handleUserCharIndexInServer: function (CharIndex) {
             if (this.game.playerId)
-                if (this.game.playerId != CharIndex)
+                if (this.game.playerId != CharIndex) {
                     log.error("WTF EL CHARINDEX CAMBIA?: playerID" + playerId + " charindex " + CharIndex);
+                    this.game.playerId = CharIndex;
+                    this.game.player = this.game.characters[CharIndex];
+                }
             this.game.playerId = CharIndex;
-
+            this.game.inicializarPlayer();
         },
 
         handleCharacterCreate: function (CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, Name, NickColor, Privileges) {
@@ -248,7 +251,16 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleUpdateUserStats: function (MaxHp, MinHp, MaxMan, MinMan, MaxSta, MinSta, Gld, Elv, Elu, Exp) {
-            console.log("TODO: handleUpdateUserStats ");
+            this.game.player.hp = MinHp;
+            this.game.player.maxHp = MaxHp;
+            this.game.player.mana = MinMan;
+            this.game.player.maxMana = MaxMan;
+            this.game.player.stamina = MinSta;
+            this.game.player.maxStamina = MaxSta;
+            this.game.player.oro = Gld;
+            this.game.player.nivel = Elv;
+            this.game.player.maxExp = Elu;
+            this.game.player.exp = Exp;
         },
 
         handleWorkRequestTarget: function (Skill) {
@@ -570,7 +582,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleDontSeeAnything: function () {
-            console.log("TODO: handleDontSeeAnything");
+            this.game.escribirMsgConsola(Enums.MensajeConsola.NO_VES_NADA_INTERESANTE, Enums.Font.INFO);
         },
 
         handleUserKill: function (attackerIndex) {
@@ -582,19 +594,19 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleNPCKillUser: function () {
-            console.log("TODO: handleNPCKillUser");
+            this.game.escribirMsgConsola(Enums.MensajeConsola.CRIATURA_MATADO, Enums.Font.FIGHT);
         },
 
         handleBlockedWithShieldUser: function () {
-            console.log("TODO: handleBlockedWithShieldUser");
+            this.game.escribirMsgConsola(Enums.MensajeConsola.RECHAZO_ATAQUE_ESCUDO, Enums.Font.FIGHT);
         },
 
         handleBlockedWithShieldOther: function () {
-            console.log("TODO: handleBlockedWithShieldOther");
+            this.game.escribirMsgConsola(Enums.MensajeConsola.USUARIO_RECHAZO_ATAQUE_ESCUDO, Enums.Font.FIGHT);
         },
 
         handleUserSwing: function () {
-            console.log("TODO: handleUserSwing");
+            this.game.escribirMsgConsola(Enums.MensajeConsola.FALLADO_GOLPE, Enums.Font.FIGHT);
         },
 
         handleSafeModeOn: function () {
@@ -614,11 +626,11 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleNobilityLost: function () {
-            console.log("TODO: handleNobilityLost");
+            this.game.escribirMsgConsola(Enums.MensajeConsola.PIERDE_NOBLEZA, Enums.Font.FIGHT);
         },
 
         handleCantUseWhileMeditating: function () {
-            console.log("TODO: handleCantUseWhileMeditating");
+            this.game.escribirMsgConsola(Enums.MensajeConsola.USAR_MEDITANDO, Enums.Font.FIGHT);
         },
 
         handleEarnExp: function () {

@@ -11,6 +11,7 @@ define(['lib/howler'], function () {
         },
 
         setMusic: function(nombre){ // todo: unload cada vez que cmabia??
+            /*
             if (this.currentMusic)
                 this.currentMusic.unload();
 
@@ -21,6 +22,7 @@ define(['lib/howler'], function () {
 
             if (this.enabled)
                 this.currentMusic.play();
+            */
         },
 
         playSound: function(nombre){

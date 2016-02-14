@@ -2,8 +2,8 @@
  * Created by horacio on 2/2/16.
  */
 
-define(['jquery', 'ui/screen', 'enums'],
-    function ($, Screen, Enums) {
+define(['jquery', 'ui/screen'],
+    function ($, Screen) {
         var CrearPjScreen = Screen.extend({
             init: function (tirar_dados_callback, volver_callback, crear_callback) {
                 this._super();

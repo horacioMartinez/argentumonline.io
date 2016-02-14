@@ -1,5 +1,5 @@
 define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'],
-    function (Camera, Item, Character, Player, Timer, TileAnimado, Enums) {
+    function (Camera, Item, Character, Player, Timer, TileAnimado) {
 
         var Renderer = Class.extend({
             init: function (game, canvas, background, foreground, loader) {

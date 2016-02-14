@@ -1,4 +1,4 @@
-define(['jquery', 'app', 'enums'], function ($, App, Enums) {
+define(['jquery', 'app', 'enums'], function ($, App) {
     var app, game;
 
     var initApp = function () {
@@ -197,7 +197,7 @@ define(['jquery', 'app', 'enums'], function ($, App, Enums) {
             });
 
             $(document).keydown(function (e) {
-                if ( (!game.started) || (game.isPaused))
+                if (!game.started)
                     return;
 
                 var key = e.which,
@@ -241,6 +241,9 @@ define(['jquery', 'app', 'enums'], function ($, App, Enums) {
                         return;
                     }
                 }
+
+                if (game.isPaused)
+                    return;
 
                 if (!$('#chatbox').hasClass('active') /* && !this.game.uiRenderer.popUpActivo*/) {
                     if (_isKeyDown(e))

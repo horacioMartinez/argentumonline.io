@@ -1,4 +1,4 @@
-define(['enums'], function (Enums) {
+define([], function () {
 
     var Camera = Class.extend({
         init: function (renderer) {
