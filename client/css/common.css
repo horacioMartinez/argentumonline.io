@@ -1,0 +1,106 @@
+/* BOTONES */
+
+.botonInvisible {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none; 
+}
+
+.botonImagen {
+    background-size: 100% 100%;
+    width: auto;
+    height: auto;
+    cursor:pointer;
+    background-color: Transparent;
+    border:none;
+    outline:none;
+    /*display: inline-block;*/
+}
+
+.botonCerrar {
+	background-size: 100% 100%;
+    width: 28px;
+    height: 26px;
+    cursor:pointer;
+    background-color: Transparent;
+    border:none;
+    outline:none;
+    background-image: url("../imagenes/botonX.jpg");
+    display: inline-block;
+}
+
+.botonCerrar:active {
+    background-image: url("../imagenes/botonX-pressed.png");
+}
+
+.botonNormal {
+    background-image: url(../imagenes/boton-normal.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100% 100%;
+    background-color: Transparent;
+    float: left;
+    border:none;
+    outline:none;
+    cursor:pointer;
+    height: 35px;
+    width: 150px;
+    /*line-height: 60px;*/
+    font-weight: bold;
+    color: rgb(255,255,255);
+    text-align: center;
+    font-size: 16px;
+    text-decoration: none;
+    text-transformxxx: uppercase;
+    
+    
+    color: #FFF;
+
+    font-size: 18px;
+
+    line-heightxxx: 60px;
+    
+    text-align: center;
+
+    font-weight: bold;
+    text-shadow: 1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000, 1px 1px 1px #333
+}
+
+.botonNormal:active {
+    background-image: url(../imagenes/boton-normal-pressed.png);
+    color:grey;
+}
+
+
+
+.botonAgrandarse{
+    background-image:url(../imagenes/boton-agrandarse.png);    background-position:center center;     background-repeat:no-repeat;     border-radius:5px;     bottom:30px;     bottom:10px;    color:#FFF;     display:block;     font-size:20px;     height:60px;     line-height:60px; right:10%;     text-align:center;     text-shadow:1px 1px 1px #222;     text-transformxxx:uppercase;     width:270px;     z-index:4;     cursor:pointer;    color: #FFF;    font-size: 24px;    line-height: 60px;    text-align: center;    font-weight: bold;    text-shadow: 1px 1px 0px #555, -1px -1px 0px #555, 1px -1px 0px #000, -1px 1px 0px #000, 1px 1px 1px #333;    bottom: 30px;    text-decoration:none; 
+}
+.botonAgrandarse:hover{
+    -webkit-transform:scale(1.2,1.2)!important; 
+    transform:scale(1.2,1.2)!important    
+}
+.botonAgrandarse:active{
+    -webkit-transform:scale(.9,.9)!important; 
+    transform:scale(.9,.9)!important
+}
+
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* IE/Edge */
+  user-select: none;           /* non-prefixed version, currently
+  not supported by any browser */
+}
+
+/* Grid DE ITEMS para compra/venta por ej */
+
+.itemgrid { list-style-type: none; margin: 0; padding: 0; width: 160px;}
+.itemgrid li { float: left; width: 32px; color: white; height: 32px; font-size: 1em; text-align: left; vertical-align: text-top; outline: 2px solid transparent;}
+.itemgrid li.selected{outline-color:limegreen; outline-style: dashed;}

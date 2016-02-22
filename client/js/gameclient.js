@@ -76,7 +76,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleCommerceEnd: function () {
-            console.log("TODO: handleCommerceEnd ");
+            this.game.UIManager.hideComerciar();
         },
 
         handleBankEnd: function () {
@@ -84,7 +84,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleCommerceInit: function () {
-            console.log("TODO: handleCommerceInit ");
+            this.game.UIManager.showComerciar();
         },
 
         handleBankInit: function (Banco) {
@@ -343,7 +343,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleChangeNPCInventorySlot: function (Slot, ObjName, Amount, Price, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef) {
-            console.log("TODO: handleChangeNPCInventorySlot ");
+            this.game.cambiarSlotCompra(Slot,ObjName,Amount,Price,GrhIndex,ObjIndex,ObjType,MaxHit,MinHit,MaxDef,MinDef);
         },
 
         handleUpdateHungerAndThirst: function (MaxAgu, MinAgu, MaxHam, MinHam) {

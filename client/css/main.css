@@ -59,229 +59,160 @@ footer, header, hgroup, menu, nav, section {
 
 /* Typography*/		
 
-    @font-face {
-        font-family: 'GraphicPixel';
-        src: url('../fonts/graphicpixel-webfont.eot');
-        src: url('../fonts/graphicpixel-webfont.eot?#iefix') format('embedded-opentype'),
-             url('../fonts/graphicpixel-webfont.woff') format('woff'),
-             url('../fonts/graphicpixel-webfont.ttf') format('truetype'),
-             url('../fonts/graphicpixel-webfont.svg#GraphicPixelRegular') format('svg');
-        font-weight: normal;
-        font-style: normal;
+@font-face {
+    font-family: 'GraphicPixel';
+    src: url('../fonts/graphicpixel-webfont.eot');
+    src: url('../fonts/graphicpixel-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/graphicpixel-webfont.woff') format('woff'),
+    url('../fonts/graphicpixel-webfont.ttf') format('truetype'),
+    url('../fonts/graphicpixel-webfont.svg#GraphicPixelRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
 
-    }
-    
-    @font-face {
-        font-family: 'AdvoCut';
-        src: url('../fonts/advocut-webfont.eot');
-        src: url('../fonts/advocut-webfont.eot?#iefix') format('embedded-opentype'),
-             url('../fonts/advocut-webfont.woff') format('woff'),
-             url('../fonts/advocut-webfont.ttf') format('truetype'),
-             url('../fonts/advocut-webfont.svg#AndinaRegular') format('svg');
-        font-weight: normal;
-        font-style: normal;
+}
 
-    }
+@font-face {
+    font-family: 'AdvoCut';
+    src: url('../fonts/advocut-webfont.eot');
+    src: url('../fonts/advocut-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/advocut-webfont.woff') format('woff'),
+    url('../fonts/advocut-webfont.ttf') format('truetype'),
+    url('../fonts/advocut-webfont.svg#AndinaRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
 
-	.gp {font-family: 'GraphicPixel', sans-serif;}
+}
 
-/* General Layout */	
-	
+.gp {font-family: 'GraphicPixel', sans-serif;}
+
+
+@font-face{
+    font-family:'Asul'; 
+    src:url(../fonts/asul-regular.eot)
+}
+
+@font-face{
+    font-family:'Asul'; 
+    src:url(../fonts/asul-regular.ttf)
+}
+
+.fontAsul {
+    font-family:'Asul',serif;
+    -webkit-font-smoothing: antialiased;
+    -webkit-font-smoothing: subpixel-antialiased;
+}
+/*
+*{
+    font-family:'Asul',serif;
+    -webkit-font-smoothing: antialiased;
+    -webkit-font-smoothing: subpixel-antialiased;
+    }*/
+
+    /* General Layout */	
+
 
     html {-webkit-text-size-adjust: 100%}
-	html, body {height:100%;}
-	
-	body {padding:0;margin:0;background:#111;overflow:hidden;image-rendering:-moz-crisp-edges; image-rendering:-webkit-optimize-contrast;border-top:2px solid #707070;}
-	
-	canvas { position:absolute;image-rendering:auto;}
-	#background { background:url('../img/common/loading.png') no-repeat center center, #000;}
-	.error #background { background:url('../img/common/loading-error.png') no-repeat center center, #000;}
-	
-	#background, #foreground, #interfaz { margin:0; padding:0;}
-    
-    #achievements nav::selection {background:transparent;text-decoration:none;color:transparent;}
+    html, body {height:100%;}
+
+    body {padding:0;margin:0;background:#111;overflow:hidden;border-top:2px solid #707070;}
+
+
+
+
+    canvas { position:absolute;image-rendering:auto;}
+    #background { background:url('../img/common/loading.png') no-repeat center center, #000;}
+    .error #background { background:url('../img/common/loading-error.png') no-repeat center center, #000;}
+
+    #background, #foreground, #interfaz { margin:0; padding:0;}
+
     #canvas, #bar-container, #chatbox, #canvasborder,#interfaz, #foreground, #background, footer, #container, #achievement-notification {-moz-user-select:none;-webkit-user-select:none;-o-user-select:none;-ms-user-select:none;}
-    
+
     /*.started #canvas {cursor:none;}*/
-    
+
     #interfaz { 
-       -webkit-tap-highlight-color:rgba(0,0,0,0);
-       /* -webkit-touch-callout:none; */
+     -webkit-tap-highlight-color:rgba(0,0,0,0);
+     /* -webkit-touch-callout:none; */
        /* margin:0 auto;
        display:block;*/
-    }
+   }
 
+   h1 {font-weight:normal;}
 
-	@media screen and (max-width: 600px) {
-		
-		#entities {
-			cursor: default;
-		}
-	}
-
-    h1 {font-weight:normal;}
-    
-    .preload {display:none;}
-    
-/* Common rules */
-    
-    #logo, #logosparks, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, #tilt, .parchment-left, .parchment-middle, .parchment-right, .avatar, .facebook, .twitter, .close, #note, .ribbon .top, .ribbon .bottom,  .ext-link {background:url('../img/1/spritesheet.png');image-rendering:-moz-crisp-edges; image-rendering:-webkit-optimize-contrast;}
-
-    #mask {height:100%;width:100%;position:fixed;top:0;left:0;background:rgba(20,20,20,1);opacity:1;z-index:20;-moz-transition:0.5s opacity linear;-webkit-transition:0.5s opacity linear;-o-transition:0.5s opacity linear;-ms-transition:0.5s opacity linear;transition:0.5s opacity linear;pointer-events:none;}
-
-   
-     div.clear{
-      float: left;
-      clear: both;
-      width: 100%;
-    }
-
-    
-    .link:hover {cursor:pointer;color:#d83939;}
-    .play img {display:none;}
-    .play.loading span:hover {color:inherit;cursor:default;}
-    .play.loading img {display:inline;}
-    #create-new {margin-top:2em;}
-    #playername {color:#fff;}
-
-    .validation-summary {margin:.5em;min-height:1em;}
-    .validation-error {color:#880000;text-shadow:2px 2px 2px #ff6666;}
-    @keyframes blink { 0% {color:red;} 100% {color:#880000;}}
-    @-webkit-keyframes blink { 0% {color:red;} 100% {color:#880000;}}
-    .blink {-webkit-animation:blink 0.3s linear 5 alternate;-moz-animation:blink 0.3s linear 5 alternate;animation:blink 0.3s linear 5 alternate;}
-
-    #credits, #loadingScreen, #loadcharacter, #confirmation, #death, #error, #legal {position:absolute;left:50%;text-align:center;font-family:'GraphicPixel', sans-serif;z-index:1000;}
-    
-    #playerimage {image-rendering: -moz-crisp-edges; image-rendering: -webkit-optimize-contrast;}
-    
-    #parchment p {font-family:'GraphicPixel';}
-    
-    #seb {clear:both;}
-
-    #portrait {display:none;}
-
-    #legal a:hover {color:#d83939;}
-
-/* ACA CAMBIAR POS FOOTER: */
-    footer {font-family:'GraphicPixel';position:absolute;bottom:3%;left:0;text-align:center;width:100%;color:#c6c0a3;-moz-transition:0.2s opacity linear;-webkit-transition:0.2s opacity linear;-o-transition:0.2s opacity linear;-ms-transition:0.2s opacity linear;transition:0.2s opacity linear;}
-    .upscaled.game footer {color:#8a8a8a;}
-    
-    .intro footer {opacity:1;}
-    footer:hover {opacity:1;}
-    footer div  {display:inline-block;}
-    #sharing a {display:block;float:right;background-size:844px;position:relative;top:-2px;}
-    #sharing .facebook {height:22px;width:22px;background-position:-822px -224px;margin:0 12px 0 12px;}
-    #sharing .facebook:hover {background-position:-822px -224px;}
-    #sharing .twitter {height:22px;width:32px;background-position:-770px -224px;margin:0 12px 0 0;}
-    #sharing .twitter:hover {background-position:-770px -224px;}
-    #sharing .gplus {height:22px;width:22px;background:url('../img/common/gplus.png');margin:0 12px 0 0px;}
-    #toggle-credits {display:inline-block;margin-left:12px;}
-    #legal-link a, #credits-link a, #privacy-link a {text-decoration:none;color:inherit;}
-    #credits-link a:hover , #privacy-link  a:hover, #legal-link a:hover{color:#fcda5c;cursor:pointer;}
-    
-    #sharing a:hover {-moz-transform:scale(1.2);-webkit-transform:scale(1.2);-o-transform:scale(1.2);transform:scale(1.2);}
-    #sharing a:active {-moz-transform:scale(1);-webkit-transform:scale(1);-o-transform:scale(1);transform:scale(1);}
-
-    .close {position:absolute;z-index:20000;}
-    .close:hover {cursor:pointer;}
-    
-    .ribbon {position:absolute;}
-    .ribbon:hover {cursor:pointer;}
-    .ribbon .top {-moz-transition:0.25s height ease;-webkit-transition:0.25s height ease;-o-transition:0.25s height ease;-ms-transition:0.25s height ease;transition:0.25s height ease;}
-    
-	.thingy {height:10px;width:11px;background:url('../img/common/thingy.png');margin:0 auto;margin-top:-10px;top:10px;position:relative;}
-    
-    .alert {height:50px;background:#d83939;width:100%;color:#eee;font-size:20px;font-family:'GraphicPixel', arial, sans-serif;text-align:center;line-height:50px;border-bottom:1px solid #000;}
-
-    #instructions, #achievements, #lists,#credits, .ribbon, .play, .play div, .barbutton {-webkit-tap-highlight-color:transparent;}
-    #nameinput::-webkit-input-placeholder  {color:#fff;}
-
-    #death p em {display:block;font-style:normal;}
-    
-    #legal p {width:75%;font-size:25px;line-height:35px;}
-    #legal p a {color:#2e7fdd;text-decoration:none;}
-    #close-legal {font-size:20px;margin-top:30px;}
-    #toggle-legal, #legal-link a {padding:0 10px;}
-    
-    #createcharacter form {position:relative;}
-    
-    #name-tooltip {width:400px;height:30px;padding:10px 0;font-size:20px;background:#373737;position:absolute;left:50%;margin-left:-200px;color:#fff;border-radius:8px;line-height:30px;top:-40px;opacity:0;-moz-transition:0.25s opacity ease;-webkit-transition:0.25s opacity ease;-o-transition:0.25s opacity ease;-ms-transition:0.25s opacity ease;transition:0.25s opacity ease;pointer-events:none;}
-    #name-tooltip:after {content:url('../img/common/arrow.png');width:28px;height:16px;position:absolute;bottom:-8px;left:50%;margin-left:-14px;}
-    #name-tooltip.visible {opacity:.9;}
-    
-    .opera #name-tooltip {display:none;}
-    .opera #name-tooltip.visible {display:block;}
-
-/* States & Transitions */
+   .preload {display:none;}
 
 
 
-    #intro {-moz-transition:0.4s opacity linear;-webkit-transition:0.4s opacity linear;-o-transition:0.4s opacity linear;-ms-transition:0.4s opacity linear;transition:0.4s opacity linear;}
-    #mask, #logo, #parchment {opacity:0;}
-    .intro #logo, .intro #parchment {opacity:1;}
-
-    .game #confirmation, .game #loadcharacter, .game #createcharacter, .game #error {display:none;}
-
-    .game #parchment {z-index:0;-moz-transition:0.5s opacity linear 0.5s, 0s z-index linear 1s;-webkit-transition:0.5s opacity linear 0.5s, 0s z-index linear 1s;-o-transition:0.5s opacity linear 0.5s, 0s z-index linear 1s;-ms-transition:0.5s opacity linear 0.5s, 0s z-index linear 1s;transition:0.5s opacity linear 0.5s, 0s z-index linear 1s;top:50%;}
-    .game #credits, .game #death {opacity:0;-moz-transition:0s opacity linear 0s;-webkit-transition:0s opacity linear 0s;-o-transition:0s opacity linear 0s;-ms-transition:0s opacity linear 0s;transition:0s opacity linear 0s;}
-    .game.credits #credits, .game.death #death, .game.legal #legal {opacity:1;-moz-transition:0.5s opacity linear 0.5s;-webkit-transition:0.5s opacity linear 0.5s;-o-transition:0.5s opacity linear 0.5s;-ms-transition:0.5s opacity linear 0.5s;transition:0.5s opacity linear 0.5s;}
-    .game.credits #parchment, .game.death #parchment, .game.legal #parchment {opacity:1;-moz-transition:0.5s opacity linear 0s, 0s z-index linear 0s;-webkit-transition:0.5s opacity linear 0s, 0s z-index linear 0s;-o-transition:0.5s opacity linear 0s, 0s z-index linear 0s;-ms-transition:0.5s opacity linear 0s, 0s z-index linear 0s;transition:0.5s opacity linear 0s, 0s z-index linear 0s;z-index:200;}
-    .game .parchment-left {-moz-transition:0.5s left ease;-webkit-transition:0.5s left ease;-o-transition:0.5s left ease;-ms-transition:0.5s left ease;transition:0.5s left ease;left:41%;}
-    .game .parchment-right {-moz-transition:0.5s right ease;-webkit-transition:0.5s right ease;-o-transition:0.5s right ease;-ms-transition:0.5s right ease;transition:0.5s right ease;right:41%;}
-    .game .parchment-middle {-moz-transition:0.5s width ease, 0.5s margin-left ease, 0.5s background-position ease;-webkit-transition:0.5s width ease, 0.5s margin-left ease, 0.5s background-position ease;-o-transition:0.5s width ease, 0.5s margin-left ease, 0.5s background-position ease;-ms-transition:0.5s width ease, 0.5s margin-left ease, 0.5s background-position ease;transition:0.5s width ease, 0.5s margin-left ease, 0.5s background-position ease;width:0px;margin-left:0px;}
-    .game.credits .parchment-left, .game.death .parchment-left, .game.legal .parchment-left {left:0%;}
-    .game.credits .parchment-right, .game.death .parchment-right, .game.legal .parchment-right {right:0%;}
-
-    #container {z-index:100;background:rgba(0,0,0,0.2);-moz-transition:1s opacity linear 0.5s;-webkit-transition:1s opacity linear 0.5s;-o-transition:1s opacity linear 0.5s;-ms-transition:1s opacity linear 0.5s;transition:1s opacity linear 0.5s;}
-    .intro #container {opacity:0;pointer-events:none;}
-    .game #container {opacity:1;}
+   /* States & Transitions */
 
 
 
+   #intro {-moz-transition:0.4s opacity linear;-webkit-transition:0.4s opacity linear;-o-transition:0.4s opacity linear;-ms-transition:0.4s opacity linear;transition:0.4s opacity linear;}
+   #container {z-index:100;background:rgba(0,0,0,0);-moz-transition:1s opacity linear 0.5s;-webkit-transition:1s opacity linear 0.5s;-o-transition:1s opacity linear 0.5s;-ms-transition:1s opacity linear 0.5s;transition:1s opacity linear 0.5s;}
+   .intro #container {opacity:0;pointer-events:none;}
+   .game #container {opacity:1;}
+
+   /*  ACA: */
 
 
+   body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../graficos/ui/presentacion.jpg') no-repeat center center, #000; background-size:auto;}
+   body {background:-webkit-gradient(radial, center center, 360, center center, 1200, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('../graficos/ui/presentacion.jpg') no-repeat center center, #000; background-size:auto;}
+
+   #container {background:#000;width: 10px; height: 90%; position: absolute; top:0; bottom: 5%; left: 0; right: 0; margin: auto;} /* el width de setea para que quede del ratio adecaudo en el programa de js */
+
+   #gamecanvas {position:absolute;top:7.8%;left:1.45%;z-index: -2} /* margenes de la interfaz */
 
 
+   #chatbox {height:6.5%;width:63%;position:absolute;left:4%;top:92%} 
+   #chatbox.active {top:85.5%;}
+   #chatbox input {font-size:12px;background:none;width:100%;border:0;margin-left:2%;margin-top:2%}
+   #chatbox {background-image:url('../graficos/ui/chatbox.png'); 
+   /*tamaño img conteindo en barra:*/
+   -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../graficos/ui/chatbox.png', sizingMethod='scale')";
+   -webkit-background-size: 100% 100%;           /* Safari 3.0 */
+   -moz-background-size: 100% 100%;           /* Gecko 1.9.2 (Firefox 3.6) */
+   -o-background-size: 100% 100%;           /* Opera 9.5 */
+   background-size: 100% 100%;           /* Gecko 2.0 (Firefox 4.0) and other CSS3-compliant browsers */
+   -moz-border-image: url(bg-image.png) 0;    /* Gecko 1.9.1 (Firefox 3.5) */
+   background-size: contain;
+   /*fin tamaño img*/
+   z-index: -1;-moz-transition:0.2s top ease;-webkit-transition:0.2s top ease;-o-transition:0.2s top ease;-ms-transition:0.2s top ease;transition:0.2s top ease;}
+   #chatinput {color:#eee;}
+   #chatinput.placeholder {color:#aaa;}
 
-/*** ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA */
-
-        body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../graficos/ui/presentacion.jpg') no-repeat center center, #000; background-size:auto;}
-    body {background:-webkit-gradient(radial, center center, 360, center center, 1200, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('../graficos/ui/presentacion.jpg') no-repeat center center, #000; background-size:auto;}
-                
-    #container {background:#000;width: 10px; height: 90%; position: absolute; top:0; bottom: 5%; left: 0; right: 0; margin: auto;} /* el width de setea para que quede del ratio adecaudo en el programa de js */
-
-    #gamecanvas {position:absolute;top:7.8%;left:1.45%;z-index: -2} /* margenes de la interfaz */
-
-
-    #chatbox {height:6.5%;width:63%;position:absolute;left:4%;top:92%} 
-    #chatbox.active {top:85.5%;}
-    #chatbox input {font-size:12px;background:none;width:100%;border:0;margin-left:2%;margin-top:2%}
-    #chatbox {background-image:url('../graficos/ui/chatbox.png'); 
-        /*tamaño img conteindo en barra:*/
-        -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../graficos/ui/chatbox.png', sizingMethod='scale')";
-        -webkit-background-size: 100% 100%;           /* Safari 3.0 */
-        -moz-background-size: 100% 100%;           /* Gecko 1.9.2 (Firefox 3.6) */
-        -o-background-size: 100% 100%;           /* Opera 9.5 */
-          background-size: 100% 100%;           /* Gecko 2.0 (Firefox 4.0) and other CSS3-compliant browsers */
-        -moz-border-image: url(bg-image.png) 0;    /* Gecko 1.9.1 (Firefox 3.5) */
-        background-size: contain;
-        /*fin tamaño img*/
-        z-index: -1;-moz-transition:0.2s top ease;-webkit-transition:0.2s top ease;-o-transition:0.2s top ease;-ms-transition:0.2s top ease;transition:0.2s top ease;}
-    #chatinput {color:#eee;}
-    #chatinput.placeholder {color:#aaa;}
-
-    @media screen and (min-height: 500px) and (max-height: 650px)  { /* Cuando el tamaño de la ventana es similar al original, pongo tamaño nativos de graficos asi no se peirde perfomance en hacer agrandarlos y se ve mejor*/
+   @media screen and (min-height: 500px) and (max-height: 650px)  { /* Cuando el tamaño de la ventana es similar al original, pongo tamaño nativos de graficos asi no se peirde perfomance en hacer agrandarlos y se ve mejor*/
 
       #container {height:500px;}
-    }
+  }
 
-    @media screen and (max-height: 500px){ /* Pantalla menor a 500px hacemos que el juego ocupe la pantalla entera */
+  @media screen and (max-height: 500px){ /* Pantalla menor a 500px hacemos que el juego ocupe la pantalla entera */
       #container {height:100%;}
-    }
-/* FINNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN */
+  }
 
-/* Workarounds for chrome windows bugs */
 
-    .windows #parchment, .windows #parchment input, .windows #notifications, .windows #instructions, .windows #achievements, .windows #achievement-notification, 
-    .windows #playercount, .windows #credits, .windows #loadcharacter, .windows #confirmation, .windows #death, .windows #error, .windows #about, .windows #legal, 
-    .windows #parchment p, .windows #portrait p, .windows .alert, .windows footer, .windows #population, .windows #chatinput {font-family:'AdvoCut';}
+  /* Footer */
+
+  .facebook {background:url('../imagenes/facebook.png');}
+  .twitter{background:url('../imagenes/twitter.png');}
+
+  footer {font-family:'GraphicPixel';position:absolute;bottom:3%;left:0;text-align:center;width:100%;color:#c6c0a3;-moz-transition:0.2s opacity linear;-webkit-transition:0.2s opacity linear;-o-transition:0.2s opacity linear;-ms-transition:0.2s opacity linear;transition:0.2s opacity linear;}
+
+  footer:hover {opacity:1;}
+  footer div  {display:inline-block;}
+  #sharing a {display:block;float:right;position:relative;top:-2px;}
+  #sharing .facebook {height:22px;width:22px;background-size: cover;margin:0 12px 0 12px;}
+  #sharing .twitter {height:22px;width:32px;background-size:     cover;margin:0 12px 0 0;}
+  #legal-link a, #credits-link a, #privacy-link a {text-decoration:none;color:inherit;}
+  #credits-link a:hover , #privacy-link  a:hover, #legal-link a:hover{color:#fcda5c;cursor:pointer;}
+  #sharing a:hover {-moz-transform:scale(1.2);-webkit-transform:scale(1.2);-o-transform:scale(1.2);transform:scale(1.2);}
+  #sharing a:active {-moz-transform:scale(1);-webkit-transform:scale(1);-o-transform:scale(1);transform:scale(1);}
+
+
+  .thingy {height:10px;width:11px;background:url('../img/common/thingy.png');margin:0 auto;margin-top:-10px;top:10px;position:relative;}
+
+  .alert {height:50px;background:#d83939;width:100%;color:#eee;font-size:20px;font-family:'GraphicPixel', arial, sans-serif;text-align:center;line-height:50px;border-bottom:1px solid #000;}
+
+  /* Workarounds for chrome windows bugs */
+
+  .windows #parchment, .windows #parchment input, .windows #notifications, .windows #instructions, .windows #achievements, .windows #achievement-notification, 
+  .windows #playercount, .windows #credits, .windows #loadcharacter, .windows #confirmation, .windows #death, .windows #error, .windows #about, .windows #legal, 
+  .windows #parchment p, .windows #portrait p, .windows .alert, .windows footer, .windows #population, .windows #chatinput {font-family:'AdvoCut';}

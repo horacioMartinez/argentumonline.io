@@ -1,12 +1,14 @@
 define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
         'gameclient', 'audiomanager', 'updater', 'transition',
         'item', 'player', 'character',
-        'config', '../shared/js/gametypes', 'loader', 'uirenderer', 'intervalos'],
+        'config', '../shared/js/gametypes', 'loader', 'uirenderer', 'intervalos', 'uimanager'],
     function (__enums__, Animacion, Mapa, InfoManager, Renderer,
               GameClient, AudioManager, Updater, Transition,
-              Item, Player, Character, config, __gametypes__, Loader, UIRenderer, Intervalos) {
+              Item, Player, Character, config, __gametypes__, Loader, UIRenderer, Intervalos, UIManager) {
         var Game = Class.extend({
             init: function (app) {
+                this.UIManager = new UIManager(this);
+
                 this.MAXIMO_LARGO_CHAT = 15; // maximo largo en caracters hasta hacer nueva linea de chat (notar las palabras se escriben completa, por lo que puede pasar los 10 caracteres)
 
                 this.loader = new Loader();
@@ -44,6 +46,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.player = {}; // se inicializa con el msj logged, ver la funcion inicializarPlayer
                 this.logeado = false; // NOTA: se pone logeado cuando llega el mensaje de logged, este es el ultimo de los mensajes al conectarse, asi que antes llega los mensajes de hechizos inventarios, etc. Deberia primero llegar esto y listo.. tambien deberia llegar el chardinex de tu pj al principio con este mensaje
                 this.inventario = [];
+                this.inventarioCompra = [];
                 this.hechizos = [];
                 this.intervalos = new Intervalos(0);
 
@@ -2151,8 +2154,19 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     minDef: MinDef,
                     precioVenta: ObjSalePrice
                 };
+
                 if (this.logeado)
                     this.uiRenderer.dibujarSlotInventario(Slot, GrhIndex, Amount, Equiped);
+
+                if (this.UIManager.comerciar.visible) {
+                    if ((Amount > 0 ) && (GrhIndex > 0)) {
+                        var numGrafico = this.indices[GrhIndex].grafico;
+                        this.UIManager.comerciar.cambiarSlotVenta(Slot, Amount, numGrafico);
+                    }
+                    else
+                        this.UIManager.comerciar.borrarSlotVenta(Slot);
+                }
+
             },
 
             cambiarSlotHechizos: function (slot, spellID, nombre) {
@@ -2353,6 +2367,40 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     }
                 }
 
+            },
+
+            cambiarSlotCompra: function (Slot, ObjName, Amount, Price, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef) {
+                this.inventarioCompra[Slot] = {
+                    objIndex: ObjIndex,
+                    objName: ObjName,
+                    cantidad: Amount,
+                    grh: GrhIndex,
+                    objType: ObjType,
+                    maxHit: MaxHit,
+                    minHit: MinHit,
+                    maxDef: MaxDef,
+                    minDef: MinDef,
+                    precio: Price
+                };
+
+                if ((Amount >0 ) && (GrhIndex > 0)) {
+                    var numGrafico = this.indices[GrhIndex].grafico;
+                    this.UIManager.comerciar.cambiarSlotCompra(Slot, Amount, numGrafico);
+                }
+                else
+                    this.UIManager.comerciar.borrarSlotCompra(Slot);
+            },
+
+            cerrarComerciar: function(){
+                this.client.sendCommerceEnd();
+            },
+
+            comprar: function (slot, cantidad) {
+                this.client.sendCommerceBuy(slot, cantidad);
+            },
+
+            vender: function(slot, cantidad){
+                this.client.sendCommerceSell(slot,cantidad);
             },
 
             togglePausa: function () {

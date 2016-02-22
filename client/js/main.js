@@ -7,6 +7,7 @@ define(['jquery', 'app', 'enums'], function ($, App) {
             $('#container').width(__ESCALA__ * 800);
             $('#chatbox input').css("font-size", Math.floor(12 * __ESCALA__) + 'px');
             log.error("ESCALA: " + __ESCALA__); // TODO: no usar una variable global!
+
             app = new App();
             app.center();
 
@@ -94,7 +95,7 @@ define(['jquery', 'app', 'enums'], function ($, App) {
 
             if (game.renderer.mobile || game.renderer.tablet) {
                 $('#interfaz').bind('touchstart', function (event) {
-                    if ( (!game.started) || (game.isPaused))
+                    if ((!game.started) || (game.isPaused))
                         return;
                     app.center();
                     if (app.setMouseCoordinates(event.originalEvent.touches[0]))
@@ -102,18 +103,18 @@ define(['jquery', 'app', 'enums'], function ($, App) {
                 });
             } else {
                 $('#interfaz').click(function (event) {
-                    if ( (!game.started) || (game.isPaused))
+                    if ((!game.started) || (game.isPaused))
                         return;
 
                     app.center();
                     if (app.setMouseCoordinates(event)) {
-                            game.click();
+                        game.click();
                     }
                     // TODO: si haces click afuera del menu pop up que lo cierre?
                 });
 
                 $('#interfaz').dblclick(function (event) {
-                    if ( (!game.started) || (game.isPaused))
+                    if ((!game.started) || (game.isPaused))
                         return;
 
                     app.center();
@@ -173,22 +174,18 @@ define(['jquery', 'app', 'enums'], function ($, App) {
                         case Enums.Keys.LEFT:
                         case Enums.Keys.KEYPAD_4:
                             game.terminarDeCaminar(Enums.Heading.oeste);
-                            game.player.disableKeyboardNpcTalk = false;
                             break;
                         case Enums.Keys.RIGHT:
                         case Enums.Keys.KEYPAD_6:
                             game.terminarDeCaminar(Enums.Heading.este);
-                            game.player.disableKeyboardNpcTalk = false;
                             break;
                         case Enums.Keys.UP:
                         case Enums.Keys.KEYPAD_8:
                             game.terminarDeCaminar(Enums.Heading.norte);
-                            game.player.disableKeyboardNpcTalk = false;
                             break;
                         case Enums.Keys.DOWN:
                         case Enums.Keys.KEYPAD_2:
                             game.terminarDeCaminar(Enums.Heading.sur);
-                            game.player.disableKeyboardNpcTalk = false;
                             break;
                         default:
                             break;
@@ -200,16 +197,7 @@ define(['jquery', 'app', 'enums'], function ($, App) {
                 if (!game.started)
                     return;
 
-                var key = e.which,
-                    $chat = $('#chatinput');
-
-                if (key === Enums.Keys.ENTER) {
-                    if ($('#chatbox').hasClass('active')) {
-                        app.hideChat();
-                    } else {
-                        app.showChat();
-                    }
-                }
+                var key = e.which;
 
                 // maneja las flechas, asi se las puede usar cuando tenes algun menu o el chat abierto
                 if (!_isKeyDown(e)) {
@@ -237,20 +225,33 @@ define(['jquery', 'app', 'enums'], function ($, App) {
                     }
                     if (!continuar) {
                         _downKey(e);
-                        e.preventDefault();
+                        if (!game.UIManager.hayPopUpActivo()) // si hay un popup abierto dejar que siga la tecla al pop up, sino no
+                            e.preventDefault();
                         return;
                     }
                 }
 
-                if (game.isPaused)
+                // lo de abajo se ejecuta solo si no hay un pop up abierto
+
+                if (game.isPaused || (game.UIManager.hayPopUpActivo()))
                     return;
 
-                if (!$('#chatbox').hasClass('active') /* && !this.game.uiRenderer.popUpActivo*/) {
+                $chatb = $('#chatbox');
+
+                if (key === Enums.Keys.ENTER) {
+                    if ($chatb.hasClass('active')) {
+                        app.hideChat();
+                    } else {
+                        app.showChat();
+                    }
+                }
+
+                if (!$chatb.hasClass('active') /* && !this.game.uiRenderer.popUpActivo*/) {
                     if (_isKeyDown(e))
                         return;
                     _downKey(e);
                     e.preventDefault();
-                    switch (key){
+                    switch (key) {
                         case Enums.Keys.A:
                             game.agarrar();
                             break;
@@ -285,9 +286,8 @@ define(['jquery', 'app', 'enums'], function ($, App) {
 
             $('#chatinput').keydown(function (e) {
 
-                var key = e.which,
-                    $chat = $('#chatinput'),
-                    placeholder = $(this).attr("placeholder");
+                var key = e.which;
+                placeholder = $(this).attr("placeholder");
 
                 //   if (!(e.shiftKey && e.keyCode === 16) && e.keyCode !== 9) {
                 //        if ($(this).val() === placeholder) {
@@ -298,11 +298,12 @@ define(['jquery', 'app', 'enums'], function ($, App) {
                 //    }
 
                 if (key === 13) {
+                    $chat = $('#chatinput');
                     if ($chat.attr('value') !== '') {
                         if (game.player) {
-                            game.enviarChat($chat.attr('value'));
+                            game.enviarChat($chat.val());
                         }
-                        $chat.attr('value', '');
+                        $chat.val('');
                         app.hideChat();
                         $('#interfaz').focus();
                         return false;
@@ -331,10 +332,10 @@ define(['jquery', 'app', 'enums'], function ($, App) {
             });
 
             $(document).bind("keydown", function (e) {
-                var key = e.which,
-                    $chat = $('#chatinput');
+                var key = e.which;
 
                 if (key === 13) { // Enter
+                    $chat = $('#chatinput');
                     if (game.started) {
                         $chat.focus();
                         return false;
@@ -345,28 +346,6 @@ define(['jquery', 'app', 'enums'], function ($, App) {
                             return false;           // prevent form submit
                         }
                     }
-                }
-
-                if ($('#chatinput:focus').size() == 0 && $('#nameinput:focus').size() == 0) {
-                    if (key === 27) { // ESC
-                        //TODO
-                        //app.hideWindows();
-                        _.each(game.player.attackers, function (attacker) {
-                            attacker.stop();
-                        });
-                        return false;
-                    }
-
-                    // The following may be uncommented for debugging purposes.
-                    //
-                    // if(key === 32 && game.started) { // Space
-                    //     game.togglePathingGrid();
-                    //     return false;
-                    // }
-                    // if(key === 70 && game.started) { // F
-                    //     game.toggleDebugInfo();
-                    //     return false;
-                    // }
                 }
             });
 

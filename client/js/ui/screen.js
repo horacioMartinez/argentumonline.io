@@ -2,8 +2,8 @@
  * Created by horacio on 1/26/16.
  */
 
-define(['jquery'],
-    function ($) {
+define([],
+    function () {
 
         var Lista = Class.extend({
 
