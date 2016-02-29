@@ -67,6 +67,30 @@ define(['ui/itemgrid'], function (ItemGrid) {
             }
         },
 
+        _updateBarra: function (cant, max, $barra, $label) {
+            //$("#barraHambreUsada").css("width","80%");
+            var porcentaje = (100 - Math.floor((cant / max) * 100));
+            log.error("PORCENTAJE!: "+porcentaje);
+            $barra.css("width", porcentaje + "%");
+            $label.text(cant + "/" + max);
+        },
+        updateBarraEnergia: function (cant, max) {
+            this._updateBarra(cant, max, $("#barraEnergiaUsada"), $("#barraEnergiaTexto"));
+        },
+        updateBarraVida: function (cant, max) {
+            this._updateBarra(cant, max, $("#barraSaludUsada"), $("#barraSaludTexto"));
+        },
+        updateBarraMana: function (cant, max) {
+            this._updateBarra(cant, max, $("#barraManaUsada"), $("#barraManaTexto"));
+        },
+        updateBarraHambre: function (cant, max) {
+            log.error(cant+ " " + max);
+            this._updateBarra(cant, max, $("#barraHambreUsada"), $("#barraHambreTexto"));
+        },
+        updateBarraSed: function (cant, max) {
+            this._updateBarra(cant, max, $("#barraSedUsada"), $("#barraSedTexto"));
+        },
+
     });
 
     return Interfaz;

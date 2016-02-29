@@ -84,29 +84,6 @@ define(['text!../indices/graficos.json',
                 return true;
             },
 
-            loadUI: function () {
-                if (this.UIloaded) {
-                    log.error("graficos ui tratados de cargar dos veces!");
-                    return;
-                }
-                var graficos = ["interfaz.png", "login.jpg", "crearpj.jpg", "barraexp.png", "barraEnergia.png", "barraMana.png", "barraVida.png", "barraHambre.png", "barraSed.png", "centroInventario.jpg", "centroHechizos.jpg"];
-                this.loadGraficosUI(graficos);
-                this.UIloaded = true;
-            },
-
-            loadGraficosUI: function (nombres) {
-                for (var i = 0; i < nombres.length; i++) {
-                    var variable = nombres[i].slice(0, -4); // saco extension
-                    this.ui[variable] = new Image();
-                    this.ui[variable].crossOrigin = "Anonymus";
-                    this.ui[variable].src = ( "graficos/ui/" + nombres[i]);
-                }
-            },
-
-            getUI: function () {
-                return this.ui;
-            },
-
             /*getMapa: function(numMapa){
              // TODO: guardar aca o en otro lado mapa actual der izq.. etc ver final carpeta, poner el parse segun numero
              if (!this.mapaActual)

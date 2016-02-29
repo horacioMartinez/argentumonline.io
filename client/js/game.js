@@ -1,9 +1,9 @@
 define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
         'gameclient', 'updater', 'transition',
-        'item', 'player', 'character', '../shared/js/gametypes', 'assetmanager', 'intervalos', 'uimanager'],
+        'item', 'player', 'character', 'assetmanager', 'intervalos', 'uimanager'],
     function (__enums__, Animacion, Mapa, InfoManager, Renderer,
               GameClient, Updater, Transition,
-              Item, Player, Character, __gametypes__, AssetManager, Intervalos, UIManager) {
+              Item, Player, Character, AssetManager, Intervalos, UIManager) {
         var Game = Class.extend({
             init: function (app, assetManager) {
                 this.uiManager = new UIManager(this);
@@ -20,8 +20,6 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.escudos = this.assetManager.getEscudos();
                 this.escudos = this.assetManager.getEscudos();
                 this.fxs = this.assetManager.getFxs();
-
-                this.assetManager.loadUI();
 
                 this.app = app;
                 this.ready = false;

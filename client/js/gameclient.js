@@ -64,7 +64,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
             }
         },
 
-        setLogeadoCallback: function(logeado_callback){
+        setLogeadoCallback: function (logeado_callback) {
             this.logeado_callback = logeado_callback;
         },
 
@@ -269,12 +269,21 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleUpdateUserStats: function (MaxHp, MinHp, MaxMan, MinMan, MaxSta, MinSta, Gld, Elv, Elu, Exp) {
-            this.game.player.hp = MinHp;
-            this.game.player.maxHp = MaxHp;
-            this.game.player.mana = MinMan;
-            this.game.player.maxMana = MaxMan;
-            this.game.player.stamina = MinSta;
-            this.game.player.maxStamina = MaxSta;
+            if ((this.game.player.hp !== MinHp) || (this.game.player.maxHp !== MaxHp)) {
+                this.game.player.hp = MinHp;
+                this.game.player.maxHp = MaxHp;
+                this.game.uiManager.interfaz.updateBarraVida(MinHp, MaxHp);
+            }
+            if ((this.game.player.mana !== MinMan) || (this.game.player.maxMana !== MaxMan)) {
+                this.game.player.mana = MinMan;
+                this.game.player.maxMana = MaxMan;
+                this.game.uiManager.interfaz.updateBarraMana(MinMan, MaxMan);
+            }
+            if ((this.game.player.stamina !== MinSta) || this.game.player.maxStamina !== MaxSta) {
+                this.game.player.stamina = MinSta;
+                this.game.player.maxStamina = MaxSta;
+                this.game.uiManager.interfaz.updateBarraEnergia(MinSta, MaxSta);
+            }
             this.game.player.oro = Gld;
             this.game.player.nivel = Elv;
             this.game.player.maxExp = Elu;
@@ -365,7 +374,16 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleUpdateHungerAndThirst: function (MaxAgu, MinAgu, MaxHam, MinHam) {
-            console.log("TODO: handleUpdateHungerAndThirst ");
+            if ((this.game.player.agua !== MinAgu) || (this.game.player.maxAgua !== MaxAgu)) {
+                this.game.player.maxAgua = MaxAgu;
+                this.game.player.agua = MinAgu;
+                this.game.uiManager.interfaz.updateBarraSed(MinAgu, MaxAgu);
+            }
+            if ((this.game.player.hambre !== MinHam) || (this.game.player.maxHambre !== MaxHam)) {
+                this.game.player.hambre = MinHam;
+                this.game.player.maxHambre = MaxHam;
+                this.game.uiManager.interfaz.updateBarraHambre(MinHam, MaxHam);
+            }
         },
 
         handleFame: function (Asesino, Bandido, Burgues, Ladron, Noble, Plebe, Promedio) {

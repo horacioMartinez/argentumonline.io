@@ -15,16 +15,20 @@ define(['character',  'enums'], function (Character) {
             this.puedeCaminarCallback = {};
             this.cambioHeadingCallback = {};
             this.lastAttackedTarget = null;
-            this.hp = 0;
-            this.maxHp = 0;
-            this.mana = 0;
-            this.maxMana = 0;
-            this.stamina = 0;
-            this.maxStamina = 0;
-            this.oro = 0;
-            this.nivel = 0;
-            this.maxExp = 0;
-            this.exp = 0;
+            this.hp= -1;
+            this.maxHp= -1;
+            this.mana= -1;
+            this.maxMana= -1;
+            this.stamina= -1;
+            this.maxStamina= -1;
+            this.oro= -1;
+            this.nivel= -1;
+            this.maxExp= -1;
+            this.exp= -1;
+            this.maxAgua= -1;
+            this.agua= -1;
+            this.hambre= -1;
+            this.maxHambre= -1;
         },
 
         comenzarCaminar: function (direccion) {
