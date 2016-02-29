@@ -2,7 +2,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
     function (Camera, Item, Character, Player, Timer, TileAnimado) {
 
         var Renderer = Class.extend({
-            init: function (game, canvas, background, foreground, loader) {
+            init: function (game, canvas, background, foreground, assetManager) {
                 this.ALTO_LETRAS_CHAT = 12;
                 this.POSICIONES_EXTRA_RENDER_X = 4; // disminuir para aumentar performance ( no creo que cambie mucho ya que solo dibuja las porciones visibles, pero tiene que iterar en cada frame por todas las pos..)
                 this.POSICIONES_EXTRA_RENDER_Y = 8; // disminuir para aumentar performance
@@ -10,8 +10,8 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
                 this.INTERFAZ_OFFSET_Y = 0;//33; // TODO: SACAR
                 this.game = game;
                 this.indices = game.indices;
-                this.loader = loader;
-                this.graficos = this.loader.getGraficos();
+                this.assetManager = assetManager;
+                this.graficos = this.assetManager.getGraficos();
 
                 this.tilesAnimados = []; // vector continuo que tiene todos los tileanimados agregados (se usa para udpate)
                 this.tilesAnimadosGrid = []; // vector 3-D que contiene tiles animados en [x][y][layer]

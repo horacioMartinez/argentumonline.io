@@ -2,7 +2,6 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
 
     var GameClient = Class.extend({
         init: function (game, host, port) {
-            this.connection = null;
             this.game = game;
             this.host = host;
             this.port = port;
@@ -14,11 +13,12 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
 
         },
 
-        connect: function (conectarse_callback) {
+        _connect: function (conectarse_callback) {
             //alert("connecting to: " + "ws://localhost:7666");
             this.ws.open("ws://localhost:7666");
             var self = this;
             this.ws.on('open', function () {
+                self.conectado = true;
                 conectarse_callback();
             });
 
@@ -31,6 +31,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
                 //}
             });
             this.ws.on('close', function () {
+                self.conectado = false;
                 //disconnect();
                 //log.error("Disconnected");
             });
@@ -38,25 +39,42 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         intentarLogear: function (nombre, pw) {
-            var self = this;
-            this.connect(function () {
-                self.sendLoginExistingChar(nombre, pw, 0, 13, 0);
-            });
+            if (!this.conectado) {
+                var self = this;
+                this._connect(function () {
+                    self.sendLoginExistingChar(nombre, pw, 0, 13, 0);
+                });
+            }
+            else {
+                this.sendLoginExistingChar(nombre, pw, 0, 13, 0);
+            }
         },
 
         intentarCrearPersonaje: function (callback) {
-            var self = this;
-            this.connect(function () {
+            if (!this.conectado) {
+                var self = this;
+                this._connect(function () {
+                    callback();
+                    self.sendThrowDices();
+                });
+            }
+            else {
                 callback();
-                self.sendThrowDices();
-            });
+                this.sendThrowDices()
+            }
         },
 
+        setLogeadoCallback: function(logeado_callback){
+            this.logeado_callback = logeado_callback;
+        },
+
+        setDadosCallback: function (dadosCallback) {
+            this.dados_callback = dadosCallback;
+        },
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         handleLogged: function (Clase) {
-            this.game.logearPlayer();
-            console.log("TODO: handleLogged ");
+            this.logeado_callback();
         },
 
         handleRemoveDialogs: function () {
@@ -76,7 +94,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleCommerceEnd: function () {
-            this.game.UIManager.hideComerciar();
+            this.game.uiManager.hideComerciar();
         },
 
         handleBankEnd: function () {
@@ -84,7 +102,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleCommerceInit: function () {
-            this.game.UIManager.showComerciar();
+            this.game.uiManager.showComerciar();
         },
 
         handleBankInit: function (Banco) {
@@ -223,11 +241,11 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handlePlayMidi: function (MidiID, Loops) {
-            this.game.audioManager.setMusic(MidiID);
+            this.game.assetManager.setMusic(MidiID);
         },
 
         handlePlayWave: function (WaveID, X, Y) {
-            this.game.audioManager.playSound(WaveID);
+            this.game.assetManager.playSound(WaveID);
         },
 
         handleGuildList: function (Data) {
@@ -343,7 +361,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleChangeNPCInventorySlot: function (Slot, ObjName, Amount, Price, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef) {
-            this.game.cambiarSlotCompra(Slot,ObjName,Amount,Price,GrhIndex,ObjIndex,ObjType,MaxHit,MinHit,MaxDef,MinDef);
+            this.game.cambiarSlotCompra(Slot, ObjName, Amount, Price, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef);
         },
 
         handleUpdateHungerAndThirst: function (MaxAgu, MinAgu, MaxHam, MinHam) {
@@ -375,7 +393,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleDiceRoll: function (Fuerza, Agilidad, Inteligencia, Carisma, Constitucion) {
-            this.game.updateDados(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion);
+            this.dados_callback(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion);
         },
 
         handleMeditateToggle: function () {

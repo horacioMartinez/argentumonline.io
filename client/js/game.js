@@ -1,37 +1,33 @@
 define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
-        'gameclient', 'audiomanager', 'updater', 'transition',
-        'item', 'player', 'character',
-        'config', '../shared/js/gametypes', 'loader', 'uirenderer', 'intervalos', 'uimanager'],
+        'gameclient', 'updater', 'transition',
+        'item', 'player', 'character', '../shared/js/gametypes', 'assetmanager', 'intervalos', 'uimanager'],
     function (__enums__, Animacion, Mapa, InfoManager, Renderer,
-              GameClient, AudioManager, Updater, Transition,
-              Item, Player, Character, config, __gametypes__, Loader, UIRenderer, Intervalos, UIManager) {
+              GameClient, Updater, Transition,
+              Item, Player, Character, __gametypes__, AssetManager, Intervalos, UIManager) {
         var Game = Class.extend({
-            init: function (app) {
-                this.UIManager = new UIManager(this);
+            init: function (app, assetManager) {
+                this.uiManager = new UIManager(this);
 
                 this.MAXIMO_LARGO_CHAT = 15; // maximo largo en caracters hasta hacer nueva linea de chat (notar las palabras se escriben completa, por lo que puede pasar los 10 caracteres)
 
-                this.loader = new Loader();
-                this.indices = this.loader.getIndices();
-                this.armas = this.loader.getArmas();
-                this.cabezas = this.loader.getCabezas();
-                this.cascos = this.loader.getCascos();
-                this.cuerpos = this.loader.getCuerpos();
-                this.escudos = this.loader.getEscudos();
-                this.escudos = this.loader.getEscudos();
-                this.fxs = this.loader.getFxs();
+                this.map = new Mapa();
+                this.assetManager = assetManager;
+                this.indices = this.assetManager.getIndices();
+                this.armas = this.assetManager.getArmas();
+                this.cabezas = this.assetManager.getCabezas();
+                this.cascos = this.assetManager.getCascos();
+                this.cuerpos = this.assetManager.getCuerpos();
+                this.escudos = this.assetManager.getEscudos();
+                this.escudos = this.assetManager.getEscudos();
+                this.fxs = this.assetManager.getFxs();
 
-                this.loader.loadUI();
-                this.loader.loadGraficos();
-                this.audioManager = new AudioManager();
+                this.assetManager.loadUI();
 
                 this.app = app;
-                this.app.config = config;
                 this.ready = false;
                 this.started = false;
                 this.isPaused = false;
 
-                this.uiRenderer = null;
                 this.renderer = null;
                 this.updater = null;
                 this.chatinput = null;
@@ -40,7 +36,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.entityGrid = null;
                 this.characters = []; // characters indexeados por ID
                 this.items = []; // idem items
-
+                this.username = null;
                 // Player
                 this.playerId = null; //charindex
                 this.player = {}; // se inicializa con el msj logged, ver la funcion inicializarPlayer
@@ -64,9 +60,8 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
 
             },
 
-            setup: function (canvas, background, foreground, interfaz, input) {
-                this.uiRenderer = new UIRenderer(this, interfaz, this.loader);
-                this.setRenderer(new Renderer(this, canvas, background, foreground, this.loader));
+            setup: function (canvas, background, foreground, input) {
+                this.setRenderer(new Renderer(this, canvas, background, foreground, this.assetManager));
                 this.setChatInput(input);
             },
 
@@ -84,229 +79,6 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
 
             setChatInput: function (element) {
                 this.chatinput = element;
-            },
-
-            loadMap: function () {
-
-                this.map = new Mapa(1, this); // TODO: ver esto
-                /*var self = this;
-                 this.map = new Map(!this.renderer.upscaledRendering, this);
-
-                 this.map.ready(function () {
-                 log.info("Map loaded.");
-                 var tilesetIndex = self.renderer.upscaledRendering ? 0 : self.renderer.scale - 1;
-                 self.renderer.setTileset(self.map.tilesets[tilesetIndex]);
-                 });*/
-            },
-
-            initPlayer: function () {
-                if (this.storage.hasAlreadyPlayed() && this.storage.data.player) {
-                    if (this.storage.data.player.armor && this.storage.data.player.weapon) {
-                        this.player.setSpriteName(this.storage.data.player.armor);
-                        this.player.setWeaponName(this.storage.data.player.weapon);
-                    }
-                    if (this.storage.data.player.guild) {
-                        this.player.setGuild(this.storage.data.player.guild);
-                    }
-                }
-
-                this.player.setSprite(this.sprites[this.player.getSpriteName()]);
-                this.player.idle();
-
-                log.debug("Finished initPlayer");
-            },
-
-            initShadows: function () {
-                this.shadows = {};
-                this.shadows["small"] = this.sprites["shadow16"];
-            },
-
-            initCursors: function () {
-
-            },
-
-            initAnimations: function () {
-                this.targetAnimation = new Animation("idle_down", 4, 0, 16, 16);
-                this.targetAnimation.setSpeed(50);
-
-                this.sparksAnimation = new Animation("idle_down", 6, 0, 16, 16);
-                this.sparksAnimation.setSpeed(120);
-            },
-
-            initHurtSprites: function () {
-                var self = this;
-
-                Types.forEachArmorKind(function (kind, kindName) {
-                    self.sprites[kindName].createHurtSprite();
-                });
-            },
-
-            initSilhouettes: function () {
-                var self = this;
-
-                Types.forEachMobOrNpcKind(function (kind, kindName) {
-                    self.sprites[kindName].createSilhouette();
-                });
-                self.sprites["chest"].createSilhouette();
-                self.sprites["item-cake"].createSilhouette();
-            },
-
-            initAchievements: function () {
-                var self = this;
-
-                this.achievements = {
-                    A_TRUE_WARRIOR: {
-                        id: 1,
-                        name: "A True Warrior",
-                        desc: "Find a new weapon"
-                    },
-                    INTO_THE_WILD: {
-                        id: 2,
-                        name: "Into the Wild",
-                        desc: "Venture outside the village"
-                    },
-                    ANGRY_RATS: {
-                        id: 3,
-                        name: "Angry Rats",
-                        desc: "Kill 10 rats",
-                        isCompleted: function () {
-                            return self.storage.getRatCount() >= 10;
-                        }
-                    },
-                    SMALL_TALK: {
-                        id: 4,
-                        name: "Small Talk",
-                        desc: "Talk to a non-player character"
-                    },
-                    FAT_LOOT: {
-                        id: 5,
-                        name: "Fat Loot",
-                        desc: "Get a new armor set"
-                    },
-                    UNDERGROUND: {
-                        id: 6,
-                        name: "Underground",
-                        desc: "Explore at least one cave"
-                    },
-                    AT_WORLDS_END: {
-                        id: 7,
-                        name: "At World's End",
-                        desc: "Reach the south shore"
-                    },
-                    COWARD: {
-                        id: 8,
-                        name: "Coward",
-                        desc: "Successfully escape an enemy"
-                    },
-                    TOMB_RAIDER: {
-                        id: 9,
-                        name: "Tomb Raider",
-                        desc: "Find the graveyard"
-                    },
-                    SKULL_COLLECTOR: {
-                        id: 10,
-                        name: "Skull Collector",
-                        desc: "Kill 10 skeletons",
-                        isCompleted: function () {
-                            return self.storage.getSkeletonCount() >= 10;
-                        }
-                    },
-                    NINJA_LOOT: {
-                        id: 11,
-                        name: "Ninja Loot",
-                        desc: "Get hold of an item you didn't fight for"
-                    },
-                    NO_MANS_LAND: {
-                        id: 12,
-                        name: "No Man's Land",
-                        desc: "Travel through the desert"
-                    },
-                    HUNTER: {
-                        id: 13,
-                        name: "Hunter",
-                        desc: "Kill 50 enemies",
-                        isCompleted: function () {
-                            return self.storage.getTotalKills() >= 50;
-                        }
-                    },
-                    STILL_ALIVE: {
-                        id: 14,
-                        name: "Still Alive",
-                        desc: "Revive your character five times",
-                        isCompleted: function () {
-                            return self.storage.getTotalRevives() >= 5;
-                        }
-                    },
-                    MEATSHIELD: {
-                        id: 15,
-                        name: "Meatshield",
-                        desc: "Take 5,000 points of damage",
-                        isCompleted: function () {
-                            return self.storage.getTotalDamageTaken() >= 5000;
-                        }
-                    },
-                    HOT_SPOT: {
-                        id: 16,
-                        name: "Hot Spot",
-                        desc: "Enter the volcanic mountains"
-                    },
-                    HERO: {
-                        id: 17,
-                        name: "Hero",
-                        desc: "Defeat the final boss"
-                    },
-                    FOXY: {
-                        id: 18,
-                        name: "Foxy",
-                        desc: "Find the Firefox costume",
-                        hidden: true
-                    },
-                    FOR_SCIENCE: {
-                        id: 19,
-                        name: "For Science",
-                        desc: "Enter into a portal",
-                        hidden: true
-                    },
-                    RICKROLLD: {
-                        id: 20,
-                        name: "Rickroll'd",
-                        desc: "Take some singing lessons",
-                        hidden: true
-                    }
-                };
-
-                _.each(this.achievements, function (obj) {
-                    if (!obj.isCompleted) {
-                        obj.isCompleted = function () {
-                            return true;
-                        }
-                    }
-                    if (!obj.hidden) {
-                        obj.hidden = false;
-                    }
-                });
-
-                if (this.storage.hasAlreadyPlayed()) {
-                    //this.app.initUnlockedAchievements(this.storage.data.achievements.unlocked);
-                }
-            },
-
-            setSpriteScale: function (scale) {
-                var self = this;
-                /*
-                 if (this.renderer.upscaledRendering) {
-                 this.sprites = this.spritesets[0];
-                 } else {
-                 this.sprites = this.spritesets[2];//scale - 1]; modificiado por mi
-
-                 _.each(this.entities, function (entity) {
-                 entity.sprite = null;
-                 entity.setSprite(self.sprites[entity.getSpriteName()]);
-                 });
-                 //this.initHurtSprites();
-                 this.initShadows();
-                 //this.initCursors();
-                 }*/
             },
 
             setCursor: function (name, orientation) {
@@ -437,7 +209,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
             realizarDanio: function (danio) {
                 var char = this.player.lastAttackedTarget;
                 if (char) {
-                    this.infoManager.addHoveringInfo(-danio, char, Enums.Font.CANVAS_DANIO_REALIZADO);
+                    this.infoManager.addHoveringInfo(danio, char, Enums.Font.CANVAS_DANIO_REALIZADO);
                     this.infoManager.addConsoleInfo(Enums.MensajeConsola.MENSAJE_GOLPE_CRIATURA_1 + danio + Enums.MensajeConsola.MENSAJE_2, Enums.Font.FIGHT);
                 }
             },
@@ -2155,25 +1927,25 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     precioVenta: ObjSalePrice
                 };
 
-                if (this.logeado)
-                    this.uiRenderer.dibujarSlotInventario(Slot, GrhIndex, Amount, Equiped);
-
-                if (this.UIManager.comerciar.visible) {
-                    if ((Amount > 0 ) && (GrhIndex > 0)) {
-                        var numGrafico = this.indices[GrhIndex].grafico;
-                        this.UIManager.comerciar.cambiarSlotVenta(Slot, Amount, numGrafico);
-                    }
-                    else
-                        this.UIManager.comerciar.borrarSlotVenta(Slot);
+                if ((Amount > 0 ) && (GrhIndex > 0)) {
+                    var numGrafico = this.indices[GrhIndex].grafico;
+                    this.uiManager.interfaz.cambiarSlotInventario(Slot, Amount, numGrafico);
+                    if (this.uiManager.comerciar.visible)
+                        this.uiManager.comerciar.cambiarSlotVenta(Slot, Amount, numGrafico);
+                }
+                else {
+                    this.uiManager.interfaz.borrarSlotInventario(Slot);
+                    if (this.uiManager.comerciar.visible)
+                        this.uiManager.comerciar.borrarSlotVenta(Slot);
                 }
 
             },
 
             cambiarSlotHechizos: function (slot, spellID, nombre) {
                 this.hechizos[slot] = {id: spellID, nombre: nombre};
-
-                if (this.logeado)
-                    this.uiRenderer.modificarSlotHechizos(slot, nombre);
+                this.uiManager.interfaz.modificarSlotHechizo(slot,nombre);
+                /*if (this.logeado)
+                 this.uiRenderer.modificarSlotHechizos(slot, nombre);*/
             },
 
             inicializarPlayer: function () { // Es necesario porque el server manda el charindex de tu pj despues de crear characters TODO: esto anda siempre? si tira algun comando cuando recien entra que use this.player puede que no este seteado? (ACEPTAR COMANDOS DESPUES DE LOGGED)
@@ -2265,7 +2037,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
             },
 
             cambiarMapa: function (numeroMapa) {
-                this.map = new Mapa(numeroMapa, this);
+                this.map = new Mapa(numeroMapa, this.assetManager.getMapaSync(numeroMapa));
             },
 
             cambiarArea: function (gridX, gridY) {
@@ -2383,15 +2155,15 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     precio: Price
                 };
 
-                if ((Amount >0 ) && (GrhIndex > 0)) {
+                if ((Amount > 0 ) && (GrhIndex > 0)) {
                     var numGrafico = this.indices[GrhIndex].grafico;
-                    this.UIManager.comerciar.cambiarSlotCompra(Slot, Amount, numGrafico);
+                    this.uiManager.comerciar.cambiarSlotCompra(Slot, Amount, numGrafico);
                 }
                 else
-                    this.UIManager.comerciar.borrarSlotCompra(Slot);
+                    this.uiManager.comerciar.borrarSlotCompra(Slot);
             },
 
-            cerrarComerciar: function(){
+            cerrarComerciar: function () {
                 this.client.sendCommerceEnd();
             },
 
@@ -2399,8 +2171,8 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.client.sendCommerceBuy(slot, cantidad);
             },
 
-            vender: function(slot, cantidad){
-                this.client.sendCommerceSell(slot,cantidad);
+            vender: function (slot, cantidad) {
+                this.client.sendCommerceSell(slot, cantidad);
             },
 
             togglePausa: function () {
@@ -2609,52 +2381,12 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
 
             },
 
-            setServerOptions: function (host, port, username, userpw, email) {
-                this.host = host;
-                this.port = port;
+            inicializar: function (username) {
                 this.username = username;
-                this.userpw = userpw;
-                this.email = email;
-
-                this.client = new GameClient(this, this.host, this.port);
-            },
-
-            run: function (action, started_callback) {
-                var self = this;
-
-                //this.loadSprites();
                 this.setUpdater(new Updater(this));
                 this.camera = this.renderer.camera;
-
-                //this.setSpriteScale(this.renderer.scale);
-
-                var wait = setInterval(function () { // ACAAAAAAAAAAAAAAAA <- carga de graficos y demas !
-                    if (self.map.isLoaded && self.loader.graficosCargados()) {
-                        self.ready = true;
-                        log.debug('All sprites loaded.');
-
-                        self.audioManager.loadSounds();
-
-                        self.initAchievements();
-                        self.initCursors();
-
-                        if (!self.renderer.mobile
-                            && !self.renderer.tablet
-                            && self.renderer.upscaledRendering) {
-                            self.initSilhouettes();
-                        }
-
-                        self.initEntityGrid();
-
-                        //self.setPathfinder(new Pathfinder(self.map.width, self.map.height));
-
-                        //self.connect(action, started_callback);
-                        self.setLoginScreen();
-                        started_callback({success: true}); // <--- TODO
-
-                        clearInterval(wait);
-                    }
-                }, 500);
+                this.initEntityGrid();
+                this.ready = true;
             },
 
             tick: function () {
@@ -2665,7 +2397,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     if (!this.isPaused)
                         this.updater.update();
                     this.renderer.renderFrame();
-                    this.uiRenderer.renderFrame();
+                    /*this.uiRenderer.renderFrame();*/
                 }
 
                 if (!this.isStopped) {
@@ -2674,6 +2406,12 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
             },
 
             start: function () {
+
+                if (this.started)
+                    return;
+                this.renderer.drawMapaIni(this.player.gridX, this.player.gridY);
+
+                this.logeado = true;
                 this.started = true;
                 this.tick();
                 this.hasNeverStarted = false;
@@ -2880,68 +2618,17 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.invincible_callback = callback
             },
 
-            updateDados: function (Fuerza, Agilidad, Inteligencia, Carisma, Constitucion) {
-                this.uiRenderer.drawDados(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion);
-            },
-
-            setLoginScreen: function () {
-                var self = this;
-                this.uiRenderer.setLoginScreen(
-                    function (nombre, password) {
-
-                        self.client.intentarLogear(nombre, password);
-
-                    },
-                    function () {
-
-                        self.client.intentarCrearPersonaje(function () {
-                            self.setCrearPjScreen();
-                        });
-
-                    }
-                );
-            },
-
-            setGameScreen: function () {
-                this.uiRenderer.setGameScreen();
-            },
-
-            setCrearPjScreen: function () {
-                var self = this;
-                this.uiRenderer.setCrearPjScreen(
-                    function () {
-                        self.client.sendThrowDices();
-                    },
-                    function () {
-                        self.setLoginScreen();
-                    },
-                    function (nombre, password, raza, genero, clase, cabeza, mail, ciudad) {
-                        log.error(nombre + " " + password + " " + 0 + " " + 13 + " " + 0 + " " + raza + " " + genero + " " + clase + " " + cabeza + " " + mail + " " + ciudad);
-                        self.client.sendLoginNewChar(nombre, password, 0, 13, 0, raza, genero, clase, cabeza, mail, ciudad);
-                    }
-                );
-            },
-
             resize: function () {
                 this.renderer.rescale();
-                this.uiRenderer.rescale();
-                if (this.started)
-                    this.setGameScreen();
-                else
-                    this.setLoginScreen();
+                /*
+                 if (this.started)
+                 this.setGameScreen();
+                 else
+                 this.setLoginScreen();
+                 */
                 //this.renderer.drawMapaIni();
             },
 
-            logearPlayer: function () {
-                if (!this.started)
-                    this.start();
-                log.error("logear player");
-                //this.inicializarPlayer();
-                this.renderer.drawMapaIni(this.player.gridX, this.player.gridY);
-                this.setGameScreen();
-                log.error("<--- logear player");
-                this.logeado = true;
-            },
         });
 
         return Game;

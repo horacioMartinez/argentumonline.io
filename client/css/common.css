@@ -7,6 +7,9 @@
     cursor:pointer;
     overflow: hidden;
     outline:none; 
+    /*DEBUGGGGGGGGGGGGGGGGGG*/
+    outline: dashed 2px green;
+    /*DEBUGGGGGGGGGGGGGGGGGG*/
 }
 
 .botonImagen {
@@ -102,5 +105,5 @@
 /* Grid DE ITEMS para compra/venta por ej */
 
 .itemgrid { list-style-type: none; margin: 0; padding: 0; width: 160px;}
-.itemgrid li { float: left; width: 32px; color: white; height: 32px; font-size: 1em; text-align: left; vertical-align: text-top; outline: 2px solid transparent;}
+.itemgrid li { background-size: 100% 100%; float: left; width: 32px; color: white; height: 32px; font-size: 1em; text-align: left; vertical-align: text-top; outline: 2px solid transparent;}
 .itemgrid li.selected{outline-color:limegreen; outline-style: dashed;}

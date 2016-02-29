@@ -1,11 +1,12 @@
 require.config({
     paths: {
         "jquery": "lib/jquery",
-        "jquery-ui": "lib/jquery-ui"
+        "jquery-ui": "lib/jquery-ui",
+        "PxLoader": "lib/PxLoader"
     },
     shim: {
         "jquery-ui": {
-            export:"$" ,
+            exports:"$" ,
             deps: ['jquery']
         }
     }

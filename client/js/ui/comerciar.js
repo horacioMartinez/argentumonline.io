@@ -2,7 +2,7 @@
  * Created by horacio on 2/22/16.
  */
 
-define(['ui/itemgrid', 'lib/jquery-ui'], function (ItemGrid) {
+define(['ui/itemgrid'], function (ItemGrid) {
 
     var Comerciar = Class.extend({
         init: function (game) {

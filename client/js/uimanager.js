@@ -3,7 +3,7 @@
  */
 
 
-define(['ui/comerciar', 'lib/jquery-ui'], function (Comerciar) {
+define(['ui/comerciar', 'ui/interfaz'], function (Comerciar, Interfaz) {
 
     //TODO: crear los popups en run time con jquery y borrarlos cuando se cierran
 
@@ -12,11 +12,12 @@ define(['ui/comerciar', 'lib/jquery-ui'], function (Comerciar) {
             this.game = game;
             this.comerciar = new Comerciar(game);
             this._currentPopUp = 0; // mal
-            //this.initDOM();
+            this.interfaz = new Interfaz(game);
+            this.initDOM();
         },
 
         initDOM: function () {
-
+            this.interfaz.inicializar();
         },
 
         hayPopUpActivo: function(){

@@ -1,5 +1,5 @@
-define(['jquery', 'app', 'enums'], function ($, App) {
-    var app, game;
+define(['jquery-ui', 'app', 'assetmanager'], function (___ui___, App, AssetManager) {
+    var app, game, assetManager;
 
     var initApp = function () {
         $(document).ready(function () {
@@ -8,6 +8,13 @@ define(['jquery', 'app', 'enums'], function ($, App) {
             $('#chatbox input').css("font-size", Math.floor(12 * __ESCALA__) + 'px');
             log.error("ESCALA: " + __ESCALA__); // TODO: no usar una variable global!
 
+            /*$(function() {
+                $( "#progressbar" ).progressbar({
+                    value: 37
+                });
+            });*/
+
+            assetManager = new AssetManager();
             app = new App();
             app.center();
 
@@ -52,6 +59,8 @@ define(['jquery', 'app', 'enums'], function ($, App) {
                 return false;
             });
 
+
+
             var data = app.storage.data;
             if (data.hasAlreadyPlayed) {
                 if (data.player.name && data.player.name !== "") {
@@ -67,9 +76,20 @@ define(['jquery', 'app', 'enums'], function ($, App) {
 
             log.info("App initialized.");
 
-            initGame();
+            assetManager.preload( function(){
+                initLoginScreen();
+                initGame();
+            });
+        });
+    };
 
-            // cuando todo este cargado -> app.tryStartingGame();
+    var initLoginScreen = function () {
+        $('#botonJugar').click(function () {
+            app.tryStartingGame();
+        });
+
+        $('#botonCrearPJ').click(function () {
+            app.setCrearPJ();
         });
     };
 
@@ -79,22 +99,17 @@ define(['jquery', 'app', 'enums'], function ($, App) {
             var canvas = document.getElementById("entities"),
                 background = document.getElementById("background"),
                 foreground = document.getElementById("foreground"),
-                interfaz = document.getElementById("interfaz"),
                 input = document.getElementById("chatinput");
 
-            game = new Game(app);
-            game.setup(canvas, background, foreground, interfaz, input);
+            game = new Game(app,assetManager);
+            game.setup(canvas, background, foreground,  input);
             game.setStorage(app.storage);
             app.setGame(game);
-
-            if (app.isDesktop && app.supportsWorkers) {
-                game.loadMap();
-            }
 
             $('#chatbox').attr('value', '');
 
             if (game.renderer.mobile || game.renderer.tablet) {
-                $('#interfaz').bind('touchstart', function (event) {
+                $('#gamecanvas').bind('touchstart', function (event) {
                     if ((!game.started) || (game.isPaused))
                         return;
                     app.center();
@@ -102,7 +117,8 @@ define(['jquery', 'app', 'enums'], function ($, App) {
                         game.click();
                 });
             } else {
-                $('#interfaz').click(function (event) {
+                $('#gamecanvas').click(function (event) {
+                    log.error("click");
                     if ((!game.started) || (game.isPaused))
                         return;
 
@@ -113,7 +129,7 @@ define(['jquery', 'app', 'enums'], function ($, App) {
                     // TODO: si haces click afuera del menu pop up que lo cierre?
                 });
 
-                $('#interfaz').dblclick(function (event) {
+                $('#gamecanvas').dblclick(function (event) {
                     if ((!game.started) || (game.isPaused))
                         return;
 
@@ -225,7 +241,7 @@ define(['jquery', 'app', 'enums'], function ($, App) {
                     }
                     if (!continuar) {
                         _downKey(e);
-                        if (!game.UIManager.hayPopUpActivo()) // si hay un popup abierto dejar que siga la tecla al pop up, sino no
+                        if (!game.uiManager.hayPopUpActivo()) // si hay un popup abierto dejar que siga la tecla al pop up, sino no
                             e.preventDefault();
                         return;
                     }
@@ -233,7 +249,7 @@ define(['jquery', 'app', 'enums'], function ($, App) {
 
                 // lo de abajo se ejecuta solo si no hay un pop up abierto
 
-                if (game.isPaused || (game.UIManager.hayPopUpActivo()))
+                if (game.isPaused || (game.uiManager.hayPopUpActivo()))
                     return;
 
                 $chatb = $('#chatbox');
@@ -305,7 +321,7 @@ define(['jquery', 'app', 'enums'], function ($, App) {
                         }
                         $chat.val('');
                         app.hideChat();
-                        $('#interfaz').focus();
+                        $('#gamecanvas').focus();
                         return false;
                     } else {
                         app.hideChat();
@@ -339,12 +355,12 @@ define(['jquery', 'app', 'enums'], function ($, App) {
                     if (game.started) {
                         $chat.focus();
                         return false;
-                    } else {
-                        if (app.loginFormActive() || app.createNewCharacterFormActive()) {
-                            $('input').blur();      // exit keyboard on mobile
-                            app.tryStartingGame();
-                            return false;           // prevent form submit
-                        }
+                    } else {/*
+                     if (app.loginFormActive() || app.createNewCharacterFormActive()) {
+                     $('input').blur();      // exit keyboard on mobile
+                     app.tryStartingGame();
+                     return false;           // prevent form submit
+                     }*/
                     }
                 }
             });
@@ -352,10 +368,12 @@ define(['jquery', 'app', 'enums'], function ($, App) {
             if (game.renderer.tablet) {
                 $('body').addClass('tablet');
             }
-            app.tryStartingGame(); // INICIA GAME <-
+
+            app.start(); // <--------------- TODO: hacer que empieze luego de cargar todo (pasarle esta funcion al assetManager para que la llame)!!!
         });
 
     };
 
     initApp();
+
 });

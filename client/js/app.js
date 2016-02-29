@@ -1,8 +1,10 @@
-define(['jquery', 'storage'], function ($, Storage) {
+define(['jquery', 'storage', 'gameclient', 'crearpj'], function ($, Storage, GameClient, CrearPJ) {
 
     var App = Class.extend({
         init: function () {
+            this.crearPJ = new CrearPJ();
             this.isParchmentReady = true;
+            this.client = null;
             this.ready = false;
             this.storage = new Storage();
 
@@ -15,6 +17,9 @@ define(['jquery', 'storage'], function ($, Storage) {
 
         setGame: function (game) {
             this.game = game;
+            this.client = new GameClient(this.game, this.host, this.port);
+            this.game.client = this.client;
+
             this.isMobile = this.game.renderer.mobile;
             this.isTablet = this.game.renderer.tablet;
             this.isDesktop = !(this.isMobile || this.isTablet);
@@ -34,133 +39,108 @@ define(['jquery', 'storage'], function ($, Storage) {
             }
         },
 
+        setCrearPJ: function () {
+            this.crearPJ.inicializar();
+            this.setCrearButtonState(false);
+            this.client = new GameClient(this.game, this.host, this.port);
+            var self = this;
+            this.client.setDadosCallback(function (Fuerza, Agilidad, Inteligencia, Carisma, Constitucion) {
+                self.crearPJ.updateDados(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion);
+            });
+            this.client.intentarCrearPersonaje(function () {
+                self.setCrearPJScreen();
+                self.setCrearButtonState(true);
+            });
+            this.crearPJ.setBotonTirarDadosCallback(function () {
+                self.client.sendThrowDices();
+            });
+            this.crearPJ.setBotonVolverCallback(function () {
+                self.setLoginScreen();
+            });
+            this.crearPJ.setBotonCrearCallback(function (nombre, password, raza, genero, clase, cabeza, mail, ciudad) {
+                self.startGame(true,nombre,password, raza, genero, clase, cabeza, mail, ciudad);
+            });
+        },
+
         tryStartingGame: function () {
             if (this.starting) return;        // Already loading
 
-            var self = this;
-            /*
-             var action = this.createNewCharacterFormActive() ? 'create' : 'login';
-             var username = this.getUsernameField().attr('value');
-             var userpw = this.getPasswordField().attr('value');
-             var email = '';
-             var userpw2;
+            var username = $('#loginNombre').val();
+            var userpw = $('#loginContrasenia').val();
+            if (!this.validarLogin(username, userpw)) return;
 
-             if(action === 'create') {
-             email = this.$email.attr('value');
-             userpw2 = this.$pwinput2.attr('value');
-             }
-
-             if(!this.validateFormFields(username, userpw, userpw2, email)) return;
-
-             this.setPlayButtonState(false);
-
-             if(!this.ready || !this.canStartGame()) {
-             var watchCanStart = setInterval(function() {
-             log.debug("waiting...");
-             if(self.canStartGame()) {
-             clearInterval(watchCanStart);
-             self.startGame(action, username, userpw, email);
-             }
-             }, 100);
-             } else {
-             this.startGame(action, username, userpw, email);
-             }*/
-
-            this.startGame('create', "a", "a", "a");
+            this.setPlayButtonState(false);
+            this.startGame(false,username, userpw);
         },
 
-        startGame: function (action, username, userpw, email) {
+        startGame: function (newChar, username, userpw, raza, genero, clase, cabeza, mail, ciudad ) {
+            this.firstTimePlaying = !this.storage.hasAlreadyPlayed();
+            if (this.game.started)
+                return;
+            this.center();
+            this.game.inicializar(username);
             var self = this;
-            self.firstTimePlaying = !self.storage.hasAlreadyPlayed();
+            this.client.setLogeadoCallback( function(){
+                self.game.start();
+                self.setGameScreen();
+                self.setPlayButtonState(true);
+            });
 
-            if (username && !this.game.started) {
-                var optionsSet = false,
-                    config = this.config;
-
-                //>>includeStart("devHost", pragmas.devHost);
-                if (config.local) {
-                    log.debug("Starting game with local dev config.");
-                    this.game.setServerOptions(config.local.host, config.local.port, username, userpw, email);
-                } else {
-                    log.debug("Starting game with default dev config.");
-                    this.game.setServerOptions(config.dev.host, config.dev.port, username, userpw, email);
-                }
-                optionsSet = true;
-                //>>includeEnd("devHost");
-
-                //>>includeStart("prodHost", pragmas.prodHost);
-                if (!optionsSet) {
-                    log.debug("Starting game with build config.");
-                    this.game.setServerOptions(config.build.host, config.build.port, username, userpw, email);
-                }
-                //>>includeEnd("prodHost");
-
-                if (!self.isDesktop) {
-                    // On mobile and tablet we load the map after the player has clicked
-                    // on the login/create button instead of loading it in a web worker.
-                    // See initGame in main.js.
-                    self.game.loadMap();
-                }
-
-                this.center();
-                this.game.run(action, function (result) {
-                    if (result.success === true) {
-                        self.start();
-                    } else {
-                        self.setPlayButtonState(true);
-
-                        switch (result.reason) {
-                            case 'invalidlogin':
-                                // Login information was not correct (either username or password)
-                                self.addValidationError(null, 'The username or password you entered is incorrect.');
-                                self.getUsernameField().focus();
-                                break;
-                            case 'userexists':
-                                // Attempted to create a new user, but the username was taken
-                                self.addValidationError(self.getUsernameField(), 'The username you entered is not available.');
-                                break;
-                            case 'invalidusername':
-                                // The username contains characters that are not allowed (rejected by the sanitizer)
-                                self.addValidationError(self.getUsernameField(), 'The username you entered contains invalid characters.');
-                                break;
-                            case 'loggedin':
-                                // Attempted to log in with the same user multiple times simultaneously
-                                self.addValidationError(self.getUsernameField(), 'A player with the specified username is already logged in.');
-                                break;
-                            default:
-                                self.addValidationError(null, 'Failed to launch the game: ' + (result.reason ? result.reason : '(reason unknown)'));
-                                break;
-                        }
-                    }
-                });
+            if (!newChar) {
+                this.client.intentarLogear(username, userpw);
+            }
+            else {
+                this.client.sendLoginNewChar(username, userpw, 0, 13, 0, raza, genero, clase, cabeza, mail, ciudad);
             }
         },
 
         start: function () {
             this.hideIntro();
-            $('body').addClass('started');
+            $('body').addClass('login');
+        },
+
+        //estas son las que van
+        setLoginScreen: function () {
+            var $body = $('body');
+            $body.removeClass('jugar');
+            $body.removeClass('crear');
+            $body.addClass('login');
+        },
+
+        setCrearPJScreen: function () {
+            var $body = $('body');
+            $body.removeClass('login');
+            $body.removeClass('jugar');
+            $body.addClass('crear');
+        },
+
+        setGameScreen: function () {
+            var $body = $('body');
+            $body.removeClass('login');
+            $body.removeClass('crear');
+            $body.addClass('jugar');
         },
 
         setPlayButtonState: function (enabled) {
-            var self = this;
-            var $playButton = this.getPlayButton();
+            var $playButton = $('#botonJugar');
 
             if (enabled) {
                 this.starting = false;
-                this.$play.removeClass('loading');
-                $playButton.click(function () {
-                    self.tryStartingGame();
-                });
-                if (this.playButtonRestoreText) {
-                    $playButton.text(this.playButtonRestoreText);
-                }
+                $playButton.prop('disabled', false);
             } else {
                 // Loading state
                 this.starting = true;
-                this.$play.addClass('loading');
-                $playButton.unbind('click');
-                this.playButtonRestoreText = $playButton.text();
-                $playButton.text('Loading...');
+                $playButton.prop('disabled', true);
+            }
+        },
+
+        setCrearButtonState: function (enabled) {
+            var $crearButton = $('#botonCrearPJ');
+
+            if (enabled) {
+                $crearButton.prop('disabled', false);
+            } else {
+                $crearButton.prop('disabled', true);
             }
         },
 
@@ -178,52 +158,22 @@ define(['jquery', 'storage'], function ($, Storage) {
             return $('#parchment').hasClass("createcharacter");
         },
 
-        /**
-         * Performs some basic validation on the login / create new character forms (required fields are filled
-         * out, passwords match, email looks valid). Assumes either the login or the create new character form
-         * is currently active.
-         */
-        validateFormFields: function (username, userpw, userpw2, email) {
-            this.clearValidationErrors();
-
+        validarLogin: function (username, userpw) {
+            //this.clearValidationErrors(); // TODO: mostrar errores al logear (tambien los que devuelve el game)
             if (!username) {
-                this.addValidationError(this.getUsernameField(), 'Please enter a username.');
+                //this.addValidationError(this.getUsernameField(), 'Please enter a username.');
                 return false;
             }
 
             if (!userpw) {
-                this.addValidationError(this.getPasswordField(), 'Please enter a password.');
+                //this.addValidationError(this.getPasswordField(), 'Please enter a password.');
                 return false;
-            }
-
-            if (this.createNewCharacterFormActive()) {     // In Create New Character form (rather than login form)
-                if (!userpw2) {
-                    this.addValidationError(this.$pwinput2, 'Please confirm your password by typing it again.');
-                    return false;
-                }
-
-                if (userpw !== userpw2) {
-                    this.addValidationError(this.$pwinput2, 'The passwords you entered do not match. Please make sure you typed the password correctly.');
-                    return false;
-                }
-
-                // Email field is not required, but if it's filled out, then it should look like a valid email.
-                if (email && !this.validateEmail(email)) {
-                    this.addValidationError(this.$email, 'The email you entered appears to be invalid. Please enter a valid email (or leave the email blank).');
-                    return false;
-                }
             }
 
             return true;
         },
 
-        validateEmail: function (email) {
-            // Regex borrowed from http://stackoverflow.com/a/46181/393005
-            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return re.test(email);
-        },
-
-        addValidationError: function (field, errorText) {
+        addValidationError: function (field, errorText) { // TODO <- algo parecido! y ver crear pj, hacer checkeo en esta clase?
             $('<span/>', {
                 'class': 'validation-error blink',
                 text: errorText
@@ -318,10 +268,9 @@ define(['jquery', 'storage'], function ($, Storage) {
         },
 
         hideIntro: function () {
-            clearInterval(this.watchNameInputInterval);
             $('body').removeClass('intro');
             setTimeout(function () {
-                $('body').addClass('game');
+                $('body').addClass('login');
             }, 500);
         },
 

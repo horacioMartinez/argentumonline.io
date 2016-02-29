@@ -148,10 +148,15 @@ footer, header, hgroup, menu, nav, section {
 
    #intro {-moz-transition:0.4s opacity linear;-webkit-transition:0.4s opacity linear;-o-transition:0.4s opacity linear;-ms-transition:0.4s opacity linear;transition:0.4s opacity linear;}
    #container {z-index:100;background:rgba(0,0,0,0);-moz-transition:1s opacity linear 0.5s;-webkit-transition:1s opacity linear 0.5s;-o-transition:1s opacity linear 0.5s;-ms-transition:1s opacity linear 0.5s;transition:1s opacity linear 0.5s;}
-   .intro #container {opacity:0;pointer-events:none;}
-   .game #container {opacity:1;}
+   .intro #container {display:none;}
+   .login #container, .jugar #container, .crear #container {display:block;}
+   .login #juego, .login #crearPJ {display:none;} .login #conectar {display:block;}
+   .crear #juego, .crear #conectar {display:none;} .crear #crearPJ {display:block;}
+   .jugar #crearPJ, .jugar #conectar {display:none;} .jugar #juego {display:block;}
 
    /*  ACA: */
+
+   #crearPJ span {color:white;display: inline-block;} /*<<-- TEMPORAL <<-*/
 
 
    body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../graficos/ui/presentacion.jpg') no-repeat center center, #000; background-size:auto;}
@@ -179,12 +184,11 @@ footer, header, hgroup, menu, nav, section {
    #chatinput {color:#eee;}
    #chatinput.placeholder {color:#aaa;}
 
-   @media screen and (min-height: 500px) and (max-height: 650px)  { /* Cuando el tamaño de la ventana es similar al original, pongo tamaño nativos de graficos asi no se peirde perfomance en hacer agrandarlos y se ve mejor*/
-
+  @media screen and (min-height: 500px) and (max-height: 650px)  { /* Cuando el tamaño de la ventana es similar al original, pongo tamaño nativos de graficos asi no se peirde perfomance en hacer agrandarlos y se ve mejor*/
       #container {height:500px;}
   }
 
-  @media screen and (max-height: 500px){ /* Pantalla menor a 500px hacemos que el juego ocupe la pantalla entera */
+  @media screen and (max-height: 500px){ /* Pantalla menor a 500px hacemos que el jugar ocupe la pantalla entera */
       #container {height:100%;}
   }
 
