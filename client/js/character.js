@@ -1,7 +1,7 @@
 define(['entity', 'transition', 'timer', 'animacion'], function (Entity, Transition, Timer, Animacion) {
 
     var Character = Entity.extend({
-        init: function (CharIndex, BodyGrh, HeadGrh, offHeadX, offHeadY, Heading, gridX, gridY, WeaponGrh, ShieldGrh, HelmetGrh, Name, NickColor, Privileges) {
+        init: function (CharIndex, BodyGrh, HeadGrh, offHeadX, offHeadY, Heading, gridX, gridY, WeaponGrh, ShieldGrh, HelmetGrh, Name, clan, NickColor, Privileges) {
             var self = this;
 
             this._super(gridX, gridY);
@@ -33,6 +33,7 @@ define(['entity', 'transition', 'timer', 'animacion'], function (Entity, Transit
             this.heading = Heading;
 
             this.Name = Name;
+            this.clan = clan;
             this.NickColor = NickColor;
             this.Privileges = Privileges;
 

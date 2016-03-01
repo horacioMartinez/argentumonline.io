@@ -196,7 +196,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
                     this.game.player = this.game.characters[CharIndex];
                 }
             this.game.playerId = CharIndex;
-            this.game.inicializarPlayer();
+            log.error("USER CHAR INDEX IN SERVER: " + CharIndex);
         },
 
         handleCharacterCreate: function (CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, Name, NickColor, Privileges) {

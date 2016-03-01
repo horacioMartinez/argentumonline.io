@@ -37,7 +37,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.username = null;
                 // Player
                 this.playerId = null; //charindex
-                this.player = {}; // se inicializa con el msj logged, ver la funcion inicializarPlayer
+                this.player = null;
                 this.logeado = false; // NOTA: se pone logeado cuando llega el mensaje de logged, este es el ultimo de los mensajes al conectarse, asi que antes llega los mensajes de hechizos inventarios, etc. Deberia primero llegar esto y listo.. tambien deberia llegar el chardinex de tu pj al principio con este mensaje
                 this.inventario = [];
                 this.inventarioCompra = [];
@@ -1864,6 +1864,12 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
 
             agregarCharacter: function (CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, Name,
                                         NickColor, Privileges) {
+                var nombre = Name.slice(Name,Name.indexOf("<")-1);
+                var clan = Name.slice(Name.indexOf("<"), Name.length);
+                if ((!this.player) && ( this.username.toUpperCase() === nombre.toUpperCase())) { // mal esto, se deberia hacer comparando el charindex pero no se puede porque el server manda el char index del pj despues de crear los chars
+                    this.inicializarPlayer(CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre,clan,NickColor, Privileges);
+                    return;
+                }
 
                 if (CharIndex === this.playerId) { // cuando pasa de mapa vuelve a mandar el crear de tu pj, directamente cambio pos e ignoro lo demas
                     if (this.player) {
@@ -1883,7 +1889,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     this.desindexear(Weapon, this.armas),
                     this.desindexear(Shield, this.escudos),
                     this.desindexear(Helmet, this.cascos),
-                    Name, NickColor, Privileges);
+                    nombre,clan,NickColor, Privileges);
 
                 if ((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal))
                     c.muerto = true;
@@ -1941,29 +1947,33 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
 
             cambiarSlotHechizos: function (slot, spellID, nombre) {
                 this.hechizos[slot] = {id: spellID, nombre: nombre};
-                this.uiManager.interfaz.modificarSlotHechizo(slot,nombre);
+                this.uiManager.interfaz.modificarSlotHechizo(slot, nombre);
                 /*if (this.logeado)
                  this.uiRenderer.modificarSlotHechizos(slot, nombre);*/
             },
 
-            inicializarPlayer: function () { // Es necesario porque el server manda el charindex de tu pj despues de crear characters TODO: esto anda siempre? si tira algun comando cuando recien entra que use this.player puede que no este seteado? (ACEPTAR COMANDOS DESPUES DE LOGGED)
-                if (!this.characters[this.playerId])
-                    log.error("No se pudo inicializar el jugador");
+            inicializarPlayer: function (CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre,clan,NickColor, Privileges) {
 
-                // sacamos el character y metemos clase player
-                char = this.characters[this.playerId];
+                this.playerId = CharIndex;
+                this.player = new Player(CharIndex,
+                    this.desindexear(Body, this.cuerpos),
+                    this.desindexear(Head, this.cabezas), this.cuerpos[Body].offHeadX, this.cuerpos[Body].offHeadY,
+                    Heading, X, Y,
+                    this.desindexear(Weapon, this.armas),
+                    this.desindexear(Shield, this.escudos),
+                    this.desindexear(Helmet, this.cascos),
+                    nombre,clan, NickColor, Privileges);
 
-                this.player = new Player(char.id, char.bodyGrhs, char.headGrhs, char.offHeadX, char.offHeadY, char.heading, char.gridX, char.gridY, char.weaponGrhs,
-                    char.shieldGrhs, char.helmetGrhs, char.Name, char.NickColor, char.Privileges);
-                this.player.muerto = char.muerto;
+                if ((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal))
+                    this.player.muerto = true;
+                else
+                    this.player.muerto = false;
 
-                for (var i = 0; i < char.getFXs().length; i++) {
-                    if (char.getFXs()[i])
-                        this.player.setFX(char.getFXs()[i].anim, char.getFXs()[i].offX, char.getFXs()[i].offY);
-                }
+                this.entityGrid[X][Y][1] = this.player;
+                this.characters[CharIndex] = this.player;
 
-                this.characters[this.playerId] = this.player;
-                this.entityGrid[this.player.gridX][this.player.gridY][1] = this.player;
+                this.setCharacterFX(CharIndex, FX, FXLoops);
+
                 var self = this;
 
                 this.player.onCaminar(function (direccion, forced) {
