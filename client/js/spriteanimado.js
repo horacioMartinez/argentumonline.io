@@ -2,18 +2,18 @@
  * Created by horacio on 3/1/16.
  */
 
-define(['lib/pixi'], function (PIXI) {
+define(['spritegrh'], function (SpriteGrh) {
 
 
 
-    function SpriteAnimado(frames, velocidad, loops) {
-
+    function SpriteAnimado(grhAnim, loops) { // TODO: ver movieclip de pixi
+        // grhanim: grhAnim.frame : vector de texturas, grhAnim.velocidad: velocidad de anim
         // Clase que hereda de sprite de pixi
-        //PIXI.Sprite.call(this, texture, width, height);
-        PIXI.Sprite.call(this, PIXI.loader.resources[frames[0] + ""].texture);
-        this.frames = frames;
-        this.velocidad = velocidad;
-        this.length = frames.length;
+        //SpriteGrh.call(this, texture, width, height);
+        this.frames = grhAnim.frames;
+        SpriteGrh.call(this, this.frames[0]);
+        this.velocidad = grhAnim.velocidad;
+        this.length = this.frames.length;
         if (!loops || loops < 0) {
             this.loops = -1;
             this.elapsedLoops = -2;
@@ -24,19 +24,14 @@ define(['lib/pixi'], function (PIXI) {
         }
         this.lastTime = 0;
         this.frameIndex = 0;
-        this.isDirty = true;
         this.finished = false;
-
-        //this.sprite = new PIXI.Sprite(PIXI.loader.resources[frames[this.frameIndex] + ""].texture);
-        //this.sprite2 = new PIXI.Sprite(PIXI.loader.resources['5'].texture);
     }
 
 
-    SpriteAnimado.prototype = Object.create(PIXI.Sprite.prototype);
+    SpriteAnimado.prototype = Object.create(SpriteGrh.prototype);
     SpriteAnimado.constructor = SpriteAnimado;
 
     SpriteAnimado.prototype.tick = function () {
-        log.error("TICK"); // sacame
         if (this.frameIndex < this.length - 1)
             this.frameIndex += 1;
         else {
@@ -50,7 +45,7 @@ define(['lib/pixi'], function (PIXI) {
                 }
             }
         }
-        this.texture = PIXI.loader.resources[this.frames[this.frameIndex] + ""].texture;
+        this.cambiarTexture(this.frames[this.frameIndex]);
     };
 
     SpriteAnimado.prototype.onFinAnim = function (callback) {
@@ -61,9 +56,8 @@ define(['lib/pixi'], function (PIXI) {
         this.velocidad = velocidad;
     };
 
-    SpriteAnimado.prototype.setLoops = function (loops/*,endcont_callback*/) {
+    SpriteAnimado.prototype.setLoops = function (loops) {
         this.loops = loops;
-        //this.endcount_callback = onEndCount;
     };
 
     SpriteAnimado.prototype.update = function (time) {
@@ -80,7 +74,7 @@ define(['lib/pixi'], function (PIXI) {
 
         if (framesAumentados) {
             if (framesAumentados > 10) //sacar
-                console.log(" Probablemente algun problema con el timepo inicial !");
+                log.error(" Probablemente algun problema con el timepo inicial !");
             for (var i = 0; i < (framesAumentados % (this.frames.length )); i++) {
                 if (!this.finished)
                     this.tick();
@@ -88,11 +82,18 @@ define(['lib/pixi'], function (PIXI) {
                     break;
             }
             this.lastTime = time;
-            this.isDirty = true;
             return true;
         } else {
             return false;
         }
+    };
+
+    SpriteAnimado.prototype.cambiarFrames = function (frames) {
+        if (frames.length < this.frameIndex)
+            this.frameIndex = 0;
+        this.frames = frames;
+        this.length = frames.length;
+        this.cambiarTexture(this.frames[this.frameIndex]);
     };
 
     SpriteAnimado.prototype.start = function () {

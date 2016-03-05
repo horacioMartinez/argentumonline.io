@@ -11,7 +11,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
             this.ws = new Websock();
             this.byteQueue = new ByteQueue(this.ws);
 
-        },
+        },// TODO: cambiar en el protocolo los peekbyte por readbyte y sacar los readbyte de cada uno
 
         _connect: function (conectarse_callback) {
             //alert("connecting to: " + "ws://localhost:7666");
@@ -196,7 +196,6 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
                     this.game.player = this.game.characters[CharIndex];
                 }
             this.game.playerId = CharIndex;
-            log.error("USER CHAR INDEX IN SERVER: " + CharIndex);
         },
 
         handleCharacterCreate: function (CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, Name, NickColor, Privileges) {
@@ -208,7 +207,10 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
                 log.error("trato de saccar al player");
                 return;
             }
-            this.game.sacarEntity(this.game.characters[CharIndex]);
+            if (!this.game.characters[CharIndex])
+                log.error("trato de sacar entity inexistente");
+            else
+                this.game.sacarEntity(this.game.characters[CharIndex]);
             console.log("TODO: handleCharacterRemove ");
         },
 
@@ -254,6 +256,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
 
         handleAreaChanged: function (X, Y) {
             this.game.cambiarArea(X, Y);
+            console.log("areaChanged ");
         },
 
         handlePauseToggle: function () {

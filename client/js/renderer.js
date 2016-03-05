@@ -1,17 +1,28 @@
-define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'],
-    function (Camera, Item, Character, Player, Timer, TileAnimado) {
+define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'lib/pixi', 'spriteanimado', 'charactersprites', 'spritegrh'],
+    function (Camera, Item, Character, Player, Timer, TileAnimado, PIXI, SpriteAnimado, CharacterSprites, SpriteGrh) {
 
         var Renderer = Class.extend({
             init: function (game, canvas, background, foreground, assetManager) {
+
                 this.ALTO_LETRAS_CHAT = 12;
                 this.POSICIONES_EXTRA_RENDER_X = 4; // disminuir para aumentar performance ( no creo que cambie mucho ya que solo dibuja las porciones visibles, pero tiene que iterar en cada frame por todas las pos..)
                 this.POSICIONES_EXTRA_RENDER_Y = 8; // disminuir para aumentar performance
-                this.INTERFAZ_OFFSET_X = 0;//12; // ofset en pixels de donde dibujar los graficos debido a la interfaz
-                this.INTERFAZ_OFFSET_Y = 0;//33; // TODO: SACAR
+                this.POSICIONES_EXTRA_TERRENO = 1; // no deberia ser necesario mas de una. (una pos extra en cada una de las 4 direcciones)
                 this.game = game;
+
                 this.indices = game.indices;
                 this.assetManager = assetManager;
+                this.grhs = assetManager.grhs;
+                this.indices = this.assetManager.getIndices();
+                this.armas = this.assetManager.getArmas();
+                this.cabezas = this.assetManager.getCabezas();
+                this.cascos = this.assetManager.getCascos();
+                this.cuerpos = this.assetManager.getCuerpos();
+                this.escudos = this.assetManager.getEscudos();
                 this.graficos = this.assetManager.getGraficos();
+
+                this.camera = new Camera(this);
+                this._initPixi();
 
                 this.tilesAnimados = []; // vector continuo que tiene todos los tileanimados agregados (se usa para udpate)
                 this.tilesAnimadosGrid = []; // vector 3-D que contiene tiles animados en [x][y][layer]
@@ -53,6 +64,92 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
 
             },
 
+            //probar con rendertexture
+            _drawTerrenoIni: function (gridX, gridY) {
+                var gridXIni = this.camera.gridX - this.POSICIONES_EXTRA_TERRENO;
+                var gridYIni = this.camera.gridY - this.POSICIONES_EXTRA_TERRENO;
+
+                for (var i = 0; i <  this.camera.gridW + this.POSICIONES_EXTRA_TERRENO*2; i++) {
+                    for (var j = 0; j <  this.camera.gridH + this.POSICIONES_EXTRA_TERRENO*2; j++) {
+                        var screenX = (gridXIni + i) * this.tilesize;
+                        var screenY = (gridYIni + j) * this.tilesize;
+                        this.terreno[i][j].x = screenX;
+                        this.terreno[i][j].y = screenY;
+
+                        if (this.game.map.getGrh1(gridXIni + i, gridYIni + j))
+                            this.terreno[i][j].cambiarTexture(this.grhs[this.game.map.getGrh1(gridXIni + i, gridYIni + j)]);
+                    }
+                }
+            },
+
+            _initTerrenoSpriteGrid: function (layer1) {
+                this.terreno = [];
+                for (var i = 0; i < this.camera.gridW + this.POSICIONES_EXTRA_TERRENO*2; i++) {
+                    this.terreno[i] = [];
+                    for (var j = 0; j < this.camera.gridH + this.POSICIONES_EXTRA_TERRENO*2; j++) {
+                        this.terreno[i][j] = new SpriteGrh();
+                        layer1.addChild(this.terreno[i][j]);
+                    }
+                }
+                this._lowestColTerreno = 0; // variable que indica que indice tiene los sprites de pos mas baja, para que al caminar estos sean movidos a las mas altas
+                this._lowestRowTerreno = 0;
+            },
+
+            _initPixi: function () {
+
+                this.pixiRenderer = new PIXI.autoDetectRenderer(544, 416);
+
+                // The renderer will create a canvas element for you that you can then insert into the DOM.
+                document.getElementById("gamecanvas").appendChild(this.pixiRenderer.view);
+
+                // You need to create a root container that will hold the scene you want to draw.
+                this.stage = new PIXI.Container();
+                this.layer1 = new PIXI.Container();
+                this._initTerrenoSpriteGrid(this.layer1);
+                this.stage.addChild(this.layer1);
+            },
+
+            _getHeadingsGrhs: function (varIndice, num) {
+                if (!num)
+                    return null;
+                if (!varIndice[num])
+                    return null;
+                if (!varIndice[num].down)
+                    return null;
+                var res = [];
+                res[Enums.Heading.norte] = this.grhs[varIndice[num].up];
+                res[Enums.Heading.este] = this.grhs[varIndice[num].right];
+                res[Enums.Heading.sur] = this.grhs[varIndice[num].down];
+                res[Enums.Heading.oeste] = this.grhs[varIndice[num].left];
+                return res;
+            },
+
+            agregarCharacter: function (char, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, Name,
+                                        NickColor, Privileges) {
+                var bodys = this._getHeadingsGrhs(this.cuerpos, Body);
+                var heads = this._getHeadingsGrhs(this.cabezas, Head);
+                var weapons = this._getHeadingsGrhs(this.armas, Weapon);
+                var shields = this._getHeadingsGrhs(this.escudos, Shield);
+                var helmets = this._getHeadingsGrhs(this.cascos, Helmet);
+                var headOffX = 0;
+                var headOffY = 0;
+                if (this.cuerpos[Body]) {
+                    headOffX = this.cuerpos[Body].offHeadX;
+                    headOffY = this.cuerpos[Body].offHeadY;
+                }
+
+                var sprite = new CharacterSprites(Heading, bodys, heads, headOffX, headOffY, weapons, shields, helmets, char.moveSpeed); //(Heading, bodys, heads, weapons, shields, helmets, FXGrh, FXLoops, Name) {
+                sprite.x = char.x;
+                sprite.y = char.y;
+
+                this.stage.addChild(sprite);
+                char.sprite = sprite;
+            },
+
+            sacarCharacter: function (char) {
+                this.stage.removeChild(char.sprite);
+            },
+
             getWidth: function () {
                 return this.canvas.width;
             },
@@ -66,22 +163,6 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
             },
 
             getScaleFactor: function () {
-                /*var w = window.innerWidth,
-                 h = window.innerHeight,
-                 scale;
-
-                 this.mobile = false;
-
-                 if (w <= 1000) {
-                 scale = 2;
-                 this.mobile = true;
-                 }
-                 else if (w <= 1500 || h <= 870) {
-                 scale = 2;
-                 }
-                 else {
-                 scale = 3;
-                 }*/
                 this.mobile = false;
                 var scale = 1; // TODO
                 return scale;
@@ -89,16 +170,14 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
 
             rescale: function () {
                 this.scale = __ESCALA__;
-                this.createCamera();
+                this.initCamera();
                 if (this.game.player)
                     this.resetPos(this.game.player.gridX, this.game.player.gridY);
                 else
                     this.resetCanvases();
             },
 
-            createCamera: function () {
-                this.camera = new Camera(this);
-
+            initCamera: function () {
                 this.canvas.width = this.camera.gridW * this.tilesize * this.scale;// * this.scale;
                 this.canvas.height = this.camera.gridH * this.tilesize * this.scale;// * this.scale;
                 log.debug("#entities set to " + this.canvas.width + " x " + this.canvas.height);
@@ -941,23 +1020,29 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
             },
 
             drawMapaIni: function (gridX, gridY) { // Limpia vectores, dibuja el terreno del mapa, almacena los tiles animados
-
                 this.resetCameraPosition(gridX, gridY);
-                for (var i = 0; i < this.tilesAnimados.length; i++) {
-                    this.tilesAnimadosGrid[this.tilesAnimados[i].gridX][this.tilesAnimados[i].gridY][this.tilesAnimados[i].numLayer] = null;
-                }
-                this.tilesAnimados = [];
+                this.stage.x = -this.camera.x;
+                this.stage.y = -this.camera.y;
 
-                var self = this;
+                this._drawTerrenoIni(gridX, gridY);
+                /*
+                 this.resetCameraPosition(gridX, gridY);
+                 for (var i = 0; i < this.tilesAnimados.length; i++) {
+                 this.tilesAnimadosGrid[this.tilesAnimados[i].gridX][this.tilesAnimados[i].gridY][this.tilesAnimados[i].numLayer] = null;
+                 }
+                 this.tilesAnimados = [];
 
-                this.camera.forEachVisiblePosition(function (gridX, gridY) {
-                    for (var i = 1; i < 5; i++) {
-                        if (!self.drawLayer(i, gridX, gridY))
-                            self.agregarTileAnimado(i, gridX, gridY);
-                    }
-                }, this.POSICIONES_EXTRA_RENDER_X, this.POSICIONES_EXTRA_RENDER_Y);
+                 var self = this;
 
-                this.dibujarTerrenoYTechos = false; // recien dibujados
+                 this.camera.forEachVisiblePosition(function (gridX, gridY) {
+                 for (var i = 1; i < 5; i++) {
+                 if (!self.drawLayer(i, gridX, gridY))
+                 self.agregarTileAnimado(i, gridX, gridY);
+                 }
+                 }, this.POSICIONES_EXTRA_RENDER_X, this.POSICIONES_EXTRA_RENDER_Y);
+
+                 this.dibujarTerrenoYTechos = false; // recien dibujados
+                 */
             },
 
             drawBackground: function (ctx, color) {
@@ -1026,8 +1111,8 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
 
             resetCameraPosition: function (gridX, gridY) { // hecha por mi
                 this.camera.lookAtGridPos(gridX, gridY);
-                this.resetCanvases();
-                this.dibujarTerrenoYTechos = true;
+                //this.resetCanvases();
+                //this.dibujarTerrenoYTechos = true;
             },
 
             setCameraView: function (ctx) { // pone la camara en la pos (x,y)
@@ -1043,78 +1128,107 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
             },
 
             // TODO: probar crear una imagen del terreno con el mapa entero (antes y tenerla guardada o al logear con el pj) y al moverse ir clipeandola
-            moverCamara: function (segundoUpdateMov, x, y) {
-                this.background.translate(x, y);
-                this.context.translate(x, y);
-                this.foreground.translate(x, y);
-                this.camera.mover(-x, -y);
-                if (segundoUpdateMov) {
-                    var dir;
-                    if (x < 0)
-                        dir = Enums.Heading.oeste;
-                    else if (x > 0)
-                        dir = Enums.Heading.este;
-                    else if (y < 0)
-                        dir = Enums.Heading.norte;
-                    else if (y > 0)
-                        dir = Enums.Heading.sur;
-                    var self = this;
-                    this.camera.forEachVisibleNextLinea(function (gridX, gridY) { // TODO: (baja prioridad) muy feo todo esto de los tiles animados, reverlo enteramente
-                        for (var i = 1; i < 5; i++)
-                            self.agregarTileAnimado(i, gridX, gridY);
-                    }, dir);
+            moverPosition: function (x, y) {
+                this.camera.mover(x, y);
+                this.stage.x = -this.camera.x;
+                this.stage.y = -this.camera.y;
 
-                }
-                this.dibujarTerrenoYTechos = true;
+                /*
+                 this.background.translate(x, y);
+                 this.context.translate(x, y);
+                 this.foreground.translate(x, y);
+                 this.camera.mover(-x, -y);
+                 if (segundoUpdateMov) {
+                 var dir;
+                 if (x < 0)
+                 dir = Enums.Heading.oeste;
+                 else if (x > 0)
+                 dir = Enums.Heading.este;
+                 else if (y < 0)
+                 dir = Enums.Heading.norte;
+                 else if (y > 0)
+                 dir = Enums.Heading.sur;
+                 var self = this;
+                 this.camera.forEachVisibleNextLinea(function (gridX, gridY) { // TODO: (baja prioridad) muy feo todo esto de los tiles animados, reverlo enteramente
+                 for (var i = 1; i < 5; i++)
+                 self.agregarTileAnimado(i, gridX, gridY);
+                 }, dir);
+
+                 }
+                 this.dibujarTerrenoYTechos = true;
+                 */
             },
 
+            _updateTilesMov: function (dir) { // al moverse mueve la columna/fila que queda atras y al frente de todo
+                var gridXIni = this.camera.gridX - this.POSICIONES_EXTRA_TERRENO;
+                var gridYIni = this.camera.gridY - this.POSICIONES_EXTRA_TERRENO;
+                var cols = this.camera.gridW + this.POSICIONES_EXTRA_TERRENO*2;
+                var rows = this.camera.gridH + this.POSICIONES_EXTRA_TERRENO*2;
+
+                switch (dir) {
+                    case Enums.Heading.norte:
+                        var j = (this._lowestRowTerreno === 0) ? rows - 1 : this._lowestRowTerreno - 1;
+                        for (var i = 0; i < this.terreno.length; i++) {
+                            this.terreno[i][j].y = this.terreno[i][j].y - (rows * this.tilesize);
+                            var grh = this.game.map.getGrh1(gridXIni+ modulo(i-this._lowestColTerreno,cols), gridYIni -1);
+                            if (grh)
+                                this.terreno[i][j].cambiarTexture(this.grhs[grh]);
+                        }
+
+                        this._lowestRowTerreno = modulo(this._lowestRowTerreno-1,rows);
+                        break;
+
+                    case Enums.Heading.oeste:
+                        var i = (this._lowestColTerreno === 0) ? cols - 1 : this._lowestColTerreno - 1;
+                        for (var j = 0; j < this.terreno[i].length; j++) {
+                            this.terreno[i][j].x = this.terreno[i][j].x - (cols * this.tilesize);
+                            var grh = this.game.map.getGrh1(gridXIni- 1, gridYIni + modulo(j-this._lowestRowTerreno,rows));
+                            if ( grh )
+                                this.terreno[i][j].cambiarTexture(this.grhs[grh]);
+                        }
+                        this._lowestColTerreno = modulo(this._lowestColTerreno-1,cols);
+                        break;
+
+                    case Enums.Heading.sur:
+                        var j = this._lowestRowTerreno;
+                        for (var i = 0; i < this.terreno.length; i++) {
+                            this.terreno[i][j].y = this.terreno[i][j].y + (rows * this.tilesize);
+                            var grh = this.game.map.getGrh1(gridXIni+ modulo(i-this._lowestColTerreno,cols), gridYIni + rows);
+                            if (grh)
+                                this.terreno[i][j].cambiarTexture(this.grhs[grh]);
+                        }
+                        this._lowestRowTerreno= modulo(this._lowestRowTerreno+ 1 ,rows);
+                        break;
+
+                    case Enums.Heading.este:
+                        var i = this._lowestColTerreno;
+                        for (var j = 0; j < this.terreno[i].length; j++) {
+                            this.terreno[i][j].x = this.terreno[i][j].x + cols * this.tilesize;
+                            var grh = this.game.map.getGrh1(gridXIni + cols, gridYIni + modulo(j-this._lowestRowTerreno,rows));
+                            if (grh)
+                                this.terreno[i][j].cambiarTexture(this.grhs[grh]);
+                        }
+                        this._lowestColTerreno= modulo(this._lowestColTerreno+ 1 ,cols);
+                        break;
+
+                    default:
+                        log.error("character heading invalido");
+                        break;
+                }
+            },
             resetPos: function (gridX, gridY) {
-                this.resetCameraPosition(gridX, gridY);
-                this.renderFrameDesktop();
+                /*
+                 this.resetCameraPosition(gridX, gridY);
+                 this.renderFrameDesktop();
+                 */
             },
 
             moverCanvas: function (x, y) {
                 ctx.translate(x, y);
             },
 
-            getPlayerImage: function () {
-                var canvas = document.createElement('canvas'),
-                    ctx = canvas.getContext('2d'),
-                    os = this.upscaledRendering ? 1 : this.scale,
-                    player = this.game.player,
-                    sprite = player.getArmorSprite(),
-                    spriteAnim = sprite.animationData["idle_down"],
-                // character
-                    row = spriteAnim.row,
-                    w = sprite.width * os,
-                    h = sprite.height * os,
-                    y = row * h,
-                // weapon
-                    weapon = this.game.sprites[this.game.player.getWeaponName()],
-                    ww = weapon.width * os,
-                    wh = weapon.height * os,
-                    wy = wh * row,
-                    offsetX = (weapon.offsetX - sprite.offsetX) * os,
-                    offsetY = (weapon.offsetY - sprite.offsetY) * os,
-                // shadow
-                    shadow = this.game.shadows["small"],
-                    sw = shadow.width * os,
-                    sh = shadow.height * os,
-                    ox = -sprite.offsetX * os,
-                    oy = -sprite.offsetY * os;
-
-                canvas.width = w;
-                canvas.height = h;
-
-                ctx.clearRect(0, 0, w, h);
-                ctx.drawImage(shadow.image, 0, 0, sw, sh, ox, oy, sw, sh);
-                ctx.drawImage(sprite.image, 0, y, w, h, 0, 0, w, h);
-                ctx.drawImage(weapon.image, 0, wy, ww, wh, offsetX, offsetY, ww, wh);
-
-                return canvas.toDataURL("image/png");
-            },
-
             renderFrame: function () {
+
                 if (this.mobile || this.tablet) {
                     this.renderFrameMobile();
                 }
@@ -1124,13 +1238,18 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'enums'
             },
 
             renderFrameDesktop: function () {
+                /*SACAR>*/
+                this.pixiRenderer.render(this.stage);
+                /*<SACAR*/
 
-                this.clearScreen(this.context);
-                this.drawPosicionesLoop();
-                if (this.game.cursorVisible)
-                    this.drawCursor();
+                /*
+                 this.clearScreen(this.context);
+                 this.drawPosicionesLoop();
+                 if (this.game.cursorVisible)
+                 this.drawCursor();
 
-                this.drawDebugInfo();
+                 this.drawDebugInfo();
+                 */
             },
 
             renderFrameMobile: function () {

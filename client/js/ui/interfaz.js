@@ -10,23 +10,6 @@ define(['ui/itemgrid'], function (ItemGrid) {
             this.inventarioGrid = new ItemGrid("itemsGrid");
         },
 
-        // TODO: si se crea cada vez que se abre, que no complete los slots vacios
-        show: function () {
-
-            this.clearInfos();
-            $('#comerciar').show();
-            this.visible = true;
-            for (var i = 1; i < this.game.inventario.length; i++) {
-                item = this.game.inventario[i];
-                if (item) {
-                    var numGraf = this.game.indices[item.grh].grafico;
-                    if (numGraf) {
-                        this.ventaGrid.modificarSlot(i, item.cantidad, numGraf);
-                    }
-                }
-            }
-        },
-
         inicializar: function () {
             var self = this;
 
@@ -68,9 +51,7 @@ define(['ui/itemgrid'], function (ItemGrid) {
         },
 
         _updateBarra: function (cant, max, $barra, $label) {
-            //$("#barraHambreUsada").css("width","80%");
             var porcentaje = (100 - Math.floor((cant / max) * 100));
-            log.error("PORCENTAJE!: "+porcentaje);
             $barra.css("width", porcentaje + "%");
             $label.text(cant + "/" + max);
         },
@@ -84,7 +65,6 @@ define(['ui/itemgrid'], function (ItemGrid) {
             this._updateBarra(cant, max, $("#barraManaUsada"), $("#barraManaTexto"));
         },
         updateBarraHambre: function (cant, max) {
-            log.error(cant+ " " + max);
             this._updateBarra(cant, max, $("#barraHambreUsada"), $("#barraHambreTexto"));
         },
         updateBarraSed: function (cant, max) {

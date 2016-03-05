@@ -2,11 +2,7 @@ define(['character', 'player', 'timer', 'enums'], function (Character, Player, T
 
     var Updater = Class.extend({
         init: function (game) {
-            this.contadorPrimerUpdate = 0;
-            this.segundoUpdateAlMover = true; // en realidad es la segunda o tercera (segun el contador)
-
             this.game = game;
-            this.playerAggroTimer = new Timer(1000);
         },
 
         update: function () {
@@ -14,7 +10,6 @@ define(['character', 'player', 'timer', 'enums'], function (Character, Player, T
                 //this.updateZoning();
                 this.updateItems();
                 this.updateCharacters();
-                this.updateRendererMov();
                 //this.updatePlayerAggro();
                 //this.updateAnimations();
                 //this.updateAnimatedTiles();
@@ -24,35 +19,24 @@ define(['character', 'player', 'timer', 'enums'], function (Character, Player, T
             }
         },
 
-        updateItems: function(){
+        updateItems: function () {
             var self = this;
             this.game.forEachItem(function (item) {
                 item.update((self.game.currentTime));
             });
         },
 
-        updateCharacters: function () {
+        updateCharacters: function () { // TODO: un callback asi no hay que estar checkeando en cada uno...
             var self = this;
             this.game.forEachCharacter(function (char) {
                 if (self.game.renderer.entityEnRangoVisible(char)) {
                     self.updateMovimientoCharacter(char);
                     //self.game.onCharacterUpdate(entity);
                     self.updateEntityFading(char);
-                    char.update(self.game.currentTime);
                     self.updateCharTransitions(char);
+                    char.update(self.game.currentTime);
                 }
             });
-        },
-
-
-        updatePlayerAggro: function () {
-            var t = this.game.currentTime,
-                player = this.game.player;
-
-            // Check player aggro every 1s when not moving nor attacking
-            if (player && !player.isMoving() && !player.isAttacking() && this.playerAggroTimer.isOver(t)) {
-                player.checkAggro();
-            }
         },
 
         updateEntityFading: function (entity) {
@@ -126,23 +110,32 @@ define(['character', 'player', 'timer', 'enums'], function (Character, Player, T
          }
          },*/
 
-        updateMovimientoCharacter: function (c) {
-            var self = this;
-            var tick = Math.round(32 / Math.round((c.moveSpeed / (1000 / this.game.renderer.FPS))));
-
+        updateMovimientoCharacter: function (c) { // todo: hacer una diferente para player y sacarse de encima los instanceof
             if (c.moviendose && c.movement.inProgress === false) {
                 if (!c.tratarDeCaminar())
                     return;
+                //mover
+                if (c instanceof Player)
+                    this.updateRendererComenzarMov(c.getDirMov());
+
                 c.animarMovimiento();
+
+                var self = this;
+                var tick = Math.round(32 / Math.round((c.moveSpeed / (1000 / this.game.renderer.FPS))));
+
                 if (c.getDirMov() === Enums.Heading.oeste) {
 
                     c.movement.start(this.game.currentTime,
                         function (x) {
-                            c.x = x;
+                            c.setPosition(x, null);
+                            if (c instanceof Player)
+                                self.updateRendererPos(c.x, c.y);
                         },
                         function () {
-                            c.x = c.movement.endValue;
+                            c.setPosition(c.movement.endValue, null);
                             c.hasMoved();
+                            if (c instanceof Player)
+                                self.updateRendererPos(c.x, c.y);
                         },
                         c.x - tick,
                         c.x - 32,
@@ -151,11 +144,15 @@ define(['character', 'player', 'timer', 'enums'], function (Character, Player, T
                 else if (c.getDirMov() === Enums.Heading.este) {
                     c.movement.start(this.game.currentTime,
                         function (x) {
-                            c.x = x;
+                            c.setPosition(x, null);
+                            if (c instanceof Player)
+                                self.updateRendererPos(c.x, c.y);
                         },
                         function () {
-                            c.x = c.movement.endValue;
+                            c.setPosition(c.movement.endValue, null);
                             c.hasMoved();
+                            if (c instanceof Player)
+                                self.updateRendererPos(c.x, c.y);
                         },
                         c.x + tick,
                         c.x + 32,
@@ -164,11 +161,15 @@ define(['character', 'player', 'timer', 'enums'], function (Character, Player, T
                 else if (c.getDirMov() === Enums.Heading.norte) {
                     c.movement.start(this.game.currentTime,
                         function (y) {
-                            c.y = y;
+                            c.setPosition(null, y);
+                            if (c instanceof Player)
+                                self.updateRendererPos(c.x, c.y);
                         },
                         function () {
-                            c.y = c.movement.endValue;
+                            c.setPosition(null, c.movement.endValue);
                             c.hasMoved();
+                            if (c instanceof Player)
+                                self.updateRendererPos(c.x, c.y);
                         },
                         c.y - tick,
                         c.y - 32,
@@ -177,11 +178,15 @@ define(['character', 'player', 'timer', 'enums'], function (Character, Player, T
                 else if (c.getDirMov() === Enums.Heading.sur) {
                     c.movement.start(this.game.currentTime,
                         function (y) {
-                            c.y = y;
+                            c.setPosition(null, y);
+                            if (c instanceof Player)
+                                self.updateRendererPos(c.x, c.y);
                         },
                         function () {
-                            c.y = c.movement.endValue;
+                            c.setPosition(null, c.movement.endValue);
                             c.hasMoved();
+                            if (c instanceof Player)
+                                self.updateRendererPos(c.x, c.y);
                         },
                         c.y + tick,
                         c.y + 32,
@@ -190,20 +195,12 @@ define(['character', 'player', 'timer', 'enums'], function (Character, Player, T
             }
         },
 
-        updateRendererMov: function () {
-            if ((this.game.player.x !== this.game.renderer.camera.centerPosX) || (this.game.player.y !== this.game.renderer.camera.centerPosY)) {
-                this.game.renderer.moverCamara(this.segundoUpdateAlMover, this.game.renderer.camera.centerPosX - this.game.player.x, this.game.renderer.camera.centerPosY - this.game.player.y);
+        updateRendererComenzarMov: function (dir) {
+            this.game.renderer._updateTilesMov(dir);
+        },
 
-                if (this.game.player.movement.inProgress) {
-                    this.contadorPrimerUpdate++;
-                    if (this.contadorPrimerUpdate === 1) // true si la proxima es la segunda update del movimiento del player
-                        this.segundoUpdateAlMover = true;
-                    else
-                        this.segundoUpdateAlMover = false;
-                }
-                else
-                    this.contadorPrimerUpdate = 0;
-            }
+        updateRendererPos: function (x, y) {
+            this.game.renderer.moverPosition(x - this.game.renderer.camera.centerPosX, y - this.game.renderer.camera.centerPosY);
         },
 
         updateKeyboardMovement: function () {

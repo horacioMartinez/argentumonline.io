@@ -10,7 +10,9 @@ define([], function () {
             this.gridX = 0;
             this.gridY = 0;
             this.offset = 0.5;
-            this.rescale();
+
+            this.gridW = 17;
+            this.gridH = 13;
         },
 
         getHeight: function () {
@@ -21,17 +23,6 @@ define([], function () {
             return this.gridW * 32;
         },
 
-        rescale: function () {
-            var factor = this.renderer.mobile ? 1 : 2;
-
-            this.gridW = 17;//* factor;
-            this.gridH = 13;//* factor;
-
-            log.debug("---------");
-            log.debug("Factor:" + factor);
-            log.debug("W:" + this.gridW + " H:" + this.gridH);
-        },
-
         setPosition: function (x, y) {
             this.x = x;
             this.y = y;
@@ -40,7 +31,7 @@ define([], function () {
             this.gridY = Math.floor(y / 32);
 
             this.centerPosX = this.x + (Math.floor(this.gridW / 2) * this.renderer.tilesize);
-            this.centerPosY = this.y + (Math.floor(this.gridH / 2) * this.renderer.tilesize);
+            this.centerPosY = this.y + (Math.floor(this.gridH / 2)  * this.renderer.tilesize);
         },
 
         setGridPosition: function (gridX, gridY) {
@@ -48,7 +39,7 @@ define([], function () {
         },
 
         lookAtGridPos: function (gridX, gridY) {
-            this.setGridPosition(gridX - Math.floor(this.gridW / 2), gridY - Math.floor(this.gridH / 2));
+            this.setGridPosition(gridX - Math.floor(this.gridW / 2), gridY - Math.floor(this.gridH / 2) );
         },
 
         mover: function (x, y) {

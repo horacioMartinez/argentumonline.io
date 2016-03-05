@@ -4,15 +4,14 @@ define(['text!../indices/graficos.json',
         'text!../indices/cascos.json',
         'text!../indices/cuerpos.json',
         'text!../indices/escudos.json',
-        'text!../indices/fxs.json', 'lib/howler', 'PxLoader'],
-    function (jsonGraficos, jsonArmas, jsonCabezas, jsonCascos, jsonCuerpos, jsonEscudos, jsonFxs, __howler__, PxLoader) {
+        'text!../indices/fxs.json', 'lib/howler', 'lib/pixi'],
+    function (jsonGraficos, jsonArmas, jsonCabezas, jsonCascos, jsonCuerpos, jsonEscudos, jsonFxs, __howler__, PIXI) {
 
         var AssetManager = Class.extend({
             init: function () {
                 this.ui = {};
                 this.callback_llamado = false;
 
-                this.loader = new PxLoader();
                 this.currentMusic = null;
                 this.sounds = [];
 
@@ -178,23 +177,30 @@ define(['text!../indices/graficos.json',
                 }
             },
 
-            _agregarPreloadGraficos: function () {
+            _agregarPreloadGraficos: function (loader) {
                 this.indices = this.getIndices();
-                if (this.graficos)
-                    log.error("graficos cargados dos veces?!");
-                this.graficos = [];
+                var graficos = [];
                 for (var i = 0; i < this.indices.length; i++) {
                     if (!this.indices[i].grafico) { // animacion
                         continue;
                     }
                     var numGrafico = this.indices[i].grafico;
-                    if (this.graficos[numGrafico]) { // ya puesto a cargar
+                    if (graficos[numGrafico]) { // ya puesto a cargar
                         continue;
                     }
-                    var img = this.loader.addImage("graficos/" + numGrafico + ".png");
-                    this.graficos[numGrafico] = {imagen: img, loaded: true};
+                    graficos[numGrafico] = 1;
+                    loader.add(numGrafico + "", "graficos/" + numGrafico + ".png");
                 }
             },
+
+            /*
+             $.getJSON('simple.json')
+             .success(function(data) {
+             alert(data.simple);
+             log.error("HOLAAAAAAAAAAA " + data.simple);
+             }).error(function(xhr) {
+             alert("Se produjo algun error cargando la página, probá recargandola");
+             });*/
 
             getMapaSync: function (numMapa) {
                 var res;
@@ -215,33 +221,53 @@ define(['text!../indices/graficos.json',
                 var maxMapa = 312;
                 for (var i = 1; i <= maxMapa; i++) {
                     $.getJSON("mapas/mapa" + i + ".json")/*.success(function(data){
-                     log.error("cargado un mapa");
+                     log.error("un mapa cargado");
                      })*/;
                 }
             },
 
-            preload: function (terminar_callback) {
-                this._loadMapas();
-                /*
-                 $.getJSON('simple.json')
-                 .success(function(data) {
-                 alert(data.simple);
-                 log.error("HOLAAAAAAAAAAA " + data.simple);
-                 }).error(function(xhr) {
-                 alert("Se produjo algun error cargando la página, probá recargandola");
-                 });*/
-                this.loadSounds();
-                this._agregarPreloadGraficos();
-                this.loader.addProgressListener(function (e) {
-                    percent = Math.round(e.completedCount / e.totalCount * 100);
-                    $("#progress").html(percent);
-                });
+            _initGrhs: function () { // cada grh es un texture distinto O un objeto que contiene un vector de texturas y velocidad, todo: como ya se creo un texture por cada grafico cargado, reuso ese si es el grh que empieza en 0,0
+                if (this.grhs)
+                    log.error("graficos cargados dos veces!!");
 
-                this.loader.addCompletionListener(function (e) {
+                this.grhs = [];
+                for (var i = 0; i < this.indices.length; i++) {
+
+                    if (this.grhs[i])
+                        return; // ya cargado
+                    if (this.indices[i].frames) { // animacion
+                        var frameNumbers = this.indices[i].frames;
+                        var vecgrhs = [];
+                        for (var j = 0; j < frameNumbers.length; j++) {
+                            if (frameNumbers[j] > i) {
+                                var k = frameNumbers[j]; // creo la textura (como el numero es mas alto, todabia no la habia creado)
+                                this.grhs[k] = new PIXI.Texture(PIXI.loader.resources[this.indices[k].grafico + ""].texture.baseTexture, new PIXI.Rectangle(this.indices[k].offX, this.indices[k].offY, this.indices[k].width, this.indices[k].height));
+                            }
+                            vecgrhs.push(this.grhs[frameNumbers[j]]);
+                        }
+                        this.grhs[i] = {frames: vecgrhs, velocidad: this.indices[i].velocidad};
+                    }
+                    else {
+                        if (this.indices[i].grafico) //grh normal
+                            this.grhs[i] = new PIXI.Texture(PIXI.loader.resources[this.indices[i].grafico + ""].texture.baseTexture, new PIXI.Rectangle(this.indices[i].offX, this.indices[i].offY, this.indices[i].width, this.indices[i].height));
+                    }
+                }
+            },
+
+            preload: function (terminar_callback) {
+                //this._loadMapas();
+                //this.loadSounds();
+                // TODO: usar el json loader de pixi para cargar los json
+                var loader = PIXI.loader;
+                this._agregarPreloadGraficos(loader);
+                loader.on('progress', function (loader, loadedResource) {
+                    console.log('Progress:', loader.progress + '%');
+                });
+                var self = this;
+                loader.load(function (loader, resources) {
+                    self._initGrhs();
                     terminar_callback();
                 });
-
-                this.loader.start();
             },
         });
 

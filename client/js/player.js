@@ -64,12 +64,12 @@ define(['character',  'enums'], function (Character) {
                 if (this.forcedCaminar[0])
                     this.moviendoseForzado = true;
                 this.caminarCallback(this.getDirMov(), this.forcedCaminar[0]);
-                this.heading = this.getDirMov();
+                this._setHeading(this.getDirMov());
                 return true;
             }
             else {
                 if (this.heading !== this.getDirMov()) {
-                    this.heading = this.getDirMov();
+                    this._setHeading(this.getDirMov());
                     this.cambioHeadingCallback(this.heading);
                 }
                 return false;

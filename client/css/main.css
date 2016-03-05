@@ -123,7 +123,7 @@ footer, header, hgroup, menu, nav, section {
     #background { background:url('../img/common/loading.png') no-repeat center center, #000;}
     .error #background { background:url('../img/common/loading-error.png') no-repeat center center, #000;}
 
-    #background, #foreground, #interfaz { margin:0; padding:0;}
+    #background, #foreground, #interfaz { margin:0; padding:0; z-index: -34;}
 
     #canvas, #bar-container, #chatbox, #canvasborder,#interfaz, #foreground, #background, footer, #container, #achievement-notification {-moz-user-select:none;-webkit-user-select:none;-o-user-select:none;-ms-user-select:none;}
 

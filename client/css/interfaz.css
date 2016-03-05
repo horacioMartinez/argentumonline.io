@@ -22,15 +22,13 @@
 .inventarioActivo #itemsGrid {display:inline-block;}
 .inventarioActivo #InventarioHechizos {background-image:url('../imagenes/interfaz/centroInventario.jpg');}
 
-span {color:white;display: inline-block;} /*<<-- TEMPORAL, SACARRRRRRR <<-*/
-
 #barras span {color:white;display: inline-block;position: absolute; top:0; bottom: 0; left: 0; right: 0; margin: auto;text-align: center; font-size: 0.8em;}
-#barraEnergia, #barraMana, #barraSalud,#barraHambre,#barraSed {background-color: Transparent; position: absolute; left:11.84%; width: 30.6%; height:2.2%;}
+#barraEnergia, #barraMana, #barraSalud, #barraHambre, #barraSed {background-color: Transparent; position: absolute; left:11.84%; width: 30.6%; height:2.2%;}
 #barraEnergia {top:68.6%;}
 #barraMana {top:73.4%;}
 #barraSalud{top:77.6%;}
 #barraHambre {top:82.2%;}
 #barraSed {top:86.4%;}
-#barraEnergiaUsada, #barraManaUsada, #barraSaludUsada,#barraHambreUsada,#barraSedUsada {background-color: black;float:right; height:100%; width:30%; outline: dashed 2px green;}
+#barraEnergiaUsada, #barraManaUsada, #barraSaludUsada, #barraHambreUsada, #barraSedUsada {background-color: black;float:right; height:100%; width:30%; outline: dashed 2px green;}
 
 

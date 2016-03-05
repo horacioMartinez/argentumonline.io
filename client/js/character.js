@@ -1,4 +1,4 @@
-define(['entity', 'transition', 'timer', 'animacion'], function (Entity, Transition, Timer, Animacion) {
+define(['entity', 'transition', 'timer', 'animacion', 'lib/pixi'], function (Entity, Transition, Timer, Animacion, PIXI) {
 
     var Character = Entity.extend({
         init: function (CharIndex, BodyGrh, HeadGrh, offHeadX, offHeadY, Heading, gridX, gridY, WeaponGrh, ShieldGrh, HelmetGrh, Name, clan, NickColor, Privileges) {
@@ -18,6 +18,8 @@ define(['entity', 'transition', 'timer', 'animacion'], function (Entity, Transit
             this.shieldGrhs = null;
             this.helmetGrhs = null;
             this.FXs = [];
+
+            this.sprite = null;
 
             this.setBodyGrh(BodyGrh);
             this.setHeadGrh(HeadGrh);
@@ -47,6 +49,24 @@ define(['entity', 'transition', 'timer', 'animacion'], function (Entity, Transit
             this.movement = new Transition();
         },
 
+        setPosition: function (x, y) {
+            if ((x === 0) || x) {
+                this.x = x;
+                if (this.sprite)
+                    this.sprite.x = x;
+            }
+            if ((y === 0) || y) {
+                this.y = y;
+                if (this.sprite)
+                    this.sprite.y = y;
+            }
+        },
+
+        _setHeading: function (heading) {
+            this.heading = heading;
+            this.sprite.cambiarHeading(heading);
+        },
+
         getDirMov: function () {
             return this.heading;
         },
@@ -60,7 +80,7 @@ define(['entity', 'transition', 'timer', 'animacion'], function (Entity, Transit
             return grh[this.heading];
         },
 
-        getBodyGrh: function () { // hacer que devuelve el frame correspondiente si se esta moviendo
+        getBodyGrh: function () {
             return this._getGrh(this.bodyGrhs);
         },
 
@@ -68,12 +88,12 @@ define(['entity', 'transition', 'timer', 'animacion'], function (Entity, Transit
             return this._getGrh(this.headGrhs);
         },
 
-        getHelmetGrh: function () { // hacer que devuelve el frame correspondiente si se esta moviendo
+        getHelmetGrh: function () {
 
             return this._getGrh(this.helmetGrhs);
         },
 
-        getWeaponGrh: function () { // hacer que devuelve el frame correspondiente si se esta moviendo
+        getWeaponGrh: function () {
             return this._getGrh(this.weaponGrhs);
         },
 
@@ -90,8 +110,7 @@ define(['entity', 'transition', 'timer', 'animacion'], function (Entity, Transit
         },
 
         mover: function (dir) {
-            this.resetMovement();
-            this.heading = dir;
+            this.cambiarHeading(dir);
             this.moviendose = true;
         },
 
@@ -101,7 +120,7 @@ define(['entity', 'transition', 'timer', 'animacion'], function (Entity, Transit
 
         cambiarHeading: function (heading) {
             this.resetMovement();
-            this.heading = heading;
+            this._setHeading(heading);
         },
 
         resetMovement: function () {
@@ -171,23 +190,23 @@ define(['entity', 'transition', 'timer', 'animacion'], function (Entity, Transit
             this.FXs[id].offY = offFxY;
 
         },
-        crearFinFxFunc: function(id){
+        crearFinFxFunc: function (id) {
             var self = this;
-            return function(){
+            return function () {
                 self.deleteFX(id)
             };
         },
 
-        deleteFX: function(id){
+        deleteFX: function (id) {
             if (!this.FXs[id])
                 return;
             this.FXs[id] = null;
         },
 
-        stopFXsInfinitos: function(){ // por ej, para de meditar
-            for (var i = 0; i < this.FXs.length; i++){
+        stopFXsInfinitos: function () { // por ej, para de meditar
+            for (var i = 0; i < this.FXs.length; i++) {
                 if (this.FXs[i])
-                    if ( (this.FXs[i].anim.loops < 1) )
+                    if ((this.FXs[i].anim.loops < 1))
                         this.FXs[i] = null;
             }
         },
@@ -210,31 +229,39 @@ define(['entity', 'transition', 'timer', 'animacion'], function (Entity, Transit
         },
 
         animarMovimiento: function () {
+            if (this.sprite)
+                if (this.sprite.visible)
+                    this.sprite.start();
             this.resetMovimientos();
         },
 
         update: function (time) {
-            // animaciones
-            if (this.bodyGrhs[this.heading] instanceof Animacion)
-                this.bodyGrhs[this.heading].update(time);
-            if (this.headGrhs[this.heading] instanceof Animacion)
-                this.headGrhs[this.heading].update(time);
-            if (this.weaponGrhs[this.heading] instanceof Animacion)
-                this.weaponGrhs[this.heading].update(time);
-            if (this.shieldGrhs[this.heading] instanceof Animacion)
-                this.shieldGrhs[this.heading].update(time);
-            if (this.helmetGrhs[this.heading] instanceof Animacion)
-                this.helmetGrhs[this.heading].update(time);
-            for (var i = 0; i < this.FXs.length; i++) {
-                if (this.FXs[i]) {
-                    this.FXs[i].anim.update(time);
-                }
-            }
-            // chat
-            if (this.chat) {
-                if (time > this.tiempoChatInicial + this.DURACION_CHAT)
-                    this.chat = null;
-            }
+            if (this.sprite)
+                this.sprite.update(time);
+
+            /*
+             // animaciones
+             if (this.bodyGrhs[this.heading] instanceof Animacion)
+             this.bodyGrhs[this.heading].update(time);
+             if (this.headGrhs[this.heading] instanceof Animacion)
+             this.headGrhs[this.heading].update(time);
+             if (this.weaponGrhs[this.heading] instanceof Animacion)
+             this.weaponGrhs[this.heading].update(time);
+             if (this.shieldGrhs[this.heading] instanceof Animacion)
+             this.shieldGrhs[this.heading].update(time);
+             if (this.helmetGrhs[this.heading] instanceof Animacion)
+             this.helmetGrhs[this.heading].update(time);
+             for (var i = 0; i < this.FXs.length; i++) {
+             if (this.FXs[i]) {
+             this.FXs[i].anim.update(time);
+             }
+             }
+             // chat
+             if (this.chat) {
+             if (time > this.tiempoChatInicial + this.DURACION_CHAT)
+             this.chat = null;
+             }
+             */
         },
 
     });

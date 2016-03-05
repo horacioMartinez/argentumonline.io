@@ -1,4 +1,4 @@
-define(['jquery-ui', 'app', 'assetmanager'], function (___ui___, App, AssetManager) {
+define(['jquery-ui', 'app', 'assetmanager', 'lib/pixi'], function (___ui___, App, AssetManager, PIXI) {
     var app, game, assetManager;
 
     var initApp = function () {
@@ -9,10 +9,10 @@ define(['jquery-ui', 'app', 'assetmanager'], function (___ui___, App, AssetManag
             log.error("ESCALA: " + __ESCALA__); // TODO: no usar una variable global!
 
             /*$(function() {
-                $( "#progressbar" ).progressbar({
-                    value: 37
-                });
-            });*/
+             $( "#progressbar" ).progressbar({
+             value: 37
+             });
+             });*/
 
             assetManager = new AssetManager();
             app = new App();
@@ -59,8 +59,6 @@ define(['jquery-ui', 'app', 'assetmanager'], function (___ui___, App, AssetManag
                 return false;
             });
 
-
-
             var data = app.storage.data;
             if (data.hasAlreadyPlayed) {
                 if (data.player.name && data.player.name !== "") {
@@ -76,7 +74,7 @@ define(['jquery-ui', 'app', 'assetmanager'], function (___ui___, App, AssetManag
 
             log.info("App initialized.");
 
-            assetManager.preload( function(){
+            assetManager.preload(function () {
                 initLoginScreen();
                 initGame();
             });
@@ -101,8 +99,8 @@ define(['jquery-ui', 'app', 'assetmanager'], function (___ui___, App, AssetManag
                 foreground = document.getElementById("foreground"),
                 input = document.getElementById("chatinput");
 
-            game = new Game(app,assetManager);
-            game.setup(canvas, background, foreground,  input);
+            game = new Game(app, assetManager);
+            game.setup(canvas, background, foreground, input);
             game.setStorage(app.storage);
             app.setGame(game);
 

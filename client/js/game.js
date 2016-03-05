@@ -1,9 +1,9 @@
 define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
         'gameclient', 'updater', 'transition',
-        'item', 'player', 'character', 'assetmanager', 'intervalos', 'uimanager'],
+        'item', 'player', 'character', 'assetmanager', 'intervalos', 'uimanager', 'spriteanimado'],
     function (__enums__, Animacion, Mapa, InfoManager, Renderer,
               GameClient, Updater, Transition,
-              Item, Player, Character, AssetManager, Intervalos, UIManager) {
+              Item, Player, Character, AssetManager, Intervalos, UIManager, SpriteAnimado) {
         var Game = Class.extend({
             init: function (app, assetManager) {
                 this.uiManager = new UIManager(this);
@@ -17,7 +17,6 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.cabezas = this.assetManager.getCabezas();
                 this.cascos = this.assetManager.getCascos();
                 this.cuerpos = this.assetManager.getCuerpos();
-                this.escudos = this.assetManager.getEscudos();
                 this.escudos = this.assetManager.getEscudos();
                 this.fxs = this.assetManager.getFxs();
 
@@ -1769,12 +1768,23 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.renderer.setBajoTecho(this.map.isBajoTecho(this.player.gridX, this.player.gridY));
             },
 
+            _removeAllEntitys: function () {
+                var self = this;
+                this.forEachEntity(
+                    function (entity, index) {
+                        if (entity !== self.player)
+                            self.sacarEntity(entity);
+                    }
+                );
+            },
+
             sacarEntity: function (entity) {
                 if (entity instanceof Character) {
                     if (entity === this.player) {
                         log.error("TRATANDO DE SACAR AL PLAYER!");
                         return;
                     }
+                    this.renderer.sacarCharacter(this.characters[entity.id]);
                     this.entityGrid[entity.gridX][entity.gridY][1] = null;
                     this.characters[entity.id] = null;
                 }
@@ -1795,6 +1805,23 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     return new Animacion(this.indices[numGrh].frames, this.indices[numGrh].velocidad, loops);
                 }
                 return numGrh;
+            },
+
+            getGraficoOFrames: function (numGrh, loops) {
+                if (!numGrh)
+                    return 0;
+
+                if (this.indices[numGrh].frames) {   // es animacion
+                    if ((!loops) && (loops !== 0))
+                        loops = 1;
+                    var grafs = [];
+                    for (var i = 0; i < this.indices[numGrh].frames.length; i++) {
+                        grafs.push(this.indices[this.indices[numGrh].frames[i]].grafico);
+                    }
+                    return grafs;
+                    //return new Animacion(grafs, this.indices[numGrh].velocidad, loops);
+                }
+                return this.indices[numGrh].grafico;
             },
 
             desindexear: function (numero, varIndice) {
@@ -1864,23 +1891,39 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
 
             agregarCharacter: function (CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, Name,
                                         NickColor, Privileges) {
-                var nombre = Name.slice(Name,Name.indexOf("<")-1);
+
+                if (this.characters[CharIndex]){
+                    log.error("tratando de agregar character habiendo un character con mismo charindex existente");
+                    return;
+                }
+                var nombre = Name.slice(Name, Name.indexOf("<") - 1);
                 var clan = Name.slice(Name.indexOf("<"), Name.length);
+
                 if ((!this.player) && ( this.username.toUpperCase() === nombre.toUpperCase())) { // mal esto, se deberia hacer comparando el charindex pero no se puede porque el server manda el char index del pj despues de crear los chars
-                    this.inicializarPlayer(CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre,clan,NickColor, Privileges);
+                    this.inicializarPlayer(CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan, NickColor, Privileges);
                     return;
                 }
 
                 if (CharIndex === this.playerId) { // cuando pasa de mapa vuelve a mandar el crear de tu pj, directamente cambio pos e ignoro lo demas
                     if (this.player) {
                         if ((X !== this.player.gridX) || (Y !== this.player.gridY)) {
-                            log.info(" DIBUJANDO INICIALMENTE MAPA");
+                            log.info(" DIBUJANDO INICIALMENTE MAPA"); // TODO: porque esta esto aca y no en el change map?
                             this.resetPosCharacter(this.playerId, X, Y);
+
                             this.renderer.drawMapaIni(this.player.gridX, this.player.gridY);
                         }
                         return;
                     }
                 }
+
+                //c = new Character(CharIndex,
+                //    this.desindexear(Body, this.cuerpos),
+                //    this.desindexear(Head, this.cabezas), this.cuerpos[Body].offHeadX, this.cuerpos[Body].offHeadY,
+                //    Heading, X, Y,
+                //    this.desindexear(Weapon, this.armas),
+                //    this.desindexear(Shield, this.escudos),
+                //    this.desindexear(Helmet, this.cascos),
+                //    nombre,clan,NickColor, Privileges);
 
                 c = new Character(CharIndex,
                     this.desindexear(Body, this.cuerpos),
@@ -1889,7 +1932,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     this.desindexear(Weapon, this.armas),
                     this.desindexear(Shield, this.escudos),
                     this.desindexear(Helmet, this.cascos),
-                    nombre,clan,NickColor, Privileges);
+                    nombre, clan, NickColor, Privileges);
 
                 if ((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal))
                     c.muerto = true;
@@ -1900,6 +1943,9 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.characters[CharIndex] = c;
 
                 this.setCharacterFX(CharIndex, FX, FXLoops);
+
+                this.renderer.agregarCharacter(c, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, Name,
+                    NickColor, Privileges);
             },
 
             agregarItem: function (grhIndex, gridX, gridY) {
@@ -1952,7 +1998,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                  this.uiRenderer.modificarSlotHechizos(slot, nombre);*/
             },
 
-            inicializarPlayer: function (CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre,clan,NickColor, Privileges) {
+            inicializarPlayer: function (CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan, NickColor, Privileges) {
 
                 this.playerId = CharIndex;
                 this.player = new Player(CharIndex,
@@ -1962,7 +2008,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     this.desindexear(Weapon, this.armas),
                     this.desindexear(Shield, this.escudos),
                     this.desindexear(Helmet, this.cascos),
-                    nombre,clan, NickColor, Privileges);
+                    nombre, clan, NickColor, Privileges);
 
                 if ((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal))
                     this.player.muerto = true;
@@ -1973,9 +2019,10 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.characters[CharIndex] = this.player;
 
                 this.setCharacterFX(CharIndex, FX, FXLoops);
+                this.renderer.agregarCharacter(this.player, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre,
+                    NickColor, Privileges);
 
                 var self = this;
-
                 this.player.onCaminar(function (direccion, forced) {
                     {
                         if (!forced)
@@ -2045,7 +2092,10 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
             },
 
             cambiarMapa: function (numeroMapa) {
+                /* todo: cambiar esto si deja de ser sync: */
+                //this._removeAllEntitys();
                 this.map = new Mapa(numeroMapa, this.assetManager.getMapaSync(numeroMapa));
+
             },
 
             cambiarArea: function (gridX, gridY) {
@@ -2230,44 +2280,6 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 }
             },
 
-            removeEntity: function (entity) {
-                if (entity.id in this.entities) {
-                    this.unregisterEntityPosition(entity);
-                    delete this.entities[entity.id];
-                }
-                else {
-                    log.error("Cannot remove entity. Unknown ID : " + entity.id);
-                }
-            },
-
-            addItem: function (item, x, y) {
-                item.setSprite(this.sprites[item.getSpriteName()]);
-                item.setGridPosition(x, y);
-                item.setAnimation("idle", 150);
-                this.addEntity(item);
-            },
-
-            removeItem: function (item) {
-                if (item) {
-                    this.removeFromItemGrid(item, item.gridX, item.gridY);
-                    this.removeFromRenderingGrid(item, item.gridX, item.gridY);
-                    delete this.entities[item.id];
-                } else {
-                    log.error("Cannot remove item. Unknown ID : " + item.id);
-                }
-            },
-
-            /*           initPathingGrid: function () {
-             this.pathingGrid = [];
-             for (var i = 0; i < this.map.height; i += 1) {
-             this.pathingGrid[i] = [];
-             for (var j = 0; j < this.map.width; j += 1) {
-             this.pathingGrid[i][j] = this.map.grid[i][j];
-             }
-             }
-             log.info("Initialized the pathing grid with static colliding cells.");
-             },
-             */
             initEntityGrid: function () {
                 this.entityGrid = [];
                 for (var i = 1; i < this.map.height + 1; i += 1) {
@@ -2298,95 +2310,6 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     }
                 }, 1);
                 //log.info("Initialized animated tiles.");
-            },
-
-            addToRenderingGrid: function (entity, x, y) {
-                if (!this.map.isOutOfBounds(x, y)) {
-                    this.renderingGrid[y][x][entity.id] = entity;
-                }
-            },
-
-            removeFromRenderingGrid: function (entity, x, y) {
-                if (entity && this.renderingGrid[y][x] && entity.id in this.renderingGrid[y][x]) {
-                    delete this.renderingGrid[y][x][entity.id];
-                }
-            },
-
-            removeFromEntityGrid: function (entity, x, y) {
-                if (this.entityGrid[y][x][entity.id]) {
-                    delete this.entityGrid[y][x][entity.id];
-                }
-            },
-
-            removeFromItemGrid: function (item, x, y) {
-                if (item && this.itemGrid[y][x][item.id]) {
-                    delete this.itemGrid[y][x][item.id];
-                }
-            },
-
-            removeFromPathingGrid: function (x, y) {
-                this.pathingGrid[y][x] = 0;
-            },
-
-            /**
-             * Registers the entity at two adjacent positions on the grid at the same time.
-             * This situation is temporary and should only occur when the entity is moving.
-             * This is useful for the hit testing algorithm used when hovering entities with the mouse cursor.
-             *
-             * @param {Entity} entity The moving entity
-             */
-            registerEntityDualPosition: function (entity) {
-                if (entity) {
-                    this.entityGrid[entity.gridY][entity.gridX][entity.id] = entity;
-
-                    this.addToRenderingGrid(entity, entity.gridX, entity.gridY);
-
-                    if (entity.nextGridX >= 0 && entity.nextGridY >= 0) {
-                        this.entityGrid[entity.nextGridY][entity.nextGridX][entity.id] = entity;
-                        if (!(entity instanceof Player)) {
-                            this.pathingGrid[entity.nextGridY][entity.nextGridX] = 1;
-                        }
-                    }
-                }
-            },
-
-            /**
-             * Clears the position(s) of this entity in the entity grid.
-             *
-             * @param {Entity} entity The moving entity
-             */
-            unregisterEntityPosition: function (entity) {
-                if (entity) {
-                    this.removeFromEntityGrid(entity, entity.gridX, entity.gridY);
-                    this.removeFromPathingGrid(entity.gridX, entity.gridY);
-
-                    this.removeFromRenderingGrid(entity, entity.gridX, entity.gridY);
-
-                    if (entity.nextGridX >= 0 && entity.nextGridY >= 0) {
-                        this.removeFromEntityGrid(entity, entity.nextGridX, entity.nextGridY);
-                        this.removeFromPathingGrid(entity.nextGridX, entity.nextGridY);
-                    }
-                }
-            },
-
-            registerEntityPosition: function (entity) {
-                var x = entity.gridX,
-                    y = entity.gridY;
-
-                if (entity) {
-                    if (entity instanceof Character || entity instanceof Chest) {
-                        this.entityGrid[y][x][entity.id] = entity;
-                        if (!(entity instanceof Player)) {
-                            this.pathingGrid[y][x] = 1;
-                        }
-                    }
-                    if (entity instanceof Item) {
-                        this.itemGrid[y][x][entity.id] = entity;
-                    }
-
-                    this.addToRenderingGrid(entity, x, y);
-                }
-
             },
 
             inicializar: function (username) {

@@ -129560,28 +129560,28 @@
         "offY": 267, 
         "offX": 0, 
         "grafico": 17000, 
-        "height": 103, 
+        "height": 81, 
         "width": 66
     }, 
     {
         "offY": 267, 
         "offX": 66, 
         "grafico": 17000, 
-        "height": 103, 
+        "height": 81, 
         "width": 66
     }, 
     {
         "offY": 267, 
         "offX": 132, 
         "grafico": 17000, 
-        "height": 103, 
+        "height": 81, 
         "width": 66
     }, 
     {
         "offY": 267, 
         "offX": 198, 
         "grafico": 17000, 
-        "height": 103, 
+        "height": 81, 
         "width": 66
     }, 
     {
@@ -129708,28 +129708,28 @@
         "offY": 267, 
         "offX": 0, 
         "grafico": 17001, 
-        "height": 103, 
+        "height": 81, 
         "width": 66
     }, 
     {
         "offY": 267, 
         "offX": 66, 
         "grafico": 17001, 
-        "height": 103, 
+        "height": 81, 
         "width": 66
     }, 
     {
         "offY": 267, 
         "offX": 132, 
         "grafico": 17001, 
-        "height": 103, 
+        "height": 81, 
         "width": 66
     }, 
     {
         "offY": 267, 
         "offX": 198, 
         "grafico": 17001, 
-        "height": 103, 
+        "height": 81, 
         "width": 66
     }, 
     {
@@ -160661,7 +160661,7 @@
         "offX": 78, 
         "grafico": 4164, 
         "height": 20, 
-        "width": 26
+        "width": 25
     }, 
     {
         "offY": 20, 
@@ -160689,7 +160689,7 @@
         "offX": 78, 
         "grafico": 4164, 
         "height": 20, 
-        "width": 26
+        "width": 25
     }, 
     {
         "offY": 40, 
@@ -160716,36 +160716,36 @@
         "offY": 40, 
         "offX": 78, 
         "grafico": 4164, 
-        "height": 20, 
-        "width": 26
+        "height": 19, 
+        "width": 25
     }, 
     {
         "offY": 60, 
         "offX": 0, 
         "grafico": 4164, 
-        "height": 20, 
+        "height": 19, 
         "width": 26
     }, 
     {
         "offY": 60, 
         "offX": 26, 
         "grafico": 4164, 
-        "height": 20, 
+        "height": 19, 
         "width": 26
     }, 
     {
         "offY": 60, 
         "offX": 52, 
         "grafico": 4164, 
-        "height": 20, 
+        "height": 19, 
         "width": 26
     }, 
     {
         "offY": 60, 
         "offX": 78, 
         "grafico": 4164, 
-        "height": 20, 
-        "width": 26
+        "height": 19, 
+        "width": 25
     }, 
     {
         "frames": [
