@@ -1,9 +1,9 @@
 define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
         'gameclient', 'updater', 'transition',
-        'item', 'player', 'character', 'assetmanager', 'intervalos', 'uimanager', 'spriteanimado'],
+        'item', 'player', 'character', 'assetmanager', 'intervalos', 'uimanager'],
     function (__enums__, Animacion, Mapa, InfoManager, Renderer,
               GameClient, Updater, Transition,
-              Item, Player, Character, AssetManager, Intervalos, UIManager, SpriteAnimado) {
+              Item, Player, Character, AssetManager, Intervalos, UIManager) {
         var Game = Class.extend({
             init: function (app, assetManager) {
                 this.uiManager = new UIManager(this);
@@ -1835,6 +1835,12 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
             },
 
             moverCharacter: function (CharIndex, gridX, gridY) {
+                if (CharIndex === this.player.id){
+                    log.error("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                }
+                if (CharIndex === this.playerId){
+                    log.error("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                }
                 if (CharIndex === this.playerId) {
                     if (this.player) {
                         if ((X !== this.player.gridX) || (Y !== this.player.gridY)) {
@@ -1873,47 +1879,34 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 }
                 if (Heading !== c.heading)
                     c.cambiarHeading(Heading);
+                c.muerto = !!((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal));
 
-                // TODO!!!: que solo cambie los que son diferentes!
-                c.setBodyGrh(this.desindexear(Body, this.cuerpos));
-                c.offHeadX = this.cuerpos[Body].offHeadX;
-                c.offHeadY = this.cuerpos[Body].offHeadY;
-                c.setHeadGrh(this.desindexear(Head, this.cabezas));
-                c.setWeaponGrh(this.desindexear(Weapon, this.armas));
-                c.setShieldGrh(this.desindexear(Shield, this.escudos));
-                c.setHelmetGrh(this.desindexear(Helmet, this.cascos));
-
-                if ((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal))
-                    c.muerto = true;
-                else
-                    c.muerto = false;
+                this.renderer.cambiarCharacter(c, Body, Head, Heading, Weapon, Shield, Helmet, FX, FXLoops);
             },
 
             agregarCharacter: function (CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, Name,
                                         NickColor, Privileges) {
 
                 if (this.characters[CharIndex]){
+                    if (CharIndex === this.player.id){
+                        if ((X !== this.player.gridX) || (Y !== this.player.gridY)) { // cuando pasa de mapa vuelve a mandar el crear de tu pj, directamente cambio pos e ignoro lo demas (esta es la unica forma de saber las pos en el cambio)
+                            log.error("DRAW MAPA INICIAL!!! MAPA:" + this.map.numero+ " X: "+ X + " Y: " + Y);
+                            this.resetPosCharacter(this.player.id,X,Y,true);
+                            this.renderer.drawMapaIni(this.player.gridX, this.player.gridY);
+
+                        }
+                        return;
+                    }
                     log.error("tratando de agregar character habiendo un character con mismo charindex existente");
                     return;
                 }
+
                 var nombre = Name.slice(Name, Name.indexOf("<") - 1);
                 var clan = Name.slice(Name.indexOf("<"), Name.length);
 
                 if ((!this.player) && ( this.username.toUpperCase() === nombre.toUpperCase())) { // mal esto, se deberia hacer comparando el charindex pero no se puede porque el server manda el char index del pj despues de crear los chars
                     this.inicializarPlayer(CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan, NickColor, Privileges);
                     return;
-                }
-
-                if (CharIndex === this.playerId) { // cuando pasa de mapa vuelve a mandar el crear de tu pj, directamente cambio pos e ignoro lo demas
-                    if (this.player) {
-                        if ((X !== this.player.gridX) || (Y !== this.player.gridY)) {
-                            log.info(" DIBUJANDO INICIALMENTE MAPA"); // TODO: porque esta esto aca y no en el change map?
-                            this.resetPosCharacter(this.playerId, X, Y);
-
-                            this.renderer.drawMapaIni(this.player.gridX, this.player.gridY);
-                        }
-                        return;
-                    }
                 }
 
                 //c = new Character(CharIndex,
@@ -2072,7 +2065,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 });
             },
 
-            resetPosCharacter: function (charIndex, gridX, gridY) {
+            resetPosCharacter: function (charIndex, gridX, gridY, noReDraw) {
 
                 c = this.characters[charIndex];
                 if (!c) {
@@ -2084,7 +2077,8 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 c.resetMovement();
                 if (c instanceof Player) {
                     console.log(" reseteando pos player");
-                    this.renderer.resetPos(gridX, gridY);
+                    if (!noReDraw)
+                        this.renderer.resetPos(gridX, gridY);
                 }
                 c.setGridPosition(gridX, gridY);
                 this.entityGrid[gridX][gridY][1] = c;
@@ -2095,7 +2089,6 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 /* todo: cambiar esto si deja de ser sync: */
                 //this._removeAllEntitys();
                 this.map = new Mapa(numeroMapa, this.assetManager.getMapaSync(numeroMapa));
-
             },
 
             cambiarArea: function (gridX, gridY) {

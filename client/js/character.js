@@ -21,12 +21,6 @@ define(['entity', 'transition', 'timer', 'animacion', 'lib/pixi'], function (Ent
 
             this.sprite = null;
 
-            this.setBodyGrh(BodyGrh);
-            this.setHeadGrh(HeadGrh);
-            this.setWeaponGrh(WeaponGrh);
-            this.setShieldGrh(ShieldGrh);
-            this.setHelmetGrh(HelmetGrh);
-
             this.offHeadX = offHeadX;
             this.offHeadY = offHeadY;
             this.offFxX = 0;
@@ -67,39 +61,31 @@ define(['entity', 'transition', 'timer', 'animacion', 'lib/pixi'], function (Ent
             this.sprite.cambiarHeading(heading);
         },
 
+        setBodyGrh: function (grhs) {
+            if (this.sprite)
+                this.sprite.setBodys(grhs);
+        },
+
+        setHeadGrh: function (grhs) {
+            this.headGrhs = this._corregirVelocidad(grhs);
+        },
+
+        setWeaponGrh: function (grhs) {
+            this.weaponGrhs = this._corregirVelocidad(grhs);
+        },
+
+        setShieldGrh: function (grhs) {
+            this.shieldGrhs = this._corregirVelocidad(grhs);
+        },
+
+        setHelmetGrh: function (grhs) {
+            this.helmetGrhs = this._corregirVelocidad(grhs);
+        },
+
         getDirMov: function () {
             return this.heading;
         },
 
-        _getGrh: function (grh) {
-            if (!grh)
-                return 0;
-            if (grh[this.heading] instanceof Animacion) {
-                return grh[this.heading].getCurrentFrame();
-            }
-            return grh[this.heading];
-        },
-
-        getBodyGrh: function () {
-            return this._getGrh(this.bodyGrhs);
-        },
-
-        getHeadGrh: function () {
-            return this._getGrh(this.headGrhs);
-        },
-
-        getHelmetGrh: function () {
-
-            return this._getGrh(this.helmetGrhs);
-        },
-
-        getWeaponGrh: function () {
-            return this._getGrh(this.weaponGrhs);
-        },
-
-        getShieldGrh: function () {
-            return this._getGrh(this.shieldGrhs);
-        },
 
         getFXs: function () {
             return this.FXs;
@@ -136,40 +122,6 @@ define(['entity', 'transition', 'timer', 'animacion', 'lib/pixi'], function (Ent
         setGridPositionOnly: function (gridX, gridY) {
             this.gridX = gridX;
             this.gridY = gridY;
-        },
-
-        _corregirVelocidad: function (grhs) {
-            if (grhs[Enums.Heading.este] instanceof Animacion)
-                grhs[Enums.Heading.este].setSpeed(this.moveSpeed);
-            if (grhs[Enums.Heading.oeste] instanceof Animacion)
-                grhs[Enums.Heading.oeste].setSpeed(this.moveSpeed);
-            if (grhs[Enums.Heading.norte] instanceof Animacion)
-                grhs[Enums.Heading.norte].setSpeed(this.moveSpeed);
-            if (grhs[Enums.Heading.sur] instanceof Animacion)
-                grhs[Enums.Heading.sur].setSpeed(this.moveSpeed);
-
-            return grhs;
-
-        },
-
-        setBodyGrh: function (grhs) {
-            this.bodyGrhs = this._corregirVelocidad(grhs);
-        },
-
-        setHeadGrh: function (grhs) {
-            this.headGrhs = this._corregirVelocidad(grhs);
-        },
-
-        setWeaponGrh: function (grhs) {
-            this.weaponGrhs = this._corregirVelocidad(grhs);
-        },
-
-        setShieldGrh: function (grhs) {
-            this.shieldGrhs = this._corregirVelocidad(grhs);
-        },
-
-        setHelmetGrh: function (grhs) {
-            this.helmetGrhs = this._corregirVelocidad(grhs);
         },
 
         setFX: function (anim, offFxX, offFxY) {
@@ -215,53 +167,10 @@ define(['entity', 'transition', 'timer', 'animacion', 'lib/pixi'], function (Ent
             return true;
         },
 
-        resetMovimientos: function () {
-            if (this.bodyGrhs[this.heading] instanceof Animacion)
-                this.bodyGrhs[this.heading].start();
-            if (this.headGrhs[this.heading] instanceof Animacion)
-                this.headGrhs[this.heading].start();
-            if (this.weaponGrhs[this.heading] instanceof Animacion)
-                this.weaponGrhs[this.heading].start();
-            if (this.shieldGrhs[this.heading] instanceof Animacion)
-                this.shieldGrhs[this.heading].start();
-            if (this.helmetGrhs[this.heading] instanceof Animacion)
-                this.helmetGrhs[this.heading].start();
-        },
-
         animarMovimiento: function () {
             if (this.sprite)
-                if (this.sprite.visible)
-                    this.sprite.start();
-            this.resetMovimientos();
-        },
-
-        update: function (time) {
-            if (this.sprite)
-                this.sprite.update(time);
-
-            /*
-             // animaciones
-             if (this.bodyGrhs[this.heading] instanceof Animacion)
-             this.bodyGrhs[this.heading].update(time);
-             if (this.headGrhs[this.heading] instanceof Animacion)
-             this.headGrhs[this.heading].update(time);
-             if (this.weaponGrhs[this.heading] instanceof Animacion)
-             this.weaponGrhs[this.heading].update(time);
-             if (this.shieldGrhs[this.heading] instanceof Animacion)
-             this.shieldGrhs[this.heading].update(time);
-             if (this.helmetGrhs[this.heading] instanceof Animacion)
-             this.helmetGrhs[this.heading].update(time);
-             for (var i = 0; i < this.FXs.length; i++) {
-             if (this.FXs[i]) {
-             this.FXs[i].anim.update(time);
-             }
-             }
-             // chat
-             if (this.chat) {
-             if (time > this.tiempoChatInicial + this.DURACION_CHAT)
-             this.chat = null;
-             }
-             */
+                if (this.sprite.isVisible())
+                    this.sprite.play();
         },
 
     });

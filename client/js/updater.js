@@ -31,10 +31,8 @@ define(['character', 'player', 'timer', 'enums'], function (Character, Player, T
             this.game.forEachCharacter(function (char) {
                 if (self.game.renderer.entityEnRangoVisible(char)) {
                     self.updateMovimientoCharacter(char);
-                    //self.game.onCharacterUpdate(entity);
                     self.updateEntityFading(char);
                     self.updateCharTransitions(char);
-                    char.update(self.game.currentTime);
                 }
             });
         },
