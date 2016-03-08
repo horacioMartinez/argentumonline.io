@@ -21458,11 +21458,11 @@ var Ticker = require('./Ticker');
  * @example
  * // You may use the shared ticker to render...
  * var renderer = PIXI.autoDetectRenderer(800, 600);
- * var stage = new PIXI.Container();
+ * var gameStage = new PIXI.Container();
  * var interactionManager = PIXI.interaction.InteractionManager(renderer);
  * document.body.appendChild(renderer.view);
  * ticker.add(function (time) {
- *     renderer.render(stage);
+ *     renderer.render(gameStage);
  * });
  *
  * @example
@@ -21471,7 +21471,7 @@ var Ticker = require('./Ticker');
  * ticker.stop();
  * function animate(time) {
  *     ticker.update(time);
- *     renderer.render(stage);
+ *     renderer.render(gameStage);
  *     requestAnimationFrame(animate);
  * }
  * animate(performance.now());

@@ -198,6 +198,7 @@ define(['jquery', 'storage', 'gameclient', 'crearpj'], function ($, Storage, Gam
         },
 
         setMouseCoordinates: function (event) {
+            /*
             var gamePos = $('#gamecanvas').offset(),
                 scale = this.game.renderer.getScaleFactor(),
                 width = this.game.renderer.getWidth(),
@@ -224,7 +225,9 @@ define(['jquery', 'storage', 'gameclient', 'crearpj'], function ($, Storage, Gam
                 posEnGameCanvas = false;
             }
             return posEnGameCanvas;
+            */
         },
+
         //Init the hud that makes it show what creature you are mousing over and attacking
         initTargetHud: function () {
             var self = this;

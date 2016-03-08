@@ -4,9 +4,7 @@
 
 
 define(['lib/pixi'],
-    function (PIXI) { // TODO: esto deberia heredar de movieclip? (y que un sprite no animado tambien sea un movieclip?)
-        // TODO: HACER INSERTAR EN ORDEN ACA (BUSQUEDA B) Y HACER CAMBIAR Z INDEX PARA QUE VUELVA A INSERTAR!!
-        // TODO: CAMBIAR Z INDEX CON EL SET POSITION!!!! y si fue creado no ordeanado que no le de bola!
+    function (PIXI) { // TODO: esto deberia heredar de movieclip? (y que un sprite no animado tambien sea un movieclip?) <- SI
         var SpriteGrh = Class.extend({
             init: function (padre, grh, loops) {
                 this._x = 0;
@@ -31,8 +29,9 @@ define(['lib/pixi'],
             },
 
             remover: function () {
-                if (this.sprite)
+                if (this.sprite) {
                     this.padre.removeChild(this.sprite);
+                }
                 this.sprite = null;
             },
 
@@ -85,6 +84,8 @@ define(['lib/pixi'],
                 this.sprite.x = this._x;
                 this.sprite.y = this._y;
                 this.sprite.visible = this._visible;
+                if (this._zIndex)
+                    this.sprite.zIndex = this._zIndex;
                 this.padre.addChild(this.sprite);
 
             },
@@ -160,6 +161,12 @@ define(['lib/pixi'],
                 if (this.sprite) {
                     this.sprite.x = x;
                     this.sprite.y = y;
+                    if (this.padre.ordenado) {
+                        var gridX = Math.floor(x / 32);
+                        var gridY = Math.floor(y / 32);
+                        this._setOrden(gridX, gridY);
+
+                    }
                 }
             },
 
@@ -167,6 +174,11 @@ define(['lib/pixi'],
                 this._x = x;
                 if (this.sprite) {
                     this.sprite.x = x;
+                    if (this.padre.ordenado) {
+                        var gridX = Math.floor(x / 32);
+                        var gridY = Math.floor(this._y / 32);
+                        this._setOrden(gridX, gridY);
+                    }
                 }
             },
 
@@ -174,7 +186,48 @@ define(['lib/pixi'],
                 this._y = y;
                 if (this.sprite) {
                     this.sprite.y = y;
+                    if (this.padre.ordenado) {
+                        var gridX = Math.round(this._x / 32);
+                        var gridY = Math.round(y / 32);
+                        this._setOrden(gridX, gridY);
+                    }
                 }
+            },
+
+            setWidth: function (w) {
+                if (this.sprite) {
+                    this.sprite.width = w;
+                    this._posicionarGrafico();
+                }
+            },
+
+            setHeight: function (h) {
+                if (this.sprite) {
+                    this.sprite.height = h;
+                    this._posicionarGrafico();
+                }
+            },
+
+            setZindex: function (z) {
+                this._zIndex = z;
+                if (this.sprite)
+                    this.sprite.zIndex = z;
+            },
+
+            _setOrden: function (gridX, gridY) {
+                if (this._ordenX === gridX && this._ordenY === gridY)
+                    return;
+                this._ordenX = gridX;
+                this._ordenY = gridY;
+                var z = gridY * 1000 + (101 - gridX);
+                this.sprite.zIndex = z;
+                /*
+                 var res = binarySearch(this.padre.children, this, function (a, b) {
+                 a.zIndex = a.zIndex || 0;
+                 b.zIndex = b.zIndex || 0;
+                 return a.zIndex - b.zIndex;
+                 });
+                 this.padre.setChildIndex(this.sprite, res.index);*/
             },
 
         });

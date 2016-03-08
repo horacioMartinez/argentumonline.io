@@ -44,16 +44,10 @@ define(['entity', 'transition', 'timer', 'animacion', 'lib/pixi'], function (Ent
         },
 
         setPosition: function (x, y) {
-            if ((x === 0) || x) {
                 this.x = x;
-                if (this.sprite)
-                    this.sprite.x = x;
-            }
-            if ((y === 0) || y) {
                 this.y = y;
                 if (this.sprite)
-                    this.sprite.y = y;
-            }
+                    this.sprite.setPosition(x,y);
         },
 
         _setHeading: function (heading) {
@@ -124,24 +118,6 @@ define(['entity', 'transition', 'timer', 'animacion', 'lib/pixi'], function (Ent
             this.gridY = gridY;
         },
 
-        setFX: function (anim, offFxX, offFxY) {
-
-            if (!anim)
-                return;
-
-            var id = 0;
-            while (this.FXs[id])
-                id++;
-
-            var self = this;
-            anim.onFinAnim(this.crearFinFxFunc(id));
-            this.FXs[id] = {};
-            this.FXs[id].anim = anim;
-
-            this.FXs[id].offX = offFxX;
-            this.FXs[id].offY = offFxY;
-
-        },
         crearFinFxFunc: function (id) {
             var self = this;
             return function () {
@@ -155,13 +131,6 @@ define(['entity', 'transition', 'timer', 'animacion', 'lib/pixi'], function (Ent
             this.FXs[id] = null;
         },
 
-        stopFXsInfinitos: function () { // por ej, para de meditar
-            for (var i = 0; i < this.FXs.length; i++) {
-                if (this.FXs[i])
-                    if ((this.FXs[i].anim.loops < 1))
-                        this.FXs[i] = null;
-            }
-        },
 
         hasShadow: function () {
             return true;

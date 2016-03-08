@@ -5,25 +5,11 @@ define(['character', 'player', 'timer', 'enums'], function (Character, Player, T
             this.game = game;
         },
 
-        update: function () {
+        update: function () { // TODO:usar pixi ticker o: no hace falta esto, usar directamente callbacks y para los timers algo como https://github.com/Nazariglez/pixi-timer/commits/master
             if (this.game.logeado) {
-                //this.updateZoning();
-                this.updateItems();
                 this.updateCharacters();
-                //this.updatePlayerAggro();
-                //this.updateAnimations();
-                //this.updateAnimatedTiles();
-                this.updateTilesAnimados();
                 this.updateInfos();
-                //this.updateKeyboardMovement();
             }
-        },
-
-        updateItems: function () {
-            var self = this;
-            this.game.forEachItem(function (item) {
-                item.update((self.game.currentTime));
-            });
         },
 
         updateCharacters: function () { // TODO: un callback asi no hay que estar checkeando en cada uno...
@@ -61,53 +47,6 @@ define(['character', 'player', 'timer', 'enums'], function (Character, Player, T
             }
         },
 
-        /*
-         updateZoning: function() {
-         var g = this.game,
-         c = g.camera,
-         z = g.currentZoning,
-         s = 3,
-         ts = 32,
-         speed = 500;
-
-         if(z && z.inProgress === false) {
-         var orientation = this.game.zoningOrientation,
-         startValue = endValue = offset = 0,
-         updateFunc = null,
-         endFunc = null;
-
-         if(orientation === Types.Orientations.LEFT || orientation === Types.Orientations.RIGHT) {
-         offset = (c.gridW - 2) * ts;
-         startValue = (orientation === Types.Orientations.LEFT) ? c.x - ts : c.x + ts;
-         endValue = (orientation === Types.Orientations.LEFT) ? c.x - offset : c.x + offset;
-         updateFunc = function(x) {
-         c.setPosition(x, c.y);
-         g.initAnimatedTiles();
-         g.renderer.renderStaticCanvases();
-         }
-         endFunc = function() {
-         c.setPosition(z.endValue, c.y);
-         g.endZoning();
-         }
-         } else if(orientation === Types.Orientations.UP || orientation === Types.Orientations.DOWN) {
-         offset = (c.gridH - 2) * ts;
-         startValue = (orientation === Types.Orientations.UP) ? c.y - ts : c.y + ts;
-         endValue = (orientation === Types.Orientations.UP) ? c.y - offset : c.y + offset;
-         updateFunc = function(y) {
-         c.setPosition(c.x, y);
-         g.initAnimatedTiles();
-         g.renderer.renderStaticCanvases();
-         }
-         endFunc = function() {
-         c.setPosition(c.x, z.endValue);
-         g.endZoning();
-         }
-         }
-
-         z.start(this.game.currentTime, updateFunc, endFunc, startValue, endValue, speed);
-         }
-         },*/
-
         updateMovimientoCharacter: function (c) { // todo: hacer una diferente para player y sacarse de encima los instanceof
             if (c.moviendose && c.movement.inProgress === false) {
                 if (!c.tratarDeCaminar())
@@ -119,18 +58,18 @@ define(['character', 'player', 'timer', 'enums'], function (Character, Player, T
                 c.animarMovimiento();
 
                 var self = this;
-                var tick = Math.round(32 / Math.round((c.moveSpeed / (1000 / this.game.renderer.FPS))));
+                var tick = Math.round(32 / Math.round((c.moveSpeed / (1000 / 60))));
 
                 if (c.getDirMov() === Enums.Heading.oeste) {
 
                     c.movement.start(this.game.currentTime,
                         function (x) {
-                            c.setPosition(x, null);
+                            c.setPosition(x, c.y);
                             if (c instanceof Player)
                                 self.updateRendererPos(c.x, c.y);
                         },
                         function () {
-                            c.setPosition(c.movement.endValue, null);
+                            c.setPosition(c.movement.endValue,  c.y);
                             c.hasMoved();
                             if (c instanceof Player)
                                 self.updateRendererPos(c.x, c.y);
@@ -142,12 +81,12 @@ define(['character', 'player', 'timer', 'enums'], function (Character, Player, T
                 else if (c.getDirMov() === Enums.Heading.este) {
                     c.movement.start(this.game.currentTime,
                         function (x) {
-                            c.setPosition(x, null);
+                            c.setPosition(x, c.y);
                             if (c instanceof Player)
                                 self.updateRendererPos(c.x, c.y);
                         },
                         function () {
-                            c.setPosition(c.movement.endValue, null);
+                            c.setPosition(c.movement.endValue,  c.y);
                             c.hasMoved();
                             if (c instanceof Player)
                                 self.updateRendererPos(c.x, c.y);
@@ -159,12 +98,12 @@ define(['character', 'player', 'timer', 'enums'], function (Character, Player, T
                 else if (c.getDirMov() === Enums.Heading.norte) {
                     c.movement.start(this.game.currentTime,
                         function (y) {
-                            c.setPosition(null, y);
+                            c.setPosition(c.x, y);
                             if (c instanceof Player)
                                 self.updateRendererPos(c.x, c.y);
                         },
                         function () {
-                            c.setPosition(null, c.movement.endValue);
+                            c.setPosition(c.x, c.movement.endValue);
                             c.hasMoved();
                             if (c instanceof Player)
                                 self.updateRendererPos(c.x, c.y);
@@ -176,12 +115,12 @@ define(['character', 'player', 'timer', 'enums'], function (Character, Player, T
                 else if (c.getDirMov() === Enums.Heading.sur) {
                     c.movement.start(this.game.currentTime,
                         function (y) {
-                            c.setPosition(null, y);
+                            c.setPosition(c.x, y);
                             if (c instanceof Player)
                                 self.updateRendererPos(c.x, c.y);
                         },
                         function () {
-                            c.setPosition(null, c.movement.endValue);
+                            c.setPosition(c.x, c.movement.endValue);
                             c.hasMoved();
                             if (c instanceof Player)
                                 self.updateRendererPos(c.x, c.y);
@@ -254,27 +193,6 @@ define(['character', 'player', 'timer', 'enums'], function (Character, Player, T
             if (target) {
                 target.update(t);
             }
-        },
-
-        updateTilesAnimados: function (time) {
-            for (var i = 0; i < this.game.renderer.tilesAnimados.length; i++)
-                this.game.renderer.tilesAnimados[i].update(this.game.currentTime);
-        },
-
-        updateAnimatedTiles: function () {
-            var self = this,
-                t = this.game.currentTime;
-
-            this.game.forEachAnimatedTile(function (tile) {
-                if (tile.animate(t)) {
-                    tile.isDirty = true;
-                    tile.dirtyRect = self.game.renderer.getTileBoundingRect(tile);
-
-                    if (self.game.renderer.mobile || self.game.renderer.tablet) {
-                        self.game.checkOtherDirtyRects(tile.dirtyRect, tile, tile.x, tile.y);
-                    }
-                }
-            });
         },
 
         updateInfos: function () {

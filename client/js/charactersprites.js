@@ -4,24 +4,77 @@
 
 define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
 
-    function CharacterSprites(Heading, bodys, heads, headOffX, headOffY, weapons, shields, helmets) {
+    function CharacterSprites(Heading, bodys, heads, headOffX, headOffY, weapons, shields, helmets,font, nombre, clan) {
         /*
          Body, Head,Weapon,Shield,Helmet: vector con los grhs de los 4 headings. Cada uno de los headings puede contener un solo grh o AnimGrhs (frames de grhs + vel)
          */
         // Clase que hereda de container de pixi
         PIXI.Container.call(this);
+
+        this.MAXIMO_LARGO_CHAT = 15;
+        this._visible = true;
+        this._fxsInfinitos = [];
         this.heading = Heading;
         this.setBodys(bodys, headOffX, headOffY, true);
         this.setHeads(heads, true);
         this.setWeapons(weapons, true);
         this.setShields(shields, true);
         this.setHelmets(helmets, true);
+        this._setNombre(font,nombre,clan);
         this._updateOrdenHijos();
-        this._visible = true;
+
     }
 
     CharacterSprites.prototype = Object.create(PIXI.Container.prototype);
     CharacterSprites.constructor = CharacterSprites;
+
+    CharacterSprites.prototype.setFX = function (grh, offX, offY, loops) {
+        var nuevoSprite = new SpriteGrh(this, grh, loops);
+        nuevoSprite.setPosition(offX, offY);
+        nuevoSprite.setZindex(6);
+        if (loops > 0) {
+            nuevoSprite.play();
+            nuevoSprite.onFinAnim(function () {
+                nuevoSprite.remover();
+            });
+        }
+        else {
+            this._fxsInfinitos.push(nuevoSprite);
+        }
+    };
+
+    CharacterSprites.prototype.setSombraSprite = function (grh) {
+        if (this._sombraSprite)
+            return;
+        this._sombraSprite = new SpriteGrh(this, grh);
+        this._sombraSprite.setVisible(this._visible);
+        this._sombraSprite.setZindex(-1);
+
+        var w = this.bodySprite.sprite.width < 32 ? 32 : this.bodySprite.sprite.width;
+        this._sombraSprite.setWidth(w);
+        this._sombraSprite.setHeight(w);
+
+        this._updateOrdenHijos();
+    };
+
+    CharacterSprites.prototype.removerFxsInfinitos = function () {
+        for (var i = 0; i < this._fxsInfinitos; i++) {
+            this._fxsInfinitos[i].remover();
+        }
+        this._fxsInfinitos = [];
+    };
+
+    CharacterSprites.prototype.setPosition = function (x, y) { // TODO: usar los getters y setters de x e y como en sprite
+        this.x = x;
+        this.y = y;
+        var gridX = Math.round(x / 32);
+        var gridY = Math.round(y / 32);
+        this._setZIndex(gridY * 1000 + (101 - gridX));
+    };
+
+    CharacterSprites.prototype.setOnZindexChange = function (callback) {
+        this._onZindexCallback = callback;
+    };
 
     CharacterSprites.prototype.setSpeed = function (vel) {
         this._velocidad = vel;
@@ -41,6 +94,8 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
         this._forEachHeadingSprite(function (sprite) {
             sprite.setVisible(visible);
         });
+        if (this._sombraSprite)
+            this._sombraSprite.setVisible(visible);
     };
 
     CharacterSprites.prototype.isVisible = function () {
@@ -48,11 +103,83 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
     };
 
     CharacterSprites.prototype.update = function (time) {
-        log.error("aca");
+        log.error("sacar esta funcion");
     };
 
     CharacterSprites.prototype.start = function () {
-        log.error("aca");
+        log.error("sacar esta funcion");
+    };
+
+    CharacterSprites.prototype._formatearChat = function (str) {
+        var resultado = [];
+        while ((str.length > this.MAXIMO_LARGO_CHAT) && (str.indexOf(' ') > (-1))) {
+            var idx = str.indexOf(' ');
+            var posUltimoEspacioPrimerBloque = idx;
+            while ((idx != -1) && (idx < this.MAXIMO_LARGO_CHAT - 1 )) {
+                idx = str.indexOf(' ', idx + 1);
+                if (idx > 0)
+                    posUltimoEspacioPrimerBloque = idx;
+            }
+            if (posUltimoEspacioPrimerBloque > 0)
+                resultado.push(str.slice(0, posUltimoEspacioPrimerBloque));
+            str = str.slice(posUltimoEspacioPrimerBloque + 1, str.length);
+        }
+        resultado.push(str);
+        return resultado;
+    };
+
+    CharacterSprites.prototype.setChat = function( chat ){
+        this.removerChat();
+        chat = this._formatearChat(chat);
+        var estilo = $.extend({},{font: '14px Arial'},Enums.Font.TALK);
+        this._chat = new PIXI.Text(chat.join('\n'), estilo);
+        var self = this;
+        this._chat.duracion = 1000;
+        this._chat.tiempoPasado = 0;
+        this._chat.updateChat = function(delta){
+            this.tiempoPasado += delta;
+            if (this.tiempoPasado > this.duracion){
+                self.removerChat();
+            }
+        }.bind(this._chat);
+        PIXI.ticker.shared.add(this._chat.updateChat, this._chat);
+
+        this._chat.zIndex = 99;
+        this.addChild(this._chat);
+        this._chat.x = this.bodySprite.sprite.x + 32 /2 - this._chat.width /2 ;
+        this._chat.y = this.bodySprite.sprite.y - this.bodySprite.sprite.height - (chat.length -1 )* 14;
+    };
+
+    CharacterSprites.prototype.removerChat = function( chat ){
+        if (this._chat) {
+            PIXI.ticker.shared.remove(this._chat.updateChat, this._chat);
+            this.removeChild(this._chat);
+        }
+        this._chat = null;
+
+    };
+    CharacterSprites.prototype._setNombre = function (font, nombre,clan) {
+        if (this._nombre){
+            this.removeChild(this._nombre);
+            this._nombre = null;
+        }
+        if (this._clan){
+            this.removeChild(this._clan);
+            this._clan= null;
+        }
+
+        if (nombre) {
+            this._nombre = new PIXI.Text(nombre,font);
+            this.addChild(this._nombre);
+            this._nombre.y = 32;
+            this._nombre.x = this.bodySprite.sprite.x + 32 /2 - this._nombre.width /2 ;
+        }
+        if (clan){
+            this._clan = new PIXI.Text(clan, font);
+            this.addChild(this._clan);
+            this._clan.y = this._nombre.y + this._nombre.height;
+            this._clan.x = this.bodySprite.sprite.x + 32 /2 - this._clan.width /2 ;
+        }
     };
 
     CharacterSprites.prototype.cambiarHeading = function (heading) {
@@ -65,6 +192,7 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
         this.setWeapons(this.weapons, true);
         this.setShields(this.shields, true);
         this.setHelmets(this.helmets, true);
+
         this._updateOrdenHijos();
     };
 
@@ -77,16 +205,16 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
         if (this.bodySprite) {
             switch (this.heading) {
                 case Enums.Heading.norte:
-                    this.bodySprite.zIndex = 3;
+                    this.bodySprite.setZindex(3);
                     break;
                 case Enums.Heading.sur:
-                    this.bodySprite.zIndex = 1;
+                    this.bodySprite.setZindex(1);
                     break;
                 case Enums.Heading.este:
-                    this.bodySprite.zIndex = 2;
+                    this.bodySprite.setZindex(2);
                     break;
                 case Enums.Heading.oeste:
-                    this.bodySprite.zIndex = 1;
+                    this.bodySprite.setZindex(1);
                     break;
                 default:
                     log.error("character heading invalido");
@@ -99,7 +227,7 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
         this.heads = heads;
         this.headSprite = this._setHeadingSprite(this.headSprite, heads);
         if (this.headSprite) {
-            this.headSprite.zIndex = 4;
+            this.headSprite.setZindex(4);
             this.headSprite.setPosition(this.headOffX, this.headOffY)
 
         }
@@ -111,16 +239,16 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
         if (this.weaponSprite) {
             switch (this.heading) {
                 case Enums.Heading.norte:
-                    this.weaponSprite.zIndex = 2;
+                    this.weaponSprite.setZindex(2);
                     break;
                 case Enums.Heading.sur:
-                    this.weaponSprite.zIndex = 2;
+                    this.weaponSprite.setZindex(2);
                     break;
                 case Enums.Heading.este:
-                    this.weaponSprite.zIndex = 3;
+                    this.weaponSprite.setZindex(3);
                     break;
                 case Enums.Heading.oeste:
-                    this.weaponSprite.zIndex = 2;
+                    this.weaponSprite.setZindex(2);
                     break;
                 default:
                     log.error("character heading invalido");
@@ -135,16 +263,16 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
         if (this.shieldSprite) {
             switch (this.heading) {
                 case Enums.Heading.norte:
-                    this.shieldSprite.zIndex = 1;
+                    this.shieldSprite.setZindex(1);
                     break;
                 case Enums.Heading.sur:
-                    this.shieldSprite.zIndex = 3;
+                    this.shieldSprite.setZindex(3);
                     break;
                 case Enums.Heading.este:
-                    this.shieldSprite.zIndex = 1;
+                    this.shieldSprite.setZindex(1);
                     break;
                 case Enums.Heading.oeste:
-                    this.shieldSprite.zIndex = 3;
+                    this.shieldSprite.setZindex(3);
                     break;
                 default:
                     log.error("character heading invalido");
@@ -157,7 +285,7 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
         this.helmets = helmets;
         this.helmetSprite = this._setHeadingSprite(this.helmetSprite, helmets);
         if (this.helmetSprite) {
-            this.helmetSprite.zIndex = 5;
+            this.helmetSprite.setZindex(5);
             this.helmetSprite.setPosition(this.headOffX, this.headOffY);
         }
     };
@@ -175,7 +303,7 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
         var nuevoSprite = new SpriteGrh(this, grhs[this.heading], 1);
         if (this._velocidad)
             nuevoSprite.setSpeed(this._velocidad);
-        nuevoSprite.visible = this._visible;
+        nuevoSprite.setVisible(this._visible);
         return nuevoSprite;
     };
 
@@ -199,7 +327,7 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
         this.children.sort(function (a, b) {
             a.zIndex = a.zIndex || 0;
             b.zIndex = b.zIndex || 0;
-            return b.zIndex - a.zIndex
+            return a.zIndex - b.zIndex;
         });
     };
 
@@ -214,6 +342,15 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
             callback(this.shieldSprite);
         if (this.helmetSprite)
             callback(this.helmetSprite);
+    };
+
+    CharacterSprites.prototype._setZIndex = function (z) {
+        if (z === this.zIndex)
+            return;
+        this.zIndex = z;
+        if (this._onZindexCallback) {
+            this._onZindexCallback();
+        }
     };
 
     return CharacterSprites;

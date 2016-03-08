@@ -232,9 +232,8 @@ define(['text!../indices/graficos.json',
 
                 this.grhs = [];
                 for (var i = 0; i < this.indices.length; i++) {
-
                     if (this.grhs[i])
-                        return; // ya cargado
+                        continue; // ya cargado
                     if (this.indices[i].frames) { // animacion
                         var frameNumbers = this.indices[i].frames;
                         var vecgrhs = [];

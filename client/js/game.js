@@ -200,24 +200,24 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 }
 
                 this.infoManager.addHoveringInfo(-danio, this.player, Enums.Font.CANVAS_DANIO_RECIBIDO);
-                this.infoManager.addConsoleInfo(txt, Enums.Font.FIGHT);
+                this.renderer.agregarTextoConsola(txt, Enums.Font.FIGHT);
             },
 
             realizarDanio: function (danio) {
                 var char = this.player.lastAttackedTarget;
                 if (char) {
                     this.infoManager.addHoveringInfo(danio, char, Enums.Font.CANVAS_DANIO_REALIZADO);
-                    this.infoManager.addConsoleInfo(Enums.MensajeConsola.MENSAJE_GOLPE_CRIATURA_1 + danio + Enums.MensajeConsola.MENSAJE_2, Enums.Font.FIGHT);
+                    this.renderer.agregarTextoConsola(Enums.MensajeConsola.MENSAJE_GOLPE_CRIATURA_1 + danio + Enums.MensajeConsola.MENSAJE_2, Enums.Font.FIGHT);
                 }
             },
 
             escribirMsgConsola: function (texto, font) {
                 if (!font)
                     font = Enums.Font.INFO;
-                this.infoManager.addConsoleInfo(texto, font);
+                this.renderer.agregarTextoConsola(texto, font);
             },
 
-            formatearChat: function (str) {
+            formatearChat: function (str) { // sacame
                 var resultado = [];
                 while ((str.length > this.MAXIMO_LARGO_CHAT) && (str.indexOf(' ') > (-1))) {
                     var idx = str.indexOf(' ');
@@ -237,8 +237,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
 
             escribirChat: function (chat, charIndex, r, g, b) { // TODO: colores?
                 if (this.characters[charIndex]) {
-                    this.characters[charIndex].chat = this.formatearChat(chat);
-                    this.characters[charIndex].tiempoChatInicial = this.currentTime;
+                    this.renderer.setCharacterChat(this.characters[charIndex], chat);
                 }
                 //this.createBubble(charIndex, chat);
             },
@@ -1778,6 +1777,14 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 );
             },
 
+            _sacarTodosItems: function () {
+                var self = this;
+                this.forEachItem(function (item) {
+                        self.sacarEntity(item);
+                    }
+                );
+            },
+
             sacarEntity: function (entity) {
                 if (entity instanceof Character) {
                     if (entity === this.player) {
@@ -1835,10 +1842,10 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
             },
 
             moverCharacter: function (CharIndex, gridX, gridY) {
-                if (CharIndex === this.player.id){
+                if (CharIndex === this.player.id) {
                     log.error("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                 }
-                if (CharIndex === this.playerId){
+                if (CharIndex === this.playerId) {
                     log.error("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                 }
                 if (CharIndex === this.playerId) {
@@ -1887,11 +1894,11 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
             agregarCharacter: function (CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, Name,
                                         NickColor, Privileges) {
 
-                if (this.characters[CharIndex]){
-                    if (CharIndex === this.player.id){
+                if (this.characters[CharIndex]) {
+                    if (CharIndex === this.player.id) {
                         if ((X !== this.player.gridX) || (Y !== this.player.gridY)) { // cuando pasa de mapa vuelve a mandar el crear de tu pj, directamente cambio pos e ignoro lo demas (esta es la unica forma de saber las pos en el cambio)
-                            log.error("DRAW MAPA INICIAL!!! MAPA:" + this.map.numero+ " X: "+ X + " Y: " + Y);
-                            this.resetPosCharacter(this.player.id,X,Y,true);
+                            log.error("DRAW MAPA INICIAL!!! MAPA:" + this.map.numero + " X: " + X + " Y: " + Y);
+                            this.resetPosCharacter(this.player.id, X, Y, true);
                             this.renderer.drawMapaIni(this.player.gridX, this.player.gridY);
 
                         }
@@ -1936,22 +1943,26 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.characters[CharIndex] = c;
 
                 this.setCharacterFX(CharIndex, FX, FXLoops);
-
-                this.renderer.agregarCharacter(c, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, Name,
-                    NickColor, Privileges);
+                this.renderer.agregarCharacter(c, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan,
+                    NickColor);
             },
 
-            agregarItem: function (grhIndex, gridX, gridY) {
+            agregarItem: function (grhIndex, gridX, gridY) { // TODO: rever si ahora que no hay que updatear hace falta tenerlos en un array
                 var id = 0;
                 while (this.items[id])
                     id++;
-                item = new Item(id, this.getGrhOAnim(grhIndex, 0), gridX, gridY);
+                item = new Item(id, gridX, gridY);
                 this.entityGrid[gridX][gridY][0] = item;
                 this.items[id] = item;
+                this.renderer.agregarItem(item, grhIndex);
             },
 
             sacarItem: function (gridX, gridY) {
-                this.items[this.entityGrid[gridX][gridY][0].id] = null;
+                var item = this.items[this.entityGrid[gridX][gridY][0].id];
+                if (item) {
+                    this.renderer.removerItem(item);
+                    this.items[this.entityGrid[gridX][gridY][0].id] = null;
+                }
                 this.entityGrid[gridX][gridY][0] = null;
             },
 
@@ -1992,7 +2003,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
             },
 
             inicializarPlayer: function (CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan, NickColor, Privileges) {
-
+                log.error("inicializar player");
                 this.playerId = CharIndex;
                 this.player = new Player(CharIndex,
                     this.desindexear(Body, this.cuerpos),
@@ -2012,8 +2023,8 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.characters[CharIndex] = this.player;
 
                 this.setCharacterFX(CharIndex, FX, FXLoops);
-                this.renderer.agregarCharacter(this.player, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre,
-                    NickColor, Privileges);
+                this.renderer.agregarCharacter(this.player, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan,
+                    NickColor);
 
                 var self = this;
                 this.player.onCaminar(function (direccion, forced) {
@@ -2089,6 +2100,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 /* todo: cambiar esto si deja de ser sync: */
                 //this._removeAllEntitys();
                 this.map = new Mapa(numeroMapa, this.assetManager.getMapaSync(numeroMapa));
+                this._sacarTodosItems();
             },
 
             cambiarArea: function (gridX, gridY) {
@@ -2237,14 +2249,12 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     return;
                 }
                 if (FX === 0) {
-                    this.characters[CharIndex].stopFXsInfinitos();
+                    if (this.characters[CharIndex].sprite)
+                        this.characters[CharIndex].sprite.removerFxsInfinitos();
                     return;
                 }
                 FXLoops = FXLoops + 1;
-                var numGrh = this.fxs[FX].animacion;
-                var fx = new Animacion(this.indices[numGrh].frames, this.indices[numGrh].velocidad, FXLoops);
-                fx.start();
-                this.characters[CharIndex].setFX(fx, this.fxs[FX].offX, this.fxs[FX].offY);
+                this.renderer.setCharacterFX(this.characters[CharIndex], FX, FXLoops);
             },
 
             addEntity: function (entity) {

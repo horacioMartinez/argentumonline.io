@@ -234,6 +234,12 @@ Enums = {
     ],
 
     Font: {
+        NOMBRE: {
+            fill: "white",
+            font: '12px Arial',
+            stroke: "black",
+            strokeThickness: 0.2
+        },
         TALK: {
             fill: "rgb(255, 255, 255)"
         },
@@ -377,7 +383,8 @@ Enums = {
      FONTTYPE_DIOS
      */
 
-};
+}
+;
 
 /*
  'Objetos públicos
