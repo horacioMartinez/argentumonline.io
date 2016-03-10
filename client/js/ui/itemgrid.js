@@ -21,46 +21,61 @@ define([], function () {
                     if (self.selectionCallback)
                         self.selectionCallback(self.getSelectedSlot());
                 }
-                else{
+                else {
                     self._selectedSlot = -1;
                 }
                 $this.siblings().removeClass("selected");
             });
         },
 
-        setSelectionCallback: function(f){
+        setSelectionCallback: function (f) {
             this.selectionCallback = f;
         },
 
-        getSelectedSlot: function(){
-            return this._selectedSlot +1;
+        getSelectedSlot: function () {
+            return this._selectedSlot + 1;
         },
 
-        modificarSlot: function(numSlot,cantidad,numGraf){
-            numSlot = numSlot -1;
+        setDobleClickCallback: function (cb) {
+            $("#" + this.id + " li").dblclick(function () {
+                var $this = $(this);
+                if ($this.hasClass("valido")) {
+                    var slot = $this.index() + 1;
+                    cb(slot);
+                }
+            });
+        },
+
+        modificarSlot: function (numSlot, cantidad, numGraf, equiped) {
+            numSlot = numSlot - 1;
             elem = $("#" + this.id + " li").eq(numSlot);
             if (elem) {
                 elem.addClass("valido");
                 elem.text(cantidad + "");
                 var url = "url(../graficos/" + numGraf + ".png)";
                 elem.css('background-image', url);
+                if (equiped) {
+                    elem.addClass("equiped");
+                }
+                else
+                    elem.removeClass("equiped");
             }
             else
                 log.error("SLOT INVALIDO!");
         },
 
-        borrarSlot: function(numSlot){
-            numSlot = numSlot -1;
+        borrarSlot: function (numSlot) {
+            numSlot = numSlot - 1;
             elem = $("#" + this.id + " li").eq(numSlot);
             if (elem) {
                 elem.removeClass("valido");
+                elem.removeClass("equiped");
                 elem.text("");
                 elem.css('background-image', 'none');
             }
             else
                 log.error("SLOT INVALIDO!");
         },
-
 
         /*
          // devuelve 0 si no hay ninguno seleccionado

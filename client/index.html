@@ -85,12 +85,9 @@
 				<!-- Pantalla de juego y interfaz ingame -->
 				<div id="juego">
 					<div id="gamecanvas" class="clickable"><!-- hacer Clickeable el gamecanvas y capturar con este los clicks <<< -->
-						<canvas id="background"></canvas>
-						<canvas id="entities"></canvas>
-						<canvas id="foreground" ></canvas>
 					</div>
 					<div id="chatbox">
-						<input id="chatinput" class="gp" type="text" maxlength="60">
+						<input id="chatinput" class="gp" type="text" maxlength="60" autocomplete="off">
 					</div>
 					<div id="bordeIzquierda"></div>
 					<div id="bordeArriba"></div>
@@ -209,8 +206,6 @@
 				<img src="img/common/thingy.png" alt="" class="preload">
 
 				<script type="text/javascript">
-					var ctx = document.querySelector('canvas').getContext('2d');
-
 					if(!Detect.supportsWebSocket()) {
 						alert("Tu navegador no soporta websockets, para jugar debes actualizar tu navegador!")
 					}

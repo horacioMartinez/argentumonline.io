@@ -2,20 +2,20 @@
  * Created by horacio on 3/8/16.
  */
 
-/**
- * Created by horacio on 3/2/16.
- */
-
 define(['lib/pixi'], function (PIXI) {
 
     function Consola() {
         PIXI.Container.call(this);
         this.CANT_LINEAS = 5;
-        this.BASE_FONT = {font: '14px Arial', stroke: "black", strokeThickness: 0.2};
     }
 
     Consola.prototype = Object.create(PIXI.Container.prototype);
     Consola.constructor = Consola;
+
+    Consola.prototype.setEscala = function (escala) {
+        var font = Math.round(14*escala)+'px Arial';
+        this.BASE_FONT = {font: font, align: "center", stroke: "black", strokeThickness: 0.2};
+    };
 
     Consola.prototype._removerTexto = function(spriteTexto){
         for (var i = 0; i < this.children.length ; i++){
@@ -49,25 +49,6 @@ define(['lib/pixi'], function (PIXI) {
         PIXI.ticker.shared.add(texto.updateChat, texto);
 
         this.addChild(texto);
-        /*
-        var self = this;
-        texto.duracion = 1000;
-        texto.tiempoPasado = 0;
-        texto.updateChat = function(delta){
-            this.tiempoPasado += delta;
-            log.error(this.tiempoPasado);
-            log.error(this.duracion);
-            if (this.tiempoPasado > this.duracion){
-                PIXI.ticker.shared.remove(this.updateChat, this);
-                self.removeChild(this);
-            }
-        }.bind(texto);
-        PIXI.ticker.shared.add(texto.updateChat, texto);
-
-        this.addChild(texto);
-        texto.x = this.bodySprite.sprite.x + 32 /2 - texto.width /2 ;
-        texto.y = this.bodySprite.sprite.y - this.bodySprite.sprite.height - (chat.length -1 )* 14;
-*/
     };
 
     return Consola;

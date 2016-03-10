@@ -198,15 +198,14 @@ define(['jquery', 'storage', 'gameclient', 'crearpj'], function ($, Storage, Gam
         },
 
         setMouseCoordinates: function (event) {
-            /*
+
             var gamePos = $('#gamecanvas').offset(),
-                scale = this.game.renderer.getScaleFactor(),
-                width = this.game.renderer.getWidth(),
-                height = this.game.renderer.getHeight(),
+                width = this.game.renderer.pixiRenderer.width,
+                height = this.game.renderer.pixiRenderer.height,
                 mouse = this.game.mouse;
 
-            mouse.x = event.pageX - gamePos.left - (this.isMobile ? 0 : 5 * scale);
-            mouse.y = event.pageY - gamePos.top - (this.isMobile ? 0 : 7 * scale);
+            mouse.x = event.pageX - gamePos.left;
+            mouse.y = event.pageY - gamePos.top;
 
             var posEnGameCanvas = true;
             if (mouse.x <= 0) {
@@ -225,7 +224,6 @@ define(['jquery', 'storage', 'gameclient', 'crearpj'], function ($, Storage, Gam
                 posEnGameCanvas = false;
             }
             return posEnGameCanvas;
-            */
         },
 
         //Init the hud that makes it show what creature you are mousing over and attacking
@@ -321,14 +319,17 @@ define(['jquery', 'storage', 'gameclient', 'crearpj'], function ($, Storage, Gam
             }
         },
 
+        getEscala: function(){
+            return $('#container').height() / 500;
+        },
+
         resizeUi: function () {
-            __ESCALA__ = ( $('#container').height() / 500 );
-            /* TODO unica funcion con estas cosas que tambien estan en main */
-            $('#container').width(__ESCALA__ * 800);
-            $('#chatbox input').css("font-size", Math.floor(12 * __ESCALA__) + 'px');
+            var escala = this.getEscala();
+            $('#container').width(escala * 800);
+            $('#chatbox input').css("font-size", Math.floor(12 * escala) + 'px');
 
             if (this.game)
-                this.game.resize();
+                this.game.resize(escala);
         }
     });
 

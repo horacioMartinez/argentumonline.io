@@ -120,21 +120,11 @@ footer, header, hgroup, menu, nav, section {
 
 
     canvas { position:absolute;image-rendering:auto;}
-    #background { background:url('../img/common/loading.png') no-repeat center center, #000;}
-    .error #background { background:url('../img/common/loading-error.png') no-repeat center center, #000;}
-
-    #background, #foreground, #interfaz { margin:0; padding:0; z-index: -34;}
-
-    #canvas, #bar-container, #chatbox, #canvasborder,#interfaz, #foreground, #background, footer, #container, #achievement-notification {-moz-user-select:none;-webkit-user-select:none;-o-user-select:none;-ms-user-select:none;}
+    #gamecanvas { background:url('../img/common/loading.png') no-repeat center center, #000;}
+    
+    #canvas, #bar-container, #chatbox, #canvasborder, footer, #container, #achievement-notification {-moz-user-select:none;-webkit-user-select:none;-o-user-select:none;-ms-user-select:none;}
 
     /*.started #canvas {cursor:none;}*/
-
-    #interfaz { 
-     -webkit-tap-highlight-color:rgba(0,0,0,0);
-     /* -webkit-touch-callout:none; */
-       /* margin:0 auto;
-       display:block;*/
-   }
 
    h1 {font-weight:normal;}
 
@@ -166,7 +156,7 @@ footer, header, hgroup, menu, nav, section {
 
    #gamecanvas {position:absolute;top:7.8%;left:1.45%;z-index: -2} /* margenes de la interfaz */
 
-
+   #chatbox {z-index: 999}
    #chatbox {height:6.5%;width:63%;position:absolute;left:4%;top:92%} 
    #chatbox.active {top:85.5%;}
    #chatbox input {font-size:12px;background:none;width:100%;border:0;margin-left:2%;margin-top:2%}

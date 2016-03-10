@@ -8,6 +8,10 @@ define(['ui/itemgrid'], function (ItemGrid) {
         init: function (game) {
             this.game = game;
             this.inventarioGrid = new ItemGrid("itemsGrid");
+            var self = this;
+            this.inventarioGrid.setDobleClickCallback(function(slot){
+                self.game.usarConDobleClick(slot);
+            });
         },
 
         inicializar: function () {
@@ -23,12 +27,17 @@ define(['ui/itemgrid'], function (ItemGrid) {
 
         },
 
-        cambiarSlotInventario: function (Slot, Amount, numGrafico) {
-            this.inventarioGrid.modificarSlot(Slot, Amount, numGrafico);
+        cambiarSlotInventario: function (Slot, Amount, numGrafico, equiped) {
+            this.inventarioGrid.modificarSlot(Slot, Amount, numGrafico, equiped);
         },
 
         borrarSlotInventario: function (slot) {
             this.inventarioGrid.borrarSlot(slot);
+        },
+
+        getSelectedSlotInventario: function () {
+
+            return this.inventarioGrid.getSelectedSlot();
         },
 
         getSelectedSlotHechizo: function () {

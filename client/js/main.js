@@ -3,10 +3,6 @@ define(['jquery-ui', 'app', 'assetmanager', 'lib/pixi'], function (___ui___, App
 
     var initApp = function () {
         $(document).ready(function () {
-            __ESCALA__ = ( $('#container').height() / 500 );
-            $('#container').width(__ESCALA__ * 800);
-            $('#chatbox input').css("font-size", Math.floor(12 * __ESCALA__) + 'px');
-            log.error("ESCALA: " + __ESCALA__); // TODO: no usar una variable global!
 
             /*$(function() {
              $( "#progressbar" ).progressbar({
@@ -16,6 +12,7 @@ define(['jquery-ui', 'app', 'assetmanager', 'lib/pixi'], function (___ui___, App
 
             assetManager = new AssetManager();
             app = new App();
+            app.resizeUi();
             app.center();
 
             if (Detect.isWindows()) {
@@ -93,14 +90,10 @@ define(['jquery-ui', 'app', 'assetmanager', 'lib/pixi'], function (___ui___, App
 
     var initGame = function () {
         require(['game'], function (Game) {
-
-            var canvas = document.getElementById("entities"),
-                background = document.getElementById("background"),
-                foreground = document.getElementById("foreground"),
-                input = document.getElementById("chatinput");
+            var input = document.getElementById("chatinput");
 
             game = new Game(app, assetManager);
-            game.setup(canvas, background, foreground, input);
+            game.setup(input);
             game.setStorage(app.storage);
             app.setGame(game);
 
@@ -116,7 +109,6 @@ define(['jquery-ui', 'app', 'assetmanager', 'lib/pixi'], function (___ui___, App
                 });
             } else {
                 $('#gamecanvas').click(function (event) {
-                    log.error("click");
                     if ((!game.started) || (game.isPaused))
                         return;
 
@@ -138,14 +130,14 @@ define(['jquery-ui', 'app', 'assetmanager', 'lib/pixi'], function (___ui___, App
                     // TODO: si haces click afuera del menu pop up que lo cierre?
                 });
             }
-
-            $(document).mousemove(function (event) {
-                app.setMouseCoordinates(event);
-                if (game.started) {
-                    game.movecursor();
-                }
-            });
-
+            /*
+             $(document).mousemove(function (event) {
+             app.setMouseCoordinates(event);
+             if (game.started) {
+             game.movecursor();
+             }
+             });
+             */
             _prevKeyDown = {};
 
             function _downKey(e) {
@@ -214,35 +206,39 @@ define(['jquery-ui', 'app', 'assetmanager', 'lib/pixi'], function (___ui___, App
                 var key = e.which;
 
                 // maneja las flechas, asi se las puede usar cuando tenes algun menu o el chat abierto
-                if (!_isKeyDown(e)) {
-                    var continuar = false;
-                    switch (key) {
-                        case Enums.Keys.LEFT:
-                        case Enums.Keys.KEYPAD_4:
+
+                var continuar = false;
+                switch (key) {
+                    case Enums.Keys.LEFT:
+                    case Enums.Keys.KEYPAD_4:
+                        if (!_isKeyDown(e))
                             game.caminar(Enums.Heading.oeste);
-                            break;
-                        case Enums.Keys.RIGHT:
-                        case Enums.Keys.KEYPAD_6:
+                        break;
+                    case Enums.Keys.RIGHT:
+                    case Enums.Keys.KEYPAD_6:
+                        if (!_isKeyDown(e))
                             game.caminar(Enums.Heading.este);
-                            break;
-                        case Enums.Keys.UP:
-                        case Enums.Keys.KEYPAD_8:
+                        break;
+                    case Enums.Keys.UP:
+                    case Enums.Keys.KEYPAD_8:
+                        if (!_isKeyDown(e))
                             game.caminar(Enums.Heading.norte);
-                            break;
-                        case Enums.Keys.DOWN:
-                        case Enums.Keys.KEYPAD_2:
+                        break;
+                    case Enums.Keys.DOWN:
+                    case Enums.Keys.KEYPAD_2:
+                        if (!_isKeyDown(e))
                             game.caminar(Enums.Heading.sur);
-                            break;
-                        default:
-                            continuar = true;
-                            break;
+                        break;
+                    default:
+                        continuar = true;
+                        break;
+                }
+                if (!continuar) {
+                    _downKey(e);
+                    if (!game.uiManager.hayPopUpActivo()) { // si hay un popup abierto dejar que siga la tecla al pop up, sino no
+                        return false;
                     }
-                    if (!continuar) {
-                        _downKey(e);
-                        if (!game.uiManager.hayPopUpActivo()) // si hay un popup abierto dejar que siga la tecla al pop up, sino no
-                            e.preventDefault();
-                        return;
-                    }
+                    return;
                 }
 
                 // lo de abajo se ejecuta solo si no hay un pop up abierto
@@ -274,6 +270,12 @@ define(['jquery-ui', 'app', 'assetmanager', 'lib/pixi'], function (___ui___, App
                             break;
                         case Enums.Keys.L:
                             game.requestPosUpdate();
+                            break;
+                        case Enums.Keys.E:
+                            game.equiparSelectedItem();
+                            break;
+                        case Enums.Keys.U:
+                            game.usarConU();
                             break;
                         case Enums.Keys.CONTROL:
                             game.atacar();

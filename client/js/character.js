@@ -12,42 +12,22 @@ define(['entity', 'transition', 'timer', 'animacion', 'lib/pixi'], function (Ent
                 this.moveSpeed = 230; // PJ TODO: setear bien estos valores, fijarse que en lo posible no haya resetmovements (esto pasa si la animacion es mas lenta que el llamado a cambiar de pos)
 
             this.id = CharIndex;
-            this.bodyGrhs = null;
-            this.headGrhs = null;
-            this.weaponGrhs = null;
-            this.shieldGrhs = null;
-            this.helmetGrhs = null;
-            this.FXs = [];
-
-            this.sprite = null;
-
-            this.offHeadX = offHeadX;
-            this.offHeadY = offHeadY;
-            this.offFxX = 0;
-            this.offFxY = 0;
 
             this.heading = Heading;
 
-            this.Name = Name;
-            this.clan = clan;
-            this.NickColor = NickColor;
-            this.Privileges = Privileges;
-
             this.moviendose = false; // moviendose es si sigue pasando al otro tile desde el anterior
-
-            this.chat = null;
-            this.tiempoChatInicial = 0;
-            this.DURACION_CHAT = 4000;
 
             this.muerto = false;
             this.movement = new Transition();
+            this.sprite = null;
+            this.texto = null;
         },
 
         setPosition: function (x, y) {
-                this.x = x;
-                this.y = y;
-                if (this.sprite)
-                    this.sprite.setPosition(x,y);
+            this.x = x;
+            this.y = y;
+            if (this.onPositionChange)
+                this.onPositionChange();
         },
 
         _setHeading: function (heading) {
@@ -78,11 +58,6 @@ define(['entity', 'transition', 'timer', 'animacion', 'lib/pixi'], function (Ent
 
         getDirMov: function () {
             return this.heading;
-        },
-
-
-        getFXs: function () {
-            return this.FXs;
         },
 
         tratarDeCaminar: function () {
@@ -116,24 +91,6 @@ define(['entity', 'transition', 'timer', 'animacion', 'lib/pixi'], function (Ent
         setGridPositionOnly: function (gridX, gridY) {
             this.gridX = gridX;
             this.gridY = gridY;
-        },
-
-        crearFinFxFunc: function (id) {
-            var self = this;
-            return function () {
-                self.deleteFX(id)
-            };
-        },
-
-        deleteFX: function (id) {
-            if (!this.FXs[id])
-                return;
-            this.FXs[id] = null;
-        },
-
-
-        hasShadow: function () {
-            return true;
         },
 
         animarMovimiento: function () {

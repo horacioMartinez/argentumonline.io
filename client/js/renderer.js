@@ -1,10 +1,10 @@
-define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'lib/pixi', 'charactersprites', 'spritegrh', 'consola'],
-    function (Camera, Item, Character, Player, Timer, TileAnimado, PIXI, CharacterSprites, SpriteGrh, Consola) {
+define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'lib/pixi', 'charactersprites', 'spritegrh', 'consola', 'charactertext'],
+    function (Camera, Item, Character, Player, Timer, TileAnimado, PIXI, CharacterSprites, SpriteGrh, Consola, CharacterText) {
 
         var Renderer = Class.extend({
-            init: function (game, canvas, background, foreground, assetManager) {
-                this.POSICIONES_EXTRA_RENDER_X = 4; // disminuir para aumentar performance ( no creo que cambie mucho ya que solo dibuja las porciones visibles, pero tiene que iterar en cada frame por todas las pos..)
-                this.POSICIONES_EXTRA_RENDER_Y = 8; // disminuir para aumentar performance
+            init: function (game, assetManager, escala) {
+                this.POSICIONES_EXTRA_RENDER_X = 4; //TODO
+                this.POSICIONES_EXTRA_RENDER_Y = 8; //TODO
                 this.POSICIONES_EXTRA_TERRENO = 1; // no deberia ser necesario mas de una. (una pos extra en cada una de las 4 direcciones)
                 this.game = game;
 
@@ -25,7 +25,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'lib/pi
 
                 this.tilesize = 32;
 
-                this.rescale();
+                this.rescale(escala);
 
                 this.tablet = Detect.isTablet(window.innerWidth);
 
@@ -33,9 +33,9 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'lib/pi
 
             _initPixi: function () {
 
-                this.pixiRenderer = new PIXI.autoDetectRenderer(544, 416);
-
-                document.getElementById("gamecanvas").appendChild(this.pixiRenderer.view);
+                this.pixiRenderer = new PIXI.autoDetectRenderer(this.camera.gridW * this.tilesize, this.camera.gridH * this.tilesize);
+                $(this.pixiRenderer.view).css('position', 'relative');
+                $("#gamecanvas").append(this.pixiRenderer.view);
 
                 this.stage = new PIXI.Container();
                 this.gameStage = new PIXI.Container();
@@ -45,7 +45,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'lib/pi
                 this.layer3.ordenado = true;
                 this.layer4 = new PIXI.Container();
                 this.gameText = new PIXI.Container();
-                this.consola = new Consola();
+                this.consola = new Consola(this.escala);
                 this.stage.addChild(this.gameStage);
                 this.stage.addChild(this.consola);
                 this.gameStage.addChild(this.layer1);
@@ -161,7 +161,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'lib/pi
                 this._ordenarLayer3();
             },
 
-            removerItem: function (item) {
+            sacarItem: function (item) {
                 if (!item.sprite)
                     return;
                 item.sprite.remover();
@@ -192,8 +192,20 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'lib/pi
                     self._ordenarLayer3();
                 });
                 sprite.setSpeed(char.moveSpeed);
-                sprite.setPosition(char.x, char.y);
                 char.sprite = sprite;
+
+                char.texto = new CharacterText(this.escala);
+                this.gameText.addChild(char.texto);
+
+                char.onPositionChange = function(){
+                    if (this.sprite)
+                        this.sprite.setPosition(this.x, this.y);
+                    if (this.texto) {
+                        this.texto.x = this.x * self.escala;
+                        this.texto.y = this.y * self.escala;
+                    }
+                };
+                char.onPositionChange();
             },
 
             cambiarCharacter: function (char, Body, Head, Heading, Weapon, Shield, Helmet, FX, FXLoops) {
@@ -219,11 +231,13 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'lib/pi
 
             sacarCharacter: function (char) {
                 this.layer3.removeChild(char.sprite);
+                this.gameText.removeChild(char.texto);
+                char.texto = null;
                 char.sprite = null;
             },
 
             setCharacterChat: function (char, chat) {
-                char.sprite.setChat(chat);
+                char.texto.setChat(chat);
             },
 
             setCharacterFX: function (char, FX, FXLoops) {
@@ -231,10 +245,22 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'lib/pi
                 char.sprite.setFX(grh, this.fxs[FX].offX, this.fxs[FX].offY, FXLoops);
             },
 
-            rescale: function () {
-                this.scale = __ESCALA__;
-                if (this.game.player)
-                    this.resetPos(this.game.player.gridX, this.game.player.gridY);
+            rescale: function (escala) { // TODO: que escale solo los graficos del juego, asi las letras no se ven feas (tendrian que estar en otro contenedor y agrandar el tamaño de las letras en vez del contenedor)
+                this.escala = escala;
+                this.pixiRenderer.resize(this.camera.gridW * this.tilesize * escala, this.camera.gridH * this.tilesize * escala);
+                this.gameStage.scale.x = escala;
+                this.gameStage.scale.y = escala;
+
+                this.gameText.scale.x = 1/escala;
+                this.gameText.scale.y = 1/escala;
+                this._syncGamePosition();
+                this.game.forEachCharacter(function(c){
+                    if (c.onPositionChange)
+                        c.onPositionChange();
+                    if (c.texto)
+                        c.texto.setEscala(escala);
+                });
+                this.consola.setEscala(escala);
             },
 
             setBajoTecho: function (bajoT) {
@@ -244,14 +270,18 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'lib/pi
             drawMapaIni: function (gridX, gridY) { // SOLO USARLO EN CAMBIO DE MAPA, SINO USAR RESETPOS. Limpia vectores, dibuja el terreno del mapa, almacena los tiles animados
                 log.error("dibujando inicialmente mapa, solo deberia pasar en cambio de map");
                 this.resetCameraPosition(gridX, gridY);
-                this.gameStage.x = -this.camera.x;
-                this.gameStage.y = -this.camera.y;
+                this._syncGamePosition();
                 this._drawTerrenoIni();
                 this._drawSpritesIni();
             },
 
             resetCameraPosition: function (gridX, gridY) { // hecha por mi
                 this.camera.lookAtGridPos(gridX, gridY);
+            },
+
+            _syncGamePosition: function () {
+                this.gameStage.x = -this.camera.x * this.escala;
+                this.gameStage.y = -this.camera.y * this.escala;
             },
 
             entityEnRangoVisible: function (entity) {
@@ -261,8 +291,7 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'lib/pi
             // TODO: probar crear una imagen del terreno con el mapa entero (antes y tenerla guardada o al logear con el pj) y al moverse ir clipeandola
             moverPosition: function (x, y) {
                 this.camera.mover(x, y);
-                this.gameStage.x = -this.camera.x;
-                this.gameStage.y = -this.camera.y;
+                this._syncGamePosition();
             },
 
             _updateTilesMov: function (dir) { // al moverse mueve la columna/fila que queda atras al frente de todo
@@ -325,14 +354,14 @@ define(['camera', 'item', 'character', 'player', 'timer', 'tileanimado', 'lib/pi
             },
             resetPos: function (gridX, gridY) {
                 this.resetCameraPosition(gridX, gridY);
-                this.gameStage.x = -this.camera.x;
-                this.gameStage.y = -this.camera.y;
+                this._syncGamePosition();
                 this._drawTerrenoIni();
             },
 
             renderFrame: function () {
                 this.pixiRenderer.render(this.stage);
             },
+
         });
         return Renderer;
     });

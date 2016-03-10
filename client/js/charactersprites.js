@@ -11,7 +11,6 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
         // Clase que hereda de container de pixi
         PIXI.Container.call(this);
 
-        this.MAXIMO_LARGO_CHAT = 15;
         this._visible = true;
         this._fxsInfinitos = [];
         this.heading = Heading;
@@ -102,62 +101,6 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
         return this._visible;
     };
 
-    CharacterSprites.prototype.update = function (time) {
-        log.error("sacar esta funcion");
-    };
-
-    CharacterSprites.prototype.start = function () {
-        log.error("sacar esta funcion");
-    };
-
-    CharacterSprites.prototype._formatearChat = function (str) {
-        var resultado = [];
-        while ((str.length > this.MAXIMO_LARGO_CHAT) && (str.indexOf(' ') > (-1))) {
-            var idx = str.indexOf(' ');
-            var posUltimoEspacioPrimerBloque = idx;
-            while ((idx != -1) && (idx < this.MAXIMO_LARGO_CHAT - 1 )) {
-                idx = str.indexOf(' ', idx + 1);
-                if (idx > 0)
-                    posUltimoEspacioPrimerBloque = idx;
-            }
-            if (posUltimoEspacioPrimerBloque > 0)
-                resultado.push(str.slice(0, posUltimoEspacioPrimerBloque));
-            str = str.slice(posUltimoEspacioPrimerBloque + 1, str.length);
-        }
-        resultado.push(str);
-        return resultado;
-    };
-
-    CharacterSprites.prototype.setChat = function( chat ){
-        this.removerChat();
-        chat = this._formatearChat(chat);
-        var estilo = $.extend({},{font: '14px Arial'},Enums.Font.TALK);
-        this._chat = new PIXI.Text(chat.join('\n'), estilo);
-        var self = this;
-        this._chat.duracion = 1000;
-        this._chat.tiempoPasado = 0;
-        this._chat.updateChat = function(delta){
-            this.tiempoPasado += delta;
-            if (this.tiempoPasado > this.duracion){
-                self.removerChat();
-            }
-        }.bind(this._chat);
-        PIXI.ticker.shared.add(this._chat.updateChat, this._chat);
-
-        this._chat.zIndex = 99;
-        this.addChild(this._chat);
-        this._chat.x = this.bodySprite.sprite.x + 32 /2 - this._chat.width /2 ;
-        this._chat.y = this.bodySprite.sprite.y - this.bodySprite.sprite.height - (chat.length -1 )* 14;
-    };
-
-    CharacterSprites.prototype.removerChat = function( chat ){
-        if (this._chat) {
-            PIXI.ticker.shared.remove(this._chat.updateChat, this._chat);
-            this.removeChild(this._chat);
-        }
-        this._chat = null;
-
-    };
     CharacterSprites.prototype._setNombre = function (font, nombre,clan) {
         if (this._nombre){
             this.removeChild(this._nombre);
@@ -228,8 +171,7 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
         this.headSprite = this._setHeadingSprite(this.headSprite, heads);
         if (this.headSprite) {
             this.headSprite.setZindex(4);
-            this.headSprite.setPosition(this.headOffX, this.headOffY)
-
+            this.headSprite.setPosition(this.headOffX, this.headOffY);
         }
     };
 
@@ -286,7 +228,9 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
         this.helmetSprite = this._setHeadingSprite(this.helmetSprite, helmets);
         if (this.helmetSprite) {
             this.helmetSprite.setZindex(5);
-            this.helmetSprite.setPosition(this.headOffX, this.headOffY);
+            log.error(this.headOffX);
+            log.error(this.headOffY);
+            this.helmetSprite.setPosition(this.headOffX, this.headOffY*0);
         }
     };
 

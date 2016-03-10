@@ -1,8 +1,7 @@
 require.config({
     paths: {
         "jquery": "lib/jquery",
-        "jquery-ui": "lib/jquery-ui",
-        "PxLoader": "lib/PxLoader"
+        "jquery-ui": "lib/jquery-ui"
     },
     shim: {
         "jquery-ui": {

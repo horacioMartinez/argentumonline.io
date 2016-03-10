@@ -105,5 +105,6 @@
 /* Grid DE ITEMS para compra/venta por ej */
 
 .itemgrid { list-style-type: none; margin: 0; padding: 0; width: 160px;}
-.itemgrid li { background-size: 100% 100%; float: left; width: 32px; color: white; height: 32px; font-size: 1em; text-align: left; vertical-align: text-top; outline: 2px solid transparent;}
-.itemgrid li.selected{outline-color:limegreen; outline-style: dashed;}
+.itemgrid li { background-size: 100% 100%; float: left; width: 32px; color: white; height: 32px; font-size: 1em; text-align: left; vertical-align: text-top; outline: 2px solid transparent;cursor:default}
+.itemgrid li.equiped{outline-color:#FFD700; outline-style: dashed; outline-width: 1px;}
+.itemgrid li.selected{outline-color:limegreen; outline-style: dashed; outline-width: 2px;}

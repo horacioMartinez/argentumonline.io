@@ -43,18 +43,6 @@ define([], function (){
             return 0;
         },
 
-        hasShadow: function() {
-            return false;
-        },
-
-        ready: function(f) {
-            this.ready_func = f;
-        },
-
-        clean: function() {
-            this.stopBlinking();
-        },
-
         setHighlight: function(value) {
             if(value === true) {
                 this.sprite = this.sprite.silhouetteSprite;
