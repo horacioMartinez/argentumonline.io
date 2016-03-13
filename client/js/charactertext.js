@@ -6,13 +6,15 @@ define(['lib/pixi', 'spritegrh'], function (PIXI) {
 
     function CharacterText(escala) {
         PIXI.Container.call(this);
-        this.MAXIMO_LARGO_CHAT = 15;
+        CharacterText.MAXIMO_LARGO_CHAT = 15;
         this._chat = null;
         this.setEscala(escala);
     }
+    CharacterText.MAXIMO_LARGO_CHAT = 15;
 
     CharacterText.prototype = Object.create(PIXI.Container.prototype);
     CharacterText.constructor = CharacterText;
+
 
     CharacterText.prototype.setEscala = function (escala) {
         var font = Math.round(14*escala)+'px Arial';
@@ -26,10 +28,10 @@ define(['lib/pixi', 'spritegrh'], function (PIXI) {
 
     CharacterText.prototype._formatearChat = function (str) {
         var resultado = [];
-        while ((str.length > this.MAXIMO_LARGO_CHAT) && (str.indexOf(' ') > (-1))) {
+        while ((str.length > CharacterText.MAXIMO_LARGO_CHAT) && (str.indexOf(' ') > (-1))) {
             var idx = str.indexOf(' ');
             var posUltimoEspacioPrimerBloque = idx;
-            while ((idx != -1) && (idx < this.MAXIMO_LARGO_CHAT - 1 )) {
+            while ((idx != -1) && (idx < CharacterText.MAXIMO_LARGO_CHAT - 1 )) {
                 idx = str.indexOf(' ', idx + 1);
                 if (idx > 0)
                     posUltimoEspacioPrimerBloque = idx;

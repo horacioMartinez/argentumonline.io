@@ -36,7 +36,9 @@ define(['lib/pixi'],
             },
 
             _posicionarGrafico: function () {
-                this.sprite.anchor.set(( (this.sprite.width - 32) / 2 ) / this.sprite.width, (this.sprite.height - 32)/ this.sprite.height);
+                var x = ( (this.sprite.width - 32) / 2 ) / this.sprite.width;
+                var y = (this.sprite.height - 32)/ this.sprite.height;
+                this.sprite.anchor.set(x,y );
             },
 
             _setSpeed: function () {

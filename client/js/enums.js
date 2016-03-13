@@ -125,7 +125,8 @@ Enums = {
         domar: 17,
         proyectiles: 18,
         wrestling: 19,
-        navegacion: 20
+        navegacion: 20,
+        fundirmetal: 88
     },
 
     Muerto: {
@@ -260,6 +261,11 @@ Enums = {
         INFOBOLD: {
             fill: "rgb(65, 190, 156)",
             bold: 1
+        },
+
+        SKILLINFO: {
+            fill: "rgb(120,0,0)",
+            stroke: "white"
         },
 
         EJECUCION: {

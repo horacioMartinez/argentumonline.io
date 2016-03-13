@@ -14,7 +14,7 @@ define(['lib/pixi'], function (PIXI) {
 
     Consola.prototype.setEscala = function (escala) {
         var font = Math.round(14*escala)+'px Arial';
-        this.BASE_FONT = {font: font, align: "center", stroke: "black", strokeThickness: 0.2};
+        this.baseFont = {font: font, align: "center", stroke: "black", strokeThickness: 0.2};
     };
 
     Consola.prototype._removerTexto = function(spriteTexto){
@@ -27,7 +27,7 @@ define(['lib/pixi'], function (PIXI) {
 
     Consola.prototype.agregarTexto = function (texto, font) {
 
-        var estilo = $.extend({},this.BASE_FONT,font);
+        var estilo = $.extend({},this.baseFont,font);
         var texto = new PIXI.Text(texto, estilo);
 
         if (this.children.length > this.CANT_LINEAS-1){

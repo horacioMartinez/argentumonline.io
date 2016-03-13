@@ -190,7 +190,7 @@ elementos=[]
 res = [0 for i in range(11)]
 
 def agregar(id,up,right,left,down):
-	nuevoRes= { 'up':up, 'right':right, 'down':down, 'left':left}
+	nuevoRes= { 'up':right, 'right':down, 'down':up, 'left':left} # <------- CAMBIADO! <-------------------------
 	res[id]=nuevoRes
 
 for line in origen:

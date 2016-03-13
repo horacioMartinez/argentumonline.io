@@ -156,7 +156,6 @@ footer, header, hgroup, menu, nav, section {
 
    #gamecanvas {position:absolute;top:7.8%;left:1.45%;z-index: -2} /* margenes de la interfaz */
 
-   #chatbox {z-index: 999}
    #chatbox {height:6.5%;width:63%;position:absolute;left:4%;top:92%} 
    #chatbox.active {top:85.5%;}
    #chatbox input {font-size:12px;background:none;width:100%;border:0;margin-left:2%;margin-top:2%}

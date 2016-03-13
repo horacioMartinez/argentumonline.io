@@ -25,6 +25,10 @@ define(['ui/itemgrid'], function (ItemGrid) {
                 $('body').removeClass('inventarioActivo');
             });
 
+            $("#botonLanzar").click(function () {
+                self.game.lanzarHechizo();
+            });
+
         },
 
         cambiarSlotInventario: function (Slot, Amount, numGrafico, equiped) {
@@ -64,6 +68,7 @@ define(['ui/itemgrid'], function (ItemGrid) {
             $barra.css("width", porcentaje + "%");
             $label.text(cant + "/" + max);
         },
+
         updateBarraEnergia: function (cant, max) {
             this._updateBarra(cant, max, $("#barraEnergiaUsada"), $("#barraEnergiaTexto"));
         },
@@ -80,6 +85,13 @@ define(['ui/itemgrid'], function (ItemGrid) {
             this._updateBarra(cant, max, $("#barraSedUsada"), $("#barraSedTexto"));
         },
 
+        setMouseCrosshair: function(visible){
+            if (visible) {
+                $("#gamecanvas").addClass("crosshair");
+            }
+            else
+                $("#gamecanvas").removeClass("crosshair");
+        },
     });
 
     return Interfaz;

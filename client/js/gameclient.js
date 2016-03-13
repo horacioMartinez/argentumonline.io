@@ -15,7 +15,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
 
         _connect: function (conectarse_callback) {
             //alert("connecting to: " + "ws://localhost:7666");
-            this.ws.open("ws://localhost:7666");
+            this.ws.open("ws://localhost:8666");
             var self = this;
             this.ws.on('open', function () {
                 self.conectado = true;
@@ -134,14 +134,16 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleUpdateSta: function (Value) {
-            console.log("TODO: handleUpdateSta ");
+            this.game.setStamina(Value);
         },
 
         handleUpdateMana: function (Value) {
+            this.game.setMana(Value);
             console.log("TODO: handleUpdateMana ");
         },
 
         handleUpdateHP: function (Value) {
+            this.game.setVida(Value);
             console.log("TODO: handleUpdateHP ");
         },
 
@@ -272,31 +274,14 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleUpdateUserStats: function (MaxHp, MinHp, MaxMan, MinMan, MaxSta, MinSta, Gld, Elv, Elu, Exp) {
-            if ((this.game.player.hp !== MinHp) || (this.game.player.maxHp !== MaxHp)) {
-                this.game.player.hp = MinHp;
-                this.game.player.maxHp = MaxHp;
-                this.game.uiManager.interfaz.updateBarraVida(MinHp, MaxHp);
-            }
-            if ((this.game.player.mana !== MinMan) || (this.game.player.maxMana !== MaxMan)) {
-                this.game.player.mana = MinMan;
-                this.game.player.maxMana = MaxMan;
-                this.game.uiManager.interfaz.updateBarraMana(MinMan, MaxMan);
-            }
-            if ((this.game.player.stamina !== MinSta) || this.game.player.maxStamina !== MaxSta) {
-                this.game.player.stamina = MinSta;
-                this.game.player.maxStamina = MaxSta;
-                this.game.uiManager.interfaz.updateBarraEnergia(MinSta, MaxSta);
-            }
+            this.game.setVida(MinHp,MaxHp);
+            this.game.setMana(MinMan,MaxMan);
+            this.game.setStamina(MinSta,MaxSta);
             this.game.player.oro = Gld;
             this.game.player.nivel = Elv;
-            this.game.player.maxExp = Elu;
+            this.game.player.maxExp = Elu; // TODO;
             this.game.player.exp = Exp;
         },
-
-        handleWorkRequestTarget: function (Skill) {
-            console.log("TODO: handleWorkRequestTarget ");
-        },
-
         handleChangeInventorySlot: function (Slot, ObjIndex, ObjName, Amount, Equiped, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) {
             this.game.cambiarSlotInventario(Slot, ObjIndex, ObjName, Amount, Equiped, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice);
         },
@@ -377,16 +362,8 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleUpdateHungerAndThirst: function (MaxAgu, MinAgu, MaxHam, MinHam) {
-            if ((this.game.player.agua !== MinAgu) || (this.game.player.maxAgua !== MaxAgu)) {
-                this.game.player.maxAgua = MaxAgu;
-                this.game.player.agua = MinAgu;
-                this.game.uiManager.interfaz.updateBarraSed(MinAgu, MaxAgu);
-            }
-            if ((this.game.player.hambre !== MinHam) || (this.game.player.maxHambre !== MaxHam)) {
-                this.game.player.hambre = MinHam;
-                this.game.player.maxHambre = MaxHam;
-                this.game.uiManager.interfaz.updateBarraHambre(MinHam, MaxHam);
-            }
+            this.game.setAgua(MinAgu,MaxAgu);
+            this.game.setHambre(MinHam,MaxHam);
         },
 
         handleFame: function (Asesino, Bandido, Burgues, Ladron, Noble, Plebe, Promedio) {
@@ -609,7 +586,32 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleWorkRequestTarget: function (skill) {
-            console.log("TODO: handleWorkRequestTarget");
+            switch (skill){
+                case Enums.Skill.magia:
+                    this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_MAGIA, Enums.Font.SKILLINFO);
+                    break;
+                case Enums.Skill.pesca:
+                    this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_PESCA, Enums.Font.SKILLINFO);
+                    break;
+                case Enums.Skill.robar:
+                    this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_ROBAR, Enums.Font.SKILLINFO);
+                    break;
+                case Enums.Skill.talar:
+                    this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_TALAR, Enums.Font.SKILLINFO);
+                    break;
+                case Enums.Skill.mineria:
+                    this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_MINERIA, Enums.Font.SKILLINFO);
+                    break;
+                case Enums.Skill.fundirmetal:
+                    this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_FUNDIRMETAL, Enums.Font.SKILLINFO);
+                    break;
+                case Enums.Skill.proyectiles:
+                    this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_PROYECTILES, Enums.Font.SKILLINFO);
+                    break;
+                default:
+                    log.error("Numero de skill invalido: " + skill)
+            }
+            this.game.setTrabajoPendiente(skill);
         },
 
         handleHaveKilledUser: function (victimIndex, exp) {

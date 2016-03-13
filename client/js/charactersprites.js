@@ -11,14 +11,15 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
         // Clase que hereda de container de pixi
         PIXI.Container.call(this);
 
+        this.OFFSET_HEAD = -34;
         this._visible = true;
         this._fxsInfinitos = [];
         this.heading = Heading;
-        this.setBodys(bodys, headOffX, headOffY, true);
-        this.setHeads(heads, true);
-        this.setWeapons(weapons, true);
-        this.setShields(shields, true);
-        this.setHelmets(helmets, true);
+        this.setBodys(bodys, headOffX, headOffY);
+        this.setHeads(heads);
+        this.setWeapons(weapons);
+        this.setShields(shields);
+        this.setHelmets(helmets);
         this._setNombre(font,nombre,clan);
         this._updateOrdenHijos();
 
@@ -228,9 +229,7 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
         this.helmetSprite = this._setHeadingSprite(this.helmetSprite, helmets);
         if (this.helmetSprite) {
             this.helmetSprite.setZindex(5);
-            log.error(this.headOffX);
-            log.error(this.headOffY);
-            this.helmetSprite.setPosition(this.headOffX, this.headOffY*0);
+            this.helmetSprite.setPosition(this.headOffX, this.headOffY +this.OFFSET_HEAD);
         }
     };
 

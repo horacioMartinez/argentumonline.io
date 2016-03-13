@@ -1,6 +1,6 @@
 define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
         'gameclient', 'updater', 'transition',
-        'item', 'player', 'character', 'assetmanager', 'intervalos', 'uimanager','comandoschat'],
+        'item', 'player', 'character', 'assetmanager', 'intervalos', 'uimanager', 'comandoschat'],
     function (__enums__, Animacion, Mapa, InfoManager, Renderer,
               GameClient, Updater, Transition,
               Item, Player, Character, AssetManager, Intervalos, UIManager, ComandosChat) {
@@ -390,9 +390,15 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     log.error("tratando de agregar character habiendo un character con mismo charindex existente");
                     return;
                 }
-
-                var nombre = Name.slice(Name, Name.indexOf("<") - 1);
-                var clan = Name.slice(Name.indexOf("<"), Name.length);
+                var nombre, clan;
+                if (Name.indexOf("<") > 0) {
+                    nombre = Name.slice(Name, Name.indexOf("<") - 1);
+                    clan = Name.slice(Name.indexOf("<"), Name.length);
+                }
+                else {
+                    nombre = Name;
+                    clan = null;
+                }
 
                 if ((!this.player) && ( this.username.toUpperCase() === nombre.toUpperCase())) { // mal esto, se deberia hacer comparando el charindex pero no se puede porque el server manda el char index del pj despues de crear los chars
                     this.inicializarPlayer(CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan, NickColor, Privileges);
@@ -450,6 +456,57 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 }
             },
 
+            setVida: function (min, max) {
+                if (!max)
+                    max = this.player.maxHp;
+                if ((this.player.hp !== min) || (this.player.maxHp !== max)) {
+                    this.player.hp = min;
+                    this.player.max = max;
+                    this.uiManager.interfaz.updateBarraVida(min, max);
+                }
+            },
+
+            setMana: function (MinMan, MaxMan) {
+                if (!MaxMan)
+                    MaxMan = this.player.maxMana;
+
+                if ((this.player.mana !== MinMan) || (this.player.maxMana !== MaxMan)) {
+                    this.player.mana = MinMan;
+                    this.player.maxMana = MaxMan;
+                    this.uiManager.interfaz.updateBarraMana(MinMan, MaxMan);
+                }
+            },
+
+            setStamina: function (MinSta, MaxSta) {
+                if (!MaxSta)
+                    MaxSta = this.player.maxStamina;
+                if ((this.player.stamina !== MinSta) || this.player.maxStamina !== MaxSta) {
+                    this.player.stamina = MinSta;
+                    this.player.maxStamina = MaxSta;
+                    this.uiManager.interfaz.updateBarraEnergia(MinSta, MaxSta);
+                }
+            },
+
+            setAgua: function (MinAgu, MaxAgu) {
+                if (!MaxAgu)
+                    MaxAgu = this.player.maxAgua;
+                if ((this.player.agua !== MinAgu) || (this.player.maxAgua !== MaxAgu)) {
+                    this.player.maxAgua = MaxAgu;
+                    this.player.agua = MinAgu;
+                    this.uiManager.interfaz.updateBarraSed(MinAgu, MaxAgu);
+                }
+            },
+
+            setHambre: function (MinHam, MaxHam) {
+                if (!MaxHam)
+                    MaxHam = this.player.maxHambre;
+                if ((this.player.hambre !== MinHam) || (this.player.maxHambre !== MaxHam)) {
+                    this.player.hambre = MinHam;
+                    this.player.maxHambre = MaxHam;
+                    this.uiManager.interfaz.updateBarraHambre(MinHam, MaxHam);
+                }
+            },
+
             cambiarSlotInventario: function (Slot, ObjIndex, ObjName, Amount, Equiped, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) {
                 this.inventario[Slot] = {
                     objIndex: ObjIndex,
@@ -467,7 +524,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
 
                 if ((Amount > 0 ) && (GrhIndex > 0)) {
                     var numGrafico = this.indices[GrhIndex].grafico;
-                    this.uiManager.interfaz.cambiarSlotInventario(Slot, Amount, numGrafico,Equiped);
+                    this.uiManager.interfaz.cambiarSlotInventario(Slot, Amount, numGrafico, Equiped);
                     if (this.uiManager.comerciar.visible)
                         this.uiManager.comerciar.cambiarSlotVenta(Slot, Amount, numGrafico);
                 }
@@ -665,25 +722,25 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     this.client.sendRequestPositionUpdate();
             },
 
-            equiparSelectedItem: function() {
+            equiparSelectedItem: function () {
                 var slot = this.uiManager.interfaz.getSelectedSlotInventario();
                 if (slot)
                     this.client.sendEquipItem(slot);
             },
 
-            usarConU: function(){
+            usarConU: function () {
                 var slot = this.uiManager.interfaz.getSelectedSlotInventario();
                 if (!slot)
                     return;
-                if (this.intervalos.requestUsarConU(this.currentTime)){
+                if (this.intervalos.requestUsarConU(this.currentTime)) {
                     this.client.sendUseItem(slot);
                 }
             },
 
-            usarConDobleClick: function(slot){
+            usarConDobleClick: function (slot) {
                 if (!slot)
                     return;
-                if (this.intervalos.requestUsarConDobleClick(this.currentTime)){
+                if (this.intervalos.requestUsarConDobleClick(this.currentTime)) {
                     this.client.sendUseItem(slot);
                 }
 
@@ -710,6 +767,19 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     }
                 }
 
+            },
+
+            lanzarHechizo: function () {
+                var slot = this.uiManager.interfaz.getSelectedSlotHechizo();
+                if (!slot)
+                    return;
+                this.client.sendCastSpell(slot);
+                this.client.sendWork(Enums.Skill.magia);
+            },
+
+            setTrabajoPendiente: function(skill){
+                this.uiManager.interfaz.setMouseCrosshair(true);
+                this.trabajoPendiente = skill;
             },
 
             cambiarSlotCompra: function (Slot, ObjName, Amount, Price, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef) {
@@ -928,8 +998,15 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
 
             click: function () {
                 var gridPos = this.getMouseGridPosition();
-                if (this.logeado)
-                    this.client.sendLeftClick(gridPos.x, gridPos.y);
+                if (this.logeado) {
+                    if (this.trabajoPendiente){
+                        this.uiManager.interfaz.setMouseCrosshair(false);
+                        this.client.sendWorkLeftClick(gridPos.x, gridPos.y, this.trabajoPendiente);
+                        this.trabajoPendiente = false;
+                    }
+                    else
+                        this.client.sendLeftClick(gridPos.x, gridPos.y);
+                }
             },
 
             doubleclick: function () {
