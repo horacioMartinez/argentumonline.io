@@ -1,7 +1,7 @@
-define(['entity', 'transition', 'timer', 'animacion', 'lib/pixi'], function (Entity, Transition, Timer, Animacion, PIXI) {
+define(['entity', 'transition', 'timer', 'lib/pixi'], function (Entity, Transition, Timer, PIXI) {
 
     var Character = Entity.extend({
-        init: function (CharIndex, BodyGrh, HeadGrh, offHeadX, offHeadY, Heading, gridX, gridY, WeaponGrh, ShieldGrh, HelmetGrh, Name, clan, NickColor, Privileges) {
+        init: function (CharIndex, gridX, gridY, Heading, Name, clan) {
             var self = this;
 
             this._super(gridX, gridY);
@@ -33,27 +33,6 @@ define(['entity', 'transition', 'timer', 'animacion', 'lib/pixi'], function (Ent
         _setHeading: function (heading) {
             this.heading = heading;
             this.sprite.cambiarHeading(heading);
-        },
-
-        setBodyGrh: function (grhs) {
-            if (this.sprite)
-                this.sprite.setBodys(grhs);
-        },
-
-        setHeadGrh: function (grhs) {
-            this.headGrhs = this._corregirVelocidad(grhs);
-        },
-
-        setWeaponGrh: function (grhs) {
-            this.weaponGrhs = this._corregirVelocidad(grhs);
-        },
-
-        setShieldGrh: function (grhs) {
-            this.shieldGrhs = this._corregirVelocidad(grhs);
-        },
-
-        setHelmetGrh: function (grhs) {
-            this.helmetGrhs = this._corregirVelocidad(grhs);
         },
 
         getDirMov: function () {
@@ -95,8 +74,7 @@ define(['entity', 'transition', 'timer', 'animacion', 'lib/pixi'], function (Ent
 
         animarMovimiento: function () {
             if (this.sprite)
-                if (this.sprite.isVisible())
-                    this.sprite.play();
+                this.sprite.play();
         },
 
     });

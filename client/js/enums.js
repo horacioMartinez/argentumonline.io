@@ -265,7 +265,8 @@ Enums = {
 
         SKILLINFO: {
             fill: "rgb(120,0,0)",
-            stroke: "white"
+            stroke: "white",
+            strokeThickness: 0.2
         },
 
         EJECUCION: {

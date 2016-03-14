@@ -1,5 +1,5 @@
 
-define(['entity','animacion'], function(Entity) {
+define(['entity'], function(Entity) {
 
     var Item = Entity.extend({
         init: function(id,gridX, gridY) {

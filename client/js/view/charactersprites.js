@@ -2,7 +2,7 @@
  * Created by horacio on 3/2/16.
  */
 
-define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
+define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
 
     function CharacterSprites(Heading, bodys, heads, headOffX, headOffY, weapons, shields, helmets,font, nombre, clan) {
         /*
@@ -12,7 +12,6 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
         PIXI.Container.call(this);
 
         this.OFFSET_HEAD = -34;
-        this._visible = true;
         this._fxsInfinitos = [];
         this.heading = Heading;
         this.setBodys(bodys, headOffX, headOffY);
@@ -29,14 +28,16 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
     CharacterSprites.constructor = CharacterSprites;
 
     CharacterSprites.prototype.setFX = function (grh, offX, offY, loops) {
-        var nuevoSprite = new SpriteGrh(this, grh, loops);
+        var nuevoSprite = new SpriteGrh(grh, loops);
+        this.addChild(nuevoSprite);
         nuevoSprite.setPosition(offX, offY);
-        nuevoSprite.setZindex(6);
+        nuevoSprite.zIndex = 6;
         if (loops > 0) {
             nuevoSprite.play();
-            nuevoSprite.onFinAnim(function () {
-                nuevoSprite.remover();
-            });
+            var self = this;
+            nuevoSprite.onComplete = function () {
+                self.removeChild(this);
+            };
         }
         else {
             this._fxsInfinitos.push(nuevoSprite);
@@ -46,34 +47,33 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
     CharacterSprites.prototype.setSombraSprite = function (grh) {
         if (this._sombraSprite)
             return;
-        this._sombraSprite = new SpriteGrh(this, grh);
-        this._sombraSprite.setVisible(this._visible);
-        this._sombraSprite.setZindex(-1);
+        this._sombraSprite = new SpriteGrh(grh);
+        this.addChild(this._sombraSprite);
+        this._sombraSprite.zIndex = -1;
 
-        var w = this.bodySprite.sprite.width < 32 ? 32 : this.bodySprite.sprite.width;
-        this._sombraSprite.setWidth(w);
-        this._sombraSprite.setHeight(w);
+        var w = this.bodySprite.width < 32 ? 32 : this.bodySprite.width;
+        this._sombraSprite.width =w;
+        this._sombraSprite.height = w;
 
         this._updateOrdenHijos();
     };
 
     CharacterSprites.prototype.removerFxsInfinitos = function () {
         for (var i = 0; i < this._fxsInfinitos; i++) {
-            this._fxsInfinitos[i].remover();
+            this.removeChild(this._fxsInfinitos[i]);
         }
         this._fxsInfinitos = [];
     };
 
-    CharacterSprites.prototype.setPosition = function (x, y) { // TODO: usar los getters y setters de x e y como en sprite
-        this.x = x;
-        this.y = y;
-        var gridX = Math.round(x / 32);
-        var gridY = Math.round(y / 32);
-        this._setZIndex(gridY * 1000 + (101 - gridX));
+    CharacterSprites.prototype.setPositionChangeCallback = function (callback) {
+        this._onSetPosition = callback;
     };
 
-    CharacterSprites.prototype.setOnZindexChange = function (callback) {
-        this._onZindexCallback = callback;
+    CharacterSprites.prototype.setPosition = function (x, y) { // TODO: usar los getters y setters de x e y como en sprite
+        this.x = x ;
+        this.y = y ;
+        if (this._onSetPosition)
+            this._onSetPosition();
     };
 
     CharacterSprites.prototype.setSpeed = function (vel) {
@@ -90,16 +90,11 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
     };
 
     CharacterSprites.prototype.setVisible = function (visible) {
-        this._visible = visible;
-        this._forEachHeadingSprite(function (sprite) {
-            sprite.setVisible(visible);
-        });
-        if (this._sombraSprite)
-            this._sombraSprite.setVisible(visible);
+        this.visible = visible;
     };
 
     CharacterSprites.prototype.isVisible = function () {
-        return this._visible;
+        return this.visible;
     };
 
     CharacterSprites.prototype._setNombre = function (font, nombre,clan) {
@@ -116,13 +111,13 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
             this._nombre = new PIXI.Text(nombre,font);
             this.addChild(this._nombre);
             this._nombre.y = 32;
-            this._nombre.x = this.bodySprite.sprite.x + 32 /2 - this._nombre.width /2 ;
+            this._nombre.x = this.bodySprite.x + 32 /2 - this._nombre.width /2 ;
         }
         if (clan){
             this._clan = new PIXI.Text(clan, font);
             this.addChild(this._clan);
             this._clan.y = this._nombre.y + this._nombre.height;
-            this._clan.x = this.bodySprite.sprite.x + 32 /2 - this._clan.width /2 ;
+            this._clan.x = this.bodySprite.x + 32 /2 - this._clan.width /2 ;
         }
     };
 
@@ -132,10 +127,10 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
 
         this.heading = heading;
         this.setBodys(this.bodys, this.headOffX, this.headOffY, true);
-        this.setHeads(this.heads, true);
-        this.setWeapons(this.weapons, true);
-        this.setShields(this.shields, true);
-        this.setHelmets(this.helmets, true);
+        this.setHeads(this.heads);
+        this.setWeapons(this.weapons);
+        this.setShields(this.shields);
+        this.setHelmets(this.helmets);
 
         this._updateOrdenHijos();
     };
@@ -149,16 +144,16 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
         if (this.bodySprite) {
             switch (this.heading) {
                 case Enums.Heading.norte:
-                    this.bodySprite.setZindex(3);
+                    this.bodySprite.zIndex = 3;
                     break;
                 case Enums.Heading.sur:
-                    this.bodySprite.setZindex(1);
+                    this.bodySprite.zIndex = 1;
                     break;
                 case Enums.Heading.este:
-                    this.bodySprite.setZindex(2);
+                    this.bodySprite.zIndex = 2;
                     break;
                 case Enums.Heading.oeste:
-                    this.bodySprite.setZindex(1);
+                    this.bodySprite.zIndex = 1;
                     break;
                 default:
                     log.error("character heading invalido");
@@ -171,7 +166,7 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
         this.heads = heads;
         this.headSprite = this._setHeadingSprite(this.headSprite, heads);
         if (this.headSprite) {
-            this.headSprite.setZindex(4);
+            this.headSprite.zIndex = 4;
             this.headSprite.setPosition(this.headOffX, this.headOffY);
         }
     };
@@ -182,16 +177,16 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
         if (this.weaponSprite) {
             switch (this.heading) {
                 case Enums.Heading.norte:
-                    this.weaponSprite.setZindex(2);
+                    this.weaponSprite.zIndex = 2;
                     break;
                 case Enums.Heading.sur:
-                    this.weaponSprite.setZindex(2);
+                    this.weaponSprite.zIndex = 2;
                     break;
                 case Enums.Heading.este:
-                    this.weaponSprite.setZindex(3);
+                    this.weaponSprite.zIndex = 3;
                     break;
                 case Enums.Heading.oeste:
-                    this.weaponSprite.setZindex(2);
+                    this.weaponSprite.zIndex = 2;
                     break;
                 default:
                     log.error("character heading invalido");
@@ -206,16 +201,16 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
         if (this.shieldSprite) {
             switch (this.heading) {
                 case Enums.Heading.norte:
-                    this.shieldSprite.setZindex(1);
+                    this.shieldSprite.zIndex = 1;
                     break;
                 case Enums.Heading.sur:
-                    this.shieldSprite.setZindex(3);
+                    this.shieldSprite.zIndex = 3;
                     break;
                 case Enums.Heading.este:
-                    this.shieldSprite.setZindex(1);
+                    this.shieldSprite.zIndex = 1;
                     break;
                 case Enums.Heading.oeste:
-                    this.shieldSprite.setZindex(3);
+                    this.shieldSprite.zIndex = 3;
                     break;
                 default:
                     log.error("character heading invalido");
@@ -228,7 +223,7 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
         this.helmets = helmets;
         this.helmetSprite = this._setHeadingSprite(this.helmetSprite, helmets);
         if (this.helmetSprite) {
-            this.helmetSprite.setZindex(5);
+            this.helmetSprite.zIndex = 5;
             this.helmetSprite.setPosition(this.headOffX, this.headOffY +this.OFFSET_HEAD);
         }
     };
@@ -236,17 +231,17 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
     CharacterSprites.prototype._setHeadingSprite = function (varSprite, grhs) {
         if (!grhs) {
             if (varSprite)
-                varSprite.remover();
+                this.removeChild(varSprite);
             return null;
         }
         if (varSprite) {
             varSprite.cambiarGrh(grhs[this.heading]);
             return varSprite;
         }
-        var nuevoSprite = new SpriteGrh(this, grhs[this.heading], 1);
+        var nuevoSprite = new SpriteGrh(grhs[this.heading], 1);
+        this.addChild(nuevoSprite);
         if (this._velocidad)
             nuevoSprite.setSpeed(this._velocidad);
-        nuevoSprite.setVisible(this._visible);
         return nuevoSprite;
     };
 
@@ -285,15 +280,6 @@ define(['lib/pixi', 'spritegrh'], function (PIXI, SpriteGrh) {
             callback(this.shieldSprite);
         if (this.helmetSprite)
             callback(this.helmetSprite);
-    };
-
-    CharacterSprites.prototype._setZIndex = function (z) {
-        if (z === this.zIndex)
-            return;
-        this.zIndex = z;
-        if (this._onZindexCallback) {
-            this._onZindexCallback();
-        }
     };
 
     return CharacterSprites;

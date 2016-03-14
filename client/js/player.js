@@ -3,9 +3,9 @@ define(['character',  'enums'], function (Character) {
     var Player = Character.extend({
         MAX_LEVEL: 10,
 
-        init: function (CharIndex, Body, Head, offHeadX, offHeadY, Heading, X, Y, Weapon, Shield, Helmet, FX, Name, clan, NickColor, Privileges) {
+        init: function (CharIndex, X, Y, Heading, Name, clan) {
 
-            this._super(CharIndex, Body, Head, offHeadX, offHeadY, Heading, X, Y, Weapon, Shield, Helmet, FX, Name,clan, NickColor, Privileges);
+            this._super(CharIndex, X, Y, Heading, Name, clan);
 
             this.forcedCaminar = []; // vector con las pos de mov forzado
             this.moviendose = 0;

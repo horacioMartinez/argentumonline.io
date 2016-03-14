@@ -367,7 +367,7 @@ define([], function () {
     return ComandosChat;
 });
 
-/*
+/*TODO: agregar comandos gm... :
 
  '
  ' BEGIN GM COMMANDS

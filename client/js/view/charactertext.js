@@ -2,7 +2,7 @@
  * Created by horacio on 3/9/16.
  */
 
-define(['lib/pixi', 'spritegrh'], function (PIXI) {
+define(['lib/pixi'], function (PIXI) {
 
     function CharacterText(escala) {
         PIXI.Container.call(this);

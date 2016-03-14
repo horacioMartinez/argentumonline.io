@@ -15,15 +15,42 @@ define(['jquery', 'storage', 'gameclient', 'crearpj'], function ($, Storage, Gam
             }
         },
 
+        _initCallbacks: function (client) {
+            var self = this;
+
+            client.setDisconnectCallback(function () {
+                self.setLoginScreen();
+                self.game.renderer.clean(self.getEscala());
+                self.game.init(this,self.game.assetManager);
+                self.game.started = false;
+            });
+
+            client.setLogeadoCallback(function () {
+                self.game.start();
+                self.setGameScreen();
+                self.setPlayButtonState(true);
+            });
+
+            client.setDadosCallback(function (Fuerza, Agilidad, Inteligencia, Carisma, Constitucion) {
+                self.crearPJ.updateDados(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion);
+            });
+
+            this.crearPJ.setBotonTirarDadosCallback(function () {
+                self.client.sendThrowDices();
+            });
+            this.crearPJ.setBotonVolverCallback(function () {
+                self.setLoginScreen();
+            });
+            this.crearPJ.setBotonCrearCallback(function (nombre, password, raza, genero, clase, cabeza, mail, ciudad) {
+                self.startGame(true, nombre, password, raza, genero, clase, cabeza, mail, ciudad);
+            });
+        },
+
         setGame: function (game) {
             this.game = game;
             this.client = new GameClient(this.game, this.host, this.port);
+            this._initCallbacks(this.client);
             this.game.client = this.client;
-
-            this.isMobile = this.game.renderer.mobile;
-            this.isTablet = this.game.renderer.tablet;
-            this.isDesktop = !(this.isMobile || this.isTablet);
-            this.supportsWorkers = !!window.Worker;
             this.ready = true;
         },
 
@@ -42,23 +69,11 @@ define(['jquery', 'storage', 'gameclient', 'crearpj'], function ($, Storage, Gam
         setCrearPJ: function () {
             this.crearPJ.inicializar();
             this.setCrearButtonState(false);
-            this.client = new GameClient(this.game, this.host, this.port);
             var self = this;
-            this.client.setDadosCallback(function (Fuerza, Agilidad, Inteligencia, Carisma, Constitucion) {
-                self.crearPJ.updateDados(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion);
-            });
+
             this.client.intentarCrearPersonaje(function () {
                 self.setCrearPJScreen();
                 self.setCrearButtonState(true);
-            });
-            this.crearPJ.setBotonTirarDadosCallback(function () {
-                self.client.sendThrowDices();
-            });
-            this.crearPJ.setBotonVolverCallback(function () {
-                self.setLoginScreen();
-            });
-            this.crearPJ.setBotonCrearCallback(function (nombre, password, raza, genero, clase, cabeza, mail, ciudad) {
-                self.startGame(true,nombre,password, raza, genero, clase, cabeza, mail, ciudad);
             });
         },
 
@@ -70,27 +85,20 @@ define(['jquery', 'storage', 'gameclient', 'crearpj'], function ($, Storage, Gam
             if (!this.validarLogin(username, userpw)) return;
 
             this.setPlayButtonState(false);
-            this.startGame(false,username, userpw);
+            this.startGame(false, username, userpw);
         },
 
-        startGame: function (newChar, username, userpw, raza, genero, clase, cabeza, mail, ciudad ) {
+        startGame: function (newChar, username, userpw, raza, genero, clase, cabeza, mail, ciudad) {
             this.firstTimePlaying = !this.storage.hasAlreadyPlayed();
             if (this.game.started)
                 return;
             this.center();
             this.game.inicializar(username);
-            var self = this;
-            this.client.setLogeadoCallback( function(){
-                self.game.start();
-                self.setGameScreen();
-                self.setPlayButtonState(true);
-            });
-
             if (!newChar) {
                 this.client.intentarLogear(username, userpw);
             }
             else {
-                this.client.sendLoginNewChar(username, userpw, 0, 13, 0, raza, genero, clase, cabeza, mail, ciudad);
+                this.client.sendLoginNewChar(username, userpw, raza, genero, clase, cabeza, mail, ciudad);
             }
         },
 
@@ -99,7 +107,6 @@ define(['jquery', 'storage', 'gameclient', 'crearpj'], function ($, Storage, Gam
             $('body').addClass('login');
         },
 
-        //estas son las que van
         setLoginScreen: function () {
             var $body = $('body');
             $body.removeClass('jugar');
@@ -319,7 +326,7 @@ define(['jquery', 'storage', 'gameclient', 'crearpj'], function ($, Storage, Gam
             }
         },
 
-        getEscala: function(){
+        getEscala: function () {
             return $('#container').height() / 500;
         },
 

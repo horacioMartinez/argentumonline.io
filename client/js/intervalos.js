@@ -5,6 +5,7 @@ define(['enums'], function () {
 
     var Intervalos = Class.extend({
         init: function (time) {
+            time = time || 0;
             this.times = {
                 macroHechizos: time,
                 macroTrabajo: time,

@@ -99,37 +99,28 @@ define(['jquery-ui', 'app', 'assetmanager', 'lib/pixi'], function (___ui___, App
 
             $('#chatbox').attr('value', '');
 
-            if (game.renderer.mobile || game.renderer.tablet) {
-                $('#gamecanvas').bind('touchstart', function (event) {
-                    if ((!game.started) || (game.isPaused))
-                        return;
-                    app.center();
-                    if (app.setMouseCoordinates(event.originalEvent.touches[0]))
-                        game.click();
-                });
-            } else {
-                $('#gamecanvas').click(function (event) {
-                    if ((!game.started) || (game.isPaused))
-                        return;
+            $('#gamecanvas').click(function (event) {
+                if ((!game.started) || (game.isPaused))
+                    return;
 
-                    app.center();
-                    if (app.setMouseCoordinates(event)) {
-                        game.click();
-                    }
-                    // TODO: si haces click afuera del menu pop up que lo cierre?
-                });
+                app.center();
+                if (app.setMouseCoordinates(event)) {
+                    game.click();
+                }
+                // TODO: si haces click afuera del menu pop up que lo cierre?
+            });
 
-                $('#gamecanvas').dblclick(function (event) {
-                    if ((!game.started) || (game.isPaused))
-                        return;
+            $('#gamecanvas').dblclick(function (event) {
+                if ((!game.started) || (game.isPaused))
+                    return;
 
-                    app.center();
-                    if (app.setMouseCoordinates(event)) {
-                        game.doubleclick();
-                    }
-                    // TODO: si haces click afuera del menu pop up que lo cierre?
-                });
-            }
+                app.center();
+                if (app.setMouseCoordinates(event)) {
+                    game.doubleclick();
+                }
+                // TODO: si haces click afuera del menu pop up que lo cierre?
+            });
+
             /*
              $(document).mousemove(function (event) {
              app.setMouseCoordinates(event);

@@ -1,7 +1,7 @@
-define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
+define(['enums', 'mapa', 'infomanager', 'view/renderer',
         'gameclient', 'updater', 'transition',
-        'item', 'player', 'character', 'assetmanager', 'intervalos', 'uimanager', 'comandoschat'],
-    function (__enums__, Animacion, Mapa, InfoManager, Renderer,
+        'item', 'player', 'character', 'assetmanager', 'intervalos', 'ui/uimanager', 'comandoschat'],
+    function (__enums__, Mapa, InfoManager, Renderer,
               GameClient, Updater, Transition,
               Item, Player, Character, AssetManager, Intervalos, UIManager, ComandosChat) {
         var Game = Class.extend({
@@ -11,20 +11,12 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.comandosChat = new ComandosChat(this);
                 this.map = new Mapa();
                 this.assetManager = assetManager;
-                this.indices = this.assetManager.getIndices();
-                this.armas = this.assetManager.getArmas();
-                this.cabezas = this.assetManager.getCabezas();
-                this.cascos = this.assetManager.getCascos();
-                this.cuerpos = this.assetManager.getCuerpos();
-                this.escudos = this.assetManager.getEscudos();
-                this.fxs = this.assetManager.getFxs();
 
                 this.app = app;
                 this.ready = false;
                 this.started = false;
                 this.isPaused = false;
 
-                this.renderer = null;
                 this.updater = null;
                 this.chatinput = null;
 
@@ -46,8 +38,6 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.itemGrid = null;
                 this.currentCursor = null;
                 this.mouse = {x: 0, y: 0};
-
-                this.cursorVisible = true;
 
                 // combat
                 this.infoManager = new InfoManager(this);
@@ -265,12 +255,12 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 );
             },
 
-            _removeAllItems: function () {
+            _removeAllEntities: function () {
                 var self = this;
-                this.forEachItem(function (item) {
-                        self.sacarEntity(item);
-                    }
-                );
+                this.forEachEntity(function(entity){
+                    if (entity.id !== self.player.id)
+                        self.sacarEntity(entity);
+                });
             },
 
             sacarEntity: function (entity) {
@@ -289,45 +279,6 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     this.entityGrid[item.gridX][item.gridY][0] = null;
                     this.items[entity.id] = null;
                 }
-            },
-
-            getGrhOAnim: function (numGrh, loops) {
-                if (!numGrh)
-                    return 0;
-
-                if (this.indices[numGrh].frames) {   // es animacion
-                    if ((!loops) && (loops !== 0))
-                        loops = 1;
-                    return new Animacion(this.indices[numGrh].frames, this.indices[numGrh].velocidad, loops);
-                }
-                return numGrh;
-            },
-
-            getGraficoOFrames: function (numGrh, loops) {
-                if (!numGrh)
-                    return 0;
-
-                if (this.indices[numGrh].frames) {   // es animacion
-                    if ((!loops) && (loops !== 0))
-                        loops = 1;
-                    var grafs = [];
-                    for (var i = 0; i < this.indices[numGrh].frames.length; i++) {
-                        grafs.push(this.indices[this.indices[numGrh].frames[i]].grafico);
-                    }
-                    return grafs;
-                    //return new Animacion(grafs, this.indices[numGrh].velocidad, loops);
-                }
-                return this.indices[numGrh].grafico;
-            },
-
-            desindexear: function (numero, varIndice) {
-                var Grhs = [];
-                Grhs[Enums.Heading.norte] = this.getGrhOAnim(varIndice[numero].up);
-                Grhs[Enums.Heading.este] = this.getGrhOAnim(varIndice[numero].right);
-                Grhs[Enums.Heading.sur] = this.getGrhOAnim(varIndice[numero].down);
-                Grhs[Enums.Heading.oeste] = this.getGrhOAnim(varIndice[numero].left);
-
-                return Grhs;
             },
 
             moverCharacter: function (CharIndex, gridX, gridY) {
@@ -404,24 +355,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     this.inicializarPlayer(CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan, NickColor, Privileges);
                     return;
                 }
-
-                //c = new Character(CharIndex,
-                //    this.desindexear(Body, this.cuerpos),
-                //    this.desindexear(Head, this.cabezas), this.cuerpos[Body].offHeadX, this.cuerpos[Body].offHeadY,
-                //    Heading, X, Y,
-                //    this.desindexear(Weapon, this.armas),
-                //    this.desindexear(Shield, this.escudos),
-                //    this.desindexear(Helmet, this.cascos),
-                //    nombre,clan,NickColor, Privileges);
-
-                c = new Character(CharIndex,
-                    this.desindexear(Body, this.cuerpos),
-                    this.desindexear(Head, this.cabezas), this.cuerpos[Body].offHeadX, this.cuerpos[Body].offHeadY,
-                    Heading, X, Y,
-                    this.desindexear(Weapon, this.armas),
-                    this.desindexear(Shield, this.escudos),
-                    this.desindexear(Helmet, this.cascos),
-                    nombre, clan, NickColor, Privileges);
+                c = new Character(CharIndex, X, Y, Heading, nombre, clan);
 
                 if ((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal))
                     c.muerto = true;
@@ -461,7 +395,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                     max = this.player.maxHp;
                 if ((this.player.hp !== min) || (this.player.maxHp !== max)) {
                     this.player.hp = min;
-                    this.player.max = max;
+                    this.player.maxHp = max;
                     this.uiManager.interfaz.updateBarraVida(min, max);
                 }
             },
@@ -523,7 +457,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 };
 
                 if ((Amount > 0 ) && (GrhIndex > 0)) {
-                    var numGrafico = this.indices[GrhIndex].grafico;
+                    var numGrafico = this.renderer.getNumGraficoFromGrh(GrhIndex);
                     this.uiManager.interfaz.cambiarSlotInventario(Slot, Amount, numGrafico, Equiped);
                     if (this.uiManager.comerciar.visible)
                         this.uiManager.comerciar.cambiarSlotVenta(Slot, Amount, numGrafico);
@@ -546,14 +480,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
             inicializarPlayer: function (CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan, NickColor, Privileges) {
                 log.error("inicializar player");
                 this.playerId = CharIndex;
-                this.player = new Player(CharIndex,
-                    this.desindexear(Body, this.cuerpos),
-                    this.desindexear(Head, this.cabezas), this.cuerpos[Body].offHeadX, this.cuerpos[Body].offHeadY,
-                    Heading, X, Y,
-                    this.desindexear(Weapon, this.armas),
-                    this.desindexear(Shield, this.escudos),
-                    this.desindexear(Helmet, this.cascos),
-                    nombre, clan, NickColor, Privileges);
+                this.player = new Player(CharIndex, X, Y, Heading, nombre, clan);
 
                 if ((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal))
                     this.player.muerto = true;
@@ -641,7 +568,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 /* todo: cambiar esto si deja de ser sync: */
                 //this._removeAllEntitys();
                 this.map = new Mapa(numeroMapa, this.assetManager.getMapaSync(numeroMapa));
-                this._removeAllItems();
+                this._removeAllEntities();
             },
 
             cambiarArea: function (gridX, gridY) {
@@ -770,6 +697,8 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
             },
 
             lanzarHechizo: function () {
+                if (!this.intervalos.requestLanzarHechizo())
+                    return;
                 var slot = this.uiManager.interfaz.getSelectedSlotHechizo();
                 if (!slot)
                     return;
@@ -777,7 +706,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.client.sendWork(Enums.Skill.magia);
             },
 
-            setTrabajoPendiente: function(skill){
+            setTrabajoPendiente: function (skill) {
                 this.uiManager.interfaz.setMouseCrosshair(true);
                 this.trabajoPendiente = skill;
             },
@@ -797,7 +726,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 };
 
                 if ((Amount > 0 ) && (GrhIndex > 0)) {
-                    var numGrafico = this.indices[GrhIndex].grafico;
+                    var numGrafico = this.renderer.getNumGraficoFromGrh(GrhIndex);
                     this.uiManager.comerciar.cambiarSlotCompra(Slot, Amount, numGrafico);
                 }
                 else
@@ -835,32 +764,6 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
                 this.renderer.setCharacterFX(this.characters[CharIndex], FX, FXLoops);
             },
 
-            addEntity: function (entity) {
-                var self = this;
-
-                if (this.entities[entity.id] === undefined) {
-                    this.entities[entity.id] = entity;
-                    this.registerEntityPosition(entity);
-
-                    if (!(entity instanceof Item && entity.wasDropped)
-                        && !(this.renderer.mobile || this.renderer.tablet)) {
-                        entity.fadeIn(this.currentTime);
-                    }
-
-                    if (this.renderer.mobile || this.renderer.tablet) {
-                        entity.onDirty(function (e) {
-                            if (self.camera.isVisible(e)) {
-                                e.dirtyRect = self.renderer.getEntityBoundingRect(e);
-                                self.checkOtherDirtyRects(e.dirtyRect, e, e.gridX, e.gridY);
-                            }
-                        });
-                    }
-                }
-                else {
-                    log.error("This entity already exists : " + entity.id + " (" + entity.kind + ")");
-                }
-            },
-
             initEntityGrid: function () {
                 this.entityGrid = [];
                 for (var i = 1; i < this.map.height + 1; i += 1) {
@@ -896,7 +799,6 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
             inicializar: function (username) {
                 this.username = username;
                 this.setUpdater(new Updater(this));
-                this.camera = this.renderer.camera;
                 this.initEntityGrid();
                 this.ready = true;
             },
@@ -999,7 +901,7 @@ define(['enums', 'animacion', 'mapa', 'infomanager', 'renderer',
             click: function () {
                 var gridPos = this.getMouseGridPosition();
                 if (this.logeado) {
-                    if (this.trabajoPendiente){
+                    if (this.trabajoPendiente) {
                         this.uiManager.interfaz.setMouseCrosshair(false);
                         this.client.sendWorkLeftClick(gridPos.x, gridPos.y, this.trabajoPendiente);
                         this.trabajoPendiente = false;

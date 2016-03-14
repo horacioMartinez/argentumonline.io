@@ -2,6 +2,10 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
 
     var GameClient = Class.extend({
         init: function (game, host, port) {
+            this.VER_A = 0;
+            this.VER_B = 13;
+            this.VER_C = 2;
+
             this.game = game;
             this.host = host;
             this.port = port;
@@ -14,8 +18,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },// TODO: cambiar en el protocolo los peekbyte por readbyte y sacar los readbyte de cada uno
 
         _connect: function (conectarse_callback) {
-            //alert("connecting to: " + "ws://localhost:7666");
-            this.ws.open("ws://localhost:8666");
+            this.ws.open("ws://server.dakara.com.ar:8666");/*server.dakara.com.ar*/
             var self = this;
             this.ws.on('open', function () {
                 self.conectado = true;
@@ -32,6 +35,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
             });
             this.ws.on('close', function () {
                 self.conectado = false;
+                self.disconnect_callback();
                 //disconnect();
                 //log.error("Disconnected");
             });
@@ -42,11 +46,11 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
             if (!this.conectado) {
                 var self = this;
                 this._connect(function () {
-                    self.sendLoginExistingChar(nombre, pw, 0, 13, 0);
+                    self.sendLoginExistingChar(nombre, pw);
                 });
             }
             else {
-                this.sendLoginExistingChar(nombre, pw, 0, 13, 0);
+                this.sendLoginExistingChar(nombre, pw);
             }
         },
 
@@ -64,6 +68,9 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
             }
         },
 
+        setDisconnectCallback: function (disconnect_callback) {
+            this.disconnect_callback = disconnect_callback;
+        },
         setLogeadoCallback: function (logeado_callback) {
             this.logeado_callback = logeado_callback;
         },
@@ -274,9 +281,9 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleUpdateUserStats: function (MaxHp, MinHp, MaxMan, MinMan, MaxSta, MinSta, Gld, Elv, Elu, Exp) {
-            this.game.setVida(MinHp,MaxHp);
-            this.game.setMana(MinMan,MaxMan);
-            this.game.setStamina(MinSta,MaxSta);
+            this.game.setVida(MinHp, MaxHp);
+            this.game.setMana(MinMan, MaxMan);
+            this.game.setStamina(MinSta, MaxSta);
             this.game.player.oro = Gld;
             this.game.player.nivel = Elv;
             this.game.player.maxExp = Elu; // TODO;
@@ -362,8 +369,8 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleUpdateHungerAndThirst: function (MaxAgu, MinAgu, MaxHam, MinHam) {
-            this.game.setAgua(MinAgu,MaxAgu);
-            this.game.setHambre(MinHam,MaxHam);
+            this.game.setAgua(MinAgu, MaxAgu);
+            this.game.setHambre(MinHam, MaxHam);
         },
 
         handleFame: function (Asesino, Bandido, Burgues, Ladron, Noble, Plebe, Promedio) {
@@ -586,7 +593,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleWorkRequestTarget: function (skill) {
-            switch (skill){
+            switch (skill) {
                 case Enums.Skill.magia:
                     this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_MAGIA, Enums.Font.SKILLINFO);
                     break;
@@ -927,8 +934,8 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
             console.log("TODO: handleCancelOfferItem ");
         },
 
-        sendLoginExistingChar: function (UserName, Password, VerA, VerB, VerC) {
-            p = this.protocolo.BuildLoginExistingChar(UserName, Password, VerA, VerB, VerC);
+        sendLoginExistingChar: function (UserName, Password) {
+            p = this.protocolo.BuildLoginExistingChar(UserName, Password, this.VER_A, this.VER_B, this.VER_C);
             p.serialize(this.byteQueue);
         },
 
@@ -937,8 +944,8 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
             p.serialize(this.byteQueue);
         },
 
-        sendLoginNewChar: function (UserName, Password, VerA, VerB, VerC, Race, Gender, Class, Head, Mail, Homeland) {
-            p = this.protocolo.BuildLoginNewChar(UserName, Password, VerA, VerB, VerC, Race, Gender, Class, Head, Mail, Homeland);
+        sendLoginNewChar: function (UserName, Password, Race, Gender, Class, Head, Mail, Homeland) {
+            p = this.protocolo.BuildLoginNewChar(UserName, Password, this.VER_A, this.VER_B,this.VER_C, Race, Gender, Class, Head, Mail, Homeland);
             p.serialize(this.byteQueue);
         },
 
