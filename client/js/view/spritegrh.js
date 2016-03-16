@@ -2,8 +2,6 @@
  * Created by horacio on 3/10/16.
  */
 
-// TODO: SPRITEGRH QUE HEREDE DE MOVIECLIP
-
 define(['lib/pixi'], function (PIXI) {
 
     function SpriteGrh(grh, cantLoops) {
@@ -64,6 +62,13 @@ define(['lib/pixi'], function (PIXI) {
         this.y = y;
         if (this._onSetPosition)
             this._onSetPosition();
+    };
+
+
+    SpriteGrh.prototype.setSize = function (w,h) {
+        this.width = w;
+        this.height = h;
+        this._posicionarGrafico();
     };
 
     SpriteGrh.prototype._posicionarGrafico = function () {

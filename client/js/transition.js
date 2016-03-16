@@ -7,7 +7,6 @@ define(function() {
             this.endValue = 0;
             this.duration = 0;
             this.inProgress = false;
-            this.enabled = true;
         },
 
         start: function(currentTime, updateFunction, stopFunction, startValue, endValue, duration) {
@@ -41,20 +40,15 @@ define(function() {
 
                     if(elapsed === this.duration || i === this.endValue) {
                         this.stop();
-                        if(this.stopFunction && this.enabled) {
+                        if(this.stopFunction) {
                             this.stopFunction();
                         }
-                        this.enabled = true;
                     }
-                    else if(this.updateFunction && this.enabled) {
+                    else if(this.updateFunction) {
                         this.updateFunction(i);
                     }
                 }
             }
-        },
-
-        desactivar: function(){ // desactiva los callbacks pero sigue con la cuenta
-            this.enabled = false;
         },
 
         restart: function(currentTime, startValue, endValue) {

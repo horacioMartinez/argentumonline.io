@@ -8,20 +8,19 @@ define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view
                 this.POSICIONES_EXTRA_TERRENO = 1; // no deberia ser necesario mas de una. (una pos extra en cada una de las 4 direcciones)
 
                 this.game = game;
-                this.assetManager = assetManager;
                 this.grhs = assetManager.grhs;
-                this.indices = this.assetManager.getIndices();
-                this.armas = this.assetManager.getArmas();
-                this.cabezas = this.assetManager.getCabezas();
-                this.cascos = this.assetManager.getCascos();
-                this.cuerpos = this.assetManager.getCuerpos();
-                this.escudos = this.assetManager.getEscudos();
-                this.fxs = this.assetManager.getFxs();
-
-                this.camera = new Camera(this);
-                this._inicializar();
+                this.indices = assetManager.getIndices();
+                this.armas = assetManager.getArmas();
+                this.cabezas = assetManager.getCabezas();
+                this.cascos = assetManager.getCascos();
+                this.cuerpos = assetManager.getCuerpos();
+                this.escudos = assetManager.getEscudos();
+                this.fxs = assetManager.getFxs();
 
                 this.tilesize = 32;
+                this.camera = new Camera(this.tilesize);
+                this._inicializarPixi();
+
 
                 this.rescale(escala);
 
@@ -29,7 +28,7 @@ define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view
 
             },
 
-            _inicializar: function () {
+            _inicializarPixi: function () {
                 this.pixiRenderer = new PIXI.autoDetectRenderer(this.camera.gridW * this.tilesize, this.camera.gridH * this.tilesize);
                 $(this.pixiRenderer.view).css('position', 'relative');
                 $("#gamecanvas").append(this.pixiRenderer.view);
@@ -41,7 +40,7 @@ define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view
                 this.gameStage = new PIXI.Container();
                 this.layer1 = new PIXI.Container();
                 this.layer2 = new PIXI.Container();
-                this.layer3 = new ContainerOrdenado();
+                this.layer3 = new ContainerOrdenado(this.game.map.width);
                 this.layer3.ordenado = true;
                 this.layer4 = new PIXI.Container();
                 this.gameText = new PIXI.Container();
@@ -158,6 +157,7 @@ define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view
                     return;
                 }
                 item.sprite = new SpriteGrh(this.grhs[numGrh]);
+                item.sprite.zOffset = -this.game.map.width; // para que item quede debajo de chars en misma cord Y ( para todo X)
                 this.layer3.addChild(item.sprite);
                 item.sprite.setPosition(item.x, item.y);
             },
@@ -295,12 +295,13 @@ define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view
                 return this.camera.isVisiblePosition(entity.gridX, entity.gridY, this.POSICIONES_EXTRA_RENDER_X, this.POSICIONES_EXTRA_RENDER_Y);
             },
 
-            // TODO: probar crear una imagen del terreno con el mapa entero (antes y tenerla guardada o al logear con el pj) y al moverse ir clipeandola
+
             moverPosition: function (x, y) {
                 this.camera.mover(x, y);
                 this._syncGamePosition();
             },
 
+            // TODO: probar crear una imagen del terreno con el mapa entero y al moverse ir clipeandola
             _updateTilesMov: function (dir) { // al moverse mueve la columna/fila que queda atras al frente de todo
                 // todo (POCO IMPORTANTE): arreglar bien y usar camera.foreachvisiblenextposition
                 var gridXIni = this.camera.gridX - this.POSICIONES_EXTRA_TERRENO;
@@ -312,7 +313,7 @@ define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view
                     case Enums.Heading.norte:
                         var j = (this._lowestRowTerreno === 0) ? rows - 1 : this._lowestRowTerreno - 1;
                         for (var i = 0; i < this.terreno.length; i++) {
-                            this.terreno[i][j].y = this.terreno[i][j].y - (rows * this.tilesize);
+                            this.terreno[i][j].setPosition(this.terreno[i][j].x,this.terreno[i][j].y - (rows * this.tilesize));
                             var grh = this.game.map.getGrh1(gridXIni + modulo(i - this._lowestColTerreno, cols), gridYIni - 1);
                             if (grh)
                                 this.terreno[i][j].cambiarGrh(this.grhs[grh]);
@@ -324,7 +325,7 @@ define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view
                     case Enums.Heading.oeste:
                         var i = (this._lowestColTerreno === 0) ? cols - 1 : this._lowestColTerreno - 1;
                         for (var j = 0; j < this.terreno[i].length; j++) {
-                            this.terreno[i][j].x = this.terreno[i][j].x - (cols * this.tilesize);
+                            this.terreno[i][j].setPosition(this.terreno[i][j].x - (cols * this.tilesize),this.terreno[i][j].y);
                             var grh = this.game.map.getGrh1(gridXIni - 1, gridYIni + modulo(j - this._lowestRowTerreno, rows));
                             if (grh)
                                 this.terreno[i][j].cambiarGrh(this.grhs[grh]);
@@ -335,7 +336,7 @@ define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view
                     case Enums.Heading.sur:
                         var j = this._lowestRowTerreno;
                         for (var i = 0; i < this.terreno.length; i++) {
-                            this.terreno[i][j].y = (this.terreno[i][j].y + (rows * this.tilesize));
+                            this.terreno[i][j].setPosition(this.terreno[i][j].x,(this.terreno[i][j].y + (rows * this.tilesize)));
                             var grh = this.game.map.getGrh1(gridXIni + modulo(i - this._lowestColTerreno, cols), gridYIni + rows);
                             if (grh)
                                 this.terreno[i][j].cambiarGrh(this.grhs[grh]);
@@ -346,7 +347,7 @@ define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view
                     case Enums.Heading.este:
                         var i = this._lowestColTerreno;
                         for (var j = 0; j < this.terreno[i].length; j++) {
-                            this.terreno[i][j].x = (this.terreno[i][j].x + cols * this.tilesize);
+                            this.terreno[i][j].setPosition((this.terreno[i][j].x + cols * this.tilesize),this.terreno[i][j].y);
                             var grh = this.game.map.getGrh1(gridXIni + cols, gridYIni + modulo(j - this._lowestRowTerreno, rows));
                             if (grh)
                                 this.terreno[i][j].cambiarGrh(this.grhs[grh]);

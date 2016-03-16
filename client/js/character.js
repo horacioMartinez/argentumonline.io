@@ -7,7 +7,7 @@ define(['entity', 'transition', 'timer', 'lib/pixi'], function (Entity, Transiti
             this._super(gridX, gridY);
 
             if (!Name) // es un bicho o npc
-                this.moveSpeed = 290;// (duracion de movimiento en ms, animaciones de mov se setean automaticamnete a esta vel (abajo) )
+                this.moveSpeed = 290;// bicho (duracion de movimiento en ms, animaciones de mov se setean automaticamnete a esta vel (abajo) )
             else
                 this.moveSpeed = 230; // PJ TODO: setear bien estos valores, fijarse que en lo posible no haya resetmovements (esto pasa si la animacion es mas lenta que el llamado a cambiar de pos)
 
@@ -44,7 +44,9 @@ define(['entity', 'transition', 'timer', 'lib/pixi'], function (Entity, Transiti
         },
 
         mover: function (dir) {
-            this.cambiarHeading(dir);
+            this.resetMovement();
+            if (this.heading !== dir)
+                this.cambiarHeading(dir);
             this.moviendose = true;
         },
 
@@ -53,18 +55,16 @@ define(['entity', 'transition', 'timer', 'lib/pixi'], function (Entity, Transiti
         },
 
         cambiarHeading: function (heading) {
-            this.resetMovement();
             this._setHeading(heading);
         },
 
         resetMovement: function () {
             if (this.movement.inProgress) {
+                log.error("reset movement!!!");
                 this.movement.stop();
                 if (this.movement.stopFunction)
                     this.movement.stopFunction();
-                //log.error("resetmovemente!, name: " + this.Name);
             }
-            this.moviendose = false;
         },
 
         setGridPositionOnly: function (gridX, gridY) {

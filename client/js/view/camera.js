@@ -1,8 +1,8 @@
 define([], function () {
 
     var Camera = Class.extend({
-        init: function (renderer) {
-            this.renderer = renderer;
+        init: function (tilesize) {
+            this.tilesize = tilesize;
             this.x = 0;
             this.y = 0;
             this.centerPosX = 0;
@@ -16,30 +16,30 @@ define([], function () {
         },
 
         getHeight: function () {
-            return this.gridH * 32;
+            return this.gridH * this.tilesize;
         },
 
         getWidth: function () {
-            return this.gridW * 32;
+            return this.gridW * this.tilesize;
         },
 
         setPosition: function (x, y) {
             this.x = x;
             this.y = y;
 
-            this.gridX = Math.floor(x / 32);
-            this.gridY = Math.floor(y / 32);
+            this.gridX = Math.floor(x / this.tilesize);
+            this.gridY = Math.floor(y / this.tilesize);
 
-            this.centerPosX = this.x + (Math.floor(this.gridW / 2) * this.renderer.tilesize);
-            this.centerPosY = this.y + (Math.floor(this.gridH / 2)  * this.renderer.tilesize);
+            this.centerPosX = this.x + (Math.floor(this.gridW / 2) * this.tilesize);
+            this.centerPosY = this.y + (Math.floor(this.gridH / 2) * this.tilesize);
         },
 
         setGridPosition: function (gridX, gridY) {
-            this.setPosition(gridX * this.renderer.tilesize, gridY * this.renderer.tilesize);
+            this.setPosition(gridX * this.tilesize, gridY * this.tilesize);
         },
 
         lookAtGridPos: function (gridX, gridY) {
-            this.setGridPosition(gridX - Math.floor(this.gridW / 2), gridY - Math.floor(this.gridH / 2) );
+            this.setGridPosition(gridX - Math.floor(this.gridW / 2), gridY - Math.floor(this.gridH / 2));
         },
 
         mover: function (x, y) {
@@ -75,7 +75,7 @@ define([], function () {
 
         forEachVisibleNextLinea: function (callback, direccion) { // x,y en la proxima "linea" del grid en la direccion direccion
             var topGridY = this.gridY;
-            var botGridY = this.gridY + this.gridH ;
+            var botGridY = this.gridY + this.gridH;
             var izqGridX = this.gridX;
             var derGridX = this.gridX + this.gridW;
 
@@ -139,9 +139,8 @@ define([], function () {
 
              this.setGridPosition(x, y);*/
 
-            var r = this.renderer,
-                x = Math.round(entity.x - (Math.floor(this.gridW / 2) * r.tilesize)),
-                y = Math.round(entity.y - (Math.floor(this.gridH / 2) * r.tilesize));
+            var x = Math.round(entity.x - (Math.floor(this.gridW / 2) * this.tilesize)),
+                y = Math.round(entity.y - (Math.floor(this.gridH / 2) * this.tilesize));
             this.setPosition(x, y);
         }
     });

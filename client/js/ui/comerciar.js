@@ -23,7 +23,7 @@ define(['ui/itemgrid'], function (ItemGrid) {
             for (var i = 1; i < this.game.inventario.length; i++) {
                 item = this.game.inventario[i];
                 if (item) {
-                    var numGraf = this.game.indices[item.grh].grafico;
+                    var numGraf = this.game.renderer.getNumGraficoFromGrh(item.grh);
                     if (numGraf) {
                         this.ventaGrid.modificarSlot(i, item.cantidad, numGraf);
                     }

@@ -233,48 +233,6 @@ define(['jquery', 'storage', 'gameclient', 'crearpj'], function ($, Storage, Gam
             return posEnGameCanvas;
         },
 
-        //Init the hud that makes it show what creature you are mousing over and attacking
-        initTargetHud: function () {
-            var self = this;
-            var scale = self.game.renderer.getScaleFactor(),
-                healthMaxWidth = $("#inspector .health").width() - (12 * scale),
-                timeout;
-            /*
-             this.game.player.onSetTarget(function(target, name, mouseover){
-             var el = '#inspector';
-             var sprite = target.sprite,
-             x = ((sprite.animationData.idle_down.length-1)*sprite.width),
-             y = ((sprite.animationData.idle_down.row)*sprite.height);
-             $(el+' .name').text(name);
-
-             //Show how much Health creature has left. Currently does not work. The reason health doesn't currently go down has to do with the lines below down to initExpBar...
-             if(target.healthPoints){
-             $(el+" .health").css('width', Math.round(target.healthPoints/target.maxHp*100)+'%');
-             } else{
-             $(el+" .health").css('width', '0%');
-             }
-             var level = Types.getMobLevel(Types.getKindFromString(name));
-             if(level !== undefined) {
-             $(el + ' .level').text("Level " + level);
-             }
-             else {
-             $('#inspector .level').text('');
-             }
-
-             $(el).fadeIn('fast');
-             });*/
-
-            self.game.onUpdateTarget(function (target) {
-                $("#inspector .health").css('width', Math.round(target.healthPoints / target.maxHp * 100) + "%");
-            });
-
-            /*self.game.player.onRemoveTarget(function(targetId){
-             $('#inspector').fadeOut('fast');
-             $('#inspector .level').text('');
-             self.game.player.inspecting = null;
-             });*/
-        },
-
         hideIntro: function () {
             $('body').removeClass('intro');
             setTimeout(function () {

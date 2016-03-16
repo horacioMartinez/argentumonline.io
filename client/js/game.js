@@ -257,7 +257,7 @@ define(['enums', 'mapa', 'infomanager', 'view/renderer',
 
             _removeAllEntities: function () {
                 var self = this;
-                this.forEachEntity(function(entity){
+                this.forEachEntity(function (entity) {
                     if (entity.id !== self.player.id)
                         self.sacarEntity(entity);
                 });
@@ -332,6 +332,32 @@ define(['enums', 'mapa', 'infomanager', 'view/renderer',
                     if (CharIndex === this.player.id) {
                         if ((X !== this.player.gridX) || (Y !== this.player.gridY)) { // cuando pasa de mapa vuelve a mandar el crear de tu pj, directamente cambio pos e ignoro lo demas (esta es la unica forma de saber las pos en el cambio)
                             log.error("DRAW MAPA INICIAL!!! MAPA:" + this.map.numero + " X: " + X + " Y: " + Y);
+
+                            // --- esto para que se setee al player una pos "anterior" a la del cambio de mapa para que de la ilusion que avanza un tile (sino se deberia quedar quieto esperando el intervalo o traeria problemas en mapas donde entras mirando la salida (ademas de que pasarias siempre en la 2da pos)) ---
+                            if (this.player.moviendose) {
+                                switch (this.player.getDirMov()) {
+                                    case Enums.Heading.sur:
+                                        Y = Y - 1;
+                                        this.player.forceCaminar(Enums.Heading.sur);
+                                        break;
+                                    case Enums.Heading.norte:
+                                        Y = Y + 1;
+                                        this.player.forceCaminar(Enums.Heading.norte);
+                                        break;
+                                    case Enums.Heading.este:
+                                        X = X - 1;
+                                        this.player.forceCaminar(Enums.Heading.este);
+                                        break;
+                                    case Enums.Heading.oeste:
+                                        X = X + 1;
+                                        this.player.forceCaminar(Enums.Heading.oeste);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            // -- fin --
+
                             this.resetPosCharacter(this.player.id, X, Y, true);
                             this.renderer.drawMapaIni(this.player.gridX, this.player.gridY);
 
@@ -545,7 +571,6 @@ define(['enums', 'mapa', 'infomanager', 'view/renderer',
             },
 
             resetPosCharacter: function (charIndex, gridX, gridY, noReDraw) {
-
                 c = this.characters[charIndex];
                 if (!c) {
                     log.error(" Reset pos de character no existente, charindex=" + charIndex);
@@ -554,13 +579,14 @@ define(['enums', 'mapa', 'infomanager', 'view/renderer',
                 this.entityGrid[c.gridX][c.gridY][1] = null;
 
                 c.resetMovement();
+                c.setGridPosition(gridX, gridY);
+                this.entityGrid[gridX][gridY][1] = c; // TODO <- esto puede traer problemas
+
                 if (c instanceof Player) {
                     console.log(" reseteando pos player");
                     if (!noReDraw)
                         this.renderer.resetPos(gridX, gridY);
                 }
-                c.setGridPosition(gridX, gridY);
-                this.entityGrid[gridX][gridY][1] = c;
 
             },
 
@@ -569,6 +595,8 @@ define(['enums', 'mapa', 'infomanager', 'view/renderer',
                 //this._removeAllEntitys();
                 this.map = new Mapa(numeroMapa, this.assetManager.getMapaSync(numeroMapa));
                 this._removeAllEntities();
+                //if (this.player)
+                //    this.player.resetMovement();
             },
 
             cambiarArea: function (gridX, gridY) {
@@ -697,7 +725,7 @@ define(['enums', 'mapa', 'infomanager', 'view/renderer',
             },
 
             lanzarHechizo: function () {
-                if (!this.intervalos.requestLanzarHechizo())
+                if (!this.intervalos.requestLanzarHechizo(this.currentTime))
                     return;
                 var slot = this.uiManager.interfaz.getSelectedSlotHechizo();
                 if (!slot)
@@ -850,20 +878,35 @@ define(['enums', 'mapa', 'infomanager', 'view/renderer',
                 }
             },
 
-            /**
-             * Converts the current mouse position on the screen to world grid coordinates.
-             * @returns {Object} An object containing x and y properties.
-             (MODIFICADA); */
             getMouseGridPosition: function () {
-                var mx = this.mouse.x / this.renderer.escala,
-                    my = this.mouse.y / this.renderer.escala,
+                var ts = this.renderer.tilesize,
                     c = this.renderer.camera,
-                    ts = this.renderer.tilesize,
+                    mx = this.mouse.x / this.renderer.escala,
+                    my = this.mouse.y / this.renderer.escala,
                     offsetX = mx % ts,
-                    offsetY = my % ts,
-                    x = ((mx - offsetX) / ts) + c.gridX,
-                    y = ((my - offsetY) / ts) + c.gridY;
+                    offsetY = my % ts;
 
+                    var x = ((mx - offsetX) / ts)  + c.gridX;
+                    var y = ((my - offsetY) / ts) + c.gridY;
+
+                /*  Medio feo pero me parece que no hay otra, explicacion:
+                    Cuando se mueve un pj, ni bien comienza la animacion ya esta en el tile siguiente. El problema con esto es que cuando estas caminando,
+                    esto significa que si clickeas el centro de la pantalla, no estas clickeando el tile de tu pj porque ya esta en el siguiente.
+                    Entonces: si haces click en el centro y te estas moviendo lo rederijo al tile del pj.
+                    (en el eje y no hay problema porque acepta 2 posiciones distintas)
+                 */
+                if (this.player.movement.inProgress && offsetX){
+
+                    if (this.player.heading === Enums.Heading.oeste){
+                        x = x+1; // fix de pos de c.gridX
+                        if (x === (this.player.gridX + 1))
+                            x--;
+                    }
+                    if (this.player.heading === Enums.Heading.este){
+                        if (x === this.player.gridX - 1)
+                            x++;
+                    }
+                }
                 return {x: x, y: y};
             },
 

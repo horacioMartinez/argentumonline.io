@@ -52,8 +52,7 @@ define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
         this._sombraSprite.zIndex = -1;
 
         var w = this.bodySprite.width < 32 ? 32 : this.bodySprite.width;
-        this._sombraSprite.width =w;
-        this._sombraSprite.height = w;
+        this._sombraSprite.setSize(w,w);
 
         this._updateOrdenHijos();
     };

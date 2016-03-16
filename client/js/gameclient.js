@@ -18,7 +18,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },// TODO: cambiar en el protocolo los peekbyte por readbyte y sacar los readbyte de cada uno
 
         _connect: function (conectarse_callback) {
-            this.ws.open("ws://server.dakara.com.ar:8666");/*server.dakara.com.ar*/
+            this.ws.open("ws://localhost:8666");/*server.dakara.com.ar*/
             var self = this;
             this.ws.on('open', function () {
                 self.conectado = true;
@@ -200,11 +200,11 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         handleUserCharIndexInServer: function (CharIndex) {
             if (this.game.playerId)
                 if (this.game.playerId != CharIndex) {
-                    log.error("WTF EL CHARINDEX CAMBIA?: playerID" + playerId + " charindex " + CharIndex);
+                    log.error("WTF EL CHARINDEX CAMBIA?: playerID" + this.game.playerId + " cambiado a charindex " + CharIndex);
                     this.game.playerId = CharIndex;
-                    this.game.player = this.game.characters[CharIndex];
+                    this.game.characters[CharIndex] = this.game.player;
+                    this.game.player.id = CharIndex;
                 }
-            this.game.playerId = CharIndex;
         },
 
         handleCharacterCreate: function (CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, Name, NickColor, Privileges) {

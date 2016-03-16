@@ -1,4 +1,4 @@
-define(['character',  'enums'], function (Character) {
+define(['character', 'enums'], function (Character) {
 
     var Player = Character.extend({
         MAX_LEVEL: 10,
@@ -15,20 +15,20 @@ define(['character',  'enums'], function (Character) {
             this.puedeCaminarCallback = {};
             this.cambioHeadingCallback = {};
             this.lastAttackedTarget = null;
-            this.hp= -1;
-            this.maxHp= -1;
-            this.mana= -1;
-            this.maxMana= -1;
-            this.stamina= -1;
-            this.maxStamina= -1;
-            this.oro= -1;
-            this.nivel= -1;
-            this.maxExp= -1;
-            this.exp= -1;
-            this.maxAgua= -1;
-            this.agua= -1;
-            this.hambre= -1;
-            this.maxHambre= -1;
+            this.hp = -1;
+            this.maxHp = -1;
+            this.mana = -1;
+            this.maxMana = -1;
+            this.stamina = -1;
+            this.maxStamina = -1;
+            this.oro = -1;
+            this.nivel = -1;
+            this.maxExp = -1;
+            this.exp = -1;
+            this.maxAgua = -1;
+            this.agua = -1;
+            this.hambre = -1;
+            this.maxHambre = -1;
         },
 
         comenzarCaminar: function (direccion) {
@@ -77,7 +77,7 @@ define(['character',  'enums'], function (Character) {
         },
 
         terminarDeCaminar: function (direccion) {
-            if ( (this.lastDirPressed.indexOf(direccion) > -1) ) {
+            if ((this.lastDirPressed.indexOf(direccion) > -1)) {
                 this.moviendose--;
                 this.lastDirPressed.splice(this.lastDirPressed.indexOf(direccion), 1);
             }
@@ -88,14 +88,24 @@ define(['character',  'enums'], function (Character) {
                 return this.forcedCaminar[0];
             return this.lastDirPressed[this.lastDirPressed.length - 1];
         },
+        /*
+         resetMovement: function () {
+         log.error("RESET MOVEMENT!");
 
-        resetMovement: function () {
-            if (this.movement.inProgress) {
-                this.movement.desactivar();
-                //this.movement.startTime -= 140; // numero arbitrario, mientras mas grande menos tiempo desde que pasa de mapa hasta que checkea si estan apretadas las flechas para moverse (esto es para que al pasar de mapas donde quedas apuntando a la salida no te vuelva a cambiar de mapa instantaneamente)
-            }
-        },
+         if (this.movement.inProgress) {
+         this.movement.stop();
+         if (this.movement.stopFunction)
+         this.movement.stopFunction();
+         //log.error("resetmovemente!, name: " + this.Name);
+         }
 
+         if (this.movement.inProgress) {
+         this.movement.desactivar();
+         //this.movement.startTime -= 140; // numero arbitrario, mientras mas grande menos tiempo desde que pasa de mapa hasta que checkea si estan apretadas las flechas para moverse (esto es para que al pasar de mapas donde quedas apuntando a la salida no te vuelva a cambiar de mapa instantaneamente)
+         }
+
+         },
+         */
         forceCaminar: function (direccion) {
             this.forcedCaminar.push(direccion);
             this.moviendose++;

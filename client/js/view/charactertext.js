@@ -17,6 +17,8 @@ define(['lib/pixi'], function (PIXI) {
 
 
     CharacterText.prototype.setEscala = function (escala) {
+
+        this._escala = escala;
         var font = Math.round(14*escala)+'px Arial';
         var aux = {font: font, align: "center", stroke: "black", strokeThickness: 0.2};
         this.estilo = $.extend({}, aux,Enums.Font.TALK);
@@ -60,8 +62,8 @@ define(['lib/pixi'], function (PIXI) {
         PIXI.ticker.shared.add(this._chat.updateChat, this._chat);
 
         this.addChild(this._chat);
-        this._chat.x = 32 /2 - this._chat.width /2 ;
-        this._chat.y =  - 28 - this._chat.height;
+        this._chat.x = 32*this._escala /2 - this._chat.width /2 ;
+        this._chat.y =  - 28*this._escala  - this._chat.height;
     };
 
     CharacterText.prototype.removerChat = function( chat ){
