@@ -4,7 +4,7 @@
 
 define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
 
-    function CharacterSprites(Heading, bodys, heads, headOffX, headOffY, weapons, shields, helmets,font, nombre, clan) {
+    function CharacterSprites(Heading, bodys, heads, headOffX, headOffY, weapons, shields, helmets, font, nombre, clan) {
         /*
          Body, Head,Weapon,Shield,Helmet: vector con los grhs de los 4 headings. Cada uno de los headings puede contener un solo grh o AnimGrhs (frames de grhs + vel)
          */
@@ -19,7 +19,7 @@ define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
         this.setWeapons(weapons);
         this.setShields(shields);
         this.setHelmets(helmets);
-        this._setNombre(font,nombre,clan);
+        this._setNombre(font, nombre, clan);
         this._updateOrdenHijos();
 
     }
@@ -50,11 +50,15 @@ define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
         this._sombraSprite = new SpriteGrh(grh);
         this.addChild(this._sombraSprite);
         this._sombraSprite.zIndex = -1;
-
-        var w = this.bodySprite.width < 32 ? 32 : this.bodySprite.width;
-        this._sombraSprite.setSize(w,w);
-
         this._updateOrdenHijos();
+    };
+
+    CharacterSprites.prototype._updateSombraSpriteSize = function (grh) {
+        if (this._sombraSprite) {
+            var w = this.bodySprite.width < 32 ? 32 : this.bodySprite.width;
+            if (w !== this._sombraSprite.width)
+                this._sombraSprite.setSize(w, w);
+        }
     };
 
     CharacterSprites.prototype.removerFxsInfinitos = function () {
@@ -69,8 +73,8 @@ define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
     };
 
     CharacterSprites.prototype.setPosition = function (x, y) { // TODO: usar los getters y setters de x e y como en sprite
-        this.x = x ;
-        this.y = y ;
+        this.x = x;
+        this.y = y;
         if (this._onSetPosition)
             this._onSetPosition();
     };
@@ -96,27 +100,27 @@ define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
         return this.visible;
     };
 
-    CharacterSprites.prototype._setNombre = function (font, nombre,clan) {
-        if (this._nombre){
+    CharacterSprites.prototype._setNombre = function (font, nombre, clan) {
+        if (this._nombre) {
             this.removeChild(this._nombre);
             this._nombre = null;
         }
-        if (this._clan){
+        if (this._clan) {
             this.removeChild(this._clan);
-            this._clan= null;
+            this._clan = null;
         }
 
         if (nombre) {
-            this._nombre = new PIXI.Text(nombre,font);
+            this._nombre = new PIXI.Text(nombre, font);
             this.addChild(this._nombre);
             this._nombre.y = 32;
-            this._nombre.x = this.bodySprite.x + 32 /2 - this._nombre.width /2 ;
+            this._nombre.x = this.bodySprite.x + 32 / 2 - this._nombre.width / 2;
         }
-        if (clan){
+        if (clan) {
             this._clan = new PIXI.Text(clan, font);
             this.addChild(this._clan);
             this._clan.y = this._nombre.y + this._nombre.height;
-            this._clan.x = this.bodySprite.x + 32 /2 - this._clan.width /2 ;
+            this._clan.x = this.bodySprite.x + 32 / 2 - this._clan.width / 2;
         }
     };
 
@@ -132,6 +136,7 @@ define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
         this.setHelmets(this.helmets);
 
         this._updateOrdenHijos();
+        this._updateSombraSpriteSize();
     };
 
     CharacterSprites.prototype.setBodys = function (bodys, headOffX, headOffY) {
@@ -158,6 +163,7 @@ define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
                     log.error("character heading invalido");
                     break;
             }
+            this._updateSombraSpriteSize();
         }
     };
 
@@ -223,7 +229,7 @@ define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
         this.helmetSprite = this._setHeadingSprite(this.helmetSprite, helmets);
         if (this.helmetSprite) {
             this.helmetSprite.zIndex = 5;
-            this.helmetSprite.setPosition(this.headOffX, this.headOffY +this.OFFSET_HEAD);
+            this.helmetSprite.setPosition(this.headOffX, this.headOffY + this.OFFSET_HEAD);
         }
     };
 

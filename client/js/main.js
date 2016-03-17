@@ -232,10 +232,10 @@ define(['jquery-ui', 'app', 'assetmanager', 'lib/pixi'], function (___ui___, App
                     return;
                 }
 
-                // lo de abajo se ejecuta solo si no hay un pop up abierto
 
                 if (game.isPaused || (game.uiManager.hayPopUpActivo()))
                     return;
+                // lo de abajo se ejecuta solo si no hay un pop up abierto
 
                 $chatb = $('#chatbox');
 

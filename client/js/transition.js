@@ -9,8 +9,8 @@ define(function() {
             this.inProgress = false;
         },
 
-        start: function(currentTime, updateFunction, stopFunction, startValue, endValue, duration) {
-            this.startTime = currentTime;
+        start: function(updateFunction, stopFunction, startValue, endValue, duration) {
+            this.elapsed = 0;
             this.updateFunction = updateFunction;
             this.stopFunction = stopFunction;
             this.startValue = startValue;
@@ -20,25 +20,25 @@ define(function() {
             this.count = 0;
         },
 
-        step: function(currentTime) {
+        step: function(deltaTime) {
             if(this.inProgress) {
                 if(this.count > 0) {
                     this.count -= 1;
-                    log.debug(currentTime + ": jumped frame");
+                    log.debug("jumped frame");
                 }
                 else {
-                    var elapsed = currentTime - this.startTime;
+                    this.elapsed += deltaTime;
 
-                    if(elapsed > this.duration) {
-                        elapsed = this.duration;
+                    if(this.elapsed > this.duration) {
+                        this.elapsed = this.duration;
                     }
 
                     var diff = this.endValue - this.startValue;
-                    var i = this.startValue + ((diff / this.duration) * elapsed);
+                    var i = this.startValue + ((diff / this.duration) * this.elapsed);
 
                     i = Math.round(i);
 
-                    if(elapsed === this.duration || i === this.endValue) {
+                    if(this.elapsed === this.duration || i === this.endValue) {
                         this.stop();
                         if(this.stopFunction) {
                             this.stopFunction();
@@ -51,9 +51,8 @@ define(function() {
             }
         },
 
-        restart: function(currentTime, startValue, endValue) {
-            this.start(currentTime, this.updateFunction, this.stopFunction, startValue, endValue, this.duration);
-            this.step(currentTime);
+        restart: function(startValue, endValue) {
+            this.start(this.updateFunction, this.stopFunction, startValue, endValue, this.duration);
         },
 
         stop: function() {

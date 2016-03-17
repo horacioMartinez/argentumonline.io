@@ -196,13 +196,14 @@ define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view
                 this.gameText.addChild(char.texto);
 
                 char.onPositionChange = function () {
-                    if (this.sprite)
+                    if (this.sprite) {
                         this.sprite.setPosition(this.x, this.y);
+                    }
                     if (this.texto) {
                         this.texto.x = this.x * self.escala;
                         this.texto.y = this.y * self.escala;
                     }
-                };
+                }.bind(char);
                 char.onPositionChange();
             },
 
@@ -302,7 +303,7 @@ define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view
             },
 
             // TODO: probar crear una imagen del terreno con el mapa entero y al moverse ir clipeandola
-            _updateTilesMov: function (dir) { // al moverse mueve la columna/fila que queda atras al frente de todo
+            updateTilesMov: function (dir) { // al moverse mueve la columna/fila que queda atras al frente de todo
                 // todo (POCO IMPORTANTE): arreglar bien y usar camera.foreachvisiblenextposition
                 var gridXIni = this.camera.gridX - this.POSICIONES_EXTRA_TERRENO;
                 var gridYIni = this.camera.gridY - this.POSICIONES_EXTRA_TERRENO;

@@ -15,19 +15,12 @@ define(['entity', 'transition', 'timer', 'lib/pixi'], function (Entity, Transiti
 
             this.heading = Heading;
 
-            this.moviendose = false; // moviendose es si sigue pasando al otro tile desde el anterior
-
             this.muerto = false;
             this.movement = new Transition();
             this.sprite = null;
             this.texto = null;
-        },
-
-        setPosition: function (x, y) {
-            this.x = x;
-            this.y = y;
-            if (this.onPositionChange)
-                this.onPositionChange();
+            this.nombre = Name;
+            this.clan = clan;
         },
 
         _setHeading: function (heading) {
@@ -39,19 +32,100 @@ define(['entity', 'transition', 'timer', 'lib/pixi'], function (Entity, Transiti
             return this.heading;
         },
 
-        tratarDeCaminar: function () {
-            return true;
-        },
-
         mover: function (dir) {
             this.resetMovement();
             if (this.heading !== dir)
                 this.cambiarHeading(dir);
-            this.moviendose = true;
+            this._crearMovimiento();
+        },
+
+        _crearMovimiento: function (callback_mov) {
+            this.animarMovimiento();
+
+            var self = this;
+            var tick = Math.round(32 / Math.round((this.moveSpeed / (1000 / 60))));
+
+            if (self.getDirMov() === Enums.Heading.oeste) {
+
+                self.movement.start(
+                    function (x) {
+                        self.setPosition(x, self.y);
+                        if (callback_mov)
+                            callback_mov(self.x,self.y);
+                    },
+                    function () {
+                        self.setPosition(self.movement.endValue, self.y);
+                        if (callback_mov)
+                            callback_mov(self.x,self.y);
+                        self.hasMoved();
+                    },
+                    self.x - tick,
+                    self.x - 32,
+                    self.moveSpeed);
+            }
+            else if (self.getDirMov() === Enums.Heading.este) {
+                self.movement.start(
+                    function (x) {
+                        self.setPosition(x, self.y);
+                        if (callback_mov)
+                            callback_mov(self.x,self.y);
+                    },
+                    function () {
+                        self.setPosition(self.movement.endValue, self.y);
+                        if (callback_mov)
+                            callback_mov(self.x,self.y);
+                        self.hasMoved();
+                    },
+                    self.x + tick,
+                    self.x + 32,
+                    self.moveSpeed);
+            }
+            else if (self.getDirMov() === Enums.Heading.norte) {
+                self.movement.start(
+                    function (y) {
+                        self.setPosition(self.x, y);
+                        if (callback_mov)
+                            callback_mov(self.x,self.y);
+                    },
+                    function () {
+                        self.setPosition(self.x, self.movement.endValue);
+                        if (callback_mov)
+                            callback_mov(self.x,self.y);
+                        self.hasMoved();
+                    },
+                    self.y - tick,
+                    self.y - 32,
+                    self.moveSpeed);
+            }
+            else if (self.getDirMov() === Enums.Heading.sur) {
+                self.movement.start(
+                    function (y) {
+                        self.setPosition(self.x, y);
+                        if (callback_mov)
+                            callback_mov(self.x,self.y);
+                    },
+                    function () {
+                        self.setPosition(self.x, self.movement.endValue);
+                        if (callback_mov)
+                            callback_mov(self.x,self.y);
+                        self.hasMoved();
+                    },
+                    self.y + tick,
+                    self.y + 32,
+                    self.moveSpeed);
+            }
+
+            PIXI.ticker.shared.add(this._updateMovement, this);
+        },
+
+        _updateMovement: function (delta) {
+            if (this.movement.inProgress) {
+                this.movement.step(delta *(1/60)*1000);
+            }
         },
 
         hasMoved: function () { // se ejecuta al finalizar de caminar
-            this.moviendose = false;
+            PIXI.ticker.shared.remove(this._updateMovement, this);
         },
 
         cambiarHeading: function (heading) {

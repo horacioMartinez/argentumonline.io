@@ -48,12 +48,18 @@ define(['character', 'enums'], function (Character) {
             this.cambioHeadingCallback = callback;
         },
 
+        // moverse tiene que ver con el renderer, caminar con enviar mensajes del sv
+        onMoverse: function(callback){ // params: x,y
+          this.moverseCallback = callback;
+        },
+
         hasMoved: function () {
             if (this.moviendoseForzado) { // moviendoseForzado difiere de forcedcaminar en que este se setea una vez que comienza el movimiento, el otro cuando le llega el mensaje. Es necesario este checkeo porque si llega el mensaje y esta en movimiento, el hasmoved de ese movimiento afectaria al forcedcaminar
                 this.moviendose--;
                 this.forcedCaminar.shift(); // remueve primer index, ForcedCaminar es una cola con los mensajes de caminar forzado que llegaron
                 this.moviendoseForzado = false;
             }
+            PIXI.ticker.shared.remove(this._updateMovement, this);
         },
 
         tratarDeCaminar: function () {
@@ -106,6 +112,18 @@ define(['character', 'enums'], function (Character) {
 
          },
          */
+        tratarDeMover: function(){
+            if ( (this.moviendose && this.movement.inProgress === false) && this.tratarDeCaminar()) {
+                this._crearMovimiento(this.moverseCallback);
+                return true;
+            }
+            return false;
+        },
+
+        mover: function (callback_mov) {
+            log.error("usar caminar en player no mover!")
+        },
+
         forceCaminar: function (direccion) {
             this.forcedCaminar.push(direccion);
             this.moviendose++;

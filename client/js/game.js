@@ -568,6 +568,11 @@ define(['enums', 'mapa', 'infomanager', 'view/renderer',
                     }
                     return true;
                 });
+
+                this.player.onMoverse(
+                    function (x, y) {
+                        self.renderer.moverPosition(x - self.renderer.camera.centerPosX, y - self.renderer.camera.centerPosY);
+                    });
             },
 
             resetPosCharacter: function (charIndex, gridX, gridY, noReDraw) {
@@ -587,7 +592,6 @@ define(['enums', 'mapa', 'infomanager', 'view/renderer',
                     if (!noReDraw)
                         this.renderer.resetPos(gridX, gridY);
                 }
-
             },
 
             cambiarMapa: function (numeroMapa) {
@@ -774,8 +778,9 @@ define(['enums', 'mapa', 'infomanager', 'view/renderer',
             },
 
             togglePausa: function () {
+                log.error(this.isPaused); //sacame
                 this.isPaused = !(this.isPaused);
-
+                log.error(this.isPaused); //sacame
             },
 
             setCharacterFX: function (CharIndex, FX, FXLoops) {
@@ -801,27 +806,6 @@ define(['enums', 'mapa', 'infomanager', 'view/renderer',
                     }
                 }
                 log.info("Initialized the entity grid.");
-            },
-
-            /**
-             *
-             */
-            initAnimatedTiles: function () {
-                var self = this,
-                    m = this.map;
-
-                this.animatedTiles = [];
-                this.forEachVisibleTile(function (id, index) {
-                    if (m.isAnimatedTile(id)) {
-                        var tile = new AnimatedTile(id, m.getTileAnimationLength(id), m.getTileAnimationDelay(id), index),
-                            pos = self.map.tileIndexToGridPosition(tile.index);
-
-                        tile.x = pos.x;
-                        tile.y = pos.y;
-                        self.animatedTiles.push(tile);
-                    }
-                }, 1);
-                //log.info("Initialized animated tiles.");
             },
 
             inicializar: function (username) {
@@ -878,7 +862,7 @@ define(['enums', 'mapa', 'infomanager', 'view/renderer',
                 }
             },
 
-            getMouseGridPosition: function () {
+            getMouseGridPosition: function () { // TODO: usar InteractionManager para detectar sprite clickeado y rederigir a ese tile???
                 var ts = this.renderer.tilesize,
                     c = this.renderer.camera,
                     mx = this.mouse.x / this.renderer.escala,
@@ -886,23 +870,23 @@ define(['enums', 'mapa', 'infomanager', 'view/renderer',
                     offsetX = mx % ts,
                     offsetY = my % ts;
 
-                    var x = ((mx - offsetX) / ts)  + c.gridX;
-                    var y = ((my - offsetY) / ts) + c.gridY;
+                var x = ((mx - offsetX) / ts) + c.gridX;
+                var y = ((my - offsetY) / ts) + c.gridY;
 
                 /*  Medio feo pero me parece que no hay otra, explicacion:
-                    Cuando se mueve un pj, ni bien comienza la animacion ya esta en el tile siguiente. El problema con esto es que cuando estas caminando,
-                    esto significa que si clickeas el centro de la pantalla, no estas clickeando el tile de tu pj porque ya esta en el siguiente.
-                    Entonces: si haces click en el centro y te estas moviendo lo rederijo al tile del pj.
-                    (en el eje y no hay problema porque acepta 2 posiciones distintas)
+                 Cuando se mueve un pj, ni bien comienza la animacion ya esta en el tile siguiente. El problema con esto es que cuando estas caminando,
+                 esto significa que si clickeas el centro de la pantalla, no estas clickeando el tile de tu pj porque ya esta en el siguiente.
+                 Entonces: si haces click en el centro y te estas moviendo lo rederijo al tile del pj.
+                 (en el eje y no hay problema porque acepta 2 posiciones distintas)
                  */
-                if (this.player.movement.inProgress && offsetX){
+                if (this.player.movement.inProgress && offsetX) {
 
-                    if (this.player.heading === Enums.Heading.oeste){
-                        x = x+1; // fix de pos de c.gridX
+                    if (this.player.heading === Enums.Heading.oeste) {
+                        x = x + 1; // fix de pos de c.gridX
                         if (x === (this.player.gridX + 1))
                             x--;
                     }
-                    if (this.player.heading === Enums.Heading.este){
+                    if (this.player.heading === Enums.Heading.este) {
                         if (x === this.player.gridX - 1)
                             x++;
                     }
