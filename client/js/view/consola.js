@@ -14,7 +14,7 @@ define(['lib/pixi'], function (PIXI) {
 
     Consola.prototype.setEscala = function (escala) {
         var font = Math.round(14 * escala) + 'px Arial';
-        this.baseFont = {font: font, align: "center", stroke: "black", strokeThickness: 0.2};
+        this.baseFont = {font: font, align: "center", stroke: "black", strokeThickness: 0.2 * escala};
 
         for (var i = 0; i < this.children.length; i++) {
             this.children[i].style.font = font;

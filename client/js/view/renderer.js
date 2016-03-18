@@ -238,6 +238,10 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 char.texto.setChat(chat);
             },
 
+            agregarCharacterHoveringInfo: function(char,valor,font,duracion){
+                char.texto.setHoveringInfo(valor,font,duracion);
+            },
+
             setCharacterFX: function (char, FX, FXLoops) {
                 var grh = this.grhs[this.fxs[FX].animacion];
                 char.sprite.setFX(grh, this.fxs[FX].offX, this.fxs[FX].offY, FXLoops);

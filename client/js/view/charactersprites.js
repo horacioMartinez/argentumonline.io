@@ -31,7 +31,7 @@ define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
         var nuevoSprite = new SpriteGrh(grh, loops);
         this.addChild(nuevoSprite);
         nuevoSprite.setPosition(offX, offY);
-        nuevoSprite.zIndex = 6;
+        nuevoSprite.zIndex = 7;
         if (loops > 0) {
             nuevoSprite.play();
             var self = this;
@@ -40,6 +40,7 @@ define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
             };
         }
         else {
+            nuevoSprite.zIndex--; // asi los fxs salen arriba de los infinitos (como meditar)
             this._fxsInfinitos.push(nuevoSprite);
         }
     };
@@ -62,7 +63,7 @@ define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
     };
 
     CharacterSprites.prototype.removerFxsInfinitos = function () {
-        for (var i = 0; i < this._fxsInfinitos; i++) {
+        for (var i = 0; i < this._fxsInfinitos.length; i++) {
             this.removeChild(this._fxsInfinitos[i]);
         }
         this._fxsInfinitos = [];

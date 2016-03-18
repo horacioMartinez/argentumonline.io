@@ -18,12 +18,12 @@ define(['lib/pixi'], function (PIXI) {
     CharacterText.constructor = CharacterText;
 
     CharacterText.prototype.setEscala = function (escala) {
-        var font = Math.round(14 * escala) + 'px Arial';
-        var aux = {font: font, align: "center", stroke: "black", strokeThickness: 0.2};
-        this.estilo = $.extend({}, aux, Enums.Font.TALK);
+        this.baseFont = Math.round(14 * escala) + 'px Arial';
+        var aux = {font: this.baseFont, align: "center", stroke: "black", strokeThickness: 0.2* escala};
 
+        this.estiloChat = $.extend({}, aux, Enums.Font.TALK);
         if (this._chat) {
-            this._chat.style = this.estilo;
+            this._chat.style = this.estiloChat;
             this._chat.x = this._chat.x * (escala / this._escala);
             this._chat.y = this._chat.y * (escala / this._escala);
         }
@@ -59,7 +59,7 @@ define(['lib/pixi'], function (PIXI) {
     CharacterText.prototype.setChat = function (chat) {
         this.removerChat();
         chat = this._formatearChat(chat);
-        this._chat = new PIXI.Text(chat.join('\n'), this.estilo);
+        this._chat = new PIXI.Text(chat.join('\n'), this.estiloChat);
         var self = this;
         this._chat.duracion = 1000;
         this._chat.tiempoPasado = 0;
@@ -83,6 +83,36 @@ define(['lib/pixi'], function (PIXI) {
         }
         this._chat = null;
 
+    };
+
+    //TODO: ordenar codigo repetido y animacion bien hecha (ademas en el chat animarlo cuando aparece, como que suba un poco)
+    CharacterText.prototype.setHoveringInfo = function (value,font, duration) {
+
+        duration = duration?duration:200;
+        font = font? font: Enums.Font.TALK;
+
+        var aux = {font: this.baseFont, align: "center", stroke: "white", strokeThickness: 0.5*this._escala};
+        var estilo = $.extend({}, aux, font);
+        var info = new PIXI.Text(value, estilo);
+
+        info.duracion = duration;
+        info.tiempoPasado = 0;
+        var self = this;
+        info.updateInfo = function(delta){
+            this.tiempoPasado += delta;
+            this.y -= delta/5;
+            var alpha = ((this.duracion- this.tiempoPasado)/ this.duracion );
+            if (alpha >= 0)
+                this.alpha = alpha;
+            if (this.tiempoPasado > this.duracion) {
+                PIXI.ticker.shared.remove(this.updateInfo, this);
+                self.removeChild(this);
+            }
+        }.bind(info);
+        PIXI.ticker.shared.add(info.updateInfo, info);
+        this.addChild(info);
+        info.y = -16 * this._escala - info.height;
+        info.x = 32 * this._escala / 2 - info.width / 2;
     };
 
     return CharacterText;

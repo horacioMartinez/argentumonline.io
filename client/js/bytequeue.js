@@ -79,7 +79,6 @@ define(function () {
         },
 
         // todos little endian:
-        // ( TODO: ver si reemplazar los typed arrays por arrays comunes para compatibilidad con browsers viejos )
         WriteInteger: function (value) { // 2B
 
             this.data.push(value & 0xff);

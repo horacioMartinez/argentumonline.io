@@ -7,7 +7,7 @@ define(['entity', 'transition', 'lib/pixi'], function (Entity, Transition, PIXI)
             this._super(gridX, gridY);
 
             if (!Name) // es un bicho o npc
-                this.moveSpeed = 290;// bicho (duracion de movimiento en ms, animaciones de mov se setean automaticamnete a esta vel (abajo) )
+                this.moveSpeed = 310;// bicho (duracion de movimiento en ms, animaciones de mov se setean automaticamnete a esta vel (abajo) )
             else
                 this.moveSpeed = 230; // PJ TODO: setear bien estos valores, fijarse que en lo posible no haya resetmovements (esto pasa si la animacion es mas lenta que el llamado a cambiar de pos)
 

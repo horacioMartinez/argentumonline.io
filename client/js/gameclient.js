@@ -93,6 +93,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleNavigateToggle: function () {
+            this.game.player.navegando = !this.game.player.navegando;
             console.log("TODO: handleNavigateToggle ");
         },
 
@@ -265,7 +266,6 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
 
         handleAreaChanged: function (X, Y) {
             this.game.cambiarArea(X, Y);
-            console.log("areaChanged ");
         },
 
         handlePauseToggle: function () {

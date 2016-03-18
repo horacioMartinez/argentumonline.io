@@ -1,14 +1,5 @@
 define([],
     function () {
-        /*Function HayAgua(ByVal X As Integer, ByVal Y As Integer) As Boolean
-         HayAgua = ((MapData(X, Y).Graphic(1).GrhIndex >= 1505 And MapData(X, Y).Graphic(1).GrhIndex <= 1520) Or _
-         (MapData(X, Y).Graphic(1).GrhIndex >= 5665 And MapData(X, Y).Graphic(1).GrhIndex <= 5680) Or _
-         (MapData(X, Y).Graphic(1).GrhIndex >= 13547 And MapData(X, Y).Graphic(1).GrhIndex <= 13562)) And _
-         MapData(X, Y).Graphic(2).GrhIndex = 0
-
-         End Function
-         */
-
         var Mapa = Class.extend({
             init: function (numMap, data) {
                 this.numero = numMap;
@@ -20,6 +11,23 @@ define([],
 
             isBlocked: function (gridX, gridY) {
                 return this.data[gridX - 1][gridY - 1][0];
+            },
+
+            hayAgua: function (gridX, gridY) {
+                var grh1 = this.getGrh1(gridX,gridY);
+                var grh2 = this.getGrh2(gridX,gridY);
+
+                if (grh2)
+                    return false;
+                if ( (grh1 >= 1505) && (grh1 <= 1520))
+                    return true;
+                if ( (grh1 >= 5665) && (grh1 <= 5680))
+                    return true;
+                if ( (grh1 >= 5665) && (grh1 <= 5680))
+                    return true;
+                if ( (grh1 >= 13547) && (grh1 <= 13562))
+                    return true;
+                return false;
             },
 
             setBlockPosition: function (gridX, gridY, blocked) {

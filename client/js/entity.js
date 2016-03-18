@@ -4,19 +4,9 @@ define([], function (){
     var Entity = Class.extend({
         init: function(gridX, gridY) {
             var self = this;
-
-            this.animations = null;
-            this.currentAnimation = null;
-            this.shadowOffsetY = 0;
-
             this.setGridPosition(gridX, gridY);
 
-            // Modes
-            this.isLoaded = false;
-            this.isHighlighted = false;
             this.visible = true;
-            this.isFading = false;
-            this.setDirty();
         },
 
         setOnPositionChange: function (posChangeCallback){
@@ -51,17 +41,6 @@ define([], function (){
             if ( (gridX === this.gridX) && (gridY === this.gridY +1 ) )
                 return Enums.Heading.sur;
             return 0;
-        },
-
-        setHighlight: function(value) {
-            if(value === true) {
-                this.sprite = this.sprite.silhouetteSprite;
-                this.isHighlighted = true;
-            }
-            else {
-                this.sprite = this.normalSprite;
-                this.isHighlighted = false;
-            }
         },
 
         setVisible: function(value) {
@@ -99,17 +78,6 @@ define([], function (){
             }
             this.setVisible(true);
         },
-
-        setDirty: function() {
-            this.isDirty = true;
-            if(this.dirty_callback) {
-                this.dirty_callback(this);
-            }
-        },
-
-        onDirty: function(dirty_callback) {
-            this.dirty_callback = dirty_callback;
-        }
     });
 
     return Entity;

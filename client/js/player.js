@@ -15,6 +15,8 @@ define(['character', 'enums'], function (Character) {
             this.puedeCaminarCallback = {};
             this.cambioHeadingCallback = {};
             this.lastAttackedTarget = null;
+
+            this.navegando = false;
             this.hp = -1;
             this.maxHp = -1;
             this.mana = -1;

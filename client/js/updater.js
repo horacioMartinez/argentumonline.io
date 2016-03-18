@@ -9,7 +9,6 @@ define(['character', 'player', 'timer', 'enums'], function (Character, Player, T
             if (this.game.logeado) {
                 if (this.game.player)
                     this.updateComenzarMovimientoPlayer();
-                this.updateInfos();
             }
         },
 
@@ -19,11 +18,6 @@ define(['character', 'player', 'timer', 'enums'], function (Character, Player, T
             }
         },
 
-        updateInfos: function () {
-            var t = this.game.currentTime;
-
-            this.game.infoManager.update(t);
-        }
     });
 
     return Updater;
