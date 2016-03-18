@@ -47,7 +47,7 @@ define(['enums', 'mapa', 'infomanager', 'view/renderer',
             },
 
             setup: function (input) {
-                this.renderer = new Renderer(this, this.assetManager, this.app.getEscala());
+                this.renderer = new Renderer(this.map, this.assetManager, this.app.getEscala());
                 this.chatinput = input;
             },
 
@@ -599,6 +599,7 @@ define(['enums', 'mapa', 'infomanager', 'view/renderer',
                 //this._removeAllEntitys();
                 this.map = new Mapa(numeroMapa, this.assetManager.getMapaSync(numeroMapa));
                 this._removeAllEntities();
+                this.renderer.cambiarMapa(this.map);
                 //if (this.player)
                 //    this.player.resetMovement();
             },
@@ -778,9 +779,7 @@ define(['enums', 'mapa', 'infomanager', 'view/renderer',
             },
 
             togglePausa: function () {
-                log.error(this.isPaused); //sacame
                 this.isPaused = !(this.isPaused);
-                log.error(this.isPaused); //sacame
             },
 
             setCharacterFX: function (CharIndex, FX, FXLoops) {

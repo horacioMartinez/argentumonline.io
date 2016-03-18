@@ -1,4 +1,4 @@
-define(['entity', 'transition', 'timer', 'lib/pixi'], function (Entity, Transition, Timer, PIXI) {
+define(['entity', 'transition', 'lib/pixi'], function (Entity, Transition, PIXI) {
 
     var Character = Entity.extend({
         init: function (CharIndex, gridX, gridY, Heading, Name, clan) {

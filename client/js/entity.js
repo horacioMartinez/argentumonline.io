@@ -19,11 +19,19 @@ define([], function (){
             this.setDirty();
         },
 
+        setOnPositionChange: function (posChangeCallback){
+            this._onPositionChange = posChangeCallback;
+        },
+
+        onPositionChange: function(){
+            this._onPositionChange();
+        },
+
         setPosition: function (x, y) {
             this.x = x;
             this.y = y;
-            if (this.onPositionChange)
-                this.onPositionChange();
+            if (this._onPositionChange)
+                this._onPositionChange();
         },
 
         setGridPosition: function(x, y) {

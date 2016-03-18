@@ -269,7 +269,6 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handlePauseToggle: function () {
-            log.error("pause toggle!");//sacame
             this.game.togglePausa();
         },
 

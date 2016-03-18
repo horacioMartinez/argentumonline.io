@@ -1,13 +1,13 @@
-define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view/charactersprites', 'view/consola', 'view/charactertext', 'view/spritegrh', 'view/containerordenado'],
-    function (Camera, Item, Character, Player, Timer, PIXI, CharacterSprites, Consola, CharacterText, SpriteGrh, ContainerOrdenado) {
+define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'view/charactertext', 'view/spritegrh', 'view/containerordenado'],
+    function (PIXI, Camera, CharacterSprites, Consola, CharacterText, SpriteGrh, ContainerOrdenado) {
 
         var Renderer = Class.extend({
-            init: function (game, assetManager, escala) {
+            init: function (mapa, assetManager, escala) {
                 this.POSICIONES_EXTRA_RENDER_X = 4; //TODO
                 this.POSICIONES_EXTRA_RENDER_Y = 8; //TODO
                 this.POSICIONES_EXTRA_TERRENO = 1; // no deberia ser necesario mas de una. (una pos extra en cada una de las 4 direcciones)
 
-                this.game = game;
+                this.mapa = mapa;
                 this.grhs = assetManager.grhs;
                 this.indices = assetManager.getIndices();
                 this.armas = assetManager.getArmas();
@@ -20,7 +20,6 @@ define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view
                 this.tilesize = 32;
                 this.camera = new Camera(this.tilesize);
                 this._inicializarPixi();
-
 
                 this.rescale(escala);
 
@@ -40,7 +39,7 @@ define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view
                 this.gameStage = new PIXI.Container();
                 this.layer1 = new PIXI.Container();
                 this.layer2 = new PIXI.Container();
-                this.layer3 = new ContainerOrdenado(this.game.map.width);
+                this.layer3 = new ContainerOrdenado(this.mapa.width);
                 this.layer3.ordenado = true;
                 this.layer4 = new PIXI.Container();
                 this.gameText = new PIXI.Container();
@@ -70,13 +69,13 @@ define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view
                 this._spritesLayer3 = [];
                 this._spritesLayer4 = [];
 
-                for (var i = 1; i < this.game.map.width + 1; i++) {
-                    for (var j = 1; j < this.game.map.height + 1; j++) {
+                for (var i = 1; i < this.mapa.width + 1; i++) {
+                    for (var j = 1; j < this.mapa.height + 1; j++) {
                         var screenX = i * this.tilesize;
                         var screenY = j * this.tilesize;
-                        var grh2 = this.game.map.getGrh2(i, j);
-                        var grh3 = this.game.map.getGrh3(i, j);
-                        var grh4 = this.game.map.getGrh4(i, j);
+                        var grh2 = this.mapa.getGrh2(i, j);
+                        var grh3 = this.mapa.getGrh3(i, j);
+                        var grh4 = this.mapa.getGrh4(i, j);
                         if (grh2) {
                             var nuevoSprite = new SpriteGrh(this.grhs[grh2]);
                             this.layer2.addChild(nuevoSprite);
@@ -113,8 +112,8 @@ define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view
                         var screenY = (gridYIni + j) * this.tilesize;
                         this.terreno[i][j].setPosition(screenX, screenY);
 
-                        if (this.game.map.getGrh1(gridXIni + i, gridYIni + j))
-                            this.terreno[i][j].cambiarGrh(this.grhs[this.game.map.getGrh1(gridXIni + i, gridYIni + j)]);
+                        if (this.mapa.getGrh1(gridXIni + i, gridYIni + j))
+                            this.terreno[i][j].cambiarGrh(this.grhs[this.mapa.getGrh1(gridXIni + i, gridYIni + j)]);
                     }
                 }
 
@@ -157,7 +156,7 @@ define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view
                     return;
                 }
                 item.sprite = new SpriteGrh(this.grhs[numGrh]);
-                item.sprite.zOffset = -this.game.map.width; // para que item quede debajo de chars en misma cord Y ( para todo X)
+                item.sprite.zOffset = -this.mapa.width; // para que item quede debajo de chars en misma cord Y ( para todo X)
                 this.layer3.addChild(item.sprite);
                 item.sprite.setPosition(item.x, item.y);
             },
@@ -195,15 +194,15 @@ define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view
                 char.texto = new CharacterText(this.escala);
                 this.gameText.addChild(char.texto);
 
-                char.onPositionChange = function () {
+                char.setOnPositionChange(function () {
                     if (this.sprite) {
                         this.sprite.setPosition(this.x, this.y);
                     }
                     if (this.texto) {
-                        this.texto.x = this.x * self.escala;
-                        this.texto.y = this.y * self.escala;
+                        this.texto.setPosition(this.x, this.y);
                     }
-                }.bind(char);
+                }.bind(char));
+
                 char.onPositionChange();
             },
 
@@ -253,12 +252,10 @@ define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view
                 this.gameText.scale.x = 1 / escala;
                 this.gameText.scale.y = 1 / escala;
                 this._syncGamePosition();
-                this.game.forEachCharacter(function (c) {
-                    if (c.onPositionChange)
-                        c.onPositionChange();
-                    if (c.texto)
-                        c.texto.setEscala(escala);
-                });
+
+                for (var i = 0; i < this.gameText.children.length; i++) {
+                    this.gameText.children[i].setEscala(escala);
+                }
                 this.consola.setEscala(escala);
             },
 
@@ -296,7 +293,6 @@ define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view
                 return this.camera.isVisiblePosition(entity.gridX, entity.gridY, this.POSICIONES_EXTRA_RENDER_X, this.POSICIONES_EXTRA_RENDER_Y);
             },
 
-
             moverPosition: function (x, y) {
                 this.camera.mover(x, y);
                 this._syncGamePosition();
@@ -314,8 +310,8 @@ define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view
                     case Enums.Heading.norte:
                         var j = (this._lowestRowTerreno === 0) ? rows - 1 : this._lowestRowTerreno - 1;
                         for (var i = 0; i < this.terreno.length; i++) {
-                            this.terreno[i][j].setPosition(this.terreno[i][j].x,this.terreno[i][j].y - (rows * this.tilesize));
-                            var grh = this.game.map.getGrh1(gridXIni + modulo(i - this._lowestColTerreno, cols), gridYIni - 1);
+                            this.terreno[i][j].setPosition(this.terreno[i][j].x, this.terreno[i][j].y - (rows * this.tilesize));
+                            var grh = this.mapa.getGrh1(gridXIni + modulo(i - this._lowestColTerreno, cols), gridYIni - 1);
                             if (grh)
                                 this.terreno[i][j].cambiarGrh(this.grhs[grh]);
                         }
@@ -326,8 +322,8 @@ define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view
                     case Enums.Heading.oeste:
                         var i = (this._lowestColTerreno === 0) ? cols - 1 : this._lowestColTerreno - 1;
                         for (var j = 0; j < this.terreno[i].length; j++) {
-                            this.terreno[i][j].setPosition(this.terreno[i][j].x - (cols * this.tilesize),this.terreno[i][j].y);
-                            var grh = this.game.map.getGrh1(gridXIni - 1, gridYIni + modulo(j - this._lowestRowTerreno, rows));
+                            this.terreno[i][j].setPosition(this.terreno[i][j].x - (cols * this.tilesize), this.terreno[i][j].y);
+                            var grh = this.mapa.getGrh1(gridXIni - 1, gridYIni + modulo(j - this._lowestRowTerreno, rows));
                             if (grh)
                                 this.terreno[i][j].cambiarGrh(this.grhs[grh]);
                         }
@@ -337,8 +333,8 @@ define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view
                     case Enums.Heading.sur:
                         var j = this._lowestRowTerreno;
                         for (var i = 0; i < this.terreno.length; i++) {
-                            this.terreno[i][j].setPosition(this.terreno[i][j].x,(this.terreno[i][j].y + (rows * this.tilesize)));
-                            var grh = this.game.map.getGrh1(gridXIni + modulo(i - this._lowestColTerreno, cols), gridYIni + rows);
+                            this.terreno[i][j].setPosition(this.terreno[i][j].x, (this.terreno[i][j].y + (rows * this.tilesize)));
+                            var grh = this.mapa.getGrh1(gridXIni + modulo(i - this._lowestColTerreno, cols), gridYIni + rows);
                             if (grh)
                                 this.terreno[i][j].cambiarGrh(this.grhs[grh]);
                         }
@@ -348,8 +344,8 @@ define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view
                     case Enums.Heading.este:
                         var i = this._lowestColTerreno;
                         for (var j = 0; j < this.terreno[i].length; j++) {
-                            this.terreno[i][j].setPosition((this.terreno[i][j].x + cols * this.tilesize),this.terreno[i][j].y);
-                            var grh = this.game.map.getGrh1(gridXIni + cols, gridYIni + modulo(j - this._lowestRowTerreno, rows));
+                            this.terreno[i][j].setPosition((this.terreno[i][j].x + cols * this.tilesize), this.terreno[i][j].y);
+                            var grh = this.mapa.getGrh1(gridXIni + cols, gridYIni + modulo(j - this._lowestRowTerreno, rows));
                             if (grh)
                                 this.terreno[i][j].cambiarGrh(this.grhs[grh]);
                         }
@@ -374,6 +370,10 @@ define(['view/camera', 'item', 'character', 'player', 'timer', 'lib/pixi', 'view
             getNumGraficoFromGrh: function (grh) {
                 if (this.indices[grh] && this.indices[grh].grafico)
                     return this.indices[grh].grafico;
+            },
+
+            cambiarMapa: function (mapa) {
+                this.mapa = mapa;
             },
 
         });
