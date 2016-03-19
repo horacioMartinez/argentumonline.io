@@ -4,7 +4,7 @@
 
 define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
 
-    function CharacterSprites(Heading, bodys, heads, headOffX, headOffY, weapons, shields, helmets, font, nombre, clan) {
+    function CharacterSprites(Heading, bodys, heads, headOffX, headOffY, weapons, shields, helmets, nombre, clan, font) {
         /*
          Body, Head,Weapon,Shield,Helmet: vector con los grhs de los 4 headings. Cada uno de los headings puede contener un solo grh o AnimGrhs (frames de grhs + vel)
          */
@@ -19,7 +19,7 @@ define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
         this.setWeapons(weapons);
         this.setShields(shields);
         this.setHelmets(helmets);
-        this._setNombre(font, nombre, clan);
+        this._setNombre(nombre, clan,font);
         this._updateOrdenHijos();
 
     }
@@ -101,7 +101,7 @@ define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
         return this.visible;
     };
 
-    CharacterSprites.prototype._setNombre = function (font, nombre, clan) {
+    CharacterSprites.prototype._setNombre = function (nombre, clan, font) {
         if (this._nombre) {
             this.removeChild(this._nombre);
             this._nombre = null;

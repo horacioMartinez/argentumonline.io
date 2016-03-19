@@ -96,7 +96,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
 
                 escribirChat: function (chat, charIndex, r, g, b) { // TODO: colores?
                     if (this.characters[charIndex]) {
-                        this.renderer.setCharacterChat(this.characters[charIndex], chat);
+                        this.renderer.setCharacterChat(this.characters[charIndex], chat, r ,g ,b);
                     }
                 },
 

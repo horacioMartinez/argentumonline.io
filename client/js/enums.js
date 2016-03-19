@@ -210,29 +210,39 @@ Enums = {
 
     },
 
-    FontIndex: [
-        "TALK",
-        "FIGHT",
-        "WARNING",
-        "INFO",
-        "INFOBOLD",
-        "EJECUCION",
-        "PARTY",
-        "VENENO",
-        "GUILD",
-        "SERVER",
-        "GUILDMSG",
-        "CONSEJO",
-        "CONSEJOCAOS",
-        "CONSEJOVesA",
-        "CONSEJOCAOSVesA",
-        "CENTINELA",
-        "GMMSG",
-        "GM",
-        "CITIZEN",
-        "CONSE",
-        "DIOS"
-    ],
+    NickColorIndex: {
+        1: "CRIMINAL",
+        2: "CIUDADANO",
+    },
+
+    NickColor: {
+        CRIMINAL: "rgb(225, 0, 0)",
+        CIUDADANO: "rgb(0, 191, 255)"
+    },
+
+    FontIndex: {
+        0: "TALK",
+        1: "FIGHT",
+        2: "WARNING",
+        3: "INFO",
+        4: "INFOBOLD",
+        5: "EJECUCION",
+        6: "PARTY",
+        7: "VENENO",
+        8: "GUILD",
+        9: "SERVER",
+        10: "GUILDMSG",
+        11: "CONSEJO",
+        12: "CONSEJOCAOS",
+        13: "CONSEJOVesA",
+        14: "CONSEJOCAOSVesA",
+        15: "CENTINELA",
+        16: "GMMSG",
+        17: "GM",
+        18: "CITIZEN",
+        19: "CONSE",
+        20: "DIOS"
+    },
 
     Font: {
         NOMBRE: {

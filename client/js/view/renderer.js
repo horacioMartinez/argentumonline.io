@@ -181,8 +181,11 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                     headOffX = this.cuerpos[Body].offHeadX;
                     headOffY = this.cuerpos[Body].offHeadY;
                 }
+                var color = NickColor ? Enums.NickColor[Enums.NickColorIndex[NickColor]] : Enums.NickColor.CIUDADANO;
+                var font = Enums.Font.NOMBRE;
+                font.fill = color;
 
-                var sprite = new CharacterSprites(Heading, bodys, heads, headOffX, headOffY, weapons, shields, helmets, Enums.Font.NOMBRE, Name, clan); //(Heading, bodys, heads, weapons, shields, helmets, FXGrh, FXLoops, Name) {
+                var sprite = new CharacterSprites(Heading, bodys, heads, headOffX, headOffY, weapons, shields, helmets, Name, clan, font);
                 sprite.setSombraSprite(this.grhs[24208]);
 
                 this.layer3.addChild(sprite);
@@ -234,8 +237,9 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 char.sprite = null;
             },
 
-            setCharacterChat: function (char, chat) {
-                char.texto.setChat(chat);
+            setCharacterChat: function (char, chat,r,g,b) {
+                var color = "rgb("+r+","+g+","+b+")";
+                char.texto.setChat(chat,color);
             },
 
             agregarCharacterHoveringInfo: function(char,valor,font,duracion){

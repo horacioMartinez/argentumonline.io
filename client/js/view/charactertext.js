@@ -56,9 +56,10 @@ define(['lib/pixi'], function (PIXI) {
         return resultado;
     };
 
-    CharacterText.prototype.setChat = function (chat) {
+    CharacterText.prototype.setChat = function (chat,color) {
         this.removerChat();
         chat = this._formatearChat(chat);
+        this.estiloChat.fill = color;
         this._chat = new PIXI.Text(chat.join('\n'), this.estiloChat);
         var self = this;
         this._chat.duracion = 1000;
