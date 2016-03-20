@@ -1,4 +1,4 @@
-define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Player, Protocolo, ByteQueue, __websock) { // TODO: sacar BISON, no se usa mas
+define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Player, Protocolo, ByteQueue, __websock) {
 
     var GameClient = Class.extend({
         init: function (game, host, port) {
@@ -165,6 +165,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleUpdateExp: function (Value) {
+            this.game.setExp(Value);
             console.log("TODO: handleUpdateExp ");
         },
 
@@ -290,10 +291,9 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
             this.game.setVida(MinHp, MaxHp);
             this.game.setMana(MinMan, MaxMan);
             this.game.setStamina(MinSta, MaxSta);
+            this.game.setExp(Exp,Elu);
             this.game.player.oro = Gld;
             this.game.player.nivel = Elv;
-            this.game.player.maxExp = Elu; // TODO;
-            this.game.player.exp = Exp;
         },
         handleChangeInventorySlot: function (Slot, ObjIndex, ObjName, Amount, Equiped, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) {
             this.game.cambiarSlotInventario(Slot, ObjIndex, ObjName, Amount, Equiped, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice);

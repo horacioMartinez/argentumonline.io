@@ -33,4 +33,7 @@
 #barraSed {top:86.4%;}
 #barraEnergiaUsada, #barraManaUsada, #barraSaludUsada, #barraHambreUsada, #barraSedUsada {background-color: black;float:right; height:100%; width:30%; outline: dashed 2px green;}
 
+#barraExp span {color:white;display: inline-block;position: absolute; top:0; bottom: 0; left: 0; right: 0; margin: auto;text-align: center; font-size: 0.8em;}
+#barraExp {background-color: Transparent; position: absolute; top:28.1%; left:3.875%; width: 62.875%; height:43.75%;}
+#barraExpUsada {float:left; height:100%; width:30%; background:url('../imagenes/interfaz/barraExp.png');background-size: cover; }
 

@@ -155,7 +155,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                         if (entity.id !== self.player.id)
                             self.sacarEntity(entity);
                     });
-                    this.items= [];
+                    this.items = [];
                 },
 
                 sacarEntity: function (entity) {
@@ -325,7 +325,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                 },
 
                 setMana: function (MinMan, MaxMan) {
-                    if (!MaxMan)
+                    if (!MaxMan && (MaxMan !== 0))
                         MaxMan = this.player.maxMana;
 
                     if ((this.player.mana !== MinMan) || (this.player.maxMana !== MaxMan)) {
@@ -362,6 +362,16 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                         this.player.hambre = MinHam;
                         this.player.maxHambre = MaxHam;
                         this.uiManager.interfaz.updateBarraHambre(MinHam, MaxHam);
+                    }
+                },
+
+                setExp: function (minExp, maxExp) {
+                    if (!maxExp)
+                        maxExp = this.player.maxExp;
+                    if ((this.player.exp !== minExp) || (this.player.maxExp !== maxExp)) {
+                        this.player.exp = minExp;
+                        this.player.maxExp = maxExp;
+                        this.uiManager.interfaz.updateBarraExp(minExp, maxExp);
                     }
                 },
 
@@ -605,8 +615,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     if (this.intervalos.requestUsarConU(this.currentTime)) {
                         this.client.sendUseItem(slot);
                     }
-                }
-                ,
+                },
 
                 usarConDobleClick: function (slot) {
                     if (!slot)
@@ -615,8 +624,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                         this.client.sendUseItem(slot);
                     }
 
-                }
-                ,
+                },
 
                 atacar: function () {
                     if (this.intervalos.requestAtacar(this.currentTime)) {
@@ -639,8 +647,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                         }
                     }
 
-                }
-                ,
+                },
 
                 lanzarHechizo: function () {
                     if (!this.intervalos.requestLanzarHechizo(this.currentTime))
@@ -650,8 +657,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                         return;
                     this.client.sendCastSpell(slot);
                     this.client.sendWork(Enums.Skill.magia);
-                }
-                ,
+                },
 
                 setTrabajoPendiente: function (skill) {
                     this.uiManager.interfaz.setMouseCrosshair(true);
@@ -679,13 +685,11 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     }
                     else
                         this.uiManager.comerciar.borrarSlotCompra(Slot);
-                }
-                ,
+                },
 
                 cerrarComerciar: function () {
                     this.client.sendCommerceEnd();
-                }
-                ,
+                },
 
                 comprar: function (slot, cantidad) {
                     this.client.sendCommerceBuy(slot, cantidad);
@@ -694,13 +698,11 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
 
                 vender: function (slot, cantidad) {
                     this.client.sendCommerceSell(slot, cantidad);
-                }
-                ,
+                },
 
                 togglePausa: function () {
                     this.isPaused = !(this.isPaused);
-                }
-                ,
+                },
 
                 setCharacterFX: function (CharIndex, FX, FXLoops) {
                     if (!this.characters[CharIndex]) {
@@ -714,8 +716,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     }
                     FXLoops = FXLoops + 1;
                     this.renderer.setCharacterFX(this.characters[CharIndex], FX, FXLoops);
-                }
-                ,
+                },
 
                 initEntityGrid: function () {
                     this.entityGrid = [];
@@ -726,16 +727,14 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                         }
                     }
                     log.info("Initialized the entity grid.");
-                }
-                ,
+                },
 
                 inicializar: function (username) {
                     this.username = username;
                     this.setUpdater(new Updater(this));
                     this.initEntityGrid();
                     this.ready = true;
-                }
-                ,
+                },
 
                 tick: function () {
                     this.currentTime = Date.now();
@@ -749,8 +748,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     if (!this.isStopped) {
                         requestAnimFrame(this.tick.bind(this));
                     }
-                }
-                ,
+                },
 
                 start: function () {
 
@@ -763,19 +761,16 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     this.tick();
                     this.hasNeverStarted = false;
                     log.info("Game loop started.");
-                }
-                ,
+                },
 
                 stop: function () {
                     log.info("Game stopped.");
                     this.isStopped = true;
-                }
-                ,
+                },
 
                 entityIdExists: function (id) {
                     return id in this.entities;
-                }
-                ,
+                },
 
                 getEntityById: function (id) {
                     if (id in this.entities) {
@@ -784,8 +779,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     else {
                         log.error("Unknown entity id : " + id, true);
                     }
-                }
-                ,
+                },
 
                 getMouseGridPosition: function () { // TODO: usar InteractionManager para detectar sprite clickeado y rederigir a ese tile???
                     var ts = this.renderer.tilesize,
@@ -817,8 +811,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                         }
                     }
                     return {x: x, y: y};
-                }
-                ,
+                },
 
                 /**
                  * Loops through all the entities currently present in the game.
@@ -835,24 +828,21 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                             callback(entity, index);
                     });
 
-                }
-                ,
+                },
 
                 forEachCharacter: function (callback) { // TODO (importante): este _.each itera solo los elementos del array?, dado que characters tiene por ej elementos en [3] y [5323] ("sparse array"), quiero imaginar que solo itera los elementos y no va desde 0 a 5323 probando con cada uno no?
                     _.each(this.characters, function (entity) {
                         if (entity)
                             callback(entity);
                     });
-                }
-                ,
+                },
 
                 forEachItem: function (callback) {
                     _.each(this.items, function (entity) {
                         if (entity)
                             callback(entity);
                     });
-                }
-                ,
+                },
 
                 click: function () {
                     var gridPos = this.getMouseGridPosition();
@@ -865,20 +855,17 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                         else
                             this.client.sendLeftClick(gridPos.x, gridPos.y);
                     }
-                }
-                ,
+                },
 
                 doubleclick: function () {
                     var gridPos = this.getMouseGridPosition();
                     if (this.logeado)
                         this.client.sendDoubleClick(gridPos.x, gridPos.y);
-                }
-                ,
+                },
 
                 resize: function (escala) {
                     this.renderer.rescale(escala);
-                }
-                ,
+                },
 
             })
             ;

@@ -10,4 +10,6 @@ rm -rf "$BUILDDIR"
 echo "Building client with RequireJS"
 node "$TOPLEVELDIR/bin/r.js" -o "$PROJECTDIR/build.js"
 
+java -jar ./compiler.jar --compilation_level SIMPLE_OPTIMIZATIONS --js "$BUILDDIR/js/main.js"  --js_output_file "$BUILDDIR/js/main.js"
+
 echo "Build complete"

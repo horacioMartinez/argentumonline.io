@@ -63,26 +63,35 @@ define(['ui/itemgrid'], function (ItemGrid) {
             }
         },
 
-        _updateBarra: function (cant, max, $barra, $label) {
-            var porcentaje = (100 - Math.floor((cant / max) * 100));
+        _updateBarra: function (cant, max, $barra, $label, invertida) {
+            var porcentaje = 100;
+            if (max) {
+                if (invertida)
+                    porcentaje = 100 -Math.floor((cant / max) * 100);
+                else
+                    porcentaje = Math.floor((cant / max) * 100);
+            }
             $barra.css("width", porcentaje + "%");
             $label.text(cant + "/" + max);
         },
 
         updateBarraEnergia: function (cant, max) {
-            this._updateBarra(cant, max, $("#barraEnergiaUsada"), $("#barraEnergiaTexto"));
+            this._updateBarra(cant, max, $("#barraEnergiaUsada"), $("#barraEnergiaTexto"),true);
         },
         updateBarraVida: function (cant, max) {
-            this._updateBarra(cant, max, $("#barraSaludUsada"), $("#barraSaludTexto"));
+            this._updateBarra(cant, max, $("#barraSaludUsada"), $("#barraSaludTexto"),true);
         },
         updateBarraMana: function (cant, max) {
-            this._updateBarra(cant, max, $("#barraManaUsada"), $("#barraManaTexto"));
+            this._updateBarra(cant, max, $("#barraManaUsada"), $("#barraManaTexto"),true);
         },
         updateBarraHambre: function (cant, max) {
-            this._updateBarra(cant, max, $("#barraHambreUsada"), $("#barraHambreTexto"));
+            this._updateBarra(cant, max, $("#barraHambreUsada"), $("#barraHambreTexto"),true);
         },
         updateBarraSed: function (cant, max) {
-            this._updateBarra(cant, max, $("#barraSedUsada"), $("#barraSedTexto"));
+            this._updateBarra(cant, max, $("#barraSedUsada"), $("#barraSedTexto"),true);
+        },
+        updateBarraExp: function(cant,max){
+            this._updateBarra(cant, max, $("#barraExpUsada"), $("#barraExpTexto"));
         },
 
         setMouseCrosshair: function(visible){

@@ -101,7 +101,7 @@ define( ['app', 'assetmanager','game'], function (App, AssetManager, __para_que_
 
             $('#gamecanvas').click(function (event) {
                 if ((!game.started) || (game.isPaused))
-                    return;
+                    return true; // <<<--- todo: rever (para que no se tilde luego de pausas) ?
 
                 app.center();
                 if (app.setMouseCoordinates(event)) {
