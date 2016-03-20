@@ -1,4 +1,4 @@
-define(['jquery-ui', 'app', 'assetmanager', 'lib/pixi'], function (___ui___, App, AssetManager, PIXI) {
+define( ['app', 'assetmanager','game'], function (App, AssetManager, __para_que_ande_el_build_nomas) {
     var app, game, assetManager;
 
     var initApp = function () {

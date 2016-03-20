@@ -18,7 +18,8 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },// TODO: cambiar en el protocolo los peekbyte por readbyte y sacar los readbyte de cada uno
 
         _connect: function (conectarse_callback) {
-            this.ws.open("ws://localhost:8666");/*server.dakara.com.ar*/
+            this.ws.open("ws://localhost:8666");
+            /*server.dakara.com.ar*/
             var self = this;
             this.ws.on('open', function () {
                 self.conectado = true;
@@ -199,13 +200,18 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleUserCharIndexInServer: function (CharIndex) {
-            if (this.game.playerId)
-                if (this.game.playerId != CharIndex) {
-                    log.error("WTF EL CHARINDEX CAMBIA?: playerID" + this.game.playerId + " cambiado a charindex " + CharIndex);
-                    this.game.playerId = CharIndex;
-                    this.game.characters[CharIndex] = this.game.player;
-                    this.game.player.id = CharIndex;
+            if (this.game.player.id !== CharIndex) {
+                log.error("WTF EL CHARINDEX CAMBIA?: playerID" + this.game.player.id + " cambiado a charindex " + CharIndex);
+
+                this.game.characters[this.game.player.id] = null;
+
+                if (this.game.characters[CharIndex]){
+                    this.game.sacarEntity(this.game.characters[CharIndex]);
                 }
+
+                this.game.player.id = CharIndex;
+                this.game.characters[CharIndex] = this.game.player;
+            }
         },
 
         handleCharacterCreate: function (CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, Name, NickColor, Privileges) {
@@ -213,7 +219,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleCharacterRemove: function (CharIndex) {
-            if (CharIndex === this.game.playerId) {
+            if (CharIndex === this.game.player.id) {
                 log.error("trato de saccar al player");
                 return;
             }
@@ -394,7 +400,9 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleSetInvisible: function (charIndex, invisible) {
-            console.log("TODO: handleSetInvisible ");
+            var char = this.game.characters[charIndex];
+            if (char)
+                this.game.renderer.setCharVisible(char, !invisible);
         },
 
         handleDiceRoll: function (Fuerza, Agilidad, Inteligencia, Carisma, Constitucion) {
@@ -945,7 +953,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         sendLoginNewChar: function (UserName, Password, Race, Gender, Class, Head, Mail, Homeland) {
-            p = this.protocolo.BuildLoginNewChar(UserName, Password, this.VER_A, this.VER_B,this.VER_C, Race, Gender, Class, Head, Mail, Homeland);
+            p = this.protocolo.BuildLoginNewChar(UserName, Password, this.VER_A, this.VER_B, this.VER_C, Race, Gender, Class, Head, Mail, Homeland);
             p.serialize(this.byteQueue);
         },
 

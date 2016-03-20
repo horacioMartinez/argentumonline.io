@@ -36,7 +36,11 @@
 }
 
 .botonCerrar:active {
-    background-image: url("../imagenes/botonX-pressed.png");
+    background-image: url("../imagenes/botonX-pressed.jpg");
+}
+
+.botonCerrar:hover {
+    background-image: url("../imagenes/botonX-hover.png");
 }
 
 .botonNormal {

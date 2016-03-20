@@ -10,7 +10,7 @@ define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
          */
         // Clase que hereda de container de pixi
         PIXI.Container.call(this);
-
+        this._visible = true; // todo: ver el todo del setvisible
         this.OFFSET_HEAD = -34;
         this._fxsInfinitos = [];
         this.heading = Heading;
@@ -19,9 +19,8 @@ define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
         this.setWeapons(weapons);
         this.setShields(shields);
         this.setHelmets(helmets);
-        this._setNombre(nombre, clan,font);
+        this._setNombre(nombre, clan, font);
         this._updateOrdenHijos();
-
     }
 
     CharacterSprites.prototype = Object.create(PIXI.Container.prototype);
@@ -93,35 +92,19 @@ define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
         });
     };
 
-    CharacterSprites.prototype.setVisible = function (visible) {
-        this.visible = visible;
-    };
-
-    CharacterSprites.prototype.isVisible = function () {
-        return this.visible;
-    };
-
     CharacterSprites.prototype._setNombre = function (nombre, clan, font) {
         if (this._nombre) {
             this.removeChild(this._nombre);
             this._nombre = null;
         }
-        if (this._clan) {
-            this.removeChild(this._clan);
-            this._clan = null;
-        }
+        if (clan)
+            nombre = nombre + "\n" + clan;
 
         if (nombre) {
             this._nombre = new PIXI.Text(nombre, font);
             this.addChild(this._nombre);
             this._nombre.y = 32;
             this._nombre.x = this.bodySprite.x + 32 / 2 - this._nombre.width / 2;
-        }
-        if (clan) {
-            this._clan = new PIXI.Text(clan, font);
-            this.addChild(this._clan);
-            this._clan.y = this._nombre.y + this._nombre.height;
-            this._clan.x = this.bodySprite.x + 32 / 2 - this._clan.width / 2;
         }
     };
 
@@ -234,6 +217,16 @@ define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
         }
     };
 
+    CharacterSprites.prototype.setVisible = function (visible) { // TODO: deberia poder hacerlo con el .visible, quizas fxs en un container distinto?
+        this._visible = visible;
+        this._forEachHeadingSprite(function (sprite) {
+            sprite.visible = visible;
+        });
+        this._sombraSprite.visible = visible;
+        if (this._nombre)
+            this._nombre.visible = visible;
+    };
+
     CharacterSprites.prototype._setHeadingSprite = function (varSprite, grhs) {
         if (!grhs) {
             if (varSprite)
@@ -248,6 +241,7 @@ define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
         this.addChild(nuevoSprite);
         if (this._velocidad)
             nuevoSprite.setSpeed(this._velocidad);
+        nuevoSprite.visible = this._visible;
         return nuevoSprite;
     };
 

@@ -5,8 +5,6 @@ define([], function (){
         init: function(gridX, gridY) {
             var self = this;
             this.setGridPosition(gridX, gridY);
-
-            this.visible = true;
         },
 
         setOnPositionChange: function (posChangeCallback){
@@ -41,22 +39,6 @@ define([], function (){
             if ( (gridX === this.gridX) && (gridY === this.gridY +1 ) )
                 return Enums.Heading.sur;
             return 0;
-        },
-
-        setVisible: function(value) {
-            this.visible = value;
-        },
-
-        isVisible: function() {
-            return this.visible;
-        },
-
-        toggleVisibility: function() {
-            if(this.visible) {
-                this.setVisible(false);
-            } else {
-                this.setVisible(true);
-            }
         },
 
         fadeIn: function(currentTime) {

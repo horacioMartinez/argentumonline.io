@@ -242,6 +242,10 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 char.texto.setChat(chat,color);
             },
 
+            setCharVisible: function(char, visible){
+                char.sprite.setVisible(visible);
+            },
+
             agregarCharacterHoveringInfo: function(char,valor,font,duracion){
                 char.texto.setHoveringInfo(valor,font,duracion);
             },

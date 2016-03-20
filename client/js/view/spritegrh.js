@@ -79,11 +79,9 @@ define(['lib/pixi'], function (PIXI) {
 
     SpriteGrh.prototype.cambiarGrh = function (grh) {
         if (!grh) {
-            this.visible = false;
             this.gotoAndStop(0);
             return;
         }
-        this.visible = true;
         if (grh.frames) { //grh animado
             this.textures = grh.frames;
             this._setSpeed(grh.velocidad);

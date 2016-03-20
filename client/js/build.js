@@ -2,34 +2,19 @@
     appDir: "../",
     baseUrl: "js/",
     dir: "../../client-build",
-    optimize: "uglify",
-    optimizeCss: "standard.keepLines",
+    mainConfigFile: 'home.js',
+    removeCombined: true,
+    fileExclusionRegExp: /^(build)\.js$/,
 
-    paths: {
-        "jquery": "lib/require-jquery"
-    },
-
-    modules: [
-        //Optimize the require-jquery.js file by applying any minification
-        //that is desired via the optimize: setting above.
-        {
-            name: "jquery"
-        },
-
-        {
-            name: "game",
-            exclude: ["jquery"]
-        },
-
-        {
-            name: "home",
-            // Exclude the jquery module since it is included already in require-jquery.js
-            exclude: ["jquery", "game"]
-        }
+        modules: [
+            {
+                name: "main",
+                exclude: ["lib/pixi","lib/websock","lib/howler","lib/jquery","lib/jquery-ui","text"]
+            },
+            {
+                name: "home",
+                exclude: ["main","lib/underscore.min","lib/stacktrace","lib/class"]
+            }
     ],
 
-    pragmas: {
-        devHost: false,
-        prodHost: true
-    }
 })

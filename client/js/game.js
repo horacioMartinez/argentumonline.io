@@ -24,7 +24,6 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     this.items = []; // idem items
                     this.username = null;
                     // Player
-                    this.playerId = null; //charindex
                     this.player = null;
                     this.logeado = false; // NOTA: se pone logeado cuando llega el mensaje de logged, este es el ultimo de los mensajes al conectarse, asi que antes llega los mensajes de hechizos inventarios, etc. Deberia primero llegar esto y listo.. tambien deberia llegar el chardinex de tu pj al principio con este mensaje
                     this.inventario = [];
@@ -33,7 +32,6 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     this.intervalos = new Intervalos(0);
 
                     this.mouse = {x: 0, y: 0};
-
 
                 },
 
@@ -96,7 +94,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
 
                 escribirChat: function (chat, charIndex, r, g, b) { // TODO: colores?
                     if (this.characters[charIndex]) {
-                        this.renderer.setCharacterChat(this.characters[charIndex], chat, r ,g ,b);
+                        this.renderer.setCharacterChat(this.characters[charIndex], chat, r, g, b);
                     }
                 },
 
@@ -157,6 +155,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                         if (entity.id !== self.player.id)
                             self.sacarEntity(entity);
                     });
+                    this.items= [];
                 },
 
                 sacarEntity: function (entity) {
@@ -175,19 +174,22 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                         this.entityGrid[item.gridX][item.gridY][0] = null;
                         this.items[entity.id] = null;
                     }
+                    else {
+                        log.error("Tipo de entity desconocido!");
+                    }
                 },
 
                 moverCharacter: function (CharIndex, gridX, gridY) {
-                    if (CharIndex === this.playerId) {
-                        if (this.player) {
-                            if ((X !== this.player.gridX) || (Y !== this.player.gridY)) {
-                                this.resetPosCharacter(Charindex, X, Y);
-                                log.error("moverCharacter: cambiar pos player a x:" + X + " y:" + Y);
-                            }
-                            else
-                                return;
+
+                    if (CharIndex === this.player.id) {
+                        if ((X !== this.player.gridX) || (Y !== this.player.gridY)) {
+                            this.resetPosCharacter(Charindex, X, Y);
+                            log.error("moverCharacter: cambiar pos player a x:" + X + " y:" + Y);
                         }
+                        else
+                            return;
                     }
+
                     else {
                         var c = this.characters[CharIndex];
                         if (!c) {
@@ -401,7 +403,6 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
 
                 inicializarPlayer: function (CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan, NickColor, Privileges) {
                     log.error("inicializar player");
-                    this.playerId = CharIndex;
                     this.player = new Player(CharIndex, X, Y, Heading, nombre, clan);
 
                     if ((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal))

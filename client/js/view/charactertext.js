@@ -89,7 +89,7 @@ define(['lib/pixi'], function (PIXI) {
     //TODO: ordenar codigo repetido y animacion bien hecha (ademas en el chat animarlo cuando aparece, como que suba un poco)
     CharacterText.prototype.setHoveringInfo = function (value,font, duration) {
 
-        duration = duration?duration:200;
+        duration = duration?duration:125;
         font = font? font: Enums.Font.TALK;
 
         var aux = {font: this.baseFont, align: "center", stroke: "white", strokeThickness: 0.5*this._escala};

@@ -249,6 +249,7 @@ Enums = {
             fill: "white",
             font: '12px Arial',
             stroke: "black",
+            align: "center",
             strokeThickness: 0.2
         },
         TALK: {
@@ -259,7 +260,7 @@ Enums = {
             bold: 1
         },
         WARNING: {
-            fill: "rgb(32, 51, 223)",
+            fill: "white",
             bold: 1,
             italic: 1
         },
