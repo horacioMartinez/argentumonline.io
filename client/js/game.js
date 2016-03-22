@@ -544,8 +544,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     this.renderer.cambiarMapa(this.map);
                     //if (this.player)
                     //    this.player.resetMovement();
-                }
-                ,
+                },
 
                 cambiarArea: function (gridX, gridY) {
 

@@ -9,6 +9,7 @@ define(['lib/howler', 'lib/pixi'],
             init: function (assetManager) {
                 this.assetManager = assetManager;
                 this.PRELOAD_GRHS = [];
+                this.PRELOAD_MAPAS = [];
             },
 
             _loadSounds: function () {
@@ -23,13 +24,19 @@ define(['lib/howler', 'lib/pixi'],
                 log.info("Sonidos cargados!");
             },
 
-            _copiarBaseTextures: function (resources, baseTextures) {
+            copiarLoadedAssets: function (resources, baseTextures, mapas) {
                 for (var res in resources) {
-                    baseTextures[parseInt(res)] = resources[parseInt(res)].texture.baseTexture;
+                    if (res.slice(0,4) === "mapa"){
+                        var numero = res.slice(4,res.length);
+                        mapas[parseInt(numero)] = resources[res].data;
+                    }
+                    else { //numero, es un grafico
+                        baseTextures[parseInt(res)] = resources[res].texture.baseTexture;
+                    }
                 }
             },
 
-            _agregarPreloadGraficos: function (loader, indices) {
+            _agregarPreloadGrhs: function (loader, indices) {
                 var graficos = [];
                 for (var i = 0; i < this.PRELOAD_GRHS.length; i++) {
                     var grh = this.PRELOAD_GRHS[i];
@@ -45,12 +52,9 @@ define(['lib/howler', 'lib/pixi'],
                 }
             },
 
-            _loadMapas: function () {
-                var maxMapa = 312;
-                for (var i = 1; i <= maxMapa; i++) {
-                    $.getJSON("mapas/mapa" + i + ".json")/*.success(function(data){
-                     log.error("un mapa cargado");
-                     })*/;
+            _agregarPreloadMapas: function (loader) {
+                for (var i = 0; i < this.PRELOAD_MAPAS.length; i++){
+                    loader.add("mapa" + this.PRELOAD_MAPAS[i], "mapas/mapa" + this.PRELOAD_MAPAS[i] + ".json");
                 }
             },
 
@@ -60,34 +64,45 @@ define(['lib/howler', 'lib/pixi'],
                 }
             },
 
-            _loadGrhs: function (terminar_callback) {
-                if (!this.PRELOAD_GRHS.length)
-                    return false;
+            _onGrhsLoaded: function(){
+                this._initGrhsPreload();
+            },
+
+            preload: function (terminar_callback) {
+                //this._loadSounds();
+                if ( (this.PRELOAD_GRHS.length < 1) || (this.PRELOAD_MAPAS.length < 1)){ // no hay nada que cargar
+                    terminar_callback();
+                    return;
+                }
 
                 var loader = PIXI.loader;
-                this._agregarPreloadGraficos(loader, this.assetManager.indices);
+                this._agregarPreloadMapas(loader);
+                this._agregarPreloadGrhs(loader, this.assetManager.indices);
+
+                var self = this;
 
                 loader.on('progress', function (loader, loadedResource) {
                     console.log('Progress:', loader.progress + '%');
                 });
 
-                var self = this;
                 loader.load(function (loader, resources) {
-                    self._copiarBaseTextures(PIXI.loader.resources, self.assetManager._baseTextures);
-                    self._initGrhsPreload();
+                    self.copiarLoadedAssets(loader.resources,self.assetManager._baseTextures, self.assetManager.dataMapas);
+                    self._onGrhsLoaded();
                     PIXI.loader.reset();
-                    self.PRELOAD_GRHS = null;
                     terminar_callback();
                 });
-
-                return true;
             },
 
-            preloadAll: function (terminar_callback) {
-                //this._loadMapas();
-                //this._loadSounds();
-                if (!this._loadGrhs(terminar_callback))
-                    terminar_callback();
+            preloadAll: function(terminar_callback){
+                var maxMapa = 312;
+                for (var i = 1; i <= maxMapa; i++) {
+                    this.PRELOAD_MAPAS.push(i);
+                }
+                for (var i = 0; i < this.assetManager.indices.length; i++) {
+                    if (this.assetManager.indices[i])
+                        this.PRELOAD_GRHS.push(i);
+                }
+                this.preload(terminar_callback);
             },
         });
 

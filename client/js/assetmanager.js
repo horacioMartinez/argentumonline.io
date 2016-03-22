@@ -10,7 +10,6 @@ define(['json!../indices/graficos.json',
         var AssetManager = Class.extend({
             init: function () {
                 this.currentMusic = null;
-                this.sounds = [];
                 this.enabled = true;
 
                 this.indices = jsonGraficos;
@@ -21,7 +20,10 @@ define(['json!../indices/graficos.json',
                 this.escudos = jsonEscudos;
                 this.fxs = jsonFxs;
                 this._baseTextures = [];
+
                 this.grhs = [];
+                this.dataMapas = [];
+                this.sounds = [];
 
                 this.preloader = new Preloader(this);
             },
@@ -66,7 +68,7 @@ define(['json!../indices/graficos.json',
              return this.mapaActual;
              },*/
 
-            setMusic: function (nombre) { // todo: unload cada vez que cmabia??
+            setMusic: function (nombre) { // todo: unload cada vez que cmabia?? <<- ALGO ANDA MAL y SIGUE AUMENTANDO MEMORIA, ver el task manager de chrome
                 /*
                  if (this.currentMusic)
                  this.currentMusic.unload();
@@ -115,22 +117,25 @@ define(['json!../indices/graficos.json',
              });*/
 
             getMapaSync: function (numMapa) {
-                var res;
-                $.ajax({
-                    type: 'GET',
-                    url: "mapas/mapa" + numMapa + ".json",
-                    dataType: 'json',
-                    success: function (data) {
-                        res = data;
-                    },
-                    data: null,
-                    async: false
-                });
-                return res;
+                if (!this.dataMapas[numMapa]) {
+                    var self = this;
+                    $.ajax({
+                        type: 'GET',
+                        url: "mapas/mapa" + numMapa + ".json",
+                        dataType: 'json',
+                        success: function (data) {
+                            self.dataMapas[numMapa] = data;
+                        },
+                        data: null,
+                        async: false
+                    });
+                }
+
+                return this.dataMapas[numMapa];
             },
 
             preload: function (terminar_callback) {
-                this.preloader.preloadAll(terminar_callback);
+                this.preloader.preload(terminar_callback);
             },
 
             getIndices: function () {
