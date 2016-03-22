@@ -12,4 +12,7 @@ node "$TOPLEVELDIR/bin/r.js" -o "$PROJECTDIR/build.js"
 
 java -jar ./compiler.jar --compilation_level SIMPLE_OPTIMIZATIONS --js "$BUILDDIR/js/main.js"  --js_output_file "$BUILDDIR/js/main.js"
 
+echo "Moving build.txt to current dir"
+mv "$BUILDDIR/build.txt" "$TOPLEVELDIR"
+
 echo "Build complete"

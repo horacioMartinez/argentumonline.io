@@ -226,6 +226,7 @@ define( ['app', 'assetmanager','game'], function (App, AssetManager, __para_que_
                 }
                 if (!continuar) {
                     _downKey(e);
+
                     if (!game.uiManager.hayPopUpActivo()) { // si hay un popup abierto dejar que siga la tecla al pop up, sino no
                         return false;
                     }
@@ -270,6 +271,9 @@ define( ['app', 'assetmanager','game'], function (App, AssetManager, __para_que_
                             break;
                         case Enums.Keys.CONTROL:
                             game.atacar();
+                            break;
+                        case Enums.Keys.T:
+                            game.tratarDeTirarItem();
                             break;
                         default:
                             break;

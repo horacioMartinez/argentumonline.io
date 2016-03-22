@@ -1,7 +1,7 @@
 /**
  * Created by horacio on 2/9/16.
  */
-define(['enums'], function () {
+define([], function () {
 
     var Intervalos = Class.extend({
         init: function (time) {

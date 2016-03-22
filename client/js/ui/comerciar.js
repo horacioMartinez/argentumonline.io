@@ -14,9 +14,7 @@ define(['ui/itemgrid'], function (ItemGrid) {
             this.initCallbacks();
         },
 
-        // TODO: si se crea cada vez que se abre, que no complete los slots vacios
         show: function () {
-
             this.clearInfos();
             $('#comerciar').show();
             this.visible = true;
@@ -29,6 +27,9 @@ define(['ui/itemgrid'], function (ItemGrid) {
                     }
                 }
             }
+            $cant = $("#comerciarInputCantidad");
+            $cant.val('');
+            $cant.focus();
         },
 
         hide: function () {

@@ -375,6 +375,36 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     }
                 },
 
+                tratarDeTirarItem: function () {
+                    if (this.player.muerto) {
+                        this.escribirMsgConsola(Enums.MensajeConsola.ESTAS_MUERTO);
+                        return;
+                    }
+                    var selectedSlot = this.uiManager.interfaz.getSelectedSlotInventario();
+                    if (!selectedSlot)
+                        return;
+                    var amount = this.inventario[selectedSlot].cantidad;
+                    if (amount === 1)
+                        this.tirarSelectedItem(1);
+                    else {
+                        this.uiManager.showTirarItem();
+                    }
+                },
+
+                tirarSelectedItem: function (cantidad) {
+                    var selectedSlot = this.uiManager.interfaz.getSelectedSlotInventario();
+                    if (!selectedSlot)
+                        return;
+                    this.client.sendDrop(selectedSlot, cantidad);
+                },
+
+                tirarTodoSelectedItem: function () {
+                    var selectedSlot = this.uiManager.interfaz.getSelectedSlotInventario();
+                    if (!selectedSlot)
+                        return;
+                    this.tirarSelectedItem(this.inventario[selectedSlot].cantidad)
+                },
+
                 cambiarSlotInventario: function (Slot, ObjIndex, ObjName, Amount, Equiped, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) {
                     this.inventario[Slot] = {
                         objIndex: ObjIndex,

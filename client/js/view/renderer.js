@@ -8,6 +8,7 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 this.POSICIONES_EXTRA_TERRENO = 1; // no deberia ser necesario mas de una. (una pos extra en cada una de las 4 direcciones)
 
                 this.mapa = mapa;
+                this.assetManager = assetManager;
                 this.grhs = assetManager.grhs;
                 this.indices = assetManager.getIndices();
                 this.armas = assetManager.getArmas();
@@ -68,6 +69,7 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 this._spritesLayer2 = [];
                 this._spritesLayer3 = [];
                 this._spritesLayer4 = [];
+                var nuevoSprite;
 
                 for (var i = 1; i < this.mapa.width + 1; i++) {
                     for (var j = 1; j < this.mapa.height + 1; j++) {
@@ -77,26 +79,25 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                         var grh3 = this.mapa.getGrh3(i, j);
                         var grh4 = this.mapa.getGrh4(i, j);
                         if (grh2) {
-                            var nuevoSprite = new SpriteGrh(this.grhs[grh2]);
+                            nuevoSprite = new SpriteGrh(this.assetManager.getGrh(grh2));
                             this.layer2.addChild(nuevoSprite);
                             nuevoSprite.setPosition(screenX, screenY);
                             this._spritesLayer2.push(nuevoSprite);
                         }
                         if (grh3) {
-                            var nuevoSprite = new SpriteGrh(this.grhs[grh3]);
+                            nuevoSprite = new SpriteGrh(this.assetManager.getGrh(grh3));
                             this.layer3.addChild(nuevoSprite);
                             nuevoSprite.setPosition(screenX, screenY);
                             this._spritesLayer3.push(nuevoSprite);
                         }
                         if (grh4) {
-                            nuevoSprite = new SpriteGrh(this.grhs[grh4]);
+                            nuevoSprite = new SpriteGrh(this.assetManager.getGrh(grh4));
                             this.layer4.addChild(nuevoSprite);
                             nuevoSprite.setPosition(screenX, screenY);
                             this._spritesLayer4.push(nuevoSprite);
                         }
                     }
                 }
-
             },
 
             // TODO!: (MUY IMPORTANTE) probar con rendertexture en las layers 1,2 y 4. (para los tiles animados generar un sprite)
@@ -113,10 +114,9 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                         this.terreno[i][j].setPosition(screenX, screenY);
 
                         if (this.mapa.getGrh1(gridXIni + i, gridYIni + j))
-                            this.terreno[i][j].cambiarGrh(this.grhs[this.mapa.getGrh1(gridXIni + i, gridYIni + j)]);
+                            this.terreno[i][j].cambiarGrh(this.assetManager.getGrh(this.mapa.getGrh1(gridXIni + i, gridYIni + j)));
                     }
                 }
-
             },
 
             _initTerrenoSpriteGrid: function (layer1) {
@@ -125,7 +125,7 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 for (var i = 0; i < this.camera.gridW + this.POSICIONES_EXTRA_TERRENO * 2; i++) {
                     this.terreno[i] = [];
                     for (var j = 0; j < this.camera.gridH + this.POSICIONES_EXTRA_TERRENO * 2; j++) {
-                        this.terreno[i][j] = new SpriteGrh(this.grhs[1]); // grh null <-- todo (poco importante) arreglar esto?
+                        this.terreno[i][j] = new SpriteGrh(this.assetManager.getGrh(1)); // grh null <-- todo (poco importante) arreglar esto?
                         this.layer1.addChild(this.terreno[i][j]);
                     }
                 }
@@ -139,10 +139,10 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 if (!varIndice[num].down)
                     return null;
                 var res = [];
-                res[Enums.Heading.norte] = this.grhs[varIndice[num].up];
-                res[Enums.Heading.este] = this.grhs[varIndice[num].right];
-                res[Enums.Heading.sur] = this.grhs[varIndice[num].down];
-                res[Enums.Heading.oeste] = this.grhs[varIndice[num].left];
+                res[Enums.Heading.norte] = this.assetManager.getGrh(varIndice[num].up);
+                res[Enums.Heading.este] = this.assetManager.getGrh(varIndice[num].right);
+                res[Enums.Heading.sur] = this.assetManager.getGrh(varIndice[num].down);
+                res[Enums.Heading.oeste] = this.assetManager.getGrh(varIndice[num].left);
                 return res;
             },
 
@@ -151,11 +151,11 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
             },
 
             agregarItem: function (item, numGrh) {
-                if (!this.grhs[numGrh]) {
-                    log.error("grh de item invalido!")
+                if (!this.assetManager.getGrh(numGrh)) {
+                    log.error("grh de item invalido!");
                     return;
                 }
-                item.sprite = new SpriteGrh(this.grhs[numGrh]);
+                item.sprite = new SpriteGrh(this.assetManager.getGrh(numGrh));
                 item.sprite.zOffset = -this.mapa.width; // para que item quede debajo de chars en misma cord Y ( para todo X)
                 this.layer3.addChild(item.sprite);
                 item.sprite.setPosition(item.x, item.y);
@@ -186,7 +186,7 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 font.fill = color;
 
                 var sprite = new CharacterSprites(Heading, bodys, heads, headOffX, headOffY, weapons, shields, helmets, Name, clan, font);
-                sprite.setSombraSprite(this.grhs[24208]);
+                sprite.setSombraSprite(this.assetManager.getGrh(24208));
 
                 this.layer3.addChild(sprite);
 
@@ -237,21 +237,21 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 char.sprite = null;
             },
 
-            setCharacterChat: function (char, chat,r,g,b) {
-                var color = "rgb("+r+","+g+","+b+")";
-                char.texto.setChat(chat,color);
+            setCharacterChat: function (char, chat, r, g, b) {
+                var color = "rgb(" + r + "," + g + "," + b + ")";
+                char.texto.setChat(chat, color);
             },
 
-            setCharVisible: function(char, visible){
+            setCharVisible: function (char, visible) {
                 char.sprite.setVisible(visible);
             },
 
-            agregarCharacterHoveringInfo: function(char,valor,font,duracion){
-                char.texto.setHoveringInfo(valor,font,duracion);
+            agregarCharacterHoveringInfo: function (char, valor, font, duracion) {
+                char.texto.setHoveringInfo(valor, font, duracion);
             },
 
             setCharacterFX: function (char, FX, FXLoops) {
-                var grh = this.grhs[this.fxs[FX].animacion];
+                var grh = this.assetManager.getGrh(this.fxs[FX].animacion);
                 char.sprite.setFX(grh, this.fxs[FX].offX, this.fxs[FX].offY, FXLoops);
             },
 
@@ -325,7 +325,7 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                             this.terreno[i][j].setPosition(this.terreno[i][j].x, this.terreno[i][j].y - (rows * this.tilesize));
                             var grh = this.mapa.getGrh1(gridXIni + modulo(i - this._lowestColTerreno, cols), gridYIni - 1);
                             if (grh)
-                                this.terreno[i][j].cambiarGrh(this.grhs[grh]);
+                                this.terreno[i][j].cambiarGrh(this.assetManager.getGrh(grh));
                         }
 
                         this._lowestRowTerreno = modulo(this._lowestRowTerreno - 1, rows);
@@ -337,7 +337,7 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                             this.terreno[i][j].setPosition(this.terreno[i][j].x - (cols * this.tilesize), this.terreno[i][j].y);
                             var grh = this.mapa.getGrh1(gridXIni - 1, gridYIni + modulo(j - this._lowestRowTerreno, rows));
                             if (grh)
-                                this.terreno[i][j].cambiarGrh(this.grhs[grh]);
+                                this.terreno[i][j].cambiarGrh(this.assetManager.getGrh(grh));
                         }
                         this._lowestColTerreno = modulo(this._lowestColTerreno - 1, cols);
                         break;
@@ -348,7 +348,7 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                             this.terreno[i][j].setPosition(this.terreno[i][j].x, (this.terreno[i][j].y + (rows * this.tilesize)));
                             var grh = this.mapa.getGrh1(gridXIni + modulo(i - this._lowestColTerreno, cols), gridYIni + rows);
                             if (grh)
-                                this.terreno[i][j].cambiarGrh(this.grhs[grh]);
+                                this.terreno[i][j].cambiarGrh(this.assetManager.getGrh(grh));
                         }
                         this._lowestRowTerreno = modulo(this._lowestRowTerreno + 1, rows);
                         break;
@@ -359,7 +359,7 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                             this.terreno[i][j].setPosition((this.terreno[i][j].x + cols * this.tilesize), this.terreno[i][j].y);
                             var grh = this.mapa.getGrh1(gridXIni + cols, gridYIni + modulo(j - this._lowestRowTerreno, rows));
                             if (grh)
-                                this.terreno[i][j].cambiarGrh(this.grhs[grh]);
+                                this.terreno[i][j].cambiarGrh(this.assetManager.getGrh(grh));
                         }
                         this._lowestColTerreno = modulo(this._lowestColTerreno + 1, cols);
                         break;

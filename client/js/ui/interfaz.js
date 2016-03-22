@@ -40,8 +40,10 @@ define(['ui/itemgrid'], function (ItemGrid) {
         },
 
         getSelectedSlotInventario: function () {
-
-            return this.inventarioGrid.getSelectedSlot();
+            var slot = this.inventarioGrid.getSelectedSlot();
+            if (!this.game.inventario[slot] || !this.game.inventario[slot].cantidad)
+                return null;
+            return slot;
         },
 
         getSelectedSlotHechizo: function () {
