@@ -1,6 +1,7 @@
 /*Interfaz: elementos dentro de la pantalla de juego (inventario, etc)*/
 
-#gamecanvas.crosshair {cursor:crosshair;}
+#gamecanvas.crosshair {cursor:crosshair;} /* <--- esto deberia estar en otro lado */
+#interfaz span {cursor:default;}
 
 #bordeIzquierda {background-size: 100% 100%; position:absolute; height:100%; width:1.375%;background-image:url('../imagenes/interfaz/bordeIzquierda.png');}
 #bordeArriba {background-size: 100% 100%;position:absolute; width:100%; height:7.8%;background-image:url('../imagenes/interfaz/bordeArriba.png')}
@@ -37,3 +38,7 @@
 #barraExp {background-color: Transparent; position: absolute; top:28.1%; left:3.875%; width: 62.875%; height:38.8%;}
 #barraExpUsada {float:left; height:100%; width:30%; background:url('../imagenes/interfaz/barraExp.png');background-size: cover; }
 
+#indicadorAgilidad, #indicadorFuerza, #indicadorOro {position: absolute; text-align: center; font-size: 0.8em;}
+#indicadorOro{left:69%;top:61.6%;color:#FFD700;text-align: left;}
+#indicadorFuerza{left:37%;top:60.6%;color:#B8860B;}
+#indicadorAgilidad{left:21.5%;top:60.6%;color:#D2691E;}

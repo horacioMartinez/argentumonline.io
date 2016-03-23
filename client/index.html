@@ -72,59 +72,66 @@
 					<span id="crearDadoConstitucion" ></span>
 				</div>
 
-				<!-- Pantalla de juego y interfaz ingame -->
+				<!-- Pantalla de juego-->
 				<div id="juego">
 					<div id="gamecanvas" class="clickable"><!-- hacer Clickeable el gamecanvas y capturar con este los clicks <<< -->
 					</div>
 					<div id="chatbox">
 						<input id="chatinput" class="gp" type="text" maxlength="60" autocomplete="off">
 					</div>
-					<div id="bordeIzquierda"></div>
-					<div id="bordeArriba"></div>
-					<div id="bordeDerecha">
-						<div id="InventarioHechizos" class="inventario">
-							<ul id="itemsGrid" class="itemgrid">
-								<li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li> 
-								<li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li> 
-								<li ></li><li ></li><li ></li><li ></li><li ></li>
-							</ul>
-							<select id="hechizos" multiple ="yes" ></select>
-							<button id="botonInventario" class="botonInvisible"></button>
-							<button id="botonHechizos" class="botonInvisible"></button>
-							<button id="botonLanzar" class="botonInvisible"></button>
-							<button id="botonInfo" class="botonInvisible"></button>
+
+					<!--interfaz ingame-->
+					<div id="interfaz">
+						<div id="bordeIzquierda"></div>
+						<div id="bordeArriba"></div>
+
+						<div id="bordeDerecha">
+							<div id="InventarioHechizos" class="inventario">
+								<ul id="itemsGrid" class="itemgrid">
+									<li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li> 
+									<li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li> 
+									<li ></li><li ></li><li ></li><li ></li><li ></li>
+								</ul>
+								<select id="hechizos" multiple ="yes" ></select>
+								<button id="botonInventario" class="botonInvisible"></button>
+								<button id="botonHechizos" class="botonInvisible"></button>
+								<button id="botonLanzar" class="botonInvisible"></button>
+								<button id="botonInfo" class="botonInvisible"></button>
+							</div>
+							<div id="barras">
+								<div id="barraEnergia">
+									<div id="barraEnergiaUsada"></div> <!-- Porcentaje usado (en negro) de la barra -->
+									<span id="barraEnergiaTexto"></span>
+								</div>
+								<div id="barraMana">
+									<div id="barraManaUsada"></div> 
+									<span id="barraManaTexto"></span>
+								</div>
+								<div id="barraSalud">
+									<div id="barraSaludUsada"></div> 
+									<span id="barraSaludTexto"></span>
+								</div>
+								<div id="barraHambre">
+									<div id="barraHambreUsada"></div> 
+									<span id="barraHambreTexto"></span>
+								</div>
+								<div id="barraSed">
+									<div id="barraSedUsada"></div> 
+									<span id="barraSedTexto"></span>
+								</div>
+							</div>
+							<span id="indicadorAgilidad"></span>
+							<span id="indicadorFuerza"></span>
+							<span id="indicadorOro"></span>
 						</div>
-						<div id="barras">
-							<div id="barraEnergia">
-								<div id="barraEnergiaUsada"></div> <!-- Porcentaje usado (en negro) de la barra -->
-								<span id="barraEnergiaTexto"></span>
-							</div>
-							<div id="barraMana">
-								<div id="barraManaUsada"></div> 
-								<span id="barraManaTexto"></span>
-							</div>
-							<div id="barraSalud">
-								<div id="barraSaludUsada"></div> 
-								<span id="barraSaludTexto"></span>
-							</div>
-							<div id="barraHambre">
-								<div id="barraHambreUsada"></div> 
-								<span id="barraHambreTexto"></span>
-							</div>
-							<div id="barraSed">
-								<div id="barraSedUsada"></div> 
-								<span id="barraSedTexto"></span>
+
+						<div id="bordeAbajo">
+							<div id="barraExp">
+								<div id="barraExpUsada"></div> 
+								<span id="barraExpTexto"></span>
 							</div>
 						</div>
 					</div>
-
-					<div id="bordeAbajo">
-						<div id="barraExp">
-							<div id="barraExpUsada"></div> 
-							<span id="barraExpTexto"></span>
-						</div>
-					</div>
-
 
 					<!-- FIN Pantalla de juego y interfaz ingame -->
 

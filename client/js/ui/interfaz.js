@@ -65,6 +65,18 @@ define(['ui/itemgrid'], function (ItemGrid) {
             }
         },
 
+        updateAgilidad: function (agi) {
+            $("#indicadorAgilidad").text(agi);
+        },
+
+        updateFuerza: function (fuerza) {
+            $("#indicadorFuerza").text(fuerza);
+        },
+
+        updateOro: function (oro) {
+            $("#indicadorOro").text(oro);
+        },
+
         _updateBarra: function (cant, max, $barra, $label, invertida) {
             var porcentaje = 100;
             if (max) {
