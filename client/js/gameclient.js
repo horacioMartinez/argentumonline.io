@@ -157,7 +157,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleUpdateGold: function (Value) {
-            this.game.uiManager.interfaz.updateOro(Value);
+            this.game.setOro(Value);
             console.log("TODO: handleUpdateGold ");
         },
 
@@ -293,7 +293,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
             this.game.setMana(MinMan, MaxMan);
             this.game.setStamina(MinSta, MaxSta);
             this.game.setExp(Exp,Elu);
-            this.game.uiManager.interfaz.updateOro(Gld);
+            this.game.setOro(Gld);
             this.game.player.oro = Gld;
             this.game.player.nivel = Elv;
         },

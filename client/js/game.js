@@ -375,6 +375,13 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     }
                 },
 
+                setOro: function (oro) {
+                    if (this.player.oro !== oro) {
+                        this.player.oro= oro;
+                        this.uiManager.interfaz.updateOro(oro);
+                    }
+                },
+
                 tratarDeTirarItem: function () {
                     if (this.player.muerto) {
                         this.escribirMsgConsola(Enums.MensajeConsola.ESTAS_MUERTO);
@@ -387,7 +394,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     if (amount === 1)
                         this.tirarSelectedItem(1);
                     else {
-                        this.uiManager.showTirarItem();
+                        this.uiManager.showTirar();
                     }
                 },
 
@@ -395,6 +402,8 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     var selectedSlot = this.uiManager.interfaz.getSelectedSlotInventario();
                     if (!selectedSlot)
                         return;
+                    if (cantidad > this.inventario[selectedSlot].cantidad)
+                        cantidad = this.inventario[selectedSlot].cantidad;
                     this.client.sendDrop(selectedSlot, cantidad);
                 },
 
@@ -403,6 +412,18 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     if (!selectedSlot)
                         return;
                     this.tirarSelectedItem(this.inventario[selectedSlot].cantidad)
+                },
+
+                tirarOro: function (cantidad) {
+                    if (cantidad > this.player.oro)
+                        cantidad = this.player.oro;
+                    if (cantidad > 10000)
+                        cantidad = 10000;
+                    this.client.sendDrop(31,cantidad); // por alguna razon 31 es el "slot" del oro
+                },
+
+                tirarTodoOro: function () {
+                    this.tirarOro(10000);
                 },
 
                 cambiarSlotInventario: function (Slot, ObjIndex, ObjName, Amount, Equiped, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) {

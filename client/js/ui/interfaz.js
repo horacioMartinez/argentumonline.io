@@ -29,6 +29,10 @@ define(['ui/itemgrid'], function (ItemGrid) {
                 self.game.lanzarHechizo();
             });
 
+            $("#botonTirarOro").click(function() {
+               self.game.uiManager.showTirar(true);
+            });
+
         },
 
         cambiarSlotInventario: function (Slot, Amount, numGrafico, equiped) {

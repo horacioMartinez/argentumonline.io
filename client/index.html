@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
+	<meta charset="ISO-8859-1"> <!--> "utf-8"> <!-->
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
@@ -120,6 +120,7 @@
 									<span id="barraSedTexto"></span>
 								</div>
 							</div>
+							<button id="botonTirarOro" class="botonInvisible"></button>
 							<span id="indicadorAgilidad"></span>
 							<span id="indicadorFuerza"></span>
 							<span id="indicadorOro"></span>
@@ -132,6 +133,7 @@
 							</div>
 						</div>
 					</div>
+
 
 					<!-- FIN Pantalla de juego y interfaz ingame -->
 
@@ -166,12 +168,11 @@
 						</article>
 
 
-						<article id="tirarItem">
+						<article id="tirar">
+							<input id="tirarInputCantidad" type="number" max="10000">
 
-							<input id="tirarItemInputCantidad" type="number">
-
-							<button id="tirarItemBotonTirar" class="botonNormal">Tirar</button>
-							<button id="tirarItemBotonTirarTodo" class="botonNormal">Tirar todo</button>
+							<button id="tirarBotonTirar" class="botonNormal">Tirar</button>
+							<button id="tirarBotonTirarTodo" class="botonNormal">Tirar todo</button>
 						</article>
 
 					</div>

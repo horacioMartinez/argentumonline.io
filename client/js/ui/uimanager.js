@@ -3,7 +3,7 @@
  */
 
 
-define(['ui/comerciar', 'ui/interfaz', 'ui/tiraritem'], function (Comerciar, Interfaz,TirarItem) {
+define(['ui/comerciar', 'ui/interfaz', 'ui/tirar'], function (Comerciar, Interfaz,Tirar) {
 
     //TODO: crear los popups en run time con jquery y borrarlos cuando se cierran
 
@@ -11,7 +11,7 @@ define(['ui/comerciar', 'ui/interfaz', 'ui/tiraritem'], function (Comerciar, Int
         init: function (game) {
             this.game = game;
             this.comerciar = new Comerciar(game);
-            this.tirarItem = new TirarItem(game);
+            this.tirar = new Tirar(game);
             this._currentPopUp = 0; // mal
             this.interfaz = new Interfaz(game);
             this.initDOM();
@@ -22,7 +22,7 @@ define(['ui/comerciar', 'ui/interfaz', 'ui/tiraritem'], function (Comerciar, Int
         },
 
         hayPopUpActivo: function(){
-            return (this.comerciar.visible || this.tirarItem.visible);
+            return (this.comerciar.visible || this.tirar.visible);
         },
 
         showComerciar: function () {
@@ -33,12 +33,12 @@ define(['ui/comerciar', 'ui/interfaz', 'ui/tiraritem'], function (Comerciar, Int
             this.comerciar.hide();
         },
 
-        showTirarItem: function () {
-            this.tirarItem.show();
+        showTirar: function (tirandoOro) {
+            this.tirar.show(tirandoOro);
         },
 
-        hideTirarItem: function () {
-            this.tirarItem.hide();
+        hideTirar: function () {
+            this.tirar.hide();
         },
 
     });

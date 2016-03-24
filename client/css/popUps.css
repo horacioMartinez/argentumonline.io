@@ -31,8 +31,8 @@
 #comerciarMax {left:235px;top:88px;}
 
 
-/* TirarItem */
-#tirarItem {width:216px;height:100px; background:url('../imagenes/popups/tirar.jpg');}
-#tirarItemInputCantidad{left:30px;top:30px;width:148px;height:24px;}
-#tirarItemBotonTirar {left:7px;top:65px; width: 95px; height:25px;}
-#tirarItemBotonTirarTodo {left:105px;top:65px;width: 105px; height:25px;}
+/* Tirar */
+#tirar {width:216px;height:100px; background:url('../imagenes/popups/tirar.jpg');}
+#tirarInputCantidad {left:30px;top:30px;width:148px;height:24px;}
+#tirarBotonTirar {left:7px;top:65px; width: 95px; height:25px;}
+#tirarBotonTirarTodo {left:105px;top:65px;width: 105px; height:25px;}

@@ -31,6 +31,7 @@ define(['character', 'enums'], function (Character) {
             this.agua = -1;
             this.hambre = -1;
             this.maxHambre = -1;
+            this.oro = -1;
         },
 
         comenzarCaminar: function (direccion) {
