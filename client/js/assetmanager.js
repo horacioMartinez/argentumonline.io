@@ -34,6 +34,24 @@ define(['json!../indices/graficos.json',
                 return this.grhs[grh];
             },
 
+            getTerrenoGrh: function (grh){ // TODO: cuando se implemente con rendertexture el mapa, sacar esto y usar getgrh, sirve para que el grid del terreno no se vea discontinuo
+                if (!this.grhs[grh])
+                    this.loadGrh(grh);
+                res = this.grhs[grh];
+                if (!res.terrenoSeteado) {
+                    if (!res.frames) {
+                        res.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+                    }
+                    else {
+                        for (var i = 0; i < res.frames.length; i++) {
+                            res.frames[i].baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+                        }
+                    }
+                    res.terrenoSeteado = true;
+                }
+                return res;
+            },
+
             loadGrh: function (grh) {
                 if (!this.indices[grh] || this.grhs[grh]) {
                     return;

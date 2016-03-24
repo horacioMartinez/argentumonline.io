@@ -70,6 +70,7 @@ define(['lib/howler', 'lib/pixi'],
 
             preload: function (terminar_callback) {
                 //this._loadSounds();
+
                 if ( (this.PRELOAD_GRHS.length < 1) || (this.PRELOAD_MAPAS.length < 1)){ // no hay nada que cargar
                     terminar_callback();
                     return;

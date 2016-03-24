@@ -33,6 +33,13 @@ define(['ui/itemgrid'], function (ItemGrid) {
                self.game.uiManager.showTirar(true);
             });
 
+            $("#botonSeguroResucitar").dblclick(function() {
+                self.game.toggleSeguroResucitar();
+            });
+
+            $("#botonSeguroAtacar").dblclick(function() {
+                self.game.toggleSeguroAtacar();
+            });
         },
 
         cambiarSlotInventario: function (Slot, Amount, numGrafico, equiped) {
@@ -119,6 +126,21 @@ define(['ui/itemgrid'], function (ItemGrid) {
             else
                 $("#gamecanvas").removeClass("crosshair");
         },
+
+        setSeguroResucitacion: function(activado){
+            if (!activado)
+                $("#botonSeguroResucitar").addClass("seguroOff");
+            else
+                $("#botonSeguroResucitar").removeClass("seguroOff");
+        },
+
+        setSeguroAtacar: function(activado){
+            if (!activado)
+                $("#botonSeguroAtacar").addClass("seguroOff");
+            else
+                $("#botonSeguroAtacar").removeClass("seguroOff");
+        },
+
     });
 
     return Interfaz;

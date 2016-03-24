@@ -6,7 +6,7 @@ define(['lib/pixi'], function (PIXI) {
 
     function CharacterText(escala) {
         PIXI.Container.call(this);
-        CharacterText.MAXIMO_LARGO_CHAT = 15;
+        CharacterText.MAXIMO_LARGO_CHAT = 18;
         this._chat = null;
         this._escala = escala ? escala : 1;
         this.setEscala(escala);

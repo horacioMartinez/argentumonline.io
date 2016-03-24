@@ -33,6 +33,9 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
 
                     this.mouse = {x: 0, y: 0};
 
+                    this.seguroResucitacionActivado = null;
+                    this.seguroAtacarActivado = null;
+
                 },
 
                 setup: function (input) {
@@ -424,6 +427,18 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
 
                 tirarTodoOro: function () {
                     this.tirarOro(10000);
+                },
+
+                toggleSeguroResucitar: function(){
+                    this.seguroResucitacionActivado = !this.seguroResucitacionActivado;
+                    this.uiManager.interfaz.setSeguroResucitacion(this.seguroResucitacionActivado);
+                    this.client.sendResuscitationSafeToggle();
+                },
+
+                toggleSeguroAtacar: function(){
+                    this.seguroAtacarActivado = !this.seguroAtacarActivado;
+                    this.uiManager.interfaz.setSeguroAtacar(this.seguroAtacarActivado);
+                    this.client.sendSafeToggle();
                 },
 
                 cambiarSlotInventario: function (Slot, ObjIndex, ObjName, Amount, Equiped, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) {

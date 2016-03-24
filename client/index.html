@@ -85,6 +85,13 @@
 						<div id="bordeIzquierda"></div>
 						<div id="bordeArriba"></div>
 
+						<div id="bordeAbajo">
+							<div id="barraExp">
+								<div id="barraExpUsada"></div> 
+								<span id="barraExpTexto"></span>
+							</div>
+						</div>
+
 						<div id="bordeDerecha">
 							<div id="InventarioHechizos" class="inventario">
 								<ul id="itemsGrid" class="itemgrid">
@@ -124,14 +131,11 @@
 							<span id="indicadorAgilidad"></span>
 							<span id="indicadorFuerza"></span>
 							<span id="indicadorOro"></span>
+							<button id="botonSeguroResucitar" class="botonImagen"></button>
+							<button id="botonSeguroAtacar" class="botonImagen"></button>
 						</div>
 
-						<div id="bordeAbajo">
-							<div id="barraExp">
-								<div id="barraExpUsada"></div> 
-								<span id="barraExpTexto"></span>
-							</div>
-						</div>
+
 					</div>
 
 
@@ -223,20 +227,19 @@
 					<div id="credits-link" class="clickable">
 						<span class="dash">&ndash;</span> <a class="clickable" target="_blank" href="http://wiki.dakaraonline.org/wiki/start">Wiki</a>
 					</div>
-				</footer>
+			</footer>
 
-				<img src="img/common/thingy.png" alt="" class="preload">
+			<script type="text/javascript">
+				if(!Detect.supportsWebSocket()) {
+					alert("Tu navegador no soporta websockets, para jugar debes actualizar tu navegador!")
+				}
+			</script>
 
-				<script type="text/javascript">
-					if(!Detect.supportsWebSocket()) {
-						alert("Tu navegador no soporta websockets, para jugar debes actualizar tu navegador!")
-					}
-				</script>
-
-				<script src="js/lib/log.js"></script>
-				<script>
-					var require = { waitSeconds: 60 };
-				</script>
-				<script data-main="js/home" src="js/lib/require.js"></script>
+			<script src="js/lib/log.js"></script>
+			<script>
+				var require = { waitSeconds: 60 };
+			</script>
+			<script data-main="js/home" src="js/lib/require.js"></script>
+			
 			</body>
 			</html>

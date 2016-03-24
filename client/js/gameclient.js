@@ -206,13 +206,19 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
                 log.error("WTF EL CHARINDEX CAMBIA?: playerID" + this.game.player.id + " cambiado a charindex " + CharIndex);
 
                 this.game.characters[this.game.player.id] = null;
-
+                var x,y;
                 if (this.game.characters[CharIndex]){
+                    x =this.game.characters[CharIndex].gridX;
+                    y =this.game.characters[CharIndex].gridY;
                     this.game.sacarEntity(this.game.characters[CharIndex]);
                 }
 
                 this.game.player.id = CharIndex;
                 this.game.characters[CharIndex] = this.game.player;
+
+                if (x){ // hack para "agregar player" y que detecte cambio de mapa, dado que el sv mando las pos de cambio al char creado con el otro charindex
+                    this.game.agregarCharacter(this.game.player.id,0,0,0,x,y);
+                }
             }
         },
 
@@ -672,18 +678,30 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleSafeModeOn: function () {
-            console.log("TODO: handleSafeModeOn");
+            this.game.seguroAtacarActivado = false;
+            this.game.uiManager.interfaz.setSeguroAtacar(false);
+            this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_ACTIVADO,Enums.Font.WARNING);
+            console.log("TODO: handleResuscitationSafeOff");
         },
 
         handleSafeModeOff: function () {
-            console.log("TODO: handleSafeModeOff");
+            this.game.seguroAtacarActivado = true;
+            this.game.uiManager.interfaz.setSeguroAtacar(true);
+            this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_DESACTIVADO,Enums.Font.WARNING);
+            console.log("TODO: handleResuscitationSafeOn");
         },
 
         handleResuscitationSafeOff: function () {
+            this.game.seguroResucitacionActivado = false;
+            this.game.uiManager.interfaz.setSeguroResucitacion(false);
+            this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_RESU_OFF,Enums.Font.WARNING);
             console.log("TODO: handleResuscitationSafeOff");
         },
 
         handleResuscitationSafeOn: function () {
+            this.game.seguroResucitacionActivado = true;
+            this.game.uiManager.interfaz.setSeguroResucitacion(true);
+            this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_RESU_ON,Enums.Font.WARNING);
             console.log("TODO: handleResuscitationSafeOn");
         },
 

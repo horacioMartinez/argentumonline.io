@@ -79,7 +79,7 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                         var grh3 = this.mapa.getGrh3(i, j);
                         var grh4 = this.mapa.getGrh4(i, j);
                         if (grh2) {
-                            nuevoSprite = new SpriteGrh(this.assetManager.getGrh(grh2));
+                            nuevoSprite = new SpriteGrh(this.assetManager.getTerrenoGrh(grh2));
                             this.layer2.addChild(nuevoSprite);
                             nuevoSprite.setPosition(screenX, screenY);
                             this._spritesLayer2.push(nuevoSprite);
@@ -114,7 +114,7 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                         this.terreno[i][j].setPosition(screenX, screenY);
 
                         if (this.mapa.getGrh1(gridXIni + i, gridYIni + j))
-                            this.terreno[i][j].cambiarGrh(this.assetManager.getGrh(this.mapa.getGrh1(gridXIni + i, gridYIni + j)));
+                            this.terreno[i][j].cambiarGrh(this.assetManager.getTerrenoGrh(this.mapa.getGrh1(gridXIni + i, gridYIni + j)));
                     }
                 }
             },
@@ -288,8 +288,8 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 log.error("dibujando inicialmente mapa, solo deberia pasar en cambio de map");
                 this.resetCameraPosition(gridX, gridY);
                 this._syncGamePosition();
-                this._drawTerrenoIni();
                 this._drawSpritesIni();
+                this._drawTerrenoIni();
             },
 
             resetCameraPosition: function (gridX, gridY) { // hecha por mi
@@ -310,7 +310,7 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 this._syncGamePosition();
             },
 
-            // TODO: probar crear una imagen del terreno con el mapa entero y al moverse ir clipeandola
+
             updateTilesMov: function (dir) { // al moverse mueve la columna/fila que queda atras al frente de todo
                 // todo (POCO IMPORTANTE): arreglar bien y usar camera.foreachvisiblenextposition
                 var gridXIni = this.camera.gridX - this.POSICIONES_EXTRA_TERRENO;
@@ -325,7 +325,7 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                             this.terreno[i][j].setPosition(this.terreno[i][j].x, this.terreno[i][j].y - (rows * this.tilesize));
                             var grh = this.mapa.getGrh1(gridXIni + modulo(i - this._lowestColTerreno, cols), gridYIni - 1);
                             if (grh)
-                                this.terreno[i][j].cambiarGrh(this.assetManager.getGrh(grh));
+                                this.terreno[i][j].cambiarGrh(this.assetManager.getTerrenoGrh(grh));
                         }
 
                         this._lowestRowTerreno = modulo(this._lowestRowTerreno - 1, rows);
@@ -337,7 +337,7 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                             this.terreno[i][j].setPosition(this.terreno[i][j].x - (cols * this.tilesize), this.terreno[i][j].y);
                             var grh = this.mapa.getGrh1(gridXIni - 1, gridYIni + modulo(j - this._lowestRowTerreno, rows));
                             if (grh)
-                                this.terreno[i][j].cambiarGrh(this.assetManager.getGrh(grh));
+                                this.terreno[i][j].cambiarGrh(this.assetManager.getTerrenoGrh(grh));
                         }
                         this._lowestColTerreno = modulo(this._lowestColTerreno - 1, cols);
                         break;
@@ -348,7 +348,7 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                             this.terreno[i][j].setPosition(this.terreno[i][j].x, (this.terreno[i][j].y + (rows * this.tilesize)));
                             var grh = this.mapa.getGrh1(gridXIni + modulo(i - this._lowestColTerreno, cols), gridYIni + rows);
                             if (grh)
-                                this.terreno[i][j].cambiarGrh(this.assetManager.getGrh(grh));
+                                this.terreno[i][j].cambiarGrh(this.assetManager.getTerrenoGrh(grh));
                         }
                         this._lowestRowTerreno = modulo(this._lowestRowTerreno + 1, rows);
                         break;
@@ -359,7 +359,7 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                             this.terreno[i][j].setPosition((this.terreno[i][j].x + cols * this.tilesize), this.terreno[i][j].y);
                             var grh = this.mapa.getGrh1(gridXIni + cols, gridYIni + modulo(j - this._lowestRowTerreno, rows));
                             if (grh)
-                                this.terreno[i][j].cambiarGrh(this.assetManager.getGrh(grh));
+                                this.terreno[i][j].cambiarGrh(this.assetManager.getTerrenoGrh(grh));
                         }
                         this._lowestColTerreno = modulo(this._lowestColTerreno + 1, cols);
                         break;

@@ -16,7 +16,7 @@
 #botonLanzar {position: absolute;left:0%; top:82%; width: 50%; height:12%;}
 #botonInfo {position: absolute; left:50%; top:82%; width: 50%; height:12%;}
 #itemsGrid {position: absolute; left:8.6%; top:15%; width: 80.9%; height:56.74%; display:none;}
-#itemsGrid li {width: 20%; height: 20%; font-size: 1em;}
+#itemsGrid li {width: 20%; height: 20%;}
 #hechizos {color: white; background: black;position: absolute; left:5.6%; top:14.19%; width: 90%; height:63.8%;}
 
 .inventarioActivo #botonInfo {display:none;}
@@ -25,7 +25,7 @@
 .inventarioActivo #itemsGrid {display:inline-block;}
 .inventarioActivo #InventarioHechizos {background-image:url('../imagenes/interfaz/centroInventario.jpg');}
 
-#barras span {color:white;display: inline-block;position: absolute; top:0; bottom: 0; left: 0; right: 0; margin: auto;text-align: center; font-size: 0.8em;}
+#barras span {color:white;display: inline-block;position: absolute; top:0; bottom: 0; left: 0; right: 0; margin: auto;text-align: center;}
 #barraEnergia, #barraMana, #barraSalud, #barraHambre, #barraSed {background-color: Transparent; position: absolute; left:11.84%; width: 30.6%; height:2.2%;}
 #barraEnergia {top:68.6%;}
 #barraMana {top:73.4%;}
@@ -34,13 +34,17 @@
 #barraSed {top:86.4%;}
 #barraEnergiaUsada, #barraManaUsada, #barraSaludUsada, #barraHambreUsada, #barraSedUsada {background-color: black;float:right; height:100%; width:30%; outline: dashed 2px green;}
 
-#barraExp span {color:white;display: inline-block;position: absolute; top:0; bottom: 0; left: 0; right: 0; margin: auto;text-align: center; font-size: 0.8em;}
-#barraExp {background-color: Transparent; position: absolute; top:28.1%; left:3.875%; width: 62.875%; height:38.8%;}
+#barraExp span {color:white; text-align: center;  margin: 0;    position: absolute;    top: 50%;    left: 50%;    margin-right: -50%;    transform: translate(-50%, -50%);}
+#barraExp {background-color: Transparent; position: relative; top:28.1%; left:3.875%; width: 62.875%; height:38.8%;}
 #barraExpUsada {float:left; height:100%; width:30%; background:url('../imagenes/interfaz/barraExp.png');background-size: cover; }
 
-#indicadorAgilidad, #indicadorFuerza, #indicadorOro {position: absolute; text-align: center; font-size: 0.8em;}
+#indicadorAgilidad, #indicadorFuerza, #indicadorOro {position: absolute; text-align: center;}
 #indicadorOro{left:69%;top:61.6%;color:#FFD700;text-align: left;}
 #indicadorFuerza{left:37%;top:60.6%;color:#B8860B;}
 #indicadorAgilidad{left:21.5%;top:60.6%;color:#D2691E;}
 
 #botonTirarOro {position: absolute; left:61.5%; top:61%; width:6.5%; height:3.7%;}
+#botonSeguroResucitar {position: absolute;left:50.8%; top:90.6%; width:10.3%; height:6%; background-image: none}
+#botonSeguroResucitar.seguroOff {background-image: url("../imagenes/interfaz/resucitationSafeOff.png");}
+#botonSeguroAtacar {position: absolute;left:60.1%; top:90.5%; width:11%; height:6.1%;background-image: none}
+#botonSeguroAtacar.seguroOff {background-image: url("../imagenes/interfaz/attackSafeOff.png");}

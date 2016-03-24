@@ -187,7 +187,7 @@ footer, header, hgroup, menu, nav, section {
   .facebook {background:url('../imagenes/facebook.png');}
   .twitter{background:url('../imagenes/twitter.png');}
 
-  footer {font-family:'GraphicPixel';position:absolute;bottom:3%;left:0;text-align:center;width:100%;color:#c6c0a3;-moz-transition:0.2s opacity linear;-webkit-transition:0.2s opacity linear;-o-transition:0.2s opacity linear;-ms-transition:0.2s opacity linear;transition:0.2s opacity linear;}
+  footer {font-size: 2vh; position:absolute;bottom:3%;left:0;text-align:center;width:100%;color:#c6c0a3;-moz-transition:0.2s opacity linear;-webkit-transition:0.2s opacity linear;-o-transition:0.2s opacity linear;-ms-transition:0.2s opacity linear;transition:0.2s opacity linear;}
 
   footer:hover {opacity:1;}
   footer div  {display:inline-block;}
