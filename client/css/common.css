@@ -113,4 +113,6 @@
 .itemgrid li.equiped{outline-color:#FFD700; outline-style: dashed; outline-width: 1px;}
 .itemgrid li.selected{outline-color:limegreen; outline-style: dashed; outline-width: 2px;}
 
-* {font-size: 3vh;}
+
+/* Estos settings globales son pisadas por el reset en main.css, acordarse de sacar el default de ahi!*/
+* {font-size: 2vh;font-family: arial, tahoma, sans-serif;}

@@ -7,6 +7,7 @@
 #popUp article ul {cursor:default;}
 #popUp article span {color:white;display: inline-block;}
 #popUp article input,article button,article ul,article span {position:absolute;}
+#popUp article .itemgrid li {font-size:14px;}
 
 /* -------- DEBUG ------- */
 #popUp article input {outline: dashed 2px green;}
@@ -23,12 +24,12 @@
 #comerciarBotonVender {left:260px;top:415px;}
 #comerciarBotonCerrar {left:407px;top:27px;}
 
-#comerciarInputCantidad {left:211px;top:438px; width:40px;}
+#comerciarInputCantidad {left:211px;top:438px; width:50px;font-size:14px;}
 
-#comerciarNombre {left:145px;top:47px;}
-#comerciarPrecio {left:145px;top:70px;}
-#comerciarMin {left:235px;top:70px;}
-#comerciarMax {left:235px;top:88px;}
+#comerciarNombre {left:145px;top:47px;font-size:16px;}
+#comerciarPrecio {left:145px;top:70px;font-size:14px;}
+#comerciarMin {left:235px;top:70px;font-size:14px;}
+#comerciarMax {left:235px;top:88px;font-size:14px;}
 
 
 /* Tirar */
@@ -36,3 +37,24 @@
 #tirarInputCantidad {left:30px;top:30px;width:148px;height:24px;}
 #tirarBotonTirar {left:7px;top:65px; width: 95px; height:25px;}
 #tirarBotonTirarTodo {left:105px;top:65px;width: 105px; height:25px;}
+
+/* boveda */
+#boveda {width:462px;height:532px;}
+#boveda {background-size: auto; background:url('../imagenes/popups/boveda.jpg');}
+
+#bovedaGridComprar {left:41px; top: 163px;}
+#bovedaGridVender {left:270px; top: 163px;}
+
+#bovedaBotonRetirarOro {position: absolute;left:70.5%; top:13%; width: 7.6%; height:9.2%;}
+#bovedaBotonDepositarOro {position: absolute;left:23.5%; top:13%; width: 9%; height:9.2%;}
+#bovedaBotonRetirarItem {position: absolute;left:48%; top:56%; width: 4.5%; height:2.2%;}
+#bovedaBotonDepositarItem {position: absolute;left:48%; top:44%; width: 4.5%; height:2.2%;}
+#bovedaBotonCerrar {left:407px;top:27px;}
+
+#bovedaInputCantidadOro {left:235px;top:95px; width:66px; font-size:16px;}
+#bovedaInputCantidadItem {left:215px;top:262px; width:52px; font-size:14px;}
+
+#bovedaOroDisponible {left:238px;top:65px;font-size:16px;}
+#bovedaNombre {left:155px;top:445px;font-size:16px;}
+#bovedaMin {left:155px;top:465px;font-size:14px;}
+#bovedaMax {left:155px;top:480px;font-size:14px;}

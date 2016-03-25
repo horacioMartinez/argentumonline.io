@@ -28,6 +28,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     this.logeado = false; // NOTA: se pone logeado cuando llega el mensaje de logged, este es el ultimo de los mensajes al conectarse, asi que antes llega los mensajes de hechizos inventarios, etc. Deberia primero llegar esto y listo.. tambien deberia llegar el chardinex de tu pj al principio con este mensaje
                     this.inventario = [];
                     this.inventarioCompra = [];
+                    this.inventarioBoveda = [];
                     this.hechizos = [];
                     this.intervalos = new Intervalos(0);
 
@@ -380,7 +381,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
 
                 setOro: function (oro) {
                     if (this.player.oro !== oro) {
-                        this.player.oro= oro;
+                        this.player.oro = oro;
                         this.uiManager.interfaz.updateOro(oro);
                     }
                 },
@@ -422,20 +423,20 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                         cantidad = this.player.oro;
                     if (cantidad > 10000)
                         cantidad = 10000;
-                    this.client.sendDrop(31,cantidad); // por alguna razon 31 es el "slot" del oro
+                    this.client.sendDrop(31, cantidad); // por alguna razon 31 es el "slot" del oro
                 },
 
                 tirarTodoOro: function () {
                     this.tirarOro(10000);
                 },
 
-                toggleSeguroResucitar: function(){
+                toggleSeguroResucitar: function () {
                     this.seguroResucitacionActivado = !this.seguroResucitacionActivado;
                     this.uiManager.interfaz.setSeguroResucitacion(this.seguroResucitacionActivado);
                     this.client.sendResuscitationSafeToggle();
                 },
 
-                toggleSeguroAtacar: function(){
+                toggleSeguroAtacar: function () {
                     this.seguroAtacarActivado = !this.seguroAtacarActivado;
                     this.uiManager.interfaz.setSeguroAtacar(this.seguroAtacarActivado);
                     this.client.sendSafeToggle();
@@ -461,11 +462,15 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                         this.uiManager.interfaz.cambiarSlotInventario(Slot, Amount, numGrafico, Equiped);
                         if (this.uiManager.comerciar.visible)
                             this.uiManager.comerciar.cambiarSlotVenta(Slot, Amount, numGrafico);
+                        if (this.uiManager.boveda.visible)
+                            this.uiManager.boveda.cambiarSlotDepositar(Slot, Amount, numGrafico);
                     }
                     else {
                         this.uiManager.interfaz.borrarSlotInventario(Slot);
                         if (this.uiManager.comerciar.visible)
                             this.uiManager.comerciar.borrarSlotVenta(Slot);
+                        if (this.uiManager.boveda.visible)
+                            this.uiManager.boveda.borrarSlotDepositar(Slot);
                     }
 
                 },
@@ -508,6 +513,10 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     });
 
                     this.player.onPuedeCaminar(function (direccion) {
+
+                        if (self.player.paralizado)
+                            return false;
+
                         var x = self.player.gridX;
                         var y = self.player.gridY;
                         switch (direccion) {
@@ -647,8 +656,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     else {
                         this.client.sendPickUp();
                     }
-                }
-                ,
+                },
 
                 ocultarse: function () {
 
@@ -724,11 +732,16 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     this.client.sendWork(Enums.Skill.magia);
                 },
 
+                requestInfoHechizo: function () {
+                    var slot = this.uiManager.interfaz.getSelectedSlotHechizo();
+                    if (slot)
+                        this.client.sendSpellInfo(slot);
+                },
+
                 setTrabajoPendiente: function (skill) {
                     this.uiManager.interfaz.setMouseCrosshair(true);
                     this.trabajoPendiente = skill;
-                }
-                ,
+                },
 
                 cambiarSlotCompra: function (Slot, ObjName, Amount, Price, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef) {
                     this.inventarioCompra[Slot] = {
@@ -752,17 +765,60 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                         this.uiManager.comerciar.borrarSlotCompra(Slot);
                 },
 
+                cambiarSlotRetirar: function (Slot, ObjIndex, ObjName, Amount, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) { // todo: arreglar este lio
+
+                    this.inventarioBoveda[Slot] = {
+                        objIndex: ObjIndex,
+                        objName: ObjName,
+                        cantidad: Amount,
+                        grh: GrhIndex,
+                        objType: ObjType,
+                        maxHit: MaxHit,
+                        minHit: MinHit,
+                        maxDef: MaxDef,
+                        minDef: MinDef,
+                        precio: ObjSalePrice
+                    };
+
+                    if ((Amount > 0 ) && (GrhIndex > 0)) {
+                        var numGrafico = this.renderer.getNumGraficoFromGrh(GrhIndex);
+                        this.uiManager.boveda.cambiarSlotRetirar(Slot, Amount, numGrafico);
+                    }
+                    else
+                        this.uiManager.boveda.borrarSlotRetirar(Slot);
+                },
+
                 cerrarComerciar: function () {
                     this.client.sendCommerceEnd();
                 },
 
                 comprar: function (slot, cantidad) {
                     this.client.sendCommerceBuy(slot, cantidad);
-                }
-                ,
+                },
 
                 vender: function (slot, cantidad) {
                     this.client.sendCommerceSell(slot, cantidad);
+                },
+
+                retirarOro: function (cantidad) {
+                    this.client.sendBankExtractGold(cantidad);
+                },
+
+                depositarOro: function (cantidad) {
+                    this.client.sendBankDepositGold(cantidad);
+                },
+
+                retirarItem: function (slot, cantidad) {
+                    log.error("retirar " + cantidad );
+                    this.client.sendBankExtractItem(slot, cantidad);
+                },
+
+                depositarItem: function (slot, cantidad) {
+                    this.client.sendBankDeposit(slot, cantidad);
+                },
+
+                cerrarBoveda: function () {
+                    this.client.sendBankEnd();
                 },
 
                 togglePausa: function () {

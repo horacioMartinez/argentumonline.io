@@ -115,6 +115,8 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleBankInit: function (Banco) {
+            this.game.uiManager.showBoveda();
+            this.game.uiManager.boveda.setOroDisponible(Banco);
             console.log("TODO: handleBankInit ");
         },
 
@@ -162,6 +164,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleUpdateBankGold: function (Value) {
+            this.game.uiManager.boveda.setOroDisponible(Value);
             console.log("TODO: handleUpdateBankGold ");
         },
 
@@ -308,6 +311,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleChangeBankSlot: function (Slot, ObjIndex, ObjName, Amount, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) {
+            this.game.cambiarSlotRetirar(Slot, ObjIndex, ObjName, Amount, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice);
             console.log("TODO: handleChangeBankSlot ");
         },
 
@@ -474,6 +478,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleParalizeOK: function () {
+            this.game.player.paralizado = !this.game.player.paralizado;
             console.log("TODO: handleParalizeOK ");
         },
 
@@ -678,15 +683,15 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleSafeModeOn: function () {
-            this.game.seguroAtacarActivado = false;
-            this.game.uiManager.interfaz.setSeguroAtacar(false);
+            this.game.seguroAtacarActivado = true;
+            this.game.uiManager.interfaz.setSeguroAtacar(true);
             this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_ACTIVADO,Enums.Font.WARNING);
             console.log("TODO: handleResuscitationSafeOff");
         },
 
         handleSafeModeOff: function () {
-            this.game.seguroAtacarActivado = true;
-            this.game.uiManager.interfaz.setSeguroAtacar(true);
+            this.game.seguroAtacarActivado = false;
+            this.game.uiManager.interfaz.setSeguroAtacar(false);
             this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_DESACTIVADO,Enums.Font.WARNING);
             console.log("TODO: handleResuscitationSafeOn");
         },

@@ -34,7 +34,7 @@
 #barraSed {top:86.4%;}
 #barraEnergiaUsada, #barraManaUsada, #barraSaludUsada, #barraHambreUsada, #barraSedUsada {background-color: black;float:right; height:100%; width:30%; outline: dashed 2px green;}
 
-#barraExp span {color:white; text-align: center;  margin: 0;    position: absolute;    top: 50%;    left: 50%;    margin-right: -50%;    transform: translate(-50%, -50%);}
+#barraExp span {text-align: center;  margin: 0;    position: absolute;    top: 50%;    left: 50%;    margin-right: -50%;    transform: translate(-50%, -50%);/*borde negro de font: */color: white;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;}
 #barraExp {background-color: Transparent; position: relative; top:28.1%; left:3.875%; width: 62.875%; height:38.8%;}
 #barraExpUsada {float:left; height:100%; width:30%; background:url('../imagenes/interfaz/barraExp.png');background-size: cover; }
 

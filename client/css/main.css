@@ -13,7 +13,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	padding: 0;
 	border: 0;
 	outline: 0;
-	font-size: 100%;
+	/*font-size: 100%;*/
 	vertical-align: baseline;
 	background: transparent;
 }
@@ -198,14 +198,3 @@ footer, header, hgroup, menu, nav, section {
   #credits-link a:hover , #privacy-link  a:hover, #legal-link a:hover{color:#fcda5c;cursor:pointer;}
   #sharing a:hover {-moz-transform:scale(1.2);-webkit-transform:scale(1.2);-o-transform:scale(1.2);transform:scale(1.2);}
   #sharing a:active {-moz-transform:scale(1);-webkit-transform:scale(1);-o-transform:scale(1);transform:scale(1);}
-
-
-  .thingy {height:10px;width:11px;background:url('../img/common/thingy.png');margin:0 auto;margin-top:-10px;top:10px;position:relative;}
-
-  .alert {height:50px;background:#d83939;width:100%;color:#eee;font-size:20px;font-family:'GraphicPixel', arial, sans-serif;text-align:center;line-height:50px;border-bottom:1px solid #000;}
-
-  /* Workarounds for chrome windows bugs */
-
-  .windows #parchment, .windows #parchment input, .windows #notifications, .windows #instructions, .windows #achievements, .windows #achievement-notification, 
-  .windows #playercount, .windows #credits, .windows #loadcharacter, .windows #confirmation, .windows #death, .windows #error, .windows #about, .windows #legal, 
-  .windows #parchment p, .windows #portrait p, .windows .alert, .windows footer, .windows #population, .windows #chatinput {font-family:'AdvoCut';}

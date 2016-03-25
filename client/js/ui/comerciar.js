@@ -27,9 +27,6 @@ define(['ui/itemgrid'], function (ItemGrid) {
                     }
                 }
             }
-            $cant = $("#comerciarInputCantidad");
-            $cant.val('');
-            $cant.focus();
         },
 
         hide: function () {
@@ -54,6 +51,7 @@ define(['ui/itemgrid'], function (ItemGrid) {
 
         clearInfos: function () {
             $('#comerciar span').text('');
+            $('#comerciar input').val('');
         },
 
         initCallbacks: function () {

@@ -29,6 +29,10 @@ define(['ui/itemgrid'], function (ItemGrid) {
                 self.game.lanzarHechizo();
             });
 
+            $("#botonInfo").click(function () {
+                self.game.requestInfoHechizo();
+            });
+
             $("#botonTirarOro").click(function() {
                self.game.uiManager.showTirar(true);
             });

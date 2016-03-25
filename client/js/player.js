@@ -32,6 +32,8 @@ define(['character', 'enums'], function (Character) {
             this.hambre = -1;
             this.maxHambre = -1;
             this.oro = -1;
+
+            this.paralizado = false;
         },
 
         comenzarCaminar: function (direccion) {
