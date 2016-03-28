@@ -1,34 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="ISO-8859-1"> <!--> "utf-8"> <!-->
+	<meta charset="ISO-8859-1"> <!-- "utf-8" -->
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
-	<link rel="icon" type="image/png" href="img/common/favicon.png">
-	<meta property="og:title" content="BrowserQuest">
+	<link rel="icon" type="image/png" href="imagenes/favicon.png">
+	<meta property="og:title" content="Dakara Online">
 	<meta property="og:type" content="website">
-	<meta property="og:url" content="http://browserquest.mozilla.org/">
-	<meta property="og:image" content="http://browserquest.mozilla.org/img/common/promo-title.jpg">
-	<meta property="og:site_name" content="BrowserQuest">
-	<meta property="og:description" content="Play Mozilla's BrowserQuest, an HTML5 massively multiplayer game demo powered by WebSockets!">
+	<meta property="og:site_name" content="Dakara Online">
+	<meta property="og:description" content="Dakara Online">
+	<link rel="stylesheet" href="css/reset.css" type="text/css">
 	<link rel="stylesheet" href="css/main.css" type="text/css">
 	<link rel="stylesheet" href="css/jquery-ui.css" type="text/css">
 	<link rel="stylesheet" href="css/common.css" type="text/css">
+	<link rel="stylesheet" href="css/login.css" type="text/css">
+	<link rel="stylesheet" href="css/crearPj.css" type="text/css">
 	<link rel="stylesheet" href="css/popUps.css" type="text/css">
 	<link rel="stylesheet" href="css/interfaz.css" type="text/css">
-
-	<link href="img/common/apple-touch-icon-57x57.png" rel="apple-touch-icon-precomposed" sizes="57x57">
-	<link href="img/common/apple-touch-icon-72x72.png" rel="apple-touch-icon-precomposed" sizes="72x72">
-	<link href="img/common/apple-touch-icon-114x114.png" rel="apple-touch-icon-precomposed" sizes="114x114">
-	<link href="img/common/apple-touch-icon-144x144.png" rel="apple-touch-icon-precomposed" sizes="144x144">
-
-	<link href="img/common/apple-touch-startup-image-320x460.png" rel="apple-touch-startup-image" media="(device-width: 320px)">
-	<link href="img/common/apple-touch-startup-image-640x920.png" rel="apple-touch-startup-image" media="(device-width: 320px) and (-webkit-device-pixel-ratio: 2)">
-	<link href="img/common/apple-touch-startup-image-768x1004.png" rel="apple-touch-startup-image" media="(device-width: 768px) and (orientation: portrait)">
-	<link href="img/common/apple-touch-startup-image-748x1024.png" rel="apple-touch-startup-image" media="(device-width: 768px) and (orientation: landscape)">
-	<link href="img/common/apple-touch-startup-image-1536x2008.png" rel="apple-touch-startup-image" media="(device-width: 1536px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)">
-	<link href="img/common/apple-touch-startup-image-1496x2048.png" rel="apple-touch-startup-image" media="(device-width: 1536px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2)">
 
 	<script src="js/lib/modernizr.js" type="text/javascript"></script>
                 <script src="js/detect.js" type="text/javascript"></script>
@@ -37,7 +26,7 @@
 		<body class="intro inventarioActivo">
 			<noscript>
 				<div class="alert">
-					You need to enable JavaScript to play BrowserQuest.
+					Necesitas activar Javascript para jugar Dakara Online
 				</div>
 			</noscript>
 
@@ -45,10 +34,11 @@
 
 				<!-- Pantalla de conectar -->
 				<div id="conectar">
-					<button id="botonJugar" class="botonNormal fontAsul">Jugar</button>
-					<input id="loginNombre" type="text" placeholder="Nombre" maxlength="15">
-					<input id="loginContrasenia" type="password" placeholder="Contraseña" maxlength="15">
-					<button id="botonCrearPJ" class="botonNormal fontAsul">Crear Personaje</button>
+					<img id="logo" src="../imagenes/logo.png" class="horizontal_center">
+					<input id="loginNombre" type="text" placeholder="Nombre" maxlength="15" class = "horizontal_center">
+					<input id="loginContrasenia" type="password" placeholder="Contraseña" maxlength="15" class = "horizontal_center">
+					<button id="botonJugar" class="botonNormal fontAsul horizontal_center">Jugar</button>
+					<button id="botonCrearPJ" class="botonNormal fontAsul horizontal_center">Crear Personaje</button>
 				</div>
 
 				<!-- Pantalla de crear PJ -->
@@ -74,10 +64,10 @@
 
 				<!-- Pantalla de juego-->
 				<div id="juego">
-					<div id="gamecanvas" class="clickable"><!-- hacer Clickeable el gamecanvas y capturar con este los clicks <<< -->
+					<div id="gamecanvas" class="clickable">
 					</div>
 					<div id="chatbox">
-						<input id="chatinput" class="gp" type="text" maxlength="60" autocomplete="off">
+						<input id="chatinput" class="fontAsul" type="text" maxlength="60" autocomplete="off">
 					</div>
 
 					<!--interfaz ingame-->
@@ -94,11 +84,7 @@
 
 						<div id="bordeDerecha">
 							<div id="InventarioHechizos" class="inventario">
-								<ul id="itemsGrid" class="itemgrid">
-									<li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li> 
-									<li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li> 
-									<li ></li><li ></li><li ></li><li ></li><li ></li>
-								</ul>
+								<ul id="itemsGrid" class="itemgrid"></ul>
 								<select id="hechizos" multiple ="yes" ></select>
 								<button id="botonInventario" class="botonInvisible"></button>
 								<button id="botonHechizos" class="botonInvisible"></button>
@@ -150,18 +136,8 @@
 							<button id="comerciarBotonVender" class="botonNormal fontAsul">Vender</button>
 							<button id="comerciarBotonCerrar" class="botonCerrar"></button>
 
-							<ul id="comerciarGridComprar" class="itemgrid">
-								<li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li> <!-- 10 items 1-->
-								<li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li> <!-- 10 items 2-->
-								<li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li> <!-- 10 items 3-->
-								<li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li> <!-- 10 items 4-->
-							</ul>
-							<ul id="comerciarGridVender" class="itemgrid">
-								<li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li> <!-- 10 items 1-->
-								<li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li> <!-- 10 items 2-->
-								<li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li> <!-- 10 items 3-->
-								<li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li> <!-- 10 items 4-->
-							</ul>
+							<ul id="comerciarGridComprar" class="itemgrid"></ul>
+							<ul id="comerciarGridVender" class="itemgrid"></ul>
 
 							<input id="comerciarInputCantidad" type="number" value="1">
 
@@ -187,18 +163,8 @@
 							<button id="bovedaBotonDepositarItem" class="botonInvisible"></button>
 							<button id="bovedaBotonCerrar" class="botonCerrar"></button>
 
-							<ul id="bovedaGridComprar" class="itemgrid">
-								<li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li> <!-- 10 items 1-->
-								<li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li> <!-- 10 items 2-->
-								<li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li> <!-- 10 items 3-->
-								<li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li> <!-- 10 items 4-->
-							</ul>
-							<ul id="bovedaGridVender" class="itemgrid">
-								<li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li> <!-- 10 items 1-->
-								<li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li> <!-- 10 items 2-->
-								<li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li> <!-- 10 items 3-->
-								<li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li><li ></li> <!-- 10 items 4-->
-							</ul>
+							<ul id="bovedaGridComprar" class="itemgrid"></ul>
+							<ul id="bovedaGridVender" class="itemgrid"></ul>
 
 							<input id="bovedaInputCantidadOro" type="number" value="1">
 							<input id="bovedaInputCantidadItem" type="number" value="1">

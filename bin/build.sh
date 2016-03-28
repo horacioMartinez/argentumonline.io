@@ -10,9 +10,10 @@ rm -rf "$BUILDDIR"
 echo "Building client with RequireJS"
 node "$TOPLEVELDIR/bin/r.js" -o "$PROJECTDIR/build.js"
 
-java -jar ./compiler.jar --compilation_level SIMPLE_OPTIMIZATIONS --js "$BUILDDIR/js/main.js"  --js_output_file "$BUILDDIR/js/main.js"
+#java -jar ./compiler.jar --compilation_level SIMPLE_OPTIMIZATIONS --js "$BUILDDIR/js/main.js"  --js_output_file "$BUILDDIR/js/main.js"
 
 echo "Moving build.txt to current dir"
 mv "$BUILDDIR/build.txt" "$TOPLEVELDIR"
+find "$BUILDDIR" -name ".idea" -type d -exec rm -rf {} \;
 
 echo "Build complete"

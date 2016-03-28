@@ -1,4 +1,4 @@
-define( ['app', 'assetmanager','game'], function (App, AssetManager, __para_que_ande_el_build_nomas) {
+define(['app', 'assetmanager', 'game'], function (App, AssetManager, __para_que_ande_el_build_nomas) {
     var app, game, assetManager;
 
     var initApp = function () {
@@ -67,7 +67,10 @@ define( ['app', 'assetmanager','game'], function (App, AssetManager, __para_que_
             document.addEventListener("touchstart", function () {
             }, false);
 
-            $(window).bind("resize", app.resizeUi.bind(app));
+            $(window).on('resize', app.resizeUi.bind(app));
+            // $(window).on('resize', _.debounce(function () {// <--- todo
+            //               app.resizeUi.bind(app)
+            //           }, 500));
 
             log.info("App initialized.");
 
@@ -155,8 +158,8 @@ define( ['app', 'assetmanager','game'], function (App, AssetManager, __para_que_
 
                 var result = false;
 
-                if (this._prevKeyDown[wh] != null) {
-                    if (this._prevKeyDown[wh][kC] == true) {
+                if (_prevKeyDown[wh] != null) {
+                    if (_prevKeyDown[wh][kC] == true) {
                         result = true;
                     }
                 }
@@ -232,7 +235,6 @@ define( ['app', 'assetmanager','game'], function (App, AssetManager, __para_que_
                     }
                     return;
                 }
-
 
                 if (game.isPaused || (game.uiManager.hayPopUpActivo()))
                     return;
@@ -364,7 +366,7 @@ define( ['app', 'assetmanager','game'], function (App, AssetManager, __para_que_
                 $('body').addClass('tablet');
             }
 
-            app.start(); // <--------------- TODO: hacer que empieze luego de cargar todo (pasarle esta funcion al assetManager para que la llame)!!!
+            app.start();
         });
 
     };

@@ -2,22 +2,21 @@
  * Created by horacio on 2/22/16.
  */
 
-define(['ui/itemgrid'], function (ItemGrid) {
+define(['ui/popup','ui/itemgrid','jquery-ui'], function (PopUp,ItemGrid) {
 
-    var Comerciar = Class.extend({
-        init: function (game) {
-            this.game = game;
-            this.visible = false;
-            this.DOMid = "comerciar";
+    var Comerciar = PopUp.extend({
+        init: function (inputHandler) {
+            this._super("comerciar");
+            this.game = inputHandler.game;
+            this.inputHandler = inputHandler;
+
             this.compraGrid = new ItemGrid("comerciarGridComprar");
             this.ventaGrid = new ItemGrid("comerciarGridVender");
             this.initCallbacks();
         },
 
         show: function () {
-            this.clearInfos();
-            $('#comerciar').show();
-            this.visible = true;
+            this._super();
             for (var i = 1; i < this.game.inventario.length; i++) {
                 item = this.game.inventario[i];
                 if (item) {
@@ -27,11 +26,8 @@ define(['ui/itemgrid'], function (ItemGrid) {
                     }
                 }
             }
-        },
-
-        hide: function () {
-            $('#comerciar').hide();
-            this.visible = false;
+            this.compraGrid.resetSelectedSlot();
+            this.ventaGrid.resetSelectedSlot();
         },
 
         cambiarSlotCompra: function (Slot, Amount, numGrafico) {
@@ -49,11 +45,6 @@ define(['ui/itemgrid'], function (ItemGrid) {
             this.ventaGrid.borrarSlot(slot);
         },
 
-        clearInfos: function () {
-            $('#comerciar span').text('');
-            $('#comerciar input').val('');
-        },
-
         initCallbacks: function () {
             var self = this;
 
@@ -63,7 +54,7 @@ define(['ui/itemgrid'], function (ItemGrid) {
                     var inputCantidad = $("#comerciarInputCantidad").val();
                     if (!isNaN(inputCantidad)) {
                         if (inputCantidad > 0) {
-                            self.game.comprar(slot, inputCantidad);
+                            self.inputHandler.comprar(slot, inputCantidad);
                         }
                     }
                 }
@@ -75,7 +66,7 @@ define(['ui/itemgrid'], function (ItemGrid) {
                     var inputCantidad = $("#comerciarInputCantidad").val();
                     if (!isNaN(inputCantidad)) {
                         if (inputCantidad > 0) {
-                            self.game.vender(slot, inputCantidad);
+                            self.inputHandler.vender(slot, inputCantidad);
                         }
                     }
                 }
@@ -83,12 +74,12 @@ define(['ui/itemgrid'], function (ItemGrid) {
 
             $("#comerciarBotonCerrar").click(function () {
                 self.hide();
-                self.game.cerrarComerciar();
+                self.inputHandler.cerrarComerciar();
             });
 
             this.compraGrid.setSelectionCallback(
                 function (slot) {
-                    item = self.game.inventarioCompra[slot];
+                    var item = self.game.inventarioCompra[slot];
                     $('#comerciarNombre').text(item.objName);
                     if (item.precio)
                         $('#comerciarPrecio').text("Precio: " + item.precio);
@@ -115,9 +106,14 @@ define(['ui/itemgrid'], function (ItemGrid) {
 
             this.ventaGrid.setSelectionCallback(
                 function (slot) {
-                    item = self.game.inventario[slot];
+                    var item = self.game.inventario[slot];
                     $('#comerciarNombre').text(item.objName);
-                    $('#comerciarPrecio').text("");
+
+                    if (item.precioVenta)
+                        $('#comerciarPrecio').text("Precio: " + item.precioVenta);
+                    else
+                        $('#comerciarPrecio').text("");
+
                     if (item.minDef)
                         $('#comerciarMin').text("Mín Defensa: " + item.minDef);
                     else {

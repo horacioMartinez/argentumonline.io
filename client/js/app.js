@@ -7,12 +7,6 @@ define(['jquery', 'storage', 'gameclient', 'crearpj'], function ($, Storage, Gam
             this.client = null;
             this.ready = false;
             this.storage = new Storage();
-
-            if (localStorage && localStorage.data) {
-                this.frontPage = 'loadcharacter';
-            } else {
-                this.frontPage = 'createcharacter';
-            }
         },
 
         _initCallbacks: function (client) {
@@ -21,7 +15,7 @@ define(['jquery', 'storage', 'gameclient', 'crearpj'], function ($, Storage, Gam
             client.setDisconnectCallback(function () {
                 self.setLoginScreen();
                 self.game.renderer.clean(self.getEscala());
-                self.game.init(this,self.game.assetManager);
+                self.game.init(this,self.game.assetManager,self.game.uiManager /* todo: <- sacar este de alguna forma*/);
                 self.game.started = false;
             });
 
@@ -56,14 +50,6 @@ define(['jquery', 'storage', 'gameclient', 'crearpj'], function ($, Storage, Gam
 
         center: function () {
             window.scrollTo(0, 1);
-        },
-
-        canStartGame: function () {
-            if (this.isDesktop) {
-                return (this.game && this.game.map && this.game.map.isLoaded);
-            } else {
-                return this.game;
-            }
         },
 
         setCrearPJ: function () {
@@ -151,19 +137,6 @@ define(['jquery', 'storage', 'gameclient', 'crearpj'], function ($, Storage, Gam
             }
         },
 
-        getActiveForm: function () {
-            if (this.loginFormActive()) return $('#loadcharacter');
-            else if (this.createNewCharacterFormActive()) return $('#createcharacter');
-            else return null;
-        },
-
-        loginFormActive: function () {
-            return $('#parchment').hasClass("loadcharacter");
-        },
-
-        createNewCharacterFormActive: function () {
-            return $('#parchment').hasClass("createcharacter");
-        },
 
         validarLogin: function (username, userpw) {
             //this.clearValidationErrors(); // TODO: mostrar errores al logear (tambien los que devuelve el game)
@@ -194,14 +167,6 @@ define(['jquery', 'storage', 'gameclient', 'crearpj'], function ($, Storage, Gam
                     $(this).unbind(event);
                 });
             }
-        },
-
-        clearValidationErrors: function () {
-            var fields = this.loginFormActive() ? this.loginFormFields : this.createNewCharacterFormFields;
-            $.each(fields, function (i, field) {
-                field.removeClass('field-error');
-            });
-            $('.validation-error').remove();
         },
 
         setMouseCoordinates: function (event) {

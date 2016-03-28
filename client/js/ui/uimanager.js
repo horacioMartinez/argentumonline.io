@@ -3,16 +3,17 @@
  */
 
 
-define(['ui/comerciar', 'ui/interfaz', 'ui/tirar', 'ui/boveda'], function (Comerciar, Interfaz,Tirar, Boveda) {
+define(['dominputhandler','ui/comerciar', 'ui/interfaz', 'ui/tirar', 'ui/boveda'], function (DomInputHandler, Comerciar, Interfaz,Tirar, Boveda) {
 
     //TODO: crear los popups en run time con jquery y borrarlos cuando se cierran
 
     var UIManager = Class.extend({
         init: function (game) {
             this.game = game;
-            this.comerciar = new Comerciar(game);
-            this.tirar = new Tirar(game);
-            this.boveda = new Boveda(game);
+            this.inputHandler = new DomInputHandler(this.game);
+            this.comerciar = new Comerciar(this.inputHandler);
+            this.tirar = new Tirar(this.inputHandler);
+            this.boveda = new Boveda(this.inputHandler);
 
             this._currentPopUp = 0; // mal
             this.interfaz = new Interfaz(game);

@@ -3,8 +3,12 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
     function (__enums__, Mapa, Renderer, GameClient, Updater, Transition,
               Item, Player, Character, AssetManager, Intervalos, UIManager, ComandosChat) {
         var Game = Class.extend({
-                init: function (app, assetManager) {
-                    this.uiManager = new UIManager(this);
+                init: function (app, assetManager, uiManager) {
+
+                    if (uiManager)
+                        this.uiManager = uiManager;
+                    else
+                        this.uiManager = new UIManager(this);
 
                     this.comandosChat = new ComandosChat(this);
                     this.map = new Mapa();
@@ -406,28 +410,11 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     var selectedSlot = this.uiManager.interfaz.getSelectedSlotInventario();
                     if (!selectedSlot)
                         return;
-                    if (cantidad > this.inventario[selectedSlot].cantidad)
+                    if (cantidad >= this.inventario[selectedSlot].cantidad) {
                         cantidad = this.inventario[selectedSlot].cantidad;
+                        this.uiManager.interfaz.resetSelectedSlotInventario();
+                    }
                     this.client.sendDrop(selectedSlot, cantidad);
-                },
-
-                tirarTodoSelectedItem: function () {
-                    var selectedSlot = this.uiManager.interfaz.getSelectedSlotInventario();
-                    if (!selectedSlot)
-                        return;
-                    this.tirarSelectedItem(this.inventario[selectedSlot].cantidad)
-                },
-
-                tirarOro: function (cantidad) {
-                    if (cantidad > this.player.oro)
-                        cantidad = this.player.oro;
-                    if (cantidad > 10000)
-                        cantidad = 10000;
-                    this.client.sendDrop(31, cantidad); // por alguna razon 31 es el "slot" del oro
-                },
-
-                tirarTodoOro: function () {
-                    this.tirarOro(10000);
                 },
 
                 toggleSeguroResucitar: function () {
@@ -786,39 +773,6 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     }
                     else
                         this.uiManager.boveda.borrarSlotRetirar(Slot);
-                },
-
-                cerrarComerciar: function () {
-                    this.client.sendCommerceEnd();
-                },
-
-                comprar: function (slot, cantidad) {
-                    this.client.sendCommerceBuy(slot, cantidad);
-                },
-
-                vender: function (slot, cantidad) {
-                    this.client.sendCommerceSell(slot, cantidad);
-                },
-
-                retirarOro: function (cantidad) {
-                    this.client.sendBankExtractGold(cantidad);
-                },
-
-                depositarOro: function (cantidad) {
-                    this.client.sendBankDepositGold(cantidad);
-                },
-
-                retirarItem: function (slot, cantidad) {
-                    log.error("retirar " + cantidad );
-                    this.client.sendBankExtractItem(slot, cantidad);
-                },
-
-                depositarItem: function (slot, cantidad) {
-                    this.client.sendBankDeposit(slot, cantidad);
-                },
-
-                cerrarBoveda: function () {
-                    this.client.sendBankEnd();
                 },
 
                 togglePausa: function () {

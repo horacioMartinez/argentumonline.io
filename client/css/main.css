@@ -1,94 +1,8 @@
-/* Eric Meyer's CSS reset */
-
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, font, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	outline: 0;
-	/*font-size: 100%;*/
-	vertical-align: baseline;
-	background: transparent;
-}
-body {
-	line-height: 1;
-}
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-
-/* remember to define focus styles! */
-:focus {
-	outline: 0;
-}
-
-/* remember to highlight inserts somehow! */
-ins {
-	text-decoration: none;
-}
-del {
-	text-decoration: line-through;
-}
-
-/* tables still need 'cellspacing="0"' in the markup */
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
-
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
-
 /* Typography*/		
-
-@font-face {
-    font-family: 'GraphicPixel';
-    src: url('../fonts/graphicpixel-webfont.eot');
-    src: url('../fonts/graphicpixel-webfont.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/graphicpixel-webfont.woff') format('woff'),
-    url('../fonts/graphicpixel-webfont.ttf') format('truetype'),
-    url('../fonts/graphicpixel-webfont.svg#GraphicPixelRegular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-@font-face {
-    font-family: 'AdvoCut';
-    src: url('../fonts/advocut-webfont.eot');
-    src: url('../fonts/advocut-webfont.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/advocut-webfont.woff') format('woff'),
-    url('../fonts/advocut-webfont.ttf') format('truetype'),
-    url('../fonts/advocut-webfont.svg#AndinaRegular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-.gp {font-family: 'GraphicPixel', sans-serif;}
-
 
 @font-face{
     font-family:'Asul'; 
-    src:url(../fonts/asul-regular.eot)
+    src:url(../fonts/asul-regular.eot);
 }
 
 @font-face{
@@ -120,7 +34,6 @@ footer, header, hgroup, menu, nav, section {
 
 
     canvas { position:absolute;image-rendering:auto;}
-    #gamecanvas { background:url('../img/common/loading.png') no-repeat center center, #000;}
     
     #canvas, #bar-container, #chatbox, #canvasborder, footer, #container, #achievement-notification {-moz-user-select:none;-webkit-user-select:none;-o-user-select:none;-ms-user-select:none;}
 
@@ -149,8 +62,7 @@ footer, header, hgroup, menu, nav, section {
    #crearPJ span {color:white;display: inline-block;} /*<<-- TEMPORAL <<-*/
 
 
-   body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../graficos/ui/presentacion.jpg') no-repeat center center, #000; background-size:auto;}
-   body {background:-webkit-gradient(radial, center center, 360, center center, 1200, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('../graficos/ui/presentacion.jpg') no-repeat center center, #000; background-size:auto;}
+   body {background-color:#000;}
 
    #container {background:#000;width: 10px; height: 90%; position: absolute; top:0; bottom: 5%; left: 0; right: 0; margin: auto;} /* el width de setea para que quede del ratio adecaudo en el programa de js */
 
@@ -187,10 +99,11 @@ footer, header, hgroup, menu, nav, section {
   .facebook {background:url('../imagenes/facebook.png');}
   .twitter{background:url('../imagenes/twitter.png');}
 
-  footer {font-size: 2vh; position:absolute;bottom:3%;left:0;text-align:center;width:100%;color:#c6c0a3;-moz-transition:0.2s opacity linear;-webkit-transition:0.2s opacity linear;-o-transition:0.2s opacity linear;-ms-transition:0.2s opacity linear;transition:0.2s opacity linear;}
+  footer {position:absolute;bottom:3%;left:0;text-align:center;width:100%;color:#c6c0a3;-moz-transition:0.2s opacity linear;-webkit-transition:0.2s opacity linear;-o-transition:0.2s opacity linear;-ms-transition:0.2s opacity linear;transition:0.2s opacity linear;}
 
   footer:hover {opacity:1;}
-  footer div  {display:inline-block;}
+  footer div  {font-size: 16px;display:inline-block;}
+  footer a  {font-size: 16px;}
   #sharing a {display:block;float:right;position:relative;top:-2px;}
   #sharing .facebook {height:22px;width:22px;background-size: cover;margin:0 12px 0 12px;}
   #sharing .twitter {height:22px;width:32px;background-size:     cover;margin:0 12px 0 0;}
