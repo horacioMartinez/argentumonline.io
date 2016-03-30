@@ -12,6 +12,19 @@ define(['ui/popup','ui/itemgrid','jquery-ui'], function (PopUp,ItemGrid) {
 
             this.compraGrid = new ItemGrid("comerciarGridComprar");
             this.ventaGrid = new ItemGrid("comerciarGridVender");
+
+            /*$("#comerciarGridComprar").$( "#droppable" ).droppable({ // <-- TODO: grid dropeables
+                activeClass: "ui-state-default",
+                hoverClass: "ui-state-hover",
+                drop: function( event, ui ) {
+                    $( this )
+                        .addClass( "ui-state-highlight" )
+                        .find( "p" )
+                        .html( "Dropped!" );
+                }
+            });*/
+
+
             this.initCallbacks();
         },
 
@@ -21,7 +34,7 @@ define(['ui/popup','ui/itemgrid','jquery-ui'], function (PopUp,ItemGrid) {
                 item = this.game.inventario[i];
                 if (item) {
                     var numGraf = this.game.renderer.getNumGraficoFromGrh(item.grh);
-                    if (numGraf) {
+                    if (numGraf) {1
                         this.ventaGrid.modificarSlot(i, item.cantidad, numGraf);
                     }
                 }

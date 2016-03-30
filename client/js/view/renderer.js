@@ -43,7 +43,8 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 this.layer3 = new ContainerOrdenado(this.mapa.width);
                 this.layer3.ordenado = true;
                 this.layer4 = new PIXI.Container();
-                this.gameText = new PIXI.Container();
+                this.gameText = new PIXI.Container(); // nota: los nombres no estan aca, solo los dialogos (no se puede meter los nombres porque pisan a algunos graficos y son pisados otros)
+                // todo?: que los nombres siempre pisen al grh1 y esten debajo de los demas, de esa forma en vez de hacerles el scale del juego se los puede agrandar como a los demas textos
                 this.consola = new Consola(this.escala);
                 this.stage.addChild(this.gameStage);
                 this.stage.addChild(this.consola);
@@ -310,7 +311,6 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 this._syncGamePosition();
             },
 
-
             updateTilesMov: function (dir) { // al moverse mueve la columna/fila que queda atras al frente de todo
                 // todo (POCO IMPORTANTE): arreglar bien y usar camera.foreachvisiblenextposition
                 var gridXIni = this.camera.gridX - this.POSICIONES_EXTRA_TERRENO;
@@ -369,10 +369,80 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                         break;
                 }
             },
+
             resetPos: function (gridX, gridY) {
                 this.resetCameraPosition(gridX, gridY);
                 this._syncGamePosition();
                 this._drawTerrenoIni();
+            },
+
+            toggleLluvia: function () {
+                if (this.containerLluvia)
+                    this.hideLluvia();
+                else
+                    this.showLluvia();
+            },
+
+            hideLluvia: function () {
+                if (!this.containerLluvia)
+                    return;
+                PIXI.ticker.shared.remove(this._updateGotas, this);
+                this.stage.removeChild(this.containerLluvia);
+                this.gotas = null;
+                this.containerLluvia = null;
+            },
+
+            showLluvia: function () {
+                if (this.containerLluvia)
+                    return;
+                this.gotas = [];
+                this.containerLluvia = new PIXI.ParticleContainer();
+                var indice = this.stage.getChildIndex(this.gameStage) + 1;
+                this.stage.addChildAt(this.containerLluvia, indice);
+                this.gameStage.addChild(this.layer4);
+
+                var anguloBase = Math.random() * (Math.PI / 12) + Math.PI / 12;
+
+                var velocidad = 7 + Math.pow(anguloBase,2) * 15;
+                var cantidadGotas = 70 + anguloBase * 150;
+                if (Math.random() < 0.5)
+                    anguloBase = -anguloBase;
+                for (var i = 0; i < cantidadGotas; ++i) {
+                    var gota = new PIXI.Sprite.fromImage("graficos/extras/gota.png");
+
+                    gota.x = Math.random() * this.pixiRenderer.width;
+                    gota.y = Math.random() * this.pixiRenderer.height;
+                    gota.rotation = anguloBase + Math.random() * Math.PI / 16;
+                    gota.velocidad = velocidad;//9;
+
+                    gota.height = (6 + 6*Math.random())*this.escala;
+                    gota.alpha = 0.4;
+                    this.gotas.push(gota);
+                    this.containerLluvia.addChild(gota);
+                }
+                PIXI.ticker.shared.add(this._updateGotas, this);
+            },
+
+            _updateGotas: function (delta) {
+                // iterate through the sprites and update their position
+                for (var i = 0; i < this.gotas.length; i++) {
+                    var gota = this.gotas[i];
+                    gota.position.x -= Math.sin(gota.rotation) * (gota.velocidad) * delta;
+                    gota.position.y += Math.cos(gota.rotation) * (gota.velocidad) * delta;
+
+                    if (gota.position.x > this.pixiRenderer.width + 20) {
+                        gota.position.x = 0 - 20;
+                        gota.y = Math.random() * this.pixiRenderer.height;
+                    }
+                    else if (gota.position.x < 0 - 20) {
+                        gota.position.x = this.pixiRenderer.width + 20;
+                        gota.y = Math.random() * this.pixiRenderer.height;
+                    }
+                    if (gota.position.y > this.pixiRenderer.height) {
+                        gota.position.y = 0 - 20;
+                        gota.x = Math.random() * this.pixiRenderer.width;
+                    }
+                }
             },
 
             renderFrame: function () {

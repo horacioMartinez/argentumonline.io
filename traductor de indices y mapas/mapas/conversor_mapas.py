@@ -2,6 +2,18 @@ import json
 import struct
 import os  
 
+
+extra_info = [0 for x in range(10000)]
+extra_data = open("./extra_data", "r")
+for line in extra_data:
+	line = line.rstrip()
+	numeroMapa = line.split('=')[0]
+	data = line.split('=')[1]
+	extra_info[int(numeroMapa)] = data
+
+def getExtraData (mapa):
+	return extra_info[mapa]
+
 for fn in os.listdir('.'):
 	if not os.path.isfile(fn):
 		continue
@@ -10,17 +22,22 @@ for fn in os.listdir('.'):
 	
 	origen = open(fn, "rb")
 
-	fileDest = "mapas_json/" + "m" + fn[1:fn.find('.')] + '.json'
-	print fileDest
+	numeroMapa = fn[4:fn.find('.')]
+
+	fileDest = "mapas_json/" + "mapa" + numeroMapa + '.json'
 	destino = open(fileDest,"w")
+
+	#if fileDest != "mapas_json/mapa1.json":
+	#	continue
+	print fileDest
 
 	origen.read(256+17)  # saco header
 
-	mapa = [[[0 for x in range(6)] for x in range(101)] for x in range(101)] 
-	y = 1
-	while ( y < 101):
-		x = 1
-		while (x < 101):
+	mapa = [[[0 for y in range(6)] for y in range(101)] for y in range(101)] 
+	x = 1
+	while ( x < 101):
+		y = 1
+		while (y < 101):
 			flags = struct.unpack('<B', (origen.read(1)))[0] # cant layers
 
 			if (flags & 1):
@@ -51,16 +68,78 @@ for fn in os.listdir('.'):
 					trigger = 0
 			else:
 				trigger=0
+			
+			mapa[y][x][0] = bloqueado
+			mapa[y][x][1] = layer1	
+			mapa[y][x][2] = layer2
+			mapa[y][x][3] = layer3				
+			mapa[y][x][4] = layer4
+			mapa[y][x][5] = trigger
+			y = y+1
+		x = x+1
+	x = 1
 
-			#mapa[x][y] = {'layer1':layer1, 'layer2':layer2,'layer3':layer3,'layer4':layer4,'trigger':trigger}
-			mapa[x][y][0] = bloqueado
-			mapa[x][y][1] = layer1
-			mapa[x][y][2] = layer2
-			mapa[x][y][3] = layer3
-			mapa[x][y][4] = layer4
-			mapa[x][y][5] = trigger
-			x = x+1
 
-		y = y+1
+	# datos extra
+	destino.write("{")
+	destino.write(getExtraData(int(numeroMapa)))
 
-	json.dump(mapa, destino, indent=4)
+	# Layers
+	destino.write(",")
+	destino.write('"layers":')
+	destino.write("[")
+	while ( x < 101):
+		y = 1
+		destino.write("[")
+		while (y < 101):
+			destino.write("{")
+			mapa[x][y][0] = mapa[x][y][0]
+			if mapa[x][y][0] != 0:
+				destino.write(""""0":""")
+				destino.write(str(mapa[x][y][0]))
+			#mapa[x][y][1] = mapa[x][y][1]
+			if mapa[x][y][1] != 0:
+				if mapa[x][y][0] != 0:
+					destino.write(",")	
+				destino.write(""""1":""")
+				destino.write(str(mapa[x][y][1]))
+			#mapa[x][y][2] = mapa[x][y][2]
+			if mapa[x][y][2] != 0:
+				if ( (mapa[x][y][0] != 0) or (mapa[x][y][1] != 0)):
+					destino.write(",")
+				destino.write(""""2":""")
+				destino.write(str(mapa[x][y][2]))
+			#mapa[x][y][3] = mapa[x][y][3]
+			if mapa[x][y][3] != 0:
+				if ( (mapa[x][y][0] != 0 or mapa[x][y][1] != 0) or mapa[x][y][2] != 0):
+					destino.write(",")
+				destino.write(""""3":""")
+				destino.write(str(mapa[x][y][3]))
+			#mapa[x][y][4] = layer4
+			if mapa[x][y][4] != 0:
+				if ( ((mapa[x][y][0] != 0 or mapa[x][y][1] != 0) or mapa[x][y][2] != 0) or mapa[x][y][3] != 0):
+					destino.write(",")
+				destino.write(""""4":""")
+				destino.write(str(mapa[x][y][4]))
+
+			if mapa[x][y][5] != 0:
+				if ((((mapa[x][y][0] != 0 or mapa[x][y][1] != 0) or mapa[x][y][2] != 0) or mapa[x][y][3] != 0) or mapa[x][y][4] != 0):
+					destino.write(",")
+				destino.write(""""5":""")
+				destino.write(str(mapa[x][y][5]))
+
+			if y==100:
+				destino.write("}")
+			else:
+				destino.write("},")
+			y = y+1
+		if x==100:
+			destino.write("]")
+		else:
+			destino.write("],")
+		x = x+1
+	destino.write("]")
+
+	destino.write("}")
+
+	

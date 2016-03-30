@@ -290,7 +290,16 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleRainToggle: function () {
-            console.log("TODO: handleRainToggle ");
+            this.game.lloviendo = !this.game.lloviendo;
+
+            if (this.game.map.mapaOutdoor()) {
+                var bajoTecho = this.game.bajoTecho;
+                if (this.game.lloviendo)
+                    this.game.assetManager.IniciarSonidoLluvia(bajoTecho);
+                else
+                    this.game.assetManager.finalizarSonidoLluvia(bajoTecho);
+                this.game.renderer.toggleLluvia();
+            }
         },
 
         handleCreateFX: function (CharIndex, FX, FXLoops) {

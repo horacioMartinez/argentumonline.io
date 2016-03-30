@@ -41,6 +41,8 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     this.seguroResucitacionActivado = null;
                     this.seguroAtacarActivado = null;
 
+                    this.lloviendo = false;
+                    this.bajoTecho = false;
                 },
 
                 setup: function (input) {
@@ -144,7 +146,13 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                 },
 
                 actualizarBajoTecho: function () {
-                    this.renderer.setBajoTecho(this.map.isBajoTecho(this.player.gridX, this.player.gridY));
+                    var bajoTecho = this.map.isBajoTecho(this.player.gridX, this.player.gridY);
+                    if (this.bajoTecho !== bajoTecho) {
+                        this.bajoTecho = bajoTecho;
+                        this.renderer.setBajoTecho(bajoTecho);
+                        if (this.lloviendo && this.map.mapaOutdoor())
+                            this.assetManager.playLoopLluvia(bajoTecho);
+                    }
                 },
 
                 _removeAllEntitys: function () {
@@ -571,11 +579,21 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                 cambiarMapa: function (numeroMapa) {
                     /* todo: cambiar esto si deja de ser sync: */
                     //this._removeAllEntitys();
+                    prevMapa = this.map;
                     this.map = new Mapa(numeroMapa, this.assetManager.getMapaSync(numeroMapa));
                     this._removeAllEntities();
                     this.renderer.cambiarMapa(this.map);
-                    //if (this.player)
-                    //    this.player.resetMovement();
+
+                    if (this.lloviendo && prevMapa) {
+                        if (this.map.mapaOutdoor() !== prevMapa.mapaOutdoor()) {
+                            if (this.map.mapaOutdoor())
+                                this.assetManager.IniciarSonidoLluvia();
+                            else
+                                this.assetManager.finalizarSonidoLluvia();
+                            this.renderer.toggleLluvia();
+                        }
+                    }
+                    //this.actualizarBajoTecho();
                 },
 
                 cambiarArea: function (gridX, gridY) {

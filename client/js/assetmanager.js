@@ -34,7 +34,7 @@ define(['json!../indices/graficos.json',
                 return this.grhs[grh];
             },
 
-            getTerrenoGrh: function (grh){ // TODO: cuando se implemente con rendertexture el mapa, sacar esto y usar getgrh, sirve para que el grid del terreno no se vea discontinuo
+            getTerrenoGrh: function (grh) { // TODO: cuando se implemente con rendertexture el mapa, sacar esto y usar getgrh, sirve para que el grid del terreno no se vea discontinuo
                 if (!this.grhs[grh])
                     this.loadGrh(grh);
                 res = this.grhs[grh];
@@ -99,15 +99,74 @@ define(['json!../indices/graficos.json',
                  */
             },
 
-            playSound: function (nombre) {
+            playSound: function (nombre, loop, onEnd) { // todo: mover todos los de sonido a una nueva clase de sonido
                 if (this.enabled) {
                     if (!this.sounds[nombre]) {
-                        this.sounds[nombre] = new Howl({
-                            urls: ['audio/sonidos/' + nombre + '.m4a']
-                        })
+                        this.cargarSonido(nombre,loop,onEnd);
                     }
                     this.sounds[nombre].play();
                 }
+            },
+
+            cargarSonido: function (nombre, loop, onEnd) {
+                if (this.sounds[nombre])
+                    return;
+                this.sounds[nombre] = new Howl({
+                    urls: ['audio/sonidos/' + nombre + '.m4a']
+                });
+
+                if (loop)
+                    this.sounds[nombre].loop(loop);
+                if (onEnd)
+                    this.sounds[nombre].on("onend", onEnd);
+            },
+
+            finalizarSonidoLluvia: function (bajoTecho) {
+                this.stopLluvia();
+                var nombre;
+                if (bajoTecho)
+                    nombre = "lluviainend";
+                else
+                    nombre = "lluviaoutend";
+                this.playSound(nombre);
+                this.sounds[nombre].volume(0.3);
+            },
+
+            IniciarSonidoLluvia: function (bajoTecho) {
+                var nombre;
+                if (bajoTecho)
+                    nombre = "lluviainst";
+                else
+                    nombre = "lluviaoutst";
+                this.playSound(nombre, false, this.playLoopLluvia(bajoTecho));
+                this.sounds[nombre].volume(0.3);
+            },
+
+            playLoopLluvia: function (bajoTecho) {
+                this.stopLluvia();
+                var nombre, sprite;
+                if (bajoTecho) {
+                    nombre = "lluviain";
+                    sprite = {lluvia: [130, 7900]};
+                }
+                else {
+                    nombre = "lluviaout";
+                    sprite = {lluvia: [100, 4200]};
+                }
+
+                if (!this.sounds[nombre]) { //cargar con sprite para que loopee bien
+                    this.cargarSonido(nombre,true);
+                    this.sounds[nombre].sprite(sprite);
+                    this.sounds[nombre].volume(0.5);
+                }
+                this.sounds[nombre].play("lluvia");
+            },
+
+            stopLluvia: function () {
+                if (this.sounds["lluviain"])
+                    this.sounds["lluviain"].stop();
+                if (this.sounds["lluviaout"])
+                    this.sounds["lluviaout"].stop();
             },
 
             toggleSound: function () {

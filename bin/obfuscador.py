@@ -6,7 +6,6 @@ excludeChars = [' ','{','}','(',')','$','"',"'"]
 def funcion_invalida(func):
 	if (func in excludeFunctions):
 		return True
-	continuar = False
 	for ch in excludeChars:
 		if ch in func:
 			return True

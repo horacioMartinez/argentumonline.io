@@ -9,8 +9,12 @@ define([],
                 this.width = 100;
             },
 
+            mapaOutdoor: function(){
+                return this.data.outdoor;
+            },
+
             isBlocked: function (gridX, gridY) {
-                return this.data[gridX - 1][gridY - 1][0];
+                return this.data.layers[gridX - 1][gridY - 1][0];
             },
 
             hayAgua: function (gridX, gridY) {
@@ -32,44 +36,44 @@ define([],
 
             setBlockPosition: function (gridX, gridY, blocked) {
                 if (blocked)
-                    this.data[gridX - 1][gridY - 1][0] = 1;
+                    this.data.layers[gridX - 1][gridY - 1][0] = 1;
                 else
-                    this.data[gridX - 1][gridY - 1][0] = 0;
+                    this.data.layers[gridX - 1][gridY - 1][0] = 0;
             },
 
             getGrh1: function (gridX, gridY) { //devuelve indice de grafico de la primer lagridYer
-                if (this.data[gridX - 1])
-                    if (this.data[gridX - 1][gridY - 1])
-                        if (this.data[gridX - 1][gridY - 1][1])
-                            return this.data[gridX - 1][gridY - 1][1];
+                if (this.data.layers[gridX - 1])
+                    if (this.data.layers[gridX - 1][gridY - 1])
+                        if (this.data.layers[gridX - 1][gridY - 1][1])
+                            return this.data.layers[gridX - 1][gridY - 1][1];
                 return 0;
             },
 
             getGrh2: function (gridX, gridY) {
-                if (this.data[gridX - 1])
-                    if (this.data[gridX - 1][gridY - 1])
-                        if (this.data[gridX - 1][gridY - 1][2])
-                            return this.data[gridX - 1][gridY - 1][2];
+                if (this.data.layers[gridX - 1])
+                    if (this.data.layers[gridX - 1][gridY - 1])
+                        if (this.data.layers[gridX - 1][gridY - 1][2])
+                            return this.data.layers[gridX - 1][gridY - 1][2];
                 return 0;
             },
             getGrh3: function (gridX, gridY) {
-                if (this.data[gridX - 1])
-                    if (this.data[gridX - 1][gridY - 1])
-                        if (this.data[gridX - 1][gridY - 1][3])
-                            return this.data[gridX - 1][gridY - 1][3];
+                if (this.data.layers[gridX - 1])
+                    if (this.data.layers[gridX - 1][gridY - 1])
+                        if (this.data.layers[gridX - 1][gridY - 1][3])
+                            return this.data.layers[gridX - 1][gridY - 1][3];
                 return 0;
             },
 
             getGrh4: function (gridX, gridY) {
-                if (this.data[gridX - 1])
-                    if (this.data[gridX - 1][gridY - 1])
-                        if (this.data[gridX - 1][gridY - 1][4])
-                            return this.data[gridX - 1][gridY - 1][4];
+                if (this.data.layers[gridX - 1])
+                    if (this.data.layers[gridX - 1][gridY - 1])
+                        if (this.data.layers[gridX - 1][gridY - 1][4])
+                            return this.data.layers[gridX - 1][gridY - 1][4];
                 return 0;
             },
 
             isBajoTecho: function (gridX, gridY) {
-                if (this.data[gridX - 1][gridY - 1][5])
+                if (this.data.layers[gridX - 1][gridY - 1][5])
                     return true;
                 else
                     return false;
