@@ -219,8 +219,24 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                         else {
                             c.mover(dir);
                             this.actualizarMovPos(c, dir);
+                            this.playSonidoPaso(c);
                         }
 
+                    }
+                },
+
+                playSonidoPaso: function(char){
+                    if (char.muerto || !this.renderer.entityEnRangoCamara(char))
+                        return;
+                    if (this.player.navegando){ //todo: que sea dependiendo si el char navega, no el player
+                        this.assetManager.playSound(Enums.SONIDOS.pasoNavegando);
+                    }
+                    else{
+                        char.pasoDerecho = !char.pasoDerecho;
+                        if (char.pasoDerecho)
+                            this.assetManager.playSound(Enums.SONIDOS.paso1);
+                        else
+                            this.assetManager.playSound(Enums.SONIDOS.paso2);
                     }
                 },
 
@@ -500,6 +516,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                                 self.client.sendWalk(direccion);
                             self.actualizarMovPos(self.player, direccion);
                             self.actualizarBajoTecho();
+                            self.playSonidoPaso(self.player);
                         }
                     });
 
@@ -573,6 +590,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                         console.log(" reseteando pos player");
                         if (!noReDraw)
                             this.renderer.resetPos(gridX, gridY);
+                        this.actualizarBajoTecho();
                     }
                 },
 
@@ -593,7 +611,6 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                             this.renderer.toggleLluvia();
                         }
                     }
-                    //this.actualizarBajoTecho();
                 },
 
                 cambiarArea: function (gridX, gridY) {
@@ -835,7 +852,6 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                         if (!this.isPaused)
                             this.updater.update();
                         this.renderer.renderFrame();
-                        /*this.uiRenderer.renderFrame();*/
                     }
 
                     if (!this.isStopped) {

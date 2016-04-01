@@ -1,27 +1,4 @@
-/* Typography*/		
-
-@font-face{
-    font-family:'Asul'; 
-    src:url(../fonts/asul-regular.eot);
-}
-
-@font-face{
-    font-family:'Asul'; 
-    src:url(../fonts/asul-regular.ttf)
-}
-
-.fontAsul {
-    font-family:'Asul',serif;
-    -webkit-font-smoothing: antialiased;
-    -webkit-font-smoothing: subpixel-antialiased;
-}
 /*
-*{
-    font-family:'Asul',serif;
-    -webkit-font-smoothing: antialiased;
-    -webkit-font-smoothing: subpixel-antialiased;
-    }*/
-
     /* General Layout */	
 
 

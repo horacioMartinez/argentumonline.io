@@ -64,6 +64,7 @@ define(['jquery'],
             },
 
             setBotonTirarDadosCallback: function (cb) {
+
                 $('#crearBotonTirarDados').click(function () {
                     cb();
                 });
@@ -111,11 +112,11 @@ define(['jquery'],
             },
 
             updateDados: function (Fuerza, Agilidad, Inteligencia, Carisma, Constitucion) {
-                $('#crearDadoFuerza').text(Fuerza);
-                $('#crearDadoAgilidad').text(Agilidad);
-                $('#crearDadoInteligencia').text(Inteligencia);
-                $('#crearDadoCarisma').text(Carisma);
-                $('#crearDadoConstitucion').text(Constitucion);
+                $('#crearDadoFuerza').text("Fuerza: " + Fuerza);
+                $('#crearDadoAgilidad').text("Agilidad: " +Agilidad);
+                $('#crearDadoInteligencia').text("Inteligencia: " +Inteligencia);
+                $('#crearDadoCarisma').text("Carisma: " +Carisma);
+                $('#crearDadoConstitucion').text("Constitucion: " +Constitucion);
             },
 
             emailValido: function (email) {

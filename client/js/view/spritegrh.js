@@ -53,15 +53,21 @@ define(['lib/pixi'], function (PIXI) {
         this._setSpeed();
     };
 
-    SpriteGrh.prototype.setPositionChangeCallback = function (callback) {
-        this._onSetPosition = callback;
+    SpriteGrh.prototype.setGridPositionChangeCallback = function (callback) {
+        this._onGridPositionChange = callback;
     };
 
     SpriteGrh.prototype.setPosition = function (x,y) {
         this.x = x;
         this.y = y;
-        if (this._onSetPosition)
-            this._onSetPosition();
+        var gridX = Math.round(x/32);
+        var gridY = Math.round(y/32);
+        if ( (gridX !== this._gridX) || (gridY !== this._gridY)) {
+            this._gridX = gridX;
+            this._gridY = gridY;
+            if (this._onGridPositionChange)
+                this._onGridPositionChange();
+        }
     };
 
 

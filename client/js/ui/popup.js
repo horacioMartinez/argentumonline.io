@@ -9,7 +9,10 @@ define(['jquery-ui'], function () {
             this.DOMid = domID;
 
             this.$this  = $('#' + domID);
-            this.$this.draggable({cursor: "move"});
+            this.$this.draggable({
+                cursor: "move",
+                /*containment: "parent"*/
+            });
             this.visible = false;
         },
 

@@ -13,7 +13,7 @@ define(['app', 'assetmanager', 'game'], function (App, AssetManager, __para_que_
             assetManager = new AssetManager();
             app = new App();
             app.resizeUi();
-            app.center();
+            //app.center();
 
             if (Detect.isWindows()) {
                 // Workaround for graphical glitches on text
@@ -103,10 +103,11 @@ define(['app', 'assetmanager', 'game'], function (App, AssetManager, __para_que_
             $('#chatbox').attr('value', '');
 
             $('#gamecanvas').click(function (event) {
-                if ((!game.started) || (game.isPaused))
-                    return true; // <<<--- todo: rever (para que no se tilde luego de pausas) ?
+                //app.center();
 
-                app.center();
+                if ((!game.started) || (game.isPaused))
+                    return; // <<<--- todo: rever (para que no se tilde luego de pausas) ?
+
                 if (app.setMouseCoordinates(event)) {
                     game.click();
                 }
@@ -117,7 +118,7 @@ define(['app', 'assetmanager', 'game'], function (App, AssetManager, __para_que_
                 if ((!game.started) || (game.isPaused))
                     return;
 
-                app.center();
+                //app.center();
                 if (app.setMouseCoordinates(event)) {
                     game.doubleclick();
                 }

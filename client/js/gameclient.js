@@ -28,7 +28,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
 
             this.ws.on('message', function () {
                 //try {
-                while (self.byteQueue.length() > 1)
+                while (self.byteQueue.length() > 0)
                     self.protocolo.ServerPacketDecodeAndDispatch(self.byteQueue, self);
                 //} catch (e) {
                 //    log.error(e.name + ': ' + e.message);
@@ -82,6 +82,8 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         handleLogged: function (Clase) {
+            this.game.actualizarBajoTecho();
+
             this.logeado_callback();
         },
 
@@ -291,15 +293,12 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
 
         handleRainToggle: function () {
             this.game.lloviendo = !this.game.lloviendo;
-
-            if (this.game.map.mapaOutdoor()) {
-                var bajoTecho = this.game.bajoTecho;
-                if (this.game.lloviendo)
-                    this.game.assetManager.IniciarSonidoLluvia(bajoTecho);
-                else
-                    this.game.assetManager.finalizarSonidoLluvia(bajoTecho);
-                this.game.renderer.toggleLluvia();
-            }
+            var bajoTecho = this.game.bajoTecho;
+            if (this.game.lloviendo)
+                this.game.assetManager.IniciarSonidoLluvia(bajoTecho);
+            else
+                this.game.assetManager.finalizarSonidoLluvia(bajoTecho);
+            this.game.renderer.toggleLluvia();
         },
 
         handleCreateFX: function (CharIndex, FX, FXLoops) {

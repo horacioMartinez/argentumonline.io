@@ -377,33 +377,43 @@ Enums = {
             fill: "rgb(80, 80, 255)",
             stroke: "rgb(50, 50, 255)"
         }
+    },
+    SONIDOS: {
+        paso1: "23",
+        paso2: "24",
+        pasoNavegando: "50",
+        lluvia_outdoor: "lluviaout",
+        lluvia_indoor: "lluviain",
+        lluvia_start_indoor:"lluviainst",
+        lluvia_start_outdoor:"lluviaoutst",
+        lluvia_end_indoor:"lluviainend",
+        lluvia_end_outdoor:"lluviaoutend",
     }
-    /*
-     FONTTYPE_TALK1
-     FONTTYPE_FIGHT2
-     FONTTYPE_WARNING3
-     FONTTYPE_INFO4
-     FONTTYPE_INFOBOLD5
-     FONTTYPE_EJECUCION6
-     FONTTYPE_PARTY7
-     FONTTYPE_VENENO8
-     FONTTYPE_GUILD9
-     FONTTYPE_SERVER10
-     FONTTYPE_GUILDMSG11
-     FONTTYPE_CONSEJO12
-     FONTTYPE_CONSEJOCAOS13
-     FONTTYPE_CONSEJOVesA14
-     FONTTYPE_CONSEJOCAOSVesA15
-     FONTTYPE_CENTINELA16
-     FONTTYPE_GMMSG17
-     FONTTYPE_GM18
-     FONTTYPE_CITI1ZEN19
-     FONTTYPE_CONSE20
-     FONTTYPE_DIOS
-     */
+};
 
-}
-;
+/*
+ FONTTYPE_TALK1
+ FONTTYPE_FIGHT2
+ FONTTYPE_WARNING3
+ FONTTYPE_INFO4
+ FONTTYPE_INFOBOLD5
+ FONTTYPE_EJECUCION6
+ FONTTYPE_PARTY7
+ FONTTYPE_VENENO8
+ FONTTYPE_GUILD9
+ FONTTYPE_SERVER10
+ FONTTYPE_GUILDMSG11
+ FONTTYPE_CONSEJO12
+ FONTTYPE_CONSEJOCAOS13
+ FONTTYPE_CONSEJOVesA14
+ FONTTYPE_CONSEJOCAOSVesA15
+ FONTTYPE_CENTINELA16
+ FONTTYPE_GMMSG17
+ FONTTYPE_GM18
+ FONTTYPE_CITI1ZEN19
+ FONTTYPE_CONSE20
+ FONTTYPE_DIOS
+ */
 
 /*
  'Objetos públicos

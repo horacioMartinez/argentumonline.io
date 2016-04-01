@@ -32,7 +32,7 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 this.pixiRenderer = new PIXI.autoDetectRenderer(this.camera.gridW * this.tilesize, this.camera.gridH * this.tilesize);
                 $(this.pixiRenderer.view).css('position', 'relative');
                 $("#gamecanvas").append(this.pixiRenderer.view);
-                this._initStage()
+                this._initStage();
             },
 
             _initStage: function () {
@@ -193,6 +193,8 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
 
                 var self = this;
                 sprite.setSpeed(char.moveSpeed);
+
+                sprite.zOffset = -50; // para que quede debajo de los objetos del mapa en el mismo y
                 char.sprite = sprite;
 
                 char.texto = new CharacterText(this.escala);
@@ -306,6 +308,10 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 return this.camera.isVisiblePosition(entity.gridX, entity.gridY, this.POSICIONES_EXTRA_RENDER_X, this.POSICIONES_EXTRA_RENDER_Y);
             },
 
+            entityEnRangoCamara: function (entity){
+                return this.camera.isVisiblePosition(entity.gridX, entity.gridY,0,0);
+            },
+
             moverPosition: function (x, y) {
                 this.camera.mover(x, y);
                 this._syncGamePosition();
@@ -404,7 +410,7 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 var anguloBase = Math.random() * (Math.PI / 12) + Math.PI / 12;
 
                 var velocidad = 7 + Math.pow(anguloBase,2) * 15;
-                var cantidadGotas = 70 + anguloBase * 150;
+                var cantidadGotas = Math.floor((100 + anguloBase * 250)*this.escala);
                 if (Math.random() < 0.5)
                     anguloBase = -anguloBase;
                 for (var i = 0; i < cantidadGotas; ++i) {
@@ -413,9 +419,9 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                     gota.x = Math.random() * this.pixiRenderer.width;
                     gota.y = Math.random() * this.pixiRenderer.height;
                     gota.rotation = anguloBase + Math.random() * Math.PI / 16;
-                    gota.velocidad = velocidad;//9;
+                    gota.velocidad = velocidad;
 
-                    gota.height = (6 + 6*Math.random())*this.escala;
+                    gota.height = (4 + 6*Math.random())*this.escala;
                     gota.alpha = 0.4;
                     this.gotas.push(gota);
                     this.containerLluvia.addChild(gota);

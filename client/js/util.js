@@ -28,6 +28,7 @@ window.requestAnimFrame = (function(){
 var modulo = function(num,max){
     return ((num%max)+max)%max;
 };
+
 /*
 // busqueda binaria que devuelve {found,index} donde index es el index donde esta o si no lo encontro donde estaria
 // despues se lo puede insertar con list.splice(resultadoBusqueda.index, 0, item);

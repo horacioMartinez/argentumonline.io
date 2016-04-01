@@ -20,222 +20,229 @@
 	<link rel="stylesheet" href="css/interfaz.css" type="text/css">
 
 	<script src="js/lib/modernizr.js" type="text/javascript"></script>
-                <script src="js/detect.js" type="text/javascript"></script>
-                <title>Dakara online</title>
-            </head>
-		<body class="intro inventarioActivo">
-			<noscript>
-				<div class="alert">
-					Necesitas activar Javascript para jugar Dakara Online
+	<script src="js/detect.js" type="text/javascript"></script>
+	<title>Dakara online</title>
+</head>
+
+<body class="intro inventarioActivo">
+	<noscript>
+		<div class="alert">
+			Necesitas activar Javascript para jugar Dakara Online
+		</div>
+	</noscript>
+
+	<div id="container">
+
+		<!-- Pantalla de conectar -->
+		<div id="conectar">
+			<img id="logo" src="../imagenes/logo.png" class="horizontal_center">
+			<input id="loginNombre" type="text" placeholder="Nombre" maxlength="15" class = "horizontal_center">
+			<input id="loginContrasenia" type="password" placeholder="Contraseña" maxlength="15" class = "horizontal_center">
+			<button id="botonJugar" class="botonNormal horizontal_center">Jugar</button>
+			<button id="botonCrearPJ" class="botonNormal horizontal_center">Crear Personaje</button>
+		</div>
+
+		<!-- Pantalla de crear PJ -->
+		<div id="crearPJ">
+			<input id="crearNombreInput" type="text" placeholder="Nombre" maxlength="15" class = "horizontal_center">
+			<input id="crearPasswordInput" type="password" placeholder="Contraseña" maxlength="15" class = "horizontal_center">
+			<input id="crearRepetirPasswordInput" type="password" placeholder="Repetir contraseña" maxlength="15" class = "horizontal_center">
+			<input id="crearMailInput"  type="email" placeholder="Mail" maxlength="15" class = "horizontal_center">
+
+			<div id="crearPjCenter">
+				<div id="crearPjSeleccion">
+					<select id="crearSelectClase" ></select>
+					<select id="crearSelectCiudad" ></select>
+					<select id="crearSelectRaza" ></select>
+					<select id="crearSelectGenero" ></select>
 				</div>
-			</noscript>
 
-			<div id="container">
-
-				<!-- Pantalla de conectar -->
-				<div id="conectar">
-					<img id="logo" src="../imagenes/logo.png" class="horizontal_center">
-					<input id="loginNombre" type="text" placeholder="Nombre" maxlength="15" class = "horizontal_center">
-					<input id="loginContrasenia" type="password" placeholder="Contraseña" maxlength="15" class = "horizontal_center">
-					<button id="botonJugar" class="botonNormal fontAsul horizontal_center">Jugar</button>
-					<button id="botonCrearPJ" class="botonNormal fontAsul horizontal_center">Crear Personaje</button>
-				</div>
-
-				<!-- Pantalla de crear PJ -->
-				<div id="crearPJ">
-					<input id="crearNombreInput" type="text" placeholder="Nombre" maxlength="15">
-					<input id="crearPasswordInput" type="password" placeholder="Contraseña" maxlength="15">
-					<input id="crearRepetirPasswordInput" type="password" placeholder="Repetir contraseña" maxlength="15">
-					<input id="crearMailInput"  type="email" placeholder="Mail" maxlength="15">
-					<button id="crearBotonTirarDados" class="botonNormal fontAsul">Tirar Dados</button>
-					<button id="crearBotonVolver" class="botonNormal fontAsul">Volver</button>
-					<button id="crearBotonCrear" class="botonNormal fontAsul">Crear personaje</button>
-
-					<select id="crearSelectClase"></select>
-					<select id="crearSelectCiudad"></select>
-					<select id="crearSelectRaza"></select>
-					<select id="crearSelectGenero"></select>
+				<div id ="crearPjAtributos">
+					<button id="crearBotonTirarDados" class="botonNormal">Tirar Dados</button>
 					<span id="crearDadoFuerza" ></span>
 					<span id="crearDadoAgilidad" ></span>
 					<span id="crearDadoInteligencia" ></span>
 					<span id="crearDadoCarisma" ></span>
 					<span id="crearDadoConstitucion" ></span>
 				</div>
+			</div>
 
-				<!-- Pantalla de juego-->
-				<div id="juego">
-					<div id="gamecanvas" class="clickable">
+			<button id="crearBotonCrear" class="botonNormal">Crear personaje</button>
+			<button id="crearBotonVolver" class="botonNormal">Volver</button>
+		</div>
+
+		<!-- Pantalla de juego-->
+		<div id="juego">
+			<div id="gamecanvas" class="clickable">
+			</div>
+			<div id="chatbox">
+				<input id="chatinput" type="text" maxlength="60" autocomplete="off">
+			</div>
+
+			<!--interfaz ingame-->
+			<div id="interfaz">
+				<div id="bordeIzquierda"></div>
+				<div id="bordeArriba"></div>
+
+				<div id="bordeAbajo">
+					<div id="barraExp">
+						<div id="barraExpUsada"></div> 
+						<span id="barraExpTexto"></span>
 					</div>
-					<div id="chatbox">
-						<input id="chatinput" class="fontAsul" type="text" maxlength="60" autocomplete="off">
-					</div>
-
-					<!--interfaz ingame-->
-					<div id="interfaz">
-						<div id="bordeIzquierda"></div>
-						<div id="bordeArriba"></div>
-
-						<div id="bordeAbajo">
-							<div id="barraExp">
-								<div id="barraExpUsada"></div> 
-								<span id="barraExpTexto"></span>
-							</div>
-						</div>
-
-						<div id="bordeDerecha">
-							<div id="InventarioHechizos" class="inventario">
-								<ul id="itemsGrid" class="itemgrid"></ul>
-								<select id="hechizos" multiple ="yes" ></select>
-								<button id="botonInventario" class="botonInvisible"></button>
-								<button id="botonHechizos" class="botonInvisible"></button>
-								<button id="botonLanzar" class="botonInvisible"></button>
-								<button id="botonInfo" class="botonInvisible"></button>
-							</div>
-							<div id="barras">
-								<div id="barraEnergia">
-									<div id="barraEnergiaUsada"></div> <!-- Porcentaje usado (en negro) de la barra -->
-									<span id="barraEnergiaTexto"></span>
-								</div>
-								<div id="barraMana">
-									<div id="barraManaUsada"></div> 
-									<span id="barraManaTexto"></span>
-								</div>
-								<div id="barraSalud">
-									<div id="barraSaludUsada"></div> 
-									<span id="barraSaludTexto"></span>
-								</div>
-								<div id="barraHambre">
-									<div id="barraHambreUsada"></div> 
-									<span id="barraHambreTexto"></span>
-								</div>
-								<div id="barraSed">
-									<div id="barraSedUsada"></div> 
-									<span id="barraSedTexto"></span>
-								</div>
-							</div>
-							<button id="botonTirarOro" class="botonInvisible"></button>
-							<span id="indicadorAgilidad"></span>
-							<span id="indicadorFuerza"></span>
-							<span id="indicadorOro"></span>
-							<button id="botonSeguroResucitar" class="botonImagen"></button>
-							<button id="botonSeguroAtacar" class="botonImagen"></button>
-						</div>
-
-
-					</div>
-
-
-					<!-- FIN Pantalla de juego y interfaz ingame -->
-
-					<!-- Pop ups, ventana de comerciar por ejemplo -->
-					<div id="popUp" class ="fontAsul">
-
-						<article id="comerciar">
-
-							<button id="comerciarBotonComprar" class="botonNormal fontAsul">Comprar</button>
-							<button id="comerciarBotonVender" class="botonNormal fontAsul">Vender</button>
-							<button id="comerciarBotonCerrar" class="botonCerrar"></button>
-
-							<ul id="comerciarGridComprar" class="itemgrid"></ul>
-							<ul id="comerciarGridVender" class="itemgrid"></ul>
-
-							<input id="comerciarInputCantidad" type="number" value="1">
-
-							<span id="comerciarNombre" class ="fontAsul"></span>
-							<span id="comerciarPrecio" class ="fontAsul"></span>
-							<span id="comerciarMin" class ="fontAsul"></span>
-							<span id="comerciarMax" class ="fontAsul"></span>
-						</article>
-
-
-						<article id="tirar">
-							<input id="tirarInputCantidad" type="number" max="10000">
-
-							<button id="tirarBotonTirar" class="botonNormal">Tirar</button>
-							<button id="tirarBotonTirarTodo" class="botonNormal">Tirar todo</button>
-						</article>
-
-						<article id="boveda">
-
-							<button id="bovedaBotonRetirarOro" class="botonInvisible"></button>
-							<button id="bovedaBotonDepositarOro" class="botonInvisible"></button>
-							<button id="bovedaBotonRetirarItem" class="botonInvisible"></button>
-							<button id="bovedaBotonDepositarItem" class="botonInvisible"></button>
-							<button id="bovedaBotonCerrar" class="botonCerrar"></button>
-
-							<ul id="bovedaGridComprar" class="itemgrid"></ul>
-							<ul id="bovedaGridVender" class="itemgrid"></ul>
-
-							<input id="bovedaInputCantidadOro" type="number" value="1">
-							<input id="bovedaInputCantidadItem" type="number" value="1">
-							
-							<span id="bovedaOroDisponible" class ="fontAsul"></span>
-							<span id="bovedaNombre" class ="fontAsul"></span>
-							<span id="bovedaMin" class ="fontAsul"></span>
-							<span id="bovedaMax" class ="fontAsul"></span>
-						</article>
-
-					</div>
-
-
-
-
-
-
-
-
-
-
 				</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+				<div id="bordeDerecha">
+					<div id="InventarioHechizos" class="inventario">
+						<ul id="itemsGrid" class="itemgrid"></ul>
+						<select id="hechizos" multiple ="yes" ></select>
+						<button id="botonInventario" class="botonInvisible"></button>
+						<button id="botonHechizos" class="botonInvisible"></button>
+						<button id="botonLanzar" class="botonInvisible"></button>
+						<button id="botonInfo" class="botonInvisible"></button>
+					</div>
+					<div id="barras">
+						<div id="barraEnergia">
+							<div id="barraEnergiaUsada"></div> <!-- Porcentaje usado (en negro) de la barra -->
+							<span id="barraEnergiaTexto"></span>
+						</div>
+						<div id="barraMana">
+							<div id="barraManaUsada"></div> 
+							<span id="barraManaTexto"></span>
+						</div>
+						<div id="barraSalud">
+							<div id="barraSaludUsada"></div> 
+							<span id="barraSaludTexto"></span>
+						</div>
+						<div id="barraHambre">
+							<div id="barraHambreUsada"></div> 
+							<span id="barraHambreTexto"></span>
+						</div>
+						<div id="barraSed">
+							<div id="barraSedUsada"></div> 
+							<span id="barraSedTexto"></span>
+						</div>
+					</div>
+					<button id="botonTirarOro" class="botonInvisible"></button>
+					<span id="indicadorAgilidad"></span>
+					<span id="indicadorFuerza"></span>
+					<span id="indicadorOro"></span>
+					<button id="botonSeguroResucitar" class="botonImagen"></button>
+					<button id="botonSeguroAtacar" class="botonImagen"></button>
+				</div>
 
 
 			</div>
 
 
-			<footer>
-				<div class="fontAsul">
-					<div id="sharing" class="clickable">
-						Comparti en
-						<a href="https://twitter.com/home?status=Estoy%20jugando%20%23DakaraOnline%20un%20servidor%20de%20%23ArgentumOnline%20completamente%20web.%20Jugalo%20en%20...!" class="twitter"></a>
-						<a href="https://www.facebook.com/DakaraOnline?fref=ts" class="facebook"></a>
-					</div>
-					<div id="privacy-link" class="clickable">
-						<span class="dash">&ndash;</span> <a class="clickable" target="_blank" href="http://foros.dakaraonline.org/">Reporte de errores</a>
-					</div>
-					<div id="legal-link" class="clickable">
-						<span class="dash">&ndash;</span> <a class="clickable" target="_blank" href="http://foros.dakaraonline.org/">Foro</a>
-					</div>
-					<div id="credits-link" class="clickable">
-						<span class="dash">&ndash;</span> <a class="clickable" target="_blank" href="http://wiki.dakaraonline.org/wiki/start">Wiki</a>
-					</div>
-			</footer>
+			<!-- FIN Pantalla de juego y interfaz ingame -->
 
-			<script type="text/javascript">
-				if(!Detect.supportsWebSocket()) {
-					alert("Tu navegador no soporta websockets, para jugar debes actualizar tu navegador!")
-				}
-			</script>
+			<!-- Pop ups, ventana de comerciar por ejemplo -->
+			<div id="popUp">
 
-			<script src="js/lib/log.js"></script>
-			<script>
-				var require = { waitSeconds: 60 };
-			</script>
-			<script data-main="js/home" src="js/lib/require.js"></script>
-			
-			</body>
-			</html>
+				<article id="comerciar">
+
+					<button id="comerciarBotonComprar" class="botonNormal">Comprar</button>
+					<button id="comerciarBotonVender" class="botonNormal">Vender</button>
+					<button id="comerciarBotonCerrar" class="botonCerrar"></button>
+
+					<ul id="comerciarGridComprar" class="itemgrid"></ul>
+					<ul id="comerciarGridVender" class="itemgrid"></ul>
+
+					<input id="comerciarInputCantidad" type="number" value="1">
+
+					<span id="comerciarNombre" ></span>
+					<span id="comerciarPrecio" ></span>
+					<span id="comerciarMin" ></span>
+					<span id="comerciarMax" ></span>
+				</article>
+
+
+				<article id="tirar">
+					<input id="tirarInputCantidad" type="number" max="10000">
+
+					<button id="tirarBotonTirar" class="botonNormal">Tirar</button>
+					<button id="tirarBotonTirarTodo" class="botonNormal">Tirar todo</button>
+				</article>
+
+				<article id="boveda">
+
+					<button id="bovedaBotonRetirarOro" class="botonInvisible"></button>
+					<button id="bovedaBotonDepositarOro" class="botonInvisible"></button>
+					<button id="bovedaBotonRetirarItem" class="botonInvisible"></button>
+					<button id="bovedaBotonDepositarItem" class="botonInvisible"></button>
+					<button id="bovedaBotonCerrar" class="botonCerrar"></button>
+
+					<ul id="bovedaGridComprar" class="itemgrid"></ul>
+					<ul id="bovedaGridVender" class="itemgrid"></ul>
+
+					<input id="bovedaInputCantidadOro" type="number" value="1">
+					<input id="bovedaInputCantidadItem" type="number" value="1">
+
+					<span id="bovedaOroDisponible"></span>
+					<span id="bovedaNombre"></span>
+					<span id="bovedaMin"></span>
+					<span id="bovedaMax"></span>
+				</article>
+
+			</div>
+
+
+
+
+
+
+
+
+
+
+		</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</div>
+
+
+	<footer>
+			<div id="sharing" class="clickable">
+				Comparti en
+				<a href="https://twitter.com/home?status=Estoy%20jugando%20%23DakaraOnline%20un%20servidor%20de%20%23ArgentumOnline%20completamente%20web.%20Jugalo%20en%20...!" class="twitter"></a>
+				<a href="https://www.facebook.com/DakaraOnline?fref=ts" class="facebook"></a>
+			</div>
+			<div id="privacy-link" class="clickable">
+				<span class="dash">&ndash;</span> <a class="clickable" target="_blank" href="http://foros.dakaraonline.org/">Reporte de errores</a>
+			</div>
+			<div id="legal-link" class="clickable">
+				<span class="dash">&ndash;</span> <a class="clickable" target="_blank" href="http://foros.dakaraonline.org/">Foro</a>
+			</div>
+			<div id="credits-link" class="clickable">
+				<span class="dash">&ndash;</span> <a class="clickable" target="_blank" href="http://wiki.dakaraonline.org/wiki/start">Wiki</a>
+	</footer>
+
+	<script type="text/javascript">
+		if(!Detect.supportsWebSocket()) {
+			alert("Tu navegador no soporta websockets, para jugar debes actualizarlo")
+		}
+	</script>
+
+	<script src="js/lib/log.js"></script>
+	<script>
+			var require = { waitSeconds: 60 };
+	</script>
+	<script data-main="js/home" src="js/lib/require.js"></script>
+
+</body>
+</html>

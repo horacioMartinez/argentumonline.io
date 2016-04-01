@@ -21,7 +21,7 @@ def generate_random_name():
 filename = sys.argv[-1]
 
 origen = open(filename, "r")
-log = open("./logObfucador","w")
+log = open("./logObfucador.txt","w")
 
 nombresUsados = []
 

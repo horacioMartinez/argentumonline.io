@@ -125,48 +125,48 @@ define(['json!../indices/graficos.json',
                 this.stopLluvia();
                 var nombre;
                 if (bajoTecho)
-                    nombre = "lluviainend";
+                    nombre = Enums.SONIDOS.lluvia_end_indoor;
                 else
-                    nombre = "lluviaoutend";
+                    nombre = Enums.SONIDOS.lluvia_end_outdoor;
                 this.playSound(nombre);
-                this.sounds[nombre].volume(0.3);
+                this.sounds[nombre].volume(0.2);
             },
 
             IniciarSonidoLluvia: function (bajoTecho) {
                 var nombre;
                 if (bajoTecho)
-                    nombre = "lluviainst";
+                    nombre = Enums.SONIDOS.lluvia_start_indoor;
                 else
-                    nombre = "lluviaoutst";
+                    nombre = Enums.SONIDOS.lluvia_start_outdoor;
                 this.playSound(nombre, false, this.playLoopLluvia(bajoTecho));
-                this.sounds[nombre].volume(0.3);
+                this.sounds[nombre].volume(0.2);
             },
 
             playLoopLluvia: function (bajoTecho) {
                 this.stopLluvia();
                 var nombre, sprite;
                 if (bajoTecho) {
-                    nombre = "lluviain";
+                    nombre = Enums.SONIDOS.lluvia_indoor;
                     sprite = {lluvia: [130, 7900]};
                 }
                 else {
-                    nombre = "lluviaout";
+                    nombre = Enums.SONIDOS.lluvia_outdoor;
                     sprite = {lluvia: [100, 4200]};
                 }
 
                 if (!this.sounds[nombre]) { //cargar con sprite para que loopee bien
                     this.cargarSonido(nombre,true);
                     this.sounds[nombre].sprite(sprite);
-                    this.sounds[nombre].volume(0.5);
+                    this.sounds[nombre].volume(0.4);
                 }
                 this.sounds[nombre].play("lluvia");
             },
 
             stopLluvia: function () {
-                if (this.sounds["lluviain"])
-                    this.sounds["lluviain"].stop();
-                if (this.sounds["lluviaout"])
-                    this.sounds["lluviaout"].stop();
+                if (this.sounds[Enums.SONIDOS.lluvia_indoor])
+                    this.sounds[Enums.SONIDOS.lluvia_indoor].stop();
+                if (this.sounds[Enums.SONIDOS.lluvia_outdoor])
+                    this.sounds[Enums.SONIDOS.lluvia_outdoor].stop();
             },
 
             toggleSound: function () {

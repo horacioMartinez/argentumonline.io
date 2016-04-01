@@ -78,7 +78,7 @@ define(['jquery', 'storage', 'gameclient', 'crearpj'], function ($, Storage, Gam
             this.firstTimePlaying = !this.storage.hasAlreadyPlayed();
             if (this.game.started)
                 return;
-            this.center();
+            //this.center();
             this.game.inicializar(username);
             if (!newChar) {
                 this.client.intentarLogear(username, userpw);

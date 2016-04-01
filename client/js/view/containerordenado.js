@@ -15,7 +15,7 @@ define(['lib/pixi'], function (PIXI) {
 
     ContainerOrdenado.prototype.addChild= function (spriteGrh) {
         var self = this;
-        spriteGrh.setPositionChangeCallback( function(){
+        spriteGrh.setGridPositionChangeCallback( function(){
             self._ordenarChild(this);
         });
         PIXI.Container.prototype.addChild.call(this,spriteGrh);
@@ -26,10 +26,12 @@ define(['lib/pixi'], function (PIXI) {
         var gridX = Math.round(hijo.x / 32);
         var gridY = Math.round(hijo.y / 32);
         hijo.zIndex = gridY *  (this._mapWidth+1) + ((this._mapWidth+1) - gridX) + (hijo.zOffset || 0);
+
         this._reordenarTodo(); // todo <- busqueda bin y insercion
     };
 
-    ContainerOrdenado.prototype._reordenarTodo= function () { // TODO (IMPORTANTE): no ordenar cada vez, sino insertar con una busqueda binaria
+    ContainerOrdenado.prototype._reordenarTodo= function () { // TODO: no ordenar cada vez, sino insertar con una busqueda binaria
+
         this.children.sort(function (a, b) {
             a.zIndex = a.zIndex || 0;
             b.zIndex = b.zIndex || 0;

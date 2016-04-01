@@ -20,7 +20,9 @@
 #comerciarGridComprar {left:41px; top: 133px;}
 #comerciarGridVender {left:263px; top: 133px;}
 
-#comerciarBotonComprar {left:37px;top:415px;}
+#comerciarBotonComprar {left:37px;top:415px;     font-family:'Asul',sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -webkit-font-smoothing: subpixel-antialiased;}
 #comerciarBotonVender {left:260px;top:415px;}
 #comerciarBotonCerrar {left:407px;top:27px;}
 

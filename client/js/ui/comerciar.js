@@ -34,7 +34,7 @@ define(['ui/popup','ui/itemgrid','jquery-ui'], function (PopUp,ItemGrid) {
                 item = this.game.inventario[i];
                 if (item) {
                     var numGraf = this.game.renderer.getNumGraficoFromGrh(item.grh);
-                    if (numGraf) {1
+                    if (numGraf) {
                         this.ventaGrid.modificarSlot(i, item.cantidad, numGraf);
                     }
                 }
