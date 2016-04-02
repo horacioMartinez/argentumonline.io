@@ -213,7 +213,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                             return;
                         }
                         var dir = c.esPosAdyacente(gridX, gridY);
-                        if (!this.renderer.entityEnRangoVisible(c) || !dir) {
+                        if (!this.renderer.entityVisiblePorCamara(c,1) || !dir) {
                             this.resetPosCharacter(CharIndex, gridX, gridY);
                         }
                         else {
@@ -226,7 +226,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                 },
 
                 playSonidoPaso: function(char){
-                    if (char.muerto || !this.renderer.entityEnRangoCamara(char))
+                    if (char.muerto || !this.renderer.entityEnTileVisible(char))
                         return;
                     if (this.player.navegando){ //todo: que sea dependiendo si el char navega, no el player
                         this.assetManager.playSound(Enums.SONIDOS.pasoNavegando);
@@ -568,10 +568,15 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                         return true;
                     });
 
-                    this.player.onMoverse(
+                    this.player.setOnMoverse(
                         function (x, y) {
                             self.renderer.moverPosition(x - self.renderer.camera.centerPosX, y - self.renderer.camera.centerPosY);
                         });
+
+                    this.player.setOnMoverseBegin(
+                        function(dir){
+                            self.renderer.updateTilesMov(dir);
+                    });
                 },
 
                 resetPosCharacter: function (charIndex, gridX, gridY, noReDraw) {

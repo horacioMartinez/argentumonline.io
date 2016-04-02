@@ -3,8 +3,8 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
 
         var Renderer = Class.extend({
             init: function (mapa, assetManager, escala) {
-                this.POSICIONES_EXTRA_RENDER_X = 4; //TODO
-                this.POSICIONES_EXTRA_RENDER_Y = 8; //TODO
+                this.POSICIONES_EXTRA_RENDER_X = 3;
+                this.POSICIONES_EXTRA_RENDER_Y = 5;
                 this.POSICIONES_EXTRA_TERRENO = 1; // no deberia ser necesario mas de una. (una pos extra en cada una de las 4 direcciones)
 
                 this.mapa = mapa;
@@ -26,6 +26,9 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
 
                 this.tablet = Detect.isTablet(window.innerWidth);
 
+                this._spritesLayer2 = [];
+                this._spritesLayer3 = [];
+                this._spritesLayer4 = [];
             },
 
             _inicializarPixi: function () {
@@ -54,51 +57,6 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 this.gameStage.addChild(this.gameText); // todo? gametext abajo o arriba de layer4?
                 this.gameStage.addChild(this.layer4);
                 this._initTerrenoSpriteGrid(this.layer1);
-            },
-
-            _removeChilds: function (padre, hijos) {
-                if (hijos)
-                    for (var i = 0; i < hijos.length; i++) {
-                        padre.removeChild(hijos[i]);
-                    }
-            },
-
-            _drawSpritesIni: function () { // dibuja TODOS los sprites del mapa de las layers 2,3,4: TODO: obviamente que no dibuje todo
-                this._removeChilds(this.layer2, this._spritesLayer2);
-                this._removeChilds(this.layer3, this._spritesLayer3);
-                this._removeChilds(this.layer4, this._spritesLayer4);
-                this._spritesLayer2 = [];
-                this._spritesLayer3 = [];
-                this._spritesLayer4 = [];
-                var nuevoSprite;
-
-                for (var i = 1; i < this.mapa.width + 1; i++) {
-                    for (var j = 1; j < this.mapa.height + 1; j++) {
-                        var screenX = i * this.tilesize;
-                        var screenY = j * this.tilesize;
-                        var grh2 = this.mapa.getGrh2(i, j);
-                        var grh3 = this.mapa.getGrh3(i, j);
-                        var grh4 = this.mapa.getGrh4(i, j);
-                        if (grh2) {
-                            nuevoSprite = new SpriteGrh(this.assetManager.getTerrenoGrh(grh2));
-                            this.layer2.addChild(nuevoSprite);
-                            nuevoSprite.setPosition(screenX, screenY);
-                            this._spritesLayer2.push(nuevoSprite);
-                        }
-                        if (grh3) {
-                            nuevoSprite = new SpriteGrh(this.assetManager.getGrh(grh3));
-                            this.layer3.addChild(nuevoSprite);
-                            nuevoSprite.setPosition(screenX, screenY);
-                            this._spritesLayer3.push(nuevoSprite);
-                        }
-                        if (grh4) {
-                            nuevoSprite = new SpriteGrh(this.assetManager.getGrh(grh4));
-                            this.layer4.addChild(nuevoSprite);
-                            nuevoSprite.setPosition(screenX, screenY);
-                            this._spritesLayer4.push(nuevoSprite);
-                        }
-                    }
-                }
             },
 
             // TODO!: (MUY IMPORTANTE) probar con rendertexture en las layers 1,2 y 4. (para los tiles animados generar un sprite)
@@ -233,6 +191,13 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 char.sprite._updateOrdenHijos();
             },
 
+            cambiarNombreCharacter: function (char, nombre, clan, color) {
+                var fontColor = color ? Enums.NickColor[Enums.NickColorIndex[color]] : Enums.NickColor.CIUDADANO;
+                var font = Enums.Font.NOMBRE;
+                font.fill = fontColor;
+                char.sprite.setNombre(nombre, clan, font);
+            },
+
             sacarCharacter: function (char) {
                 this.layer3.removeChild(char.sprite);
                 this.gameText.removeChild(char.texto);
@@ -304,12 +269,26 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 this.gameStage.y = -this.camera.y * this.escala;
             },
 
-            entityEnRangoVisible: function (entity) {
-                return this.camera.isVisiblePosition(entity.gridX, entity.gridY, this.POSICIONES_EXTRA_RENDER_X, this.POSICIONES_EXTRA_RENDER_Y);
+            entityVisiblePorCamara: function (entity, heightTileOffset) {
+                if (!entity.sprite)
+                    return false;
+
+                var entityRect = entity.sprite.getBounds().clone();
+                if (!entityRect.width) {
+                    entityRect.x = entity.x;
+                    entityRect.y = entity.y;
+                }
+                else {
+                    entityRect.width /= this.escala;
+                    entityRect.height = (entityRect.height / this.escala) + this.tilesize * heightTileOffset * 2;
+                    entityRect.x = (-this.gameStage.x + entityRect.x) / this.escala;
+                    entityRect.y = (-this.gameStage.y + entityRect.y) / this.escala - this.tilesize * heightTileOffset;
+                }
+                return this.camera.rectVisible(entityRect);
             },
 
-            entityEnRangoCamara: function (entity){
-                return this.camera.isVisiblePosition(entity.gridX, entity.gridY,0,0);
+            entityEnTileVisible: function (entity) { // puede que no este en un tile visible pero si sea visible la entidad (para eso usar el de arriba)
+                return this.camera.isVisiblePosition(entity.gridX, entity.gridY, 0, 0);
             },
 
             moverPosition: function (x, y) {
@@ -317,8 +296,12 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 this._syncGamePosition();
             },
 
-            updateTilesMov: function (dir) { // al moverse mueve la columna/fila que queda atras al frente de todo
-                // todo (POCO IMPORTANTE): arreglar bien y usar camera.foreachvisiblenextposition
+            updateTilesMov: function (dir) {
+                this.updateTerrenoMov(dir);
+                this.updateLayersMov(dir);
+            },
+
+            updateTerrenoMov: function (dir) { // al moverse mueve la columna/fila que queda atras al frente de todo
                 var gridXIni = this.camera.gridX - this.POSICIONES_EXTRA_TERRENO;
                 var gridYIni = this.camera.gridY - this.POSICIONES_EXTRA_TERRENO;
                 var cols = this.camera.gridW + this.POSICIONES_EXTRA_TERRENO * 2;
@@ -375,11 +358,118 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                         break;
                 }
             },
+            _removeChilds: function (padre, gridHijos) {
+                // todo: no tener que iterar todo!
+                for (var k = 1; k <= 100; k++) {
+                    for (var j = 1; j <= 100; j++) {
+                        if (gridHijos[k])
+                            if (gridHijos[k][j])
+                                padre.removeChild(gridHijos[k][j]);
+
+                    }
+                }
+                //for (var fila in gridHijos) {
+                //    log.error("largo fila: " + fila.length);
+                //    for (var hijo in fila)
+                //        padre.removeChild(hijo);
+                //}
+            },
+
+            _drawSpritesIni: function () {
+
+                this._removeChilds(this.layer2, this._spritesLayer2);
+                this._removeChilds(this.layer3, this._spritesLayer3);
+                this._removeChilds(this.layer4, this._spritesLayer4);
+                for (var k = 0; k <= 100; k++) {
+                    this._spritesLayer2[k] = [];
+                    this._spritesLayer3[k] = [];
+                    this._spritesLayer4[k] = [];
+                }
+                var nuevoSprite;
+
+                var self = this;
+                this.camera.forEachVisiblePosition(function (i, j) {
+                    var screenX = i * self.tilesize;
+                    var screenY = j * self.tilesize;
+                    var grh2 = self.mapa.getGrh2(i, j);
+                    var grh3 = self.mapa.getGrh3(i, j);
+                    var grh4 = self.mapa.getGrh4(i, j);
+                    if (grh2) {
+                        nuevoSprite = new SpriteGrh(self.assetManager.getTerrenoGrh(grh2));
+                        nuevoSprite.setPosition(screenX, screenY);
+                        self.layer2.addChild(nuevoSprite);
+                        self._spritesLayer2[i][j] = nuevoSprite;
+                    }
+                    if (grh3) {
+                        nuevoSprite = new SpriteGrh(self.assetManager.getGrh(grh3));
+                        self.layer3.addChild(nuevoSprite);
+                        nuevoSprite.setPosition(screenX, screenY);
+                        self._spritesLayer3[i][j] = nuevoSprite;
+                    }
+                    if (grh4) {
+                        nuevoSprite = new SpriteGrh(self.assetManager.getGrh(grh4));
+                        nuevoSprite.setPosition(screenX, screenY);
+                        self.layer4.addChild(nuevoSprite);
+                        self._spritesLayer4[i][j] = nuevoSprite;
+                    }
+                }, this.POSICIONES_EXTRA_RENDER_X, this.POSICIONES_EXTRA_RENDER_Y);
+            },
+
+            updateLayersMov: function (dir) {
+                var self = this;
+                this.camera.forEachVisibleNextLinea(dir, function (i, j) {
+                    var screenX = i * self.tilesize;
+                    var screenY = j * self.tilesize;
+                    var grh2 = self.mapa.getGrh2(i, j);
+                    var grh3 = self.mapa.getGrh3(i, j);
+                    var grh4 = self.mapa.getGrh4(i, j);
+                    if (grh2) {
+                        if (self._spritesLayer2[i][j])
+                            return;
+                        nuevoSprite = new SpriteGrh(self.assetManager.getTerrenoGrh(grh2));
+                        self.layer2.addChild(nuevoSprite);
+                        nuevoSprite.setPosition(screenX, screenY);
+                        self._spritesLayer2[i][j] = (nuevoSprite);
+                    }
+                    if (grh3) {
+                        if (self._spritesLayer3[i][j])
+                            return;
+                        nuevoSprite = new SpriteGrh(self.assetManager.getGrh(grh3));
+                        self.layer3.addChild(nuevoSprite);
+                        nuevoSprite.setPosition(screenX, screenY);
+                        self._spritesLayer3[i][j] = (nuevoSprite);
+                    }
+                    if (grh4) {
+                        if (self._spritesLayer4[i][j])
+                            return;
+                        nuevoSprite = new SpriteGrh(self.assetManager.getGrh(grh4));
+                        self.layer4.addChild(nuevoSprite);
+                        nuevoSprite.setPosition(screenX, screenY);
+                        self._spritesLayer4[i][j] = (nuevoSprite);
+                    }
+                }, this.POSICIONES_EXTRA_RENDER_X, this.POSICIONES_EXTRA_RENDER_Y);
+
+                this.camera.forEachVisibleLastLinea(dir, function (i, j) {
+                    if (self._spritesLayer2[i][j]) {
+                        self.layer2.removeChild(self._spritesLayer2[i][j]);
+                        self._spritesLayer2[i][j] = null;
+                    }
+                    if (self._spritesLayer3[i][j]) {
+                        self.layer3.removeChild(self._spritesLayer3[i][j]);
+                        self._spritesLayer3[i][j] = null;
+                    }
+                    if (self._spritesLayer4[i][j]) {
+                        self.layer4.removeChild(self._spritesLayer4[i][j]);
+                        self._spritesLayer4[i][j] = null;
+                    }
+                }, this.POSICIONES_EXTRA_RENDER_X, this.POSICIONES_EXTRA_RENDER_Y);
+            },
 
             resetPos: function (gridX, gridY) {
-                this.resetCameraPosition(gridX, gridY);
-                this._syncGamePosition();
-                this._drawTerrenoIni();
+                this.drawMapaIni(gridX, gridY);
+                //this.resetCameraPosition(gridX, gridY);
+                //this._syncGamePosition();
+                //this._drawTerrenoIni();
             },
 
             toggleLluvia: function () {
@@ -409,8 +499,8 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
 
                 var anguloBase = Math.random() * (Math.PI / 12) + Math.PI / 12;
 
-                var velocidad = 7 + Math.pow(anguloBase,2) * 15;
-                var cantidadGotas = Math.floor((100 + anguloBase * 250)*this.escala);
+                var velocidad = 7 + Math.pow(anguloBase, 2) * 15;
+                var cantidadGotas = Math.floor((100 + anguloBase * 250) * this.escala);
                 if (Math.random() < 0.5)
                     anguloBase = -anguloBase;
                 for (var i = 0; i < cantidadGotas; ++i) {
@@ -421,7 +511,7 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                     gota.rotation = anguloBase + Math.random() * Math.PI / 16;
                     gota.velocidad = velocidad;
 
-                    gota.height = (4 + 6*Math.random())*this.escala;
+                    gota.height = (4 + 6 * Math.random()) * this.escala;
                     gota.alpha = 0.4;
                     this.gotas.push(gota);
                     this.containerLluvia.addChild(gota);

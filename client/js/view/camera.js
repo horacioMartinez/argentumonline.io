@@ -13,14 +13,9 @@ define([], function () {
 
             this.gridW = 17;
             this.gridH = 13;
-        },
 
-        getHeight: function () {
-            return this.gridH * this.tilesize;
-        },
-
-        getWidth: function () {
-            return this.gridW * this.tilesize;
+            this.height = this.gridH * this.tilesize;
+            this.width = this.gridW * this.tilesize;
         },
 
         setPosition: function (x, y) {
@@ -52,8 +47,8 @@ define([], function () {
         },
 
         forEachVisiblePosition: function (callback, extraX, extraY) { // TODO: poner mas extra en el eje y?
-            var extraX = extraX || 0;
-            var extraY = extraY || 0;
+            extraX = extraX || 0;
+            extraY = extraY || 0;
             var gridIniY = this.gridY;
             var maxY = this.gridY + this.gridH + extraY;
             var gridiniX = this.gridX - extraX;
@@ -66,18 +61,18 @@ define([], function () {
                 gridiniX = 1;
             if (maxX > 100)
                 maxX = 100;
-            for (; gridIniY < maxY; gridIniY += 1) {
-                for (var gX = gridiniX; gX < maxX; gX += 1) {
+            for (; gridIniY < maxY; gridIniY++) {
+                for (var gX = gridiniX; gX < maxX; gX++) {
                     callback(gX, gridIniY);
                 }
             }
         },
 
-        forEachVisibleNextLinea: function (callback, direccion) { // x,y en la proxima "linea" del grid en la direccion direccion
+        forEachVisibleNextLinea: function (direccion, callback, extraX, extraY) { // x,y en la proxima "linea" del grid en la direccion direccion
             var topGridY = this.gridY;
-            var botGridY = this.gridY + this.gridH;
-            var izqGridX = this.gridX;
-            var derGridX = this.gridX + this.gridW;
+            var botGridY = this.gridY + this.gridH - 1 + extraY;
+            var izqGridX = this.gridX - extraX;
+            var derGridX = this.gridX + this.gridW - 1 + extraX;
 
             if (topGridY < 1)
                 topGridY = 1;
@@ -89,37 +84,57 @@ define([], function () {
                 derGridX = 100;
 
             switch (direccion) {
-                case Enums.Heading.este:
+                case Enums.Heading.oeste:
                     izqGridX -= 1;
                     if (izqGridX < 1)
-                        izqGridX = 1;
-                    for (var y = topGridY; y < botGridY; y++)
+                        return;
+                    for (var y = topGridY; y <= botGridY; y++)
                         callback(izqGridX, y);
                     break;
-                case Enums.Heading.oeste:
+                case Enums.Heading.este:
                     derGridX += 1;
                     if (derGridX > 100)
-                        derGridX = 100;
-                    for (var y = topGridY; y < botGridY; y++)
+                        return;
+                    for (var y = topGridY; y <= botGridY; y++)
                         callback(derGridX, y);
                     break;
-                case Enums.Heading.sur:
-                    topGridY -= 1;
+                case Enums.Heading.norte:
+                    topGridY -= 1; //extras en el norte se ignoran
                     if (topGridY < 1)
-                        topGridY = 1;
-                    for (var x = izqGridX; x < derGridX; x++)
+                        return;
+                    for (var x = izqGridX; x <= derGridX; x++)
                         callback(x, topGridY);
                     break;
-                case Enums.Heading.norte:
+                case Enums.Heading.sur:
                     botGridY += 1;
                     if (botGridY > 100)
-                        botGridY = 100;
-                    for (var x = izqGridX; x < derGridX; x++)
+                        return; // <-- ojo
+                    for (var x = izqGridX; x <= derGridX; x++)
                         callback(x, botGridY);
                     break;
                 default:
                     log.error("Heading invalido");
             }
+        },
+
+        //TODO: algunos siguen quedando visibles por ir caminando en zig zag con offsets distintos
+        forEachVisibleLastLinea: function (direccion, callback, extraX, extraY) {
+            var dirInversa;
+            switch (direccion) {
+                case Enums.Heading.oeste:
+                    dirInversa = Enums.Heading.este;
+                    break;
+                case Enums.Heading.este:
+                    dirInversa = Enums.Heading.oeste;
+                    break;
+                case Enums.Heading.norte:
+                    dirInversa = Enums.Heading.sur;
+                    break;
+                case Enums.Heading.sur:
+                    dirInversa = Enums.Heading.norte;
+                    break;
+            }
+            this.forEachVisibleNextLinea(dirInversa, callback, extraX, extraY);
         },
 
         isVisiblePosition: function (gridX, gridY, extraX, extraY) {
@@ -129,6 +144,13 @@ define([], function () {
             } else {
                 return false;
             }
+        },
+
+        rectVisible: function (rect) {
+            return !((this.x > rect.x + rect.width) ||
+            (this.x + this.width < rect.x) ||
+            (this.y > rect.y + rect.height) ||
+            (this.y + this.height < rect.y));
         },
 
         focusEntity: function (entity) {

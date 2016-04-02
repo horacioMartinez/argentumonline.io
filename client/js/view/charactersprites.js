@@ -19,7 +19,7 @@ define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
         this.setWeapons(weapons);
         this.setShields(shields);
         this.setHelmets(helmets);
-        this._setNombre(nombre, clan, font);
+        this.setNombre(nombre, clan, font);
         this._updateOrdenHijos();
     }
 
@@ -98,7 +98,7 @@ define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
         });
     };
 
-    CharacterSprites.prototype._setNombre = function (nombre, clan, font) {
+    CharacterSprites.prototype.setNombre = function (nombre, clan, font) {
         if (this._nombre) {
             this.removeChild(this._nombre);
             this._nombre = null;

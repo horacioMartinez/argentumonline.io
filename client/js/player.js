@@ -54,9 +54,14 @@ define(['character', 'enums'], function (Character) {
         },
 
         // moverse tiene que ver con el renderer, caminar con enviar mensajes del sv
-        onMoverse: function(callback){ // params: x,y
-          this.moverseCallback = callback;
+        setOnMoverse: function(callback){ // params: x,y
+          this._moverseCallback = callback;
         },
+
+        setOnMoverseBegin: function(cb){
+            this._comenzarMoverseCallback = cb;
+        },
+
 
         hasMoved: function () {
             if (this.moviendoseForzado) { // moviendoseForzado difiere de forcedcaminar en que este se setea una vez que comienza el movimiento, el otro cuando le llega el mensaje. Es necesario este checkeo porque si llega el mensaje y esta en movimiento, el hasmoved de ese movimiento afectaria al forcedcaminar
@@ -119,7 +124,8 @@ define(['character', 'enums'], function (Character) {
          */
         tratarDeMover: function(){
             if ( (this.moviendose && this.movement.inProgress === false) && this.tratarDeCaminar()) {
-                this._crearMovimiento(this.moverseCallback);
+                this._comenzarMoverseCallback(this.getDirMov());
+                this._crearMovimiento(this._moverseCallback);
                 return true;
             }
             return false;

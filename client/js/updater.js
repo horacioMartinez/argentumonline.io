@@ -13,10 +13,8 @@ define(['character', 'player', 'timer', 'enums'], function (Character, Player, T
         },
 
         updateComenzarMovimientoPlayer: function () { // todo: hacerlo dentro de player y sacar por completo esta clase
-            if (this.game.player.tratarDeMover()){
-                this.game.renderer.updateTilesMov(this.game.player.getDirMov());
-            }
-        },
+            this.game.player.tratarDeMover();
+        }
 
     });
 

@@ -515,6 +515,22 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleUpdateTagAndStatus: function (CharIndex, NickColor, Tag) {
+            // TODO: arreglar en el server, siempre manda charIndex = 1
+            var char = this.game.characters[CharIndex];
+            if (!char)
+                return;
+
+            var nombre, clan;
+            if (Tag.indexOf("<") > 0) {
+                nombre = Tag.slice(Tag, Tag.indexOf("<") - 1);
+                clan = Tag.slice(Tag.indexOf("<"), Tag.length);
+            }
+            else {
+                nombre = Tag;
+                clan = null;
+            }
+            this.game.renderer.cambiarNombreCharacter(char,nombre,clan,NickColor);
+
             console.log("TODO: handleUpdateTagAndStatus ");
         },
 

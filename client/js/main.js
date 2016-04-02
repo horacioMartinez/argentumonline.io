@@ -363,6 +363,25 @@ define(['app', 'assetmanager', 'game'], function (App, AssetManager, __para_que_
                 }
             });
 
+            /*
+            // DEBUGGGGGGGGGGGGGGGGG:
+            $(window).bind('mousewheel DOMMouseScroll', function(event){
+                var escala;
+                if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
+                    //scroll up
+                    escala = 1.1;
+                }
+                else {
+                    // scroll down
+                    escala = 0.9;
+                }
+                game.renderer.stage.scale.x *= escala;
+                game.renderer.stage.scale.y *= escala;
+                game.renderer.stage.x = ((game.renderer.stage.width * (1-game.renderer.stage.scale.x))/2);
+                game.renderer.stage.y = ((game.renderer.stage.height * (1-game.renderer.stage.scale.y))/2);
+            });*/
+
+
             if (game.renderer.tablet) {
                 $('body').addClass('tablet');
             }
