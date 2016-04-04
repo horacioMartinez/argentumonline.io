@@ -55,7 +55,11 @@ define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
 
     CharacterSprites.prototype._updateSombraSpriteSize = function (grh) {
         if (this._sombraSprite) {
-            var w = this.bodySprite.width < 32 ? 32 : this.bodySprite.width;
+            var w;
+            if (this.bodySprite)
+                w = this.bodySprite.width < 32 ? 32 : this.bodySprite.width;
+            else
+                w = 32;
             if (w !== this._sombraSprite.width)
                 this._sombraSprite.setSize(w, w);
         }
