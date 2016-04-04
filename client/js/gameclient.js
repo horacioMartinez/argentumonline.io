@@ -1,12 +1,13 @@
 define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Player, Protocolo, ByteQueue, __websock) {
 
     var GameClient = Class.extend({
-        init: function (game, host, port) {
+        init: function (game, uiManager, host, port) {
             this.VER_A = 0;
             this.VER_B = 13;
             this.VER_C = 2;
 
             this.game = game;
+            this.uiManager = uiManager;
             this.host = host;
             this.port = port;
             this.conectado = false;
@@ -35,12 +36,16 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
                 //}
             });
             this.ws.on('close', function () {
-                self.conectado = false;
-                self.disconnect_callback();
-                //disconnect();
-                //log.error("Disconnected");
+                 //   self._desconectar();
             });
 
+        },
+
+        _desconectar: function(){
+            log.error("DESCONECTAR!!!!");
+            this.conectado = false;
+            this.ws.close();
+            this.disconnect_callback();
         },
 
         intentarLogear: function (nombre, pw) {
@@ -101,11 +106,12 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleDisconnect: function () {
+            this._desconectar();
             console.log("TODO: handleDisconnect ");
         },
 
         handleCommerceEnd: function () {
-            this.game.uiManager.hideComerciar();
+            this.uiManager.hideComerciar();
         },
 
         handleBankEnd: function () {
@@ -113,12 +119,12 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleCommerceInit: function () {
-            this.game.uiManager.showComerciar();
+            this.uiManager.showComerciar();
         },
 
         handleBankInit: function (Banco) {
-            this.game.uiManager.showBoveda();
-            this.game.uiManager.boveda.setOroDisponible(Banco);
+            this.uiManager.showBoveda();
+            this.uiManager.boveda.setOroDisponible(Banco);
             console.log("TODO: handleBankInit ");
         },
 
@@ -166,7 +172,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleUpdateBankGold: function (Value) {
-            this.game.uiManager.boveda.setOroDisponible(Value);
+            this.uiManager.boveda.setOroDisponible(Value);
             console.log("TODO: handleUpdateBankGold ");
         },
 
@@ -199,6 +205,7 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleShowMessageBox: function (Chat) {
+            this.uiManager.showMensaje(Chat);
             console.log("TODO: handleShowMessageBox ");
         },
 
@@ -374,7 +381,8 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleErrorMsg: function (Message) {
-            log.error(Message);
+            this._desconectar();
+            this.uiManager.showMensaje(Message);
             console.log("TODO: handleErrorMsg ");
         },
 
@@ -575,18 +583,18 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
         },
 
         handleUpdateStrenghtAndDexterity: function (Fuerza, Agilidad) {
-            this.game.uiManager.interfaz.updateAgilidad(Agilidad);
-            this.game.uiManager.interfaz.updateFuerza(Fuerza);
+            this.uiManager.interfaz.updateAgilidad(Agilidad);
+            this.uiManager.interfaz.updateFuerza(Fuerza);
             console.log("TODO: handleUpdateStrenghtAndDexterity ");
         },
 
         handleUpdateStrenght: function (Fuerza) {
-            this.game.uiManager.interfaz.updateFuerza(Fuerza);
+            this.uiManager.interfaz.updateFuerza(Fuerza);
             console.log("TODO: handleUpdateStrenght ");
         },
 
         handleUpdateDexterity: function (Agilidad) {
-            this.game.uiManager.interfaz.updateAgilidad(Agilidad);
+            this.uiManager.interfaz.updateAgilidad(Agilidad);
             console.log("TODO: handleUpdateDexterity ");
         },
 
@@ -708,28 +716,28 @@ define(['player', 'protocol', 'bytequeue', 'lib/websock', 'enums'], function (Pl
 
         handleSafeModeOn: function () {
             this.game.seguroAtacarActivado = true;
-            this.game.uiManager.interfaz.setSeguroAtacar(true);
+            this.uiManager.interfaz.setSeguroAtacar(true);
             this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_ACTIVADO,Enums.Font.WARNING);
             console.log("TODO: handleResuscitationSafeOff");
         },
 
         handleSafeModeOff: function () {
             this.game.seguroAtacarActivado = false;
-            this.game.uiManager.interfaz.setSeguroAtacar(false);
+            this.uiManager.interfaz.setSeguroAtacar(false);
             this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_DESACTIVADO,Enums.Font.WARNING);
             console.log("TODO: handleResuscitationSafeOn");
         },
 
         handleResuscitationSafeOff: function () {
             this.game.seguroResucitacionActivado = false;
-            this.game.uiManager.interfaz.setSeguroResucitacion(false);
+            this.uiManager.interfaz.setSeguroResucitacion(false);
             this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_RESU_OFF,Enums.Font.WARNING);
             console.log("TODO: handleResuscitationSafeOff");
         },
 
         handleResuscitationSafeOn: function () {
             this.game.seguroResucitacionActivado = true;
-            this.game.uiManager.interfaz.setSeguroResucitacion(true);
+            this.uiManager.interfaz.setSeguroResucitacion(true);
             this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_RESU_ON,Enums.Font.WARNING);
             console.log("TODO: handleResuscitationSafeOn");
         },

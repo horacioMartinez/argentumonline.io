@@ -96,7 +96,6 @@ define(['app', 'assetmanager', 'game'], function (App, AssetManager, __para_que_
             var input = document.getElementById("chatinput");
 
             game = new Game(app, assetManager);
-            game.setup(input);
             game.setStorage(app.storage);
             app.setGame(game);
 

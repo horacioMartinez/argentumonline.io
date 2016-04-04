@@ -67,7 +67,7 @@ define(['ui/itemgrid'], function (ItemGrid) {
         getSelectedSlotHechizo: function () {
             res = $('#hechizos').val();
             if (res) {
-                return res[0];
+                return res;
             }
             else
                 return 0;
@@ -124,6 +124,10 @@ define(['ui/itemgrid'], function (ItemGrid) {
         },
         updateBarraExp: function(cant,max){
             this._updateBarra(cant, max, $("#barraExpUsada"), $("#barraExpTexto"));
+        },
+
+        updateIndicadorPosMapa: function(mapa, x,y){
+          $("#indicadorMapa").text("Mapa "+mapa+"  X: "+x + " Y: " +y);
         },
 
         setMouseCrosshair: function(visible){

@@ -3,12 +3,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
     function (__enums__, Mapa, Renderer, GameClient, Updater, Transition,
               Item, Player, Character, AssetManager, Intervalos, UIManager, ComandosChat) {
         var Game = Class.extend({
-                init: function (app, assetManager, uiManager) {
-
-                    if (uiManager)
-                        this.uiManager = uiManager;
-                    else
-                        this.uiManager = new UIManager(this);
+                init: function (app, assetManager) {
 
                     this.comandosChat = new ComandosChat(this);
                     this.map = new Mapa();
@@ -45,9 +40,13 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     this.bajoTecho = false;
                 },
 
-                setup: function (input) {
-                    this.renderer = new Renderer(this.map, this.assetManager, this.app.getEscala());
-                    this.chatinput = input;
+                setup: function (client,uiManager,renderer) {
+                    this.client = client;
+                    this.uiManager = uiManager;
+                    if (renderer)
+                        this.renderer = renderer;
+                    else
+                        this.renderer = new Renderer(this.map, this.assetManager, this.app.getEscala());
                 },
 
                 setStorage: function (storage) {
@@ -199,7 +198,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
 
                     if (CharIndex === this.player.id) {
                         if ((X !== this.player.gridX) || (Y !== this.player.gridY)) {
-                            this.resetPosCharacter(Charindex, X, Y);
+                            this.resetPosCharacter(CharIndex, X, Y);
                             log.error("moverCharacter: cambiar pos player a x:" + X + " y:" + Y);
                         }
                         else
@@ -517,6 +516,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                             self.actualizarMovPos(self.player, direccion);
                             self.actualizarBajoTecho();
                             self.playSonidoPaso(self.player);
+                            self.actualizarIndicadorPosMapa();
                         }
                     });
 
@@ -577,6 +577,8 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                         function(dir){
                             self.renderer.updateTilesMov(dir);
                     });
+
+                    this.actualizarIndicadorPosMapa();
                 },
 
                 resetPosCharacter: function (charIndex, gridX, gridY, noReDraw) {
@@ -596,6 +598,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                         if (!noReDraw)
                             this.renderer.resetPos(gridX, gridY);
                         this.actualizarBajoTecho();
+                        this.actualizarIndicadorPosMapa();
                     }
                 },
 
@@ -616,6 +619,10 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                             this.renderer.toggleLluvia();
                         }
                     }
+                },
+
+                actualizarIndicadorPosMapa: function (){
+                    this.uiManager.interfaz.updateIndicadorPosMapa(this.map.numero,this.player.gridX,this.player.gridY);
                 },
 
                 cambiarArea: function (gridX, gridY) {

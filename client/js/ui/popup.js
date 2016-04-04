@@ -9,6 +9,7 @@ define(['jquery-ui'], function () {
             this.DOMid = domID;
 
             this.$this  = $('#' + domID);
+            this.$container = $("#container");
             this.$this.draggable({
                 cursor: "move",
                 /*containment: "parent"*/
@@ -19,6 +20,11 @@ define(['jquery-ui'], function () {
         show: function () {
             this.clearDom();
             this.$this.show();
+
+            //centrado:
+            this.$this.css("top", (this.$container.height() / 2) - (this.$this.outerHeight() / 2));
+            this.$this.css("left", (this.$container.width() / 2) - (this.$this.outerWidth() / 2));
+
             this.visible = true;
         },
 

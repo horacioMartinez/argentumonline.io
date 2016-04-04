@@ -115,7 +115,7 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                     return;
                 }
                 item.sprite = new SpriteGrh(this.assetManager.getGrh(numGrh));
-                item.sprite.zOffset = -this.mapa.width; // para que item quede debajo de chars en misma cord Y ( para todo X)
+                item.sprite.zOffset = -50; // para que item quede debajo de chars en misma cord Y ( para todo X)
                 this.layer3.addChild(item.sprite);
                 item.sprite.setPosition(item.x, item.y);
             },
@@ -152,7 +152,7 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 var self = this;
                 sprite.setSpeed(char.moveSpeed);
 
-                sprite.zOffset = -50; // para que quede debajo de los objetos del mapa en el mismo y
+                sprite.zOffset = -30; // para que quede debajo de los objetos del mapa en el mismo y
                 char.sprite = sprite;
 
                 char.texto = new CharacterText(this.escala);
@@ -359,20 +359,12 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 }
             },
             _removeChilds: function (padre, gridHijos) {
-                // todo: no tener que iterar todo!
-                for (var k = 1; k <= 100; k++) {
-                    for (var j = 1; j <= 100; j++) {
-                        if (gridHijos[k])
-                            if (gridHijos[k][j])
-                                padre.removeChild(gridHijos[k][j]);
-
-                    }
-                }
-                //for (var fila in gridHijos) {
-                //    log.error("largo fila: " + fila.length);
-                //    for (var hijo in fila)
-                //        padre.removeChild(hijo);
-                //}
+                _.each(gridHijos, function(fila){
+                    _.each(fila, function(hijo){
+                        if (hijo)
+                            padre.removeChild(hijo);
+                    });
+                });
             },
 
             _drawSpritesIni: function () {

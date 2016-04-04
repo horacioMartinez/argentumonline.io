@@ -38,10 +38,11 @@
 #barraExp {background-color: Transparent; position: relative; top:28.1%; left:3.875%; width: 62.875%; height:38.8%;}
 #barraExpUsada {float:left; height:100%; width:30%; background:url('../imagenes/interfaz/barraExp.png');background-size: cover; }
 
-#indicadorAgilidad, #indicadorFuerza, #indicadorOro {position: absolute; text-align: center;}
+#indicadorAgilidad, #indicadorFuerza, #indicadorOro, #indicadorMapa {position: absolute; text-align: center;}
 #indicadorOro{left:69%;top:61.6%;color:#FFD700;text-align: left;}
 #indicadorFuerza{left:37%;top:60.6%;color:#B8860B;}
 #indicadorAgilidad{left:21.5%;top:60.6%;color:#D2691E;}
+#indicadorMapa{left:11%;top:93%;color:yellow;white-space: pre;}
 
 #botonTirarOro {position: absolute; left:61.5%; top:61%; width:6.5%; height:3.7%;}
 #botonSeguroResucitar {position: absolute;left:50.8%; top:90.6%; width:10.3%; height:6%; background-image: none}

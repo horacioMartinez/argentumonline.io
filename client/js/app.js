@@ -1,10 +1,11 @@
-define(['jquery', 'storage', 'gameclient', 'crearpj'], function ($, Storage, GameClient, CrearPJ) {
+define(['jquery', 'storage', 'gameclient', 'crearpj', 'ui/uimanager'], function ($, Storage, GameClient, CrearPJ, UIManager) {
 
     var App = Class.extend({
         init: function () {
             this.crearPJ = new CrearPJ();
             this.isParchmentReady = true;
             this.client = null;
+            this.uiManager = null;
             this.ready = false;
             this.storage = new Storage();
         },
@@ -14,15 +15,16 @@ define(['jquery', 'storage', 'gameclient', 'crearpj'], function ($, Storage, Gam
 
             client.setDisconnectCallback(function () {
                 self.setLoginScreen();
-                self.game.renderer.clean(self.getEscala());
-                self.game.init(this,self.game.assetManager,self.game.uiManager /* todo: <- sacar este de alguna forma*/);
+                var r = self.game.renderer;
+                r.clean(self.getEscala());
+                self.game.init(self,self.game.assetManager);
+                self.game.setup(self.client, self.uiManager,r);
                 self.game.started = false;
             });
 
             client.setLogeadoCallback(function () {
                 self.game.start();
                 self.setGameScreen();
-                self.setPlayButtonState(true);
             });
 
             client.setDadosCallback(function (Fuerza, Agilidad, Inteligencia, Carisma, Constitucion) {
@@ -42,9 +44,11 @@ define(['jquery', 'storage', 'gameclient', 'crearpj'], function ($, Storage, Gam
 
         setGame: function (game) {
             this.game = game;
-            this.client = new GameClient(this.game, this.host, this.port);
+            this.uiManager = new UIManager(this.game);
+            this.client = new GameClient(this.game,this.uiManager, this.host, this.port);
             this._initCallbacks(this.client);
-            this.game.client = this.client;
+
+            this.game.setup(this.client, this.uiManager);
             this.ready = true;
         },
 
@@ -98,6 +102,8 @@ define(['jquery', 'storage', 'gameclient', 'crearpj'], function ($, Storage, Gam
             $body.removeClass('jugar');
             $body.removeClass('crear');
             $body.addClass('login');
+            this.setPlayButtonState(true);
+            this.setCrearButtonState(true);
         },
 
         setCrearPJScreen: function () {

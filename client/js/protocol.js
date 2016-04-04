@@ -6586,6 +6586,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
             var Y = buffer.ReadByte();
 
             handler.handlePosUpdate( X,Y );
+
             break;
         }
 

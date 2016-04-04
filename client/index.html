@@ -33,6 +33,14 @@
 
 	<div id="container">
 
+		<!-- Dialogos que pueden ser usados en cualquier pantalla -->
+		<div id="popUpsGenerales" class="popUp">
+			<article id="mensaje">
+				<span id="mensajeContenido"></span>
+				<button id="mensajeBotonCerrar" class="botonNormal">OK</button>
+			</article>
+		</div>
+
 		<!-- Pantalla de conectar -->
 		<div id="conectar">
 			<img id="logo" src="../imagenes/logo.png" class="horizontal_center">
@@ -94,7 +102,7 @@
 				<div id="bordeDerecha">
 					<div id="InventarioHechizos" class="inventario">
 						<ul id="itemsGrid" class="itemgrid"></ul>
-						<select id="hechizos" multiple ="yes" ></select>
+						<select id="hechizos" size="2"></select>
 						<button id="botonInventario" class="botonInvisible"></button>
 						<button id="botonHechizos" class="botonInvisible"></button>
 						<button id="botonLanzar" class="botonInvisible"></button>
@@ -128,6 +136,7 @@
 					<span id="indicadorOro"></span>
 					<button id="botonSeguroResucitar" class="botonImagen"></button>
 					<button id="botonSeguroAtacar" class="botonImagen"></button>
+					<span id="indicadorMapa"></span>
 				</div>
 
 
@@ -137,7 +146,7 @@
 			<!-- FIN Pantalla de juego y interfaz ingame -->
 
 			<!-- Pop ups, ventana de comerciar por ejemplo -->
-			<div id="popUp">
+			<div id="popUpsJuego" class="popUp">
 
 				<article id="comerciar">
 
