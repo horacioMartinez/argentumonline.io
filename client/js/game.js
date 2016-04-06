@@ -1,15 +1,14 @@
-define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
-        'item', 'player', 'character', 'assetmanager', 'intervalos', 'ui/uimanager', 'comandoschat'],
+define(['enums', 'mapa', 'view/renderer', 'network/gameclient', 'updater', 'transition',
+        'item', 'player', 'character', 'assetmanager', 'intervalos', 'comandoschat'],
     function (__enums__, Mapa, Renderer, GameClient, Updater, Transition,
-              Item, Player, Character, AssetManager, Intervalos, UIManager, ComandosChat) {
+              Item, Player, Character, AssetManager, Intervalos, ComandosChat) {
         var Game = Class.extend({
-                init: function (app, assetManager) {
+                init: function (assetManager) {
 
                     this.comandosChat = new ComandosChat(this);
                     this.map = new Mapa();
                     this.assetManager = assetManager;
 
-                    this.app = app;
                     this.ready = false;
                     this.started = false;
                     this.isPaused = false;
@@ -40,13 +39,10 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     this.bajoTecho = false;
                 },
 
-                setup: function (client,uiManager,renderer) {
+                setup: function (client,gameUI,renderer) {
                     this.client = client;
-                    this.uiManager = uiManager;
-                    if (renderer)
-                        this.renderer = renderer;
-                    else
-                        this.renderer = new Renderer(this.map, this.assetManager, this.app.getEscala());
+                    this.gameUI = gameUI;
+                    this.renderer = renderer;
                 },
 
                 setStorage: function (storage) {
@@ -351,7 +347,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     if ((this.player.hp !== min) || (this.player.maxHp !== max)) {
                         this.player.hp = min;
                         this.player.maxHp = max;
-                        this.uiManager.interfaz.updateBarraVida(min, max);
+                        this.gameUI.interfaz.updateBarraVida(min, max);
                     }
                 },
 
@@ -362,7 +358,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     if ((this.player.mana !== MinMan) || (this.player.maxMana !== MaxMan)) {
                         this.player.mana = MinMan;
                         this.player.maxMana = MaxMan;
-                        this.uiManager.interfaz.updateBarraMana(MinMan, MaxMan);
+                        this.gameUI.interfaz.updateBarraMana(MinMan, MaxMan);
                     }
                 },
 
@@ -372,7 +368,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     if ((this.player.stamina !== MinSta) || this.player.maxStamina !== MaxSta) {
                         this.player.stamina = MinSta;
                         this.player.maxStamina = MaxSta;
-                        this.uiManager.interfaz.updateBarraEnergia(MinSta, MaxSta);
+                        this.gameUI.interfaz.updateBarraEnergia(MinSta, MaxSta);
                     }
                 },
 
@@ -382,7 +378,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     if ((this.player.agua !== MinAgu) || (this.player.maxAgua !== MaxAgu)) {
                         this.player.maxAgua = MaxAgu;
                         this.player.agua = MinAgu;
-                        this.uiManager.interfaz.updateBarraSed(MinAgu, MaxAgu);
+                        this.gameUI.interfaz.updateBarraSed(MinAgu, MaxAgu);
                     }
                 },
 
@@ -392,7 +388,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     if ((this.player.hambre !== MinHam) || (this.player.maxHambre !== MaxHam)) {
                         this.player.hambre = MinHam;
                         this.player.maxHambre = MaxHam;
-                        this.uiManager.interfaz.updateBarraHambre(MinHam, MaxHam);
+                        this.gameUI.interfaz.updateBarraHambre(MinHam, MaxHam);
                     }
                 },
 
@@ -402,14 +398,14 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     if ((this.player.exp !== minExp) || (this.player.maxExp !== maxExp)) {
                         this.player.exp = minExp;
                         this.player.maxExp = maxExp;
-                        this.uiManager.interfaz.updateBarraExp(minExp, maxExp);
+                        this.gameUI.interfaz.updateBarraExp(minExp, maxExp);
                     }
                 },
 
                 setOro: function (oro) {
                     if (this.player.oro !== oro) {
                         this.player.oro = oro;
-                        this.uiManager.interfaz.updateOro(oro);
+                        this.gameUI.interfaz.updateOro(oro);
                     }
                 },
 
@@ -418,37 +414,37 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                         this.escribirMsgConsola(Enums.MensajeConsola.ESTAS_MUERTO);
                         return;
                     }
-                    var selectedSlot = this.uiManager.interfaz.getSelectedSlotInventario();
+                    var selectedSlot = this.gameUI.interfaz.getSelectedSlotInventario();
                     if (!selectedSlot)
                         return;
                     var amount = this.inventario[selectedSlot].cantidad;
                     if (amount === 1)
                         this.tirarSelectedItem(1);
                     else {
-                        this.uiManager.showTirar();
+                        this.gameUI.showTirar();
                     }
                 },
 
                 tirarSelectedItem: function (cantidad) {
-                    var selectedSlot = this.uiManager.interfaz.getSelectedSlotInventario();
+                    var selectedSlot = this.gameUI.interfaz.getSelectedSlotInventario();
                     if (!selectedSlot)
                         return;
                     if (cantidad >= this.inventario[selectedSlot].cantidad) {
                         cantidad = this.inventario[selectedSlot].cantidad;
-                        this.uiManager.interfaz.resetSelectedSlotInventario();
+                        this.gameUI.interfaz.resetSelectedSlotInventario();
                     }
                     this.client.sendDrop(selectedSlot, cantidad);
                 },
 
                 toggleSeguroResucitar: function () {
                     this.seguroResucitacionActivado = !this.seguroResucitacionActivado;
-                    this.uiManager.interfaz.setSeguroResucitacion(this.seguroResucitacionActivado);
+                    this.gameUI.interfaz.setSeguroResucitacion(this.seguroResucitacionActivado);
                     this.client.sendResuscitationSafeToggle();
                 },
 
                 toggleSeguroAtacar: function () {
                     this.seguroAtacarActivado = !this.seguroAtacarActivado;
-                    this.uiManager.interfaz.setSeguroAtacar(this.seguroAtacarActivado);
+                    this.gameUI.interfaz.setSeguroAtacar(this.seguroAtacarActivado);
                     this.client.sendSafeToggle();
                 },
 
@@ -469,25 +465,25 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
 
                     if ((Amount > 0 ) && (GrhIndex > 0)) {
                         var numGrafico = this.renderer.getNumGraficoFromGrh(GrhIndex);
-                        this.uiManager.interfaz.cambiarSlotInventario(Slot, Amount, numGrafico, Equiped);
-                        if (this.uiManager.comerciar.visible)
-                            this.uiManager.comerciar.cambiarSlotVenta(Slot, Amount, numGrafico);
-                        if (this.uiManager.boveda.visible)
-                            this.uiManager.boveda.cambiarSlotDepositar(Slot, Amount, numGrafico);
+                        this.gameUI.interfaz.cambiarSlotInventario(Slot, Amount, numGrafico, Equiped);
+                        if (this.gameUI.comerciar.visible)
+                            this.gameUI.comerciar.cambiarSlotVenta(Slot, Amount, numGrafico);
+                        if (this.gameUI.boveda.visible)
+                            this.gameUI.boveda.cambiarSlotDepositar(Slot, Amount, numGrafico);
                     }
                     else {
-                        this.uiManager.interfaz.borrarSlotInventario(Slot);
-                        if (this.uiManager.comerciar.visible)
-                            this.uiManager.comerciar.borrarSlotVenta(Slot);
-                        if (this.uiManager.boveda.visible)
-                            this.uiManager.boveda.borrarSlotDepositar(Slot);
+                        this.gameUI.interfaz.borrarSlotInventario(Slot);
+                        if (this.gameUI.comerciar.visible)
+                            this.gameUI.comerciar.borrarSlotVenta(Slot);
+                        if (this.gameUI.boveda.visible)
+                            this.gameUI.boveda.borrarSlotDepositar(Slot);
                     }
 
                 },
 
                 cambiarSlotHechizos: function (slot, spellID, nombre) {
                     this.hechizos[slot] = {id: spellID, nombre: nombre};
-                    this.uiManager.interfaz.modificarSlotHechizo(slot, nombre);
+                    this.gameUI.interfaz.modificarSlotHechizo(slot, nombre);
                     /*if (this.logeado)
                      this.uiRenderer.modificarSlotHechizos(slot, nombre);*/
                 },
@@ -619,10 +615,11 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                             this.renderer.toggleLluvia();
                         }
                     }
+
                 },
 
                 actualizarIndicadorPosMapa: function (){
-                    this.uiManager.interfaz.updateIndicadorPosMapa(this.map.numero,this.player.gridX,this.player.gridY);
+                    this.gameUI.interfaz.updateIndicadorPosMapa(this.map.numero,this.player.gridX,this.player.gridY);
                 },
 
                 cambiarArea: function (gridX, gridY) {
@@ -709,14 +706,14 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                 ,
 
                 equiparSelectedItem: function () {
-                    var slot = this.uiManager.interfaz.getSelectedSlotInventario();
+                    var slot = this.gameUI.interfaz.getSelectedSlotInventario();
                     if (slot)
                         this.client.sendEquipItem(slot);
                 }
                 ,
 
                 usarConU: function () {
-                    var slot = this.uiManager.interfaz.getSelectedSlotInventario();
+                    var slot = this.gameUI.interfaz.getSelectedSlotInventario();
                     if (!slot)
                         return;
                     if (this.intervalos.requestUsarConU(this.currentTime)) {
@@ -759,7 +756,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                 lanzarHechizo: function () {
                     if (!this.intervalos.requestLanzarHechizo(this.currentTime))
                         return;
-                    var slot = this.uiManager.interfaz.getSelectedSlotHechizo();
+                    var slot = this.gameUI.interfaz.getSelectedSlotHechizo();
                     if (!slot)
                         return;
                     this.client.sendCastSpell(slot);
@@ -767,13 +764,13 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                 },
 
                 requestInfoHechizo: function () {
-                    var slot = this.uiManager.interfaz.getSelectedSlotHechizo();
+                    var slot = this.gameUI.interfaz.getSelectedSlotHechizo();
                     if (slot)
                         this.client.sendSpellInfo(slot);
                 },
 
                 setTrabajoPendiente: function (skill) {
-                    this.uiManager.interfaz.setMouseCrosshair(true);
+                    this.gameUI.interfaz.setMouseCrosshair(true);
                     this.trabajoPendiente = skill;
                 },
 
@@ -793,10 +790,10 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
 
                     if ((Amount > 0 ) && (GrhIndex > 0)) {
                         var numGrafico = this.renderer.getNumGraficoFromGrh(GrhIndex);
-                        this.uiManager.comerciar.cambiarSlotCompra(Slot, Amount, numGrafico);
+                        this.gameUI.comerciar.cambiarSlotCompra(Slot, Amount, numGrafico);
                     }
                     else
-                        this.uiManager.comerciar.borrarSlotCompra(Slot);
+                        this.gameUI.comerciar.borrarSlotCompra(Slot);
                 },
 
                 cambiarSlotRetirar: function (Slot, ObjIndex, ObjName, Amount, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) { // todo: arreglar este lio
@@ -816,10 +813,10 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
 
                     if ((Amount > 0 ) && (GrhIndex > 0)) {
                         var numGrafico = this.renderer.getNumGraficoFromGrh(GrhIndex);
-                        this.uiManager.boveda.cambiarSlotRetirar(Slot, Amount, numGrafico);
+                        this.gameUI.boveda.cambiarSlotRetirar(Slot, Amount, numGrafico);
                     }
                     else
-                        this.uiManager.boveda.borrarSlotRetirar(Slot);
+                        this.gameUI.boveda.borrarSlotRetirar(Slot);
                 },
 
                 togglePausa: function () {
@@ -969,7 +966,7 @@ define(['enums', 'mapa', 'view/renderer', 'gameclient', 'updater', 'transition',
                     var gridPos = this.getMouseGridPosition();
                     if (this.logeado) {
                         if (this.trabajoPendiente) {
-                            this.uiManager.interfaz.setMouseCrosshair(false);
+                            this.gameUI.interfaz.setMouseCrosshair(false);
                             this.client.sendWorkLeftClick(gridPos.x, gridPos.y, this.trabajoPendiente);
                             this.trabajoPendiente = false;
                         }

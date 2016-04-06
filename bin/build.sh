@@ -12,8 +12,9 @@ node "$TOPLEVELDIR/bin/r.js" -o "$PROJECTDIR/build.js"
 
 #java -jar ./compiler.jar --compilation_level SIMPLE_OPTIMIZATIONS --js "$BUILDDIR/js/main.js"  --js_output_file "$BUILDDIR/js/main.js"
 
+echo "Comprimiendo archivos"
+find "$BUILDDIR" \( -name '*.css' -o -name '*.html' -o -name '*.xml' -o -name '*.json' -o -name '*.js' \) -exec gzip --verbose --keep --best --force {} \;
 echo "Moving build.txt to current dir"
 mv "$BUILDDIR/build.txt" "$TOPLEVELDIR"
-find "$BUILDDIR" -name ".idea" -type d -exec rm -rf {} \;
 
 echo "Build complete"

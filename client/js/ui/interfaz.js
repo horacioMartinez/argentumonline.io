@@ -34,7 +34,7 @@ define(['ui/itemgrid'], function (ItemGrid) {
             });
 
             $("#botonTirarOro").click(function() {
-               self.game.uiManager.showTirar(true);
+               self.game.gameUI.showTirar(true);
             });
 
             $("#botonSeguroResucitar").dblclick(function() {

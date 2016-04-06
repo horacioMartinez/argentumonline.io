@@ -80,7 +80,6 @@ define(['json!../indices/graficos.json',
             },
 
             /*getMapa: function(numMapa){
-             // TODO: guardar aca o en otro lado mapa actual der izq.. etc ver final carpeta, poner el parse segun numero
              if (!this.mapaActual)
              this.mapaActual= JSON.parse(mapa1);
              return this.mapaActual;

@@ -2,12 +2,13 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
     function (PIXI, Camera, CharacterSprites, Consola, CharacterText, SpriteGrh, ContainerOrdenado) {
 
         var Renderer = Class.extend({
-            init: function (mapa, assetManager, escala) {
+            init: function (assetManager, escala) {
                 this.POSICIONES_EXTRA_RENDER_X = 3;
                 this.POSICIONES_EXTRA_RENDER_Y = 5;
                 this.POSICIONES_EXTRA_TERRENO = 1; // no deberia ser necesario mas de una. (una pos extra en cada una de las 4 direcciones)
 
-                this.mapa = mapa;
+                this.MAPA_WIDTH = 100; // todo: usarlo desde mapa
+                this.mapa = null;
                 this.assetManager = assetManager;
                 this.grhs = assetManager.grhs;
                 this.indices = assetManager.getIndices();
@@ -43,7 +44,7 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 this.gameStage = new PIXI.Container();
                 this.layer1 = new PIXI.Container();
                 this.layer2 = new PIXI.Container();
-                this.layer3 = new ContainerOrdenado(this.mapa.width);
+                this.layer3 = new ContainerOrdenado(this.MAPA_WIDTH);
                 this.layer3.ordenado = true;
                 this.layer4 = new PIXI.Container();
                 this.gameText = new PIXI.Container(); // nota: los nombres no estan aca, solo los dialogos (no se puede meter los nombres porque pisan a algunos graficos y son pisados otros)

@@ -10,7 +10,7 @@ define(['jquery-ui'], function () {
         init: function (gridID) {
             this.id = gridID;
             this.$this = $("#" + this.id);
-            this.$this.sortable();
+            this.$this.sortable({distance: 20});
             this._selectedSlot = null;
             this._selectionCallback = null;
             this._doubleClickCallback = null;
@@ -28,7 +28,7 @@ define(['jquery-ui'], function () {
         },
 
         resetSelectedSlot: function () {
-            this._selectedSlot= null;
+            this._selectedSlot = null;
             this.$this.children().removeClass("selected");
         },
 

@@ -1,4 +1,4 @@
-define(['character', 'player', 'timer', 'enums'], function (Character, Player, Timer) {
+define([], function () {
 
     var Updater = Class.extend({
         init: function (game) {

@@ -29,9 +29,6 @@ h1 {font-weight:normal;}
 
 /*  ACA: */
 
-#crearPJ span {color:white;display: inline-block;} /*<<-- TEMPORAL <<-*/
-
-
 body {background-color:#000;}
 
 #container {background:#000;width: 100%; height: 90%; position: absolute; top:0; bottom: 5%; left: 0; right: 0; margin: auto;} /* el width de setea para que quede del ratio adecaudo en el programa de js */
@@ -53,45 +50,40 @@ background-size: contain;
 /*fin tamaño img*/
 z-index: -1;-moz-transition:0.2s top ease;-webkit-transition:0.2s top ease;-o-transition:0.2s top ease;-ms-transition:0.2s top ease;transition:0.2s top ease;}
 #chatinput {color:#eee;}
-#chatinput.placeholder {color:#aaa;}
-/*
-  @media screen and (min-height: 500px) and (max-height: 650px)  {
-      #container {height:500px; width:800px;}
-  }
 
-  @media screen and (max-height: 500px){
-      #container {height:100%;}
-  }
-  */
-  @media screen and (min-aspect-ratio: 7/5) and (max-aspect-ratio: 8/5){
-  	#container {height:85%;}
-  }
 
-  @media screen and (min-aspect-ratio: 13/10) and (max-aspect-ratio: 7/5){
-  	#container {height:80%;}
-  }
+/* Tamaño contenedor (width seteado en js) */
 
-  @media screen and (min-aspect-ratio: 6/5) and (max-aspect-ratio: 13/10){
-  	#container {height:75%;}
-  }
+@media screen and (min-aspect-ratio: 7/5) and (max-aspect-ratio: 8/5){
+	#container {height:85%;}
+}
 
-  @media screen and (max-aspect-ratio: 6/5){
-  	#container {height:65%;}
-  }
-  /* Footer */
+@media screen and (min-aspect-ratio: 13/10) and (max-aspect-ratio: 7/5){
+	#container {height:80%;}
+}
 
-  .facebook {background:url('../imagenes/facebook.png');}
-  .twitter{background:url('../imagenes/twitter.png');}
+@media screen and (min-aspect-ratio: 6/5) and (max-aspect-ratio: 13/10){
+	#container {height:75%;}
+}
 
-  footer {position:absolute;bottom:3%;left:0;text-align:center;width:100%;color:#c6c0a3;-moz-transition:0.2s opacity linear;-webkit-transition:0.2s opacity linear;-o-transition:0.2s opacity linear;-ms-transition:0.2s opacity linear;transition:0.2s opacity linear;}
+@media screen and (max-aspect-ratio: 6/5){
+	#container {height:65%;}
+}
 
-  footer:hover {opacity:1;}
-  footer div  {font-size: 16px;display:inline-block;}
-  footer a  {font-size: 16px;}
-  #sharing a {display:block;float:right;position:relative;top:-2px;}
-  #sharing .facebook {height:22px;width:22px;background-size: cover;margin:0 12px 0 12px;}
-  #sharing .twitter {height:22px;width:32px;background-size:     cover;margin:0 12px 0 0;}
-  #legal-link a, #credits-link a, #privacy-link a {text-decoration:none;color:inherit;}
-  #credits-link a:hover , #privacy-link  a:hover, #legal-link a:hover{color:#fcda5c;cursor:pointer;}
-  #sharing a:hover {-moz-transform:scale(1.2);-webkit-transform:scale(1.2);-o-transform:scale(1.2);transform:scale(1.2);}
-  #sharing a:active {-moz-transform:scale(1);-webkit-transform:scale(1);-o-transform:scale(1);transform:scale(1);}
+/* Footer */
+
+.facebook {background:url('../imagenes/facebook.png');}
+.twitter{background:url('../imagenes/twitter.png');}
+
+footer {position:absolute;bottom:3%;left:0;text-align:center;width:100%;color:#c6c0a3;-moz-transition:0.2s opacity linear;-webkit-transition:0.2s opacity linear;-o-transition:0.2s opacity linear;-ms-transition:0.2s opacity linear;transition:0.2s opacity linear;}
+
+footer:hover {opacity:1;}
+footer div  {font-size: 16px;display:inline-block;}
+footer a  {font-size: 16px;}
+#sharing a {display:block;float:right;position:relative;top:-2px;}
+#sharing .facebook {height:22px;width:22px;background-size: cover;margin:0 12px 0 12px;}
+#sharing .twitter {height:22px;width:32px;background-size:     cover;margin:0 12px 0 0;}
+#legal-link a, #credits-link a, #privacy-link a {text-decoration:none;color:inherit;}
+#credits-link a:hover , #privacy-link  a:hover, #legal-link a:hover{color:#fcda5c;cursor:pointer;}
+#sharing a:hover {-moz-transform:scale(1.2);-webkit-transform:scale(1.2);-o-transform:scale(1.2);transform:scale(1.2);}
+#sharing a:active {-moz-transform:scale(1);-webkit-transform:scale(1);-o-transform:scale(1);transform:scale(1);}

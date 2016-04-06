@@ -6,7 +6,7 @@ define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
 
     function CharacterSprites(Heading, bodys, heads, headOffX, headOffY, weapons, shields, helmets, nombre, clan, font) {
         /*
-         Body, Head,Weapon,Shield,Helmet: vector con los grhs de los 4 headings. Cada uno de los headings puede contener un solo grh o AnimGrhs (frames de grhs + vel)
+         Body, Head,Weapon,Shield,Helmet: vector con los grhs de los 4 headings. Cada uno de los headings puede contener un solo numero de grh frames de grhs + vel
          */
         // Clase que hereda de container de pixi
         PIXI.Container.call(this);

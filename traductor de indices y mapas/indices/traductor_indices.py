@@ -1,4 +1,5 @@
 import json
+from collections import OrderedDict
 
 ################################################# GRAFICOS #################################################
 
@@ -6,12 +7,13 @@ origen = open("indices_originales/Graficos.ini", "r")
 destino = open("indices_json/graficos.json","w")
 
 res = [0 for i in range(24209)]
+
 def agregar_grh(numGrh,grafico,offX,offY,width,height):
-	nuevogrh= {'grafico':grafico, 'offX':offX, 'offY':offY, 'width':width, 'height':height}
+	nuevogrh= OrderedDict([('id',numGrh),('grafico',grafico), ('offX',offX), ('offY',offY), ('width',width), ('height',height)])
 	res[numGrh]=nuevogrh
 
 def agregar_animacion(numGrh,grhs,velocidad):
-	nuevaAnimacion= {'frames':grhs, 'velocidad':velocidad}
+	nuevaAnimacion= OrderedDict([('id',numGrh),('frames',grhs), ('velocidad',velocidad)])
 	res[numGrh]=nuevaAnimacion
 
 
@@ -60,7 +62,7 @@ for line in origen:
 			continue
 		agregar_animacion(numGrh,grhs,velocidad)
 
-json.dump(res, destino, indent=4)
+json.dump(res, destino, indent=4 )
 
 ################################################# CABEZAS #################################################
 
@@ -71,7 +73,7 @@ elementos=[]
 res = [0 for i in range(515)]
 
 def agregar(id,up,right,down,left):
-	nuevoRes= {'up':up, 'right':right, 'down':down, 'left':left}
+	nuevoRes= OrderedDict([('id',id),('up',up),('right',right), ('down',down), ('left',left)])
 	res[id]=nuevoRes
 
 for line in origen:
@@ -89,7 +91,7 @@ while i < ( len(elementos)):
 		agregar((i/4)+1,elementos[i],elementos[i+1],elementos[i+2],elementos[i+3])
 	i = i+1
 
-json.dump(res, destino, indent=4)
+json.dump(res, destino, indent=4 )
 
 ################################################# CASCOS #################################################
 
@@ -100,7 +102,7 @@ elementos=[]
 res = [0 for i in range(23)]
 
 def agregar(id,up,right,down,left):
-	nuevoRes= { 'up':up, 'right':right, 'down':down, 'left':left}
+	nuevoRes= {'id':id, 'up':up, 'right':right, 'down':down, 'left':left}
 	res[id]=nuevoRes
 
 for line in origen:
@@ -118,7 +120,7 @@ while i < ( len(elementos)):
 		agregar((i/4)+1,elementos[i],elementos[i+1],elementos[i+2],elementos[i+3])
 	i = i+1
 
-json.dump(res, destino, indent=4)
+json.dump(res, destino, indent=4 )
 
 ################################################# CUERPOS #################################################
 
@@ -129,7 +131,7 @@ elementos=[]
 res = [0 for i in range(566)]
 
 def agregar_cuerpo(id,up,right,down,left,offX,offY):
-	nuevoRes= { 'up':up, 'right':right, 'down':down, 'left':left, 'offHeadX':offX, 'offHeadY':offY}
+	nuevoRes= {'id':id, 'up':up, 'right':right, 'down':down, 'left':left, 'offHeadX':offX, 'offHeadY':offY}
 	res[id]=nuevoRes
 
 for line in origen:
@@ -147,7 +149,7 @@ while i < ( len(elementos)):
 		agregar_cuerpo((i/6)+1,elementos[i],elementos[i+1],elementos[i+2],elementos[i+3],elementos[i+4],elementos[i+5])
 	i = i+1
 
-json.dump(res, destino, indent=4)
+json.dump(res, destino, indent=4 )
 
 ################################################# ARMAS #################################################
 
@@ -158,7 +160,7 @@ elementos=[]
 res = [0 for i in range(78)]
 
 def agregar(id,up,right,left,down):
-	nuevoRes= { 'up':right, 'right':down, 'down':up, 'left':left}
+	nuevoRes= {'id':id, 'up':right, 'right':down, 'down':up, 'left':left}
 	res[id]=nuevoRes
 
 for line in origen:
@@ -179,7 +181,7 @@ while i < ( len(elementos)):
 			agregar((i/4)+1,elementos[i],elementos[i+1],elementos[i+2],elementos[i+3])
 	i = i+1
 
-json.dump(res, destino, indent=4)
+json.dump(res, destino, indent=4 )
 
 ################################################# ESCUDOS #################################################
 
@@ -190,7 +192,7 @@ elementos=[]
 res = [0 for i in range(11)]
 
 def agregar(id,up,right,left,down):
-	nuevoRes= { 'up':right, 'right':down, 'down':up, 'left':left} # <------- CAMBIADO! <-------------------------
+	nuevoRes= {'id':id, 'up':right, 'right':down, 'down':up, 'left':left} # <------- CAMBIADO! <-------------------------
 	res[id]=nuevoRes
 
 for line in origen:
@@ -211,7 +213,7 @@ while i < ( len(elementos)):
 			agregar((i/4)+1,elementos[i],elementos[i+1],elementos[i+2],elementos[i+3])
 	i = i+1
 
-json.dump(res, destino, indent=4)
+json.dump(res, destino, indent=4 )
 
 ################################################# CASCOS #################################################
 
@@ -222,7 +224,7 @@ elementos=[]
 res = [0 for i in range(39)]
 
 def agregar(id,animacion,offX,offY):
-	nuevoRes= { 'animacion':animacion, 'offX':offX, 'offY':offY}
+	nuevoRes= {'id':id, 'animacion':animacion, 'offX':offX, 'offY':offY}
 	res[id]=nuevoRes
 
 for line in origen:
@@ -240,4 +242,4 @@ while i < ( len(elementos)):
 		agregar((i/3)+1,elementos[i],elementos[i+1],elementos[i+2])
 	i = i+1
 
-json.dump(res, destino, indent=4)
+json.dump(res, destino, indent=4 )
