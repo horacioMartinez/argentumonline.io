@@ -13,9 +13,6 @@ define([], function () {
 
             this.gridW = 17;
             this.gridH = 13;
-
-            this.height = this.gridH * this.tilesize;
-            this.width = this.gridW * this.tilesize;
         },
 
         setPosition: function (x, y) {

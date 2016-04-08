@@ -10,10 +10,14 @@ rm -rf "$BUILDDIR"
 echo "Building client with RequireJS"
 node "$TOPLEVELDIR/bin/r.js" -o "$PROJECTDIR/build.js"
 
-#java -jar ./compiler.jar --compilation_level SIMPLE_OPTIMIZATIONS --js "$BUILDDIR/js/main.js"  --js_output_file "$BUILDDIR/js/main.js"
+echo "Obfuscando..."
+python "./obfuscador.py" "$BUILDDIR/js"
 
-echo "Comprimiendo archivos"
-find "$BUILDDIR" \( -name '*.css' -o -name '*.html' -o -name '*.xml' -o -name '*.json' -o -name '*.js' \) -exec gzip --verbose --keep --best --force {} \;
+echo "Comprimiendo..."
+{
+	find "$BUILDDIR" \( -name '*.css' -o -name '*.html' -o -name '*.xml' -o -name '*.json' -o -name '*.js' \) -exec gzip --verbose --keep --best --force {} \;
+} &>> "$BUILDDIR/build.txt"
+
 echo "Moving build.txt to current dir"
 mv "$BUILDDIR/build.txt" "$TOPLEVELDIR"
 
