@@ -56,7 +56,7 @@ nombreFunciones = list(set(nombreFunciones))
 # agrego funciones invalidas del codigo main
 excludeFunctions.extend( get_nombres_prototypes(codigo) )
 
-# funciones que no se las use unicamente como .funcion() :
+# funciones que no se las use unicamente como .funcion(...) :
 for func in nombreFunciones:
 	if (funcion_invalida(func)):
 		continue
@@ -81,7 +81,7 @@ agregar_exclude_funcs_from_codigo_externo(codigoLibrerias)
 excludeFunctions = list(set(excludeFunctions))
 
 
-# Combierto a los nuevos nombres:
+# Convierto a los nuevos nombres:
 
 for func in nombreFunciones:
 	if (funcion_invalida(func)):
@@ -98,7 +98,7 @@ for func in nombreFunciones:
 	p = re.compile(regEx1)
 	codigo = p.sub(regEx2, codigo)
 
-	# Ahora en donde se use (por lo de arriba solo se consideran los casos con .func() )
+	# Ahora en donde se use (por lo de arriba solo se consideran los casos con .func(..) )
 	regEx1 = r"(\.)" + re.escape(func) + r"([\(\),])"
 	regEx2 = r'\1' + re.escape(nuevo_nombre) + r'\2'
 	p = re.compile(regEx1)

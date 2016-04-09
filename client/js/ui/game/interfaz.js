@@ -2,15 +2,16 @@
  * Created by horacio on 2/28/16.
  */
 
-define(['ui/itemgrid'], function (ItemGrid) {
+define(['ui/game/itemgrid'], function (ItemGrid) {
 
     var Interfaz = Class.extend({
-        init: function (game) {
+        init: function (game,acciones) {
+            this.acciones = acciones;
             this.game = game;
             this.inventarioGrid = new ItemGrid("itemsGrid");
             var self = this;
             this.inventarioGrid.setDobleClickCallback(function(slot){
-                self.game.usarConDobleClick(slot);
+                self.acciones.usarConDobleClick(slot);
             });
         },
 
@@ -26,11 +27,11 @@ define(['ui/itemgrid'], function (ItemGrid) {
             });
 
             $("#botonLanzar").click(function () {
-                self.game.lanzarHechizo();
+                self.acciones.lanzarHechizo();
             });
 
             $("#botonInfo").click(function () {
-                self.game.requestInfoHechizo();
+                self.acciones.requestInfoHechizo();
             });
 
             $("#botonTirarOro").click(function() {

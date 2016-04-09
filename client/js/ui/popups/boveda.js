@@ -2,13 +2,13 @@
  * Created by horacio on 3/24/16.
  */
 
-define(['ui/popups/popup','ui/itemgrid'], function (PopUp,ItemGrid) {
+define(['ui/popups/popup','ui/game/itemgrid'], function (PopUp,ItemGrid) {
 
     var Boveda = PopUp.extend({
-        init: function (inputHandler) {
+        init: function (game,acciones) {
             this._super("boveda");
-            this.game = inputHandler.game;
-            this.popUpInputHandler = inputHandler;
+            this.game = game;
+            this.acciones = acciones;
 
             this.compraGrid = new ItemGrid("bovedaGridComprar");
             this.ventaGrid = new ItemGrid("bovedaGridVender");
@@ -56,7 +56,7 @@ define(['ui/popups/popup','ui/itemgrid'], function (PopUp,ItemGrid) {
                 var inputCantidad = $("#bovedaInputCantidadOro").val();
                 if (!isNaN(inputCantidad)) {
                     if (inputCantidad > 0) {
-                        self.popUpInputHandler.retirarOro(inputCantidad);
+                        self.acciones.retirarOro(inputCantidad);
                     }
                 }
             });
@@ -65,7 +65,7 @@ define(['ui/popups/popup','ui/itemgrid'], function (PopUp,ItemGrid) {
                 var inputCantidad = $("#bovedaInputCantidadOro").val();
                 if (!isNaN(inputCantidad)) {
                     if (inputCantidad > 0) {
-                        self.popUpInputHandler.depositarOro(inputCantidad);
+                        self.acciones.depositarOro(inputCantidad);
                     }
                 }
             });
@@ -76,7 +76,7 @@ define(['ui/popups/popup','ui/itemgrid'], function (PopUp,ItemGrid) {
                     var inputCantidad = $("#bovedaInputCantidadItem").val();
                     if (isNaN(inputCantidad) || (inputCantidad < 0) || !inputCantidad)
                         inputCantidad = 1;
-                    self.popUpInputHandler.retirarItem(slot, inputCantidad);
+                    self.acciones.retirarItem(slot, inputCantidad);
                 }
             });
 
@@ -86,13 +86,13 @@ define(['ui/popups/popup','ui/itemgrid'], function (PopUp,ItemGrid) {
                     var inputCantidad = $("#bovedaInputCantidadItem").val();
                     if (isNaN(inputCantidad) || (inputCantidad < 0) || !inputCantidad)
                         inputCantidad = 1;
-                    self.popUpInputHandler.depositarItem(slot, inputCantidad);
+                    self.acciones.depositarItem(slot, inputCantidad);
                 }
             });
 
             $("#bovedaBotonCerrar").click(function () {
                 self.hide();
-                self.popUpInputHandler.cerrarBoveda();
+                self.acciones.cerrarBoveda();
             });
 
             this.compraGrid.setSelectionCallback(

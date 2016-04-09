@@ -3,6 +3,7 @@ Enums = {
     Keys: {
         ENTER: 13,
         CONTROL: 17,
+        ESCAPE: 27,
         UP: 38,
         DOWN: 40,
         LEFT: 37,

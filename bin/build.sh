@@ -11,7 +11,7 @@ echo "Building client with RequireJS"
 node "$TOPLEVELDIR/bin/r.js" -o "$PROJECTDIR/build.js"
 
 echo "Obfuscando..."
-python "./obfuscador.py" "$BUILDDIR/js"
+python "$TOPLEVELDIR/bin/obfuscador.py" "$BUILDDIR/js"
 
 echo "Comprimiendo..."
 {

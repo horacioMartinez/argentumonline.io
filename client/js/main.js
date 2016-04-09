@@ -1,4 +1,4 @@
-define(['app', 'assetmanager', 'ui/uimanager', 'game'], function (App, AssetManager, UIManager, __para_que_ande_el_build_nomas) {
+define(['app', 'assetmanager', 'ui/uimanager'], function (App, AssetManager, UIManager) {
     var app, uiManager, assetManager;
 
     var initApp = function () {

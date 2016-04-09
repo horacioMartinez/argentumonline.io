@@ -3,27 +3,27 @@
  */
 
 
-define(['ui/gameinputhandler','ui/popupinputhandler','ui/popups/comerciar', 'ui/interfaz', 'ui/popups/tirar', 'ui/popups/boveda'], function (GameInputHandler, PopUpInputHandler, Comerciar, Interfaz,Tirar, Boveda) {
+define(['ui/game/keymouselistener','ui/popups/comerciar', 'ui/game/interfaz', 'ui/popups/tirar', 'ui/popups/boveda'], function (KeyMouseListener,Comerciar, Interfaz,Tirar, Boveda) {
 
     //TODO: crear los popups en run time con jquery y borrarlos cuando se cierran ?
 
     var GameUI = Class.extend({
-        init: function (game) {
+        init: function (game,acciones) {
+            this.acciones = acciones;
             this.game = game;
-            this.popUpInputHandler = new PopUpInputHandler(this.game);
-            this.comerciar = new Comerciar(this.popUpInputHandler);
-            this.tirar = new Tirar(this.popUpInputHandler);
-            this.boveda = new Boveda(this.popUpInputHandler);
+            this.comerciar = new Comerciar(game,acciones);
+            this.tirar = new Tirar(game,acciones);
+            this.boveda = new Boveda(game,acciones);
 
             this._currentPopUp = 0; // mal
-            this.interfaz = new Interfaz(game);
-            this.gameInputHandler = new GameInputHandler(game);
+            this.interfaz = new Interfaz(game,acciones);
+            this.keyMouseListener = new KeyMouseListener(game,acciones);
             this.initDOM();
         },
 
         initDOM: function () {
             this.interfaz.inicializar();
-            this.gameInputHandler.initGameDom();
+            this.keyMouseListener.initListeners();
         },
 
         resize: function(escala){

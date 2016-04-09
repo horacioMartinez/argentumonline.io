@@ -1,4 +1,4 @@
-define(['character', 'enums'], function (Character) {
+define(['model/character'], function (Character) {
 
     var Player = Character.extend({
         MAX_LEVEL: 10,
@@ -17,21 +17,6 @@ define(['character', 'enums'], function (Character) {
             this.lastAttackedTarget = null;
 
             this.navegando = false;
-            this.hp = -1;
-            this.maxHp = -1;
-            this.mana = -1;
-            this.maxMana = -1;
-            this.stamina = -1;
-            this.maxStamina = -1;
-            this.oro = -1;
-            this.nivel = -1;
-            this.maxExp = -1;
-            this.exp = -1;
-            this.maxAgua = -1;
-            this.agua = -1;
-            this.hambre = -1;
-            this.maxHambre = -1;
-            this.oro = -1;
 
             this.paralizado = false;
         },

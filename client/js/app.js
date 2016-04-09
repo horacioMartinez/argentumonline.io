@@ -1,4 +1,4 @@
-define(['game', 'view/renderer', 'storage', 'network/gameclient'], function (Game, Renderer, Storage, GameClient) {
+define(['model/game', 'view/renderer', 'storage', 'network/gameclient','model/acciones'], function (Game, Renderer, Storage, GameClient,Acciones) {
 
     var App = Class.extend({
         init: function (assetManager, uiManager) {
@@ -59,7 +59,8 @@ define(['game', 'view/renderer', 'storage', 'network/gameclient'], function (Gam
 
         inicializarGame: function () {
             this.game = new Game(this.assetManager);
-            var gameUI = this.uiManager.inicializarGameUI(this.game);
+            var acciones = new Acciones(this.game);
+            var gameUI = this.uiManager.inicializarGameUI(this.game,acciones);
             this.client = new GameClient(this.game,this.uiManager,gameUI, this.host, this.port);
             this._initClientCallbacks(this.client);
             var renderer = new Renderer(this.assetManager, this.uiManager.getEscala());

@@ -55,8 +55,8 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 this.gameStage.addChild(this.layer1);
                 this.gameStage.addChild(this.layer2);
                 this.gameStage.addChild(this.layer3);
-                this.gameStage.addChild(this.gameText); // todo? gametext abajo o arriba de layer4?
                 this.gameStage.addChild(this.layer4);
+                this.gameStage.addChild(this.gameText); // todo? gametext abajo o arriba de layer4?
                 this._initTerrenoSpriteGrid(this.layer1);
             },
 

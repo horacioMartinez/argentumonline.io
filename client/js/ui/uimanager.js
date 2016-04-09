@@ -1,7 +1,7 @@
 /**
  * Created by horacio on 4/6/16.
  */
-define(['ui/loginui','ui/crearpjui','ui/gameui', 'ui/popups/mensaje'], function (LoginUI,CrearPjUI, GameUI, Mensaje) {
+define(['ui/loginui','ui/crearpjui','ui/game/gameui', 'ui/popups/mensaje'], function (LoginUI,CrearPjUI, GameUI, Mensaje) {
 
     var UIManager = Class.extend({
         init: function () {
@@ -130,8 +130,8 @@ define(['ui/loginui','ui/crearpjui','ui/gameui', 'ui/popups/mensaje'], function 
             this.setLoginScreen();
         },
 
-        inicializarGameUI: function (game) {
-            this.gameUI = new GameUI(game);
+        inicializarGameUI: function (game,acciones) {
+            this.gameUI = new GameUI(game,acciones);
             return this.gameUI;
         },
 

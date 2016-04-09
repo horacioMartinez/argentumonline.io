@@ -2,13 +2,12 @@
  * Created by horacio on 2/22/16.
  */
 
-define(['ui/popups/popup','ui/itemgrid','jquery-ui'], function (PopUp,ItemGrid) {
+define(['ui/popups/popup','ui/game/itemgrid','jquery-ui'], function (PopUp,ItemGrid) {
 
     var Comerciar = PopUp.extend({
-        init: function (inputHandler) {
+        init: function (game,acciones) {
             this._super("comerciar");
-            this.game = inputHandler.game;
-            this.popUpInputHandler = inputHandler;
+            this.acciones = acciones;
 
             this.compraGrid = new ItemGrid("comerciarGridComprar");
             this.ventaGrid = new ItemGrid("comerciarGridVender");
@@ -67,7 +66,7 @@ define(['ui/popups/popup','ui/itemgrid','jquery-ui'], function (PopUp,ItemGrid) 
                     var inputCantidad = $("#comerciarInputCantidad").val();
                     if (!isNaN(inputCantidad)) {
                         if (inputCantidad > 0) {
-                            self.popUpInputHandler.comprar(slot, inputCantidad);
+                            self.acciones.comprar(slot, inputCantidad);
                         }
                     }
                 }
@@ -79,7 +78,7 @@ define(['ui/popups/popup','ui/itemgrid','jquery-ui'], function (PopUp,ItemGrid) 
                     var inputCantidad = $("#comerciarInputCantidad").val();
                     if (!isNaN(inputCantidad)) {
                         if (inputCantidad > 0) {
-                            self.popUpInputHandler.vender(slot, inputCantidad);
+                            self.acciones.vender(slot, inputCantidad);
                         }
                     }
                 }
@@ -87,7 +86,7 @@ define(['ui/popups/popup','ui/itemgrid','jquery-ui'], function (PopUp,ItemGrid) 
 
             $("#comerciarBotonCerrar").click(function () {
                 self.hide();
-                self.popUpInputHandler.cerrarComerciar();
+                self.acciones.cerrarComerciar();
             });
 
             this.compraGrid.setSelectionCallback(

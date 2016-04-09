@@ -5,11 +5,11 @@
 define(['ui/popups/popup'], function (PopUp) {
 
     var Tirar = PopUp.extend({
-        init: function (inputHandler) {
+        init: function (game,acciones) {
             this._super("tirar");
 
-            this.game = inputHandler.game;
-            this.popUpInputHandler = inputHandler;
+            this.game = game;
+            this.acciones = acciones;
             this.initCallbacks();
         },
 
@@ -26,9 +26,9 @@ define(['ui/popups/popup'], function (PopUp) {
                 if (!isNaN(cantidad)) {
                     if (cantidad > 0) {
                         if (self.tirandoOro)
-                            self.popUpInputHandler.tirarOro(cantidad);
+                            self.acciones.tirarOro(cantidad);
                         else
-                            self.popUpInputHandler.tirarSelectedItem(cantidad);
+                            self.acciones.tirarSelectedItem(cantidad);
                     }
                 }
                 self.hide();
@@ -36,9 +36,9 @@ define(['ui/popups/popup'], function (PopUp) {
 
             $("#tirarBotonTirarTodo").click(function () {
                 if (self.tirandoOro)
-                    self.popUpInputHandler.tirarTodoOro();
+                    self.acciones.tirarTodoOro();
                 else
-                self.popUpInputHandler.tirarTodoSelectedItem();
+                self.acciones.tirarTodoSelectedItem();
                 self.hide();
             });
         },

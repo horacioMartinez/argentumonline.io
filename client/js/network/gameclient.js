@@ -154,21 +154,21 @@ define(['network/protocol', 'network/bytequeue', 'lib/websock'], function (Proto
         },
 
         handleUpdateSta: function (Value) {
-            this.game.setStamina(Value);
+            this.game.atributos.setStamina(Value);
         },
 
         handleUpdateMana: function (Value) {
-            this.game.setMana(Value);
+            this.game.atributos.setMana(Value);
             console.log("TODO: handleUpdateMana ");
         },
 
         handleUpdateHP: function (Value) {
-            this.game.setVida(Value);
+            this.game.atributos.setVida(Value);
             console.log("TODO: handleUpdateHP ");
         },
 
         handleUpdateGold: function (Value) {
-            this.game.setOro(Value);
+            this.game.atributos.setOro(Value);
             console.log("TODO: handleUpdateGold ");
         },
 
@@ -178,7 +178,7 @@ define(['network/protocol', 'network/bytequeue', 'lib/websock'], function (Proto
         },
 
         handleUpdateExp: function (Value) {
-            this.game.setExp(Value);
+            this.game.atributos.setExp(Value);
             console.log("TODO: handleUpdateExp ");
         },
 
@@ -318,13 +318,13 @@ define(['network/protocol', 'network/bytequeue', 'lib/websock'], function (Proto
         },
 
         handleUpdateUserStats: function (MaxHp, MinHp, MaxMan, MinMan, MaxSta, MinSta, Gld, Elv, Elu, Exp) {
-            this.game.setVida(MinHp, MaxHp);
-            this.game.setMana(MinMan, MaxMan);
-            this.game.setStamina(MinSta, MaxSta);
-            this.game.setExp(Exp,Elu);
-            this.game.setOro(Gld);
-            this.game.player.oro = Gld;
-            this.game.player.nivel = Elv;
+            this.game.atributos.setVida(MinHp, MaxHp);
+            this.game.atributos.setMana(MinMan, MaxMan);
+            this.game.atributos.setStamina(MinSta, MaxSta);
+            this.game.atributos.setExp(Exp,Elu);
+            this.game.atributos.setOro(Gld);
+            this.game.atributos.oro = Gld;
+            this.game.atributos.nivel = Elv;
         },
         handleChangeInventorySlot: function (Slot, ObjIndex, ObjName, Amount, Equiped, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) {
             this.game.cambiarSlotInventario(Slot, ObjIndex, ObjName, Amount, Equiped, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice);
@@ -408,8 +408,8 @@ define(['network/protocol', 'network/bytequeue', 'lib/websock'], function (Proto
         },
 
         handleUpdateHungerAndThirst: function (MaxAgu, MinAgu, MaxHam, MinHam) {
-            this.game.setAgua(MinAgu, MaxAgu);
-            this.game.setHambre(MinHam, MaxHam);
+            this.game.atributos.setAgua(MinAgu, MaxAgu);
+            this.game.atributos.setHambre(MinHam, MaxHam);
         },
 
         handleFame: function (Asesino, Bandido, Burgues, Ladron, Noble, Plebe, Promedio) {
