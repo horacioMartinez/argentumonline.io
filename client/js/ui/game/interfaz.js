@@ -8,7 +8,7 @@ define(['ui/game/itemgrid'], function (ItemGrid) {
         init: function (game,acciones) {
             this.acciones = acciones;
             this.game = game;
-            this.inventarioGrid = new ItemGrid("itemsGrid");
+            this.inventarioGrid = new ItemGrid("itemsGrid",true);
             var self = this;
             this.inventarioGrid.setDobleClickCallback(function(slot){
                 self.acciones.usarConDobleClick(slot);
@@ -47,8 +47,8 @@ define(['ui/game/itemgrid'], function (ItemGrid) {
             });
         },
 
-        cambiarSlotInventario: function (Slot, Amount, numGrafico, equiped) {
-            this.inventarioGrid.modificarSlot(Slot, Amount, numGrafico, equiped);
+        cambiarSlotInventario: function (numSlot, Amount, numGrafico, equiped) {
+            this.inventarioGrid.modificarSlot(numSlot, Amount, numGrafico, equiped);
         },
 
         borrarSlotInventario: function (slot) {

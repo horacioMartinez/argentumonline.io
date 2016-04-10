@@ -7,10 +7,15 @@ define(['jquery-ui'], function () {
     //TODO: crear los popups en run time con jquery y borrarlos cuando se cierran
 
     var ItemGrid = Class.extend({
-        init: function (gridID) {
+        init: function (gridID, sortable) {
             this.id = gridID;
             this.$this = $("#" + this.id);
-            this.$this.sortable({distance: 20});
+            if (sortable) {
+                this.$this.sortable({
+                    distance: 20,
+                    cursor: "move"
+                });
+            }
             this._selectedSlot = null;
             this._selectionCallback = null;
             this._doubleClickCallback = null;

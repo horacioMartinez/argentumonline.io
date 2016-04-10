@@ -14,7 +14,7 @@ define(['app', 'assetmanager', 'ui/uimanager'], function (App, AssetManager, UIM
             uiManager = new UIManager();
             app = new App(assetManager, uiManager);
             uiManager.resizeUi();
-            uiManager.initDOM(); // <<<<-- uimanager
+            uiManager.initDOM();
             //app.center();
 
             assetManager.preload(function () {

@@ -39,7 +39,7 @@ define(['model/character'], function (Character) {
         },
 
         // moverse tiene que ver con el renderer, caminar con enviar mensajes del sv
-        setOnMoverse: function(callback){ // params: x,y
+        setOnMoverse: function(callback){ // cb params: x,y
           this._moverseCallback = callback;
         },
 

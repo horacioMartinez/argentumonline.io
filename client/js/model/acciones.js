@@ -120,9 +120,9 @@ define(['model/intervalos'], function (Intervalos) {
             var selectedSlot = this.game.gameUI.interfaz.getSelectedSlotInventario();
             if (!selectedSlot)
                 return;
-            var amount = this.game.inventario[selectedSlot].cantidad;
+            var amount = this.game.inventario.getSlot(selectedSlot).cantidad;
             if (amount === 1)
-                this.game.tirarSelectedItem(1);
+                this.tirarSelectedItem(1);
             else {
                 this.game.gameUI.showTirar();
             }
@@ -177,27 +177,36 @@ define(['model/intervalos'], function (Intervalos) {
         },
 
         tirarSelectedItem: function (cantidad) {
-            this.game.tirarSelectedItem(cantidad);
+            var selectedSlot = this.game.gameUI.interfaz.getSelectedSlotInventario();
+            if (!selectedSlot)
+                return;
+            if (cantidad >= this.game.inventario.getSlot(selectedSlot).cantidad) {
+                cantidad = this.game.inventario.getSlot(selectedSlot).cantidad;
+                this.game.gameUI.interfaz.resetSelectedSlotInventario();
+            }
+            this.game.client.sendDrop(selectedSlot, cantidad);
         },
+
 
         tirarTodoSelectedItem: function () {
             var selectedSlot = this.game.gameUI.interfaz.getSelectedSlotInventario();
             if (!selectedSlot)
                 return;
-            this.game.tirarSelectedItem(this.game.inventario[selectedSlot].cantidad);
+            this.tirarSelectedItem(this.game.inventario.getSlot(selectedSlot).cantidad);
         },
 
         tirarOro: function (cantidad) {
-            if (cantidad > (this.game.player.oro))
-                cantidad = this.game.player.oro;
-            if (cantidad > 10000)
-                cantidad = 10000;
+            if (cantidad > (this.game.atributos.oro))
+                cantidad = this.game.atributos.oro;
+            if (cantidad > this.MAX_CANTIDAD_ITEM)
+                cantidad = this.MAX_CANTIDAD_ITEM;
             this.game.client.sendDrop(31, cantidad); // por alguna razon 31 es el "slot" del oro
         },
 
         tirarTodoOro: function () {
             this.tirarOro(this.MAX_CANTIDAD_ITEM);
         },
+
 
     });
 

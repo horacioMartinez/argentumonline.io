@@ -10,39 +10,38 @@ define(['ui/popups/popup','ui/game/itemgrid'], function (PopUp,ItemGrid) {
             this.game = game;
             this.acciones = acciones;
 
-            this.compraGrid = new ItemGrid("bovedaGridComprar");
-            this.ventaGrid = new ItemGrid("bovedaGridVender");
+            this.shopGrid = new ItemGrid("bovedaGridComprar",true);
+            this.userGrid = new ItemGrid("bovedaGridVender",true);
             this.initCallbacks();
         },
 
         show: function () {
             this._super();
-            for (var i = 1; i < this.game.inventario.length; i++) {
-                var item = this.game.inventario[i];
-                if (item) {
-                    var numGraf = this.game.renderer.getNumGraficoFromGrh(item.grh);
-                    if (numGraf) {
-                        this.ventaGrid.modificarSlot(i, item.cantidad, numGraf);
-                    }
-                }
-            }
-            this.compraGrid.resetSelectedSlot();
-            this.ventaGrid.resetSelectedSlot();
+            var self = this;
+
+            this.game.inventario.forEachSlot(
+                function (slot) {
+                    var numGraf = self.game.renderer.getNumGraficoFromGrh(slot.grh);
+                    self.userGrid.modificarSlot(slot.numero, slot.cantidad, numGraf);
+                });
+
+            this.shopGrid.resetSelectedSlot();
+            this.userGrid.resetSelectedSlot();
         },
 
         cambiarSlotRetirar: function (Slot, Amount, numGrafico) {
-            this.compraGrid.modificarSlot(Slot, Amount, numGrafico);
+            this.shopGrid.modificarSlot(Slot, Amount, numGrafico);
         },
 
         cambiarSlotDepositar: function (Slot, Amount, numGrafico) {
-            this.ventaGrid.modificarSlot(Slot, Amount, numGrafico);
+            this.userGrid.modificarSlot(Slot, Amount, numGrafico);
         },
 
         borrarSlotRetirar: function (slot) {
-            this.compraGrid.borrarSlot(slot);
+            this.shopGrid.borrarSlot(slot);
         },
         borrarSlotDepositar: function (slot) {
-            this.ventaGrid.borrarSlot(slot);
+            this.userGrid.borrarSlot(slot);
         },
 
         setOroDisponible: function (oro) {
@@ -71,7 +70,7 @@ define(['ui/popups/popup','ui/game/itemgrid'], function (PopUp,ItemGrid) {
             });
 
             $("#bovedaBotonRetirarItem").click(function () {
-                var slot = self.compraGrid.getSelectedSlot();
+                var slot = self.shopGrid.getSelectedSlot();
                 if (slot) {
                     var inputCantidad = $("#bovedaInputCantidadItem").val();
                     if (isNaN(inputCantidad) || (inputCantidad < 0) || !inputCantidad)
@@ -81,7 +80,7 @@ define(['ui/popups/popup','ui/game/itemgrid'], function (PopUp,ItemGrid) {
             });
 
             $("#bovedaBotonDepositarItem").click(function () {
-                var slot = self.ventaGrid.getSelectedSlot();
+                var slot = self.userGrid.getSelectedSlot();
                 if (slot) {
                     var inputCantidad = $("#bovedaInputCantidadItem").val();
                     if (isNaN(inputCantidad) || (inputCantidad < 0) || !inputCantidad)
@@ -95,9 +94,9 @@ define(['ui/popups/popup','ui/game/itemgrid'], function (PopUp,ItemGrid) {
                 self.acciones.cerrarBoveda();
             });
 
-            this.compraGrid.setSelectionCallback(
+            this.shopGrid.setSelectionCallback(
                 function (slot) {
-                    var item = self.game.inventarioBoveda[slot];
+                    var item = self.game.inventarioShop.getSlot(slot);
                     $('#bovedaNombre').text(item.objName);
                     if (item.minDef)
                         $('#bovedaMin').text("Mín Defensa: " + item.minDef);
@@ -117,9 +116,9 @@ define(['ui/popups/popup','ui/game/itemgrid'], function (PopUp,ItemGrid) {
                     }
                 });
 
-            this.ventaGrid.setSelectionCallback(
+            this.userGrid.setSelectionCallback(
                 function (slot) {
-                    var item = self.game.inventario[slot];
+                    var item = self.game.inventario.getSlot(slot);
                     $('#bovedaNombre').text(item.objName);
                     if (item.minDef)
                         $('#bovedaMin').text("Mín Defensa: " + item.minDef);

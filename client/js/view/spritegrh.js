@@ -91,8 +91,6 @@ define(['lib/pixi'], function (PIXI) {
         if (grh.frames) { //grh animado
             this.textures = grh.frames;
             this._setSpeed(grh.velocidad);
-            if (this.loop)
-                this.play();
         }
         else {
             var aux = [];

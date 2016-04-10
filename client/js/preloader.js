@@ -52,7 +52,7 @@ define(['lib/howler', 'lib/pixi'],
                 }
             },
 
-            _agregarPreloadMapas: function (loader) { // TODO: comprimir los mapas con http://pieroxy.net/blog/pages/lz-string/index.html y guardarlos en el local storage
+            _agregarPreloadMapas: function (loader) { // TODO: comprimir los mapas con http://pieroxy.net/blog/pages/lz-string/index.html y guardarlos en el local storage ??
                 for (var i = 0; i < this.PRELOAD_MAPAS.length; i++){
                     loader.add("mapa" + this.PRELOAD_MAPAS[i], "mapas/mapa" + this.PRELOAD_MAPAS[i] + ".json");
                 }

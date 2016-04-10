@@ -1,5 +1,5 @@
-define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character', 'model/comandoschat', 'model/atributos'],
-    function (Mapa, Updater, Item, Player, Character, ComandosChat, Atributos) {
+define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character', 'model/comandoschat', 'model/atributos', 'model/inventario'],
+    function (Mapa, Updater, Item, Player, Character, ComandosChat, Atributos, Inventario) {
         var Game = Class.extend({
             init: function (assetManager) {
                 this.atributos = new Atributos(this);
@@ -21,9 +21,8 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 // Player
                 this.player = null;
                 this.logeado = false; // NOTA: se pone logeado cuando llega el mensaje de logged, este es el ultimo de los mensajes al conectarse, asi que antes llega los mensajes de hechizos inventarios, etc. Deberia primero llegar esto y listo.. tambien deberia llegar el chardinex de tu pj al principio con este mensaje
-                this.inventario = [];
-                this.inventarioCompra = [];
-                this.inventarioBoveda = [];
+                this.inventario = new Inventario();
+                this.inventarioShop = new Inventario();
                 this.hechizos = [];
 
                 this.mouse = {x: 0, y: 0};
@@ -339,17 +338,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 }
             },
 
-            tirarSelectedItem: function (cantidad) {
-                var selectedSlot = this.gameUI.interfaz.getSelectedSlotInventario();
-                if (!selectedSlot)
-                    return;
-                if (cantidad >= this.inventario[selectedSlot].cantidad) {
-                    cantidad = this.inventario[selectedSlot].cantidad;
-                    this.gameUI.interfaz.resetSelectedSlotInventario();
-                }
-                this.client.sendDrop(selectedSlot, cantidad);
-            },
-
             toggleSeguroResucitar: function () {
                 this.seguroResucitacionActivado = !this.seguroResucitacionActivado;
                 this.gameUI.interfaz.setSeguroResucitacion(this.seguroResucitacionActivado);
@@ -362,37 +350,9 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 this.client.sendSafeToggle();
             },
 
-            cambiarSlotInventario: function (Slot, ObjIndex, ObjName, Amount, Equiped, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) {
-                this.inventario[Slot] = {
-                    objIndex: ObjIndex,
-                    objName: ObjName,
-                    cantidad: Amount,
-                    equipado: Equiped,
-                    grh: GrhIndex,
-                    objType: ObjType,
-                    maxHit: MaxHit,
-                    minHit: MinHit,
-                    maxDef: MaxDef,
-                    minDef: MinDef,
-                    precioVenta: ObjSalePrice
-                };
-
-                if ((Amount > 0 ) && (GrhIndex > 0)) {
-                    var numGrafico = this.renderer.getNumGraficoFromGrh(GrhIndex);
-                    this.gameUI.interfaz.cambiarSlotInventario(Slot, Amount, numGrafico, Equiped);
-                    if (this.gameUI.comerciar.visible)
-                        this.gameUI.comerciar.cambiarSlotVenta(Slot, Amount, numGrafico);
-                    if (this.gameUI.boveda.visible)
-                        this.gameUI.boveda.cambiarSlotDepositar(Slot, Amount, numGrafico);
-                }
-                else {
-                    this.gameUI.interfaz.borrarSlotInventario(Slot);
-                    if (this.gameUI.comerciar.visible)
-                        this.gameUI.comerciar.borrarSlotVenta(Slot);
-                    if (this.gameUI.boveda.visible)
-                        this.gameUI.boveda.borrarSlotDepositar(Slot);
-                }
-
+            cambiarSlotInventario: function (numSlot, ObjIndex, ObjName, Amount, Equiped, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) {
+                this.inventario.cambiarSlot(numSlot, ObjName, Amount, ObjSalePrice, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, Equiped);
+                this.gameUI.updateSlotUser(numSlot,this.inventario.getSlot(numSlot));
             },
 
             cambiarSlotHechizos: function (slot, spellID, nombre) {
@@ -564,49 +524,15 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 this.trabajoPendiente = skill;
             },
 
-            cambiarSlotCompra: function (Slot, ObjName, Amount, Price, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef) {
-                this.inventarioCompra[Slot] = {
-                    objIndex: ObjIndex,
-                    objName: ObjName,
-                    cantidad: Amount,
-                    grh: GrhIndex,
-                    objType: ObjType,
-                    maxHit: MaxHit,
-                    minHit: MinHit,
-                    maxDef: MaxDef,
-                    minDef: MinDef,
-                    precio: Price
-                };
+            cambiarSlotCompra: function (numSlot, ObjName, Amount, Price, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef) {
+                this.inventarioShop.cambiarSlot(numSlot, ObjName, Amount, Price, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef);
+                this.gameUI.updateSlotShop(numSlot,this.inventarioShop.getSlot(numSlot));
 
-                if ((Amount > 0 ) && (GrhIndex > 0)) {
-                    var numGrafico = this.renderer.getNumGraficoFromGrh(GrhIndex);
-                    this.gameUI.comerciar.cambiarSlotCompra(Slot, Amount, numGrafico);
-                }
-                else
-                    this.gameUI.comerciar.borrarSlotCompra(Slot);
             },
 
-            cambiarSlotRetirar: function (Slot, ObjIndex, ObjName, Amount, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) { // todo: arreglar este lio
-
-                this.inventarioBoveda[Slot] = {
-                    objIndex: ObjIndex,
-                    objName: ObjName,
-                    cantidad: Amount,
-                    grh: GrhIndex,
-                    objType: ObjType,
-                    maxHit: MaxHit,
-                    minHit: MinHit,
-                    maxDef: MaxDef,
-                    minDef: MinDef,
-                    precio: ObjSalePrice
-                };
-
-                if ((Amount > 0 ) && (GrhIndex > 0)) {
-                    var numGrafico = this.renderer.getNumGraficoFromGrh(GrhIndex);
-                    this.gameUI.boveda.cambiarSlotRetirar(Slot, Amount, numGrafico);
-                }
-                else
-                    this.gameUI.boveda.borrarSlotRetirar(Slot);
+            cambiarSlotRetirar: function (numSlot, ObjIndex, ObjName, Amount, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) {
+                this.inventarioShop.cambiarSlot(numSlot, ObjName, Amount, ObjSalePrice, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef);
+                this.gameUI.updateSlotShop(numSlot,this.inventarioShop.getSlot(numSlot));
             },
 
             togglePausa: function () {

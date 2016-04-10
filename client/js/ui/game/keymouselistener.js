@@ -6,11 +6,12 @@
 define(['ui/game/keymouseinput'], function (KeyMouseInput/*SACAME*/) {
     var KeyMouseListener = Class.extend({
 
-        init: function (game,acciones) {
+        init: function (game, acciones) {
             this.game = game; // todo: sacar de aca !?
-            this.inputHandler = new KeyMouseInput(game,acciones);
+            this.inputHandler = new KeyMouseInput(game, acciones);
 
             this._prevKeyDown = {};
+            log.error("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         },
 
         showChat: function () {
@@ -86,12 +87,11 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput/*SACAME*/) {
 
                 var key = e.which;
 
-                if (!self._isKeyDown(e))
-                    inputHandler.keyDown(key);
-
                 if (inputHandler.isCaminarKey(key)) {
-                    self._downKey(e);
-
+                    if (!self._isKeyDown(e)) {
+                        inputHandler.keyDown(key);
+                        self._downKey(e);
+                    }
                     if (!game.gameUI.hayPopUpActivo()) { // si hay un popup abierto dejar que siga la tecla al pop up, sino no
                         return false;
                     }
