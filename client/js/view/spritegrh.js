@@ -84,6 +84,13 @@ define(['lib/pixi'], function (PIXI) {
     };
 
     SpriteGrh.prototype.cambiarGrh = function (grh) {
+        //temporal
+        if (this._grh === grh)
+            return;
+        else{
+            this._grh = grh;
+        }
+        //<<temporal
         if (!grh) {
             this.gotoAndStop(0);
             return;

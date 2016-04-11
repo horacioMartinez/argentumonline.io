@@ -488,7 +488,6 @@ define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'vie
                 this.containerLluvia = new PIXI.ParticleContainer();
                 var indice = this.stage.getChildIndex(this.gameStage) + 1;
                 this.stage.addChildAt(this.containerLluvia, indice);
-                this.gameStage.addChild(this.layer4);
 
                 var anguloBase = Math.random() * (Math.PI / 12) + Math.PI / 12;
 

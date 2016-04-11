@@ -218,8 +218,8 @@ Enums = {
     },
 
     NickColor: {
-        CRIMINAL: "rgb(225, 0, 0)",
-        CIUDADANO: "rgb(0, 191, 255)"
+        CRIMINAL: "rgb(225, 20, 0)",
+        CIUDADANO: "rgb(0, 60, 255)"
     },
 
     FontIndex: {
@@ -247,11 +247,18 @@ Enums = {
     },
 
     Font: {
-        NOMBRE: {
-            fill: "white",
-            font: '12px Arial',
+
+        BASE_FONT: {
+            font: 'Arial',
+            _weight: '600',
+            _size: '12',
             stroke: "black",
-            align: "center",
+            strokeThickness: 0.2,
+        },
+
+        NOMBRE: {
+            font: '800 14px Arial',
+            stroke: "black",
             strokeThickness: 0.2
         },
         TALK: {

@@ -21,7 +21,7 @@ define(['network/protocol', 'network/bytequeue', 'lib/websock'], function (Proto
         },// TODO: cambiar en el protocolo los peekbyte por readbyte y sacar los readbyte de cada uno
 
         _connect: function (conectarse_callback) {
-            this.ws.open("ws://localhost:8666");
+            this.ws.open("ws://ec2-54-94-134-88.sa-east-1.compute.amazonaws.com:8666");
             /*ec2-54-94-134-88.sa-east-1.compute.amazonaws.com*/
             var self = this;
             this.ws.on('open', function () {
@@ -303,13 +303,16 @@ define(['network/protocol', 'network/bytequeue', 'lib/websock'], function (Proto
             this.game.lloviendo = !this.game.lloviendo;
             var bajoTecho = this.game.bajoTecho;
             if (this.game.lloviendo) {
-                this.game.assetManager.IniciarSonidoLluvia(bajoTecho);
-                if (this.game.map.mapaOutdoor())
+                if (this.game.map.mapaOutdoor()) {
+                    this.game.assetManager.IniciarSonidoLluvia(bajoTecho);
                     this.game.renderer.showLluvia();
+                }
             }
             else {
-                this.game.assetManager.finalizarSonidoLluvia(bajoTecho);
-                this.game.renderer.hideLluvia();
+                if (this.game.map.mapaOutdoor()) {
+                    this.game.assetManager.finalizarSonidoLluvia(bajoTecho);
+                    this.game.renderer.hideLluvia();
+                }
             }
         },
 

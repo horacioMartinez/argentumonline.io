@@ -18,9 +18,10 @@ define(['lib/pixi'], function (PIXI) {
     CharacterText.constructor = CharacterText;
 
     CharacterText.prototype.setEscala = function (escala) {
-        this.baseFont = Math.round(14 * escala) + 'px Arial';
-        var aux = {font: this.baseFont, align: "center", stroke: "black", strokeThickness: 0.2* escala};
-
+        var baseFont = Enums.Font.BASE_FONT;
+        var fuente = baseFont._weight + ' ' + Math.round(baseFont._size * escala) + 'px ' + baseFont.font;
+        var aux = {font: fuente, align: "center", stroke: baseFont.stroke, strokeThickness: baseFont.strokeThickness * escala};
+        
         this.estiloChat = $.extend({}, aux, Enums.Font.TALK);
         if (this._chat) {
             this._chat.style = this.estiloChat;
@@ -92,7 +93,7 @@ define(['lib/pixi'], function (PIXI) {
         duration = duration?duration:125;
         font = font? font: Enums.Font.TALK;
 
-        var aux = {font: this.baseFont, align: "center", stroke: "white", strokeThickness: 0.5*this._escala};
+        var aux = {font: this.estiloChat.font, align: "center", stroke: "white", strokeThickness: 0.5*this._escala};
         var estilo = $.extend({}, aux, font);
         var info = new PIXI.Text(value, estilo);
 

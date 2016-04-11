@@ -4,17 +4,20 @@
 
 define(['lib/pixi'], function (PIXI) {
 
-    function Consola() {
+    function Consola(escala) {
         PIXI.Container.call(this);
-        this.CANT_LINEAS = 5;
+        this.CANT_LINEAS = 7;
+        escala = escala ? escala : 1;
+        this.setEscala(escala);
     }
 
     Consola.prototype = Object.create(PIXI.Container.prototype);
     Consola.constructor = Consola;
 
     Consola.prototype.setEscala = function (escala) {
-        var font = Math.round(14 * escala) + 'px Arial';
-        this.baseFont = {font: font, align: "center", stroke: "black", strokeThickness: 0.2 * escala};
+        var BASE_FONT = Enums.Font.BASE_FONT;
+        var fuente = BASE_FONT._weight + ' ' + Math.round(BASE_FONT._size * escala) + 'px ' + BASE_FONT.font;
+        this.baseFont = {font: fuente, align: "center", stroke: BASE_FONT.stroke, strokeThickness: BASE_FONT.strokeThickness * escala};
 
         for (var i = 0; i < this.children.length; i++) {
             this.children[i].style.font = font;

@@ -11,7 +11,6 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput/*SACAME*/) {
             this.inputHandler = new KeyMouseInput(game, acciones);
 
             this._prevKeyDown = {};
-            log.error("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         },
 
         showChat: function () {
