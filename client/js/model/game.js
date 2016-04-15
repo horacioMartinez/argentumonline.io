@@ -1,5 +1,5 @@
-define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character', 'model/comandoschat', 'model/atributos', 'model/inventario'],
-    function (Mapa, Updater, Item, Player, Character, ComandosChat, Atributos, Inventario) {
+define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character', 'model/comandoschat', 'model/atributos', 'model/inventario','enums'],
+    function (Mapa, Updater, Item, Player, Character, ComandosChat, Atributos, Inventario,Enums) {
         var Game = Class.extend({
             init: function (assetManager) {
                 this.atributos = new Atributos(this);
@@ -457,8 +457,10 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                     log.error(" Reset pos de character no existente, charindex=" + charIndex);
                     return;
                 }
-                this.entityGrid[c.gridX][c.gridY][1] = null;
+                if (this.entityGrid[c.gridX][c.gridY][1] === c)
+                    this.entityGrid[c.gridX][c.gridY][1] = null;
 
+                var prevPos = {x: c.gridX, y: c.gridY};
                 c.resetMovement();
                 c.setGridPosition(gridX, gridY);
                 this.entityGrid[gridX][gridY][1] = c; // TODO <- esto puede traer problemas

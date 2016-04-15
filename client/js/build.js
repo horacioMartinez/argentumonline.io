@@ -1,7 +1,7 @@
 ({
     appDir: "../",
     baseUrl: "js/",
-    dir: "../../client-build",
+    dir: "../../dakara-client-build/build",
     mainConfigFile: 'home.js',
     removeCombined: true,
     fileExclusionRegExp: /^(build)\.js$/,

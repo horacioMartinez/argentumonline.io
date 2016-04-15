@@ -2,7 +2,7 @@
  * Created by horacio on 3/8/16.
  */
 
-define(['lib/pixi'], function (PIXI) {
+define(['enums','lib/pixi'], function (Enums,PIXI) {
 
     function Consola(escala) {
         PIXI.Container.call(this);
@@ -20,7 +20,7 @@ define(['lib/pixi'], function (PIXI) {
         this.baseFont = {font: fuente, align: "center", stroke: BASE_FONT.stroke, strokeThickness: BASE_FONT.strokeThickness * escala};
 
         for (var i = 0; i < this.children.length; i++) {
-            this.children[i].style.font = font;
+            this.children[i].style.font = fuente;
             this.children[i].dirty = true;
             this.children[i].y = this.children[0].height * i;
         }

@@ -2,7 +2,7 @@
  * Created by horacio on 3/2/16.
  */
 
-define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
+define(['enums','lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh) {
 
     function CharacterSprites(Heading, bodys, heads, headOffX, headOffY, weapons, shields, helmets, nombre, clan, font) {
         /*
@@ -51,9 +51,10 @@ define(['lib/pixi', 'view/spritegrh'], function (PIXI, SpriteGrh) {
         this.addChild(this._sombraSprite);
         this._sombraSprite.zIndex = -1;
         this._updateOrdenHijos();
+        this._updateSombraSpriteSize();
     };
 
-    CharacterSprites.prototype._updateSombraSpriteSize = function (grh) {
+    CharacterSprites.prototype._updateSombraSpriteSize = function () {
         if (this._sombraSprite) {
             var w;
             if (this.bodySprite)

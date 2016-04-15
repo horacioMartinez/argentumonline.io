@@ -3,16 +3,20 @@
  */
 
 
-define([], function () {
+define(['enums'], function (Enums) {
     var KeyMouseInput = Class.extend({
         init: function (game,acciones) {
             this.acciones = acciones;
             this.game = game;
-            this.caminarKeys = [Enums.Keys.LEFT, Enums.Keys.KEYPAD_4, Enums.Keys.RIGHT, Enums.Keys.KEYPAD_6, Enums.Keys.UP, Enums.Keys.KEYPAD_8, Enums.Keys.DOWN, Enums.Keys.KEYPAD_2];
+            this.keys = null;
+        },
+
+        setKeys: function(keys){
+            this.keys = keys;
         },
 
         isCaminarKey: function (key) {
-            return this.caminarKeys.indexOf(key) > -1;
+            return ( (key === this.keys.caminarEste) || (key === this.keys.caminarOeste) || (key === this.keys.caminarNorte) || (key === this.keys.caminarSur));
         },
 
         click: function () {
@@ -31,24 +35,21 @@ define([], function () {
         keyUp: function (key) {
             var game = this.game;
             var acciones = this.acciones;
+            var keys = this.keys;
 
             if (!game.started)
                 return;
             switch (key) {
-                case Enums.Keys.LEFT:
-                case Enums.Keys.KEYPAD_4:
+                case keys.caminarOeste:
                     acciones.terminarDeCaminar(Enums.Heading.oeste);
                     break;
-                case Enums.Keys.RIGHT:
-                case Enums.Keys.KEYPAD_6:
+                case keys.caminarEste:
                     acciones.terminarDeCaminar(Enums.Heading.este);
                     break;
-                case Enums.Keys.UP:
-                case Enums.Keys.KEYPAD_8:
+                case keys.caminarNorte:
                     acciones.terminarDeCaminar(Enums.Heading.norte);
                     break;
-                case Enums.Keys.DOWN:
-                case Enums.Keys.KEYPAD_2:
+                case keys.caminarSur:
                     acciones.terminarDeCaminar(Enums.Heading.sur);
                     break;
                 default:
@@ -60,53 +61,51 @@ define([], function () {
         keyDown: function (key) {
             var game = this.game;
             var acciones = this.acciones;
+            var keys = this.keys;
 
             if (!game.started)
                 return;
 
+            var continuar = false;
             switch (key) {
-                case Enums.Keys.LEFT:
-                case Enums.Keys.KEYPAD_4:
+                case keys.caminarOeste:
                     acciones.caminar(Enums.Heading.oeste);
                     break;
-                case Enums.Keys.RIGHT:
-                case Enums.Keys.KEYPAD_6:
+                case keys.caminarEste:
                     acciones.caminar(Enums.Heading.este);
                     break;
-                case Enums.Keys.UP:
-                case Enums.Keys.KEYPAD_8:
+                case keys.caminarNorte:
                     acciones.caminar(Enums.Heading.norte);
                     break;
-                case Enums.Keys.DOWN:
-                case Enums.Keys.KEYPAD_2:
+                case keys.caminarSur:
                     acciones.caminar(Enums.Heading.sur);
                     break;
-                case Enums.Keys.A:
+                case keys.agarrar:
                     acciones.agarrar();
                     break;
-                case Enums.Keys.O:
+                case keys.ocultarse:
                     acciones.ocultarse();
                     break;
-                case Enums.Keys.L:
+                case keys.deslagear:
                     acciones.requestPosUpdate();
                     break;
-                case Enums.Keys.E:
+                case keys.equipar:
                     acciones.equiparSelectedItem();
                     break;
-                case Enums.Keys.U:
+                case keys.usar:
                     acciones.usarConU();
                     break;
-                case Enums.Keys.CONTROL:
+                case keys.atacar:
                     acciones.atacar();
                     break;
-                case Enums.Keys.T:
+                case keys.tirar:
                     acciones.tratarDeTirarItem();
                     break;
                 default:
                     continuar = true;
                     break;
             }
-
+            return continuar;
         },
     });
 

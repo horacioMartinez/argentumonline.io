@@ -2,7 +2,7 @@
  * Created by horacio on 3/9/16.
  */
 
-define([], function () {
+define(['enums'], function (Enums) {
 
     var ComandosChat = Class.extend({
         init: function (game) {

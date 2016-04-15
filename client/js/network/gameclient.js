@@ -1,4 +1,4 @@
-define(['network/protocol', 'network/bytequeue', 'lib/websock'], function (Protocolo, ByteQueue, __websock) {
+define(['enums','network/protocol', 'network/bytequeue', 'lib/websock'], function (Enums,Protocolo, ByteQueue, __websock) {
 
     var GameClient = Class.extend({
         init: function (game, uiManager, gameUI, host, port) {

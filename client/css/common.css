@@ -1,10 +1,4 @@
 /* Typography*/     
-
-@font-face{
-    font-family:'Asul'; 
-    src:url(../fonts/asul-regular.eot);
-}
-
 @font-face{
     font-family:'Asul'; 
     src:url(../fonts/asul-regular.ttf)

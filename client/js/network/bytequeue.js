@@ -130,8 +130,7 @@ define(function () {
 });
 
 
-/*----- COMENTADOS porque no se usa utf8, lo dejo por las dudas que se use en el futuro, ------
- ------ acordarse de cambair el charset en el index.html tambien! -----------------------------
+/*COMENTADOS porque no se usa utf8, lo dejo por las dudas que se use en el futuro, acordarse de cambair el charset en el index.html tambien!
 
  function stringToUTF8Array(str) { // string a array convertido en utf-8
  var utf8 = [];
@@ -212,4 +211,4 @@ define(function () {
  var utf8array = this.ws.rQshiftBytes(largo);
  return UTF8arrayToString(utf8array);
  },
- -------------------------------------------------------------------------------------*/
+ */

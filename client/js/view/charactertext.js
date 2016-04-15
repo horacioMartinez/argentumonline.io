@@ -2,7 +2,7 @@
  * Created by horacio on 3/9/16.
  */
 
-define(['lib/pixi'], function (PIXI) {
+define(['enums','lib/pixi'], function (Enums,PIXI) {
 
     function CharacterText(escala) {
         PIXI.Container.call(this);
@@ -41,6 +41,7 @@ define(['lib/pixi'], function (PIXI) {
 
     CharacterText.prototype._formatearChat = function (str) {
         var resultado = [];
+        str = str.trim();
         while ((str.length > CharacterText.MAXIMO_LARGO_CHAT) && (str.indexOf(' ') > (-1))) {
             var idx = str.indexOf(' ');
             var posUltimoEspacioPrimerBloque = idx;

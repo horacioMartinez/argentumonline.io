@@ -1,7 +1,7 @@
 
 /* Automatically generated file */
 
-define(['enums'], function () {
+define(['enums'], function (Enums) {
 var ClientPacketID = { 
     LoginExistingChar : 0,
     ThrowDices : 1,

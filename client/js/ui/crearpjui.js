@@ -2,7 +2,7 @@
  * Created by horacio on 2/27/16.
  */
 
-define([], function () {
+define(['enums'], function (Enums) {
     var CrearPjUI = Class.extend({
         init: function () {
             this._inicializado = false;

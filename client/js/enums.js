@@ -1,33 +1,4 @@
-Enums = {
-
-    Keys: {
-        ENTER: 13,
-        CONTROL: 17,
-        ESCAPE: 27,
-        UP: 38,
-        DOWN: 40,
-        LEFT: 37,
-        RIGHT: 39,
-        W: 87,
-        A: 65,
-        S: 83,
-        D: 68,
-        E: 69,
-        SPACE: 32,
-        I: 73,
-        H: 72,
-        L: 76,
-        M: 77,
-        O: 79,
-        P: 80,
-        R: 82,
-        T: 84,
-        U: 85,
-        KEYPAD_4: 100,
-        KEYPAD_6: 102,
-        KEYPAD_8: 104,
-        KEYPAD_2: 98
-    },
+define({
     Heading: {
         norte: 1,
         este: 2,
@@ -284,9 +255,7 @@ Enums = {
         },
 
         SKILLINFO: {
-            fill: "rgb(120,0,0)",
-            stroke: "white",
-            strokeThickness: 0.2
+            fill: "rgb(120,20,20)",
         },
 
         EJECUCION: {
@@ -377,15 +346,12 @@ Enums = {
             fill: "rgb(80, 255, 80)",
             stroke: "rgb(50, 120, 50)"
         },
-        "health": {
-            fill: "white",
-            stroke: "#373737"
-        },
         CANVAS_EXP: {
             fill: "rgb(80, 80, 255)",
             stroke: "rgb(50, 50, 255)"
         }
     },
+
     SONIDOS: {
         paso1: "23",
         paso2: "24",
@@ -397,7 +363,7 @@ Enums = {
         lluvia_end_indoor:"lluviainend",
         lluvia_end_outdoor:"lluviaoutend",
     }
-};
+});
 
 /*
  FONTTYPE_TALK1
@@ -1339,4 +1305,38 @@ Enums = {
  End Enum
 
  Public Const MP3_INITIAL_INDEX As Integer = 1000
+ */
+
+/* sacar
+
+
+ Keys: {
+ ENTER: 13,
+ CONTROL: 17,
+ ESCAPE: 27,
+ UP: 38,
+ DOWN: 40,
+ LEFT: 37,
+ RIGHT: 39,
+ W: 87,
+ A: 65,
+ S: 83,
+ D: 68,
+ E: 69,
+ SPACE: 32,
+ I: 73,
+ H: 72,
+ L: 76,
+ M: 77,
+ O: 79,
+ P: 80,
+ R: 82,
+ T: 84,
+ U: 85,
+ KEYPAD_4: 100,
+ KEYPAD_6: 102,
+ KEYPAD_8: 104,
+ KEYPAD_2: 98
+ },
+
  */

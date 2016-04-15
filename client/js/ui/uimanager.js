@@ -130,8 +130,8 @@ define(['ui/loginui','ui/crearpjui','ui/game/gameui', 'ui/popups/mensaje'], func
             this.setLoginScreen();
         },
 
-        inicializarGameUI: function (game,acciones) {
-            this.gameUI = new GameUI(game,acciones);
+        inicializarGameUI: function (game,acciones, storage /*SACAME!*/) {
+            this.gameUI = new GameUI(game,acciones,storage);
             return this.gameUI;
         },
 

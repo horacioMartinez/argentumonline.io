@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 TOPLEVELDIR="`dirname $0`/.."
-BUILDDIR="$TOPLEVELDIR/client-build"
+BUILDDIR="$TOPLEVELDIR/dakara-client-build/build"
 PROJECTDIR="$TOPLEVELDIR/client/js"
 
 echo "Deleting previous build directory"

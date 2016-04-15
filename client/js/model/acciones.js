@@ -2,7 +2,7 @@
  * Created by horacio on 4/9/16.
  */
 
-define(['model/intervalos'], function (Intervalos) {
+define(['model/intervalos','enums'], function (Intervalos,Enums) {
 
     var Acciones = Class.extend({
         init: function (game) {

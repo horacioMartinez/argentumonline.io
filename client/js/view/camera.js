@@ -1,4 +1,4 @@
-define([], function () {
+define(['enums'], function (Enums) {
 
     var Camera = Class.extend({
         init: function (tilesize) {

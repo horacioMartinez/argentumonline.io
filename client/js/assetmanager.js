@@ -4,8 +4,8 @@ define(['json!../indices/graficos.json',
         'json!../indices/cascos.json',
         'json!../indices/cuerpos.json',
         'json!../indices/escudos.json',
-        'json!../indices/fxs.json', 'lib/howler', 'lib/pixi', 'preloader'],
-    function (jsonGraficos, jsonArmas, jsonCabezas, jsonCascos, jsonCuerpos, jsonEscudos, jsonFxs, __howler__, PIXI, Preloader) {
+        'json!../indices/fxs.json', 'lib/howler', 'lib/pixi', 'preloader','enums'],
+    function (jsonGraficos, jsonArmas, jsonCabezas, jsonCascos, jsonCuerpos, jsonEscudos, jsonFxs, __howler__, PIXI, Preloader, Enums) {
 
         var AssetManager = Class.extend({
             init: function () {

@@ -2,15 +2,20 @@
  * Created by horacio on 4/6/16.
  */
 
-
-define(['ui/game/keymouseinput'], function (KeyMouseInput/*SACAME*/) {
+define(['ui/game/keymouseinput'], function (KeyMouseInput) {
     var KeyMouseListener = Class.extend({
 
-        init: function (game, acciones) {
+        init: function (game, acciones, keys) {
             this.game = game; // todo: sacar de aca !?
             this.inputHandler = new KeyMouseInput(game, acciones);
+            this.setKeys(keys);
 
             this._prevKeyDown = {};
+        },
+
+        setKeys: function(keys){
+            this.keys = keys;
+            this.inputHandler.setKeys(keys);
         },
 
         showChat: function () {
@@ -54,56 +59,47 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput/*SACAME*/) {
 
         initListeners: function () {
             var self = this;
-            var game = this.game;
-            var inputHandler = this.inputHandler;
-
             $('#chatbox').attr('value', '');
+            this._initMouseListeners();
+            this._initDocumentKeysListeners();
+            this._initChatKeyListener();
+        },
 
-            $('#gamecanvas').click(function (event) {
-                // TODO: si haces click afuera del menu pop up que lo cierre?
-
-                if (self.inGameMouseCoordinates(game, event)) {
-                    inputHandler.click();
-                }
-            });
-
-            $('#gamecanvas').dblclick(function (event) {
-                // TODO: si haces click afuera del menu pop up que lo cierre?
-                if (self.inGameMouseCoordinates(game, event)) {
-                    inputHandler.doubleClick();
-                }
-            });
+        _initDocumentKeysListeners: function () {
+            var self = this;
 
             $(document).keyup(function (e) {
                 var key = e.which;
                 self._upKey(e);
-                inputHandler.keyUp(key);
+                self.inputHandler.keyUp(key);
             });
 
             $(document).keydown(function (e) {
-                if (!game.started)
+                if (!self.game.started)
                     return;
 
                 var key = e.which;
 
-                if (inputHandler.isCaminarKey(key)) {
+                if (self.inputHandler.isCaminarKey(key)) {
                     if (!self._isKeyDown(e)) {
-                        inputHandler.keyDown(key);
+                        self.inputHandler.keyDown(key);
                         self._downKey(e);
                     }
-                    if (!game.gameUI.hayPopUpActivo()) { // si hay un popup abierto dejar que siga la tecla al pop up, sino no
+                    if (!self.game.gameUI.hayPopUpActivo()) { // si hay un popup abierto dejar que siga la tecla al pop up, sino no
                         return false;
                     }
-                    return;
+                    else
+                        return;
                 }
 
-                if (game.isPaused || (game.gameUI.hayPopUpActivo()))
+                if (self.game.isPaused || (self.game.gameUI.hayPopUpActivo()))
                     return;
+
                 // lo de abajo se ejecuta solo si no hay un pop up abierto
 
                 $chatb = $('#chatbox');
 
-                if (key === Enums.Keys.ENTER) {
+                if (key === self.keys.toggleChat) {
                     if ($chatb.hasClass('active')) {
                         self.hideChat();
                     } else {
@@ -111,24 +107,30 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput/*SACAME*/) {
                     }
                 }
 
-                if (!$chatb.hasClass('active') /* && !this.game.uiRenderer.popUpActivo*/) {
+                if (!$chatb.hasClass('active') /* && !this.self.game.uiRenderer.popUpActivo*/) {
                     if (self._isKeyDown(e))
-                        return;
+                        return false;
                     self._downKey(e);
-                    e.preventDefault();
-                    inputHandler.keyDown(key);
+
+                    return self.inputHandler.keyDown(key); // << return false previene el default y hace que no se propague mas
+                    // TODO: hacer algo como lo anterior para los popUps, por ejemplo si tenes configurado el F5 en meditar prevenir que se recargue la pagina (lo hace devolviendo false)
+                    //TODO?: directamente desactivar todos los Fs, asi se evita que apretes uno sin querer?
                 }
             });
+        },
+
+        _initChatKeyListener: function () {
+            var self = this;
 
             $('#chatinput').keydown(function (e) {
 
                 var key = e.which;
 
-                if (key === Enums.Keys.ENTER) {
+                if (key === self.keys.toggleChat) {
                     $chat = $('#chatinput');
                     if ($chat.attr('value') !== '') {
-                        if (game.player) {
-                            game.enviarChat($chat.val());
+                        if (self.game.player) {
+                            self.game.enviarChat($chat.val());
                         }
                         $chat.val('');
                         self.hideChat();
@@ -140,21 +142,29 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput/*SACAME*/) {
                     }
                 }
 
-                if (key === Enums.Keys.ESCAPE) {
+                if (key === self.keys.cerrar) {
                     self.hideChat();
                     return false;
                 }
             });
+        },
 
-            $(document).bind("keydown", function (e) {
-                var key = e.which;
+        _initMouseListeners: function () {
 
-                if (key === Enums.Keys.ENTER) { // Enter
-                    $chat = $('#chatinput');
-                    if (game.started) {
-                        $chat.focus();
-                        return false;
-                    }
+            var self = this;
+
+            $('#gamecanvas').click(function (event) {
+                // TODO: si haces click afuera del menu pop up que lo cierre?
+
+                if (self.inGameMouseCoordinates(self.game, event)) {
+                    self.inputHandler.click();
+                }
+            });
+
+            $('#gamecanvas').dblclick(function (event) {
+                // TODO: si haces click afuera del menu pop up que lo cierre?
+                if (self.inGameMouseCoordinates(self.game, event)) {
+                    self.inputHandler.doubleClick();
                 }
             });
         },

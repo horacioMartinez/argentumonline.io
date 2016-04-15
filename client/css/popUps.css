@@ -5,7 +5,7 @@
 .popUp article {font-size:12px;text-align:center; position:absolute;}
 .popUp article input {border:none; outline:none; background: none; color: white; font: 1em;}
 .popUp article ul {cursor:default;}
-.popUp article span {color:white;display: inline-block;}
+.popUp article span {color:white;display: inline-block; user-select: none; cursor: default;}
 .popUp article input,article button,article ul,article span {position:absolute;}
 .popUp article .itemgrid li {font-size:13px;}
 
@@ -63,3 +63,19 @@
 #bovedaNombre {left:155px;top:445px;font-size:16px;}
 #bovedaMin {left:155px;top:465px;font-size:14px;}
 #bovedaMax {left:155px;top:480px;font-size:14px;}
+
+/* Mapa */
+#popUpMapa {width:573px;height:528px; background:url('../imagenes/popups/mapa1.jpg');}
+#mapaBotonCerrar {left:527px;top:12px;}
+#mapaBotonToggle{position: absolute;left:45.5%; top:94%; width: 10%; height:5.2%;}
+
+#popUpMapa.mapaSeccionB {background:url('../imagenes/popups/mapa2.jpg');}
+#popUpMapa.mapaSeccionB #mapaBotonToggle {position: absolute;left:45.5%; top:0.5%; width: 10%; height:5.2%;}
+
+/* Configurar teclas */
+#configurarTeclas {width:548px;height:500px;background:url('../imagenes/popups/configurarTeclas.jpg');}
+#configurarTecla_agarrar {position: absolute;left:70.5%; top:13%; width: 17.6%; height:5.2%;}
+#configurarTeclasBotonCerrar {left:507px;top:12px;}
+#configurarTeclasCancelar {left:2%; top:90%;}
+#configurarTeclasRestaurarDefault {left:35%; top:90%;}
+#configurarTeclasGuardarYSalir {left:68%; top:90%;}

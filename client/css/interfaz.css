@@ -49,3 +49,9 @@
 #botonSeguroResucitar.seguroOff {background-image: url("../imagenes/interfaz/resucitationSafeOff.png");}
 #botonSeguroAtacar {position: absolute;left:60.1%; top:90.5%; width:11%; height:6.1%;background-image: none}
 #botonSeguroAtacar.seguroOff {background-image: url("../imagenes/interfaz/attackSafeOff.png");}
+
+#botonMapa {position: absolute; left:53.5%; top:68%; width:35.5%; height:3.6%;}
+#botonGrupo {position: absolute; left:53.5%; top:72%; width:35.5%; height:3.6%;}
+#botonOpciones {position: absolute; left:53.5%; top:76%; width:35.5%; height:3.6%;}
+#botonEstadisticas {position: absolute; left:53.5%; top:80%; width:35.5%; height:3.6%;}
+#botonClanes {position: absolute; left:53.5%; top:84%; width:35.5%; height:3.6%;}

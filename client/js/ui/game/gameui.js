@@ -3,22 +3,27 @@
  */
 
 
-define(['ui/game/keymouselistener', 'ui/popups/comerciar', 'ui/game/interfaz', 'ui/popups/tirar', 'ui/popups/boveda'], function (KeyMouseListener, Comerciar, Interfaz, Tirar, Boveda) {
+define(['ui/game/keymouselistener', 'ui/popups/comerciar', 'ui/game/interfaz', 'ui/popups/tirar', 'ui/popups/boveda', 'ui/popups/guiamapa','ui/popups/configurarteclas'], function (KeyMouseListener, Comerciar, Interfaz, Tirar, Boveda, GuiaMapa, ConfigurarTeclas) {
 
     //TODO: crear los popups en run time con jquery y borrarlos cuando se cierran ?
 
     var GameUI = Class.extend({
-        init: function (game, acciones) {
+        init: function (game, acciones,storage) {
             this.acciones = acciones;
             this.game = game;
+            this.storage = storage; // no deberia venir aca, ver funcion setkeys
+
             this.comerciar = new Comerciar(game, acciones);
             this.tirar = new Tirar(game, acciones);
             this.boveda = new Boveda(game, acciones);
+            this.guiaMapa = new GuiaMapa();
+            this.configurarTeclas = new ConfigurarTeclas(storage,this.updateKeysCallback.bind(this));
 
             this._currentPopUp = 0; // mal
             this.interfaz = new Interfaz(game, acciones);
-            this.keyMouseListener = new KeyMouseListener(game, acciones);
+            this.keyMouseListener = new KeyMouseListener(game, acciones,storage.getKeys());
             this.initDOM();
+            this.$popUps = $("#popUpsJuego");
         },
 
         initDOM: function () {
@@ -30,8 +35,12 @@ define(['ui/game/keymouselistener', 'ui/popups/comerciar', 'ui/game/interfaz', '
             this.game.resize(escala); // todo <- este resize del renderer deberia ir fuera de game
         },
 
+        updateKeysCallback: function(keys){ // todo: en otro lado esto y que a gameui solo le llegue keys
+            this.keyMouseListener.setKeys(keys);
+        },
+
         hayPopUpActivo: function () {
-            return (this.comerciar.visible || this.tirar.visible || this.boveda.visible);
+            return !(this.$popUps.children(':visible').length === 0);
         },
 
         showComerciar: function () {
@@ -56,6 +65,14 @@ define(['ui/game/keymouselistener', 'ui/popups/comerciar', 'ui/game/interfaz', '
 
         hideTirar: function () {
             this.tirar.hide();
+        },
+
+        showMapa: function(){
+            this.guiaMapa.show();
+        },
+
+        showConfigurarTeclas: function(){
+            this.configurarTeclas.show();
         },
 
         updateSlotUser: function (numSlot, slot) { //todo: feo todo esto!

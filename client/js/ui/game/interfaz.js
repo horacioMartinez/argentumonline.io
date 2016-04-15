@@ -45,6 +45,14 @@ define(['ui/game/itemgrid'], function (ItemGrid) {
             $("#botonSeguroAtacar").dblclick(function() {
                 self.game.toggleSeguroAtacar();
             });
+
+            $("#botonMapa").click(function(){
+               self.game.gameUI.showMapa();
+            });
+
+            $("#botonOpciones").click(function(){
+                self.game.gameUI.showConfigurarTeclas();
+            });
         },
 
         cambiarSlotInventario: function (numSlot, Amount, numGrafico, equiped) {

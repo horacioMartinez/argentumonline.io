@@ -1,5 +1,5 @@
-define(['lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'view/charactertext', 'view/spritegrh', 'view/containerordenado'],
-    function (PIXI, Camera, CharacterSprites, Consola, CharacterText, SpriteGrh, ContainerOrdenado) {
+define(['enums','lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'view/charactertext', 'view/spritegrh', 'view/containerordenado'],
+    function (Enums, PIXI, Camera, CharacterSprites, Consola, CharacterText, SpriteGrh, ContainerOrdenado) {
 
         var Renderer = Class.extend({
             init: function (assetManager, escala) {
