@@ -107,7 +107,7 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
                     }
                 }
 
-                if (!$chatb.hasClass('active') /* && !this.self.game.uiRenderer.popUpActivo*/) {
+                if (!$chatb.hasClass('active')) {
                     if (self._isKeyDown(e))
                         return false;
                     self._downKey(e);
