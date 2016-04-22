@@ -1,12 +1,12 @@
-define(['model/game', 'view/renderer', 'storage/storage', 'network/gameclient','model/acciones'], function (Game, Renderer, Storage, GameClient, Acciones) {
+define(['model/game', 'view/renderer', 'network/gameclient','model/acciones'], function (Game, Renderer, GameClient, Acciones) {
 
     var App = Class.extend({
-        init: function (assetManager, uiManager) {
+        init: function (assetManager, uiManager, storage) {
             this.assetManager = assetManager;
             this.uiManager = uiManager;
             this.client = null;
             this.ready = false;
-            this.storage = new Storage();
+            this.storage = storage;
         },
 
         _initLoginCallbacks: function(){
@@ -43,6 +43,7 @@ define(['model/game', 'view/renderer', 'storage/storage', 'network/gameclient','
                 self.game.init(self.game.assetManager);
                 self.game.setup(self.client,ui,r);
                 self.game.started = false;
+                self.starting = false;
             });
 
             client.setLogeadoCallback(function () {

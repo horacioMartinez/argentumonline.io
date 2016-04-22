@@ -55,3 +55,5 @@
 #botonOpciones {position: absolute; left:53.5%; top:76%; width:35.5%; height:3.6%;}
 #botonEstadisticas {position: absolute; left:53.5%; top:80%; width:35.5%; height:3.6%;}
 #botonClanes {position: absolute; left:53.5%; top:84%; width:35.5%; height:3.6%;}
+
+#botonAsignarSkills {position:absolute;background-image: url("../imagenes/interfaz/botonAsignarSkills.png");left:55%; top:10%;width:5%;height:80%}

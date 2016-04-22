@@ -3,15 +3,16 @@
  */
 
 
-define(['storage/defaultsettings', 'charcodemap', 'ui/popups/popup'], function (DefaultSettings, CharCodeMap, PopUp) {
+define(['charcodemap', 'ui/popups/popup'], function (CharCodeMap, PopUp) {
 
     var ConfigurarTeclas = PopUp.extend({
-        init: function (storage, updateKeysCb) {
+        init: function (storage, updateKeysCb, showMensajeCb) {
             this._super("configurarTeclas");
             this.storage = storage;
             this.initCallbacks();
             this.nuevasKeys = null;
             this.updateKeysCb = updateKeysCb;
+            this.showMensajeCb = showMensajeCb;
         },
 
         show: function () {
@@ -57,7 +58,7 @@ define(['storage/defaultsettings', 'charcodemap', 'ui/popups/popup'], function (
             });
 
             $("#configurarTeclasRestaurarDefault").click(function () {
-                self.nuevasKeys = DefaultSettings.keys;
+                self.nuevasKeys = self.storage.getDefaultKeys();
                 self.displayKeys();
             });
 
@@ -75,12 +76,10 @@ define(['storage/defaultsettings', 'charcodemap', 'ui/popups/popup'], function (
                     return;
                 }
                 var nuevaKey = event.which;
-                log.error(nuevaKey);
-                log.error(self.nuevasKeys.agarrar);
                 if (self.keyRepetida(nuevaKey)){
-                    alert("Esa tecla ya pertenece a otro comando"); // TODO <<--- no alert, mensaje!!!
+                    self.showMensajeCb("Esa tecla ya pertenece a otro comando");
                     self.displayKeys();
-                    return;
+                    return false;
                 }
                 self.nuevasKeys[accion] = nuevaKey;
                 self.displayKeys();

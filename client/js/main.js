@@ -1,5 +1,13 @@
-define(['app', 'assetmanager', 'ui/uimanager'], function (App, AssetManager, UIManager) {
-    var app, uiManager, assetManager;
+define(['app', 'assets/assetmanager', 'ui/uimanager', 'storage/storage'], function (App, AssetManager, UIManager, Storage) {
+    var app, uiManager, assetManager, storage;
+
+    var setupAudio = function(audio, storage) {
+        audio.setSoundMuted(storage.getSoundMuted());
+        audio.setMusicMuted(storage.getMusicMuted());
+        audio.setMusicVolume(storage.getMusicVolume());
+        audio.setSoundVolume(storage.getSoundVolume());
+        audio.setMusic("intro");
+    };
 
     var initApp = function () {
         $(document).ready(function () {
@@ -10,11 +18,17 @@ define(['app', 'assetmanager', 'ui/uimanager'], function (App, AssetManager, UIM
              });
              });*/
 
+            storage = new Storage();
             assetManager = new AssetManager();
+            setupAudio(assetManager.audio,storage);
+
+
             uiManager = new UIManager();
-            app = new App(assetManager, uiManager);
+            app = new App(assetManager, uiManager, storage);
             uiManager.resizeUi();
             uiManager.initDOM();
+
+
             //app.center();
 
             assetManager.preload(function () {

@@ -13,10 +13,17 @@
 .popUp article input {outline: dashed 2px green;}
 /* ---------------------- */
 
-/* Mensaje */
-#mensaje {width:266px;height:213px; background:url('../imagenes/popups/mensaje.jpg');}
+/* ------ POP UPS GLOBALES ------- */
+/* Mensaje global */
+#mensajeGlobal {width:266px;height:213px; background:url('../imagenes/popups/mensaje.jpg');}
 #mensajeContenido {text-align:left;top:37px;left:15px;width:230px;height:130px;font-size:16px;overflow:auto;}
 #mensajeBotonCerrar {top:177px;left:80px; width:100px; height:30px;}
+
+/* ------ POP UPS IN GAME ------- */
+/* Mensaje in-game */
+#inGameMensaje {width:266px;height:213px; background:url('../imagenes/popups/mensaje.jpg');z-index:99999;}
+#inGameMensajeContenido {text-align:left;top:37px;left:15px;width:230px;height:130px;font-size:16px;overflow:auto;}
+#inGameMensajeBotonCerrar {top:177px;left:80px; width:100px; height:30px;}
 
 /* comerciar */
 #comerciar {width:462px;height:486px;}
@@ -96,4 +103,10 @@
 #configurarTecla_atacar {top:65%;}
 #configurarTecla_toggleChat {top:74%;}
 #configurarTecla_cerrar {top:65%;}
- #configurarTecla_deslagear {top:12%;}
+#configurarTecla_deslagear {top:12%;}
+
+/* Skills */
+
+#popUpSkills {width:600px;height:450px;background:url('../imagenes/popups/skills.jpg');}
+#skillsBotonCerrar {top:37px;left:580px}
+

@@ -38,6 +38,10 @@ define(['ui/game/itemgrid'], function (ItemGrid) {
                self.game.gameUI.showTirar(true);
             });
 
+            $("#botonAsignarSkills").click(function(){
+               self.game.gameUI.showSkills();
+            });
+
             $("#botonSeguroResucitar").dblclick(function() {
                 self.game.toggleSeguroResucitar();
             });

@@ -206,7 +206,7 @@ define(['enums','network/protocol', 'network/bytequeue', 'lib/websock'], functio
         },
 
         handleShowMessageBox: function (Chat) {
-            this.uiManager.showMensaje(Chat);
+            this.gameUI.showMensaje(Chat);
             console.log("TODO: handleShowMessageBox ");
         },
 
@@ -280,11 +280,11 @@ define(['enums','network/protocol', 'network/bytequeue', 'lib/websock'], functio
         },
 
         handlePlayMidi: function (MidiID, Loops) {
-            this.game.assetManager.setMusic(MidiID);
+            this.game.assetManager.audio.setMusic(MidiID);
         },
 
         handlePlayWave: function (WaveID, X, Y) {
-            this.game.assetManager.playSound(WaveID);
+            this.game.assetManager.audio.playSound(WaveID);
         },
 
         handleGuildList: function (Data) {
@@ -304,13 +304,13 @@ define(['enums','network/protocol', 'network/bytequeue', 'lib/websock'], functio
             var bajoTecho = this.game.bajoTecho;
             if (this.game.lloviendo) {
                 if (this.game.map.mapaOutdoor()) {
-                    this.game.assetManager.IniciarSonidoLluvia(bajoTecho);
+                    this.game.assetManager.audio.IniciarSonidoLluvia(bajoTecho);
                     this.game.renderer.showLluvia();
                 }
             }
             else {
                 if (this.game.map.mapaOutdoor()) {
-                    this.game.assetManager.finalizarSonidoLluvia(bajoTecho);
+                    this.game.assetManager.audio.finalizarSonidoLluvia(bajoTecho);
                     this.game.renderer.hideLluvia();
                 }
             }

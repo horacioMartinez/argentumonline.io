@@ -141,7 +141,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                     this.bajoTecho = bajoTecho;
                     this.renderer.setBajoTecho(bajoTecho);
                     if (this.lloviendo && this.map.mapaOutdoor())
-                        this.assetManager.playLoopLluvia(bajoTecho);
+                        this.assetManager.audio.playLoopLluvia(bajoTecho);
                 }
             },
 
@@ -219,14 +219,14 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 if (char.muerto || !this.renderer.entityEnTileVisible(char))
                     return;
                 if (this.player.navegando) { //todo: que sea dependiendo si el char navega, no el player
-                    this.assetManager.playSound(Enums.SONIDOS.pasoNavegando);
+                    this.assetManager.audio.playSound(Enums.SONIDOS.pasoNavegando);
                 }
                 else {
                     char.pasoDerecho = !char.pasoDerecho;
                     if (char.pasoDerecho)
-                        this.assetManager.playSound(Enums.SONIDOS.paso1);
+                        this.assetManager.audio.playSound(Enums.SONIDOS.paso1);
                     else
-                        this.assetManager.playSound(Enums.SONIDOS.paso2);
+                        this.assetManager.audio.playSound(Enums.SONIDOS.paso2);
                 }
             },
 
@@ -485,9 +485,9 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 if (this.lloviendo && prevMapa) {
                     if (this.map.mapaOutdoor() !== prevMapa.mapaOutdoor()) {
                         if (this.map.mapaOutdoor())
-                            this.assetManager.IniciarSonidoLluvia();
+                            this.assetManager.audio.IniciarSonidoLluvia();
                         else
-                            this.assetManager.finalizarSonidoLluvia();
+                            this.assetManager.audio.finalizarSonidoLluvia();
                         this.renderer.toggleLluvia();
                     }
                 }

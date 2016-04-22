@@ -6,6 +6,8 @@ define(['enums','lib/pixi'], function (Enums,PIXI) {
 
     function CharacterText(escala) {
         PIXI.Container.call(this);
+        this.estiloChat = null;
+        this.estiloHovering = null;
         CharacterText.MAXIMO_LARGO_CHAT = 18;
         this._chat = null;
         this._escala = escala ? escala : 1;
@@ -32,6 +34,10 @@ define(['enums','lib/pixi'], function (Enums,PIXI) {
         this.y = this.y * (escala / this._escala);
 
         this._escala = escala;
+
+        baseFont = Enums.Font.HOVERING_BASE_FONT;
+        fuente = baseFont._weight + ' ' + Math.round(baseFont._size * escala) + 'px ' + baseFont.font;
+        this.estiloHovering = {font: fuente, align: "center", stroke: baseFont.stroke, strokeThickness: baseFont.strokeThickness * escala};
     };
 
     CharacterText.prototype.setPosition = function (x, y) {
@@ -92,10 +98,8 @@ define(['enums','lib/pixi'], function (Enums,PIXI) {
     CharacterText.prototype.setHoveringInfo = function (value,font, duration) {
 
         duration = duration?duration:125;
-        font = font? font: Enums.Font.TALK;
 
-        var aux = {font: this.estiloChat.font, align: "center", stroke: "white", strokeThickness: 0.5*this._escala};
-        var estilo = $.extend({}, aux, font);
+        var estilo = $.extend({}, this.estiloHovering, font);
         var info = new PIXI.Text(value, estilo);
 
         info.duracion = duration;

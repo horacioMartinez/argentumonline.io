@@ -1,43 +1,71 @@
-
 define(['storage/defaultsettings'], function (DefaultSettings) {
     var Storage = Class.extend({
-        init: function() {
-            if(this.hasLocalStorage() && localStorage.data) {
-                this._data = JSON.parse(localStorage.data);
+        init: function () {
+            if (this.hasLocalStorage() && localStorage.data) {
+                var userData = JSON.parse(localStorage.data);
+                var defaultData = this._getDefaultData();
+                this._data = $.extend(true,defaultData, userData); // agrega los userData a defaultData, es por si falta algun campo en userData que este en default
             } else {
                 this.resetData();
             }
         },
 
-        resetData: function() {
-            this._data = {settings: DefaultSettings};
+        resetData: function () {
+            this._data = this._getDefaultData;
         },
 
-        getSettings: function(){
-          return this._data.settings;
+        _getDefaultData: function(){
+            var defSettings = $.extend(true,{},DefaultSettings);//_(DefaultSettings).clone();
+            return {
+                settings: defSettings
+            };
         },
 
-        getKeys: function(){
-          return this._data.settings.keys;
+        getDefaultKeys: function(){
+            return this._getDefaultData().settings.keys;
         },
 
-        setKeys: function(keys){
+        getSettings: function () {
+            return this._data.settings;
+        },
+
+        getKeys: function () {
+            return this._data.settings.keys;
+        },
+
+        getSoundMuted: function(){
+            return this._data.settings.audio.soundMuted;
+        },
+
+        getMusicMuted: function(){
+            return this._data.settings.audio.musicMuted;
+        },
+
+        getSoundVolume: function () {
+            return this._data.settings.audio.soundVolume;
+        },
+
+        getMusicVolume: function () {
+            return this._data.settings.audio.musicVolume;
+        },
+
+        setKeys: function (keys) {
             this._data.settings.keys = keys;
             this.save();
         },
 
-        hasLocalStorage: function() {
+        hasLocalStorage: function () {
             return Modernizr.localstorage;
         },
 
-        save: function() {
-            if(this.hasLocalStorage()) {
+        save: function () {
+            if (this.hasLocalStorage()) {
                 localStorage.data = JSON.stringify(this._data);
             }
         },
 
-        clear: function() {
-            if(this.hasLocalStorage()) {
+        clear: function () {
+            if (this.hasLocalStorage()) {
                 localStorage.data = "";
                 this.resetData();
             }
@@ -45,47 +73,47 @@ define(['storage/defaultsettings'], function (DefaultSettings) {
 
         // Player
 
-        hasAlreadyPlayed: function() {
+        hasAlreadyPlayed: function () {
             return this._data.hasAlreadyPlayed;
         },
 
-        initPlayer: function(name) {
+        initPlayer: function (name) {
             this._data.hasAlreadyPlayed = true;
             this.setPlayerName(name);
         },
 
-        setPlayerName: function(name) {
+        setPlayerName: function (name) {
             this._data.player.name = name;
             this.save();
         },
 
-        setPlayerImage: function(img) {
+        setPlayerImage: function (img) {
             this._data.player.image = img;
             this.save();
         },
 
-        setPlayerArmor: function(armor) {
+        setPlayerArmor: function (armor) {
             this._data.player.armor = armor;
             this.save();
         },
 
-        setPlayerWeapon: function(weapon) {
+        setPlayerWeapon: function (weapon) {
             this._data.player.weapon = weapon;
             this.save();
         },
-        
-        setPlayerGuild: function(guild) {
-			if(typeof guild !== "undefined") {
-				this._data.player.guild={id:guild.id, name:guild.name,members:JSON.stringify(guild.members)};
-				this.save();
-			}
-			else{
-				delete this._data.player.guild;
-				this.save();
-			}
-		},
 
-        savePlayer: function(img, armor, weapon, guild) {
+        setPlayerGuild: function (guild) {
+            if (typeof guild !== "undefined") {
+                this._data.player.guild = {id: guild.id, name: guild.name, members: JSON.stringify(guild.members)};
+                this.save();
+            }
+            else {
+                delete this._data.player.guild;
+                this.save();
+            }
+        },
+
+        savePlayer: function (img, armor, weapon, guild) {
             this.setPlayerImage(img);
             this.setPlayerArmor(armor);
             this.setPlayerWeapon(weapon);
@@ -94,12 +122,12 @@ define(['storage/defaultsettings'], function (DefaultSettings) {
 
         // Achievements
 
-        hasUnlockedAchievement: function(id) {
+        hasUnlockedAchievement: function (id) {
             return _.include(this._data.achievements.unlocked, id);
         },
 
-        unlockAchievement: function(id) {
-            if(!this.hasUnlockedAchievement(id)) {
+        unlockAchievement: function (id) {
+            if (!this.hasUnlockedAchievement(id)) {
                 this._data.achievements.unlocked.push(id);
                 this.save();
                 return true;
@@ -107,65 +135,65 @@ define(['storage/defaultsettings'], function (DefaultSettings) {
             return false;
         },
 
-        getAchievementCount: function() {
+        getAchievementCount: function () {
             return _.size(this._data.achievements.unlocked);
         },
 
         // Angry rats
-        getRatCount: function() {
+        getRatCount: function () {
             return this._data.achievements.ratCount;
         },
 
-        incrementRatCount: function() {
-            if(this._data.achievements.ratCount < 10) {
+        incrementRatCount: function () {
+            if (this._data.achievements.ratCount < 10) {
                 this._data.achievements.ratCount++;
                 this.save();
             }
         },
 
         // Skull Collector
-        getSkeletonCount: function() {
+        getSkeletonCount: function () {
             return this._data.achievements.skeletonCount;
         },
 
-        incrementSkeletonCount: function() {
-            if(this._data.achievements.skeletonCount < 10) {
+        incrementSkeletonCount: function () {
+            if (this._data.achievements.skeletonCount < 10) {
                 this._data.achievements.skeletonCount++;
                 this.save();
             }
         },
 
         // Meatshield
-        getTotalDamageTaken: function() {
+        getTotalDamageTaken: function () {
             return this._data.achievements.totalDmg;
         },
 
-        addDamage: function(damage) {
-            if(this._data.achievements.totalDmg < 5000) {
+        addDamage: function (damage) {
+            if (this._data.achievements.totalDmg < 5000) {
                 this._data.achievements.totalDmg += damage;
                 this.save();
             }
         },
 
         // Hunter
-        getTotalKills: function() {
+        getTotalKills: function () {
             return this._data.achievements.totalKills;
         },
 
-        incrementTotalKills: function() {
-            if(this._data.achievements.totalKills < 50) {
+        incrementTotalKills: function () {
+            if (this._data.achievements.totalKills < 50) {
                 this._data.achievements.totalKills++;
                 this.save();
             }
         },
 
         // Still Alive
-        getTotalRevives: function() {
+        getTotalRevives: function () {
             return this._data.achievements.totalRevives;
         },
 
-        incrementRevives: function() {
-            if(this._data.achievements.totalRevives < 5) {
+        incrementRevives: function () {
+            if (this._data.achievements.totalRevives < 5) {
                 this._data.achievements.totalRevives++;
                 this.save();
             }

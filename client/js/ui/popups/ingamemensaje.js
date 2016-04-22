@@ -1,28 +1,28 @@
 /**
- * Created by horacio on 4/3/16.
+ * Created by horacio on 4/19/16.
  */
 
 define(['ui/popups/popup'], function (PopUp) {
 
-    var Mensaje = PopUp.extend({
+    var InGameMensaje = PopUp.extend({
         init: function () {
-            this._super("mensajeGlobal",true);
+            this._super("inGameMensaje");
             this.initCallbacks();
         },
 
 
         show: function (mensaje) {
             this._super();
-            $("#mensajeContenido").text(mensaje);
+            $("#inGameMensajeContenido").text(mensaje);
         },
 
         initCallbacks: function () {
             var self = this;
-            $("#mensajeBotonCerrar").click(function () {
+            $("#inGameMensajeBotonCerrar").click(function () {
                 self.hide();
             });
         },
     });
 
-    return Mensaje;
+    return InGameMensaje;
 });

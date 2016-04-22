@@ -21,5 +21,11 @@ define(["charcodemap"],function(CharCodeMap){
             tirar: CharCodeMap.keys.indexOf("T"),
             usar: CharCodeMap.keys.indexOf("U")
         },
+        audio: {
+            soundMuted: false,
+            musicMuted: false,
+            soundVolume: 1.0,
+            musicVolume: 1.0
+        }
     }
 });

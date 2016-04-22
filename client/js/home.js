@@ -3,7 +3,7 @@ require.config({
         "jquery": "lib/jquery",
         "jquery-ui": "lib/jquery-ui",
         "text": "lib/text",
-        "json": "lib/json"
+        "json": "lib/json",
     },
     shim: {
         "jquery-ui": {

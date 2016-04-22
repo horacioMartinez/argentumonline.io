@@ -227,10 +227,18 @@ define({
             strokeThickness: 0.2,
         },
 
-        NOMBRE: {
-            font: '800 14px Arial',
+        HOVERING_BASE_FONT: {
+            font: 'Arial',
+            _weight: '400',
+            _size: '14',
             stroke: "black",
-            strokeThickness: 0.2
+            strokeThickness: 0.8,
+        },
+
+        NOMBRE: {
+            font: '900 14px Arial',
+            stroke: "black",
+            strokeThickness: 0.8
         },
         TALK: {
             fill: "rgb(255, 255, 255)"
@@ -340,7 +348,7 @@ define({
         },
         CANVAS_DANIO_REALIZADO: {
             fill: "white",
-            stroke: "#373737"
+            stroke: "#696969"
         },
         CANVAS_CURAR: {
             fill: "rgb(80, 255, 80)",
