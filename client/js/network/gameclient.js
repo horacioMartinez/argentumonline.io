@@ -206,7 +206,7 @@ define(['enums','network/protocol', 'network/bytequeue', 'lib/websock'], functio
         },
 
         handleShowMessageBox: function (Chat) {
-            this.gameUI.showMensaje(Chat);
+            this.uiManager.showMensaje(Chat);
             console.log("TODO: handleShowMessageBox ");
         },
 
@@ -424,6 +424,7 @@ define(['enums','network/protocol', 'network/bytequeue', 'lib/websock'], functio
         },
 
         handleLevelUp: function (SkillPoints) {
+            this.game.skills.agregarSkillsLibres(SkillPoints);
             console.log("TODO: handleLevelUp ");
         },
 
@@ -458,6 +459,8 @@ define(['enums','network/protocol', 'network/bytequeue', 'lib/websock'], functio
         },
 
         handleSendSkills: function (Skills) {
+            this.game.skills.setSkills(Skills);
+            this.uiManager.gameUI.updateSkillsData();
             console.log("TODO: handleSendSkills ");
         },
 
@@ -1201,7 +1204,7 @@ define(['enums','network/protocol', 'network/bytequeue', 'lib/websock'], functio
             p.serialize(this.byteQueue);
         },
 
-        sendModifySkills: function (Skills) {
+        sendModifySkills: function (Skills) { // Skills : vector de 20 pos conteniendo los puntos a adicionar a cada skill
             p = this.protocolo.BuildModifySkills(Skills);
             p.serialize(this.byteQueue);
         },

@@ -113,7 +113,11 @@ define(['ui/game/keymouselistener', 'ui/popups/skills', 'ui/popups/comerciar', '
                 this.comerciar.borrarSlotCompra(numSlot);
                 this.boveda.borrarSlotRetirar(numSlot);
             }
-        }
+        },
+
+        updateSkillsData: function (skills){
+          this.skills.updateSkillsData(skills);
+        },
 
     });
 

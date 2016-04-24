@@ -23,7 +23,7 @@ define(["charcodemap"],function(CharCodeMap){
         },
         audio: {
             soundMuted: false,
-            musicMuted: false,
+            musicMuted: true,
             soundVolume: 1.0,
             musicVolume: 1.0
         }

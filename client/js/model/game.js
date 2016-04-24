@@ -1,5 +1,5 @@
-define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character', 'model/comandoschat', 'model/atributos', 'model/inventario','enums'],
-    function (Mapa, Updater, Item, Player, Character, ComandosChat, Atributos, Inventario,Enums) {
+define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character', 'model/comandoschat', 'model/atributos', 'model/inventario', 'model/skills','enums'],
+    function (Mapa, Updater, Item, Player, Character, ComandosChat, Atributos, Inventario,Skills,Enums) {
         var Game = Class.extend({
             init: function (assetManager) {
                 this.atributos = new Atributos(this);
@@ -23,6 +23,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 this.logeado = false; // NOTA: se pone logeado cuando llega el mensaje de logged, este es el ultimo de los mensajes al conectarse, asi que antes llega los mensajes de hechizos inventarios, etc. Deberia primero llegar esto y listo.. tambien deberia llegar el chardinex de tu pj al principio con este mensaje
                 this.inventario = new Inventario();
                 this.inventarioShop = new Inventario();
+                this.skills = new Skills();
                 this.hechizos = [];
 
                 this.mouse = {x: 0, y: 0};
