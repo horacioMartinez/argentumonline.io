@@ -11,8 +11,10 @@
 	<meta property="og:site_name" content="Dakara Online">
 	<meta property="og:description" content="Dakara Online">
 	<link rel="stylesheet" href="css/reset.css" type="text/css">
-	<link rel="stylesheet" href="css/main.css" type="text/css">
 	<link rel="stylesheet" href="css/jquery-ui.css" type="text/css">
+	<link rel="stylesheet" href="css/jquery-ui.structure.css" type="text/css">
+	<link rel="stylesheet" href="css/jquery-ui.theme.css" type="text/css">
+	<link rel="stylesheet" href="css/main.css" type="text/css">
 	<link rel="stylesheet" href="css/common.css" type="text/css">
 	<link rel="stylesheet" href="css/login.css" type="text/css">
 	<link rel="stylesheet" href="css/crearPj.css" type="text/css">
@@ -214,18 +216,18 @@
 				<article id="configurarTeclas">
 					<input id="configurarTecla_agarrar">
 					<input id="configurarTecla_toggleChat">
-		            <input id="configurarTecla_cerrar">
-		            <input id="configurarTecla_atacar">
-		            <input id="configurarTecla_caminarNorte">
-		            <input id="configurarTecla_caminarSur">
-		            <input id="configurarTecla_caminarOeste">
-		            <input id="configurarTecla_caminarEste">
-		            <input id="configurarTecla_agarrar">
-		            <input id="configurarTecla_equipar">
-		            <input id="configurarTecla_deslagear">
-		            <input id="configurarTecla_ocultarse">
-		            <input id="configurarTecla_tirar">
-		            <input id="configurarTecla_usar">
+					<input id="configurarTecla_cerrar">
+					<input id="configurarTecla_atacar">
+					<input id="configurarTecla_caminarNorte">
+					<input id="configurarTecla_caminarSur">
+					<input id="configurarTecla_caminarOeste">
+					<input id="configurarTecla_caminarEste">
+					<input id="configurarTecla_agarrar">
+					<input id="configurarTecla_equipar">
+					<input id="configurarTecla_deslagear">
+					<input id="configurarTecla_ocultarse">
+					<input id="configurarTecla_tirar">
+					<input id="configurarTecla_usar">
 					<button id="configurarTeclasBotonCerrar" class="botonCerrar"></button>
 					<button id="configurarTeclasGuardarYSalir" class="botonNormal">Guardar y salir</button>
 					<button id="configurarTeclasCancelar" class="botonNormal">Cancelar</button>
@@ -233,13 +235,23 @@
 				</article>
 
 				<article id="popUpSkills">
-					<div id="popUpSkillsContenedorPuntosLibres"> asdsdadadada adsadsd</div>
+					<div id="popUpSkillsContenedorPuntosLibres"></div>
 					<div id="popUpSkillsContenedorSkills"></div>
 					<button id="skillsBotonCerrar" class="botonCerrar"></button>
 					<button id="skillsBotonCancelar" class="botonNormal">Cancelar</button>
 					<button id="skillsBotonAceptar" class="botonNormal">Aceptar</button>
 
 				</article>
+
+				<article id="popUpOpciones">
+					<div id="sliderMusica"></div>
+					<div id="sliderSonido"></div>
+					<input id="checkboxMusica" type="checkbox">
+					<input id="checkboxSonido" type="checkbox">
+					<button id="opcionesConfigurarTeclas" class="botonNormal">Configurar Teclas</button>
+					<button id="opcionesBotonCerrar" class="botonCerrar"></button>
+				</article>
+
 
 			</div>
 
@@ -274,32 +286,32 @@
 
 
 	<footer>
-			<div id="sharing" class="clickable">
-				Comparti en
-				<a href="https://twitter.com/home?status=Estoy%20jugando%20%23DakaraOnline%20un%20servidor%20de%20%23ArgentumOnline%20completamente%20web.%20Jugalo%20en%20...!" class="twitter"></a>
-				<a href="https://www.facebook.com/DakaraOnline?fref=ts" class="facebook"></a>
-			</div>
-			<div id="privacy-link" class="clickable">
-				<span class="dash">&ndash;</span> <a class="clickable" target="_blank" href="http://foros.dakaraonline.org/">Reporte de errores</a>
-			</div>
-			<div id="legal-link" class="clickable">
-				<span class="dash">&ndash;</span> <a class="clickable" target="_blank" href="http://foros.dakaraonline.org/">Foro</a>
-			</div>
-			<div id="credits-link" class="clickable">
-				<span class="dash">&ndash;</span> <a class="clickable" target="_blank" href="http://wiki.dakaraonline.org/wiki/start">Wiki</a>
-	</footer>
+		<div id="sharing" class="clickable">
+			Comparti en
+			<a href="https://twitter.com/home?status=Estoy%20jugando%20%23DakaraOnline%20un%20servidor%20de%20%23ArgentumOnline%20completamente%20web.%20Jugalo%20en%20...!" class="twitter"></a>
+			<a href="https://www.facebook.com/DakaraOnline?fref=ts" class="facebook"></a>
+		</div>
+		<div id="privacy-link" class="clickable">
+			<span class="dash">&ndash;</span> <a class="clickable" target="_blank" href="http://foros.dakaraonline.org/">Reporte de errores</a>
+		</div>
+		<div id="legal-link" class="clickable">
+			<span class="dash">&ndash;</span> <a class="clickable" target="_blank" href="http://foros.dakaraonline.org/">Foro</a>
+		</div>
+		<div id="credits-link" class="clickable">
+			<span class="dash">&ndash;</span> <a class="clickable" target="_blank" href="http://wiki.dakaraonline.org/wiki/start">Wiki</a>
+		</footer>
 
-	<script type="text/javascript">
-		if(!Detect.supportsWebSocket()) {
-			alert("Tu navegador no soporta websockets, para jugar debes actualizarlo")
-		}
-	</script>
+		<script type="text/javascript">
+			if(!Detect.supportsWebSocket()) {
+				alert("Tu navegador no soporta websockets, para jugar debes actualizarlo")
+			}
+		</script>
 
-	<script src="js/lib/log.js"></script>
-	<script>
+		<script src="js/lib/log.js"></script>
+		<script>
 			var require = { waitSeconds: 60 };
-	</script>
-	<script data-main="js/home" src="js/lib/require.js"></script>
+		</script>
+		<script data-main="js/home" src="js/lib/require.js"></script>
 
-</body>
-</html>
+	</body>
+	</html>

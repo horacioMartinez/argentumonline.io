@@ -12,13 +12,13 @@ define(['lib/howler'], function (Howler) {
             this.soundVolume = 1.0;
             this.musicVolume = 1.0;
             this.sounds = [];
+
+            this.mutedMusicName = null;
         },
 
         setMusic: function (nombre) { // todo: unload cada vez que cmabia?? <<- ALGO ANDA MAL y SIGUE AUMENTANDO MEMORIA, ver el task manager de chrome
 
             if (this.musicEnabled) {
-                //if (this.currentMusic)
-                //    this.currentMusic.unload();
                 if (this.currentMusic)
                     this.currentMusic.stop();
 
@@ -28,6 +28,9 @@ define(['lib/howler'], function (Howler) {
                 });
                 this.currentMusic.volume(this.musicVolume);
                 this.currentMusic.play();
+            }
+            else {
+                this.mutedMusicName = nombre;
             }
 
         },
@@ -74,7 +77,7 @@ define(['lib/howler'], function (Howler) {
             else
                 nombre = Enums.SONIDOS.lluvia_start_outdoor;
             this.playSound(nombre, false, this.playLoopLluvia(bajoTecho));
-            this.sounds[nombre].volume(0.2* this.soundVolume);
+            this.sounds[nombre].volume(0.2 * this.soundVolume);
         },
 
         playLoopLluvia: function (bajoTecho) {
@@ -119,24 +122,30 @@ define(['lib/howler'], function (Howler) {
             }
         },
 
-
         setSoundMuted: function (muted) {
             this.soundEnabled = !muted;
         },
 
-        setMusicMuted: function(muted){
+        setMusicMuted: function (muted) {
             this.musicEnabled = !muted;
+            if (this.musicEnabled) {
+                if (this.mutedMusicName)
+                    this.setMusic(this.mutedMusicName);
+            } else {
+                if (this.currentMusic)
+                    this.currentMusic.stop();
+            }
         },
 
-        setGlobalVolume: function(volume){
+        setGlobalVolume: function (volume) {
             Howler.Howler.volume(volume); // afecta tambien a los que no esten al maximo, ej global = 0.5 -> lluvia de 0.4 a 0.2
         },
 
-        setSoundVolume: function(volume){
+        setSoundVolume: function (volume) {
             this.soundVolume = volume;
         },
 
-        setMusicVolume: function(volume){
+        setMusicVolume: function (volume) {
             this.musicVolume = volume;
         },
     });

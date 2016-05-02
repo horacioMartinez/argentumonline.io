@@ -3,7 +3,7 @@
  */
 
 
-define(['ui/game/keymouselistener', 'ui/popups/skills', 'ui/popups/comerciar', 'ui/popups/ingamemensaje', 'ui/game/interfaz', 'ui/popups/tirar', 'ui/popups/boveda', 'ui/popups/guiamapa', 'ui/popups/configurarteclas'], function (KeyMouseListener, Skills, Comerciar, InGameMensaje, Interfaz, Tirar, Boveda, GuiaMapa, ConfigurarTeclas) {
+define(['ui/game/keymouselistener', 'ui/popups/skills', 'ui/popups/comerciar', 'ui/popups/ingamemensaje', 'ui/game/interfaz', 'ui/popups/tirar', 'ui/popups/boveda', 'ui/popups/guiamapa', 'ui/popups/configurarteclas', 'ui/popups/opciones'], function (KeyMouseListener, Skills, Comerciar, InGameMensaje, Interfaz, Tirar, Boveda, GuiaMapa, ConfigurarTeclas, Opciones) {
 
     //TODO: crear los popups en run time con jquery y borrarlos cuando se cierran ?
 
@@ -11,7 +11,7 @@ define(['ui/game/keymouselistener', 'ui/popups/skills', 'ui/popups/comerciar', '
         init: function (game, acciones, storage) {
             this.acciones = acciones;
             this.game = game;
-            this.storage = storage; // no deberia venir aca, ver funcion setkeys
+            this.storage = storage;
 
             this.inGameMensaje = new InGameMensaje();
             this.comerciar = new Comerciar(game, acciones);
@@ -19,6 +19,7 @@ define(['ui/game/keymouselistener', 'ui/popups/skills', 'ui/popups/comerciar', '
             this.boveda = new Boveda(game, acciones);
             this.guiaMapa = new GuiaMapa();
             this.configurarTeclas = new ConfigurarTeclas(storage, this.updateKeysCallback.bind(this), this.showMensaje.bind(this));
+            this.opciones= new Opciones(game,storage,this.configurarTeclas);
             this.skills = new Skills(game);
 
             this._currentPopUp = 0; // mal
@@ -73,6 +74,10 @@ define(['ui/game/keymouselistener', 'ui/popups/skills', 'ui/popups/comerciar', '
             this.skills.show();
         },
 
+        showOpciones: function(){
+            this.opciones.show();
+        },
+
         hideTirar: function () {
             this.tirar.hide();
         },
@@ -81,8 +86,8 @@ define(['ui/game/keymouselistener', 'ui/popups/skills', 'ui/popups/comerciar', '
             this.guiaMapa.show();
         },
 
-        showConfigurarTeclas: function () {
-            this.configurarTeclas.show();
+        showOpciones: function () {
+            this.opciones.show();
         },
 
         updateSlotUser: function (numSlot, slot) { //todo: feo todo esto!

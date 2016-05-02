@@ -1,4 +1,4 @@
-define(['storage/defaultsettings'], function (DefaultSettings) {
+define(['storage/defaultsettings','jquery-ui'], function (DefaultSettings) {
     var Storage = Class.extend({
         init: function () {
             if (this.hasLocalStorage() && localStorage.data) {
@@ -11,11 +11,11 @@ define(['storage/defaultsettings'], function (DefaultSettings) {
         },
 
         resetData: function () {
-            this._data = this._getDefaultData;
+            this._data = this._getDefaultData();
         },
 
         _getDefaultData: function(){
-            var defSettings = $.extend(true,{},DefaultSettings);//_(DefaultSettings).clone();
+            var defSettings = $.extend(true,{},DefaultSettings);
             return {
                 settings: defSettings
             };
@@ -23,10 +23,6 @@ define(['storage/defaultsettings'], function (DefaultSettings) {
 
         getDefaultKeys: function(){
             return this._getDefaultData().settings.keys;
-        },
-
-        getSettings: function () {
-            return this._data.settings;
         },
 
         getKeys: function () {
@@ -47,6 +43,26 @@ define(['storage/defaultsettings'], function (DefaultSettings) {
 
         getMusicVolume: function () {
             return this._data.settings.audio.musicVolume;
+        },
+
+        setSoundMuted: function(muted){
+            this._data.settings.audio.soundMuted = muted;
+            this.save();
+        },
+
+        setMusicMuted: function(muted){
+            this._data.settings.audio.musicMuted = muted;
+            this.save();
+        },
+
+        setSoundVolume: function (vol) {
+            this._data.settings.audio.soundVolume = vol;
+            this.save();
+        },
+
+        setMusicVolume: function (vol) {
+            this._data.settings.audio.musicVolume = vol;
+            this.save();
         },
 
         setKeys: function (keys) {
@@ -70,134 +86,10 @@ define(['storage/defaultsettings'], function (DefaultSettings) {
                 this.resetData();
             }
         },
-
-        // Player
-
+/*
         hasAlreadyPlayed: function () {
             return this._data.hasAlreadyPlayed;
-        },
-
-        initPlayer: function (name) {
-            this._data.hasAlreadyPlayed = true;
-            this.setPlayerName(name);
-        },
-
-        setPlayerName: function (name) {
-            this._data.player.name = name;
-            this.save();
-        },
-
-        setPlayerImage: function (img) {
-            this._data.player.image = img;
-            this.save();
-        },
-
-        setPlayerArmor: function (armor) {
-            this._data.player.armor = armor;
-            this.save();
-        },
-
-        setPlayerWeapon: function (weapon) {
-            this._data.player.weapon = weapon;
-            this.save();
-        },
-
-        setPlayerGuild: function (guild) {
-            if (typeof guild !== "undefined") {
-                this._data.player.guild = {id: guild.id, name: guild.name, members: JSON.stringify(guild.members)};
-                this.save();
-            }
-            else {
-                delete this._data.player.guild;
-                this.save();
-            }
-        },
-
-        savePlayer: function (img, armor, weapon, guild) {
-            this.setPlayerImage(img);
-            this.setPlayerArmor(armor);
-            this.setPlayerWeapon(weapon);
-            this.setPlayerGuild(guild);
-        },
-
-        // Achievements
-
-        hasUnlockedAchievement: function (id) {
-            return _.include(this._data.achievements.unlocked, id);
-        },
-
-        unlockAchievement: function (id) {
-            if (!this.hasUnlockedAchievement(id)) {
-                this._data.achievements.unlocked.push(id);
-                this.save();
-                return true;
-            }
-            return false;
-        },
-
-        getAchievementCount: function () {
-            return _.size(this._data.achievements.unlocked);
-        },
-
-        // Angry rats
-        getRatCount: function () {
-            return this._data.achievements.ratCount;
-        },
-
-        incrementRatCount: function () {
-            if (this._data.achievements.ratCount < 10) {
-                this._data.achievements.ratCount++;
-                this.save();
-            }
-        },
-
-        // Skull Collector
-        getSkeletonCount: function () {
-            return this._data.achievements.skeletonCount;
-        },
-
-        incrementSkeletonCount: function () {
-            if (this._data.achievements.skeletonCount < 10) {
-                this._data.achievements.skeletonCount++;
-                this.save();
-            }
-        },
-
-        // Meatshield
-        getTotalDamageTaken: function () {
-            return this._data.achievements.totalDmg;
-        },
-
-        addDamage: function (damage) {
-            if (this._data.achievements.totalDmg < 5000) {
-                this._data.achievements.totalDmg += damage;
-                this.save();
-            }
-        },
-
-        // Hunter
-        getTotalKills: function () {
-            return this._data.achievements.totalKills;
-        },
-
-        incrementTotalKills: function () {
-            if (this._data.achievements.totalKills < 50) {
-                this._data.achievements.totalKills++;
-                this.save();
-            }
-        },
-
-        // Still Alive
-        getTotalRevives: function () {
-            return this._data.achievements.totalRevives;
-        },
-
-        incrementRevives: function () {
-            if (this._data.achievements.totalRevives < 5) {
-                this._data.achievements.totalRevives++;
-                this.save();
-            }
-        },
+        },*/
     });
 
     return Storage;

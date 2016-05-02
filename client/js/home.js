@@ -1,9 +1,10 @@
 require.config({
+    urlArgs: "bust=v1", // Cambiar para refrescar cache
     paths: {
         "jquery": "lib/jquery",
         "jquery-ui": "lib/jquery-ui",
         "text": "lib/text",
-        "json": "lib/json",
+        "json": "lib/json"
     },
     shim: {
         "jquery-ui": {
@@ -13,6 +14,6 @@ require.config({
     }
 });
 
-define(['lib/class', 'lib/underscore', 'lib/stacktrace', 'util'], function() {
+define(['lib/class', 'lib/lodash', 'lib/stacktrace', 'util'], function() {
     require(["main"]);
 });

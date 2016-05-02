@@ -96,7 +96,6 @@ define(['model/game', 'view/renderer', 'network/gameclient','model/acciones'], f
         },
 
         startGame: function (newChar, username, userpw, raza, genero, clase, cabeza, mail, ciudad) {
-            this.firstTimePlaying = !this.storage.hasAlreadyPlayed();
             if (this.game.started)
                 return;
             //this.center();

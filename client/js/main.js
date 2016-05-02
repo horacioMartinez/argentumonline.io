@@ -28,7 +28,6 @@ define(['app', 'assets/assetmanager', 'ui/uimanager', 'storage/storage'], functi
             uiManager.resizeUi();
             uiManager.initDOM();
 
-
             //app.center();
 
             assetManager.preload(function () {

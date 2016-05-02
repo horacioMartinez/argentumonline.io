@@ -55,7 +55,7 @@ define(['ui/game/itemgrid'], function (ItemGrid) {
             });
 
             $("#botonOpciones").click(function(){
-                self.game.gameUI.showConfigurarTeclas();
+                self.game.gameUI.showOpciones();
             });
         },
 

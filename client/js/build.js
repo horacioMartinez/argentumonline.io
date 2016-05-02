@@ -13,7 +13,7 @@
             },
             {
                 name: "home",
-                exclude: ["main","lib/underscore","lib/stacktrace","lib/class"]
+                exclude: ["main","lib/lodash","lib/stacktrace","lib/class"]
             }
     ],
 

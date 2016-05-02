@@ -107,6 +107,8 @@ define(['ui/loginui','ui/crearpjui','ui/game/gameui', 'ui/popups/mensaje'], func
             //               self.resizeUi.bind(self)
             //           }, 500));
 
+
+
         },
 
         getEscala: function () {

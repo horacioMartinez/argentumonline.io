@@ -117,6 +117,15 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
                     //TODO?: directamente desactivar todos los Fs, asi se evita que apretes uno sin querer?
                 }
             });
+
+            // TODO: ver esto en firefox en windows
+            // para que no se mueva la seleccion del menu de hechizos al caminar
+            /*$("#hechizos").keydown(function (e) {
+                var key = e.which;
+                if (self.inputHandler.isCaminarKey(key)) {
+                    e.preventDefault();
+                }
+            });*/
         },
 
         _initChatKeyListener: function () {
