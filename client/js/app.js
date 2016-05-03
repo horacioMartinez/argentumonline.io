@@ -1,4 +1,4 @@
-define(['model/game', 'view/renderer', 'network/gameclient','model/acciones'], function (Game, Renderer, GameClient, Acciones) {
+define(['model/gamemanager','view/renderer', 'network/gameclient'], function (GameManager, Renderer, GameClient) {
 
     var App = Class.extend({
         init: function (assetManager, uiManager, storage) {
@@ -37,17 +37,13 @@ define(['model/game', 'view/renderer', 'network/gameclient','model/acciones'], f
 
             client.setDisconnectCallback(function () {
                 self.uiManager.setLoginScreen();
-                var r = self.game.renderer;
-                r.clean(self.uiManager.getEscala());
-                var ui = self.game.gameUI;
-                self.game.init(self.game.assetManager);
-                self.game.setup(self.client,ui,r);
-                self.game.started = false;
+
+                self.gameManager.stopGame(self.uiManager.getEscala());
                 self.starting = false;
             });
 
             client.setLogeadoCallback(function () {
-                self.game.start();
+                self.gameManager.game.start();
                 self.uiManager.setGameScreen();
                 self.starting = false;
             });
@@ -59,13 +55,13 @@ define(['model/game', 'view/renderer', 'network/gameclient','model/acciones'], f
         },
 
         inicializarGame: function () {
-            this.game = new Game(this.assetManager);
-            var acciones = new Acciones(this.game);
-            var gameUI = this.uiManager.inicializarGameUI(this.game,acciones,this.storage);
-            this.client = new GameClient(this.game,this.uiManager,gameUI, this.host, this.port);
-            this._initClientCallbacks(this.client);
             var renderer = new Renderer(this.assetManager, this.uiManager.getEscala());
-            this.game.setup(this.client, gameUI,renderer);
+            this.gameManager = new GameManager(this.assetManager,renderer);
+
+            var gameUI = this.uiManager.inicializarGameUI(this.gameManager,this.storage);
+            this.client = new GameClient(this.gameManager.game,this.uiManager,gameUI, this.host, this.port);
+            this._initClientCallbacks(this.client);
+            this.gameManager.setup(this.client, gameUI);
             this.ready = true;
         },
 
@@ -96,10 +92,10 @@ define(['model/game', 'view/renderer', 'network/gameclient','model/acciones'], f
         },
 
         startGame: function (newChar, username, userpw, raza, genero, clase, cabeza, mail, ciudad) {
-            if (this.game.started)
+            if (this.gameManager.game.started)
                 return;
             //this.center();
-            this.game.inicializar(username);
+            this.gameManager.game.inicializar(username);
             if (!newChar) {
                 this.client.intentarLogear(username, userpw);
             }

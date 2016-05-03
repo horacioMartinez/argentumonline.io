@@ -31,8 +31,9 @@ define(['enums','network/protocol', 'network/bytequeue', 'lib/websock'], functio
 
             this.ws.on('message', function () {
                 //try {
-                while (self.byteQueue.length() > 0)
+                while (self.byteQueue.length() > 0) {
                     self.protocolo.ServerPacketDecodeAndDispatch(self.byteQueue, self);
+                }
                 //} catch (e) {
                 //    log.error(e.name + ': ' + e.message);
                 //}

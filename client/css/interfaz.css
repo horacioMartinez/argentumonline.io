@@ -49,6 +49,8 @@
 #botonSeguroResucitar.seguroOff {background-image: url("../imagenes/interfaz/resucitationSafeOff.png");}
 #botonSeguroAtacar {position: absolute;left:60.1%; top:90.5%; width:11%; height:6.1%;background-image: none}
 #botonSeguroAtacar.seguroOff {background-image: url("../imagenes/interfaz/attackSafeOff.png");}
+#botonMacroHechizos{position: absolute;left:70%; top:90.6%; width:10.3%; height:6%; background-image: url("../imagenes/interfaz/macroHechizos.jpg");}
+#botonMacroTrabajo{position: absolute;left:80%; top:90.6%; width:10.3%; height:6%; background-image: url("../imagenes/interfaz/macroTrabajo.jpg");}
 
 #botonMapa {position: absolute; left:53.5%; top:68%; width:35.5%; height:3.6%;}
 #botonGrupo {position: absolute; left:53.5%; top:72%; width:35.5%; height:3.6%;}

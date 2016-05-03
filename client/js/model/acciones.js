@@ -2,12 +2,12 @@
  * Created by horacio on 4/9/16.
  */
 
-define(['model/intervalos','enums'], function (Intervalos,Enums) {
+define(['enums'], function (Enums) {
 
     var Acciones = Class.extend({
-        init: function (game) {
+        init: function (game, intervalos) {
             this.game = game;
-            this.intervalos = new Intervalos(0);
+            this.intervalos = intervalos;
             this.MAX_CANTIDAD_ITEM = 10000;
         },
 
@@ -99,7 +99,7 @@ define(['model/intervalos','enums'], function (Intervalos,Enums) {
                 if (this.game.trabajoPendiente) {
                     this.game.gameUI.interfaz.setMouseCrosshair(false);
                     this.game.client.sendWorkLeftClick(gridPos.x, gridPos.y, this.game.trabajoPendiente);
-                    this.game.trabajoPendiente = false;
+                    this.game.trabajoPendiente = null;
                 }
                 else
                     this.game.client.sendLeftClick(gridPos.x, gridPos.y);

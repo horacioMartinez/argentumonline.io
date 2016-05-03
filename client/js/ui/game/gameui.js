@@ -8,7 +8,9 @@ define(['enums','ui/game/keymouselistener', 'ui/popups/skills', 'ui/popups/comer
     //TODO: crear los popups en run time con jquery y borrarlos cuando se cierran ?
 
     var GameUI = Class.extend({
-        init: function (game, acciones, storage) {
+        init: function (gameManager, storage) {
+            var game = gameManager.game;
+            var acciones = gameManager.acciones;
             this.acciones = acciones;
             this.game = game;
             this.storage = storage;
@@ -23,7 +25,7 @@ define(['enums','ui/game/keymouselistener', 'ui/popups/skills', 'ui/popups/comer
             this.skills = new Skills(game);
 
             this._currentPopUp = 0; // mal
-            this.interfaz = new Interfaz(game, acciones);
+            this.interfaz = new Interfaz(game, gameManager.macros, acciones);
             this.keyMouseListener = new KeyMouseListener(game, acciones, storage.getKeys());
             this.initDOM();
             this.$popUps = $("#popUpsJuego");

@@ -24,10 +24,10 @@ define(['lib/howler'], function (Howler) {
 
                 this.currentMusic = new Howler.Howl({
                     urls: ['audio/musica/' + nombre + '.m4a'],
-                    loop: true,
+                    loop: true
                 });
-                this.currentMusic.volume(this.musicVolume);
                 this.currentMusic.play();
+                this.currentMusic.volume(this.musicVolume);
             }
             else {
                 this.mutedMusicName = nombre;
@@ -35,13 +35,13 @@ define(['lib/howler'], function (Howler) {
 
         },
 
-        playSound: function (nombre, loop, onEnd) { // todo: mover todos los de sonido a una nueva clase de sonido
+        playSound: function (nombre, loop, onEnd) {
             if (this.soundEnabled) {
                 if (!this.sounds[nombre]) {
                     this._cargarSonido(nombre, loop, onEnd);
                 }
-                this.sounds[nombre].volume(this.soundVolume);
                 this.sounds[nombre].play();
+                this.sounds[nombre].volume(this.soundVolume);
             }
         },
 
@@ -95,9 +95,9 @@ define(['lib/howler'], function (Howler) {
             if (!this.sounds[nombre]) { //cargar con sprite para que loopee bien
                 this._cargarSonido(nombre, true);
                 this.sounds[nombre].sprite(sprite);
-                this.sounds[nombre].volume(0.4 * this.soundVolume);
             }
             this.sounds[nombre].play("lluvia");
+            this.sounds[nombre].volume(0.4 * this.soundVolume);
         },
 
         stopLluvia: function () {
@@ -147,6 +147,8 @@ define(['lib/howler'], function (Howler) {
 
         setMusicVolume: function (volume) {
             this.musicVolume = volume;
+            if (this.currentMusic)
+                this.currentMusic.volume(this.musicVolume);
         },
     });
 

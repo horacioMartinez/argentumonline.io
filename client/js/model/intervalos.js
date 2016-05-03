@@ -17,8 +17,29 @@ define(['enums'], function (Enums) {
                 trabajar: time,
                 usarItemConU: time,
                 usarItemConDobleClick: time,
-                requestPostionUpdate: time
+                requestPostionUpdate: time,
+                macroTrabajo: time,
+                macroHechizo: time
+            };
+
+            this.INTERVALO_MACRO_TRABAJAR = Math.floor(Enums.Intervalo.usarItemConU/2) + 75; // dividido 2 porque la mitad en usar u la otra en clickear
+            this.INTERVALO_MACRO_HECHIZO = Math.floor(Enums.Intervalo.hechizo /2 ) + 75;
+        },
+
+        requestMacroTrabajo: function(time){
+            if (time > ( this.times.macroTrabajo + this.INTERVALO_MACRO_TRABAJAR)) {
+                this.times.macroTrabajo = time;
+                return true;
             }
+            return false;
+        },
+
+        requestMacroHechizo: function(time){
+            if (time > ( this.times.macroHechizo + this.INTERVALO_MACRO_HECHIZO)) {
+                this.times.macroHechizo = time;
+                return true;
+            }
+            return false;
         },
 
         requestPosUpdate: function (time) {

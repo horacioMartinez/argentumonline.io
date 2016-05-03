@@ -5,8 +5,9 @@
 define(['ui/game/itemgrid'], function (ItemGrid) {
 
     var Interfaz = Class.extend({
-        init: function (game,acciones) {
+        init: function (game,macros, acciones) {
             this.acciones = acciones;
+            this.macros = macros;
             this.game = game;
             this.inventarioGrid = new ItemGrid("itemsGrid",true);
             var self = this;
@@ -48,6 +49,14 @@ define(['ui/game/itemgrid'], function (ItemGrid) {
 
             $("#botonSeguroAtacar").dblclick(function() {
                 self.game.toggleSeguroAtacar();
+            });
+
+            $("#botonMacroHechizos").click(function() {
+                self.macros.comenzarLanzarHechizo();
+            });
+
+            $("#botonMacroTrabajo").click(function() {
+                self.macros.comenzarTrabajar();
             });
 
             $("#botonMapa").click(function(){
