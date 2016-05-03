@@ -3,7 +3,7 @@
  */
 
 
-define(['ui/game/keymouselistener', 'ui/popups/skills', 'ui/popups/comerciar', 'ui/popups/ingamemensaje', 'ui/game/interfaz', 'ui/popups/tirar', 'ui/popups/boveda', 'ui/popups/guiamapa', 'ui/popups/configurarteclas', 'ui/popups/opciones'], function (KeyMouseListener, Skills, Comerciar, InGameMensaje, Interfaz, Tirar, Boveda, GuiaMapa, ConfigurarTeclas, Opciones) {
+define(['enums','ui/game/keymouselistener', 'ui/popups/skills', 'ui/popups/comerciar', 'ui/popups/ingamemensaje', 'ui/game/interfaz', 'ui/popups/tirar', 'ui/popups/boveda', 'ui/popups/guiamapa', 'ui/popups/configurarteclas', 'ui/popups/opciones'], function (Enums, KeyMouseListener, Skills, Comerciar, InGameMensaje, Interfaz, Tirar, Boveda, GuiaMapa, ConfigurarTeclas, Opciones) {
 
     //TODO: crear los popups en run time con jquery y borrarlos cuando se cierran ?
 
@@ -32,6 +32,10 @@ define(['ui/game/keymouselistener', 'ui/popups/skills', 'ui/popups/comerciar', '
         initDOM: function () {
             this.interfaz.inicializar();
             this.keyMouseListener.initListeners();
+            var self = this;
+            $(window).blur(function(){
+                self.keyMouseListener.upKeyTeclasCaminar();
+            });
         },
 
         resize: function (escala) {

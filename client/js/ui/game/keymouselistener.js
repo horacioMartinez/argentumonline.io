@@ -10,10 +10,10 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
             this.inputHandler = new KeyMouseInput(game, acciones);
             this.setKeys(keys);
 
-            this._prevKeyDown = {};
+            this._prevKeyDown = [];
         },
 
-        setKeys: function(keys){
+        setKeys: function (keys) {
             this.keys = keys;
             this.inputHandler.setKeys(keys);
         },
@@ -57,6 +57,15 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
             return posEnGameCanvas;
         },
 
+        upKeyTeclasCaminar: function(){
+            var teclasCaminar = this.inputHandler.getTeclasCaminar();
+            var self = this;
+            _.each(teclasCaminar, function(key) {
+                self._upKey(key);
+                self.inputHandler.keyUp(key);
+            });
+        },
+
         initListeners: function () {
             var self = this;
             $('#chatbox').attr('value', '');
@@ -70,7 +79,7 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
 
             $(document).keyup(function (e) {
                 var key = e.which;
-                self._upKey(e);
+                self._upKey(key);
                 self.inputHandler.keyUp(key);
             });
 
@@ -81,9 +90,9 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
                 var key = e.which;
 
                 if (self.inputHandler.isCaminarKey(key)) {
-                    if (!self._isKeyDown(e)) {
+                    if (!self._isKeyDown(key)) {
                         self.inputHandler.keyDown(key);
-                        self._downKey(e);
+                        self._downKey(key);
                     }
                     if (!self.game.gameUI.hayPopUpActivo()) { // si hay un popup abierto dejar que siga la tecla al pop up, sino no
                         return false;
@@ -108,9 +117,9 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
                 }
 
                 if (!$chatb.hasClass('active')) {
-                    if (self._isKeyDown(e))
+                    if (self._isKeyDown(key))
                         return false;
-                    self._downKey(e);
+                    self._downKey(key);
 
                     return self.inputHandler.keyDown(key); // << return false previene el default y hace que no se propague mas
                     // TODO: hacer algo como lo anterior para los popUps, por ejemplo si tenes configurado el F5 en meditar prevenir que se recargue la pagina (lo hace devolviendo false)
@@ -121,11 +130,11 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
             // TODO: ver esto en firefox en windows
             // para que no se mueva la seleccion del menu de hechizos al caminar
             /*$("#hechizos").keydown(function (e) {
-                var key = e.which;
-                if (self.inputHandler.isCaminarKey(key)) {
-                    e.preventDefault();
-                }
-            });*/
+             var key = e.which;
+             if (self.inputHandler.isCaminarKey(key)) {
+             e.preventDefault();
+             }
+             });*/
         },
 
         _initChatKeyListener: function () {
@@ -178,37 +187,19 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
             });
         },
 
-        _downKey: function (e) {
-            var wh = e.which;
-            var kC = e.keyCode;
-            if (this._prevKeyDown[wh] == null) {
-                this._prevKeyDown[wh] = {};
-            }
-            this._prevKeyDown[wh][kC] = true;
+        _downKey: function (key) {
+            this._prevKeyDown[key] = true;
         },
 
-        _upKey: function (event) {
-            var wh = event.which;
-            var kC = event.keyCode;
-
-            if (this._prevKeyDown[wh] != null) {
-                this._prevKeyDown[wh][kC] = null;
-            }
+        _upKey: function (key) {
+            this._prevKeyDown[key] = null;
         },
 
-        _isKeyDown: function (event) {
-            var wh = event.which;
-            var kC = event.keyCode;
-
-            var result = false;
-
-            if (this._prevKeyDown[wh] != null) {
-                if (this._prevKeyDown[wh][kC] == true) {
-                    result = true;
-                }
-            }
-            return result;
-        }
+        _isKeyDown: function (key) {
+            if (this._prevKeyDown[key])
+                return true;
+            return false;
+        },
 
     });
 

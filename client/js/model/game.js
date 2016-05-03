@@ -1,5 +1,5 @@
-define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character', 'model/comandoschat', 'model/atributos', 'model/inventario', 'model/skills','enums'],
-    function (Mapa, Updater, Item, Player, Character, ComandosChat, Atributos, Inventario,Skills,Enums) {
+define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character', 'model/comandoschat', 'model/atributos', 'model/inventario', 'model/skills', 'enums'],
+    function (Mapa, Updater, Item, Player, Character, ComandosChat, Atributos, Inventario, Skills, Enums) {
         var Game = Class.extend({
             init: function (assetManager) {
                 this.atributos = new Atributos(this);
@@ -353,7 +353,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
 
             cambiarSlotInventario: function (numSlot, ObjIndex, ObjName, Amount, Equiped, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) {
                 this.inventario.cambiarSlot(numSlot, ObjName, Amount, ObjSalePrice, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, Equiped);
-                this.gameUI.updateSlotUser(numSlot,this.inventario.getSlot(numSlot));
+                this.gameUI.updateSlotUser(numSlot, this.inventario.getSlot(numSlot));
             },
 
             cambiarSlotHechizos: function (slot, spellID, nombre) {
@@ -529,13 +529,13 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
 
             cambiarSlotCompra: function (numSlot, ObjName, Amount, Price, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef) {
                 this.inventarioShop.cambiarSlot(numSlot, ObjName, Amount, Price, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef);
-                this.gameUI.updateSlotShop(numSlot,this.inventarioShop.getSlot(numSlot));
+                this.gameUI.updateSlotShop(numSlot, this.inventarioShop.getSlot(numSlot));
 
             },
 
             cambiarSlotRetirar: function (numSlot, ObjIndex, ObjName, Amount, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) {
                 this.inventarioShop.cambiarSlot(numSlot, ObjName, Amount, ObjSalePrice, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef);
-                this.gameUI.updateSlotShop(numSlot,this.inventarioShop.getSlot(numSlot));
+                this.gameUI.updateSlotShop(numSlot, this.inventarioShop.getSlot(numSlot));
             },
 
             togglePausa: function () {

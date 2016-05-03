@@ -19,6 +19,10 @@ define(['enums'], function (Enums) {
             return ( (key === this.keys.caminarEste) || (key === this.keys.caminarOeste) || (key === this.keys.caminarNorte) || (key === this.keys.caminarSur));
         },
 
+        getTeclasCaminar: function(){
+            return [this.keys.caminarEste,this.keys.caminarOeste,this.keys.caminarNorte,this.keys.caminarSur];
+        },
+
         click: function () {
             if ((!this.game.started) || (this.game.isPaused))
                 return;
