@@ -7,7 +7,7 @@ define(['ui/loginui','ui/crearpjui','ui/game/gameui', 'ui/popups/mensaje'], func
         init: function () {
             this.mensaje = new Mensaje();
             this.loginUI = new LoginUI();
-            this.crearPjUI = new CrearPjUI();
+            this.crearPjUI = new CrearPjUI(this.mensaje);
 
             this.gameUI = null;
         },

@@ -2,7 +2,7 @@
  * Created by horacio on 4/20/16.
  */
 
-define(['lib/howler'], function (Howler) {
+define(['enums','lib/howler'], function (Enums,Howler) {
 
     var Audio = Class.extend({
         init: function () {

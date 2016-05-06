@@ -1,4 +1,4 @@
-define(['enums','network/protocol', 'network/bytequeue', 'lib/websock'], function (Enums,Protocolo, ByteQueue, __websock) {
+define(['enums', 'network/protocol', 'network/bytequeue', 'lib/websock'], function (Enums, Protocolo, ByteQueue, __websock) {
 
     var GameClient = Class.extend({
         init: function (game, uiManager, gameUI, host, port) {
@@ -22,7 +22,7 @@ define(['enums','network/protocol', 'network/bytequeue', 'lib/websock'], functio
 
         _connect: function (conectarse_callback) {
             this.ws.open("ws://ec2-54-94-134-88.sa-east-1.compute.amazonaws.com:8666");
-            /*ec2-54-94-134-88.sa-east-1.compute.amazonaws.com*/
+            /*ws://ec2-54-94-134-88.sa-east-1.compute.amazonaws.com:8666*/
             var self = this;
             this.ws.on('open', function () {
                 self.conectado = true;
@@ -39,15 +39,14 @@ define(['enums','network/protocol', 'network/bytequeue', 'lib/websock'], functio
                 //}
             });
             this.ws.on('close', function () {
-                 self._desconectar();
+                self.conectado = false;
+                self.disconnect_callback();
             });
 
         },
 
-        _desconectar: function(){
-            this.conectado = false;
+        _desconectar: function () {
             this.ws.close();
-            this.disconnect_callback();
         },
 
         intentarLogear: function (nombre, pw) {
@@ -220,18 +219,18 @@ define(['enums','network/protocol', 'network/bytequeue', 'lib/websock'], functio
                 log.error("WTF EL CHARINDEX CAMBIA?: playerID" + this.game.player.id + " cambiado a charindex " + CharIndex);
 
                 this.game.characters[this.game.player.id] = null;
-                var x,y;
-                if (this.game.characters[CharIndex]){
-                    x =this.game.characters[CharIndex].gridX;
-                    y =this.game.characters[CharIndex].gridY;
+                var x, y;
+                if (this.game.characters[CharIndex]) {
+                    x = this.game.characters[CharIndex].gridX;
+                    y = this.game.characters[CharIndex].gridY;
                     this.game.sacarEntity(this.game.characters[CharIndex]);
                 }
 
                 this.game.player.id = CharIndex;
                 this.game.characters[CharIndex] = this.game.player;
 
-                if (x){ // hack para "agregar player" y que detecte cambio de mapa, dado que el sv mando las pos de cambio al char creado con el otro charindex
-                    this.game.agregarCharacter(this.game.player.id,0,0,0,x,y);
+                if (x) { // hack para "agregar player" y que detecte cambio de mapa, dado que el sv mando las pos de cambio al char creado con el otro charindex
+                    this.game.agregarCharacter(this.game.player.id, 0, 0, 0, x, y);
                 }
             }
         },
@@ -325,7 +324,7 @@ define(['enums','network/protocol', 'network/bytequeue', 'lib/websock'], functio
             this.game.atributos.setVida(MinHp, MaxHp);
             this.game.atributos.setMana(MinMan, MaxMan);
             this.game.atributos.setStamina(MinSta, MaxSta);
-            this.game.atributos.setExp(Exp,Elu);
+            this.game.atributos.setExp(Exp, Elu);
             this.game.atributos.setOro(Gld);
             this.game.atributos.oro = Gld;
             this.game.atributos.nivel = Elv;
@@ -549,7 +548,7 @@ define(['enums','network/protocol', 'network/bytequeue', 'lib/websock'], functio
                 nombre = Tag;
                 clan = null;
             }
-            this.game.renderer.cambiarNombreCharacter(char,nombre,clan,NickColor);
+            this.game.renderer.cambiarNombreCharacter(char, nombre, clan, NickColor);
 
             console.log("TODO: handleUpdateTagAndStatus ");
         },
@@ -729,28 +728,28 @@ define(['enums','network/protocol', 'network/bytequeue', 'lib/websock'], functio
         handleSafeModeOn: function () {
             this.game.seguroAtacarActivado = true;
             this.gameUI.interfaz.setSeguroAtacar(true);
-            this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_ACTIVADO,Enums.Font.WARNING);
+            this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_ACTIVADO, Enums.Font.WARNING);
             console.log("TODO: handleResuscitationSafeOff");
         },
 
         handleSafeModeOff: function () {
             this.game.seguroAtacarActivado = false;
             this.gameUI.interfaz.setSeguroAtacar(false);
-            this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_DESACTIVADO,Enums.Font.WARNING);
+            this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_DESACTIVADO, Enums.Font.WARNING);
             console.log("TODO: handleResuscitationSafeOn");
         },
 
         handleResuscitationSafeOff: function () {
             this.game.seguroResucitacionActivado = false;
             this.gameUI.interfaz.setSeguroResucitacion(false);
-            this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_RESU_OFF,Enums.Font.WARNING);
+            this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_RESU_OFF, Enums.Font.WARNING);
             console.log("TODO: handleResuscitationSafeOff");
         },
 
         handleResuscitationSafeOn: function () {
             this.game.seguroResucitacionActivado = true;
             this.gameUI.interfaz.setSeguroResucitacion(true);
-            this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_RESU_ON,Enums.Font.WARNING);
+            this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_RESU_ON, Enums.Font.WARNING);
             console.log("TODO: handleResuscitationSafeOn");
         },
 
