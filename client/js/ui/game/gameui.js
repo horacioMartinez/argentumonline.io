@@ -98,7 +98,7 @@ define(['enums','ui/game/keymouselistener', 'ui/popups/skills', 'ui/popups/comer
 
         updateSlotUser: function (numSlot, slot) { //todo: feo todo esto!
             if (slot) {
-                var numGrafico = this.game.renderer.getNumGraficoFromGrh(slot.grh);
+                var numGrafico = this.game.assetManager.getNumGraficoFromGrh(slot.grh);
                 this.interfaz.cambiarSlotInventario(numSlot, slot.cantidad, numGrafico, slot.equipado);
                 if (this.comerciar.visible)
                     this.comerciar.cambiarSlotVenta(numSlot, slot.cantidad, numGrafico);
@@ -116,7 +116,7 @@ define(['enums','ui/game/keymouselistener', 'ui/popups/skills', 'ui/popups/comer
 
         updateSlotShop: function (numSlot, slot) {
             if (slot) {
-                var numGrafico = this.game.renderer.getNumGraficoFromGrh(slot.grh);
+                var numGrafico = this.game.assetManager.getNumGraficoFromGrh(slot.grh);
                 this.comerciar.cambiarSlotCompra(numSlot, slot.cantidad, numGrafico);
                 this.boveda.cambiarSlotRetirar(numSlot, slot.cantidad, numGrafico);
             }

@@ -21,7 +21,7 @@ define(['ui/popups/popup','ui/game/itemgrid'], function (PopUp,ItemGrid) {
 
             this.game.inventario.forEachSlot(
                 function (slot) {
-                    var numGraf = self.game.renderer.getNumGraficoFromGrh(slot.grh);
+                    var numGraf = self.game.assetManager.getNumGraficoFromGrh(slot.grh);
                     self.userGrid.modificarSlot(slot.numero, slot.cantidad, numGraf);
                 });
 

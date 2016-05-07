@@ -57,10 +57,10 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
             return posEnGameCanvas;
         },
 
-        upKeyTeclasCaminar: function(){
+        upKeyTeclasCaminar: function () {
             var teclasCaminar = this.inputHandler.getTeclasCaminar();
             var self = this;
-            _.each(teclasCaminar, function(key) {
+            _.each(teclasCaminar, function (key) {
                 self._upKey(key);
                 self.inputHandler.keyUp(key);
             });
@@ -164,6 +164,7 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
                     self.hideChat();
                     return false;
                 }
+
             });
         },
 
@@ -185,6 +186,27 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
                     self.inputHandler.doubleClick();
                 }
             });
+
+            /*
+            // DEBUG:
+
+            $(window).bind('mousewheel DOMMouseScroll', function (event) {
+                log.error("HOLA");
+                var escala;
+                if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
+                    //scroll up
+                    escala = 1.1;
+                }
+                else {
+                    // scroll down
+                    escala = 0.9;
+                }
+                self.game.renderer.stage.scale.x *= escala;
+                self.game.renderer.stage.scale.y *= escala;
+                self.game.renderer.stage.x = ((self.game.renderer.stage.width * (1 - self.game.renderer.stage.scale.x)) / 2);
+                self.game.renderer.stage.y = ((self.game.renderer.stage.height * (1 - self.game.renderer.stage.scale.y)) / 2);
+            });
+            */
         },
 
         _downKey: function (key) {
@@ -205,21 +227,3 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
 
     return KeyMouseListener;
 });
-
-/*
- // DEBUGGGGGGGGGGGGGGGGG:
- $(window).bind('mousewheel DOMMouseScroll', function(event){
- var escala;
- if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
- //scroll up
- escala = 1.1;
- }
- else {
- // scroll down
- escala = 0.9;
- }
- game.renderer.stage.scale.x *= escala;
- game.renderer.stage.scale.y *= escala;
- game.renderer.stage.x = ((game.renderer.stage.width * (1-game.renderer.stage.scale.x))/2);
- game.renderer.stage.y = ((game.renderer.stage.height * (1-game.renderer.stage.scale.y))/2);
- });*/

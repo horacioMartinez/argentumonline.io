@@ -25,6 +25,18 @@ define(['json!../../indices/graficos.json',
                 this.preloader = new Preloader(this);
             },
 
+            getNumGraficoFromGrh: function (grh) {
+                if (this.indices[grh] && this.indices[grh].grafico)
+                    return this.indices[grh].grafico;
+            },
+
+            getFaceGrafFromNum: function (numHead){
+                if (!this.cabezas[numHead])
+                    return;
+                var grh = this.cabezas[numHead].down;
+                return this.getNumGraficoFromGrh(grh);
+            },
+
             getGrh: function (grh) {
                 if (!this.grhs[grh])
                     this.loadGrh(grh);

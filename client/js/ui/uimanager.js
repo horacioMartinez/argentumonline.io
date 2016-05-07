@@ -4,10 +4,11 @@
 define(['ui/loginui','ui/crearpjui','ui/game/gameui', 'ui/popups/mensaje'], function (LoginUI,CrearPjUI, GameUI, Mensaje) {
 
     var UIManager = Class.extend({
-        init: function () {
+        init: function (assetManager) {
+            this.assetManager = assetManager;
             this.mensaje = new Mensaje();
             this.loginUI = new LoginUI();
-            this.crearPjUI = new CrearPjUI(this.mensaje);
+            this.crearPjUI = new CrearPjUI(this.assetManager,this.mensaje);
 
             this.gameUI = null;
         },

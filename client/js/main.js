@@ -22,13 +22,10 @@ define(['app', 'assets/assetmanager', 'ui/uimanager', 'storage/storage'], functi
             assetManager = new AssetManager();
             setupAudio(assetManager.audio,storage);
 
-
-            uiManager = new UIManager();
+            uiManager = new UIManager(assetManager);
             app = new App(assetManager, uiManager, storage);
             uiManager.resizeUi();
             uiManager.initDOM();
-
-            //app.center();
 
             assetManager.preload(function () {
                 app.start();

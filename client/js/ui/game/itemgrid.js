@@ -93,6 +93,10 @@ define(['jquery-ui'], function () {
             if ($item)
                 $item.remove();
         },
+
+        clear: function(){
+            this.$this.empty();
+        },
     });
 
     return ItemGrid;

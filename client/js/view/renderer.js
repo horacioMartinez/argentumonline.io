@@ -4,7 +4,7 @@ define(['enums','lib/pixi', 'view/camera', 'view/charactersprites', 'view/consol
         var Renderer = Class.extend({
             init: function (assetManager, escala) {
                 this.POSICIONES_EXTRA_RENDER_X = 3;
-                this.POSICIONES_EXTRA_RENDER_Y = 5;
+                this.POSICIONES_EXTRA_RENDER_Y = 7;
                 this.POSICIONES_EXTRA_TERRENO = 1; // no deberia ser necesario mas de una. (una pos extra en cada una de las 4 direcciones)
 
                 this.MAPA_WIDTH = 100; // todo: usarlo desde mapa
@@ -224,7 +224,7 @@ define(['enums','lib/pixi', 'view/camera', 'view/charactersprites', 'view/consol
                 char.sprite.setFX(grh, this.fxs[FX].offX, this.fxs[FX].offY, FXLoops);
             },
 
-            rescale: function (escala) { // TODO: que escale solo los graficos del juego, asi las letras no se ven feas (tendrian que estar en otro contenedor y agrandar el tamaño de las letras en vez del contenedor)
+            rescale: function (escala) {
                 this.escala = escala;
                 this.pixiRenderer.resize(this.camera.gridW * this.tilesize * escala, this.camera.gridH * this.tilesize * escala);
                 this.gameStage.scale.x = escala;
@@ -535,11 +535,6 @@ define(['enums','lib/pixi', 'view/camera', 'view/charactersprites', 'view/consol
 
             renderFrame: function () {
                 this.pixiRenderer.render(this.stage);
-            },
-
-            getNumGraficoFromGrh: function (grh) {
-                if (this.indices[grh] && this.indices[grh].grafico)
-                    return this.indices[grh].grafico;
             },
 
             cambiarMapa: function (mapa) {
