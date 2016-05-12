@@ -2,7 +2,7 @@
  * Created by horacio on 3/8/16.
  */
 
-define(['enums','lib/pixi'], function (Enums,PIXI) {
+define(['font','lib/pixi'], function (Font,PIXI) {
 
     function Consola(escala) {
         PIXI.Container.call(this);
@@ -15,7 +15,7 @@ define(['enums','lib/pixi'], function (Enums,PIXI) {
     Consola.constructor = Consola;
 
     Consola.prototype.setEscala = function (escala) {
-        var BASE_FONT = Enums.Font.BASE_FONT;
+        var BASE_FONT = Font.BASE_FONT;
         var fuente = BASE_FONT._weight + ' ' + Math.round(BASE_FONT._size * escala) + 'px ' + BASE_FONT.font;
         this.baseFont = {font: fuente, align: "center", stroke: BASE_FONT.stroke, strokeThickness: BASE_FONT.strokeThickness * escala};
 

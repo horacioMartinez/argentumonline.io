@@ -3,7 +3,7 @@
  */
 
 
-define(['charcodemap', 'ui/popups/popup'], function (CharCodeMap, PopUp) {
+define(['utils/charcodemap', 'ui/popups/popup'], function (CharCodeMap, PopUp) {
 
     var ConfigurarTeclas = PopUp.extend({
         init: function (storage, updateKeysCb, showMensajeCb) {

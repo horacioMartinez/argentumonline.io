@@ -1,7 +1,3 @@
-/**
- * Created by horacio on 4/14/16.
- */
-
 /* from http://stackoverflow.com/a/23377822 */
 define({
     keys: [

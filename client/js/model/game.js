@@ -1,5 +1,5 @@
-define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character', 'model/comandoschat', 'model/atributos', 'model/inventario', 'model/skills', 'enums'],
-    function (Mapa, Updater, Item, Player, Character, ComandosChat, Atributos, Inventario, Skills, Enums) {
+define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character', 'model/comandoschat', 'model/atributos', 'model/inventario', 'model/skills', 'enums','font'],
+    function (Mapa, Updater, Item, Player, Character, ComandosChat, Atributos, Inventario, Skills, Enums, Font) {
         var Game = Class.extend({
             init: function (assetManager) {
                 this.atributos = new Atributos(this);
@@ -75,21 +75,21 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                         log.error("Mensaje de parte de cuerpo invalido");
                 }
 
-                this.renderer.agregarCharacterHoveringInfo(this.player, -danio, Enums.Font.CANVAS_DANIO_RECIBIDO);
-                this.renderer.agregarTextoConsola(txt, Enums.Font.FIGHT);
+                this.renderer.agregarCharacterHoveringInfo(this.player, -danio, Font.CANVAS_DANIO_RECIBIDO);
+                this.renderer.agregarTextoConsola(txt, Font.FIGHT);
             },
 
             realizarDanio: function (danio) {
                 var char = this.player.lastAttackedTarget;
                 if (char) {
-                    this.renderer.agregarCharacterHoveringInfo(char, danio, Enums.Font.CANVAS_DANIO_REALIZADO);
-                    this.renderer.agregarTextoConsola(Enums.MensajeConsola.MENSAJE_GOLPE_CRIATURA_1 + danio + Enums.MensajeConsola.MENSAJE_2, Enums.Font.FIGHT);
+                    this.renderer.agregarCharacterHoveringInfo(char, danio, Font.CANVAS_DANIO_REALIZADO);
+                    this.renderer.agregarTextoConsola(Enums.MensajeConsola.MENSAJE_GOLPE_CRIATURA_1 + danio + Enums.MensajeConsola.MENSAJE_2, Font.FIGHT);
                 }
             },
 
             escribirMsgConsola: function (texto, font) {
                 if (!font)
-                    font = Enums.Font.INFO;
+                    font = Font.INFO;
                 this.renderer.agregarTextoConsola(texto, font);
             },
 

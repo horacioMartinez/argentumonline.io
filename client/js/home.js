@@ -1,5 +1,5 @@
 require.config({
-    urlArgs: "bust=v1", // Cambiar para refrescar cache
+    urlArgs: "bust=v0", // Cambiar para refrescar cache
     paths: {
         "jquery": "lib/jquery",
         "jquery-ui": "lib/jquery-ui",
@@ -8,12 +8,12 @@ require.config({
     },
     shim: {
         "jquery-ui": {
-            exports:"$" ,
+            exports: "$",
             deps: ['jquery']
         }
     }
 });
 
-define(['lib/class', 'lib/lodash', 'lib/stacktrace', 'util'], function() {
+define(['lib/class', 'lib/lodash', 'lib/stacktrace', 'utils/util'], function () {
     require(["main"]);
 });

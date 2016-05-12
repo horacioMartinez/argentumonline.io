@@ -6,15 +6,20 @@
     removeCombined: true,
     fileExclusionRegExp: /^(build)\.js$/,
 
-        modules: [
-            {
-                name: "main",
-                exclude: ["lib/pixi","lib/websock","lib/howler","lib/jquery","lib/jquery-ui","text","json"]
-            },
-            {
-                name: "home",
-                exclude: ["main","lib/lodash","lib/stacktrace","lib/class"]
-            }
+    modules: [
+        {
+            name: "main",
+            exclude: ["lib/pixi", "lib/websock", "lib/howler", "lib/jquery", "lib/jquery-ui", "text", "json"]
+        },
+        {
+            name: "home",
+            exclude: ["main", "lib/lodash", "lib/stacktrace", "lib/class"]
+        }
     ],
+    uglify2: {
+        compress: {
+            pure_funcs: ['console.log', 'log.error']
+        }
+    }
 
 })

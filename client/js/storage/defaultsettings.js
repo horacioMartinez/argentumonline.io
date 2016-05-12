@@ -2,7 +2,7 @@
  * Created by horacio on 4/11/16.
  */
 
-define(["charcodemap"],function(CharCodeMap){
+define(["utils/charcodemap"],function(CharCodeMap){
     
     return {
         keys: {

@@ -6,7 +6,7 @@ define(['model/game','model/intervalos', 'model/acciones', 'model/macros'], func
 
     var GameManager = Class.extend({
         init: function (assetManager,renderer) {
-            this.renderer = renderer; // temporal, pasarselo directamente al constructor de game
+            this.renderer = renderer; // temporal, pasarselo directamente al constructor de game ?
             this.game = new Game(assetManager); // todo: esta clase deberia llamarse world y solo encargarse de agregar, sacar cosas del mundo y ese tipo de cosas
 
             this.intervalos = new Intervalos();
@@ -18,7 +18,7 @@ define(['model/game','model/intervalos', 'model/acciones', 'model/macros'], func
             this.game.setup(client,gameUI, this.renderer);
         },
 
-        stopGame: function(escala){
+        resetGame: function(escala){
             this.renderer.clean(escala);
             var ui = this.game.gameUI;
             var client = this.game.client;

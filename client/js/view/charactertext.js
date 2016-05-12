@@ -2,7 +2,7 @@
  * Created by horacio on 3/9/16.
  */
 
-define(['enums','lib/pixi'], function (Enums,PIXI) {
+define(['font','lib/pixi'], function (Font,PIXI) {
 
     function CharacterText(escala) {
         PIXI.Container.call(this);
@@ -20,11 +20,11 @@ define(['enums','lib/pixi'], function (Enums,PIXI) {
     CharacterText.constructor = CharacterText;
 
     CharacterText.prototype.setEscala = function (escala) {
-        var baseFont = Enums.Font.BASE_FONT;
+        var baseFont = Font.BASE_FONT;
         var fuente = baseFont._weight + ' ' + Math.round(baseFont._size * escala) + 'px ' + baseFont.font;
         var aux = {font: fuente, align: "center", stroke: baseFont.stroke, strokeThickness: baseFont.strokeThickness * escala};
         
-        this.estiloChat = $.extend({}, aux, Enums.Font.TALK);
+        this.estiloChat = $.extend({}, aux, Font.TALK);
         if (this._chat) {
             this._chat.style = this.estiloChat;
             this._chat.x = this._chat.x * (escala / this._escala);
@@ -35,7 +35,7 @@ define(['enums','lib/pixi'], function (Enums,PIXI) {
 
         this._escala = escala;
 
-        baseFont = Enums.Font.HOVERING_BASE_FONT;
+        baseFont = Font.HOVERING_BASE_FONT;
         fuente = baseFont._weight + ' ' + Math.round(baseFont._size * escala) + 'px ' + baseFont.font;
         this.estiloHovering = {font: fuente, align: "center", stroke: baseFont.stroke, strokeThickness: baseFont.strokeThickness * escala};
     };

@@ -2,7 +2,7 @@
  * Created by horacio on 3/9/16.
  */
 
-define(['enums'], function (Enums) {
+define(['enums','font'], function (Enums, Font) {
 
     var ComandosChat = Class.extend({
         init: function (game) {
@@ -11,7 +11,7 @@ define(['enums'], function (Enums) {
 
         _checkearYescribirMuerto: function () {
             if (this.game.player.muerto) {
-                this.game.escribirMsgConsola(Enums.MensajeConsola.ESTAS_MUERTO, Enums.Font.INFO);
+                this.game.escribirMsgConsola(Enums.MensajeConsola.ESTAS_MUERTO, Font.INFO);
                 return true;
             }
             return false;
@@ -32,7 +32,7 @@ define(['enums'], function (Enums) {
 
                         case "/SALIR":
                             if (this.game.player.paralizado)
-                                this.game.escribirMsgConsola("No puedes salir estando paralizado.", Enums.Font.WARNING);
+                                this.game.escribirMsgConsola("No puedes salir estando paralizado.", Font.WARNING);
                             else {
                                 if (this.game.macroActivado)
                                     this.game.desactivarMacro();
@@ -76,8 +76,8 @@ define(['enums'], function (Enums) {
                         case "/MEDITAR":
 
                             if (!this._checkearYescribirMuerto()) {
-                                if (this.game.player.mana === this.game.player.maxMana)
-                                    this.game.escribirMsgConsola("Tu mana ya está llena", Enums.Font.INFO);
+                                if (this.game.player.mana === this.game.atributos.maxMana)
+                                    this.game.escribirMsgConsola("Tu mana ya está llena", Font.INFO);
                                 else
                                     this.game.client.sendMeditate();
                             }
@@ -107,7 +107,7 @@ define(['enums'], function (Enums) {
                             if (!this._checkearYescribirMuerto) {
 
                                 if (this.game.comerciando)
-                                    this.game.escribirMsgConsola("Ya estás comerciando", Enums.Font.INFO);
+                                    this.game.escribirMsgConsola("Ya estás comerciando", Font.INFO);
                                 else
                                     this.game.client.sendCommerceStart();
                             }
@@ -169,7 +169,7 @@ define(['enums'], function (Enums) {
                                 if (!isNaN(args[0]) && (args[0] < 256))
                                     this.game.client.sendInquiryVote(args[0]);
                                 else
-                                    this.game.escribirMsgConsola("Para votar una opción, escribe /encuesta NUMERODEOPCION, por ejemplo para votar la opcion 1, escribe /encuesta 1.", Enums.Font.WARNING);
+                                    this.game.escribirMsgConsola("Para votar una opción, escribe /encuesta NUMERODEOPCION, por ejemplo para votar la opcion 1, escribe /encuesta 1.", Font.WARNING);
                             }
 
                             break;
@@ -177,7 +177,7 @@ define(['enums'], function (Enums) {
                             if (args.length)
                                 this.game.client.sendGuildMessage(args.join(" "));
                             else
-                                this.game.escribirMsgConsola("Escriba un mensaje.", Enums.Font.INFO);
+                                this.game.escribirMsgConsola("Escriba un mensaje.", Font.INFO);
 
                             break;
                         case "/PMSG":
@@ -354,7 +354,7 @@ define(['enums'], function (Enums) {
                 else
                     valido = false;
                 if (!valido)
-                    this.game.escribirMsgConsola("Comando invalido", Enums.Font.WARNING);
+                    this.game.escribirMsgConsola("Comando invalido", Font.WARNING);
             }
 
             else {

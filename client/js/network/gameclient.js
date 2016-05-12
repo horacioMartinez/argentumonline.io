@@ -1,4 +1,4 @@
-define(['enums', 'network/protocol', 'network/bytequeue', 'lib/websock'], function (Enums, Protocolo, ByteQueue, __websock) {
+define(['enums','font', 'network/protocol', 'network/bytequeue', 'lib/websock'], function (Enums,Font, Protocolo, ByteQueue, __websock) {
 
     var GameClient = Class.extend({
         init: function (game, uiManager, gameUI, host, port) {
@@ -21,7 +21,7 @@ define(['enums', 'network/protocol', 'network/bytequeue', 'lib/websock'], functi
         },// TODO: cambiar en el protocolo los peekbyte por readbyte y sacar los readbyte de cada uno
 
         _connect: function (conectarse_callback) {
-            this.ws.open("ws://ec2-54-94-134-88.sa-east-1.compute.amazonaws.com:8666");
+            this.ws.open("ws://localhost:8666");
             /*ws://ec2-54-94-134-88.sa-east-1.compute.amazonaws.com:8666*/
             var self = this;
             this.ws.on('open', function () {
@@ -198,7 +198,7 @@ define(['enums', 'network/protocol', 'network/bytequeue', 'lib/websock'], functi
         },
 
         handleConsoleMsg: function (Chat, FontIndex) {
-            this.game.escribirMsgConsola(Chat, Enums.Font[Enums.FontIndex[FontIndex]]);
+            this.game.escribirMsgConsola(Chat, Font[Font.Index[FontIndex]]);
         },
 
         handleGuildChat: function (Chat) {
@@ -663,25 +663,25 @@ define(['enums', 'network/protocol', 'network/bytequeue', 'lib/websock'], functi
         handleWorkRequestTarget: function (skill) {
             switch (skill) {
                 case Enums.Skill.magia:
-                    this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_MAGIA, Enums.Font.SKILLINFO);
+                    this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_MAGIA, Font.SKILLINFO);
                     break;
                 case Enums.Skill.pesca:
-                    this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_PESCA, Enums.Font.SKILLINFO);
+                    this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_PESCA, Font.SKILLINFO);
                     break;
                 case Enums.Skill.robar:
-                    this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_ROBAR, Enums.Font.SKILLINFO);
+                    this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_ROBAR, Font.SKILLINFO);
                     break;
                 case Enums.Skill.talar:
-                    this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_TALAR, Enums.Font.SKILLINFO);
+                    this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_TALAR, Font.SKILLINFO);
                     break;
                 case Enums.Skill.mineria:
-                    this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_MINERIA, Enums.Font.SKILLINFO);
+                    this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_MINERIA, Font.SKILLINFO);
                     break;
                 case Enums.Skill.fundirmetal:
-                    this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_FUNDIRMETAL, Enums.Font.SKILLINFO);
+                    this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_FUNDIRMETAL, Font.SKILLINFO);
                     break;
                 case Enums.Skill.proyectiles:
-                    this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_PROYECTILES, Enums.Font.SKILLINFO);
+                    this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_PROYECTILES, Font.SKILLINFO);
                     break;
                 default:
                     log.error("Numero de skill invalido: " + skill)
@@ -698,7 +698,7 @@ define(['enums', 'network/protocol', 'network/bytequeue', 'lib/websock'], functi
         },
 
         handleDontSeeAnything: function () {
-            this.game.escribirMsgConsola(Enums.MensajeConsola.NO_VES_NADA_INTERESANTE, Enums.Font.INFO);
+            this.game.escribirMsgConsola(Enums.MensajeConsola.NO_VES_NADA_INTERESANTE, Font.INFO);
         },
 
         handleUserKill: function (attackerIndex) {
@@ -706,59 +706,59 @@ define(['enums', 'network/protocol', 'network/bytequeue', 'lib/websock'], functi
         },
 
         handleNPCSwing: function () {
-            this.game.escribirMsgConsola(Enums.MensajeConsola.CRIATURA_FALLA_GOLPE, Enums.Font.FIGHT);
+            this.game.escribirMsgConsola(Enums.MensajeConsola.CRIATURA_FALLA_GOLPE, Font.FIGHT);
         },
 
         handleNPCKillUser: function () {
-            this.game.escribirMsgConsola(Enums.MensajeConsola.CRIATURA_MATADO, Enums.Font.FIGHT);
+            this.game.escribirMsgConsola(Enums.MensajeConsola.CRIATURA_MATADO, Font.FIGHT);
         },
 
         handleBlockedWithShieldUser: function () {
-            this.game.escribirMsgConsola(Enums.MensajeConsola.RECHAZO_ATAQUE_ESCUDO, Enums.Font.FIGHT);
+            this.game.escribirMsgConsola(Enums.MensajeConsola.RECHAZO_ATAQUE_ESCUDO, Font.FIGHT);
         },
 
         handleBlockedWithShieldOther: function () {
-            this.game.escribirMsgConsola(Enums.MensajeConsola.USUARIO_RECHAZO_ATAQUE_ESCUDO, Enums.Font.FIGHT);
+            this.game.escribirMsgConsola(Enums.MensajeConsola.USUARIO_RECHAZO_ATAQUE_ESCUDO, Font.FIGHT);
         },
 
         handleUserSwing: function () {
-            this.game.escribirMsgConsola(Enums.MensajeConsola.FALLADO_GOLPE, Enums.Font.FIGHT);
+            this.game.escribirMsgConsola(Enums.MensajeConsola.FALLADO_GOLPE, Font.FIGHT);
         },
 
         handleSafeModeOn: function () {
             this.game.seguroAtacarActivado = true;
             this.gameUI.interfaz.setSeguroAtacar(true);
-            this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_ACTIVADO, Enums.Font.WARNING);
+            this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_ACTIVADO, Font.WARNING);
             console.log("TODO: handleResuscitationSafeOff");
         },
 
         handleSafeModeOff: function () {
             this.game.seguroAtacarActivado = false;
             this.gameUI.interfaz.setSeguroAtacar(false);
-            this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_DESACTIVADO, Enums.Font.WARNING);
+            this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_DESACTIVADO, Font.WARNING);
             console.log("TODO: handleResuscitationSafeOn");
         },
 
         handleResuscitationSafeOff: function () {
             this.game.seguroResucitacionActivado = false;
             this.gameUI.interfaz.setSeguroResucitacion(false);
-            this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_RESU_OFF, Enums.Font.WARNING);
+            this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_RESU_OFF, Font.WARNING);
             console.log("TODO: handleResuscitationSafeOff");
         },
 
         handleResuscitationSafeOn: function () {
             this.game.seguroResucitacionActivado = true;
             this.gameUI.interfaz.setSeguroResucitacion(true);
-            this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_RESU_ON, Enums.Font.WARNING);
+            this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_RESU_ON, Font.WARNING);
             console.log("TODO: handleResuscitationSafeOn");
         },
 
         handleNobilityLost: function () {
-            this.game.escribirMsgConsola(Enums.MensajeConsola.PIERDE_NOBLEZA, Enums.Font.FIGHT);
+            this.game.escribirMsgConsola(Enums.MensajeConsola.PIERDE_NOBLEZA, Font.FIGHT);
         },
 
         handleCantUseWhileMeditating: function () {
-            this.game.escribirMsgConsola(Enums.MensajeConsola.USAR_MEDITANDO, Enums.Font.FIGHT);
+            this.game.escribirMsgConsola(Enums.MensajeConsola.USAR_MEDITANDO, Font.FIGHT);
         },
 
         handleEarnExp: function () {

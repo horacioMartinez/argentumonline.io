@@ -7,8 +7,6 @@ define(['enums'], function (Enums) {
         init: function (time) {
             time = time || 0;
             this.times = {
-                macroHechizos: time,
-                macroTrabajo: time,
                 ataque: time,
                 ataqueConArco: time,
                 hechizo: time,

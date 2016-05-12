@@ -1,5 +1,5 @@
-define(['enums','lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'view/charactertext', 'view/spritegrh', 'view/containerordenado'],
-    function (Enums, PIXI, Camera, CharacterSprites, Consola, CharacterText, SpriteGrh, ContainerOrdenado) {
+define(['enums','font','lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'view/charactertext', 'view/spritegrh', 'view/containerordenado'],
+    function (Enums,Font, PIXI, Camera, CharacterSprites, Consola, CharacterText, SpriteGrh, ContainerOrdenado) {
 
         var Renderer = Class.extend({
             init: function (assetManager, escala) {
@@ -141,8 +141,8 @@ define(['enums','lib/pixi', 'view/camera', 'view/charactersprites', 'view/consol
                     headOffX = this.cuerpos[Body].offHeadX;
                     headOffY = this.cuerpos[Body].offHeadY;
                 }
-                var color = NickColor ? Enums.NickColor[Enums.NickColorIndex[NickColor]] : Enums.NickColor.CIUDADANO;
-                var font = Enums.Font.NOMBRE;
+                var color = NickColor ? Font.NickColor[Font.NickColorIndex[NickColor]] : Font.NickColor.CIUDADANO;
+                var font = Font.NOMBRE;
                 font.fill = color;
 
                 var sprite = new CharacterSprites(Heading, bodys, heads, headOffX, headOffY, weapons, shields, helmets, Name, clan, font);
@@ -193,8 +193,8 @@ define(['enums','lib/pixi', 'view/camera', 'view/charactersprites', 'view/consol
             },
 
             cambiarNombreCharacter: function (char, nombre, clan, color) {
-                var fontColor = color ? Enums.NickColor[Enums.NickColorIndex[color]] : Enums.NickColor.CIUDADANO;
-                var font = Enums.Font.NOMBRE;
+                var fontColor = color ? Font.NickColor[Font.NickColorIndex[color]] : Font.NickColor.CIUDADANO;
+                var font = Font.NOMBRE;
                 font.fill = fontColor;
                 char.sprite.setNombre(nombre, clan, font);
             },

@@ -1,4 +1,4 @@
-define(['model/gamemanager','view/renderer', 'network/gameclient'], function (GameManager, Renderer, GameClient) {
+define(['model/gamemanager', 'view/renderer', 'network/gameclient'], function (GameManager, Renderer, GameClient) {
 
     var App = Class.extend({
         init: function (assetManager, uiManager, storage) {
@@ -9,17 +9,17 @@ define(['model/gamemanager','view/renderer', 'network/gameclient'], function (Ga
             this.storage = storage;
         },
 
-        _initLoginCallbacks: function(){
+        _initLoginCallbacks: function () {
             var self = this;
-            this.uiManager.loginUI.setBotonJugarCallback( function() {
+            this.uiManager.loginUI.setBotonJugarCallback(function () {
                 self.tryStartingGame();
             });
-            this.uiManager.loginUI.setBotonCrearCallback( function() {
+            this.uiManager.loginUI.setBotonCrearCallback(function () {
                 self.setCrearPJ();
             });
         },
 
-        _initCrearPjCallbacks: function(){
+        _initCrearPjCallbacks: function () {
             var self = this;
             this.uiManager.crearPjUI.setBotonTirarDadosCallback(function () {
                 self.client.sendThrowDices();
@@ -38,7 +38,7 @@ define(['model/gamemanager','view/renderer', 'network/gameclient'], function (Ga
             client.setDisconnectCallback(function () {
                 self.uiManager.setLoginScreen();
 
-                self.gameManager.stopGame(self.uiManager.getEscala());
+                self.gameManager.resetGame(self.uiManager.getEscala());
                 self.starting = false;
             });
 
@@ -56,10 +56,10 @@ define(['model/gamemanager','view/renderer', 'network/gameclient'], function (Ga
 
         inicializarGame: function () {
             var renderer = new Renderer(this.assetManager, this.uiManager.getEscala());
-            this.gameManager = new GameManager(this.assetManager,renderer);
+            this.gameManager = new GameManager(this.assetManager, renderer);
 
-            var gameUI = this.uiManager.inicializarGameUI(this.gameManager,this.storage);
-            this.client = new GameClient(this.gameManager.game,this.uiManager,gameUI, this.host, this.port);
+            var gameUI = this.uiManager.inicializarGameUI(this.gameManager, this.storage);
+            this.client = new GameClient(this.gameManager.game, this.uiManager, gameUI, this.host, this.port);
             this._initClientCallbacks(this.client);
             this.gameManager.setup(this.client, gameUI);
             this.ready = true;
