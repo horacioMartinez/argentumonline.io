@@ -151,13 +151,6 @@ define(['enums'], function (Enums) {
         },
 
         focusEntity: function (entity) {
-            /*    var w = this.gridW - 2,
-             h = this.gridH - 2,
-             x = Math.floor((entity.gridX - 1) / w) * w,
-             y = Math.floor((entity.gridY - 1) / h) * h;
-
-             this.setGridPosition(x, y);*/
-
             var x = Math.round(entity.x - (Math.floor(this.gridW / 2) * this.tilesize)),
                 y = Math.round(entity.y - (Math.floor(this.gridH / 2) * this.tilesize));
             this.setPosition(x, y);

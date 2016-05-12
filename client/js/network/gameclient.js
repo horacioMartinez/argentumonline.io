@@ -1,4 +1,4 @@
-define(['enums','font', 'network/protocol', 'network/bytequeue', 'lib/websock'], function (Enums,Font, Protocolo, ByteQueue, __websock) {
+define(['enums', 'font', 'network/protocol', 'network/bytequeue', 'lib/websock'], function (Enums, Font, Protocolo, ByteQueue, __websock) {
 
     var GameClient = Class.extend({
         init: function (game, uiManager, gameUI, host, port) {
@@ -21,7 +21,7 @@ define(['enums','font', 'network/protocol', 'network/bytequeue', 'lib/websock'],
         },// TODO: cambiar en el protocolo los peekbyte por readbyte y sacar los readbyte de cada uno
 
         _connect: function (conectarse_callback) {
-            this.ws.open("ws://localhost:8666");
+            this.ws.open("ws://ec2-54-94-134-88.sa-east-1.compute.amazonaws.com:8666");
             /*ws://ec2-54-94-134-88.sa-east-1.compute.amazonaws.com:8666*/
             var self = this;
             this.ws.on('open', function () {
@@ -30,13 +30,14 @@ define(['enums','font', 'network/protocol', 'network/bytequeue', 'lib/websock'],
             });
 
             this.ws.on('message', function () {
-                //try {
-                while (self.byteQueue.length() > 0) {
-                    self.protocolo.ServerPacketDecodeAndDispatch(self.byteQueue, self);
+                try {
+                    while (self.byteQueue.length() > 0) {
+                        // TODO: readbyte de una en vez de peekbyte en lo de abajo
+                        self.protocolo.ServerPacketDecodeAndDispatch(self.byteQueue, self);
+                    }
+                } catch (e) {
+                    alert(e.name + ': ' + e.message);
                 }
-                //} catch (e) {
-                //    log.error(e.name + ': ' + e.message);
-                //}
             });
             this.ws.on('close', function () {
                 self.conectado = false;
@@ -284,7 +285,9 @@ define(['enums','font', 'network/protocol', 'network/bytequeue', 'lib/websock'],
         },
 
         handlePlayWave: function (WaveID, X, Y) {
-            this.game.assetManager.audio.playSound(WaveID);
+            //TODO : reveer esto !!
+            if (( X < 0 ) || (Y < 0) || this.game.renderer.camera.isVisiblePosition(X,Y+2,2,4)) // +2 porque extraY de visible no checkea para arriba
+                this.game.assetManager.audio.playSound(WaveID);
         },
 
         handleGuildList: function (Data) {
