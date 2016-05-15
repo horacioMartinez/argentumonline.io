@@ -14,6 +14,7 @@ define(['ui/popups/popup'], function (PopUp) {
         show: function (mensaje) {
             this._super();
             $("#inGameMensajeContenido").text(mensaje);
+            $("#inGameMensajeBotonCerrar").focus();
         },
 
         initCallbacks: function () {

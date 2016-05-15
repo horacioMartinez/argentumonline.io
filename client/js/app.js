@@ -37,7 +37,7 @@ define(['model/gamemanager', 'view/renderer', 'network/gameclient'], function (G
 
             client.setDisconnectCallback(function () {
                 self.uiManager.setLoginScreen();
-
+                self.assetManager.audio.stopMusic();
                 self.gameManager.resetGame(self.uiManager.getEscala());
                 self.starting = false;
             });

@@ -311,7 +311,7 @@ define(['enums','font'], function (Enums, Font) {
 
                             break;
                         case "/FUNDARCLAN":
-                            if (this.game.player.nivel > 24)
+                            if (this.game.atributos.nivel > 24)
                                 this.game.client.sendGuildFundate();
                             else
                                 this.game.escribirMsgConsola("Para fundar un clan tienes que ser nivel 25 y tener 90 skills en liderazgo.");

@@ -399,6 +399,16 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
 
                     if (self.player.paralizado)
                         return false;
+                    if (self.player.meditando){
+                        // envia solo 1 vez el mensaje de caminar para que deje de meditar, feo esto
+                        if (!this._waltkToCancelMeditarSent) {
+                            self.client.sendWalk(direccion);
+                        }
+                        this._waltkToCancelMeditarSent = true;
+                        return false;
+                    } else{
+                        this._waltkToCancelMeditarSent = false;
+                    }
 
                     var x = self.player.gridX;
                     var y = self.player.gridY;

@@ -329,8 +329,7 @@ define(['enums', 'font', 'network/protocol', 'network/bytequeue', 'lib/websock']
             this.game.atributos.setStamina(MinSta, MaxSta);
             this.game.atributos.setExp(Exp, Elu);
             this.game.atributos.setOro(Gld);
-            this.game.atributos.oro = Gld;
-            this.game.atributos.nivel = Elv;
+            this.game.atributos.setNivel(Elv);
         },
         handleChangeInventorySlot: function (Slot, ObjIndex, ObjName, Amount, Equiped, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) {
             this.game.cambiarSlotInventario(Slot, ObjIndex, ObjName, Amount, Equiped, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice);
@@ -450,6 +449,7 @@ define(['enums', 'font', 'network/protocol', 'network/bytequeue', 'lib/websock']
         },
 
         handleMeditateToggle: function () {
+            this.game.player.meditando = !this.game.player.meditando;
             console.log("TODO: handleMeditateToggle ");
         },
 

@@ -19,6 +19,7 @@ define(['model/character'], function (Character) {
             this.navegando = false;
 
             this.paralizado = false;
+            this.meditando = false;
         },
 
         comenzarCaminar: function (direccion) {

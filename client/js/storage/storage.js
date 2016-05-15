@@ -1,10 +1,10 @@
-define(['storage/defaultsettings','jquery-ui'], function (DefaultSettings) {
+define(['storage/defaultsettings', 'jquery-ui'], function (DefaultSettings) {
     var Storage = Class.extend({
         init: function () {
             if (this.hasLocalStorage() && localStorage.data) {
                 var userData = JSON.parse(localStorage.data);
                 var defaultData = this._getDefaultData();
-                this._data = $.extend(true,defaultData, userData); // agrega los userData a defaultData, es por si falta algun campo en userData que este en default
+                this._data = $.extend(true, defaultData, userData); // agrega los userData a defaultData, es por si falta algun campo en userData que este en default
             } else {
                 this.resetData();
             }
@@ -14,14 +14,14 @@ define(['storage/defaultsettings','jquery-ui'], function (DefaultSettings) {
             this._data = this._getDefaultData();
         },
 
-        _getDefaultData: function(){
-            var defSettings = $.extend(true,{},DefaultSettings);
+        _getDefaultData: function () {
+            var defSettings = $.extend(true, {}, DefaultSettings);
             return {
                 settings: defSettings
             };
         },
 
-        getDefaultKeys: function(){
+        getDefaultKeys: function () {
             return this._getDefaultData().settings.keys;
         },
 
@@ -29,11 +29,11 @@ define(['storage/defaultsettings','jquery-ui'], function (DefaultSettings) {
             return this._data.settings.keys;
         },
 
-        getSoundMuted: function(){
+        getSoundMuted: function () {
             return this._data.settings.audio.soundMuted;
         },
 
-        getMusicMuted: function(){
+        getMusicMuted: function () {
             return this._data.settings.audio.musicMuted;
         },
 
@@ -45,12 +45,12 @@ define(['storage/defaultsettings','jquery-ui'], function (DefaultSettings) {
             return this._data.settings.audio.musicVolume;
         },
 
-        setSoundMuted: function(muted){
+        setSoundMuted: function (muted) {
             this._data.settings.audio.soundMuted = muted;
             this.save();
         },
 
-        setMusicMuted: function(muted){
+        setMusicMuted: function (muted) {
             this._data.settings.audio.musicMuted = muted;
             this.save();
         },
@@ -85,11 +85,12 @@ define(['storage/defaultsettings','jquery-ui'], function (DefaultSettings) {
                 localStorage.data = "";
                 this.resetData();
             }
+            this.save();
         },
-/*
-        hasAlreadyPlayed: function () {
-            return this._data.hasAlreadyPlayed;
-        },*/
+        /*
+         hasAlreadyPlayed: function () {
+         return this._data.hasAlreadyPlayed;
+         },*/
     });
 
     return Storage;

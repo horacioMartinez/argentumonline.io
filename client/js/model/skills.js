@@ -67,7 +67,7 @@ define(['enums'], function (Enums) {
             return this._nombres[numSkill];
         },
 
-        _initNombresSkills: function (nombres) { // TODO: sacar esto de aca, crear clase skills?
+        _initNombresSkills: function (nombres) { // TODO: sacar esto de aca
             nombres[Enums.Skill.magia] = "Magia";
             nombres[Enums.Skill.robar] = "Robar";
             nombres[Enums.Skill.tacticas] = "Evasión en combate";

@@ -86,6 +86,12 @@ define([], function () {
             }
         },
 
+        setNivel: function(nivel){
+          if (nivel !== this.nivel){
+              this.nivel = nivel;
+              this.game.gameUI.interfaz.updateNivel(nivel);
+          }
+        },
         setOro: function (oro) {
             if (this.oro !== oro) {
                 this.oro = oro;

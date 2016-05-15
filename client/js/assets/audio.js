@@ -150,6 +150,11 @@ define(['enums','lib/howler'], function (Enums,Howler) {
             if (this.currentMusic)
                 this.currentMusic.volume(this.musicVolume);
         },
+
+        stopMusic: function(){
+            if (this.currentMusic)
+                this.currentMusic.stop();
+        }
     });
 
     return Audio;

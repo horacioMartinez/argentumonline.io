@@ -147,6 +147,9 @@ define(['ui/game/itemgrid'], function (ItemGrid) {
         updateBarraExp: function(cant,max){
             this._updateBarra(cant, max, $("#barraExpUsada"), $("#barraExpTexto"));
         },
+        updateNivel: function(nivel){
+            $("#indicadorNivel").text("Nivel "+ nivel);
+        },
 
         updateIndicadorPosMapa: function(mapa, x,y){
           $("#indicadorMapa").text("Mapa "+mapa+"  X: "+x + " Y: " +y);
