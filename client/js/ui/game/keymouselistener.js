@@ -127,14 +127,6 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
                 }
             });
 
-            // TODO: ver esto en firefox en windows
-            // para que no se mueva la seleccion del menu de hechizos al caminar
-            /*$("#hechizos").keydown(function (e) {
-             var key = e.which;
-             if (self.inputHandler.isCaminarKey(key)) {
-             e.preventDefault();
-             }
-             });*/
         },
 
         _initChatKeyListener: function () {
@@ -188,25 +180,25 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
             });
 
             /*
-            // DEBUG:
+             // DEBUG:
 
-            $(window).bind('mousewheel DOMMouseScroll', function (event) {
-                log.error("HOLA");
-                var escala;
-                if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
-                    //scroll up
-                    escala = 1.1;
-                }
-                else {
-                    // scroll down
-                    escala = 0.9;
-                }
-                self.game.renderer.stage.scale.x *= escala;
-                self.game.renderer.stage.scale.y *= escala;
-                self.game.renderer.stage.x = ((self.game.renderer.stage.width * (1 - self.game.renderer.stage.scale.x)) / 2);
-                self.game.renderer.stage.y = ((self.game.renderer.stage.height * (1 - self.game.renderer.stage.scale.y)) / 2);
-            });
-            */
+             $(window).bind('mousewheel DOMMouseScroll', function (event) {
+             log.error("HOLA");
+             var escala;
+             if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
+             //scroll up
+             escala = 1.1;
+             }
+             else {
+             // scroll down
+             escala = 0.9;
+             }
+             self.game.renderer.stage.scale.x *= escala;
+             self.game.renderer.stage.scale.y *= escala;
+             self.game.renderer.stage.x = ((self.game.renderer.stage.width * (1 - self.game.renderer.stage.scale.x)) / 2);
+             self.game.renderer.stage.y = ((self.game.renderer.stage.height * (1 - self.game.renderer.stage.scale.y)) / 2);
+             });
+             */
         },
 
         _downKey: function (key) {

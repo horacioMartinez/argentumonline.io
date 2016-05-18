@@ -38,6 +38,10 @@ Detect.isOpera = function () {
     return Detect.userAgentContains('Opera');
 };
 
+Detect.isFirefox = function (){
+    return Detect.userAgentContains('Firefox');
+};
+
 Detect.isFirefoxAndroid = function () {
     return Detect.userAgentContains('Android') && Detect.userAgentContains('Firefox');
 };

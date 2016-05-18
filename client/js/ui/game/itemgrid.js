@@ -88,6 +88,7 @@ define(['jquery-ui'], function () {
             return $item;
         },
 
+
         borrarSlot: function (numSlot) {
             $item = this._getItem(numSlot);
             if ($item)

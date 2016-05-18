@@ -102,6 +102,10 @@ define(['enums', 'ui/game/itemgrid'], function (Enums, ItemGrid) {
                 var ciudad = $("#crearSelectCiudad").val();
                 var cabeza = self.cabezasGrid.getSelectedSlot();
 
+                if (!cabeza){
+                    self.mensaje.show("Debes elegir una cabeza");
+                }
+
                 if (!(nombre && password && password2 && raza && genero && clase && cabeza && mail && ciudad)) {
                     self.mensaje.show("Debes completar todos los campos");
                     return;
@@ -118,10 +122,6 @@ define(['enums', 'ui/game/itemgrid'], function (Enums, ItemGrid) {
                 if (!( password === password2)) {
                     self.mensaje.show("Los passwords ingresados no coinciden");
                     return;
-                }
-
-                if (!cabeza){
-                    self.mensaje.show("Debes elegir una cabeza");
                 }
 
                 cb(nombre, password, raza, genero, clase, cabeza, mail, ciudad);

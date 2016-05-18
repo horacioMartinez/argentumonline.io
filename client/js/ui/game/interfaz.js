@@ -5,13 +5,13 @@
 define(['ui/game/itemgrid'], function (ItemGrid) {
 
     var Interfaz = Class.extend({
-        init: function (game,macros, acciones) {
+        init: function (game, macros, acciones) {
             this.acciones = acciones;
             this.macros = macros;
             this.game = game;
-            this.inventarioGrid = new ItemGrid("itemsGrid",true);
+            this.inventarioGrid = new ItemGrid("itemsGrid", true);
             var self = this;
-            this.inventarioGrid.setDobleClickCallback(function(slot){
+            this.inventarioGrid.setDobleClickCallback(function (slot) {
                 self.acciones.usarConDobleClick(slot);
             });
         },
@@ -35,37 +35,42 @@ define(['ui/game/itemgrid'], function (ItemGrid) {
                 self.acciones.requestInfoHechizo();
             });
 
-            $("#botonTirarOro").click(function() {
-               self.game.gameUI.showTirar(true);
+            $("#botonTirarOro").click(function () {
+                self.game.gameUI.showTirar(true);
             });
 
-            $("#botonAsignarSkills").click(function(){
-               self.game.gameUI.showSkills();
+            $("#botonAsignarSkills").click(function () {
+                self.game.gameUI.showSkills();
             });
 
-            $("#botonSeguroResucitar").dblclick(function() {
+            $("#botonSeguroResucitar").dblclick(function () {
                 self.game.toggleSeguroResucitar();
             });
 
-            $("#botonSeguroAtacar").dblclick(function() {
+            $("#botonSeguroAtacar").dblclick(function () {
                 self.game.toggleSeguroAtacar();
             });
 
-            $("#botonMacroHechizos").click(function() {
+            $("#botonMacroHechizos").click(function () {
                 self.macros.comenzarLanzarHechizo();
             });
 
-            $("#botonMacroTrabajo").click(function() {
+            $("#botonMacroTrabajo").click(function () {
                 self.macros.comenzarTrabajar();
             });
 
-            $("#botonMapa").click(function(){
-               self.game.gameUI.showMapa();
+            $("#botonMapa").click(function () {
+                self.game.gameUI.showMapa();
             });
 
-            $("#botonOpciones").click(function(){
+            $("#botonOpciones").click(function () {
                 self.game.gameUI.showOpciones();
             });
+
+            //FIX bug firefox que no previene movimiento scroll hehcizos
+            if (Detect.isFirefox()) {
+                self.setHechizosScrollFirefoxFix();
+            }
         },
 
         cambiarSlotInventario: function (numSlot, Amount, numGrafico, equiped) {
@@ -76,8 +81,8 @@ define(['ui/game/itemgrid'], function (ItemGrid) {
             this.inventarioGrid.borrarSlot(slot);
         },
 
-        resetSelectedSlotInventario: function(){
-          this.inventarioGrid.resetSelectedSlot();
+        resetSelectedSlotInventario: function () {
+            this.inventarioGrid.resetSelectedSlot();
         },
 
         getSelectedSlotInventario: function () {
@@ -98,7 +103,8 @@ define(['ui/game/itemgrid'], function (ItemGrid) {
         modificarSlotHechizo: function (slot, texto) {
             var elemento = $('#hechizos option[value=' + slot + ']');
             if (!elemento.length) { // nuevo elemento
-                $('#hechizos').append($("<option>").attr('value', slot).text(texto));
+                var $nuevoHechizo = $("<option>").attr('value', slot).text(texto);
+                $('#hechizos').append($nuevoHechizo);
             }
             else {
                 $(elemento).text(texto);
@@ -121,7 +127,7 @@ define(['ui/game/itemgrid'], function (ItemGrid) {
             var porcentaje = 100;
             if (max) {
                 if (invertida)
-                    porcentaje = 100 -Math.floor((cant / max) * 100);
+                    porcentaje = 100 - Math.floor((cant / max) * 100);
                 else
                     porcentaje = Math.floor((cant / max) * 100);
             }
@@ -130,32 +136,32 @@ define(['ui/game/itemgrid'], function (ItemGrid) {
         },
 
         updateBarraEnergia: function (cant, max) {
-            this._updateBarra(cant, max, $("#barraEnergiaUsada"), $("#barraEnergiaTexto"),true);
+            this._updateBarra(cant, max, $("#barraEnergiaUsada"), $("#barraEnergiaTexto"), true);
         },
         updateBarraVida: function (cant, max) {
-            this._updateBarra(cant, max, $("#barraSaludUsada"), $("#barraSaludTexto"),true);
+            this._updateBarra(cant, max, $("#barraSaludUsada"), $("#barraSaludTexto"), true);
         },
         updateBarraMana: function (cant, max) {
-            this._updateBarra(cant, max, $("#barraManaUsada"), $("#barraManaTexto"),true);
+            this._updateBarra(cant, max, $("#barraManaUsada"), $("#barraManaTexto"), true);
         },
         updateBarraHambre: function (cant, max) {
-            this._updateBarra(cant, max, $("#barraHambreUsada"), $("#barraHambreTexto"),true);
+            this._updateBarra(cant, max, $("#barraHambreUsada"), $("#barraHambreTexto"), true);
         },
         updateBarraSed: function (cant, max) {
-            this._updateBarra(cant, max, $("#barraSedUsada"), $("#barraSedTexto"),true);
+            this._updateBarra(cant, max, $("#barraSedUsada"), $("#barraSedTexto"), true);
         },
-        updateBarraExp: function(cant,max){
+        updateBarraExp: function (cant, max) {
             this._updateBarra(cant, max, $("#barraExpUsada"), $("#barraExpTexto"));
         },
-        updateNivel: function(nivel){
-            $("#indicadorNivel").text("Nivel "+ nivel);
+        updateNivel: function (nivel) {
+            $("#indicadorNivel").text("Nivel " + nivel);
         },
 
-        updateIndicadorPosMapa: function(mapa, x,y){
-          $("#indicadorMapa").text("Mapa "+mapa+"  X: "+x + " Y: " +y);
+        updateIndicadorPosMapa: function (mapa, x, y) {
+            $("#indicadorMapa").text("Mapa " + mapa + "  X: " + x + " Y: " + y);
         },
 
-        setMouseCrosshair: function(visible){
+        setMouseCrosshair: function (visible) {
             if (visible) {
                 $("#gamecanvas").addClass("crosshair");
             }
@@ -163,19 +169,50 @@ define(['ui/game/itemgrid'], function (ItemGrid) {
                 $("#gamecanvas").removeClass("crosshair");
         },
 
-        setSeguroResucitacion: function(activado){
+        setSeguroResucitacion: function (activado) {
             if (!activado)
                 $("#botonSeguroResucitar").addClass("seguroOff");
             else
                 $("#botonSeguroResucitar").removeClass("seguroOff");
         },
 
-        setSeguroAtacar: function(activado){
+        setSeguroAtacar: function (activado) {
             if (!activado)
                 $("#botonSeguroAtacar").addClass("seguroOff");
             else
                 $("#botonSeguroAtacar").removeClass("seguroOff");
         },
+
+        setHechizosScrollFirefoxFix: function (self) {
+            var $hechizos = $("#hechizos");
+
+            $hechizos.click(function () {
+                //self.hechizos_realSelectedSlot = $hechizos.val();
+                $hechizos.blur();
+            });
+
+            //var up = CharCodeMap.keys.indexOf("UP");
+            //var down = CharCodeMap.keys.indexOf("DOWN");
+            //var left = CharCodeMap.keys.indexOf("LEFT");
+            //var right = CharCodeMap.keys.indexOf("RIGHT");
+            //
+            //$hechizos.keydown(function (e) {
+            //    var key = e.which;
+            //    switch (key) {
+            //        case up:
+            //        case down:
+            //        case left:
+            //        case right:
+            //            $hechizos.blur();
+            //            setTimeout(function () {
+            //                $hechizos.val(self.hechizos_realSelectedSlot);
+            //            });
+            //            log.error($hechizos.val());
+            //            break;
+            //    }
+            //});
+
+        }
 
     });
 
