@@ -79,15 +79,13 @@ define(['jquery-ui'], function () {
                     self._selectionCallback(self._selectedSlot);
             });
 
-            var listItems = this.$this.children();
-            listItems.dblclick(function () {
-                if (self._doubleClickCallback) {
+            if (self._doubleClickCallback) {
+                $item.dblclick(function () {
                     self._doubleClickCallback(self._selectedSlot)
-                }
-            });
+                });
+            }
             return $item;
         },
-
 
         borrarSlot: function (numSlot) {
             $item = this._getItem(numSlot);
@@ -95,7 +93,7 @@ define(['jquery-ui'], function () {
                 $item.remove();
         },
 
-        clear: function(){
+        clear: function () {
             this.$this.empty();
         },
     });

@@ -36,7 +36,7 @@ define(['enums', 'font', 'network/protocol', 'network/bytequeue', 'lib/websock']
                         self.protocolo.ServerPacketDecodeAndDispatch(self.byteQueue, self);
                     }
                 } catch (e) {
-                    alert(e.name + ': ' + e.message);
+                    alert(' Protocolo- ' + e.name + ': ' + e.message + " - " + new Error().stack);
                 }
             });
             this.ws.on('close', function () {

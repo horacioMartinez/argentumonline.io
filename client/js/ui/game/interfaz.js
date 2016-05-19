@@ -2,7 +2,7 @@
  * Created by horacio on 2/28/16.
  */
 
-define(['ui/game/itemgrid'], function (ItemGrid) {
+define(['utils/charcodemap','ui/game/itemgrid'], function (CharCodeMap,ItemGrid) {
 
     var Interfaz = Class.extend({
         init: function (game, macros, acciones) {
@@ -69,7 +69,7 @@ define(['ui/game/itemgrid'], function (ItemGrid) {
 
             //FIX bug firefox que no previene movimiento scroll hehcizos
             if (Detect.isFirefox()) {
-                self.setHechizosScrollFirefoxFix();
+                self.setHechizosScrollFirefoxFix(self);
             }
         },
 
@@ -185,17 +185,24 @@ define(['ui/game/itemgrid'], function (ItemGrid) {
 
         setHechizosScrollFirefoxFix: function (self) {
             var $hechizos = $("#hechizos");
+            self.hechizos_realSelectedSlot = 1;
 
             $hechizos.click(function () {
-                //self.hechizos_realSelectedSlot = $hechizos.val();
+                self.hechizos_realSelectedSlot = $hechizos.val();
                 $hechizos.blur();
             });
 
-            //var up = CharCodeMap.keys.indexOf("UP");
-            //var down = CharCodeMap.keys.indexOf("DOWN");
-            //var left = CharCodeMap.keys.indexOf("LEFT");
-            //var right = CharCodeMap.keys.indexOf("RIGHT");
-            //
+            var up = CharCodeMap.keys.indexOf("UP");
+            var down = CharCodeMap.keys.indexOf("DOWN");
+            var left = CharCodeMap.keys.indexOf("LEFT");
+            var right = CharCodeMap.keys.indexOf("RIGHT");
+
+            $hechizos.change(function(){
+                $hechizos.blur();
+                //setTimeout(function () {
+                //    $hechizos.val(self.hechizos_realSelectedSlot);
+                //},50);
+            });
             //$hechizos.keydown(function (e) {
             //    var key = e.which;
             //    switch (key) {
@@ -207,7 +214,6 @@ define(['ui/game/itemgrid'], function (ItemGrid) {
             //            setTimeout(function () {
             //                $hechizos.val(self.hechizos_realSelectedSlot);
             //            });
-            //            log.error($hechizos.val());
             //            break;
             //    }
             //});
