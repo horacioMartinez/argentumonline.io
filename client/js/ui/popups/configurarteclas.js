@@ -3,11 +3,11 @@
  */
 
 
-define(['utils/charcodemap', 'ui/popups/popup'], function (CharCodeMap, PopUp) {
+define(["text!../../../menus/configurarTeclas.html!strip",'utils/charcodemap', 'ui/popups/popup'], function (DOMdata, CharCodeMap, PopUp) {
 
     var ConfigurarTeclas = PopUp.extend({
         init: function (storage, updateKeysCb, showMensajeCb) {
-            this._super("configurarTeclas");
+            this._super(DOMdata);
             this.storage = storage;
             this.initCallbacks();
             this.nuevasKeys = null;

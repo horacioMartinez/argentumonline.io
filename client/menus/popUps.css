@@ -1,9 +1,10 @@
+@import 'comerciar.css';
 
 /* Reglas generales de popUps*/
 .popUp {z-index:1000;}
 .popUp article {display:none; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.5);}
 .popUp article {font-size:12px;text-align:center; position:absolute;}
-.popUp article input {border:none; outline:none; background: none; color: white; font: 1em;}
+.popUp article input {border:none; outline:none; background: none; color: white; font-size: 1em;}
 .popUp article ul {cursor:default;}
 .popUp article span {color:white;display: inline-block; user-select: none; cursor: default;}
 .popUp article input,article button,article ul,article span {position:absolute;}
@@ -24,25 +25,6 @@
 #inGameMensaje {width:266px;height:213px; background:url('../imagenes/popups/mensaje.jpg');z-index:99999;}
 #inGameMensajeContenido {text-align:left;top:37px;left:15px;width:230px;height:130px;font-size:16px;overflow:auto;}
 #inGameMensajeBotonCerrar {top:177px;left:80px; width:100px; height:30px;}
-
-/* comerciar */
-#comerciar {width:462px;height:486px;}
-#comerciar {background-size: auto; background:url('../imagenes/popups/comerciar.jpg');}
-
-#comerciarGridComprar {left:41px; top: 133px;}
-#comerciarGridVender {left:263px; top: 133px;}
-
-#comerciarBotonComprar {left:37px;top:415px;}
-#comerciarBotonVender {left:260px;top:415px;}
-#comerciarBotonCerrar {left:407px;top:27px;}
-
-#comerciarInputCantidad {left:211px;top:438px; width:50px;font-size:14px;}
-
-#comerciarNombre {left:145px;top:47px;font-size:16px;}
-#comerciarPrecio {left:145px;top:70px;font-size:14px;}
-#comerciarMin {left:235px;top:70px;font-size:14px;}
-#comerciarMax {left:235px;top:88px;font-size:14px;}
-
 
 /* Tirar */
 #tirar {width:216px;height:100px; background:url('../imagenes/popups/tirar.jpg');}
@@ -92,7 +74,7 @@
 #configurarTecla_cerrar, #configurarTecla_deslagear {left:76%;}
 
 #configurarTecla_caminarNorte {top:7%;}
-#configurarTecla_caminarSur {top:11%;} 
+#configurarTecla_caminarSur {top:11%;}
 #configurarTecla_caminarOeste {top:16%;}
 #configurarTecla_caminarEste {top:21%;}
 #configurarTecla_agarrar {top:31%;}

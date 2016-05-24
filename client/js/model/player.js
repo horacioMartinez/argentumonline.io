@@ -11,9 +11,9 @@ define(['model/character'], function (Character) {
             this.moviendose = 0;
             this.moviendoseForzado = false;
             this.lastDirPressed = [];
-            this.caminarCallback = {};
-            this.puedeCaminarCallback = {};
-            this.cambioHeadingCallback = {};
+            this.caminarCallback = null;
+            this.puedeCaminarCallback = null;
+            this.cambioHeadingCallback = null;
             this.lastAttackedTarget = null;
 
             this.navegando = false;

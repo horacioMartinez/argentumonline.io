@@ -2,11 +2,11 @@
  * Created by horacio on 4/12/16.
  */
 
-define(['ui/popups/popup'], function (PopUp) {
+define(["text!../../../menus/mapa.html!strip", 'ui/popups/popup'], function (DOMdata, PopUp) {
 
     var GuiaMapa = PopUp.extend({
         init: function (game, acciones) {
-            this._super("popUpMapa");
+            this._super(DOMdata);
             this.initCallbacks();
         },
 

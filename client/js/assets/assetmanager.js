@@ -100,7 +100,6 @@ define(['json!../../indices/graficos.json',
              $.getJSON('simple.json')
              .success(function(data) {
              alert(data.simple);
-             log.error("HOLAAAAAAAAAAA " + data.simple);
              }).error(function(xhr) {
              alert("Se produjo algun error cargando la página, probá recargandola");
              });*/

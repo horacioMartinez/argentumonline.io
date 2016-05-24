@@ -2,11 +2,11 @@
  * Created by horacio on 4/19/16.
  */
 
-define(['ui/popups/popup'], function (PopUp) {
+define(["text!../../../menus/inGameMensaje.html!strip",'ui/popups/popup'], function (DOMdata,PopUp) {
 
     var InGameMensaje = PopUp.extend({
         init: function () {
-            this._super("inGameMensaje");
+            this._super(DOMdata);
             this.initCallbacks();
         },
 

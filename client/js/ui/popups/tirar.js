@@ -2,11 +2,11 @@
  * Created by horacio on 3/21/16.
  */
 
-define(['ui/popups/popup'], function (PopUp) {
+define(["text!../../../menus/tirar.html!strip",'ui/popups/popup','ui/popups/popup'], function (DOMdata,PopUp) {
 
     var Tirar = PopUp.extend({
         init: function (game,acciones) {
-            this._super("tirar");
+            this._super(DOMdata);
 
             this.game = game;
             this.acciones = acciones;

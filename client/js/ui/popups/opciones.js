@@ -2,11 +2,11 @@
  * Created by horacio on 5/2/16.
  */
 
-define(['ui/popups/popup'], function (PopUp) {
+define(["text!../../../menus/opciones.html!strip",'ui/popups/popup'], function (DOMdata,PopUp) {
 
     var Opciones = PopUp.extend({
         init: function (game, storage, configurarTeclas) {
-            this._super("popUpOpciones");
+            this._super(DOMdata);
             this.game = game;
             this.storage = storage;
             this.configurarTeclasPopUp = configurarTeclas;

@@ -2,11 +2,14 @@
  * Created by horacio on 2/22/16.
  */
 
-define(['ui/popups/popup', 'ui/game/itemgrid', 'jquery-ui'], function (PopUp, ItemGrid) {
+define(["text!../../../menus/comerciar.html!strip",'ui/popups/popup', 'ui/game/itemgrid', 'jquery-ui'], function (DOMdata,PopUp, ItemGrid) {
 
     var Comerciar = PopUp.extend({
         init: function (game, acciones) {
-            this._super("comerciar");
+
+
+            this._super(DOMdata);
+
             this.game = game;
             this.acciones = acciones;
 

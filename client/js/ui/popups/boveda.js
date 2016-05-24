@@ -2,11 +2,11 @@
  * Created by horacio on 3/24/16.
  */
 
-define(['ui/popups/popup','ui/game/itemgrid'], function (PopUp,ItemGrid) {
+define(["text!../../../menus/boveda.html!strip",'ui/popups/popup','ui/game/itemgrid'], function (DOMdata,PopUp,ItemGrid) {
 
     var Boveda = PopUp.extend({
         init: function (game,acciones) {
-            this._super("boveda");
+            this._super(DOMdata);
             this.game = game;
             this.acciones = acciones;
 

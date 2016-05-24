@@ -2,25 +2,25 @@ define(function () {
     var ByteQueue = Class.extend({
         init: function (ws) {
             this.ws = ws;
-            this.data = [];
+            this._data = [];
         },
 
         WriteByte: function (value) {
-            this.data.push(value);
+            this._data.push(value);
         },
 
         // todos little endian:
         WriteInteger: function (value) { // 2B
 
-            this.data.push(value & 0xff);
-            this.data.push((value >> 8) & 0xff);
+            this._data.push(value & 0xff);
+            this._data.push((value >> 8) & 0xff);
         },
 
         WriteLong: function (value) { // 4B
-            this.data.push(value & 0xff);
-            this.data.push((value >> 8) & 0xff);
-            this.data.push((value >> 16) & 0xff);
-            this.data.push((value >> 24) & 0xff);
+            this._data.push(value & 0xff);
+            this._data.push((value >> 8) & 0xff);
+            this._data.push((value >> 16) & 0xff);
+            this._data.push((value >> 24) & 0xff);
         },
 
         WriteSingle: function (value) { // 4B
@@ -29,8 +29,9 @@ define(function () {
             var floatArray = new Float32Array(buffer);
             floatArray[0] = value;
             var byteArray = new Uint8Array(buffer);
-            for (var i = 0; i < byteArray.length; i++)
-                this.data.push(byteArray[i]);
+            for (var i = 0; i < byteArray.length; i++) {
+                this._data.push(byteArray[i]);
+            }
         },
 
         WriteDouble: function (value) { //8B
@@ -39,19 +40,20 @@ define(function () {
             var floatArray = new Float64Array(buffer);
             floatArray[0] = value;
             var byteArray = new Uint8Array(buffer);
-            for (var i = 0; i < byteArray.length; i++)
-                this.data.push(byteArray[i]);
+            for (var i = 0; i < byteArray.length; i++) {
+                this._data.push(byteArray[i]);
+            }
         },
 
         WriteBoolean: function (value) {
             if (value)
-                this.data.push(1);
+                this._data.push(1);
             else
-                this.data.push(0);
+                this._data.push(0);
         },
 
         WriteUnicodeStringFixed: function (string) {
-            this.data = this.data.concat(
+            this._data = this._data.concat(
                 string.split('').map(
                     function (chr) {
                         return chr.charCodeAt(0);
@@ -121,8 +123,8 @@ define(function () {
         },
 
         flush: function () {
-            this.ws.send(this.data);
-            this.data = [];
+            this.ws.send(this._data);
+            this._data = [];
         }
     });
 

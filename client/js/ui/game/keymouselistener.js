@@ -183,7 +183,6 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
              // DEBUG:
 
              $(window).bind('mousewheel DOMMouseScroll', function (event) {
-             log.error("HOLA");
              var escala;
              if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
              //scroll up

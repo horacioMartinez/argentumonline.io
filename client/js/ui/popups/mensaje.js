@@ -2,11 +2,11 @@
  * Created by horacio on 4/3/16.
  */
 
-define(['ui/popups/popup'], function (PopUp) {
+define(["text!../../../menus/mensajeGlobal.html!strip",'ui/popups/popup'], function (DOMdata,PopUp) {
 
     var Mensaje = PopUp.extend({
         init: function () {
-            this._super("mensajeGlobal",true);
+            this._super(DOMdata,true);
             this.initCallbacks();
         },
 

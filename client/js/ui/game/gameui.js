@@ -92,10 +92,6 @@ define(['enums','ui/game/keymouselistener', 'ui/popups/skills', 'ui/popups/comer
             this.guiaMapa.show();
         },
 
-        showOpciones: function () {
-            this.opciones.show();
-        },
-
         updateSlotUser: function (numSlot, slot) { //todo: feo todo esto!
             if (slot) {
                 var numGrafico = this.game.assetManager.getNumGraficoFromGrh(slot.grh);

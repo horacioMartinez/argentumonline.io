@@ -1,0 +1,17 @@
+/* comerciar */
+#comerciar {width:462px;height:486px;}
+#comerciar {background-size: auto; background:url('../imagenes/popups/comerciar.jpg');}
+
+#comerciarGridComprar {left:41px; top: 133px;}
+#comerciarGridVender {left:263px; top: 133px;}
+
+#comerciarBotonComprar {left:37px;top:415px;}
+#comerciarBotonVender {left:260px;top:415px;}
+#comerciarBotonCerrar {left:407px;top:27px;}
+
+#comerciarInputCantidad {position:absolute; left:211px;top:438px; width:50px;font-size:14px;}
+
+#comerciarNombre {left:145px;top:47px;font-size:16px;}
+#comerciarPrecio {left:145px;top:70px;font-size:14px;}
+#comerciarMin {left:235px;top:70px;font-size:14px;}
+#comerciarMax {left:235px;top:88px;font-size:14px;}

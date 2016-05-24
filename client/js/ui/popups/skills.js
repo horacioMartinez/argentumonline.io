@@ -2,11 +2,12 @@
  * Created by horacio on 4/20/16.
  */
 
-define(['ui/popups/popup'], function (PopUp) {
+define(["text!../../../menus/skills.html!strip",'ui/popups/popup'], function (DOMdata,PopUp) {
 
     var Skills = PopUp.extend({
         init: function (game) {
-            this._super("popUpSkills");
+
+            this._super(DOMdata);
             this.game = game;
             this.initCallbacks();
             this.skills = null;
@@ -22,6 +23,7 @@ define(['ui/popups/popup'], function (PopUp) {
         initCallbacks: function () {
             var self = this;
             $("#skillsBotonCerrar").click(function () {
+                log.error("HOLAAAAAAAAAAAAAAAAA");
                 self.hide();
             });
 
