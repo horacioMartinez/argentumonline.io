@@ -1,0 +1,24 @@
+#boveda {display:flex;flex-direction: column; min-width:310px; min-height: 350px;}
+
+#bovedaGridComprar {flex:1; margin-right:10px;}
+#bovedaGridVender {flex:1;}
+
+#bovedaBotonRetirarOro {float:left;width:50px;height:50px;transform:scaleX(-1);background-image:url('../imagenes/oro_bolsa.svg');}
+#bovedaBotonRetirarOro:hover {background-image:url('../imagenes/oro_bolsa_hover.svg');}
+
+#bovedaBotonDepositarOro {float:right;width:50px; height:50px;background-image:url('../imagenes/oro_bolsa.svg');}
+#bovedaBotonDepositarOro:hover {background-image:url('../imagenes/oro_bolsa_hover.svg');}
+
+#bovedaBotonRetirarItem {width:40%;float:left;margin:auto;}
+#bovedaBotonDepositarItem {width:40%;float:right;margin:auto;}
+
+#bovedaOroDisponibleLabel {font-size:16px;margin-right: 5px;}
+#bovedaOroDisponibleVal {font-size:16px;}
+#bovedaInputCantidadItem {font-size:14px;}
+
+#bovedaOroDisponible {display:block;font-size:16px;}
+
+#bovedaMaxLabel{float:right; margin:auto 5px;}
+#bovedaMaxVal{float:right;}
+
+#bovedaMinLabel {margin-right:5px;}

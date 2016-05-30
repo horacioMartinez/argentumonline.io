@@ -2,16 +2,16 @@
  * Created by horacio on 3/24/16.
  */
 
-define(["text!../../../menus/boveda.html!strip",'ui/popups/popup','ui/game/itemgrid'], function (DOMdata,PopUp,ItemGrid) {
+define(["text!../../../menus/boveda.html!strip", 'ui/popups/popup', 'ui/game/itemgrid'], function (DOMdata, PopUp, ItemGrid) {
 
     var Boveda = PopUp.extend({
-        init: function (game,acciones) {
+        init: function (game, acciones) {
             this._super(DOMdata);
             this.game = game;
             this.acciones = acciones;
 
-            this.shopGrid = new ItemGrid("bovedaGridComprar",true);
-            this.userGrid = new ItemGrid("bovedaGridVender",true);
+            this.shopGrid = new ItemGrid("bovedaGridComprar", true);
+            this.userGrid = new ItemGrid("bovedaGridVender", true);
             this.initCallbacks();
         },
 
@@ -45,7 +45,8 @@ define(["text!../../../menus/boveda.html!strip",'ui/popups/popup','ui/game/itemg
         },
 
         setOroDisponible: function (oro) {
-            $("#bovedaOroDisponible").text(oro);
+            $("#bovedaOroDisponibleLabel").text("ORO DISPONIBLE");
+            $("#bovedaOroDisponibleVal").text(oro);
         },
 
         initCallbacks: function () {
@@ -97,48 +98,49 @@ define(["text!../../../menus/boveda.html!strip",'ui/popups/popup','ui/game/itemg
             this.shopGrid.setSelectionCallback(
                 function (slot) {
                     var item = self.game.inventarioShop.getSlot(slot);
-                    $('#bovedaNombre').text(item.objName);
-                    if (item.minDef)
-                        $('#bovedaMin').text("Mín Defensa: " + item.minDef);
-                    else {
-                        if (item.minHit)
-                            $('#bovedaMin').text("Mín Golpe: " + item.minHit);
-                        else
-                            $('#bovedaMin').text("");
-                    }
-                    if (item.maxDef)
-                        $('#bovedaMax').text("Máx Defensa: " + item.maxDef);
-                    else {
-                        if (item.maxHit)
-                            $('#bovedaMax').text("Máx Golpe: " + item.maxHit);
-                        else
-                            $('#bovedaMax').text("");
-                    }
+                    self.displayItemData(item);
                 });
 
             this.userGrid.setSelectionCallback(
                 function (slot) {
                     var item = self.game.inventario.getSlot(slot);
-                    $('#bovedaNombre').text(item.objName);
-                    if (item.minDef)
-                        $('#bovedaMin').text("Mín Defensa: " + item.minDef);
-                    else {
-                        if (item.minHit)
-                            $('#bovedaMin').text("Mín Golpe: " + item.minHit);
-                        else
-                            $('#bovedaMin').text("");
-                    }
-
-                    if (item.maxDef)
-                        $('#bovedaMax').text("Máx Defensa: " + item.maxDef);
-                    else {
-                        if (item.maxHit)
-                            $('#bovedaMax').text("Máx Golpe: " + item.maxHit);
-                        else
-                            $('#bovedaMax').text("");
-                    }
+                    self.displayItemData(item);
                 });
         },
+
+        displayItemData: function (item) {
+            var minLabel = "";
+            var maxLabel = "";
+
+            if (item.minDef)
+                minLabel = "MIN DEFENSA";
+            if (item.minHit)
+                minLabel = "MIN GOLPE";
+
+            if (item.maxDef)
+                maxLabel = "MAX DEFENSA";
+            if (item.maxHit)
+                maxLabel = "MAX GOLPE";
+
+            var minVal = item.minDef || item.minHit;
+            var maxVal = item.maxDef || item.maxHit;
+
+            this.completarLabels(item.objName.toUpperCase(), minLabel, minVal, maxLabel, maxVal);
+        },
+
+        completarLabels: function (nombreVal, minLabel, minVal, maxLabel, maxVal) {
+            if (!minLabel)
+                minVal = "";
+            if (!maxLabel)
+                maxVal = "";
+
+            $('#bovedaNombreLabel').text("NOMBRE");
+            $('#bovedaNombreVal').text(nombreVal);
+            $('#bovedaMinLabel').text(minLabel);
+            $('#bovedaMinVal').text(minVal);
+            $('#bovedaMaxLabel').text(maxLabel);
+            $('#bovedaMaxVal').text(maxVal);
+        }
     });
 
     return Boveda;

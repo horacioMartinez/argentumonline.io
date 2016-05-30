@@ -1,0 +1,30 @@
+/* Typography*/
+@font-face {
+    font-family: 'Asul';
+    src: url(../fonts/asul-regular.ttf)
+}
+/* Estos settings globales son pisadas por el reset en main.css, acordarse de sacar el default de ahi!*/
+* { font-size: 2vh;
+    font-family: 'Asul', serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+.horizontal_center {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+}
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE/Edge */
+    user-select: none; /* non-prefixed version, currently
+  not supported by any browser */
+}
+/* Grid DE ITEMS para compra/venta por ej */
+
+.itemgrid { list-style-type: none; margin: 0; padding: 0; width: 160px; }
+.itemgrid li { background-size: 100% 100%; float: left; width: 32px; color: white; height: 32px; font-size: 2vh; text-align: left; vertical-align: text-top; outline: 2px solid transparent; cursor: default }
+.itemgrid li.equiped { outline-color: #FFD700; outline-style: dashed; outline-width: 1px; }
+.itemgrid li.selected { outline-color: limegreen; outline-style: dashed; outline-width: 2px; }

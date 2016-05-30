@@ -1,38 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="../css/reset.css" type="text/css">
-    <link rel="stylesheet" href="../css/jquery-ui.css" type="text/css">
-    <link rel="stylesheet" href="../css/jquery-ui.structure.css" type="text/css">
-    <link rel="stylesheet" href="../css/jquery-ui.theme.css" type="text/css">
     <link rel="stylesheet" href="../css/main.css" type="text/css">
-    <link rel="stylesheet" href="../css/common.css" type="text/css">
-    <link rel="stylesheet" href="../css/login.css" type="text/css">
-    <link rel="stylesheet" href="../css/crearPj.css" type="text/css">
-    <link rel="stylesheet" href="popUps.css" type="text/css">
-    <link rel="stylesheet" href="../css/interfaz.css" type="text/css">
 </head>
+
+<style>
+    body { background: green;}
+</style>
+
 <body>
 
+<article id="boveda" class="popUp">
 
-<article id="boveda">
-
-    <button id="bovedaBotonRetirarOro" class="botonInvisible"></button>
-    <button id="bovedaBotonDepositarOro" class="botonInvisible"></button>
-    <button id="bovedaBotonRetirarItem" class="botonInvisible"></button>
-    <button id="bovedaBotonDepositarItem" class="botonInvisible"></button>
     <button id="bovedaBotonCerrar" class="botonCerrar"></button>
 
-    <ul id="bovedaGridComprar" class="itemgrid"></ul>
-    <ul id="bovedaGridVender" class="itemgrid"></ul>
+    <div style="text-align: center;">
+        <button id="bovedaBotonRetirarOro" class="botonImagen"></button>
+        <div style ="display:inline-block;text-align: center;">
+            <div style="margin-bottom:5px;">
+                <span id="bovedaOroDisponibleLabel" class="everywhereFont secondaryColor">ORO DISPONIBLE</span>
+                <span id="bovedaOroDisponibleVal" class="everywhereBoldFont activeColor">834</span>
+            </div>
+            <input id="bovedaInputCantidadOro" type="number" value="1">
+        </div>
+        <button id="bovedaBotonDepositarOro" class="botonImagen"></button>
+    </div>
 
-    <input id="bovedaInputCantidadOro" type="number" value="1">
-    <input id="bovedaInputCantidadItem" type="number" value="1">
+    <div style="text-align:center; margin: 5px 0;">
+        <span id="bovedaNombreLabel" class="everywhereFont secondaryColor">NOMBRE</span>
+        <span id="bovedaNombreVal" class="everywhereMediumFont activeColor">Pollo</span>
+    </div>
+    <div>
+        <span id="bovedaMinLabel" class="everywhereFont secondaryColor">MIN</span>
+        <span id="bovedaMinVal" class="everywhereBoldFont activeColor">1</span>
+        <span id="bovedaMaxVal" class="everywhereBoldFont activeColor">3</span>
+        <span id="bovedaMaxLabel" class="everywhereFont secondaryColor">MAX</span>
+    </div>
 
-    <span id="bovedaOroDisponible"></span>
-    <span id="bovedaNombre"></span>
-    <span id="bovedaMin"></span>
-    <span id="bovedaMax"></span>
+    <div style="margin:10px auto; width:100%; display:flex; flex:1;">
+        <ul id="bovedaGridComprar" class="itemgrid"></ul>
+        <ul id="bovedaGridVender" class="itemgrid"></ul>
+    </div>
+
+    <div style="text-align: center;">
+        <button id="bovedaBotonRetirarItem" class="botonNormal">RETIRAR</button>
+        <button id="bovedaBotonDepositarItem" class="botonNormal">DEPOSITAR</button>
+        <input id="bovedaInputCantidadItem" type="number" value="1">
+    </div>
+
 </article>
 
 </body>

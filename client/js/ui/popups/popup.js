@@ -21,12 +21,14 @@ define(['jquery-ui'], function () {
                 throw new Error("pop up inicializado dos veces: " + this.$this.attr('id'));
             }
 
+            this.$this.hide();
             this.$parent.append(this.$this);
             this.$centering_container = $("#container");
             this.$this.draggable({
                 cursor: "move",
                 /*containment: "parent"*/
             });
+            this.$this.resizable();
 
             this.visible = false;
         },

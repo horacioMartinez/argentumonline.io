@@ -1,0 +1,83 @@
+@font-face {
+    font-family: 'FuturaStd';
+    src: url('../fonts/FuturaStd-Condensed.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'FuturaStd';
+    src: url('../fonts/FuturaStd-CondensedBold.otf');
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'FuturaStd';
+    src: url('../fonts/FuturaStd-CondensedBoldObl.otf');
+    font-weight: bold;
+    font-style: oblique;
+}
+@font-face {
+    font-family: 'FuturaStd';
+    src: url('../fonts/FuturaStd-CondensedExtraBd.otf');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'FuturaStd';
+    src: url('../fonts/FuturaStd-CondensedLight.otf');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'FuturaStd';
+    src: url('../fonts/FuturaStd-CondensedLightObl.otf');
+    font-weight: 300;
+    font-style: oblique;
+}
+
+@font-face {
+    font-family: 'FuturaStd';
+    src: url('../fonts/FuturaStd-CondensedOblique.otf');
+    font-weight: normal;
+    font-style: oblique;
+}
+
+@font-face {
+    font-family: 'FuturaStd';
+    src: url('../fonts/FuturaStd-CondExtraBoldObl.otf');
+    font-weight: 900;
+    font-style: oblique;
+}
+
+.buttonFont {
+    font-family: 'FuturaStd',arial,serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.everywhereMediumFont{
+    font-family: 'FuturaStd',arial,serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.everywhereFont {
+    font-family: 'FuturaStd',arial,serif;
+    font-weight: 300;
+    font-style: normal;
+}
+.everywhereBoldFont {
+    font-family: 'FuturaStd',arial,serif;
+    font-weight: bold;
+    font-style: normal;
+}
+
+.activeColor {
+    color:#ffffff;
+}
+
+.secondaryColor {
+    color:#BBBDBF;
+}

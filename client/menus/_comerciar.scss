@@ -1,0 +1,15 @@
+#comerciar {display:flex;flex-direction: column; min-width:310px; min-height: 350px;}
+#comerciarGridComprar {flex:1; margin-right:10px;}
+#comerciarGridVender {flex: 1;}
+
+#comerciarPrecio {display:inline-block; float:right;margin:auto 5px;}
+#comerciarPrecioValor{display:inline-block; float:right;}
+
+#comerciarMax{float:right; margin:auto 5px;}
+#comerciarMaxValor{float:right;}
+
+#comerciarNombre {margin-right:5px;}
+#comerciarMin {margin-right:5px;}
+
+#comerciarBotonComprar {width:40%;float:left;margin:auto;}
+#comerciarBotonVender {width:40%;float:right;margin:auto;}

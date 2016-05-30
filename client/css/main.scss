@@ -1,0 +1,15 @@
+@import "vendor/reset";
+@import "vendor/jquery-ui";
+@import "vendor/jquery-ui.structure";
+@import "vendor/jquery-ui.theme";
+
+@import "variables";
+@import "fonts";
+@import "botones";
+
+@import "general";
+@import "common";
+@import "login";
+@import "crearPj";
+@import "interfaz";
+@import "../menus/popUps";

@@ -6,8 +6,6 @@ define(["text!../../../menus/comerciar.html!strip",'ui/popups/popup', 'ui/game/i
 
     var Comerciar = PopUp.extend({
         init: function (game, acciones) {
-
-
             this._super(DOMdata);
 
             this.game = game;
@@ -92,59 +90,56 @@ define(["text!../../../menus/comerciar.html!strip",'ui/popups/popup', 'ui/game/i
             this.shopGrid.setSelectionCallback(
                 function (slot) {
                     var item = self.game.inventarioShop.getSlot(slot);
-                    $('#comerciarNombre').text(item.objName);
-                    if (item.precio)
-                        $('#comerciarPrecio').text("Precio: " + item.precio);
-                    else
-                        $('#comerciarPrecio').text("");
-
-                    if (item.minDef)
-                        $('#comerciarMin').text("Mín Defensa: " + item.minDef);
-                    else {
-                        if (item.minHit)
-                            $('#comerciarMin').text("Mín Golpe: " + item.minHit);
-                        else
-                            $('#comerciarMin').text("");
-                    }
-                    if (item.maxDef)
-                        $('#comerciarMax').text("Máx Defensa: " + item.maxDef);
-                    else {
-                        if (item.maxHit)
-                            $('#comerciarMax').text("Máx Golpe: " + item.maxHit);
-                        else
-                            $('#comerciarMax').text("");
-                    }
+                    self.displayItemData(item);
                 });
 
             this.userGrid.setSelectionCallback(
                 function (slot) {
                     var item = self.game.inventario.getSlot(slot);
-                    $('#comerciarNombre').text(item.objName);
-
-                    if (item.precioVenta)
-                        $('#comerciarPrecio').text("Precio: " + item.precioVenta);
-                    else
-                        $('#comerciarPrecio').text("");
-
-                    if (item.minDef)
-                        $('#comerciarMin').text("Mín Defensa: " + item.minDef);
-                    else {
-                        if (item.minHit)
-                            $('#comerciarMin').text("Mín Golpe: " + item.minHit);
-                        else
-                            $('#comerciarMin').text("");
-                    }
-
-                    if (item.maxDef)
-                        $('#comerciarMax').text("Máx Defensa: " + item.maxDef);
-                    else {
-                        if (item.maxHit)
-                            $('#comerciarMax').text("Máx Golpe: " + item.maxHit);
-                        else
-                            $('#comerciarMax').text("");
-                    }
+                    self.displayItemData(item);
                 });
         },
+
+        clearDom: function(){
+            this._super();
+            $('#comerciarInputCantidad').val(1);
+        },
+
+        displayItemData: function(item){
+            var minLabel = "";
+            var maxLabel = "";
+
+            if (item.minDef)
+                minLabel = "MIN DEFENSA";
+            if (item.minHit)
+                minLabel = "MIN GOLPE";
+
+            if (item.maxDef)
+                maxLabel = "MAX DEFENSA";
+            if (item.maxHit)
+                maxLabel = "MAX GOLPE";
+
+            var minVal = item.minDef || item.minHit;
+            var maxVal = item.maxDef || item.maxHit;
+
+            this.completarLabels(item.objName.toUpperCase(),item.precio,minLabel,minVal,maxLabel,maxVal);
+        },
+
+        completarLabels: function(nombreVal, precioVal, minLabel, minVal, maxLabel, maxVal){
+            if (!minLabel)
+                minVal = "";
+            if (!maxLabel)
+                maxVal = "";
+
+            $('#comerciarPrecio').text("PRECIO");
+            $('#comerciarNombre').text("NOMBRE");
+            $('#comerciarPrecioValor').text(precioVal);
+            $('#comerciarNombreValor').text(nombreVal);
+            $('#comerciarMin').text(minLabel);
+            $('#comerciarMinValor').text(minVal);
+            $('#comerciarMax').text(maxLabel);
+            $('#comerciarMaxValor').text(maxVal);
+        }
     });
 
     return Comerciar;
