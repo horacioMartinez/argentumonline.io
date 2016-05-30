@@ -13,10 +13,16 @@ node "$TOPLEVELDIR/bin/r.js" -o "$PROJECTDIR/build.js"
 echo "Obfuscando..."
 python "$TOPLEVELDIR/bin/obfuscador.py" "$BUILDDIR/js"
 
+echo "Autoprefixer.."
+gulp autoprefixer
+
 echo "Comprimiendo..."
 {
 	find "$BUILDDIR" \( -name '*.css' -o -name '*.html' -o -name '*.xml' -o -name '*.json' -o -name '*.js' \) -exec gzip --verbose --keep --best --force {} \;
 } &>> "$BUILDDIR/build.txt"
+
+echo "Borrando scss y map"
+find "$BUILDDIR" \( -name "*.scss" -o -name '*.map' \) -type f -delete
 
 echo "Moving build.txt to current dir"
 mv "$BUILDDIR/build.txt" "$TOPLEVELDIR"
