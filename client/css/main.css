@@ -3457,7 +3457,7 @@ body {
 
 #chatbox {
   background-image: url("../graficos/ui/chatbox.png");
-  /*tama├▒o img conteindo en barra:*/
+  /*tamaño img conteindo en barra:*/
   -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../graficos/ui/chatbox.png', sizingMethod='scale')";
   -webkit-background-size: 100% 100%;
   /* Safari 3.0 */
@@ -3468,7 +3468,7 @@ body {
   background-size: 100% 100%;
   /* Gecko 2.0 (Firefox 4.0) and other CSS3-compliant browsers */
   background-size: contain;
-  /*fin tama├▒o img*/
+  /*fin tamaño img*/
   z-index: -1;
   -moz-transition: 0.2s top ease;
   -webkit-transition: 0.2s top ease;
@@ -3479,7 +3479,7 @@ body {
 #chatinput {
   color: #eee; }
 
-/* Tama├▒o contenedor (width seteado en js) */
+/* Tamaño contenedor (width seteado en js) */
 @media screen and (min-aspect-ratio: 7 / 5) and (max-aspect-ratio: 8 / 5) {
   #container {
     height: 85%; } }
@@ -3616,6 +3616,15 @@ not supported by any browser */ }
   outline-color: limegreen;
   outline-style: dashed;
   outline-width: 2px; }
+
+.divImagen {
+  width: auto;
+  height: auto;
+  background: Transparent;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: none;
+  outline: none; }
 
 #logo {
   margin-top: 10vh;
@@ -4298,8 +4307,7 @@ not supported by any browser */ }
 
 #configurarTeclas {
   width: 548px;
-  height: 500px;
-  background: url("../imagenes/popups/configurarTeclas.jpg"); }
+  height: 500px; }
 
 #configurarTeclasBotonCerrar {
   left: 507px;
@@ -4382,6 +4390,10 @@ not supported by any browser */ }
   width: 100%; }
 
 #popUpMapa {
+  min-width: 573px;
+  min-height: 528px; }
+
+#imagenMapa {
   width: 573px;
   height: 528px;
   background: url("../imagenes/popups/mapa1.jpg"); }
@@ -4397,7 +4409,7 @@ not supported by any browser */ }
   width: 10%;
   height: 5.2%; }
 
-#popUpMapa.mapaSeccionB {
+#popUpMapa.mapaSeccionB #imagenMapa {
   background: url("../imagenes/popups/mapa2.jpg"); }
 
 #popUpMapa.mapaSeccionB #mapaBotonToggle {
@@ -4410,8 +4422,7 @@ not supported by any browser */ }
 #popUpOpciones {
   position: absolute;
   width: 322px;
-  height: 480px;
-  background: url("../imagenes/popups/opciones.jpg"); }
+  height: 480px; }
 
 #sliderMusica {
   position: absolute;
@@ -4448,20 +4459,20 @@ not supported by any browser */ }
 #popUpSkillsContenedorPuntosLibres {
   margin: 10px;
   color: white;
+  text-align: center;
   /*DEBUG:*/
   outline: dashed 2px green;
   background-color: black; }
 
 #popUpSkills {
-  width: 600px;
-  height: 450px;
-  background: url("../imagenes/popups/skills.jpg"); }
+  min-width: 600px;
+  min-height: 450px; }
 
 #popUpSkillsContenedorSkills {
   margin: 10px;
+  text-align: center;
   /*DEBUG:*/
-  outline: dashed 2px green;
-  background-color: black; }
+  outline: dashed 2px green; }
 
 #popUpSkillsContenedorSkills span {
   position: relative;
@@ -4514,8 +4525,7 @@ not supported by any browser */ }
 
 #tirar {
   width: 216px;
-  height: 100px;
-  background: url("../imagenes/popups/tirar.jpg"); }
+  height: 100px; }
 
 #tirarInputCantidad {
   left: 30px;

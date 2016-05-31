@@ -5,7 +5,6 @@
     mainConfigFile: 'home.js',
     removeCombined: true,
     fileExclusionRegExp: /^(build)\.js$/,
-
     modules: [
         {
             name: "main",
@@ -16,10 +15,5 @@
             exclude: ["main", "lib/lodash", "lib/stacktrace", "lib/class"]
         }
     ],
-    uglify2: {
-        compress: {
-            pure_funcs: ['console.log', 'log.error']
-        }
-    }
-
+    optimize: "none",
 })

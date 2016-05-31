@@ -1,5 +1,5 @@
-define(['enums','font','lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'view/charactertext', 'view/spritegrh', 'view/containerordenado'],
-    function (Enums,Font, PIXI, Camera, CharacterSprites, Consola, CharacterText, SpriteGrh, ContainerOrdenado) {
+define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'view/charactertext', 'view/spritegrh', 'view/containerordenado'],
+    function (Enums, Font, PIXI, Camera, CharacterSprites, Consola, CharacterText, SpriteGrh, ContainerOrdenado) {
 
         var Renderer = Class.extend({
             init: function (assetManager, escala) {
@@ -310,7 +310,7 @@ define(['enums','font','lib/pixi', 'view/camera', 'view/charactersprites', 'view
 
                 switch (dir) {
                     case Enums.Heading.norte:
-                        var j = (this._lowestRowTerreno === 0) ? rows - 1 : this._lowestRowTerreno - 1;
+                        var j = modulo(this._lowestRowTerreno - 1, rows);
                         for (var i = 0; i < this.terreno.length; i++) {
                             this.terreno[i][j].setPosition(this.terreno[i][j].x, this.terreno[i][j].y - (rows * this.tilesize));
                             var grh = this.mapa.getGrh1(gridXIni + modulo(i - this._lowestColTerreno, cols), gridYIni - 1);
@@ -322,7 +322,7 @@ define(['enums','font','lib/pixi', 'view/camera', 'view/charactersprites', 'view
                         break;
 
                     case Enums.Heading.oeste:
-                        var i = (this._lowestColTerreno === 0) ? cols - 1 : this._lowestColTerreno - 1;
+                        var i = modulo(this._lowestColTerreno - 1, cols);
                         for (var j = 0; j < this.terreno[i].length; j++) {
                             this.terreno[i][j].setPosition(this.terreno[i][j].x - (cols * this.tilesize), this.terreno[i][j].y);
                             var grh = this.mapa.getGrh1(gridXIni - 1, gridYIni + modulo(j - this._lowestRowTerreno, rows));
@@ -360,8 +360,8 @@ define(['enums','font','lib/pixi', 'view/camera', 'view/charactersprites', 'view
                 }
             },
             _removeChilds: function (padre, gridHijos) {
-                _.each(gridHijos, function(fila){
-                    _.each(fila, function(hijo){
+                _.each(gridHijos, function (fila) {
+                    _.each(fila, function (hijo) {
                         if (hijo)
                             padre.removeChild(hijo);
                     });

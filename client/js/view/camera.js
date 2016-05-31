@@ -1,7 +1,7 @@
 define(['enums'], function (Enums) {
 
-    var Camera = Class.extend({
-        init: function (tilesize) {
+    class Camera {
+        constructor(tilesize) {
             this.tilesize = tilesize;
             this.x = 0;
             this.y = 0;
@@ -13,9 +13,9 @@ define(['enums'], function (Enums) {
 
             this.gridW = 17;
             this.gridH = 13;
-        },
+        }
 
-        setPosition: function (x, y) {
+        setPosition(x, y){
             this.x = x;
             this.y = y;
 
@@ -24,26 +24,26 @@ define(['enums'], function (Enums) {
 
             this.centerPosX = this.x + (Math.floor(this.gridW / 2) * this.tilesize);
             this.centerPosY = this.y + (Math.floor(this.gridH / 2) * this.tilesize);
-        },
+        }
 
-        setGridPosition: function (gridX, gridY) {
+        setGridPosition(gridX, gridY){
             this.setPosition(gridX * this.tilesize, gridY * this.tilesize);
-        },
+        }
 
-        lookAtGridPos: function (gridX, gridY) {
+        lookAtGridPos(gridX, gridY) {
             this.setGridPosition(gridX - Math.floor(this.gridW / 2), gridY - Math.floor(this.gridH / 2));
-        },
+        }
 
-        mover: function (x, y) {
+        mover(x, y) {
             this.setPosition(this.x + x, this.y + y);
-        },
+        }
 
-        posFueraDeMapa: function (gridX, gridY) { //esto deberia estar en el mapa y blabhblahblah
+        posFueraDeMapa(gridX, gridY) { //esto deberia estar en el mapa y blabhblahblah
             if (((gridX > 100) || (gridX < 1)) || ((gridY > 100) || (gridY < 1)))
                 return true;
-        },
+        }
 
-        forEachVisiblePosition: function (callback, extraX, extraY) { // TODO: poner mas extra en el eje y?
+        forEachVisiblePosition(callback, extraX, extraY) { // TODO: poner mas extra en el eje y?
             extraX = extraX || 0;
             extraY = extraY || 0;
             var gridIniY = this.gridY;
@@ -63,9 +63,9 @@ define(['enums'], function (Enums) {
                     callback(gX, gridIniY);
                 }
             }
-        },
+        }
 
-        forEachVisibleNextLinea: function (direccion, callback, extraX, extraY) { // x,y en la proxima "linea" del grid en la direccion direccion
+        forEachVisibleNextLinea(direccion, callback, extraX, extraY) { // x,y en la proxima "linea" del grid en la direccion direccion
             var topGridY = this.gridY;
             var botGridY = this.gridY + this.gridH - 1 + extraY;
             var izqGridX = this.gridX - extraX;
@@ -112,10 +112,10 @@ define(['enums'], function (Enums) {
                 default:
                     log.error("Heading invalido");
             }
-        },
+        }
 
         //TODO: algunos siguen quedando visibles por ir caminando en zig zag con offsets distintos
-        forEachVisibleLastLinea: function (direccion, callback, extraX, extraY) {
+        forEachVisibleLastLinea(direccion, callback, extraX, extraY) {
             var dirInversa;
             switch (direccion) {
                 case Enums.Heading.oeste:
@@ -132,30 +132,30 @@ define(['enums'], function (Enums) {
                     break;
             }
             this.forEachVisibleNextLinea(dirInversa, callback, extraX, extraY);
-        },
+        }
 
-        isVisiblePosition: function (gridX, gridY, extraX, extraY) {
+        isVisiblePosition(gridX, gridY, extraX, extraY) {
             if (gridY >= this.gridY && gridY < (this.gridY + this.gridH + extraY)
                 && gridX >= (this.gridX - extraX) && gridX < (this.gridX + this.gridW + extraX)) {
                 return true;
             } else {
                 return false;
             }
-        },
+        }
 
-        rectVisible: function (rect) {
+        rectVisible(rect) {
             return !((this.x > rect.x + rect.width) ||
             (this.x + this.width < rect.x) ||
             (this.y > rect.y + rect.height) ||
             (this.y + this.height < rect.y));
-        },
+        }
 
-        focusEntity: function (entity) {
+        focusEntity(entity) {
             var x = Math.round(entity.x - (Math.floor(this.gridW / 2) * this.tilesize)),
                 y = Math.round(entity.y - (Math.floor(this.gridH / 2) * this.tilesize));
             this.setPosition(x, y);
         }
-    });
+    }
 
     return Camera;
 });
