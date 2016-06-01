@@ -14,6 +14,6 @@ require.config({
     }
 });
 
-define(['lib/class', 'lib/lodash', 'lib/stacktrace', 'utils/util'], function () {
+define(['lib/lodash', 'lib/stacktrace', 'utils/util'], function () {
     require(["main"]);
 });
