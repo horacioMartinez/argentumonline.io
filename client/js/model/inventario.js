@@ -4,14 +4,14 @@
 
 define([], function () {
 
-    var Inventario = Class.extend({
-        init: function () {
+    class Inventario {
+        constructor() {
             this._slots = [];
             this._cambioSlotCallback = null;
             this._borrarSlotCallback = null;
-        },
+        }
 
-        cambiarSlot: function (numSlot, ObjName, Amount, Price, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, Equiped) {
+        cambiarSlot(numSlot, ObjName, Amount, Price, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, Equiped) {
             var nuevoSlot;
             if (this.isValidSlot(Amount, GrhIndex)) {
                 nuevoSlot = {
@@ -34,26 +34,26 @@ define([], function () {
             }
 
             this._slots[numSlot] = nuevoSlot;
-        },
+        }
 
-        getSlot: function (numSlot) {
+        getSlot(numSlot) {
             return this._slots[numSlot];
-        },
+        }
 
-        forEachSlot: function (callback) {
+        forEachSlot(callback) {
             _.each(this._slots, function (slot) {
                 if (slot) {
                     callback(slot);
                 }
             });
-        },
+        }
 
-        isValidSlot: function (cantidad, grh) {
+        isValidSlot(cantidad, grh) {
             if ((cantidad > 0) && (grh > 0))
                 return true;
             return false;
-        },
+        }
 
-    });
+    }
     return Inventario;
 });

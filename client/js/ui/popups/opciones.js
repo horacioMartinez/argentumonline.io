@@ -2,37 +2,37 @@
  * Created by horacio on 5/2/16.
  */
 
-define(["text!../../../menus/opciones.html!strip",'ui/popups/popup'], function (DOMdata,PopUp) {
+define(["text!../../../menus/opciones.html!strip", 'ui/popups/popup'], function (DOMdata, PopUp) {
 
-    var Opciones = PopUp.extend({
-        init: function (game, storage, configurarTeclas) {
-            this._super(DOMdata);
+    class Opciones extends PopUp {
+        constructor(game, storage, configurarTeclas) {
+            super(DOMdata);
             this.game = game;
             this.storage = storage;
             this.configurarTeclasPopUp = configurarTeclas;
 
             this.initCallbacks();
-        },
+        }
 
-        show: function () {
-            this._super();
+        show() {
+            super.show();
 
             $("#sliderMusica").slider('value', this.storage.getMusicVolume() * 100);
             $("#sliderSonido").slider('value', this.storage.getSoundVolume() * 100);
 
             $("#checkboxMusica").prop('checked', !this.storage.getMusicMuted());
             $("#checkboxSonido").prop('checked', !this.storage.getSoundMuted());
-        },
+        }
 
-        hide: function () {
-            this._super();
+        hide() {
+            super.hide();
             this.storage.setMusicMuted(!this.game.assetManager.audio.musicEnabled);
             this.storage.setSoundMuted(!this.game.assetManager.audio.soundEnabled);
             this.storage.setMusicVolume(this.game.assetManager.audio.musicVolume);
             this.storage.setSoundVolume(this.game.assetManager.audio.soundVolume);
-        },
+        }
 
-        initCallbacks: function () {
+        initCallbacks() {
             var self = this;
 
             $("#sliderMusica").slider({
@@ -70,9 +70,9 @@ define(["text!../../../menus/opciones.html!strip",'ui/popups/popup'], function (
                 self.hide();
             });
 
-        },
+        }
 
-    });
+    }
 
     return Opciones;
 });

@@ -6,8 +6,8 @@ define(['jquery-ui'], function () {
 
     //TODO: crear los popups en run time con jquery y borrarlos cuando se cierran
 
-    var ItemGrid = Class.extend({
-        init: function (gridID, sortable) {
+    class ItemGrid {
+        constructor(gridID, sortable) {
             this.id = gridID;
             this.$this = $("#" + this.id);
             if (sortable) {
@@ -19,25 +19,26 @@ define(['jquery-ui'], function () {
             this._selectedSlot = null;
             this._selectionCallback = null;
             this._doubleClickCallback = null;
-        },
+        }
 
-        setSelectionCallback: function (f) {
+        setSelectionCallback(f) {
             this._selectionCallback = f;
-        },
-        setDobleClickCallback: function (cb) { // params: slot
+        }
+
+        setDobleClickCallback(cb) { // params: slot
             this._doubleClickCallback = cb;
-        },
+        }
 
-        getSelectedSlot: function () {
+        getSelectedSlot() {
             return this._selectedSlot;
-        },
+        }
 
-        resetSelectedSlot: function () {
+        resetSelectedSlot() {
             this._selectedSlot = null;
             this.$this.children().removeClass("selected");
-        },
+        }
 
-        modificarSlot: function (numSlot, cantidad, numGraf, equiped) {
+        modificarSlot(numSlot, cantidad, numGraf, equiped) {
             var $item = this._getItem(numSlot);
             if (!$item) {
                 $item = this._crearItem();
@@ -51,9 +52,9 @@ define(['jquery-ui'], function () {
                 $item.addClass("equiped");
             else
                 $item.removeClass("equiped");
-        },
+        }
 
-        _getItem: function (numSlot) {
+        _getItem(numSlot) {
             //var listItems = $("#" + this.id + " li");
             var listItems = this.$this.children();
             var res = null;
@@ -65,9 +66,9 @@ define(['jquery-ui'], function () {
                 }
             });
             return res;
-        },
+        }
 
-        _crearItem: function () {
+        _crearItem() {
             var $item = $('<li></li>').appendTo(this.$this);
             var self = this;
             $item.mousedown(function () {
@@ -85,18 +86,18 @@ define(['jquery-ui'], function () {
                 });
             }
             return $item;
-        },
+        }
 
-        borrarSlot: function (numSlot) {
-            $item = this._getItem(numSlot);
+        borrarSlot(numSlot) {
+            var $item = this._getItem(numSlot);
             if ($item)
                 $item.remove();
-        },
+        }
 
-        clear: function () {
+        clear() {
             this.$this.empty();
-        },
-    });
+        }
+    }
 
     return ItemGrid;
 });

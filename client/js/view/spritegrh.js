@@ -57,12 +57,12 @@ define(['lib/pixi'], function (PIXI) {
         this._onGridPositionChange = callback;
     };
 
-    SpriteGrh.prototype.setPosition = function (x,y) {
+    SpriteGrh.prototype.setPosition = function (x, y) {
         this.x = x;
         this.y = y;
-        var gridX = Math.round(x/32);
-        var gridY = Math.round(y/32);
-        if ( (gridX !== this._gridX) || (gridY !== this._gridY)) {
+        var gridX = Math.round(x / 32);
+        var gridY = Math.round(y / 32);
+        if ((gridX !== this._gridX) || (gridY !== this._gridY)) {
             this._gridX = gridX;
             this._gridY = gridY;
             if (this._onGridPositionChange)
@@ -70,8 +70,7 @@ define(['lib/pixi'], function (PIXI) {
         }
     };
 
-
-    SpriteGrh.prototype.setSize = function (w,h) {
+    SpriteGrh.prototype.setSize = function (w, h) {
         this.width = w;
         this.height = h;
         this._posicionarGrafico();
@@ -87,7 +86,7 @@ define(['lib/pixi'], function (PIXI) {
         //temporal
         if (this._grh === grh)
             return;
-        else{
+        else {
             this._grh = grh;
         }
         //<<temporal

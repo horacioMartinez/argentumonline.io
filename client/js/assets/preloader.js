@@ -5,14 +5,14 @@
 define(['lib/howler', 'lib/pixi'],
     function (Howler, PIXI) {
 
-        var Preloader = Class.extend({
-            init: function (assetManager) {
+        class Preloader {
+            constructor(assetManager) {
                 this.assetManager = assetManager;
                 this.PRELOAD_GRHS = [];
                 this.PRELOAD_MAPAS = [];
-            },
+            }
 
-            _loadSounds: function () {
+            _loadSounds() {
                 for (var i = 1; i < 212; i++) { // <-- todo numero hardcodeado!
                     if (!this.assetManager.audio.sounds[i]) {
                         this.assetManager.audio.sounds[i] = new Howl({
@@ -22,9 +22,9 @@ define(['lib/howler', 'lib/pixi'],
                 }
 
                 log.info("Sonidos cargados!");
-            },
+            }
 
-            copiarLoadedAssets: function (resources, baseTextures, mapas) {
+            copiarLoadedAssets(resources, baseTextures, mapas) {
                 for (var res in resources) {
                     if (res.slice(0, 4) === "mapa") {
                         var numero = res.slice(4, res.length);
@@ -34,9 +34,9 @@ define(['lib/howler', 'lib/pixi'],
                         baseTextures[parseInt(res)] = resources[res].texture.baseTexture;
                     }
                 }
-            },
+            }
 
-            _agregarPreloadGrhs: function (loader, indices) {
+            _agregarPreloadGrhs(loader, indices) {
                 var graficos = [];
                 for (var i = 0; i < this.PRELOAD_GRHS.length; i++) {
                     var grh = this.PRELOAD_GRHS[i];
@@ -50,25 +50,25 @@ define(['lib/howler', 'lib/pixi'],
                     graficos[numGrafico] = 1;
                     loader.add(numGrafico + "", "graficos/" + numGrafico + ".png");
                 }
-            },
+            }
 
-            _agregarPreloadMapas: function (loader) { // TODO: comprimir los mapas con http://pieroxy.net/blog/pages/lz-string/index.html y guardarlos en el local storage ??
+            _agregarPreloadMapas(loader) { // TODO: comprimir los mapas con http://pieroxy.net/blog/pages/lz-string/index.html y guardarlos en el local storage ??
                 for (var i = 0; i < this.PRELOAD_MAPAS.length; i++) {
                     loader.add("mapa" + this.PRELOAD_MAPAS[i], "mapas/mapa" + this.PRELOAD_MAPAS[i] + ".json");
                 }
-            },
+            }
 
-            _initGrhsPreload: function () {
+            _initGrhsPreload() {
                 for (var i = 0; i < this.PRELOAD_GRHS.length; i++) {
                     this.assetManager.loadGrh(this.PRELOAD_GRHS[i]);
                 }
-            },
+            }
 
-            _onGrhsLoaded: function () {
+            _onGrhsLoaded() {
                 this._initGrhsPreload();
-            },
+            }
 
-            preload: function (terminar_callback) {
+            preload(terminar_callback) {
                 //this._loadSounds();
 
                 if ((this.PRELOAD_GRHS.length < 1) || (this.PRELOAD_MAPAS.length < 1)) { // no hay nada que cargar
@@ -92,9 +92,9 @@ define(['lib/howler', 'lib/pixi'],
                     PIXI.loader.reset();
                     terminar_callback();
                 });
-            },
+            }
 
-            preloadAll: function (terminar_callback) {
+            preloadAll(terminar_callback) {
                 var maxMapa = 312;
                 for (var i = 1; i <= maxMapa; i++) {
                     this.PRELOAD_MAPAS.push(i);
@@ -104,8 +104,8 @@ define(['lib/howler', 'lib/pixi'],
                         this.PRELOAD_GRHS.push(i);
                 }
                 this.preload(terminar_callback);
-            },
-        });
+            }
+        }
 
         return Preloader;
     });

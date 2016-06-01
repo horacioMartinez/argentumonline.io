@@ -15,7 +15,7 @@ define(['enums'], function (Enums) {
             this.gridH = 13;
         }
 
-        setPosition(x, y){
+        setPosition(x, y) {
             this.x = x;
             this.y = y;
 
@@ -26,7 +26,7 @@ define(['enums'], function (Enums) {
             this.centerPosY = this.y + (Math.floor(this.gridH / 2) * this.tilesize);
         }
 
-        setGridPosition(gridX, gridY){
+        setGridPosition(gridX, gridY) {
             this.setPosition(gridX * this.tilesize, gridY * this.tilesize);
         }
 

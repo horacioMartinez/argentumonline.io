@@ -1,29 +1,29 @@
 define(function () {
-    var ByteQueue = Class.extend({
-        init: function (ws) {
+    class ByteQueue {
+        constructor(ws) {
             this.ws = ws;
             this._data = [];
-        },
+        }
 
-        WriteByte: function (value) {
+        WriteByte(value) {
             this._data.push(value);
-        },
+        }
 
         // todos little endian:
-        WriteInteger: function (value) { // 2B
+        WriteInteger(value) { // 2B
 
             this._data.push(value & 0xff);
             this._data.push((value >> 8) & 0xff);
-        },
+        }
 
-        WriteLong: function (value) { // 4B
+        WriteLong(value) { // 4B
             this._data.push(value & 0xff);
             this._data.push((value >> 8) & 0xff);
             this._data.push((value >> 16) & 0xff);
             this._data.push((value >> 24) & 0xff);
-        },
+        }
 
-        WriteSingle: function (value) { // 4B
+        WriteSingle(value) { // 4B
 
             var buffer = new ArrayBuffer(4);
             var floatArray = new Float32Array(buffer);
@@ -32,9 +32,9 @@ define(function () {
             for (var i = 0; i < byteArray.length; i++) {
                 this._data.push(byteArray[i]);
             }
-        },
+        }
 
-        WriteDouble: function (value) { //8B
+        WriteDouble(value) { //8B
 
             var buffer = new ArrayBuffer(8);
             var floatArray = new Float64Array(buffer);
@@ -43,49 +43,49 @@ define(function () {
             for (var i = 0; i < byteArray.length; i++) {
                 this._data.push(byteArray[i]);
             }
-        },
+        }
 
-        WriteBoolean: function (value) {
+        WriteBoolean(value) {
             if (value)
                 this._data.push(1);
             else
                 this._data.push(0);
-        },
+        }
 
-        WriteUnicodeStringFixed: function (string) {
+        WriteUnicodeStringFixed(string) {
             this._data = this._data.concat(
                 string.split('').map(
                     function (chr) {
                         return chr.charCodeAt(0);
                     }));
-        },
+        }
 
-        WriteUnicodeString: function (string) {
+        WriteUnicodeString(string) {
             this.WriteInteger(string.length);
             this.WriteUnicodeStringFixed(string);
-        },
+        }
 
-        PeekByte: function () {
+        PeekByte() {
             return this.ws.rQpeek8();
-        },
+        }
 
-        ReadByte: function () {
+        ReadByte() {
             return this.ws.rQshift8();
-        },
+        }
 
-        ReadInteger: function () {
+        ReadInteger() {
 
             var int = this.ws.rQshift16();
             if (int & 0x8000) // ultimo bit de los 16 es 1 -> numero negativo, extiendo los demas bits
                 int = int | 0xFFFF0000;
             return int;
-        },
+        }
 
-        ReadLong: function () {
+        ReadLong() {
             return this.ws.rQshift32();
-        },
+        }
 
-        ReadSingle: function () {
+        ReadSingle() {
             var buffer = new ArrayBuffer(4);
             var byteView = new Uint8Array(buffer);
             var floatView = new Float32Array(buffer);
@@ -94,39 +94,39 @@ define(function () {
             byteView[2] = this.ws.rQshift8();
             byteView[3] = this.ws.rQshift8();
             return floatView[0];
-        },
+        }
 
-        ReadDouble: function () {
+        ReadDouble() {
             var buffer = new ArrayBuffer(8);
             var byteView = new Uint8Array(buffer);
             var floatView = new Float64Array(buffer);
             for (var i = 0; i < 8; i++)
                 byteView[i] = this.ws.rQshift8();
             return floatView[0];
-        },
+        }
 
-        ReadBoolean: function () {
+        ReadBoolean() {
             var value = this.ReadByte();
             if (value)
                 return true;
             else
                 return false;
-        },
+        }
 
-        ReadUnicodeString: function () {
+        ReadUnicodeString() {
             var isoArray = this.ws.rQshiftBytes(this.ws.rQshift16());
             return String.fromCharCode.apply(null, isoArray);
-        },
+        }
 
-        length: function () {
+        length() {
             return this.ws.rQlen();
-        },
+        }
 
-        flush: function () {
+        flush() {
             this.ws.send(this._data);
             this._data = [];
         }
-    });
+    }
 
     return ByteQueue;
 });

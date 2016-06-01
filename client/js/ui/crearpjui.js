@@ -3,16 +3,16 @@
  */
 
 define(['enums', 'ui/game/itemgrid'], function (Enums, ItemGrid) {
-    var CrearPjUI = Class.extend({
-        init: function (assetManager, mensaje) {
+    class CrearPjUI {
+        constructor(assetManager, mensaje) {
             this.assetManager = assetManager;
             this.mensaje = mensaje;
             this._inicializado = false;
             this.LARGO_MINIMO_PASSWORD = 5;
             this.cabezasGrid = null;
-        },
+        }
 
-        inicializar: function () {
+        inicializar() {
             if (this._inicializado)
                 return;
             else
@@ -35,7 +35,7 @@ define(['enums', 'ui/game/itemgrid'], function (Enums, ItemGrid) {
             this.modificarSlotInput($sel, id, Enums.Raza.elfoOscuro, "Elfo Oscuro");
             this.modificarSlotInput($sel, id, Enums.Raza.gnomo, "Gnomo");
             this.modificarSlotInput($sel, id, Enums.Raza.enano, "Enano");
-            $sel.change(function(){
+            $sel.change(function () {
                 self.updateCabezas();
             });
 
@@ -58,15 +58,15 @@ define(['enums', 'ui/game/itemgrid'], function (Enums, ItemGrid) {
             $sel = $('#' + id);
             this.modificarSlotInput($sel, id, Enums.Genero.hombre, "Hombre");
             this.modificarSlotInput($sel, id, Enums.Genero.mujer, "Mujer");
-            $sel.change(function(){
+            $sel.change(function () {
                 self.updateCabezas();
             });
 
             this.cabezasGrid = new ItemGrid('crearPjSeleccionCabeza');
             this.updateCabezas();
-        },
+        }
 
-        modificarSlotInput: function ($sel, id, slot, texto) {
+        modificarSlotInput($sel, id, slot, texto) {
             var elemento = $('#' + id + ' option[value=' + slot + ']');
             if (!elemento.length) { // nuevo elemento
                 $sel.append($("<option>").attr('value', slot).text(texto));
@@ -74,22 +74,22 @@ define(['enums', 'ui/game/itemgrid'], function (Enums, ItemGrid) {
             else {
                 $(elemento).text(texto);
             }
-        },
+        }
 
-        setBotonTirarDadosCallback: function (cb) {
+        setBotonTirarDadosCallback(cb) {
 
             $('#crearBotonTirarDados').click(function () {
                 cb();
             });
-        },
+        }
 
-        setBotonVolverCallback: function (cb) {
+        setBotonVolverCallback(cb) {
             $('#crearBotonVolver').click(function () {
                 cb();
             });
-        },
+        }
 
-        setBotonCrearCallback: function (cb) {
+        setBotonCrearCallback(cb) {
             var self = this;
             $('#crearBotonCrear').click(function () {
                 var nombre = $("#crearNombreInput").val();
@@ -102,7 +102,7 @@ define(['enums', 'ui/game/itemgrid'], function (Enums, ItemGrid) {
                 var ciudad = $("#crearSelectCiudad").val();
                 var cabeza = self.cabezasGrid.getSelectedSlot();
 
-                if (!cabeza){
+                if (!cabeza) {
                     self.mensaje.show("Debes elegir una cabeza");
                 }
 
@@ -126,9 +126,9 @@ define(['enums', 'ui/game/itemgrid'], function (Enums, ItemGrid) {
 
                 cb(nombre, password, raza, genero, clase, cabeza, mail, ciudad);
             });
-        },
+        }
 
-        updateCabezas: function () {
+        updateCabezas() {
             var raza = $("#crearSelectRaza").val();
             var genero = $("#crearSelectGenero").val();
 
@@ -139,27 +139,27 @@ define(['enums', 'ui/game/itemgrid'], function (Enums, ItemGrid) {
                 var numGraf = this.assetManager.getFaceGrafFromNum(i);
                 this.cabezasGrid.modificarSlot(i, '', numGraf);
             }
-        },
+        }
 
-        updateDados: function (Fuerza, Agilidad, Inteligencia, Carisma, Constitucion) {
+        updateDados(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion) {
             $('#crearDadoFuerza').text("Fuerza: " + Fuerza);
             $('#crearDadoAgilidad').text("Agilidad: " + Agilidad);
             $('#crearDadoInteligencia').text("Inteligencia: " + Inteligencia);
             $('#crearDadoCarisma').text("Carisma: " + Carisma);
             $('#crearDadoConstitucion').text("Constitucion: " + Constitucion);
-        },
+        }
 
-        emailValido: function (email) {
+        emailValido(email) {
             // Regex borrowed from http://stackoverflow.com/a/46181/393005
             var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(email);
-        },
+        }
 
-        passwordValido: function (pw) {
+        passwordValido(pw) {
             return (!(pw.length < this.LARGO_MINIMO_PASSWORD))
-        },
+        }
 
-        getPrimerYUltimaCabezaNum: function (genero, raza) {
+        getPrimerYUltimaCabezaNum(genero, raza) {
             var genero = parseInt(genero);
             var raza = parseInt(raza);
 
@@ -238,8 +238,9 @@ define(['enums', 'ui/game/itemgrid'], function (Enums, ItemGrid) {
                 }
             }
 
-        },
-    });
+        }
+    }
+
     return CrearPjUI;
 });
 

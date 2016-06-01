@@ -3,25 +3,25 @@
  */
 
 
-define(["text!../../../menus/configurarTeclas.html!strip",'utils/charcodemap', 'ui/popups/popup'], function (DOMdata, CharCodeMap, PopUp) {
+define(["text!../../../menus/configurarTeclas.html!strip", 'utils/charcodemap', 'ui/popups/popup'], function (DOMdata, CharCodeMap, PopUp) {
 
-    var ConfigurarTeclas = PopUp.extend({
-        init: function (storage, updateKeysCb, showMensajeCb) {
-            this._super(DOMdata);
+    class ConfigurarTeclas extends PopUp {
+        constructor(storage, updateKeysCb, showMensajeCb) {
+            super(DOMdata);
             this.storage = storage;
             this.initCallbacks();
             this.nuevasKeys = null;
             this.updateKeysCb = updateKeysCb;
             this.showMensajeCb = showMensajeCb;
-        },
+        }
 
-        show: function () {
-            this._super();
+        show() {
+            super.show();
             this.nuevasKeys = jQuery.extend({}, this.storage.getKeys()); // clonar
             this.displayKeys();
-        },
+        }
 
-        displayKeys: function () {
+        displayKeys() {
             var self = this;
             this.$this.children('input').each(function () {
 
@@ -33,20 +33,20 @@ define(["text!../../../menus/configurarTeclas.html!strip",'utils/charcodemap', '
                 }
                 $(this).val(CharCodeMap.keys[self.nuevasKeys[accion]]);
             });
-        },
+        }
 
-        keyRepetida: function (c) {
-            for(var prop in this.nuevasKeys) {
-                if(this.nuevasKeys.hasOwnProperty(prop)) {
-                    if(this.nuevasKeys[prop] === c) {
+        keyRepetida(c) {
+            for (var prop in this.nuevasKeys) {
+                if (this.nuevasKeys.hasOwnProperty(prop)) {
+                    if (this.nuevasKeys[prop] === c) {
                         return true;
                     }
                 }
             }
             return false;
-        },
+        }
 
-        initCallbacks: function () {
+        initCallbacks() {
             var self = this;
 
             $("#configurarTeclasBotonCerrar").click(function () {
@@ -76,7 +76,7 @@ define(["text!../../../menus/configurarTeclas.html!strip",'utils/charcodemap', '
                     return;
                 }
                 var nuevaKey = event.which;
-                if (self.keyRepetida(nuevaKey)){
+                if (self.keyRepetida(nuevaKey)) {
                     self.showMensajeCb("Esa tecla ya pertenece a otro comando");
                     self.displayKeys();
                     return false;
@@ -86,8 +86,8 @@ define(["text!../../../menus/configurarTeclas.html!strip",'utils/charcodemap', '
                 return false;
             });
 
-        },
-    });
+        }
+    }
 
     return ConfigurarTeclas;
 });

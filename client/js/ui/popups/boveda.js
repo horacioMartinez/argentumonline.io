@@ -4,19 +4,19 @@
 
 define(["text!../../../menus/boveda.html!strip", 'ui/popups/popup', 'ui/game/itemgrid'], function (DOMdata, PopUp, ItemGrid) {
 
-    var Boveda = PopUp.extend({
-        init: function (game, acciones) {
-            this._super(DOMdata);
+    class Boveda extends PopUp {
+        constructor(game, acciones) {
+            super(DOMdata);
             this.game = game;
             this.acciones = acciones;
 
             this.shopGrid = new ItemGrid("bovedaGridComprar", true);
             this.userGrid = new ItemGrid("bovedaGridVender", true);
             this.initCallbacks();
-        },
+        }
 
-        show: function () {
-            this._super();
+        show() {
+            super.show();
             var self = this;
 
             this.game.inventario.forEachSlot(
@@ -27,29 +27,30 @@ define(["text!../../../menus/boveda.html!strip", 'ui/popups/popup', 'ui/game/ite
 
             this.shopGrid.resetSelectedSlot();
             this.userGrid.resetSelectedSlot();
-        },
+        }
 
-        cambiarSlotRetirar: function (Slot, Amount, numGrafico) {
+        cambiarSlotRetirar(Slot, Amount, numGrafico) {
             this.shopGrid.modificarSlot(Slot, Amount, numGrafico);
-        },
+        }
 
-        cambiarSlotDepositar: function (Slot, Amount, numGrafico) {
+        cambiarSlotDepositar(Slot, Amount, numGrafico) {
             this.userGrid.modificarSlot(Slot, Amount, numGrafico);
-        },
+        }
 
-        borrarSlotRetirar: function (slot) {
+        borrarSlotRetirar(slot) {
             this.shopGrid.borrarSlot(slot);
-        },
-        borrarSlotDepositar: function (slot) {
-            this.userGrid.borrarSlot(slot);
-        },
+        }
 
-        setOroDisponible: function (oro) {
+        borrarSlotDepositar(slot) {
+            this.userGrid.borrarSlot(slot);
+        }
+
+        setOroDisponible(oro) {
             $("#bovedaOroDisponibleLabel").text("ORO DISPONIBLE");
             $("#bovedaOroDisponibleVal").text(oro);
-        },
+        }
 
-        initCallbacks: function () {
+        initCallbacks() {
             var self = this;
 
             $("#bovedaBotonRetirarOro").click(function () {
@@ -106,9 +107,9 @@ define(["text!../../../menus/boveda.html!strip", 'ui/popups/popup', 'ui/game/ite
                     var item = self.game.inventario.getSlot(slot);
                     self.displayItemData(item);
                 });
-        },
+        }
 
-        displayItemData: function (item) {
+        displayItemData(item) {
             var minLabel = "";
             var maxLabel = "";
 
@@ -126,9 +127,9 @@ define(["text!../../../menus/boveda.html!strip", 'ui/popups/popup', 'ui/game/ite
             var maxVal = item.maxDef || item.maxHit;
 
             this.completarLabels(item.objName.toUpperCase(), minLabel, minVal, maxLabel, maxVal);
-        },
+        }
 
-        completarLabels: function (nombreVal, minLabel, minVal, maxLabel, maxVal) {
+        completarLabels(nombreVal, minLabel, minVal, maxLabel, maxVal) {
             if (!minLabel)
                 minVal = "";
             if (!maxLabel)
@@ -141,7 +142,7 @@ define(["text!../../../menus/boveda.html!strip", 'ui/popups/popup', 'ui/game/ite
             $('#bovedaMaxLabel').text(maxLabel);
             $('#bovedaMaxVal').text(maxVal);
         }
-    });
+    }
 
     return Boveda;
 });

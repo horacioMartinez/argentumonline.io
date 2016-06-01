@@ -1,15 +1,15 @@
 define(['model/gamemanager', 'view/renderer', 'network/gameclient'], function (GameManager, Renderer, GameClient) {
 
-    var App = Class.extend({
-        init: function (assetManager, uiManager, storage) {
+    class App {
+        constructor(assetManager, uiManager, storage) {
             this.assetManager = assetManager;
             this.uiManager = uiManager;
             this.client = null;
             this.ready = false;
             this.storage = storage;
-        },
+        }
 
-        _initLoginCallbacks: function () {
+        _initLoginCallbacks() {
             var self = this;
             this.uiManager.loginUI.setBotonJugarCallback(function () {
                 self.tryStartingGame();
@@ -17,9 +17,9 @@ define(['model/gamemanager', 'view/renderer', 'network/gameclient'], function (G
             this.uiManager.loginUI.setBotonCrearCallback(function () {
                 self.setCrearPJ();
             });
-        },
+        }
 
-        _initCrearPjCallbacks: function () {
+        _initCrearPjCallbacks() {
             var self = this;
             this.uiManager.crearPjUI.setBotonTirarDadosCallback(function () {
                 self.client.sendThrowDices();
@@ -30,9 +30,9 @@ define(['model/gamemanager', 'view/renderer', 'network/gameclient'], function (G
             this.uiManager.crearPjUI.setBotonCrearCallback(function (nombre, password, raza, genero, clase, cabeza, mail, ciudad) {
                 self.startGame(true, nombre, password, raza, genero, clase, cabeza, mail, ciudad);
             });
-        },
+        }
 
-        _initClientCallbacks: function (client) {
+        _initClientCallbacks(client) {
             var self = this;
 
             client.setDisconnectCallback(function () {
@@ -52,9 +52,9 @@ define(['model/gamemanager', 'view/renderer', 'network/gameclient'], function (G
                 self.uiManager.crearPjUI.updateDados(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion);
             });
 
-        },
+        }
 
-        inicializarGame: function () {
+        inicializarGame() {
             var renderer = new Renderer(this.assetManager, this.uiManager.getEscala());
             this.gameManager = new GameManager(this.assetManager, renderer);
 
@@ -63,9 +63,9 @@ define(['model/gamemanager', 'view/renderer', 'network/gameclient'], function (G
             this._initClientCallbacks(this.client);
             this.gameManager.setup(this.client, gameUI);
             this.ready = true;
-        },
+        }
 
-        setCrearPJ: function () {
+        setCrearPJ() {
             this.uiManager.crearPjUI.inicializar();
             this.uiManager.loginUI.setCrearButtonState(false);
             var self = this;
@@ -74,9 +74,9 @@ define(['model/gamemanager', 'view/renderer', 'network/gameclient'], function (G
                 self.uiManager.setCrearPJScreen();
                 self.uiManager.loginUI.setCrearButtonState(true);
             });
-        },
+        }
 
-        tryStartingGame: function () {
+        tryStartingGame() {
             if (this.starting) return;
 
             log.info(" Trying to start game...");
@@ -89,9 +89,9 @@ define(['model/gamemanager', 'view/renderer', 'network/gameclient'], function (G
             this.starting = true;
             this.uiManager.loginUI.setPlayButtonState(false);
             this.startGame(false, username, userpw);
-        },
+        }
 
-        startGame: function (newChar, username, userpw, raza, genero, clase, cabeza, mail, ciudad) {
+        startGame(newChar, username, userpw, raza, genero, clase, cabeza, mail, ciudad) {
             if (this.gameManager.game.started)
                 return;
             //this.center();
@@ -102,18 +102,18 @@ define(['model/gamemanager', 'view/renderer', 'network/gameclient'], function (G
             else {
                 this.client.sendLoginNewChar(username, userpw, raza, genero, clase, cabeza, mail, ciudad);
             }
-        },
+        }
 
-        start: function () {
+        start() {
             this._initLoginCallbacks();
             this._initCrearPjCallbacks();
             this.uiManager.hideIntro();
             this.inicializarGame();
 
             log.info("App initialized.");
-        },
+        }
 
-        validarLogin: function (username, userpw) {
+        validarLogin(username, userpw) {
             if (!username) {
                 this.uiManager.showMensaje("Debes ingresar un usuario");
                 return false;
@@ -125,8 +125,8 @@ define(['model/gamemanager', 'view/renderer', 'network/gameclient'], function (G
             }
 
             return true;
-        },
+        }
 
-    });
+    }
     return App;
 });

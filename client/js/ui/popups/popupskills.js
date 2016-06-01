@@ -2,28 +2,26 @@
  * Created by horacio on 4/20/16.
  */
 
-define(["text!../../../menus/skills.html!strip",'ui/popups/popup'], function (DOMdata,PopUp) {
+define(["text!../../../menus/skills.html!strip", 'ui/popups/popup'], function (DOMdata, PopUp) {
 
-    var Skills = PopUp.extend({
-        init: function (game) {
-
-            this._super(DOMdata);
+    class popUpSkills extends PopUp {
+        constructor(game) {
+            super(DOMdata);
             this.game = game;
             this.initCallbacks();
             this.skills = null;
             this.skillsInicializados = false;
-        },
+        }
 
-        show: function () {
-            this._super();
+        show() {
+            super.show();
             this.game.client.sendRequestSkills(); // todo: << sacaR?
 
-        },
+        }
 
-        initCallbacks: function () {
+        initCallbacks() {
             var self = this;
             $("#skillsBotonCerrar").click(function () {
-                log.error("HOLAAAAAAAAAAAAAAAAA");
                 self.hide();
             });
 
@@ -39,21 +37,21 @@ define(["text!../../../menus/skills.html!strip",'ui/popups/popup'], function (DO
                 }
                 self.hide();
             });
-        },
+        }
 
-        _getSkillDOMid: function (numSkill) {
+        _getSkillDOMid(numSkill) {
             return "popUpSkills_skill_" + numSkill;
-        },
+        }
 
-        _getSkillTextDOMid: function (numSkill) {
+        _getSkillTextDOMid(numSkill) {
             return "popUpSkills_textoSkill_" + numSkill;
-        },
+        }
 
-        _getSkillText: function (nombre, puntos) {
+        _getSkillText(nombre, puntos) {
             return nombre + ':  ' + puntos;
-        },
+        }
 
-        _createSkill: function (numSkill, nombre, puntos, porcentaje) {
+        _createSkill(numSkill, nombre, puntos, porcentaje) {
             var self = this;
             var id = this._getSkillDOMid(numSkill);
             var textoId = this._getSkillTextDOMid(numSkill);
@@ -86,29 +84,29 @@ define(["text!../../../menus/skills.html!strip",'ui/popups/popup'], function (DO
                 self._updateSkill(numSkill);
                 self._updatePuntosLibres();
             });
-        },
+        }
 
-        _updatePuntosLibres: function(){
+        _updatePuntosLibres() {
             $("#popUpSkillsContenedorPuntosLibres").text("Puntos libres: " + this.skills.puntosLibres);
-        },
+        }
 
-        _updateSkill: function (numSkill) {
+        _updateSkill(numSkill) {
             var id = this._getSkillTextDOMid(numSkill);
             $("#" + id).text(this._getSkillText(this.skills.getNombreSkill(numSkill), this.skills.getPuntosSkill(numSkill)));
-        },
+        }
 
-
-        _updateSkillsPoints: function () {
+        _updateSkillsPoints() {
             var self = this;
             this.skills.forEachSkill(function (numSkill, puntos, porcentaje, nombre) {
                 var id = self._getSkillTextDOMid(numSkill);
                 $("#" + id).text(self._getSkillText(nombre, puntos));
             });
-        },
+        }
 
-        updateSkillsData: function () {
+        updateSkillsData() {
             var self = this;
-            this.skills = $.extend(true, {}, this.game.skills);
+            //this.skills = $.extend(true, {}, this.game.skills);
+            this.skills = $.extend(true, Object.create(Object.getPrototypeOf(this.game.skills)), this.game.skills); // clonar
             if (!this.skillsInicializados) {
                 this.skills.forEachSkill(function (numSkill, puntos, porcentaje, nombre) {
                     self._createSkill(numSkill, nombre, puntos, porcentaje);
@@ -117,9 +115,9 @@ define(["text!../../../menus/skills.html!strip",'ui/popups/popup'], function (DO
             }
             this._updateSkillsPoints();
             this._updatePuntosLibres();
-        },
+        }
 
-        _getPuntosAdicionalesSerialized: function(){
+        _getPuntosAdicionalesSerialized() {
             var modificados = false;
             var res = [];
             var self = this;
@@ -132,8 +130,8 @@ define(["text!../../../menus/skills.html!strip",'ui/popups/popup'], function (DO
             if (!modificados)
                 return null;
             return res;
-        },
-    });
+        }
+    }
 
-    return Skills;
+    return popUpSkills;
 });

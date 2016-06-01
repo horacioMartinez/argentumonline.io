@@ -2,24 +2,24 @@
  * Created by horacio on 4/6/16.
  */
 
-define([],function () {
-    var LoginUI = Class.extend({
-        init: function () {
-        },
+define([], function () {
+    class LoginUI {
+        constructor() {
+        }
 
-        setBotonJugarCallback: function (cb) {
+        setBotonJugarCallback(cb) {
             $('#botonJugar').click(function () {
                 cb();
             });
-        },
+        }
 
-        setBotonCrearCallback: function (cb) {
+        setBotonCrearCallback(cb) {
             $('#botonCrearPJ').click(function () {
                 cb();
             });
-        },
+        }
 
-        setPlayButtonState: function (enabled) {
+        setPlayButtonState(enabled) {
             var $playButton = $('#botonJugar');
 
             if (enabled) {
@@ -27,9 +27,9 @@ define([],function () {
             } else {
                 $playButton.prop('disabled', true);
             }
-        },
+        }
 
-        setCrearButtonState: function (enabled) {
+        setCrearButtonState(enabled) {
             var $crearButton = $('#botonCrearPJ');
 
             if (enabled) {
@@ -37,15 +37,15 @@ define([],function () {
             } else {
                 $crearButton.prop('disabled', true);
             }
-        },
+        }
 
-        getUsername: function(){
+        getUsername() {
             return $('#loginNombre').val();
-        },
+        }
 
-        getPassword: function(){
+        getPassword() {
             return $('#loginContrasenia').val();
         }
-    });
+    }
     return LoginUI;
 });

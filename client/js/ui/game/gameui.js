@@ -3,12 +3,12 @@
  */
 
 
-define(['enums','ui/game/keymouselistener', 'ui/popups/skills', 'ui/popups/comerciar', 'ui/popups/ingamemensaje', 'ui/game/interfaz', 'ui/popups/tirar', 'ui/popups/boveda', 'ui/popups/guiamapa', 'ui/popups/configurarteclas', 'ui/popups/opciones'], function (Enums, KeyMouseListener, Skills, Comerciar, InGameMensaje, Interfaz, Tirar, Boveda, GuiaMapa, ConfigurarTeclas, Opciones) {
+define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups/comerciar', 'ui/popups/ingamemensaje', 'ui/game/interfaz', 'ui/popups/tirar', 'ui/popups/boveda', 'ui/popups/guiamapa', 'ui/popups/configurarteclas', 'ui/popups/opciones'], function (Enums, KeyMouseListener, popUpSkills, Comerciar, InGameMensaje, Interfaz, Tirar, Boveda, GuiaMapa, ConfigurarTeclas, Opciones) {
 
     //TODO: crear los popups en run time con jquery y borrarlos cuando se cierran ?
 
-    var GameUI = Class.extend({
-        init: function (gameManager, storage) {
+    class GameUI {
+        constructor(gameManager, storage) {
             var game = gameManager.game;
             var acciones = gameManager.acciones;
             this.acciones = acciones;
@@ -21,78 +21,78 @@ define(['enums','ui/game/keymouselistener', 'ui/popups/skills', 'ui/popups/comer
             this.boveda = new Boveda(game, acciones);
             this.guiaMapa = new GuiaMapa();
             this.configurarTeclas = new ConfigurarTeclas(storage, this.updateKeysCallback.bind(this), this.showMensaje.bind(this));
-            this.opciones= new Opciones(game,storage,this.configurarTeclas);
-            this.skills = new Skills(game);
+            this.opciones = new Opciones(game, storage, this.configurarTeclas);
+            this.skills = new popUpSkills(game);
 
             this._currentPopUp = 0; // mal
             this.interfaz = new Interfaz(game, gameManager.macros, acciones);
             this.keyMouseListener = new KeyMouseListener(game, acciones, storage.getKeys());
             this.initDOM();
             this.$popUps = $("#popUpsJuego");
-        },
+        }
 
-        initDOM: function () {
+        initDOM() {
             this.interfaz.inicializar();
             this.keyMouseListener.initListeners();
             var self = this;
-            $(window).blur(function(){
+            $(window).blur(function () {
                 self.keyMouseListener.upKeyTeclasCaminar();
             });
-        },
+        }
 
-        resize: function (escala) {
+        resize(escala) {
             this.game.resize(escala); // todo <- este resize del renderer deberia ir fuera de game
-        },
+        }
 
-        updateKeysCallback: function (keys) { // todo: en otro lado esto y que a gameui solo le llegue keys
+        updateKeysCallback(keys) { // todo: en otro lado esto y que a gameui solo le llegue keys
             this.keyMouseListener.setKeys(keys);
-        },
+        }
 
-        hayPopUpActivo: function () {
+        hayPopUpActivo() {
             return !(this.$popUps.children(':visible').length === 0);
-        },
+        }
 
-        showComerciar: function () {
+        showComerciar() {
             this.comerciar.show();
-        },
+        }
 
-        hideComerciar: function () {
+        hideComerciar() {
             this.comerciar.hide();
-        },
+        }
 
-        showMensaje: function (msj) {
+        showMensaje(msj) {
             this.inGameMensaje.show(msj);
-        },
+        }
 
-        showBoveda: function () {
+        showBoveda() {
             this.boveda.show();
-        },
+        }
 
-        hideBoveda: function () {
+        hideBoveda() {
             this.boveda.hide();
-        },
+        }
 
-        showTirar: function (tirandoOro) {
+        showTirar(tirandoOro) {
             this.tirar.show(tirandoOro);
-        },
+        }
 
-        showSkills: function () {
+        showSkills() {
             this.skills.show();
-        },
+        }
 
-        showOpciones: function(){
+        showOpciones() {
             this.opciones.show();
-        },
+        }
 
-        hideTirar: function () {
+        hideTirar() {
             this.tirar.hide();
-        },
+        }
 
-        showMapa: function () {
+        showMapa() {
             this.guiaMapa.show();
-        },
+        }
 
-        updateSlotUser: function (numSlot, slot) { //todo: feo todo esto!
+        updateSlotUser(numSlot, slot) { //todo: feo todo esto!
             if (slot) {
                 var numGrafico = this.game.assetManager.getNumGraficoFromGrh(slot.grh);
                 this.interfaz.cambiarSlotInventario(numSlot, slot.cantidad, numGrafico, slot.equipado);
@@ -108,9 +108,9 @@ define(['enums','ui/game/keymouselistener', 'ui/popups/skills', 'ui/popups/comer
                 if (this.boveda.visible)
                     this.boveda.borrarSlotDepositar(numSlot);
             }
-        },
+        }
 
-        updateSlotShop: function (numSlot, slot) {
+        updateSlotShop(numSlot, slot) {
             if (slot) {
                 var numGrafico = this.game.assetManager.getNumGraficoFromGrh(slot.grh);
                 this.comerciar.cambiarSlotCompra(numSlot, slot.cantidad, numGrafico);
@@ -120,13 +120,13 @@ define(['enums','ui/game/keymouselistener', 'ui/popups/skills', 'ui/popups/comer
                 this.comerciar.borrarSlotCompra(numSlot);
                 this.boveda.borrarSlotRetirar(numSlot);
             }
-        },
+        }
 
-        updateSkillsData: function (skills){
-          this.skills.updateSkillsData(skills);
-        },
+        updateSkillsData(skills) {
+            this.skills.updateSkillsData(skills);
+        }
 
-    });
+    }
 
     return GameUI;
 });

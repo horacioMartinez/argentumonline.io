@@ -4,14 +4,14 @@
 
 define(['enums'], function (Enums) {
 
-    var Acciones = Class.extend({
-        init: function (game, intervalos) {
+    class Acciones {
+        constructor(game, intervalos) {
             this.game = game;
             this.intervalos = intervalos;
             this.MAX_CANTIDAD_ITEM = 10000;
-        },
+        }
 
-        agarrar: function () {
+        agarrar() {
 
             if (this.game.player.muerto) {
                 this.game.escribirMsgConsola(Enums.MensajeConsola.ESTAS_MUERTO);
@@ -19,9 +19,9 @@ define(['enums'], function (Enums) {
             else {
                 this.game.client.sendPickUp();
             }
-        },
+        }
 
-        ocultarse: function () {
+        ocultarse() {
 
             if (this.game.player.muerto) {
                 this.game.escribirMsgConsola(Enums.MensajeConsola.ESTAS_MUERTO);
@@ -29,38 +29,38 @@ define(['enums'], function (Enums) {
             else {
                 this.game.client.sendWork(Enums.Skill.ocultarse);
             }
-        },
+        }
 
-        requestPosUpdate: function () {
+        requestPosUpdate() {
             if (this.intervalos.requestPosUpdate(this.game.currentTime))
                 this.game.client.sendRequestPositionUpdate();
-        },
+        }
 
-        equiparSelectedItem: function () {
+        equiparSelectedItem() {
             var slot = this.game.gameUI.interfaz.getSelectedSlotInventario();
             if (slot)
                 this.game.client.sendEquipItem(slot);
-        },
+        }
 
-        usarConU: function () {
+        usarConU() {
             var slot = this.game.gameUI.interfaz.getSelectedSlotInventario();
             if (!slot)
                 return;
             if (this.intervalos.requestUsarConU(this.game.currentTime)) {
                 this.game.client.sendUseItem(slot);
             }
-        },
+        }
 
-        usarConDobleClick: function (slot) {
+        usarConDobleClick(slot) {
             if (!slot)
                 return;
             if (this.intervalos.requestUsarConDobleClick(this.game.currentTime)) {
                 this.game.client.sendUseItem(slot);
             }
 
-        },
+        }
 
-        atacar: function () {
+        atacar() {
             if (this.intervalos.requestAtacar(this.game.currentTime)) {
                 this.game.client.sendAttack();
                 switch (this.game.player.heading) { // todo: hacerlo con el arco y con hechizos tambien
@@ -81,19 +81,19 @@ define(['enums'], function (Enums) {
                 }
             }
 
-        },
+        }
 
-        caminar: function (direccion) {
+        caminar(direccion) {
             if (this.game.logeado)
                 this.game.player.comenzarCaminar(direccion);
-        },
+        }
 
-        terminarDeCaminar: function (direccion) {
+        terminarDeCaminar(direccion) {
             if (this.game.logeado)
                 this.game.player.terminarDeCaminar(direccion);
-        },
+        }
 
-        click: function () {
+        click() {
             var gridPos = this.game.getMouseGridPosition();
             if (this.game.logeado) {
                 if (this.game.trabajoPendiente) {
@@ -104,15 +104,15 @@ define(['enums'], function (Enums) {
                 else
                     this.game.client.sendLeftClick(gridPos.x, gridPos.y);
             }
-        },
+        }
 
-        doubleClick: function () {
+        doubleClick() {
             var gridPos = this.game.getMouseGridPosition();
             if (this.game.logeado)
                 this.game.client.sendDoubleClick(gridPos.x, gridPos.y);
-        },
+        }
 
-        tratarDeTirarItem: function () {
+        tratarDeTirarItem() {
             if (this.game.player.muerto) {
                 this.game.escribirMsgConsola(Enums.MensajeConsola.ESTAS_MUERTO);
                 return;
@@ -126,9 +126,9 @@ define(['enums'], function (Enums) {
             else {
                 this.game.gameUI.showTirar();
             }
-        },
+        }
 
-        lanzarHechizo: function () { /*todo: slot por parametro*/
+        lanzarHechizo() { /*todo: slot por parametro*/
             if (!this.intervalos.requestLanzarHechizo(this.game.currentTime))
                 return;
             var slot = this.game.gameUI.interfaz.getSelectedSlotHechizo();
@@ -136,47 +136,47 @@ define(['enums'], function (Enums) {
                 return;
             this.game.client.sendCastSpell(slot);
             this.game.client.sendWork(Enums.Skill.magia);
-        },
+        }
 
-        requestInfoHechizo: function () {
+        requestInfoHechizo() {
             var slot = this.game.gameUI.interfaz.getSelectedSlotHechizo();
             if (slot)
                 this.game.client.sendSpellInfo(slot);
-        },
+        }
 
-        comprar: function (slot, cantidad) {
+        comprar(slot, cantidad) {
             this.game.client.sendCommerceBuy(slot, cantidad);
-        },
+        }
 
-        vender: function (slot, cantidad) {
+        vender(slot, cantidad) {
             this.game.client.sendCommerceSell(slot, cantidad);
-        },
+        }
 
-        cerrarComerciar: function () {
+        cerrarComerciar() {
             this.game.client.sendCommerceEnd();
-        },
+        }
 
-        retirarOro: function (cantidad) {
+        retirarOro(cantidad) {
             this.game.client.sendBankExtractGold(cantidad);
-        },
+        }
 
-        depositarOro: function (cantidad) {
+        depositarOro(cantidad) {
             this.game.client.sendBankDepositGold(cantidad);
-        },
+        }
 
-        retirarItem: function (slot, cantidad) {
+        retirarItem(slot, cantidad) {
             this.game.client.sendBankExtractItem(slot, cantidad);
-        },
+        }
 
-        depositarItem: function (slot, cantidad) {
+        depositarItem(slot, cantidad) {
             this.game.client.sendBankDeposit(slot, cantidad);
-        },
+        }
 
-        cerrarBoveda: function () {
+        cerrarBoveda() {
             this.game.client.sendBankEnd();
-        },
+        }
 
-        tirarSelectedItem: function (cantidad) {
+        tirarSelectedItem(cantidad) {
             var selectedSlot = this.game.gameUI.interfaz.getSelectedSlotInventario();
             if (!selectedSlot)
                 return;
@@ -185,30 +185,28 @@ define(['enums'], function (Enums) {
                 this.game.gameUI.interfaz.resetSelectedSlotInventario();
             }
             this.game.client.sendDrop(selectedSlot, cantidad);
-        },
+        }
 
-
-        tirarTodoSelectedItem: function () {
+        tirarTodoSelectedItem() {
             var selectedSlot = this.game.gameUI.interfaz.getSelectedSlotInventario();
             if (!selectedSlot)
                 return;
             this.tirarSelectedItem(this.game.inventario.getSlot(selectedSlot).cantidad);
-        },
+        }
 
-        tirarOro: function (cantidad) {
+        tirarOro(cantidad) {
             if (cantidad > (this.game.atributos.oro))
                 cantidad = this.game.atributos.oro;
             if (cantidad > this.MAX_CANTIDAD_ITEM)
                 cantidad = this.MAX_CANTIDAD_ITEM;
             this.game.client.sendDrop(31, cantidad); // por alguna razon 31 es el "slot" del oro
-        },
+        }
 
-        tirarTodoOro: function () {
+        tirarTodoOro() {
             this.tirarOro(this.MAX_CANTIDAD_ITEM);
-        },
+        }
 
-
-    });
+    }
 
     return Acciones;
 });

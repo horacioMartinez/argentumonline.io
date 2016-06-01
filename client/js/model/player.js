@@ -1,11 +1,10 @@
 define(['model/character'], function (Character) {
 
-    var Player = Character.extend({
-        MAX_LEVEL: 10,
+    class Player extends Character {
 
-        init: function (CharIndex, X, Y, Heading, Name, clan) {
+        constructor(CharIndex, X, Y, Heading, Name, clan) {
 
-            this._super(CharIndex, X, Y, Heading, Name, clan);
+            super(CharIndex, X, Y, Heading, Name, clan);
 
             this.forcedCaminar = []; // vector con las pos de mov forzado
             this.moviendose = 0;
@@ -20,45 +19,44 @@ define(['model/character'], function (Character) {
 
             this.paralizado = false;
             this.meditando = false;
-        },
+        }
 
-        comenzarCaminar: function (direccion) {
+        comenzarCaminar(direccion) {
             this.moviendose++;
             this.lastDirPressed.push(direccion);
-        },
+        }
 
-        onCaminar: function (callback) {
+        onCaminar(callback) {
             this.caminarCallback = callback;
-        },
+        }
 
-        onPuedeCaminar: function (callback) {
+        onPuedeCaminar(callback) {
             this.puedeCaminarCallback = callback;
-        },
+        }
 
-        onCambioHeading: function (callback) {
+        onCambioHeading(callback) {
             this.cambioHeadingCallback = callback;
-        },
+        }
 
         // moverse tiene que ver con el renderer, caminar con enviar mensajes del sv
-        setOnMoverse: function(callback){ // cb params: x,y
-          this._moverseCallback = callback;
-        },
+        setOnMoverse(callback) { // cb params: x,y
+            this._moverseCallback = callback;
+        }
 
-        setOnMoverseBegin: function(cb){
+        setOnMoverseBegin(cb) {
             this._comenzarMoverseCallback = cb;
-        },
+        }
 
-
-        hasMoved: function () {
+        hasMoved() {
             if (this.moviendoseForzado) { // moviendoseForzado difiere de forcedcaminar en que este se setea una vez que comienza el movimiento, el otro cuando le llega el mensaje. Es necesario este checkeo porque si llega el mensaje y esta en movimiento, el hasmoved de ese movimiento afectaria al forcedcaminar
                 this.moviendose--;
                 this.forcedCaminar.shift(); // remueve primer index, ForcedCaminar es una cola con los mensajes de caminar forzado que llegaron
                 this.moviendoseForzado = false;
             }
             PIXI.ticker.shared.remove(this._updateMovement, this);
-        },
+        }
 
-        tratarDeCaminar: function () {
+        tratarDeCaminar() {
 
             if (!this.getDirMov())
                 return false;
@@ -76,22 +74,23 @@ define(['model/character'], function (Character) {
                 }
                 return false;
             }
-        },
+        }
 
-        terminarDeCaminar: function (direccion) {
+        terminarDeCaminar(direccion) {
             if ((this.lastDirPressed.indexOf(direccion) > -1)) {
                 this.moviendose--;
                 this.lastDirPressed.splice(this.lastDirPressed.indexOf(direccion), 1);
             }
-        },
+        }
 
-        getDirMov: function () {
+        getDirMov() {
             if (this.forcedCaminar[0])
                 return this.forcedCaminar[0];
             return this.lastDirPressed[this.lastDirPressed.length - 1];
-        },
+        }
+
         /*
-         resetMovement: function () {
+         resetMovement() {
          log.error("RESET MOVEMENT!");
 
          if (this.movement.inProgress) {
@@ -106,27 +105,27 @@ define(['model/character'], function (Character) {
          //this.movement.startTime -= 140; // numero arbitrario, mientras mas grande menos tiempo desde que pasa de mapa hasta que checkea si estan apretadas las flechas para moverse (esto es para que al pasar de mapas donde quedas apuntando a la salida no te vuelva a cambiar de mapa instantaneamente)
          }
 
-         },
+         }
          */
-        tratarDeMover: function(){
-            if ( (this.moviendose && this.movement.inProgress === false) && this.tratarDeCaminar()) {
+        tratarDeMover() {
+            if ((this.moviendose && this.movement.inProgress === false) && this.tratarDeCaminar()) {
                 this._comenzarMoverseCallback(this.getDirMov());
                 this._crearMovimiento(this._moverseCallback);
                 return true;
             }
             return false;
-        },
+        }
 
-        mover: function (callback_mov) {
+        mover(callback_mov) {
             log.error("usar caminar en player no mover!")
-        },
+        }
 
-        forceCaminar: function (direccion) {
+        forceCaminar(direccion) {
             this.forcedCaminar.push(direccion);
             this.moviendose++;
-        },
+        }
 
-    });
+    }
 
     return Player;
 });

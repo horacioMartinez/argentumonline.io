@@ -2,17 +2,17 @@
  * Created by horacio on 2/22/16.
  */
 
-define(["text!../../../menus/comerciar.html!strip",'ui/popups/popup', 'ui/game/itemgrid', 'jquery-ui'], function (DOMdata,PopUp, ItemGrid) {
+define(["text!../../../menus/comerciar.html!strip", 'ui/popups/popup', 'ui/game/itemgrid', 'jquery-ui'], function (DOMdata, PopUp, ItemGrid) {
 
-    var Comerciar = PopUp.extend({
-        init: function (game, acciones) {
-            this._super(DOMdata);
+    class Comerciar extends PopUp {
+        constructor(game, acciones) {
+            super(DOMdata);
 
             this.game = game;
             this.acciones = acciones;
 
-            this.shopGrid = new ItemGrid("comerciarGridComprar",false);
-            this.userGrid = new ItemGrid("comerciarGridVender",true);
+            this.shopGrid = new ItemGrid("comerciarGridComprar", false);
+            this.userGrid = new ItemGrid("comerciarGridVender", true);
 
             /*$("#comerciarGridComprar").$( "#droppable" ).droppable({ // <-- TODO: grid dropeables
              activeClass: "ui-state-default",
@@ -26,10 +26,10 @@ define(["text!../../../menus/comerciar.html!strip",'ui/popups/popup', 'ui/game/i
              });*/
 
             this.initCallbacks();
-        },
+        }
 
-        show: function () {
-            this._super();
+        show() {
+            super.show();
             var self = this;
             this.game.inventario.forEachSlot(
                 function (slot) {
@@ -38,24 +38,25 @@ define(["text!../../../menus/comerciar.html!strip",'ui/popups/popup', 'ui/game/i
                 });
             this.shopGrid.resetSelectedSlot();
             this.userGrid.resetSelectedSlot();
-        },
+        }
 
-        cambiarSlotCompra: function (Slot, Amount, numGrafico) {
+        cambiarSlotCompra(Slot, Amount, numGrafico) {
             this.shopGrid.modificarSlot(Slot, Amount, numGrafico);
-        },
+        }
 
-        cambiarSlotVenta: function (Slot, Amount, numGrafico) {
+        cambiarSlotVenta(Slot, Amount, numGrafico) {
             this.userGrid.modificarSlot(Slot, Amount, numGrafico);
-        },
+        }
 
-        borrarSlotCompra: function (slot) {
+        borrarSlotCompra(slot) {
             this.shopGrid.borrarSlot(slot);
-        },
-        borrarSlotVenta: function (slot) {
-            this.userGrid.borrarSlot(slot);
-        },
+        }
 
-        initCallbacks: function () {
+        borrarSlotVenta(slot) {
+            this.userGrid.borrarSlot(slot);
+        }
+
+        initCallbacks() {
             var self = this;
 
             $("#comerciarBotonComprar").click(function () {
@@ -98,14 +99,14 @@ define(["text!../../../menus/comerciar.html!strip",'ui/popups/popup', 'ui/game/i
                     var item = self.game.inventario.getSlot(slot);
                     self.displayItemData(item);
                 });
-        },
+        }
 
-        clearDom: function(){
-            this._super();
+        clearDom() {
+            super.clearDom();
             $('#comerciarInputCantidad').val(1);
-        },
+        }
 
-        displayItemData: function(item){
+        displayItemData(item) {
             var minLabel = "";
             var maxLabel = "";
 
@@ -122,10 +123,10 @@ define(["text!../../../menus/comerciar.html!strip",'ui/popups/popup', 'ui/game/i
             var minVal = item.minDef || item.minHit;
             var maxVal = item.maxDef || item.maxHit;
 
-            this.completarLabels(item.objName.toUpperCase(),item.precio,minLabel,minVal,maxLabel,maxVal);
-        },
+            this.completarLabels(item.objName.toUpperCase(), item.precio, minLabel, minVal, maxLabel, maxVal);
+        }
 
-        completarLabels: function(nombreVal, precioVal, minLabel, minVal, maxLabel, maxVal){
+        completarLabels(nombreVal, precioVal, minLabel, minVal, maxLabel, maxVal) {
             if (!minLabel)
                 minVal = "";
             if (!maxLabel)
@@ -140,7 +141,7 @@ define(["text!../../../menus/comerciar.html!strip",'ui/popups/popup', 'ui/game/i
             $('#comerciarMax').text(maxLabel);
             $('#comerciarMaxValor').text(maxVal);
         }
-    });
+    }
 
     return Comerciar;
 });

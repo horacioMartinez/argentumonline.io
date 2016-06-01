@@ -2,8 +2,8 @@
  * Created by horacio on 4/11/16.
  */
 
-define(["utils/charcodemap"],function(CharCodeMap){
-    
+define(["utils/charcodemap"], function (CharCodeMap) {
+
     return {
         keys: {
             toggleChat: CharCodeMap.keys.indexOf("ENTER"),

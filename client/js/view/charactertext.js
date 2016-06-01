@@ -2,7 +2,7 @@
  * Created by horacio on 3/9/16.
  */
 
-define(['font','lib/pixi'], function (Font,PIXI) {
+define(['font', 'lib/pixi'], function (Font, PIXI) {
 
     function CharacterText(escala) {
         PIXI.Container.call(this);
@@ -22,8 +22,13 @@ define(['font','lib/pixi'], function (Font,PIXI) {
     CharacterText.prototype.setEscala = function (escala) {
         var baseFont = Font.BASE_FONT;
         var fuente = baseFont._weight + ' ' + Math.round(baseFont._size * escala) + 'px ' + baseFont.font;
-        var aux = {font: fuente, align: "center", stroke: baseFont.stroke, strokeThickness: baseFont.strokeThickness * escala};
-        
+        var aux = {
+            font: fuente,
+            align: "center",
+            stroke: baseFont.stroke,
+            strokeThickness: baseFont.strokeThickness * escala
+        };
+
         this.estiloChat = $.extend({}, aux, Font.TALK);
         if (this._chat) {
             this._chat.style = this.estiloChat;
@@ -37,7 +42,12 @@ define(['font','lib/pixi'], function (Font,PIXI) {
 
         baseFont = Font.HOVERING_BASE_FONT;
         fuente = baseFont._weight + ' ' + Math.round(baseFont._size * escala) + 'px ' + baseFont.font;
-        this.estiloHovering = {font: fuente, align: "center", stroke: baseFont.stroke, strokeThickness: baseFont.strokeThickness * escala};
+        this.estiloHovering = {
+            font: fuente,
+            align: "center",
+            stroke: baseFont.stroke,
+            strokeThickness: baseFont.strokeThickness * escala
+        };
     };
 
     CharacterText.prototype.setPosition = function (x, y) {
@@ -64,7 +74,7 @@ define(['font','lib/pixi'], function (Font,PIXI) {
         return resultado;
     };
 
-    CharacterText.prototype.setChat = function (chat,color) {
+    CharacterText.prototype.setChat = function (chat, color) {
         this.removerChat();
         chat = this._formatearChat(chat);
         this.estiloChat.fill = color;
@@ -95,9 +105,9 @@ define(['font','lib/pixi'], function (Font,PIXI) {
     };
 
     //TODO: ordenar codigo repetido y animacion bien hecha (ademas en el chat animarlo cuando aparece, como que suba un poco)
-    CharacterText.prototype.setHoveringInfo = function (value,font, duration) {
+    CharacterText.prototype.setHoveringInfo = function (value, font, duration) {
 
-        duration = duration?duration:125;
+        duration = duration ? duration : 125;
 
         var estilo = $.extend({}, this.estiloHovering, font);
         var info = new PIXI.Text(value, estilo);
@@ -105,10 +115,10 @@ define(['font','lib/pixi'], function (Font,PIXI) {
         info.duracion = duration;
         info.tiempoPasado = 0;
         var self = this;
-        info.updateInfo = function(delta){
+        info.updateInfo = function (delta) {
             this.tiempoPasado += delta;
-            this.y -= delta/5;
-            var alpha = ((this.duracion- this.tiempoPasado)/ this.duracion );
+            this.y -= delta / 5;
+            var alpha = ((this.duracion - this.tiempoPasado) / this.duracion );
             if (alpha >= 0)
                 this.alpha = alpha;
             if (this.tiempoPasado > this.duracion) {

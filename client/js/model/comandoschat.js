@@ -2,22 +2,22 @@
  * Created by horacio on 3/9/16.
  */
 
-define(['enums','font'], function (Enums, Font) {
+define(['enums', 'font'], function (Enums, Font) {
 
-    var ComandosChat = Class.extend({
-        init: function (game) {
+    class ComandosChat {
+        constructor(game) {
             this.game = game;
-        },
+        }
 
-        _checkearYescribirMuerto: function () {
+        _checkearYescribirMuerto() {
             if (this.game.player.muerto) {
                 this.game.escribirMsgConsola(Enums.MensajeConsola.ESTAS_MUERTO, Font.INFO);
                 return true;
             }
             return false;
-        },
+        }
 
-        parsearChat: function (message) {
+        parsearChat(message) {
             //#cli guilds
             if (message[0] === '/') {
                 var args = message.match(/\S+/g);
@@ -360,9 +360,9 @@ define(['enums','font'], function (Enums, Font) {
             else {
                 return message;
             }
-        },
+        }
 
-    });
+    }
 
     return ComandosChat;
 });

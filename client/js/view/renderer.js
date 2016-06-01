@@ -1,8 +1,8 @@
 define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'view/charactertext', 'view/spritegrh', 'view/containerordenado'],
     function (Enums, Font, PIXI, Camera, CharacterSprites, Consola, CharacterText, SpriteGrh, ContainerOrdenado) {
 
-        var Renderer = Class.extend({
-            init: function (assetManager, escala) {
+        class Renderer {
+            constructor(assetManager, escala) {
                 this.POSICIONES_EXTRA_RENDER_X = 3;
                 this.POSICIONES_EXTRA_RENDER_Y = 7;
                 this.POSICIONES_EXTRA_TERRENO = 1; // no deberia ser necesario mas de una. (una pos extra en cada una de las 4 direcciones)
@@ -30,16 +30,16 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
                 this._spritesLayer2 = [];
                 this._spritesLayer3 = [];
                 this._spritesLayer4 = [];
-            },
+            }
 
-            _inicializarPixi: function () {
+            _inicializarPixi() {
                 this.pixiRenderer = new PIXI.autoDetectRenderer(this.camera.gridW * this.tilesize, this.camera.gridH * this.tilesize);
                 $(this.pixiRenderer.view).css('position', 'relative');
                 $("#gamecanvas").append(this.pixiRenderer.view);
                 this._initStage();
-            },
+            }
 
-            _initStage: function () {
+            _initStage() {
                 this.stage = new PIXI.Container();
                 this.gameStage = new PIXI.Container();
                 this.layer1 = new PIXI.Container();
@@ -58,10 +58,10 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
                 this.gameStage.addChild(this.layer4);
                 this.gameStage.addChild(this.gameText); // todo? gametext abajo o arriba de layer4?
                 this._initTerrenoSpriteGrid(this.layer1);
-            },
+            }
 
             // TODO!: (MUY IMPORTANTE) probar con rendertexture en las layers 1,2 y 4. (para los tiles animados generar un sprite)
-            _drawTerrenoIni: function () {
+            _drawTerrenoIni() {
                 var gridXIni = this.camera.gridX - this.POSICIONES_EXTRA_TERRENO;
                 var gridYIni = this.camera.gridY - this.POSICIONES_EXTRA_TERRENO;
                 this._lowestRowTerreno = 0; // variable que indica que indice tiene los sprites de pos mas baja, para que al caminar estos sean movidos a las mas altas
@@ -77,9 +77,9 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
                             this.terreno[i][j].cambiarGrh(this.assetManager.getTerrenoGrh(this.mapa.getGrh1(gridXIni + i, gridYIni + j)));
                     }
                 }
-            },
+            }
 
-            _initTerrenoSpriteGrid: function (layer1) {
+            _initTerrenoSpriteGrid(layer1) {
 
                 this.terreno = [];
                 for (var i = 0; i < this.camera.gridW + this.POSICIONES_EXTRA_TERRENO * 2; i++) {
@@ -89,9 +89,9 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
                         this.layer1.addChild(this.terreno[i][j]);
                     }
                 }
-            },
+            }
 
-            _getHeadingsGrhs: function (varIndice, num) {
+            _getHeadingsGrhs(varIndice, num) {
                 if (!num)
                     return null;
                 if (!varIndice[num])
@@ -104,13 +104,13 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
                 res[Enums.Heading.sur] = this.assetManager.getGrh(varIndice[num].down);
                 res[Enums.Heading.oeste] = this.assetManager.getGrh(varIndice[num].left);
                 return res;
-            },
+            }
 
-            agregarTextoConsola: function (texto, font) {
+            agregarTextoConsola(texto, font) {
                 this.consola.agregarTexto(texto, font);
-            },
+            }
 
-            agregarItem: function (item, numGrh) {
+            agregarItem(item, numGrh) {
                 if (!this.assetManager.getGrh(numGrh)) {
                     log.error("grh de item invalido!");
                     return;
@@ -119,17 +119,17 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
                 item.sprite.zOffset = -50; // para que item quede debajo de chars en misma cord Y ( para todo X)
                 this.layer3.addChild(item.sprite);
                 item.sprite.setPosition(item.x, item.y);
-            },
+            }
 
-            sacarItem: function (item) {
+            sacarItem(item) {
                 if (!item.sprite)
                     return;
                 this.layer3.removeChild(item.sprite);
                 item.sprite = null;
-            },
+            }
 
-            agregarCharacter: function (char, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, Name, clan,
-                                        NickColor) {
+            agregarCharacter(char, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, Name, clan,
+                             NickColor) {
                 var bodys = this._getHeadingsGrhs(this.cuerpos, Body);
                 var heads = this._getHeadingsGrhs(this.cabezas, Head);
                 var weapons = this._getHeadingsGrhs(this.armas, Weapon);
@@ -169,9 +169,9 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
                 }.bind(char));
 
                 char.onPositionChange();
-            },
+            }
 
-            cambiarCharacter: function (char, Body, Head, Heading, Weapon, Shield, Helmet, FX, FXLoops) {
+            cambiarCharacter(char, Body, Head, Heading, Weapon, Shield, Helmet, FX, FXLoops) {
                 var bodys = this._getHeadingsGrhs(this.cuerpos, Body);
                 var heads = this._getHeadingsGrhs(this.cabezas, Head);
                 var weapons = this._getHeadingsGrhs(this.armas, Weapon);
@@ -190,41 +190,41 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
                 char.sprite.setShields(shields);
                 char.sprite.setHelmets(helmets);
                 char.sprite._updateOrdenHijos();
-            },
+            }
 
-            cambiarNombreCharacter: function (char, nombre, clan, color) {
+            cambiarNombreCharacter(char, nombre, clan, color) {
                 var fontColor = color ? Font.NickColor[Font.NickColorIndex[color]] : Font.NickColor.CIUDADANO;
                 var font = Font.NOMBRE;
                 font.fill = fontColor;
                 char.sprite.setNombre(nombre, clan, font);
-            },
+            }
 
-            sacarCharacter: function (char) {
+            sacarCharacter(char) {
                 this.layer3.removeChild(char.sprite);
                 this.gameText.removeChild(char.texto);
                 char.texto = null;
                 char.sprite = null;
-            },
+            }
 
-            setCharacterChat: function (char, chat, r, g, b) {
+            setCharacterChat(char, chat, r, g, b) {
                 var color = "rgb(" + r + "," + g + "," + b + ")";
                 char.texto.setChat(chat, color);
-            },
+            }
 
-            setCharVisible: function (char, visible) {
+            setCharVisible(char, visible) {
                 char.sprite.setVisible(visible);
-            },
+            }
 
-            agregarCharacterHoveringInfo: function (char, valor, font, duracion) {
+            agregarCharacterHoveringInfo(char, valor, font, duracion) {
                 char.texto.setHoveringInfo(valor, font, duracion);
-            },
+            }
 
-            setCharacterFX: function (char, FX, FXLoops) {
+            setCharacterFX(char, FX, FXLoops) {
                 var grh = this.assetManager.getGrh(this.fxs[FX].animacion);
                 char.sprite.setFX(grh, this.fxs[FX].offX, this.fxs[FX].offY, FXLoops);
-            },
+            }
 
-            rescale: function (escala) {
+            rescale(escala) {
                 this.escala = escala;
                 this.pixiRenderer.resize(this.camera.gridW * this.tilesize * escala, this.camera.gridH * this.tilesize * escala);
                 this.gameStage.scale.x = escala;
@@ -238,39 +238,39 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
                     this.gameText.children[i].setEscala(escala);
                 }
                 this.consola.setEscala(escala);
-            },
+            }
 
-            clean: function (escala) {
+            clean(escala) {
                 while (this.stage.children.length > 0) {
                     var child = this.stage.getChildAt(0);
                     this.stage.removeChild(child);
                 }
                 this._initStage();
                 this.rescale(escala);
-            },
+            }
 
-            setBajoTecho: function (bajoT) {
+            setBajoTecho(bajoT) {
                 this.layer4.visible = !bajoT;
-            },
+            }
 
-            drawMapaIni: function (gridX, gridY) { // SOLO USARLO EN CAMBIO DE MAPA, SINO USAR RESETPOS. Limpia vectores, dibuja el terreno del mapa, almacena los tiles animados
+            drawMapaIni(gridX, gridY) { // SOLO USARLO EN CAMBIO DE MAPA, SINO USAR RESETPOS. Limpia vectores, dibuja el terreno del mapa, almacena los tiles animados
                 log.error("dibujando inicialmente mapa, solo deberia pasar en cambio de map");
                 this.resetCameraPosition(gridX, gridY);
                 this._syncGamePosition();
                 this._drawSpritesIni();
                 this._drawTerrenoIni();
-            },
+            }
 
-            resetCameraPosition: function (gridX, gridY) { // hecha por mi
+            resetCameraPosition(gridX, gridY) { // hecha por mi
                 this.camera.lookAtGridPos(gridX, gridY);
-            },
+            }
 
-            _syncGamePosition: function () {
+            _syncGamePosition() {
                 this.gameStage.x = -this.camera.x * this.escala;
                 this.gameStage.y = -this.camera.y * this.escala;
-            },
+            }
 
-            entityVisiblePorCamara: function (entity, heightTileOffset) {
+            entityVisiblePorCamara(entity, heightTileOffset) {
                 if (!entity.sprite)
                     return false;
 
@@ -286,23 +286,23 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
                     entityRect.y = (-this.gameStage.y + entityRect.y) / this.escala - this.tilesize * heightTileOffset;
                 }
                 return this.camera.rectVisible(entityRect);
-            },
+            }
 
-            entityEnTileVisible: function (entity) { // puede que no este en un tile visible pero si sea visible la entidad (para eso usar el de arriba)
+            entityEnTileVisible(entity) { // puede que no este en un tile visible pero si sea visible la entidad (para eso usar el de arriba)
                 return this.camera.isVisiblePosition(entity.gridX, entity.gridY, 0, 0);
-            },
+            }
 
-            moverPosition: function (x, y) {
+            moverPosition(x, y) {
                 this.camera.mover(x, y);
                 this._syncGamePosition();
-            },
+            }
 
-            updateTilesMov: function (dir) {
+            updateTilesMov(dir) {
                 this.updateTerrenoMov(dir);
                 this.updateLayersMov(dir);
-            },
+            }
 
-            updateTerrenoMov: function (dir) { // al moverse mueve la columna/fila que queda atras al frente de todo
+            updateTerrenoMov(dir) { // al moverse mueve la columna/fila que queda atras al frente de todo
                 var gridXIni = this.camera.gridX - this.POSICIONES_EXTRA_TERRENO;
                 var gridYIni = this.camera.gridY - this.POSICIONES_EXTRA_TERRENO;
                 var cols = this.camera.gridW + this.POSICIONES_EXTRA_TERRENO * 2;
@@ -358,17 +358,18 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
                         log.error("character heading invalido");
                         break;
                 }
-            },
-            _removeChilds: function (padre, gridHijos) {
+            }
+
+            _removeChilds(padre, gridHijos) {
                 _.each(gridHijos, function (fila) {
                     _.each(fila, function (hijo) {
                         if (hijo)
                             padre.removeChild(hijo);
                     });
                 });
-            },
+            }
 
-            _drawSpritesIni: function () {
+            _drawSpritesIni() {
 
                 this._removeChilds(this.layer2, this._spritesLayer2);
                 this._removeChilds(this.layer3, this._spritesLayer3);
@@ -406,9 +407,9 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
                         self._spritesLayer4[i][j] = nuevoSprite;
                     }
                 }, this.POSICIONES_EXTRA_RENDER_X, this.POSICIONES_EXTRA_RENDER_Y);
-            },
+            }
 
-            updateLayersMov: function (dir) {
+            updateLayersMov(dir) {
                 var self = this;
                 this.camera.forEachVisibleNextLinea(dir, function (i, j) {
                     var screenX = i * self.tilesize;
@@ -416,6 +417,7 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
                     var grh2 = self.mapa.getGrh2(i, j);
                     var grh3 = self.mapa.getGrh3(i, j);
                     var grh4 = self.mapa.getGrh4(i, j);
+                    var nuevoSprite;
                     if (grh2) {
                         if (self._spritesLayer2[i][j])
                             return;
@@ -456,32 +458,32 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
                         self._spritesLayer4[i][j] = null;
                     }
                 }, this.POSICIONES_EXTRA_RENDER_X, this.POSICIONES_EXTRA_RENDER_Y);
-            },
+            }
 
-            resetPos: function (gridX, gridY) {
+            resetPos(gridX, gridY) {
                 this.drawMapaIni(gridX, gridY);
                 //this.resetCameraPosition(gridX, gridY);
                 //this._syncGamePosition();
                 //this._drawTerrenoIni();
-            },
+            }
 
-            toggleLluvia: function () {
+            toggleLluvia() {
                 if (this.containerLluvia)
                     this.hideLluvia();
                 else
                     this.showLluvia();
-            },
+            }
 
-            hideLluvia: function () {
+            hideLluvia() {
                 if (!this.containerLluvia)
                     return;
                 PIXI.ticker.shared.remove(this._updateGotas, this);
                 this.stage.removeChild(this.containerLluvia);
                 this.gotas = null;
                 this.containerLluvia = null;
-            },
+            }
 
-            showLluvia: function () {
+            showLluvia() {
                 if (this.containerLluvia)
                     return;
                 this.gotas = [];
@@ -509,9 +511,9 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
                     this.containerLluvia.addChild(gota);
                 }
                 PIXI.ticker.shared.add(this._updateGotas, this);
-            },
+            }
 
-            _updateGotas: function (delta) {
+            _updateGotas(delta) {
                 // iterate through the sprites and update their position
                 for (var i = 0; i < this.gotas.length; i++) {
                     var gota = this.gotas[i];
@@ -531,16 +533,16 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
                         gota.x = Math.random() * this.pixiRenderer.width;
                     }
                 }
-            },
+            }
 
-            renderFrame: function () {
+            renderFrame() {
                 this.pixiRenderer.render(this.stage);
-            },
+            }
 
-            cambiarMapa: function (mapa) {
+            cambiarMapa(mapa) {
                 this.mapa = mapa;
-            },
+            }
 
-        });
+        }
         return Renderer;
     });

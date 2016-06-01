@@ -5,24 +5,24 @@
 
 define(['enums'], function (Enums) {
 
-    var Skills = Class.extend({
-        init: function () {
+    class Skills {
+        constructor() {
             this.MAX_PUNTOS_SKILL = 100;
             this._nombres = [];
             this._skills = [];
             this._initNombresSkills(this._nombres);
             this.puntosLibres = 0;
-        },
+        }
 
-        setSkillsLibres: function (cant) {
+        setSkillsLibres(cant) {
             this.puntosLibres = cant;
-        },
+        }
 
-        agregarSkillsLibres: function (cant) {
+        agregarSkillsLibres(cant) {
             this.puntosLibres += cant;
-        },
+        }
 
-        setSkills: function (skills) { // llegan cant puntos de skill i, porcentaje de skill i
+        setSkills(skills) { // llegan cant puntos de skill i, porcentaje de skill i
             this._skills = [];
             for (var i = 0; i < skills.length; i++) {
                 var skill = {};
@@ -32,48 +32,48 @@ define(['enums'], function (Enums) {
                 skill.nombre = this.getNombreSkill(skill.numSkill);
                 this._skills[skill.numSkill] = skill;
             }
-        },
+        }
 
-        asignarSkill: function (numSkill) {
+        asignarSkill(numSkill) {
             var skill = this._skills[numSkill];
             if ((this.puntosLibres < 1 ) || (skill.puntos >= this.MAX_PUNTOS_SKILL ))
                 return false;
             this.puntosLibres--;
             this._skills[numSkill].puntos++;
             return true;
-        },
+        }
 
-        desAsignarSkill: function (numSkill) {
+        desAsignarSkill(numSkill) {
             var skill = this._skills[numSkill];
-            if (skill.puntos < 0 )
+            if (skill.puntos < 0)
                 return false;
             this.puntosLibres++;
             this._skills[numSkill].puntos--;
-        },
+        }
 
-        getPuntosSkill: function(numSkill){
+        getPuntosSkill(numSkill) {
             return this._skills[numSkill].puntos;
-        },
+        }
 
-        forEachSkill: function (callback) { // callback(numSkill,puntos,porcentaje,nombre)
+        forEachSkill(callback) { // callback(numSkill,puntos,porcentaje,nombre)
             _.each(this._skills, function (skill) {
                 if (skill) {
-                    callback(skill.numSkill,skill.puntos,skill.porcentaje,skill.nombre);
+                    callback(skill.numSkill, skill.puntos, skill.porcentaje, skill.nombre);
                 }
             });
-        },
+        }
 
-        getNombreSkill: function (numSkill) {
+        getNombreSkill(numSkill) {
             return this._nombres[numSkill];
-        },
+        }
 
-        _initNombresSkills: function (nombres) { // TODO: sacar esto de aca
+        _initNombresSkills(nombres) { // TODO: sacar esto de aca
             nombres[Enums.Skill.magia] = "Magia";
             nombres[Enums.Skill.robar] = "Robar";
             nombres[Enums.Skill.tacticas] = "Evasión en combate";
             nombres[Enums.Skill.armas] = "Combate cuerpo a cuerpo";
             nombres[Enums.Skill.meditar] = "Meditar";
-            nombres[Enums.Skill.apuñalar] = "Apuñalar";
+            nombres[Enums.Skill.apunalar] = "Apuñalar";
             nombres[Enums.Skill.ocultarse] = "Ocultarse";
             nombres[Enums.Skill.supervivencia] = "Supervivencia";
             nombres[Enums.Skill.talar] = "Talar árboles";
@@ -89,9 +89,8 @@ define(['enums'], function (Enums) {
             nombres[Enums.Skill.wrestling] = "Combate sin armas";
             nombres[Enums.Skill.navegacion] = "Navegación";
             nombres[Enums.Skill.fundirmetal] = "????";
-        },
-
-    });
+        }
+    }
     return Skills;
 });
 

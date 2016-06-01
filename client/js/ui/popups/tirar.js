@@ -2,24 +2,23 @@
  * Created by horacio on 3/21/16.
  */
 
-define(["text!../../../menus/tirar.html!strip",'ui/popups/popup','ui/popups/popup'], function (DOMdata,PopUp) {
+define(["text!../../../menus/tirar.html!strip", 'ui/popups/popup', 'ui/popups/popup'], function (DOMdata, PopUp) {
 
-    var Tirar = PopUp.extend({
-        init: function (game,acciones) {
-            this._super(DOMdata);
+    class Tirar extends PopUp {
+        constructor(game, acciones) {
+            super(DOMdata);
 
             this.game = game;
             this.acciones = acciones;
             this.initCallbacks();
-        },
+        }
 
-
-        show: function (tirandoOro) {
-            this._super();
+        show(tirandoOro) {
+            super.show();
             this.tirandoOro = tirandoOro;
-        },
+        }
 
-        initCallbacks: function () {
+        initCallbacks() {
             var self = this;
             $("#tirarBotonTirar").click(function () {
                 var cantidad = $("#tirarInputCantidad").val();
@@ -38,11 +37,11 @@ define(["text!../../../menus/tirar.html!strip",'ui/popups/popup','ui/popups/popu
                 if (self.tirandoOro)
                     self.acciones.tirarTodoOro();
                 else
-                self.acciones.tirarTodoSelectedItem();
+                    self.acciones.tirarTodoSelectedItem();
                 self.hide();
             });
-        },
-    });
+        }
+    }
 
     return Tirar;
 });

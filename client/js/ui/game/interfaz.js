@@ -2,10 +2,10 @@
  * Created by horacio on 2/28/16.
  */
 
-define(['utils/charcodemap','ui/game/itemgrid'], function (CharCodeMap,ItemGrid) {
+define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGrid) {
 
-    var Interfaz = Class.extend({
-        init: function (game, macros, acciones) {
+    class Interfaz {
+        constructor(game, macros, acciones) {
             this.acciones = acciones;
             this.macros = macros;
             this.game = game;
@@ -14,9 +14,9 @@ define(['utils/charcodemap','ui/game/itemgrid'], function (CharCodeMap,ItemGrid)
             this.inventarioGrid.setDobleClickCallback(function (slot) {
                 self.acciones.usarConDobleClick(slot);
             });
-        },
+        }
 
-        inicializar: function () {
+        inicializar() {
             var self = this;
 
             $("#botonInventario").click(function () {
@@ -71,36 +71,36 @@ define(['utils/charcodemap','ui/game/itemgrid'], function (CharCodeMap,ItemGrid)
             if (Detect.isFirefox()) {
                 self.setHechizosScrollFirefoxFix(self);
             }
-        },
+        }
 
-        cambiarSlotInventario: function (numSlot, Amount, numGrafico, equiped) {
+        cambiarSlotInventario(numSlot, Amount, numGrafico, equiped) {
             this.inventarioGrid.modificarSlot(numSlot, Amount, numGrafico, equiped);
-        },
+        }
 
-        borrarSlotInventario: function (slot) {
+        borrarSlotInventario(slot) {
             this.inventarioGrid.borrarSlot(slot);
-        },
+        }
 
-        resetSelectedSlotInventario: function () {
+        resetSelectedSlotInventario() {
             this.inventarioGrid.resetSelectedSlot();
-        },
+        }
 
-        getSelectedSlotInventario: function () {
+        getSelectedSlotInventario() {
             var slot = this.inventarioGrid.getSelectedSlot();
             if (slot > 0)
                 return slot;
-        },
+        }
 
-        getSelectedSlotHechizo: function () {
+        getSelectedSlotHechizo() {
             res = $('#hechizos').val();
             if (res) {
                 return res;
             }
             else
                 return 0;
-        },
+        }
 
-        modificarSlotHechizo: function (slot, texto) {
+        modificarSlotHechizo(slot, texto) {
             var elemento = $('#hechizos option[value=' + slot + ']');
             if (!elemento.length) { // nuevo elemento
                 var $nuevoHechizo = $("<option>").attr('value', slot).text(texto);
@@ -109,21 +109,21 @@ define(['utils/charcodemap','ui/game/itemgrid'], function (CharCodeMap,ItemGrid)
             else {
                 $(elemento).text(texto);
             }
-        },
+        }
 
-        updateAgilidad: function (agi) {
+        updateAgilidad(agi) {
             $("#indicadorAgilidad").text(agi);
-        },
+        }
 
-        updateFuerza: function (fuerza) {
+        updateFuerza(fuerza) {
             $("#indicadorFuerza").text(fuerza);
-        },
+        }
 
-        updateOro: function (oro) {
+        updateOro(oro) {
             $("#indicadorOro").text(oro);
-        },
+        }
 
-        _updateBarra: function (cant, max, $barra, $label, invertida) {
+        _updateBarra(cant, max, $barra, $label, invertida) {
             var porcentaje = 100;
             if (max) {
                 if (invertida)
@@ -133,57 +133,63 @@ define(['utils/charcodemap','ui/game/itemgrid'], function (CharCodeMap,ItemGrid)
             }
             $barra.css("width", porcentaje + "%");
             $label.text(cant + "/" + max);
-        },
+        }
 
-        updateBarraEnergia: function (cant, max) {
+        updateBarraEnergia(cant, max) {
             this._updateBarra(cant, max, $("#barraEnergiaUsada"), $("#barraEnergiaTexto"), true);
-        },
-        updateBarraVida: function (cant, max) {
+        }
+
+        updateBarraVida(cant, max) {
             this._updateBarra(cant, max, $("#barraSaludUsada"), $("#barraSaludTexto"), true);
-        },
-        updateBarraMana: function (cant, max) {
+        }
+
+        updateBarraMana(cant, max) {
             this._updateBarra(cant, max, $("#barraManaUsada"), $("#barraManaTexto"), true);
-        },
-        updateBarraHambre: function (cant, max) {
+        }
+
+        updateBarraHambre(cant, max) {
             this._updateBarra(cant, max, $("#barraHambreUsada"), $("#barraHambreTexto"), true);
-        },
-        updateBarraSed: function (cant, max) {
+        }
+
+        updateBarraSed(cant, max) {
             this._updateBarra(cant, max, $("#barraSedUsada"), $("#barraSedTexto"), true);
-        },
-        updateBarraExp: function (cant, max) {
+        }
+
+        updateBarraExp(cant, max) {
             this._updateBarra(cant, max, $("#barraExpUsada"), $("#barraExpTexto"));
-        },
-        updateNivel: function (nivel) {
+        }
+
+        updateNivel(nivel) {
             $("#indicadorNivel").text("Nivel " + nivel);
-        },
+        }
 
-        updateIndicadorPosMapa: function (mapa, x, y) {
+        updateIndicadorPosMapa(mapa, x, y) {
             $("#indicadorMapa").text("Mapa " + mapa + "  X: " + x + " Y: " + y);
-        },
+        }
 
-        setMouseCrosshair: function (visible) {
+        setMouseCrosshair(visible) {
             if (visible) {
                 $("#gamecanvas").addClass("crosshair");
             }
             else
                 $("#gamecanvas").removeClass("crosshair");
-        },
+        }
 
-        setSeguroResucitacion: function (activado) {
+        setSeguroResucitacion(activado) {
             if (!activado)
                 $("#botonSeguroResucitar").addClass("seguroOff");
             else
                 $("#botonSeguroResucitar").removeClass("seguroOff");
-        },
+        }
 
-        setSeguroAtacar: function (activado) {
+        setSeguroAtacar(activado) {
             if (!activado)
                 $("#botonSeguroAtacar").addClass("seguroOff");
             else
                 $("#botonSeguroAtacar").removeClass("seguroOff");
-        },
+        }
 
-        setHechizosScrollFirefoxFix: function (self) {
+        setHechizosScrollFirefoxFix(self) {
             var $hechizos = $("#hechizos");
             self.hechizos_realSelectedSlot = 1;
 
@@ -197,7 +203,7 @@ define(['utils/charcodemap','ui/game/itemgrid'], function (CharCodeMap,ItemGrid)
             var left = CharCodeMap.keys.indexOf("LEFT");
             var right = CharCodeMap.keys.indexOf("RIGHT");
 
-            $hechizos.change(function(){
+            $hechizos.change(function () {
                 $hechizos.blur();
                 //setTimeout(function () {
                 //    $hechizos.val(self.hechizos_realSelectedSlot);
@@ -220,7 +226,7 @@ define(['utils/charcodemap','ui/game/itemgrid'], function (CharCodeMap,ItemGrid)
 
         }
 
-    });
+    }
 
     return Interfaz;
 });

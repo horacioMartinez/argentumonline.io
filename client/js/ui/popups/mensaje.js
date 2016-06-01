@@ -2,28 +2,27 @@
  * Created by horacio on 4/3/16.
  */
 
-define(["text!../../../menus/mensajeGlobal.html!strip",'ui/popups/popup'], function (DOMdata,PopUp) {
+define(["text!../../../menus/mensajeGlobal.html!strip", 'ui/popups/popup'], function (DOMdata, PopUp) {
 
-    var Mensaje = PopUp.extend({
-        init: function () {
-            this._super(DOMdata,true);
+    class Mensaje extends PopUp {
+        constructor() {
+            super(DOMdata, true);
             this.initCallbacks();
-        },
+        }
 
-
-        show: function (mensaje) {
-            this._super();
+        show(mensaje) {
+            super.show();
             $("#mensajeContenido").text(mensaje);
             $("#mensajeBotonCerrar").focus();
-        },
+        }
 
-        initCallbacks: function () {
+        initCallbacks() {
             var self = this;
             $("#mensajeBotonCerrar").click(function () {
                 self.hide();
             });
-        },
-    });
+        }
+    }
 
     return Mensaje;
 });

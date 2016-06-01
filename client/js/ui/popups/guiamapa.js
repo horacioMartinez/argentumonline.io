@@ -4,13 +4,13 @@
 
 define(["text!../../../menus/mapa.html!strip", 'ui/popups/popup'], function (DOMdata, PopUp) {
 
-    var GuiaMapa = PopUp.extend({
-        init: function (game, acciones) {
-            this._super(DOMdata);
+    class GuiaMapa extends PopUp {
+        constructor(game, acciones) {
+            super(DOMdata);
             this.initCallbacks();
-        },
+        }
 
-        initCallbacks: function () {
+        initCallbacks() {
             var self = this;
             $("#mapaBotonCerrar").click(function () {
                 self.hide();
@@ -19,8 +19,8 @@ define(["text!../../../menus/mapa.html!strip", 'ui/popups/popup'], function (DOM
                 $("#popUpMapa").toggleClass("mapaSeccionB");
             });
 
-        },
-    });
+        }
+    }
 
     return GuiaMapa;
 });

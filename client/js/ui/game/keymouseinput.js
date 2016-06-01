@@ -4,39 +4,39 @@
 
 
 define(['enums'], function (Enums) {
-    var KeyMouseInput = Class.extend({
-        init: function (game,acciones) {
+    class KeyMouseInput {
+        constructor(game, acciones) {
             this.acciones = acciones;
             this.game = game;
             this.keys = null;
-        },
+        }
 
-        setKeys: function(keys){
+        setKeys(keys) {
             this.keys = keys;
-        },
+        }
 
-        isCaminarKey: function (key) {
+        isCaminarKey(key) {
             return ( (key === this.keys.caminarEste) || (key === this.keys.caminarOeste) || (key === this.keys.caminarNorte) || (key === this.keys.caminarSur));
-        },
+        }
 
-        getTeclasCaminar: function(){
-            return [this.keys.caminarEste,this.keys.caminarOeste,this.keys.caminarNorte,this.keys.caminarSur];
-        },
+        getTeclasCaminar() {
+            return [this.keys.caminarEste, this.keys.caminarOeste, this.keys.caminarNorte, this.keys.caminarSur];
+        }
 
-        click: function () {
+        click() {
             if ((!this.game.started) || (this.game.isPaused))
                 return;
             this.acciones.click();
-        },
+        }
 
-        doubleClick: function () {
+        doubleClick() {
 
             if ((!this.game.started) || (this.game.isPaused))
                 return;
             this.acciones.doubleClick();
-        },
+        }
 
-        keyUp: function (key) {
+        keyUp(key) {
             var game = this.game;
             var acciones = this.acciones;
             var keys = this.keys;
@@ -60,9 +60,9 @@ define(['enums'], function (Enums) {
                     break;
 
             }
-        },
+        }
 
-        keyDown: function (key) {
+        keyDown(key) {
             var game = this.game;
             var acciones = this.acciones;
             var keys = this.keys;
@@ -110,8 +110,8 @@ define(['enums'], function (Enums) {
                     break;
             }
             return continuar;
-        },
-    });
+        }
+    }
 
     return KeyMouseInput;
 });

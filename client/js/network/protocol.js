@@ -6340,14 +6340,13 @@ function HigherAdminsMessage (buffer) {
 
 function ServerPacketDecodeAndDispatch(buffer, handler) {
     if (buffer.length() < 1) return;
-    var PacketID = buffer.PeekByte();
+    var PacketID = buffer.ReadByte();
 
     switch (PacketID) {
 
         case 0:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Clase = buffer.ReadByte();
 
             handler.handleLogged( Clase );
@@ -6358,7 +6357,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 1:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handleRemoveDialogs(  );
 
@@ -6368,7 +6366,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 2:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var CharIndex = buffer.ReadInteger();
 
             handler.handleRemoveCharDialog( CharIndex );
@@ -6379,7 +6376,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 3:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handleNavigateToggle(  );
 
@@ -6389,7 +6385,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 4:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handleDisconnect(  );
 
@@ -6399,7 +6394,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 5:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handleCommerceEnd(  );
 
@@ -6409,7 +6403,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 6:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handleBankEnd(  );
 
@@ -6419,7 +6412,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 7:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handleCommerceInit(  );
 
@@ -6429,7 +6421,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 8:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Banco = buffer.ReadLong();
 
             handler.handleBankInit( Banco );
@@ -6440,7 +6431,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 9:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var DestUserName = buffer.ReadUnicodeString();
 
             handler.handleUserCommerceInit( DestUserName );
@@ -6451,7 +6441,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 10:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handleUserCommerceEnd(  );
 
@@ -6461,7 +6450,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 11:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handleUserOfferConfirm(  );
 
@@ -6471,7 +6459,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 12:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Chat = buffer.ReadUnicodeString();
             var FontIndex = buffer.ReadByte();
 
@@ -6483,7 +6470,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 13:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handleShowBlacksmithForm(  );
 
@@ -6493,7 +6479,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 14:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handleShowCarpenterForm(  );
 
@@ -6503,7 +6488,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 15:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Value = buffer.ReadInteger();
 
             handler.handleUpdateSta( Value );
@@ -6514,7 +6498,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 16:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Value = buffer.ReadInteger();
 
             handler.handleUpdateMana( Value );
@@ -6525,7 +6508,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 17:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Value = buffer.ReadInteger();
 
             handler.handleUpdateHP( Value );
@@ -6536,7 +6518,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 18:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Value = buffer.ReadLong();
 
             handler.handleUpdateGold( Value );
@@ -6547,7 +6528,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 19:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Value = buffer.ReadLong();
 
             handler.handleUpdateBankGold( Value );
@@ -6558,7 +6538,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 20:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Value = buffer.ReadLong();
 
             handler.handleUpdateExp( Value );
@@ -6569,7 +6548,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 21:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Map = buffer.ReadInteger();
             var Version = buffer.ReadInteger();
 
@@ -6581,7 +6559,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 22:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var X = buffer.ReadByte();
             var Y = buffer.ReadByte();
 
@@ -6593,7 +6570,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 23:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Chat = buffer.ReadUnicodeString();
             var CharIndex = buffer.ReadInteger();
             var R = buffer.ReadByte();
@@ -6608,7 +6584,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 24:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Chat = buffer.ReadUnicodeString();
             var FontIndex = buffer.ReadByte();
 
@@ -6620,7 +6595,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 25:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Chat = buffer.ReadUnicodeString();
 
             handler.handleGuildChat( Chat );
@@ -6631,7 +6605,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 26:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Chat = buffer.ReadUnicodeString();
 
             handler.handleShowMessageBox( Chat );
@@ -6642,7 +6615,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 27:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var UserIndex = buffer.ReadInteger();
 
             handler.handleUserIndexInServer( UserIndex );
@@ -6653,7 +6625,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 28:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var CharIndex = buffer.ReadInteger();
 
             handler.handleUserCharIndexInServer( CharIndex );
@@ -6664,7 +6635,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 29:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var CharIndex = buffer.ReadInteger();
             var Body = buffer.ReadInteger();
             var Head = buffer.ReadInteger();
@@ -6688,7 +6658,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 30:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var CharIndex = buffer.ReadInteger();
 
             handler.handleCharacterRemove( CharIndex );
@@ -6699,7 +6668,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 31:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var CharIndex = buffer.ReadInteger();
             var NewName = buffer.ReadUnicodeString();
 
@@ -6711,7 +6679,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 32:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var CharIndex = buffer.ReadInteger();
             var X = buffer.ReadByte();
             var Y = buffer.ReadByte();
@@ -6724,7 +6691,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 33:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Direction = buffer.ReadByte();
 
             handler.handleForceCharMove( Direction );
@@ -6735,7 +6701,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 34:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var CharIndex = buffer.ReadInteger();
             var Body = buffer.ReadInteger();
             var Head = buffer.ReadInteger();
@@ -6754,7 +6719,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 35:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var X = buffer.ReadByte();
             var Y = buffer.ReadByte();
             var GrhIndex = buffer.ReadInteger();
@@ -6767,7 +6731,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 36:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var X = buffer.ReadByte();
             var Y = buffer.ReadByte();
 
@@ -6779,7 +6742,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 37:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var X = buffer.ReadByte();
             var Y = buffer.ReadByte();
             var Blocked = buffer.ReadBoolean();
@@ -6792,7 +6754,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 38:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var MidiID = buffer.ReadInteger();
             var Loops = buffer.ReadInteger();
 
@@ -6804,7 +6765,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 39:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var WaveID = buffer.ReadByte();
             var X = buffer.ReadByte();
             var Y = buffer.ReadByte();
@@ -6817,7 +6777,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 40:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Data = buffer.ReadUnicodeString();
 
             handler.handleGuildList( Data );
@@ -6828,7 +6787,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 41:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var X = buffer.ReadByte();
             var Y = buffer.ReadByte();
 
@@ -6840,7 +6798,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 42:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handlePauseToggle(  );
 
@@ -6850,7 +6807,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 43:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handleRainToggle(  );
 
@@ -6860,7 +6816,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 44:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var CharIndex = buffer.ReadInteger();
             var FX = buffer.ReadInteger();
             var FXLoops = buffer.ReadInteger();
@@ -6873,7 +6828,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 45:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var MaxHp = buffer.ReadInteger();
             var MinHp = buffer.ReadInteger();
             var MaxMan = buffer.ReadInteger();
@@ -6893,7 +6847,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 46:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Skill = buffer.ReadByte();
 
             handler.handleWorkRequestTarget( Skill );
@@ -6904,7 +6857,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 47:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Slot = buffer.ReadByte();
             var ObjIndex = buffer.ReadInteger();
             var ObjName = buffer.ReadUnicodeString();
@@ -6926,7 +6878,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 48:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Slot = buffer.ReadByte();
             var ObjIndex = buffer.ReadInteger();
             var ObjName = buffer.ReadUnicodeString();
@@ -6947,7 +6898,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 49:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Slot = buffer.ReadByte();
             var SpellID = buffer.ReadInteger();
             var Name = buffer.ReadUnicodeString();
@@ -6960,7 +6910,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 50:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Fuerza = buffer.ReadByte();
             var Agilidad = buffer.ReadByte();
             var Inteligencia = buffer.ReadByte();
@@ -6975,7 +6924,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 51:
         {
                 
-        buffer.ReadByte(); /* PacketID */ /* Packet con count! */
+        /* Packet con count! */
         var Items = [];
         var Count = buffer.ReadInteger();
         var i; 
@@ -7000,7 +6949,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 52:
         {
                 
-        buffer.ReadByte(); /* PacketID */ /* Packet con count! */
+        /* Packet con count! */
         var Items = [];
         var Count = buffer.ReadInteger();
         var i; 
@@ -7025,7 +6974,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 53:
         {
                 
-        buffer.ReadByte(); /* PacketID */ /* Packet con count! */
+        /* Packet con count! */
         var Items = [];
         var Count = buffer.ReadInteger();
         var i; 
@@ -7049,7 +6998,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 54:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handleRestOK(  );
 
@@ -7059,7 +7007,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 55:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Message = buffer.ReadUnicodeString();
 
             handler.handleErrorMsg( Message );
@@ -7070,7 +7017,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 56:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handleBlind(  );
 
@@ -7080,7 +7026,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 57:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handleDumb(  );
 
@@ -7090,7 +7035,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 58:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Texto = buffer.ReadUnicodeString();
             var Grh = buffer.ReadInteger();
 
@@ -7102,7 +7046,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 59:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Slot = buffer.ReadByte();
             var ObjName = buffer.ReadUnicodeString();
             var Amount = buffer.ReadInteger();
@@ -7123,7 +7066,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 60:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var MaxAgu = buffer.ReadByte();
             var MinAgu = buffer.ReadByte();
             var MaxHam = buffer.ReadByte();
@@ -7137,7 +7079,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 61:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Asesino = buffer.ReadLong();
             var Bandido = buffer.ReadLong();
             var Burgues = buffer.ReadLong();
@@ -7154,7 +7095,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 62:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var CiudadanosMatados = buffer.ReadLong();
             var CriminalesMatados = buffer.ReadLong();
             var UsuariosMatados = buffer.ReadLong();
@@ -7170,7 +7110,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 63:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var SkillPoints = buffer.ReadInteger();
 
             handler.handleLevelUp( SkillPoints );
@@ -7181,7 +7120,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 64:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var ForumType = buffer.ReadLong();
             var Title = buffer.ReadUnicodeString();
             var Author = buffer.ReadUnicodeString();
@@ -7195,7 +7133,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 65:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Visibilidad = buffer.ReadByte();
             var CanMakeSticky = buffer.ReadByte();
 
@@ -7207,7 +7144,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 66:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var charIndex = buffer.ReadInteger();
             var invisible = buffer.ReadBoolean();
 
@@ -7219,7 +7155,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 67:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Fuerza = buffer.ReadByte();
             var Agilidad = buffer.ReadByte();
             var Inteligencia = buffer.ReadByte();
@@ -7234,7 +7169,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 68:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handleMeditateToggle(  );
 
@@ -7244,7 +7178,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 69:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handleBlindNoMore(  );
 
@@ -7254,7 +7187,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 70:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handleDumbNoMore(  );
 
@@ -7264,7 +7196,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 71:
         {
                 
-            buffer.ReadByte(); /* PacketID */
         var i; var Skills= []; for (i=0; i<40; ++i) Skills[i] = buffer.ReadByte();
 
             handler.handleSendSkills( Skills );
@@ -7275,7 +7206,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 72:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Data = buffer.ReadUnicodeString();
 
             handler.handleTrainerCreatureList( Data );
@@ -7286,7 +7216,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 73:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var News = buffer.ReadUnicodeString();
             var EnemiesList = buffer.ReadUnicodeString();
             var AlliesList = buffer.ReadUnicodeString();
@@ -7299,7 +7228,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 74:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Details = buffer.ReadUnicodeString();
 
             handler.handleOfferDetails( Details );
@@ -7310,7 +7238,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 75:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Data = buffer.ReadUnicodeString();
 
             handler.handleAlianceProposalsList( Data );
@@ -7321,7 +7248,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 76:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Data = buffer.ReadUnicodeString();
 
             handler.handlePeaceProposalsList( Data );
@@ -7332,7 +7258,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 77:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var CharName = buffer.ReadUnicodeString();
             var Race = buffer.ReadByte();
             var Class = buffer.ReadByte();
@@ -7357,7 +7282,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 78:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var GuildList = buffer.ReadUnicodeString();
             var MemberList = buffer.ReadUnicodeString();
             var GuildNews = buffer.ReadUnicodeString();
@@ -7371,7 +7295,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 79:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var GuildList = buffer.ReadUnicodeString();
             var MemberList = buffer.ReadUnicodeString();
 
@@ -7383,7 +7306,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 80:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var GuildName = buffer.ReadUnicodeString();
             var Founder = buffer.ReadUnicodeString();
             var FoundationDate = buffer.ReadUnicodeString();
@@ -7406,7 +7328,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 81:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handleShowGuildFundationForm(  );
 
@@ -7416,7 +7337,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 82:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handleParalizeOK(  );
 
@@ -7426,7 +7346,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 83:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Details = buffer.ReadUnicodeString();
 
             handler.handleShowUserRequest( Details );
@@ -7437,7 +7356,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 84:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handleTradeOK(  );
 
@@ -7447,7 +7365,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 85:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handleBankOK(  );
 
@@ -7457,7 +7374,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 86:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var OfferSlot = buffer.ReadByte();
             var ObjIndex = buffer.ReadInteger();
             var Amount = buffer.ReadLong();
@@ -7478,7 +7394,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 87:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Night = buffer.ReadBoolean();
 
             handler.handleSendNight( Night );
@@ -7489,7 +7404,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 88:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handlePong(  );
 
@@ -7499,7 +7413,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 89:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var CharIndex = buffer.ReadInteger();
             var NickColor = buffer.ReadByte();
             var Tag = buffer.ReadUnicodeString();
@@ -7512,7 +7425,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 90:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Data = buffer.ReadUnicodeString();
 
             handler.handleSpawnList( Data );
@@ -7523,7 +7435,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 91:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Data = buffer.ReadUnicodeString();
 
             handler.handleShowSOSForm( Data );
@@ -7534,7 +7445,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 92:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Data = buffer.ReadUnicodeString();
 
             handler.handleShowMOTDEditionForm( Data );
@@ -7545,7 +7455,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 93:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handleShowGMPanelForm(  );
 
@@ -7555,7 +7464,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 94:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Data = buffer.ReadUnicodeString();
 
             handler.handleUserNameList( Data );
@@ -7566,7 +7474,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 95:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Data = buffer.ReadUnicodeString();
 
             handler.handleShowDenounces( Data );
@@ -7577,7 +7484,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 96:
         {
                 
-        buffer.ReadByte(); /* PacketID */ /* Packet con count! */
+        /* Packet con count! */
         var Items = [];
         var Count = buffer.ReadByte();
         var i; 
@@ -7596,7 +7503,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 97:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Creador = buffer.ReadUnicodeString();
             var Motivo = buffer.ReadUnicodeString();
             var Online = buffer.ReadBoolean();
@@ -7612,7 +7518,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 98:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handleShowGuildAlign(  );
 
@@ -7622,7 +7527,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 99:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var EsLider = buffer.ReadByte();
             var Data = buffer.ReadUnicodeString();
             var Exp = buffer.ReadLong();
@@ -7635,7 +7539,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 100:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Fuerza = buffer.ReadByte();
             var Agilidad = buffer.ReadByte();
 
@@ -7647,7 +7550,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 101:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Fuerza = buffer.ReadByte();
 
             handler.handleUpdateStrenght( Fuerza );
@@ -7658,7 +7560,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 102:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Agilidad = buffer.ReadByte();
 
             handler.handleUpdateDexterity( Agilidad );
@@ -7669,7 +7570,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 103:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Mochila = buffer.ReadByte();
 
             handler.handleAddSlots( Mochila );
@@ -7680,8 +7580,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 104:
         {
             
-                buffer.ReadByte();
-                /* PacketID */
+
                 var msgIdx = buffer.ReadByte();
                 switch (msgIdx) {
 
@@ -7805,7 +7704,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 105:
         {
                 
-            buffer.ReadByte(); /* PacketID */
 
             handler.handleStopWorking(  );
 
@@ -7815,7 +7713,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
         case 106:
         {
                 
-            buffer.ReadByte(); /* PacketID */
             var Slot = buffer.ReadByte();
 
             handler.handleCancelOfferItem( Slot );
@@ -7831,11 +7728,9 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
     }
 }
 
-    var Protocolo = Class.extend({
-        init: function(){
-    },
+    class Protocolo{
 
-    BuildLoginExistingChar: function( UserName,  Password,  VerA,  VerB,  VerC) {
+    BuildLoginExistingChar( UserName,  Password,  VerA,  VerB,  VerC) {
         var e = new LoginExistingChar();
     e.UserName= UserName;
     e.Password= Password;
@@ -7843,17 +7738,17 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
     e.VerB= VerB;
     e.VerC= VerC;
         return e;
-    },
+    }
 
 
-    BuildThrowDices: function() {
+    BuildThrowDices() {
         var e = new ThrowDices();
 
         return e;
-    },
+    }
 
 
-    BuildLoginNewChar: function( UserName,  Password,  VerA,  VerB,  VerC,  Race,  Gender,  Class,  Head,  Mail,  Homeland) {
+    BuildLoginNewChar( UserName,  Password,  VerA,  VerB,  VerC,  Race,  Gender,  Class,  Head,  Mail,  Homeland) {
         var e = new LoginNewChar();
     e.UserName= UserName;
     e.Password= Password;
@@ -7867,2006 +7762,2006 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
     e.Mail= Mail;
     e.Homeland= Homeland;
         return e;
-    },
+    }
 
 
-    BuildTalk: function( Chat) {
+    BuildTalk( Chat) {
         var e = new Talk();
     e.Chat= Chat;
         return e;
-    },
+    }
 
 
-    BuildYell: function( Chat) {
+    BuildYell( Chat) {
         var e = new Yell();
     e.Chat= Chat;
         return e;
-    },
+    }
 
 
-    BuildWhisper: function( TargetName,  Chat) {
+    BuildWhisper( TargetName,  Chat) {
         var e = new Whisper();
     e.TargetName= TargetName;
     e.Chat= Chat;
         return e;
-    },
+    }
 
 
-    BuildWalk: function( Heading) {
+    BuildWalk( Heading) {
         var e = new Walk();
     e.Heading= Heading;
         return e;
-    },
+    }
 
 
-    BuildRequestPositionUpdate: function() {
+    BuildRequestPositionUpdate() {
         var e = new RequestPositionUpdate();
 
         return e;
-    },
+    }
 
 
-    BuildAttack: function() {
+    BuildAttack() {
         var e = new Attack();
 
         return e;
-    },
+    }
 
 
-    BuildPickUp: function() {
+    BuildPickUp() {
         var e = new PickUp();
 
         return e;
-    },
+    }
 
 
-    BuildSafeToggle: function() {
+    BuildSafeToggle() {
         var e = new SafeToggle();
 
         return e;
-    },
+    }
 
 
-    BuildResuscitationSafeToggle: function() {
+    BuildResuscitationSafeToggle() {
         var e = new ResuscitationSafeToggle();
 
         return e;
-    },
+    }
 
 
-    BuildRequestGuildLeaderInfo: function() {
+    BuildRequestGuildLeaderInfo() {
         var e = new RequestGuildLeaderInfo();
 
         return e;
-    },
+    }
 
 
-    BuildRequestAtributes: function() {
+    BuildRequestAtributes() {
         var e = new RequestAtributes();
 
         return e;
-    },
+    }
 
 
-    BuildRequestFame: function() {
+    BuildRequestFame() {
         var e = new RequestFame();
 
         return e;
-    },
+    }
 
 
-    BuildRequestSkills: function() {
+    BuildRequestSkills() {
         var e = new RequestSkills();
 
         return e;
-    },
+    }
 
 
-    BuildRequestMiniStats: function() {
+    BuildRequestMiniStats() {
         var e = new RequestMiniStats();
 
         return e;
-    },
+    }
 
 
-    BuildCommerceEnd: function() {
+    BuildCommerceEnd() {
         var e = new CommerceEnd();
 
         return e;
-    },
+    }
 
 
-    BuildUserCommerceEnd: function() {
+    BuildUserCommerceEnd() {
         var e = new UserCommerceEnd();
 
         return e;
-    },
+    }
 
 
-    BuildUserCommerceConfirm: function() {
+    BuildUserCommerceConfirm() {
         var e = new UserCommerceConfirm();
 
         return e;
-    },
+    }
 
 
-    BuildCommerceChat: function( Chat) {
+    BuildCommerceChat( Chat) {
         var e = new CommerceChat();
     e.Chat= Chat;
         return e;
-    },
+    }
 
 
-    BuildBankEnd: function() {
+    BuildBankEnd() {
         var e = new BankEnd();
 
         return e;
-    },
+    }
 
 
-    BuildUserCommerceOk: function() {
+    BuildUserCommerceOk() {
         var e = new UserCommerceOk();
 
         return e;
-    },
+    }
 
 
-    BuildUserCommerceReject: function() {
+    BuildUserCommerceReject() {
         var e = new UserCommerceReject();
 
         return e;
-    },
+    }
 
 
-    BuildDrop: function( Slot,  Amount) {
+    BuildDrop( Slot,  Amount) {
         var e = new Drop();
     e.Slot= Slot;
     e.Amount= Amount;
         return e;
-    },
+    }
 
 
-    BuildCastSpell: function( Spell) {
+    BuildCastSpell( Spell) {
         var e = new CastSpell();
     e.Spell= Spell;
         return e;
-    },
+    }
 
 
-    BuildLeftClick: function( X,  Y) {
+    BuildLeftClick( X,  Y) {
         var e = new LeftClick();
     e.X= X;
     e.Y= Y;
         return e;
-    },
+    }
 
 
-    BuildDoubleClick: function( X,  Y) {
+    BuildDoubleClick( X,  Y) {
         var e = new DoubleClick();
     e.X= X;
     e.Y= Y;
         return e;
-    },
+    }
 
 
-    BuildWork: function( Skill) {
+    BuildWork( Skill) {
         var e = new Work();
     e.Skill= Skill;
         return e;
-    },
+    }
 
 
-    BuildUseSpellMacro: function() {
+    BuildUseSpellMacro() {
         var e = new UseSpellMacro();
 
         return e;
-    },
+    }
 
 
-    BuildUseItem: function( Slot) {
+    BuildUseItem( Slot) {
         var e = new UseItem();
     e.Slot= Slot;
         return e;
-    },
+    }
 
 
-    BuildCraftBlacksmith: function( Item) {
+    BuildCraftBlacksmith( Item) {
         var e = new CraftBlacksmith();
     e.Item= Item;
         return e;
-    },
+    }
 
 
-    BuildCraftCarpenter: function( Item) {
+    BuildCraftCarpenter( Item) {
         var e = new CraftCarpenter();
     e.Item= Item;
         return e;
-    },
+    }
 
 
-    BuildWorkLeftClick: function( X,  Y,  Skill) {
+    BuildWorkLeftClick( X,  Y,  Skill) {
         var e = new WorkLeftClick();
     e.X= X;
     e.Y= Y;
     e.Skill= Skill;
         return e;
-    },
+    }
 
 
-    BuildCreateNewGuild: function( Desc,  GuildName,  Site,  Codex) {
+    BuildCreateNewGuild( Desc,  GuildName,  Site,  Codex) {
         var e = new CreateNewGuild();
     e.Desc= Desc;
     e.GuildName= GuildName;
     e.Site= Site;
     e.Codex= Codex;
         return e;
-    },
+    }
 
 
-    BuildSpellInfo: function( Slot) {
+    BuildSpellInfo( Slot) {
         var e = new SpellInfo();
     e.Slot= Slot;
         return e;
-    },
+    }
 
 
-    BuildEquipItem: function( Slot) {
+    BuildEquipItem( Slot) {
         var e = new EquipItem();
     e.Slot= Slot;
         return e;
-    },
+    }
 
 
-    BuildChangeHeading: function( Heading) {
+    BuildChangeHeading( Heading) {
         var e = new ChangeHeading();
     e.Heading= Heading;
         return e;
-    },
+    }
 
 
-    BuildModifySkills: function(Skills ) {
+    BuildModifySkills(Skills ) {
         var e = new ModifySkills();
     e.Skills= Skills;
         return e;
-    },
+    }
 
 
-    BuildTrain: function( PetIndex) {
+    BuildTrain( PetIndex) {
         var e = new Train();
     e.PetIndex= PetIndex;
         return e;
-    },
+    }
 
 
-    BuildCommerceBuy: function( Slot,  Amount) {
+    BuildCommerceBuy( Slot,  Amount) {
         var e = new CommerceBuy();
     e.Slot= Slot;
     e.Amount= Amount;
         return e;
-    },
+    }
 
 
-    BuildBankExtractItem: function( Slot,  Amount) {
+    BuildBankExtractItem( Slot,  Amount) {
         var e = new BankExtractItem();
     e.Slot= Slot;
     e.Amount= Amount;
         return e;
-    },
+    }
 
 
-    BuildCommerceSell: function( Slot,  Amount) {
+    BuildCommerceSell( Slot,  Amount) {
         var e = new CommerceSell();
     e.Slot= Slot;
     e.Amount= Amount;
         return e;
-    },
+    }
 
 
-    BuildBankDeposit: function( Slot,  Amount) {
+    BuildBankDeposit( Slot,  Amount) {
         var e = new BankDeposit();
     e.Slot= Slot;
     e.Amount= Amount;
         return e;
-    },
+    }
 
 
-    BuildForumPost: function( MsgType,  Title,  Post) {
+    BuildForumPost( MsgType,  Title,  Post) {
         var e = new ForumPost();
     e.MsgType= MsgType;
     e.Title= Title;
     e.Post= Post;
         return e;
-    },
+    }
 
 
-    BuildMoveSpell: function( Direction,  Slot) {
+    BuildMoveSpell( Direction,  Slot) {
         var e = new MoveSpell();
     e.Direction= Direction;
     e.Slot= Slot;
         return e;
-    },
+    }
 
 
-    BuildMoveBank: function( Direction,  Slot) {
+    BuildMoveBank( Direction,  Slot) {
         var e = new MoveBank();
     e.Direction= Direction;
     e.Slot= Slot;
         return e;
-    },
+    }
 
 
-    BuildClanCodexUpdate: function( Desc,  Codex) {
+    BuildClanCodexUpdate( Desc,  Codex) {
         var e = new ClanCodexUpdate();
     e.Desc= Desc;
     e.Codex= Codex;
         return e;
-    },
+    }
 
 
-    BuildUserCommerceOffer: function( Slot,  Amount,  OfferSlot) {
+    BuildUserCommerceOffer( Slot,  Amount,  OfferSlot) {
         var e = new UserCommerceOffer();
     e.Slot= Slot;
     e.Amount= Amount;
     e.OfferSlot= OfferSlot;
         return e;
-    },
+    }
 
 
-    BuildGuildAcceptPeace: function( Guild) {
+    BuildGuildAcceptPeace( Guild) {
         var e = new GuildAcceptPeace();
     e.Guild= Guild;
         return e;
-    },
+    }
 
 
-    BuildGuildRejectAlliance: function( Guild) {
+    BuildGuildRejectAlliance( Guild) {
         var e = new GuildRejectAlliance();
     e.Guild= Guild;
         return e;
-    },
+    }
 
 
-    BuildGuildRejectPeace: function( Guild) {
+    BuildGuildRejectPeace( Guild) {
         var e = new GuildRejectPeace();
     e.Guild= Guild;
         return e;
-    },
+    }
 
 
-    BuildGuildAcceptAlliance: function( Guild) {
+    BuildGuildAcceptAlliance( Guild) {
         var e = new GuildAcceptAlliance();
     e.Guild= Guild;
         return e;
-    },
+    }
 
 
-    BuildGuildOfferPeace: function( Guild,  Proposal) {
+    BuildGuildOfferPeace( Guild,  Proposal) {
         var e = new GuildOfferPeace();
     e.Guild= Guild;
     e.Proposal= Proposal;
         return e;
-    },
+    }
 
 
-    BuildGuildOfferAlliance: function( Guild,  Proposal) {
+    BuildGuildOfferAlliance( Guild,  Proposal) {
         var e = new GuildOfferAlliance();
     e.Guild= Guild;
     e.Proposal= Proposal;
         return e;
-    },
+    }
 
 
-    BuildGuildAllianceDetails: function( Guild) {
+    BuildGuildAllianceDetails( Guild) {
         var e = new GuildAllianceDetails();
     e.Guild= Guild;
         return e;
-    },
+    }
 
 
-    BuildGuildPeaceDetails: function( Guild) {
+    BuildGuildPeaceDetails( Guild) {
         var e = new GuildPeaceDetails();
     e.Guild= Guild;
         return e;
-    },
+    }
 
 
-    BuildGuildRequestJoinerInfo: function( User) {
+    BuildGuildRequestJoinerInfo( User) {
         var e = new GuildRequestJoinerInfo();
     e.User= User;
         return e;
-    },
+    }
 
 
-    BuildGuildAlliancePropList: function() {
+    BuildGuildAlliancePropList() {
         var e = new GuildAlliancePropList();
 
         return e;
-    },
+    }
 
 
-    BuildGuildPeacePropList: function() {
+    BuildGuildPeacePropList() {
         var e = new GuildPeacePropList();
 
         return e;
-    },
+    }
 
 
-    BuildGuildDeclareWar: function( Guild) {
+    BuildGuildDeclareWar( Guild) {
         var e = new GuildDeclareWar();
     e.Guild= Guild;
         return e;
-    },
+    }
 
 
-    BuildGuildNewWebsite: function( Website) {
+    BuildGuildNewWebsite( Website) {
         var e = new GuildNewWebsite();
     e.Website= Website;
         return e;
-    },
+    }
 
 
-    BuildGuildAcceptNewMember: function( UserName) {
+    BuildGuildAcceptNewMember( UserName) {
         var e = new GuildAcceptNewMember();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildGuildRejectNewMember: function( UserName,  Reason) {
+    BuildGuildRejectNewMember( UserName,  Reason) {
         var e = new GuildRejectNewMember();
     e.UserName= UserName;
     e.Reason= Reason;
         return e;
-    },
+    }
 
 
-    BuildGuildKickMember: function( UserName) {
+    BuildGuildKickMember( UserName) {
         var e = new GuildKickMember();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildGuildUpdateNews: function( News) {
+    BuildGuildUpdateNews( News) {
         var e = new GuildUpdateNews();
     e.News= News;
         return e;
-    },
+    }
 
 
-    BuildGuildMemberInfo: function( UserName) {
+    BuildGuildMemberInfo( UserName) {
         var e = new GuildMemberInfo();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildGuildOpenElections: function() {
+    BuildGuildOpenElections() {
         var e = new GuildOpenElections();
 
         return e;
-    },
+    }
 
 
-    BuildGuildRequestMembership: function( Guild,  Application) {
+    BuildGuildRequestMembership( Guild,  Application) {
         var e = new GuildRequestMembership();
     e.Guild= Guild;
     e.Application= Application;
         return e;
-    },
+    }
 
 
-    BuildGuildRequestDetails: function( Guild) {
+    BuildGuildRequestDetails( Guild) {
         var e = new GuildRequestDetails();
     e.Guild= Guild;
         return e;
-    },
+    }
 
 
-    BuildOnline: function() {
+    BuildOnline() {
         var e = new Online();
 
         return e;
-    },
+    }
 
 
-    BuildQuit: function() {
+    BuildQuit() {
         var e = new Quit();
 
         return e;
-    },
+    }
 
 
-    BuildGuildLeave: function() {
+    BuildGuildLeave() {
         var e = new GuildLeave();
 
         return e;
-    },
+    }
 
 
-    BuildRequestAccountState: function() {
+    BuildRequestAccountState() {
         var e = new RequestAccountState();
 
         return e;
-    },
+    }
 
 
-    BuildPetStand: function() {
+    BuildPetStand() {
         var e = new PetStand();
 
         return e;
-    },
+    }
 
 
-    BuildPetFollow: function() {
+    BuildPetFollow() {
         var e = new PetFollow();
 
         return e;
-    },
+    }
 
 
-    BuildReleasePet: function() {
+    BuildReleasePet() {
         var e = new ReleasePet();
 
         return e;
-    },
+    }
 
 
-    BuildTrainList: function() {
+    BuildTrainList() {
         var e = new TrainList();
 
         return e;
-    },
+    }
 
 
-    BuildRest: function() {
+    BuildRest() {
         var e = new Rest();
 
         return e;
-    },
+    }
 
 
-    BuildMeditate: function() {
+    BuildMeditate() {
         var e = new Meditate();
 
         return e;
-    },
+    }
 
 
-    BuildResucitate: function() {
+    BuildResucitate() {
         var e = new Resucitate();
 
         return e;
-    },
+    }
 
 
-    BuildHeal: function() {
+    BuildHeal() {
         var e = new Heal();
 
         return e;
-    },
+    }
 
 
-    BuildHelp: function() {
+    BuildHelp() {
         var e = new Help();
 
         return e;
-    },
+    }
 
 
-    BuildRequestStats: function() {
+    BuildRequestStats() {
         var e = new RequestStats();
 
         return e;
-    },
+    }
 
 
-    BuildCommerceStart: function() {
+    BuildCommerceStart() {
         var e = new CommerceStart();
 
         return e;
-    },
+    }
 
 
-    BuildBankStart: function() {
+    BuildBankStart() {
         var e = new BankStart();
 
         return e;
-    },
+    }
 
 
-    BuildEnlist: function() {
+    BuildEnlist() {
         var e = new Enlist();
 
         return e;
-    },
+    }
 
 
-    BuildInformation: function() {
+    BuildInformation() {
         var e = new Information();
 
         return e;
-    },
+    }
 
 
-    BuildReward: function() {
+    BuildReward() {
         var e = new Reward();
 
         return e;
-    },
+    }
 
 
-    BuildRequestMOTD: function() {
+    BuildRequestMOTD() {
         var e = new RequestMOTD();
 
         return e;
-    },
+    }
 
 
-    BuildUpTime: function() {
+    BuildUpTime() {
         var e = new UpTime();
 
         return e;
-    },
+    }
 
 
-    BuildPartyLeave: function() {
+    BuildPartyLeave() {
         var e = new PartyLeave();
 
         return e;
-    },
+    }
 
 
-    BuildPartyCreate: function() {
+    BuildPartyCreate() {
         var e = new PartyCreate();
 
         return e;
-    },
+    }
 
 
-    BuildPartyJoin: function() {
+    BuildPartyJoin() {
         var e = new PartyJoin();
 
         return e;
-    },
+    }
 
 
-    BuildInquiry: function() {
+    BuildInquiry() {
         var e = new Inquiry();
 
         return e;
-    },
+    }
 
 
-    BuildGuildMessage: function( Chat) {
+    BuildGuildMessage( Chat) {
         var e = new GuildMessage();
     e.Chat= Chat;
         return e;
-    },
+    }
 
 
-    BuildPartyMessage: function( Chat) {
+    BuildPartyMessage( Chat) {
         var e = new PartyMessage();
     e.Chat= Chat;
         return e;
-    },
+    }
 
 
-    BuildCentinelReport: function( Code) {
+    BuildCentinelReport( Code) {
         var e = new CentinelReport();
     e.Code= Code;
         return e;
-    },
+    }
 
 
-    BuildGuildOnline: function() {
+    BuildGuildOnline() {
         var e = new GuildOnline();
 
         return e;
-    },
+    }
 
 
-    BuildPartyOnline: function() {
+    BuildPartyOnline() {
         var e = new PartyOnline();
 
         return e;
-    },
+    }
 
 
-    BuildCouncilMessage: function( Chat) {
+    BuildCouncilMessage( Chat) {
         var e = new CouncilMessage();
     e.Chat= Chat;
         return e;
-    },
+    }
 
 
-    BuildRoleMasterRequest: function( Request) {
+    BuildRoleMasterRequest( Request) {
         var e = new RoleMasterRequest();
     e.Request= Request;
         return e;
-    },
+    }
 
 
-    BuildGMRequest: function() {
+    BuildGMRequest() {
         var e = new GMRequest();
 
         return e;
-    },
+    }
 
 
-    BuildBugReport: function( Report) {
+    BuildBugReport( Report) {
         var e = new BugReport();
     e.Report= Report;
         return e;
-    },
+    }
 
 
-    BuildChangeDescription: function( Description) {
+    BuildChangeDescription( Description) {
         var e = new ChangeDescription();
     e.Description= Description;
         return e;
-    },
+    }
 
 
-    BuildGuildVote: function( Vote) {
+    BuildGuildVote( Vote) {
         var e = new GuildVote();
     e.Vote= Vote;
         return e;
-    },
+    }
 
 
-    BuildPunishments: function( Name) {
+    BuildPunishments( Name) {
         var e = new Punishments();
     e.Name= Name;
         return e;
-    },
+    }
 
 
-    BuildChangePassword: function( OldPass,  NewPass) {
+    BuildChangePassword( OldPass,  NewPass) {
         var e = new ChangePassword();
     e.OldPass= OldPass;
     e.NewPass= NewPass;
         return e;
-    },
+    }
 
 
-    BuildGamble: function( Amount) {
+    BuildGamble( Amount) {
         var e = new Gamble();
     e.Amount= Amount;
         return e;
-    },
+    }
 
 
-    BuildInquiryVote: function( Opt) {
+    BuildInquiryVote( Opt) {
         var e = new InquiryVote();
     e.Opt= Opt;
         return e;
-    },
+    }
 
 
-    BuildLeaveFaction: function() {
+    BuildLeaveFaction() {
         var e = new LeaveFaction();
 
         return e;
-    },
+    }
 
 
-    BuildBankExtractGold: function( Amount) {
+    BuildBankExtractGold( Amount) {
         var e = new BankExtractGold();
     e.Amount= Amount;
         return e;
-    },
+    }
 
 
-    BuildBankDepositGold: function( Amount) {
+    BuildBankDepositGold( Amount) {
         var e = new BankDepositGold();
     e.Amount= Amount;
         return e;
-    },
+    }
 
 
-    BuildDenounce: function( Text) {
+    BuildDenounce( Text) {
         var e = new Denounce();
     e.Text= Text;
         return e;
-    },
+    }
 
 
-    BuildGuildFundate: function() {
+    BuildGuildFundate() {
         var e = new GuildFundate();
 
         return e;
-    },
+    }
 
 
-    BuildGuildFundation: function( ClanType) {
+    BuildGuildFundation( ClanType) {
         var e = new GuildFundation();
     e.ClanType= ClanType;
         return e;
-    },
+    }
 
 
-    BuildPartyKick: function( UserName) {
+    BuildPartyKick( UserName) {
         var e = new PartyKick();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildPartySetLeader: function( UserName) {
+    BuildPartySetLeader( UserName) {
         var e = new PartySetLeader();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildPartyAcceptMember: function( UserName) {
+    BuildPartyAcceptMember( UserName) {
         var e = new PartyAcceptMember();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildPing: function() {
+    BuildPing() {
         var e = new Ping();
 
         return e;
-    },
+    }
 
 
-    BuildRequestPartyForm: function() {
+    BuildRequestPartyForm() {
         var e = new RequestPartyForm();
 
         return e;
-    },
+    }
 
 
-    BuildItemUpgrade: function( ItemIndex) {
+    BuildItemUpgrade( ItemIndex) {
         var e = new ItemUpgrade();
     e.ItemIndex= ItemIndex;
         return e;
-    },
+    }
 
 
-    BuildGMCommands: function() {
+    BuildGMCommands() {
         var e = new GMCommands();
 
         return e;
-    },
+    }
 
 
-    BuildInitCrafting: function( TotalItems,  ItemsPorCiclo) {
+    BuildInitCrafting( TotalItems,  ItemsPorCiclo) {
         var e = new InitCrafting();
     e.TotalItems= TotalItems;
     e.ItemsPorCiclo= ItemsPorCiclo;
         return e;
-    },
+    }
 
 
-    BuildHome: function() {
+    BuildHome() {
         var e = new Home();
 
         return e;
-    },
+    }
 
 
-    BuildShowGuildNews: function() {
+    BuildShowGuildNews() {
         var e = new ShowGuildNews();
 
         return e;
-    },
+    }
 
 
-    BuildShareNpc: function() {
+    BuildShareNpc() {
         var e = new ShareNpc();
 
         return e;
-    },
+    }
 
 
-    BuildStopSharingNpc: function() {
+    BuildStopSharingNpc() {
         var e = new StopSharingNpc();
 
         return e;
-    },
+    }
 
 
-    BuildConsultation: function() {
+    BuildConsultation() {
         var e = new Consultation();
 
         return e;
-    },
+    }
 
 
-    BuildMoveItem: function( OldSlot,  NewSlot) {
+    BuildMoveItem( OldSlot,  NewSlot) {
         var e = new MoveItem();
     e.OldSlot= OldSlot;
     e.NewSlot= NewSlot;
         return e;
-    },
+    }
 
 
-    BuildGMMessage: function( Chat) {
+    BuildGMMessage( Chat) {
         var e = new GMMessage();
     e.Chat= Chat;
         return e;
-    },
+    }
 
 
-    BuildShowName: function() {
+    BuildShowName() {
         var e = new ShowName();
 
         return e;
-    },
+    }
 
 
-    BuildOnlineRoyalArmy: function() {
+    BuildOnlineRoyalArmy() {
         var e = new OnlineRoyalArmy();
 
         return e;
-    },
+    }
 
 
-    BuildOnlineChaosLegion: function() {
+    BuildOnlineChaosLegion() {
         var e = new OnlineChaosLegion();
 
         return e;
-    },
+    }
 
 
-    BuildGoNearby: function( UserName) {
+    BuildGoNearby( UserName) {
         var e = new GoNearby();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildComment: function( Data) {
+    BuildComment( Data) {
         var e = new Comment();
     e.Data= Data;
         return e;
-    },
+    }
 
 
-    BuildServerTime: function() {
+    BuildServerTime() {
         var e = new ServerTime();
 
         return e;
-    },
+    }
 
 
-    BuildWhere: function( UserName) {
+    BuildWhere( UserName) {
         var e = new Where();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildCreaturesInMap: function( Map) {
+    BuildCreaturesInMap( Map) {
         var e = new CreaturesInMap();
     e.Map= Map;
         return e;
-    },
+    }
 
 
-    BuildWarpMeToTarget: function() {
+    BuildWarpMeToTarget() {
         var e = new WarpMeToTarget();
 
         return e;
-    },
+    }
 
 
-    BuildWarpChar: function( UserName,  Map,  X,  Y) {
+    BuildWarpChar( UserName,  Map,  X,  Y) {
         var e = new WarpChar();
     e.UserName= UserName;
     e.Map= Map;
     e.X= X;
     e.Y= Y;
         return e;
-    },
+    }
 
 
-    BuildSilence: function( UserName) {
+    BuildSilence( UserName) {
         var e = new Silence();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildSOSShowList: function() {
+    BuildSOSShowList() {
         var e = new SOSShowList();
 
         return e;
-    },
+    }
 
 
-    BuildSOSRemove: function( UserName) {
+    BuildSOSRemove( UserName) {
         var e = new SOSRemove();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildGoToChar: function( UserName) {
+    BuildGoToChar( UserName) {
         var e = new GoToChar();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildInvisible: function() {
+    BuildInvisible() {
         var e = new Invisible();
 
         return e;
-    },
+    }
 
 
-    BuildGMPanel: function() {
+    BuildGMPanel() {
         var e = new GMPanel();
 
         return e;
-    },
+    }
 
 
-    BuildRequestUserList: function() {
+    BuildRequestUserList() {
         var e = new RequestUserList();
 
         return e;
-    },
+    }
 
 
-    BuildWorking: function() {
+    BuildWorking() {
         var e = new Working();
 
         return e;
-    },
+    }
 
 
-    BuildHiding: function() {
+    BuildHiding() {
         var e = new Hiding();
 
         return e;
-    },
+    }
 
 
-    BuildJail: function( UserName,  Reason,  JailTime) {
+    BuildJail( UserName,  Reason,  JailTime) {
         var e = new Jail();
     e.UserName= UserName;
     e.Reason= Reason;
     e.JailTime= JailTime;
         return e;
-    },
+    }
 
 
-    BuildKillNPC: function() {
+    BuildKillNPC() {
         var e = new KillNPC();
 
         return e;
-    },
+    }
 
 
-    BuildWarnUser: function( UserName,  Reason) {
+    BuildWarnUser( UserName,  Reason) {
         var e = new WarnUser();
     e.UserName= UserName;
     e.Reason= Reason;
         return e;
-    },
+    }
 
 
-    BuildEditChar: function( UserName,  Opcion,  Arg1,  Arg2) {
+    BuildEditChar( UserName,  Opcion,  Arg1,  Arg2) {
         var e = new EditChar();
     e.UserName= UserName;
     e.Opcion= Opcion;
     e.Arg1= Arg1;
     e.Arg2= Arg2;
         return e;
-    },
+    }
 
 
-    BuildRequestCharInfo: function( TargetName) {
+    BuildRequestCharInfo( TargetName) {
         var e = new RequestCharInfo();
     e.TargetName= TargetName;
         return e;
-    },
+    }
 
 
-    BuildRequestCharStats: function( UserName) {
+    BuildRequestCharStats( UserName) {
         var e = new RequestCharStats();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildRequestCharGold: function( UserName) {
+    BuildRequestCharGold( UserName) {
         var e = new RequestCharGold();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildRequestCharInventory: function( UserName) {
+    BuildRequestCharInventory( UserName) {
         var e = new RequestCharInventory();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildRequestCharBank: function( UserName) {
+    BuildRequestCharBank( UserName) {
         var e = new RequestCharBank();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildRequestCharSkills: function( UserName) {
+    BuildRequestCharSkills( UserName) {
         var e = new RequestCharSkills();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildReviveChar: function( UserName) {
+    BuildReviveChar( UserName) {
         var e = new ReviveChar();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildOnlineGM: function() {
+    BuildOnlineGM() {
         var e = new OnlineGM();
 
         return e;
-    },
+    }
 
 
-    BuildOnlineMap: function( Map) {
+    BuildOnlineMap( Map) {
         var e = new OnlineMap();
     e.Map= Map;
         return e;
-    },
+    }
 
 
-    BuildForgive: function( UserName) {
+    BuildForgive( UserName) {
         var e = new Forgive();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildKick: function( UserName) {
+    BuildKick( UserName) {
         var e = new Kick();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildExecute: function( UserName) {
+    BuildExecute( UserName) {
         var e = new Execute();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildBanChar: function( UserName,  Reason) {
+    BuildBanChar( UserName,  Reason) {
         var e = new BanChar();
     e.UserName= UserName;
     e.Reason= Reason;
         return e;
-    },
+    }
 
 
-    BuildUnbanChar: function( UserName) {
+    BuildUnbanChar( UserName) {
         var e = new UnbanChar();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildNPCFollow: function() {
+    BuildNPCFollow() {
         var e = new NPCFollow();
 
         return e;
-    },
+    }
 
 
-    BuildSummonChar: function( UserName) {
+    BuildSummonChar( UserName) {
         var e = new SummonChar();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildSpawnListRequest: function() {
+    BuildSpawnListRequest() {
         var e = new SpawnListRequest();
 
         return e;
-    },
+    }
 
 
-    BuildSpawnCreature: function( NPC) {
+    BuildSpawnCreature( NPC) {
         var e = new SpawnCreature();
     e.NPC= NPC;
         return e;
-    },
+    }
 
 
-    BuildResetNPCInventory: function() {
+    BuildResetNPCInventory() {
         var e = new ResetNPCInventory();
 
         return e;
-    },
+    }
 
 
-    BuildCleanWorld: function() {
+    BuildCleanWorld() {
         var e = new CleanWorld();
 
         return e;
-    },
+    }
 
 
-    BuildServerMessage: function( Message) {
+    BuildServerMessage( Message) {
         var e = new ServerMessage();
     e.Message= Message;
         return e;
-    },
+    }
 
 
-    BuildNickToIP: function( UserName) {
+    BuildNickToIP( UserName) {
         var e = new NickToIP();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildIPToNick: function( A,  B,  C,  D) {
+    BuildIPToNick( A,  B,  C,  D) {
         var e = new IPToNick();
     e.A= A;
     e.B= B;
     e.C= C;
     e.D= D;
         return e;
-    },
+    }
 
 
-    BuildGuildOnlineMembers: function( GuildName) {
+    BuildGuildOnlineMembers( GuildName) {
         var e = new GuildOnlineMembers();
     e.GuildName= GuildName;
         return e;
-    },
+    }
 
 
-    BuildTeleportCreate: function( Map,  X,  Y,  Radio) {
+    BuildTeleportCreate( Map,  X,  Y,  Radio) {
         var e = new TeleportCreate();
     e.Map= Map;
     e.X= X;
     e.Y= Y;
     e.Radio= Radio;
         return e;
-    },
+    }
 
 
-    BuildTeleportDestroy: function() {
+    BuildTeleportDestroy() {
         var e = new TeleportDestroy();
 
         return e;
-    },
+    }
 
 
-    BuildRainToggle: function() {
+    BuildRainToggle() {
         var e = new RainToggle();
 
         return e;
-    },
+    }
 
 
-    BuildSetCharDescription: function( Description) {
+    BuildSetCharDescription( Description) {
         var e = new SetCharDescription();
     e.Description= Description;
         return e;
-    },
+    }
 
 
-    BuildForceMIDIToMap: function( MidiID,  Map) {
+    BuildForceMIDIToMap( MidiID,  Map) {
         var e = new ForceMIDIToMap();
     e.MidiID= MidiID;
     e.Map= Map;
         return e;
-    },
+    }
 
 
-    BuildForceWAVEToMap: function( Wave,  Map,  X,  Y) {
+    BuildForceWAVEToMap( Wave,  Map,  X,  Y) {
         var e = new ForceWAVEToMap();
     e.Wave= Wave;
     e.Map= Map;
     e.X= X;
     e.Y= Y;
         return e;
-    },
+    }
 
 
-    BuildRoyalArmyMessage: function( Message) {
+    BuildRoyalArmyMessage( Message) {
         var e = new RoyalArmyMessage();
     e.Message= Message;
         return e;
-    },
+    }
 
 
-    BuildChaosLegionMessage: function( Message) {
+    BuildChaosLegionMessage( Message) {
         var e = new ChaosLegionMessage();
     e.Message= Message;
         return e;
-    },
+    }
 
 
-    BuildCitizenMessage: function( Message) {
+    BuildCitizenMessage( Message) {
         var e = new CitizenMessage();
     e.Message= Message;
         return e;
-    },
+    }
 
 
-    BuildCriminalMessage: function( Message) {
+    BuildCriminalMessage( Message) {
         var e = new CriminalMessage();
     e.Message= Message;
         return e;
-    },
+    }
 
 
-    BuildTalkAsNPC: function( Message) {
+    BuildTalkAsNPC( Message) {
         var e = new TalkAsNPC();
     e.Message= Message;
         return e;
-    },
+    }
 
 
-    BuildDestroyAllItemsInArea: function() {
+    BuildDestroyAllItemsInArea() {
         var e = new DestroyAllItemsInArea();
 
         return e;
-    },
+    }
 
 
-    BuildAcceptRoyalCouncilMember: function( UserName) {
+    BuildAcceptRoyalCouncilMember( UserName) {
         var e = new AcceptRoyalCouncilMember();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildAcceptChaosCouncilMember: function( UserName) {
+    BuildAcceptChaosCouncilMember( UserName) {
         var e = new AcceptChaosCouncilMember();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildItemsInTheFloor: function() {
+    BuildItemsInTheFloor() {
         var e = new ItemsInTheFloor();
 
         return e;
-    },
+    }
 
 
-    BuildMakeDumb: function( UserName) {
+    BuildMakeDumb( UserName) {
         var e = new MakeDumb();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildMakeDumbNoMore: function( UserName) {
+    BuildMakeDumbNoMore( UserName) {
         var e = new MakeDumbNoMore();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildDumpIPTables: function() {
+    BuildDumpIPTables() {
         var e = new DumpIPTables();
 
         return e;
-    },
+    }
 
 
-    BuildCouncilKick: function( UserName) {
+    BuildCouncilKick( UserName) {
         var e = new CouncilKick();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildSetTrigger: function( Trigger) {
+    BuildSetTrigger( Trigger) {
         var e = new SetTrigger();
     e.Trigger= Trigger;
         return e;
-    },
+    }
 
 
-    BuildAskTrigger: function() {
+    BuildAskTrigger() {
         var e = new AskTrigger();
 
         return e;
-    },
+    }
 
 
-    BuildBannedIPList: function() {
+    BuildBannedIPList() {
         var e = new BannedIPList();
 
         return e;
-    },
+    }
 
 
-    BuildBannedIPReload: function() {
+    BuildBannedIPReload() {
         var e = new BannedIPReload();
 
         return e;
-    },
+    }
 
 
-    BuildGuildMemberList: function( GuildName) {
+    BuildGuildMemberList( GuildName) {
         var e = new GuildMemberList();
     e.GuildName= GuildName;
         return e;
-    },
+    }
 
 
-    BuildGuildBan: function( GuildName) {
+    BuildGuildBan( GuildName) {
         var e = new GuildBan();
     e.GuildName= GuildName;
         return e;
-    },
+    }
 
 
-    BuildBanIP: function( IP,  Reason) {
+    BuildBanIP( IP,  Reason) {
         var e = new BanIP();
     e.IP= IP;
     e.Reason= Reason;
         return e;
-    },
+    }
 
 
-    BuildUnbanIP: function( IP) {
+    BuildUnbanIP( IP) {
         var e = new UnbanIP();
     e.IP= IP;
         return e;
-    },
+    }
 
 
-    BuildCreateItem: function( Item) {
+    BuildCreateItem( Item) {
         var e = new CreateItem();
     e.Item= Item;
         return e;
-    },
+    }
 
 
-    BuildDestroyItems: function() {
+    BuildDestroyItems() {
         var e = new DestroyItems();
 
         return e;
-    },
+    }
 
 
-    BuildChaosLegionKick: function( UserName,  Reason) {
+    BuildChaosLegionKick( UserName,  Reason) {
         var e = new ChaosLegionKick();
     e.UserName= UserName;
     e.Reason= Reason;
         return e;
-    },
+    }
 
 
-    BuildRoyalArmyKick: function( UserName,  Reason) {
+    BuildRoyalArmyKick( UserName,  Reason) {
         var e = new RoyalArmyKick();
     e.UserName= UserName;
     e.Reason= Reason;
         return e;
-    },
+    }
 
 
-    BuildForceMIDIAll: function( MidiID) {
+    BuildForceMIDIAll( MidiID) {
         var e = new ForceMIDIAll();
     e.MidiID= MidiID;
         return e;
-    },
+    }
 
 
-    BuildForceWAVEAll: function( WaveID) {
+    BuildForceWAVEAll( WaveID) {
         var e = new ForceWAVEAll();
     e.WaveID= WaveID;
         return e;
-    },
+    }
 
 
-    BuildRemovePunishment: function( UserName,  Punishment,  NewText) {
+    BuildRemovePunishment( UserName,  Punishment,  NewText) {
         var e = new RemovePunishment();
     e.UserName= UserName;
     e.Punishment= Punishment;
     e.NewText= NewText;
         return e;
-    },
+    }
 
 
-    BuildTileBlockedToggle: function() {
+    BuildTileBlockedToggle() {
         var e = new TileBlockedToggle();
 
         return e;
-    },
+    }
 
 
-    BuildKillNPCNoRespawn: function() {
+    BuildKillNPCNoRespawn() {
         var e = new KillNPCNoRespawn();
 
         return e;
-    },
+    }
 
 
-    BuildKillAllNearbyNPCs: function() {
+    BuildKillAllNearbyNPCs() {
         var e = new KillAllNearbyNPCs();
 
         return e;
-    },
+    }
 
 
-    BuildLastIP: function( UserName) {
+    BuildLastIP( UserName) {
         var e = new LastIP();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildChangeMOTD: function() {
+    BuildChangeMOTD() {
         var e = new ChangeMOTD();
 
         return e;
-    },
+    }
 
 
-    BuildSetMOTD: function( Motd) {
+    BuildSetMOTD( Motd) {
         var e = new SetMOTD();
     e.Motd= Motd;
         return e;
-    },
+    }
 
 
-    BuildSystemMessage: function( Message) {
+    BuildSystemMessage( Message) {
         var e = new SystemMessage();
     e.Message= Message;
         return e;
-    },
+    }
 
 
-    BuildCreateNPC: function( NpcIndex) {
+    BuildCreateNPC( NpcIndex) {
         var e = new CreateNPC();
     e.NpcIndex= NpcIndex;
         return e;
-    },
+    }
 
 
-    BuildCreateNPCWithRespawn: function( NpcIndex) {
+    BuildCreateNPCWithRespawn( NpcIndex) {
         var e = new CreateNPCWithRespawn();
     e.NpcIndex= NpcIndex;
         return e;
-    },
+    }
 
 
-    BuildImperialArmour: function( Index,  ObjIndex) {
+    BuildImperialArmour( Index,  ObjIndex) {
         var e = new ImperialArmour();
     e.Index= Index;
     e.ObjIndex= ObjIndex;
         return e;
-    },
+    }
 
 
-    BuildChaosArmour: function( Index,  ObjIndex) {
+    BuildChaosArmour( Index,  ObjIndex) {
         var e = new ChaosArmour();
     e.Index= Index;
     e.ObjIndex= ObjIndex;
         return e;
-    },
+    }
 
 
-    BuildNavigateToggle: function() {
+    BuildNavigateToggle() {
         var e = new NavigateToggle();
 
         return e;
-    },
+    }
 
 
-    BuildServerOpenToUsersToggle: function() {
+    BuildServerOpenToUsersToggle() {
         var e = new ServerOpenToUsersToggle();
 
         return e;
-    },
+    }
 
 
-    BuildTurnOffServer: function() {
+    BuildTurnOffServer() {
         var e = new TurnOffServer();
 
         return e;
-    },
+    }
 
 
-    BuildTurnCriminal: function( UserName) {
+    BuildTurnCriminal( UserName) {
         var e = new TurnCriminal();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildResetFactions: function( UserName) {
+    BuildResetFactions( UserName) {
         var e = new ResetFactions();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildRemoveCharFromGuild: function( UserName) {
+    BuildRemoveCharFromGuild( UserName) {
         var e = new RemoveCharFromGuild();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildRequestCharMail: function( UserName) {
+    BuildRequestCharMail( UserName) {
         var e = new RequestCharMail();
     e.UserName= UserName;
         return e;
-    },
+    }
 
 
-    BuildAlterPassword: function( UserName,  CopyFrom) {
+    BuildAlterPassword( UserName,  CopyFrom) {
         var e = new AlterPassword();
     e.UserName= UserName;
     e.CopyFrom= CopyFrom;
         return e;
-    },
+    }
 
 
-    BuildAlterMail: function( UserName,  NewMail) {
+    BuildAlterMail( UserName,  NewMail) {
         var e = new AlterMail();
     e.UserName= UserName;
     e.NewMail= NewMail;
         return e;
-    },
+    }
 
 
-    BuildAlterName: function( UserName,  NewName) {
+    BuildAlterName( UserName,  NewName) {
         var e = new AlterName();
     e.UserName= UserName;
     e.NewName= NewName;
         return e;
-    },
+    }
 
 
-    BuildToggleCentinelActivated: function() {
+    BuildToggleCentinelActivated() {
         var e = new ToggleCentinelActivated();
 
         return e;
-    },
+    }
 
 
-    BuildDoBackUp: function() {
+    BuildDoBackUp() {
         var e = new DoBackUp();
 
         return e;
-    },
+    }
 
 
-    BuildShowGuildMessages: function( GuildName) {
+    BuildShowGuildMessages( GuildName) {
         var e = new ShowGuildMessages();
     e.GuildName= GuildName;
         return e;
-    },
+    }
 
 
-    BuildSaveMap: function() {
+    BuildSaveMap() {
         var e = new SaveMap();
 
         return e;
-    },
+    }
 
 
-    BuildChangeMapInfoPK: function( Pk) {
+    BuildChangeMapInfoPK( Pk) {
         var e = new ChangeMapInfoPK();
     e.Pk= Pk;
         return e;
-    },
+    }
 
 
-    BuildChangeMapInfoBackup: function( Backup) {
+    BuildChangeMapInfoBackup( Backup) {
         var e = new ChangeMapInfoBackup();
     e.Backup= Backup;
         return e;
-    },
+    }
 
 
-    BuildChangeMapInfoRestricted: function( RestrictedTo) {
+    BuildChangeMapInfoRestricted( RestrictedTo) {
         var e = new ChangeMapInfoRestricted();
     e.RestrictedTo= RestrictedTo;
         return e;
-    },
+    }
 
 
-    BuildChangeMapInfoNoMagic: function( NoMagic) {
+    BuildChangeMapInfoNoMagic( NoMagic) {
         var e = new ChangeMapInfoNoMagic();
     e.NoMagic= NoMagic;
         return e;
-    },
+    }
 
 
-    BuildChangeMapInfoNoInvi: function( NoInvi) {
+    BuildChangeMapInfoNoInvi( NoInvi) {
         var e = new ChangeMapInfoNoInvi();
     e.NoInvi= NoInvi;
         return e;
-    },
+    }
 
 
-    BuildChangeMapInfoNoResu: function( NoResu) {
+    BuildChangeMapInfoNoResu( NoResu) {
         var e = new ChangeMapInfoNoResu();
     e.NoResu= NoResu;
         return e;
-    },
+    }
 
 
-    BuildChangeMapInfoLand: function( Data) {
+    BuildChangeMapInfoLand( Data) {
         var e = new ChangeMapInfoLand();
     e.Data= Data;
         return e;
-    },
+    }
 
 
-    BuildChangeMapInfoZone: function( Data) {
+    BuildChangeMapInfoZone( Data) {
         var e = new ChangeMapInfoZone();
     e.Data= Data;
         return e;
-    },
+    }
 
 
-    BuildChangeMapInfoStealNpc: function( RoboNpc) {
+    BuildChangeMapInfoStealNpc( RoboNpc) {
         var e = new ChangeMapInfoStealNpc();
     e.RoboNpc= RoboNpc;
         return e;
-    },
+    }
 
 
-    BuildChangeMapInfoNoOcultar: function( NoOcultar) {
+    BuildChangeMapInfoNoOcultar( NoOcultar) {
         var e = new ChangeMapInfoNoOcultar();
     e.NoOcultar= NoOcultar;
         return e;
-    },
+    }
 
 
-    BuildChangeMapInfoNoInvocar: function( NoInvocar) {
+    BuildChangeMapInfoNoInvocar( NoInvocar) {
         var e = new ChangeMapInfoNoInvocar();
     e.NoInvocar= NoInvocar;
         return e;
-    },
+    }
 
 
-    BuildSaveChars: function() {
+    BuildSaveChars() {
         var e = new SaveChars();
 
         return e;
-    },
+    }
 
 
-    BuildCleanSOS: function() {
+    BuildCleanSOS() {
         var e = new CleanSOS();
 
         return e;
-    },
+    }
 
 
-    BuildShowServerForm: function() {
+    BuildShowServerForm() {
         var e = new ShowServerForm();
 
         return e;
-    },
+    }
 
 
-    BuildNight: function() {
+    BuildNight() {
         var e = new Night();
 
         return e;
-    },
+    }
 
 
-    BuildKickAllChars: function() {
+    BuildKickAllChars() {
         var e = new KickAllChars();
 
         return e;
-    },
+    }
 
 
-    BuildReloadNPCs: function() {
+    BuildReloadNPCs() {
         var e = new ReloadNPCs();
 
         return e;
-    },
+    }
 
 
-    BuildReloadServerIni: function() {
+    BuildReloadServerIni() {
         var e = new ReloadServerIni();
 
         return e;
-    },
+    }
 
 
-    BuildReloadSpells: function() {
+    BuildReloadSpells() {
         var e = new ReloadSpells();
 
         return e;
-    },
+    }
 
 
-    BuildReloadObjects: function() {
+    BuildReloadObjects() {
         var e = new ReloadObjects();
 
         return e;
-    },
+    }
 
 
-    BuildRestart: function() {
+    BuildRestart() {
         var e = new Restart();
 
         return e;
-    },
+    }
 
 
-    BuildResetAutoUpdate: function() {
+    BuildResetAutoUpdate() {
         var e = new ResetAutoUpdate();
 
         return e;
-    },
+    }
 
 
-    BuildChatColor: function( R,  G,  B) {
+    BuildChatColor( R,  G,  B) {
         var e = new ChatColor();
     e.R= R;
     e.G= G;
     e.B= B;
         return e;
-    },
+    }
 
 
-    BuildIgnored: function() {
+    BuildIgnored() {
         var e = new Ignored();
 
         return e;
-    },
+    }
 
 
-    BuildCheckSlot: function( UserName,  Slot) {
+    BuildCheckSlot( UserName,  Slot) {
         var e = new CheckSlot();
     e.UserName= UserName;
     e.Slot= Slot;
         return e;
-    },
+    }
 
 
-    BuildSetIniVar: function( Seccion,  Clave,  Valor) {
+    BuildSetIniVar( Seccion,  Clave,  Valor) {
         var e = new SetIniVar();
     e.Seccion= Seccion;
     e.Clave= Clave;
     e.Valor= Valor;
         return e;
-    },
+    }
 
 
-    BuildCreatePretorianClan: function( Map,  X,  Y) {
+    BuildCreatePretorianClan( Map,  X,  Y) {
         var e = new CreatePretorianClan();
     e.Map= Map;
     e.X= X;
     e.Y= Y;
         return e;
-    },
+    }
 
 
-    BuildRemovePretorianClan: function( Map) {
+    BuildRemovePretorianClan( Map) {
         var e = new RemovePretorianClan();
     e.Map= Map;
         return e;
-    },
+    }
 
 
-    BuildEnableDenounces: function() {
+    BuildEnableDenounces() {
         var e = new EnableDenounces();
 
         return e;
-    },
+    }
 
 
-    BuildShowDenouncesList: function() {
+    BuildShowDenouncesList() {
         var e = new ShowDenouncesList();
 
         return e;
-    },
+    }
 
 
-    BuildMapMessage: function( Message) {
+    BuildMapMessage( Message) {
         var e = new MapMessage();
     e.Message= Message;
         return e;
-    },
+    }
 
 
-    BuildSetDialog: function( Message) {
+    BuildSetDialog( Message) {
         var e = new SetDialog();
     e.Message= Message;
         return e;
-    },
+    }
 
 
-    BuildImpersonate: function() {
+    BuildImpersonate() {
         var e = new Impersonate();
 
         return e;
-    },
+    }
 
 
-    BuildImitate: function() {
+    BuildImitate() {
         var e = new Imitate();
 
         return e;
-    },
+    }
 
 
-    BuildRecordAdd: function( UserName,  Reason) {
+    BuildRecordAdd( UserName,  Reason) {
         var e = new RecordAdd();
     e.UserName= UserName;
     e.Reason= Reason;
         return e;
-    },
+    }
 
 
-    BuildRecordRemove: function( Index) {
+    BuildRecordRemove( Index) {
         var e = new RecordRemove();
     e.Index= Index;
         return e;
-    },
+    }
 
 
-    BuildRecordAddObs: function( Index,  Obs) {
+    BuildRecordAddObs( Index,  Obs) {
         var e = new RecordAddObs();
     e.Index= Index;
     e.Obs= Obs;
         return e;
-    },
+    }
 
 
-    BuildRecordListRequest: function() {
+    BuildRecordListRequest() {
         var e = new RecordListRequest();
 
         return e;
-    },
+    }
 
 
-    BuildRecordDetailsRequest: function( Index) {
+    BuildRecordDetailsRequest( Index) {
         var e = new RecordDetailsRequest();
     e.Index= Index;
         return e;
-    },
+    }
 
 
-    BuildAlterGuildName: function( OldGuildName,  NewGuildName) {
+    BuildAlterGuildName( OldGuildName,  NewGuildName) {
         var e = new AlterGuildName();
     e.OldGuildName= OldGuildName;
     e.NewGuildName= NewGuildName;
         return e;
-    },
+    }
 
 
-    BuildHigherAdminsMessage: function( Message) {
+    BuildHigherAdminsMessage( Message) {
         var e = new HigherAdminsMessage();
     e.Message= Message;
         return e;
-    },
+    }
 
 
-    ServerPacketDecodeAndDispatch: function(buffer, handler){
+    ServerPacketDecodeAndDispatch(buffer, handler){
         ServerPacketDecodeAndDispatch(buffer, handler);
     }
     
-    });
+    }
 
     return Protocolo;
 }); 

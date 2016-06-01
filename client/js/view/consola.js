@@ -2,7 +2,7 @@
  * Created by horacio on 3/8/16.
  */
 
-define(['font','lib/pixi'], function (Font,PIXI) {
+define(['font', 'lib/pixi'], function (Font, PIXI) {
 
     function Consola(escala) {
         PIXI.Container.call(this);
@@ -17,7 +17,12 @@ define(['font','lib/pixi'], function (Font,PIXI) {
     Consola.prototype.setEscala = function (escala) {
         var BASE_FONT = Font.BASE_FONT;
         var fuente = BASE_FONT._weight + ' ' + Math.round(BASE_FONT._size * escala) + 'px ' + BASE_FONT.font;
-        this.baseFont = {font: fuente, align: "center", stroke: BASE_FONT.stroke, strokeThickness: BASE_FONT.strokeThickness * escala};
+        this.baseFont = {
+            font: fuente,
+            align: "center",
+            stroke: BASE_FONT.stroke,
+            strokeThickness: BASE_FONT.strokeThickness * escala
+        };
 
         for (var i = 0; i < this.children.length; i++) {
             this.children[i].style.font = fuente;

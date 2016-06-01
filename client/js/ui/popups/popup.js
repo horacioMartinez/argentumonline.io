@@ -4,8 +4,8 @@
 
 define(['jquery-ui'], function () {
 
-    var PopUp = Class.extend({
-        init: function (DOMdata, general) { // los pop ups generales se ven en todas las pantallas (no solo juego) y estan centrados en el medio
+    class PopUp {
+        constructor(DOMdata, general) { // los pop ups generales se ven en todas las pantallas (no solo juego) y estan centrados en el medio
             if (!DOMdata)
                 throw new Error("DOMdata required");
 
@@ -31,9 +31,9 @@ define(['jquery-ui'], function () {
             this.$this.resizable();
 
             this.visible = false;
-        },
+        }
 
-        show: function () {
+        show() {
             this.clearDom();
             this.$parent.append(this.$this);
             this.$this.show();
@@ -47,19 +47,19 @@ define(['jquery-ui'], function () {
             }
 
             this.visible = true;
-        },
+        }
 
-        hide: function () { // OJO, en algunos se cierra con el comando que viene del server (y se puede cerrar 2 veces)
+        hide() { // OJO, en algunos se cierra con el comando que viene del server (y se puede cerrar 2 veces)
             this.$this.hide();
             this.visible = false;
             //this.$parent.detach(this.$this);
-        },
+        }
 
-        clearDom: function () {
+        clearDom() {
             this.$this.find('span').text('');
             this.$this.find('input').val('');
-        },
+        }
 
-    });
+    }
     return PopUp;
 });

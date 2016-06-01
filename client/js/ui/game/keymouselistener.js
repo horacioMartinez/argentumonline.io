@@ -3,32 +3,32 @@
  */
 
 define(['ui/game/keymouseinput'], function (KeyMouseInput) {
-    var KeyMouseListener = Class.extend({
+    class KeyMouseListener {
 
-        init: function (game, acciones, keys) {
+        constructor(game, acciones, keys) {
             this.game = game; // todo: sacar de aca !?
             this.inputHandler = new KeyMouseInput(game, acciones);
             this.setKeys(keys);
 
             this._prevKeyDown = [];
-        },
+        }
 
-        setKeys: function (keys) {
+        setKeys(keys) {
             this.keys = keys;
             this.inputHandler.setKeys(keys);
-        },
+        }
 
-        showChat: function () {
+        showChat() {
             $('#chatbox').addClass('active');
             $('#chatinput').focus();
-        },
+        }
 
-        hideChat: function () {
+        hideChat() {
             $('#chatbox').removeClass('active');
             $('#chatinput').blur();
-        },
+        }
 
-        inGameMouseCoordinates: function (game, event) {
+        inGameMouseCoordinates(game, event) {
 
             var gamePos = $('#gamecanvas').offset(),
                 width = game.renderer.pixiRenderer.width,
@@ -55,26 +55,26 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
                 posEnGameCanvas = false;
             }
             return posEnGameCanvas;
-        },
+        }
 
-        upKeyTeclasCaminar: function () {
+        upKeyTeclasCaminar() {
             var teclasCaminar = this.inputHandler.getTeclasCaminar();
             var self = this;
             _.each(teclasCaminar, function (key) {
                 self._upKey(key);
                 self.inputHandler.keyUp(key);
             });
-        },
+        }
 
-        initListeners: function () {
+        initListeners() {
             var self = this;
             $('#chatbox').attr('value', '');
             this._initMouseListeners();
             this._initDocumentKeysListeners();
             this._initChatKeyListener();
-        },
+        }
 
-        _initDocumentKeysListeners: function () {
+        _initDocumentKeysListeners() {
             var self = this;
 
             $(document).keyup(function (e) {
@@ -106,7 +106,7 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
 
                 // lo de abajo se ejecuta solo si no hay un pop up abierto
 
-                $chatb = $('#chatbox');
+                var $chatb = $('#chatbox');
 
                 if (key === self.keys.toggleChat) {
                     if ($chatb.hasClass('active')) {
@@ -127,9 +127,9 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
                 }
             });
 
-        },
+        }
 
-        _initChatKeyListener: function () {
+        _initChatKeyListener() {
             var self = this;
 
             $('#chatinput').keydown(function (e) {
@@ -158,9 +158,9 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
                 }
 
             });
-        },
+        }
 
-        _initMouseListeners: function () {
+        _initMouseListeners() {
 
             var self = this;
 
@@ -198,23 +198,23 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
              self.game.renderer.stage.y = ((self.game.renderer.stage.height * (1 - self.game.renderer.stage.scale.y)) / 2);
              });
              */
-        },
+        }
 
-        _downKey: function (key) {
+        _downKey(key) {
             this._prevKeyDown[key] = true;
-        },
+        }
 
-        _upKey: function (key) {
+        _upKey(key) {
             this._prevKeyDown[key] = null;
-        },
+        }
 
-        _isKeyDown: function (key) {
+        _isKeyDown(key) {
             if (this._prevKeyDown[key])
                 return true;
             return false;
-        },
+        }
 
-    });
+    }
 
     return KeyMouseListener;
 });

@@ -84,7 +84,7 @@ define({
         tacticas: 3,
         armas: 4,
         meditar: 5,
-        apuñalar: 6,
+        apunalar: 6,
         ocultarse: 7,
         supervivencia: 8,
         talar: 9,

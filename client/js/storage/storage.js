@@ -1,6 +1,6 @@
 define(['storage/defaultsettings', 'jquery-ui'], function (DefaultSettings) {
-    var Storage = Class.extend({
-        init: function () {
+    class Storage {
+        constructor() {
             if (this.hasLocalStorage() && localStorage.data) {
                 var userData = JSON.parse(localStorage.data);
                 var defaultData = this._getDefaultData();
@@ -8,90 +8,91 @@ define(['storage/defaultsettings', 'jquery-ui'], function (DefaultSettings) {
             } else {
                 this.resetData();
             }
-        },
+        }
 
-        resetData: function () {
+        resetData() {
             this._data = this._getDefaultData();
-        },
+        }
 
-        _getDefaultData: function () {
+        _getDefaultData() {
             var defSettings = $.extend(true, {}, DefaultSettings);
             return {
                 settings: defSettings
             };
-        },
+        }
 
-        getDefaultKeys: function () {
+        getDefaultKeys() {
             return this._getDefaultData().settings.keys;
-        },
+        }
 
-        getKeys: function () {
+        getKeys() {
             return this._data.settings.keys;
-        },
+        }
 
-        getSoundMuted: function () {
+        getSoundMuted() {
             return this._data.settings.audio.soundMuted;
-        },
+        }
 
-        getMusicMuted: function () {
+        getMusicMuted() {
             return this._data.settings.audio.musicMuted;
-        },
+        }
 
-        getSoundVolume: function () {
+        getSoundVolume() {
             return this._data.settings.audio.soundVolume;
-        },
+        }
 
-        getMusicVolume: function () {
+        getMusicVolume() {
             return this._data.settings.audio.musicVolume;
-        },
+        }
 
-        setSoundMuted: function (muted) {
+        setSoundMuted(muted) {
             this._data.settings.audio.soundMuted = muted;
             this.save();
-        },
+        }
 
-        setMusicMuted: function (muted) {
+        setMusicMuted(muted) {
             this._data.settings.audio.musicMuted = muted;
             this.save();
-        },
+        }
 
-        setSoundVolume: function (vol) {
+        setSoundVolume(vol) {
             this._data.settings.audio.soundVolume = vol;
             this.save();
-        },
+        }
 
-        setMusicVolume: function (vol) {
+        setMusicVolume(vol) {
             this._data.settings.audio.musicVolume = vol;
             this.save();
-        },
+        }
 
-        setKeys: function (keys) {
+        setKeys(keys) {
             this._data.settings.keys = keys;
             this.save();
-        },
+        }
 
-        hasLocalStorage: function () {
+        hasLocalStorage() {
             return Modernizr.localstorage;
-        },
+        }
 
-        save: function () {
+        save() {
             if (this.hasLocalStorage()) {
                 localStorage.data = JSON.stringify(this._data);
             }
-        },
+        }
 
-        clear: function () {
+        clear() {
             if (this.hasLocalStorage()) {
                 localStorage.data = "";
                 this.resetData();
             }
             this.save();
-        },
+        }
+
         /*
-         hasAlreadyPlayed: function () {
+         hasAlreadyPlayed() {
          return this._data.hasAlreadyPlayed;
-         },*/
-    });
+         }*/
+    }
 
     return Storage;
 });

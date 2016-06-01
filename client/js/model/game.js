@@ -1,7 +1,11 @@
-define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character', 'model/comandoschat', 'model/atributos', 'model/inventario', 'model/skills', 'enums','font'],
+define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character', 'model/comandoschat', 'model/atributos', 'model/inventario', 'model/skills', 'enums', 'font'],
     function (Mapa, Updater, Item, Player, Character, ComandosChat, Atributos, Inventario, Skills, Enums, Font) {
-        var Game = Class.extend({
-            init: function (assetManager) {
+        class Game {
+            constructor(assetManager) {
+                this.init(assetManager);
+            }
+
+            init(assetManager) { // temporal
                 this.atributos = new Atributos(this);
                 this.comandosChat = new ComandosChat(this);
                 this.map = new Mapa();
@@ -33,23 +37,23 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
 
                 this.lloviendo = false;
                 this.bajoTecho = false;
-            },
+            }
 
-            setup: function (client, gameUI, renderer) {
+            setup(client, gameUI, renderer) {
                 this.client = client;
                 this.gameUI = gameUI;
                 this.renderer = renderer;
-            },
+            }
 
-            setStorage: function (storage) {
+            setStorage(storage) {
                 this.storage = storage;
-            },
+            }
 
-            setUpdater: function (updater) {
+            setUpdater(updater) {
                 this.updater = updater;
-            },
+            }
 
-            recibirDanio: function (parteCuerpo, danio) {
+            recibirDanio(parteCuerpo, danio) {
 
                 var txt = "";
                 switch (parteCuerpo) {
@@ -77,35 +81,35 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
 
                 this.renderer.agregarCharacterHoveringInfo(this.player, -danio, Font.CANVAS_DANIO_RECIBIDO);
                 this.renderer.agregarTextoConsola(txt, Font.FIGHT);
-            },
+            }
 
-            realizarDanio: function (danio) {
+            realizarDanio(danio) {
                 var char = this.player.lastAttackedTarget;
                 if (char) {
                     this.renderer.agregarCharacterHoveringInfo(char, danio, Font.CANVAS_DANIO_REALIZADO);
                     this.renderer.agregarTextoConsola(Enums.MensajeConsola.MENSAJE_GOLPE_CRIATURA_1 + danio + Enums.MensajeConsola.MENSAJE_2, Font.FIGHT);
                 }
-            },
+            }
 
-            escribirMsgConsola: function (texto, font) {
+            escribirMsgConsola(texto, font) {
                 if (!font)
                     font = Font.INFO;
                 this.renderer.agregarTextoConsola(texto, font);
-            },
+            }
 
-            escribirChat: function (chat, charIndex, r, g, b) { // TODO: colores?
+            escribirChat(chat, charIndex, r, g, b) { // TODO: colores?
                 if (this.characters[charIndex]) {
                     this.renderer.setCharacterChat(this.characters[charIndex], chat, r, g, b);
                 }
-            },
+            }
 
-            enviarChat: function (message) {
+            enviarChat(message) {
                 var res = this.comandosChat.parsearChat(message);
                 if (res)
                     this.client.sendTalk(res);
-            },
+            }
 
-            actualizarMovPos: function (char, direccion) {
+            actualizarMovPos(char, direccion) {
                 // Se setea la pos del grid nomas porque la (x,y) la usa para la animacion el character ( y la actualiza el al final)
                 if (this.entityGrid[char.gridX][char.gridY][1])
                     if (this.entityGrid[char.gridX][char.gridY][1].id === char.id) // es necesario checkear que sean iguales porque puede que haya otro char que piso la dir de este (pisar caspers)
@@ -134,9 +138,9 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 }
 
                 // hacer para que se vea animacion y demas... de los characters
-            },
+            }
 
-            actualizarBajoTecho: function () {
+            actualizarBajoTecho() {
                 var bajoTecho = this.map.isBajoTecho(this.player.gridX, this.player.gridY);
                 if (this.bajoTecho !== bajoTecho) {
                     this.bajoTecho = bajoTecho;
@@ -144,9 +148,9 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                     if (this.lloviendo && this.map.mapaOutdoor())
                         this.assetManager.audio.playLoopLluvia(bajoTecho);
                 }
-            },
+            }
 
-            _removeAllEntitys: function () {
+            _removeAllEntitys() {
                 var self = this;
                 this.forEachEntity(
                     function (entity, index) {
@@ -154,18 +158,18 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                             self.sacarEntity(entity);
                     }
                 );
-            },
+            }
 
-            _removeAllEntities: function () {
+            _removeAllEntities() {
                 var self = this;
                 this.forEachEntity(function (entity) {
                     if (entity.id !== self.player.id)
                         self.sacarEntity(entity);
                 });
                 this.items = [];
-            },
+            }
 
-            sacarEntity: function (entity) {
+            sacarEntity(entity) {
                 if (entity instanceof Character) {
                     if (entity === this.player) {
                         log.error("TRATANDO DE SACAR AL PLAYER!");
@@ -184,9 +188,9 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 else {
                     log.error("Tipo de entity desconocido!");
                 }
-            },
+            }
 
-            moverCharacter: function (CharIndex, gridX, gridY) {
+            moverCharacter(CharIndex, gridX, gridY) {
 
                 if (CharIndex === this.player.id) {
                     if ((X !== this.player.gridX) || (Y !== this.player.gridY)) {
@@ -214,9 +218,9 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                     }
 
                 }
-            },
+            }
 
-            playSonidoPaso: function (char) {
+            playSonidoPaso(char) {
                 if (char.muerto || !this.renderer.entityEnTileVisible(char))
                     return;
                 if (this.player.navegando) { //todo: que sea dependiendo si el char navega, no el player
@@ -229,11 +233,11 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                     else
                         this.assetManager.audio.playSound(Enums.SONIDOS.paso2);
                 }
-            },
+            }
 
-            cambiarCharacter: function (CharIndex, Body, Head, Heading, Weapon, Shield, Helmet, FX, FXLoops) { // TODO: que solo cambie los que son diferentes!
+            cambiarCharacter(CharIndex, Body, Head, Heading, Weapon, Shield, Helmet, FX, FXLoops) { // TODO: que solo cambie los que son diferentes!
 
-                c = this.characters[CharIndex];
+                var c = this.characters[CharIndex];
 
                 if (!c) {
                     //log.error(" cambiar character inexistente ");
@@ -244,10 +248,10 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 c.muerto = !!((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal));
 
                 this.renderer.cambiarCharacter(c, Body, Head, Heading, Weapon, Shield, Helmet, FX, FXLoops);
-            },
+            }
 
-            agregarCharacter: function (CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, Name,
-                                        NickColor, Privileges) {
+            agregarCharacter(CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, Name,
+                             NickColor, Privileges) {
 
                 if (this.characters[CharIndex]) {
                     if (CharIndex === this.player.id) {
@@ -304,7 +308,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                     this.inicializarPlayer(CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan, NickColor, Privileges);
                     return;
                 }
-                c = new Character(CharIndex, X, Y, Heading, nombre, clan);
+                var c = new Character(CharIndex, X, Y, Heading, nombre, clan);
 
                 if ((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal))
                     c.muerto = true;
@@ -317,53 +321,53 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 this.setCharacterFX(CharIndex, FX, FXLoops);
                 this.renderer.agregarCharacter(c, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan,
                     NickColor);
-            },
+            }
 
-            agregarItem: function (grhIndex, gridX, gridY) { // TODO: rever si ahora que no hay que updatear hace falta tenerlos en un array
+            agregarItem(grhIndex, gridX, gridY) { // TODO: rever si ahora que no hay que updatear hace falta tenerlos en un array
                 var viejoItem = this.entityGrid[gridX][gridY][0];
                 if (viejoItem)
                     this.sacarEntity(viejoItem);
                 var id = 0;
                 while (this.items[id])
                     id++;
-                item = new Item(id, gridX, gridY);
+                var item = new Item(id, gridX, gridY);
                 this.entityGrid[gridX][gridY][0] = item;
                 this.items[id] = item;
                 this.renderer.agregarItem(item, grhIndex);
-            },
+            }
 
-            sacarItem: function (gridX, gridY) {
+            sacarItem(gridX, gridY) {
                 var item = this.items[this.entityGrid[gridX][gridY][0].id];
                 if (item) {
                     this.sacarEntity(item);
                 }
-            },
+            }
 
-            toggleSeguroResucitar: function () {
+            toggleSeguroResucitar() {
                 this.seguroResucitacionActivado = !this.seguroResucitacionActivado;
                 this.gameUI.interfaz.setSeguroResucitacion(this.seguroResucitacionActivado);
                 this.client.sendResuscitationSafeToggle();
-            },
+            }
 
-            toggleSeguroAtacar: function () {
+            toggleSeguroAtacar() {
                 this.seguroAtacarActivado = !this.seguroAtacarActivado;
                 this.gameUI.interfaz.setSeguroAtacar(this.seguroAtacarActivado);
                 this.client.sendSafeToggle();
-            },
+            }
 
-            cambiarSlotInventario: function (numSlot, ObjIndex, ObjName, Amount, Equiped, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) {
+            cambiarSlotInventario(numSlot, ObjIndex, ObjName, Amount, Equiped, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) {
                 this.inventario.cambiarSlot(numSlot, ObjName, Amount, ObjSalePrice, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, Equiped);
                 this.gameUI.updateSlotUser(numSlot, this.inventario.getSlot(numSlot));
-            },
+            }
 
-            cambiarSlotHechizos: function (slot, spellID, nombre) {
+            cambiarSlotHechizos(slot, spellID, nombre) {
                 this.hechizos[slot] = {id: spellID, nombre: nombre};
                 this.gameUI.interfaz.modificarSlotHechizo(slot, nombre);
                 /*if (this.logeado)
                  this.uiRenderer.modificarSlotHechizos(slot, nombre);*/
-            },
+            }
 
-            inicializarPlayer: function (CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan, NickColor, Privileges) {
+            inicializarPlayer(CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan, NickColor, Privileges) {
                 log.error("inicializar player");
                 this.player = new Player(CharIndex, X, Y, Heading, nombre, clan);
 
@@ -399,14 +403,14 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
 
                     if (self.player.paralizado)
                         return false;
-                    if (self.player.meditando){
+                    if (self.player.meditando) {
                         // envia solo 1 vez el mensaje de caminar para que deje de meditar, feo esto
                         if (!this._waltkToCancelMeditarSent) {
                             self.client.sendWalk(direccion);
                         }
                         this._waltkToCancelMeditarSent = true;
                         return false;
-                    } else{
+                    } else {
                         this._waltkToCancelMeditarSent = false;
                     }
 
@@ -460,10 +464,10 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                     });
 
                 this.actualizarIndicadorPosMapa();
-            },
+            }
 
-            resetPosCharacter: function (charIndex, gridX, gridY, noReDraw) {
-                c = this.characters[charIndex];
+            resetPosCharacter(charIndex, gridX, gridY, noReDraw) {
+                var c = this.characters[charIndex];
                 if (!c) {
                     log.error(" Reset pos de character no existente, charindex=" + charIndex);
                     return;
@@ -483,12 +487,12 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                     this.actualizarBajoTecho();
                     this.actualizarIndicadorPosMapa();
                 }
-            },
+            }
 
-            cambiarMapa: function (numeroMapa) {
+            cambiarMapa(numeroMapa) {
                 /* todo: cambiar esto si deja de ser sync: */
                 //this._removeAllEntitys();
-                prevMapa = this.map;
+                var prevMapa = this.map;
                 this.map = new Mapa(numeroMapa, this.assetManager.getMapaSync(numeroMapa));
                 this._removeAllEntities();
                 this.renderer.cambiarMapa(this.map);
@@ -503,13 +507,13 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                     }
                 }
 
-            },
+            }
 
-            actualizarIndicadorPosMapa: function () {
+            actualizarIndicadorPosMapa() {
                 this.gameUI.interfaz.updateIndicadorPosMapa(this.map.numero, this.player.gridX, this.player.gridY);
-            },
+            }
 
-            cambiarArea: function (gridX, gridY) {
+            cambiarArea(gridX, gridY) {
 
                 var MinLimiteX = Math.floor(gridX / 9 - 1) * 9;
                 var MaxLimiteX = MinLimiteX + 26;
@@ -526,33 +530,33 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                         }
                     }
                 );
-            },
+            }
 
-            forceCaminar: function (direccion) {
+            forceCaminar(direccion) {
                 this.player.forceCaminar(direccion);
-            },
+            }
 
-            setTrabajoPendiente: function (skill) {
+            setTrabajoPendiente(skill) {
                 this.gameUI.interfaz.setMouseCrosshair(true);
                 this.trabajoPendiente = skill;
-            },
+            }
 
-            cambiarSlotCompra: function (numSlot, ObjName, Amount, Price, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef) {
+            cambiarSlotCompra(numSlot, ObjName, Amount, Price, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef) {
                 this.inventarioShop.cambiarSlot(numSlot, ObjName, Amount, Price, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef);
                 this.gameUI.updateSlotShop(numSlot, this.inventarioShop.getSlot(numSlot));
 
-            },
+            }
 
-            cambiarSlotRetirar: function (numSlot, ObjIndex, ObjName, Amount, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) {
+            cambiarSlotRetirar(numSlot, ObjIndex, ObjName, Amount, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) {
                 this.inventarioShop.cambiarSlot(numSlot, ObjName, Amount, ObjSalePrice, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef);
                 this.gameUI.updateSlotShop(numSlot, this.inventarioShop.getSlot(numSlot));
-            },
+            }
 
-            togglePausa: function () {
+            togglePausa() {
                 this.isPaused = !(this.isPaused);
-            },
+            }
 
-            setCharacterFX: function (CharIndex, FX, FXLoops) {
+            setCharacterFX(CharIndex, FX, FXLoops) {
                 if (!this.characters[CharIndex]) {
                     log.error("crear fx en character inexistente");
                     return;
@@ -564,9 +568,9 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 }
                 FXLoops = FXLoops + 1;
                 this.renderer.setCharacterFX(this.characters[CharIndex], FX, FXLoops);
-            },
+            }
 
-            initEntityGrid: function () {
+            initEntityGrid() {
                 this.entityGrid = [];
                 for (var i = 1; i < this.map.height + 1; i += 1) {
                     this.entityGrid[i] = [];
@@ -575,16 +579,16 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                     }
                 }
                 log.info("Initialized the entity grid.");
-            },
+            }
 
-            inicializar: function (username) {
+            inicializar(username) {
                 this.username = username;
                 this.setUpdater(new Updater(this));
                 this.initEntityGrid();
                 this.ready = true;
-            },
+            }
 
-            tick: function () {
+            tick() {
                 this.currentTime = Date.now();
                 if (this.started) {
                     if (!this.isPaused)
@@ -595,9 +599,9 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 if (!this.isStopped) {
                     requestAnimFrame(this.tick.bind(this));
                 }
-            },
+            }
 
-            start: function () {
+            start() {
 
                 if (this.started)
                     return;
@@ -608,27 +612,27 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 this.tick();
                 this.hasNeverStarted = false;
                 log.info("Game loop started.");
-            },
+            }
 
-            stop: function () {
+            stop() {
                 log.info("Game stopped.");
                 this.isStopped = true;
-            },
+            }
 
-            entityIdExists: function (id) {
+            entityIdExists(id) {
                 return id in this.entities;
-            },
+            }
 
-            getEntityById: function (id) {
+            getEntityById(id) {
                 if (id in this.entities) {
                     return this.entities[id];
                 }
                 else {
                     log.error("Unknown entity id : " + id, true);
                 }
-            },
+            }
 
-            getMouseGridPosition: function () { // TODO: usar InteractionManager para detectar sprite clickeado y rederigir a ese tile???
+            getMouseGridPosition() { // TODO: usar InteractionManager para detectar sprite clickeado y rederigir a ese tile???
                 var ts = this.renderer.tilesize,
                     c = this.renderer.camera,
                     mx = this.mouse.x / this.renderer.escala,
@@ -658,13 +662,13 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                     }
                 }
                 return {x: x, y: y};
-            },
+            }
 
             /**
              * Loops through all the entities currently present in the game.
              * @param {Function} callback The function to call back (must accept one entity argument).
              */
-            forEachEntity: function (callback) {
+            forEachEntity(callback) {
                 _.each(this.characters, function (entity, index) {
                     if (entity)
                         callback(entity, index);
@@ -675,27 +679,27 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                         callback(entity, index);
                 });
 
-            },
+            }
 
-            forEachCharacter: function (callback) { // TODO (importante): este _.each itera solo los elementos del array?, dado que characters tiene por ej elementos en [3] y [5323] ("sparse array"), quiero imaginar que solo itera los elementos y no va desde 0 a 5323 probando con cada uno no?
+            forEachCharacter(callback) { // TODO (importante): este _.each itera solo los elementos del array?, dado que characters tiene por ej elementos en [3] y [5323] ("sparse array"), quiero imaginar que solo itera los elementos y no va desde 0 a 5323 probando con cada uno no?
                 _.each(this.characters, function (entity) {
                     if (entity)
                         callback(entity);
                 });
-            },
+            }
 
-            forEachItem: function (callback) {
+            forEachItem(callback) {
                 _.each(this.items, function (entity) {
                     if (entity)
                         callback(entity);
                 });
-            },
+            }
 
-            resize: function (escala) {
+            resize(escala) {
                 this.renderer.rescale(escala);
-            },
+            }
 
-        });
+        }
 
         return Game;
     });

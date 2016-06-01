@@ -1,14 +1,14 @@
 define(function () {
 
-    var Transition = Class.extend({
-        init: function () {
+    class Transition {
+        constructor() {
             this.startValue = 0;
             this.endValue = 0;
             this.duration = 0;
             this.inProgress = false;
-        },
+        }
 
-        start: function (updateFunction, stopFunction, startValue, endValue, duration) {
+        start(updateFunction, stopFunction, startValue, endValue, duration) {
             this.elapsed = 0;
             this.updateFunction = updateFunction;
             this.stopFunction = stopFunction;
@@ -16,9 +16,9 @@ define(function () {
             this.endValue = endValue;
             this.duration = duration;
             this.inProgress = true;
-        },
+        }
 
-        step: function (deltaTime) {
+        step(deltaTime) {
             if (this.inProgress) {
                 this.elapsed += deltaTime;
 
@@ -37,16 +37,15 @@ define(function () {
                     this.updateFunction(i);
                 }
             }
-        },
+        }
 
-        restart: function (startValue, endValue) {
+        restart(startValue, endValue) {
             this.start(this.updateFunction, this.stopFunction, startValue, endValue, this.duration);
-        },
+        }
 
-        stop: function () {
+        stop() {
             this.inProgress = false;
         }
-    });
-
+    }
     return Transition;
 });
