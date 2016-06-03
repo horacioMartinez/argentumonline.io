@@ -21,6 +21,7 @@ define(['jquery-ui'], function () {
                 throw new Error("pop up inicializado dos veces: " + this.$this.attr('id'));
             }
 
+            this._addCloseButton(this.$this);
             this.$this.hide();
             this.$parent.append(this.$this);
             this.$centering_container = $("#container");
@@ -58,6 +59,15 @@ define(['jquery-ui'], function () {
         clearDom() {
             this.$this.find('span').text('');
             this.$this.find('input').val('');
+        }
+
+        _addCloseButton($target){
+            var $button = $('<button class="botonCerrar"></button>');
+            let self = this;
+            $button.click(function () {
+               self.hide();
+            });
+            $target.append($button);
         }
 
     }

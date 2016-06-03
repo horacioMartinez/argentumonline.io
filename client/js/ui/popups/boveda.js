@@ -29,6 +29,12 @@ define(["text!../../../menus/boveda.html!strip", 'ui/popups/popup', 'ui/game/ite
             this.userGrid.resetSelectedSlot();
         }
 
+        hide(incomingFromServer){
+            super.hide();
+            if (!incomingFromServer)
+                this.acciones.cerrarBoveda();
+        }
+
         cambiarSlotRetirar(Slot, Amount, numGrafico) {
             this.shopGrid.modificarSlot(Slot, Amount, numGrafico);
         }
@@ -89,11 +95,6 @@ define(["text!../../../menus/boveda.html!strip", 'ui/popups/popup', 'ui/game/ite
                         inputCantidad = 1;
                     self.acciones.depositarItem(slot, inputCantidad);
                 }
-            });
-
-            $("#bovedaBotonCerrar").click(function () {
-                self.hide();
-                self.acciones.cerrarBoveda();
             });
 
             this.shopGrid.setSelectionCallback(

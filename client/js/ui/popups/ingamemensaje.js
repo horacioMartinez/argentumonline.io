@@ -13,12 +13,12 @@ define(["text!../../../menus/inGameMensaje.html!strip", 'ui/popups/popup'], func
         show(mensaje) {
             super.show();
             $("#inGameMensajeContenido").text(mensaje);
-            $("#inGameMensajeBotonCerrar").focus();
+            $("#inGameMensajeBotonOk").focus();
         }
 
         initCallbacks() {
             var self = this;
-            $("#inGameMensajeBotonCerrar").click(function () {
+            $("#inGameMensajeBotonOk").click(function () {
                 self.hide();
             });
         }

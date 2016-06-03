@@ -40,6 +40,13 @@ define(["text!../../../menus/comerciar.html!strip", 'ui/popups/popup', 'ui/game/
             this.userGrid.resetSelectedSlot();
         }
 
+        hide(incomingFromServer) {
+            super.hide();
+            if (!incomingFromServer) { // TODO: (en comerciar y en boveda!!) que el cliente no le tenga que mandar al sv cuando cierra, esta accion no deberia estar
+                this.acciones.cerrarComerciar();
+            }
+        }
+
         cambiarSlotCompra(Slot, Amount, numGrafico) {
             this.shopGrid.modificarSlot(Slot, Amount, numGrafico);
         }
@@ -81,11 +88,6 @@ define(["text!../../../menus/comerciar.html!strip", 'ui/popups/popup', 'ui/game/
                         }
                     }
                 }
-            });
-
-            $("#comerciarBotonCerrar").click(function () {
-                self.hide();
-                self.acciones.cerrarComerciar();
             });
 
             this.shopGrid.setSelectionCallback(

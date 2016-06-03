@@ -35,8 +35,8 @@ define(['enums', 'font', 'network/protocol', 'network/bytequeue', 'lib/websock']
                         self.protocolo.ServerPacketDecodeAndDispatch(self.byteQueue, self);
                     }
                 } catch (e) {
-                    alert(' Protocolo - ' + e.name + ': ' + e.message + " - " + new Error().stack);
-                    log.error(' Protocolo - ' + e.name + ': ' + e.message + " - " + new Error().stack);
+                    alert(' Protocolo - ' + e.name + ': ' + e.message + " - " + e.stack);
+                    log.error(' Protocolo - ' + e.name + ': ' + e.message + " - " + e.stack);
                 }
             });
             this.ws.on('close', function () {
@@ -115,11 +115,11 @@ define(['enums', 'font', 'network/protocol', 'network/bytequeue', 'lib/websock']
         }
 
         handleCommerceEnd() {
-            this.gameUI.hideComerciar();
+            this.gameUI.hideComerciar(true);
         }
 
         handleBankEnd() {
-            console.log("TODO: handleBankEnd ");
+            this.gameUI.hideBoveda(true);
         }
 
         handleCommerceInit() {

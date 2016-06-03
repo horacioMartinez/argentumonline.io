@@ -56,8 +56,8 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
             this.comerciar.show();
         }
 
-        hideComerciar() {
-            this.comerciar.hide();
+        hideComerciar(incomingFromServer) {
+            this.comerciar.hide(incomingFromServer);
         }
 
         showMensaje(msj) {
@@ -68,8 +68,8 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
             this.boveda.show();
         }
 
-        hideBoveda() {
-            this.boveda.hide();
+        hideBoveda(incomingFromServer) {
+            this.boveda.hide(incomingFromServer);
         }
 
         showTirar(tirandoOro) {

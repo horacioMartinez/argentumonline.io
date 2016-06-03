@@ -61,6 +61,8 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
 
         finalizarSonidoLluvia(bajoTecho) {
             this.stopLluvia();
+            if (!this.soundEnabled)
+                return;
             var nombre;
             if (bajoTecho)
                 nombre = Enums.SONIDOS.lluvia_end_indoor;
@@ -72,6 +74,8 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
 
         IniciarSonidoLluvia(bajoTecho) {
             var nombre;
+            if (!this.soundEnabled)
+                return;
             if (bajoTecho)
                 nombre = Enums.SONIDOS.lluvia_start_indoor;
             else
@@ -82,6 +86,8 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
 
         playLoopLluvia(bajoTecho) {
             this.stopLluvia();
+            if (!this.soundEnabled)
+                return;
             var nombre, sprite;
             if (bajoTecho) {
                 nombre = Enums.SONIDOS.lluvia_indoor;

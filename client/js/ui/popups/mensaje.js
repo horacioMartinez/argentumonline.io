@@ -13,12 +13,12 @@ define(["text!../../../menus/mensajeGlobal.html!strip", 'ui/popups/popup'], func
         show(mensaje) {
             super.show();
             $("#mensajeContenido").text(mensaje);
-            $("#mensajeBotonCerrar").focus();
+            $("#mensajeBotonOk").focus();
         }
 
         initCallbacks() {
             var self = this;
-            $("#mensajeBotonCerrar").click(function () {
+            $("#mensajeBotonOk").click(function () {
                 self.hide();
             });
         }

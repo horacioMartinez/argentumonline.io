@@ -2,7 +2,7 @@
 /* Automatically generated file */
 
 define(['enums'], function (Enums) {
-var ClientPacketID = { 
+var ClientPacketID = {
     LoginExistingChar : 0,
     ThrowDices : 1,
     LoginNewChar : 2,
@@ -137,7 +137,7 @@ var ClientPacketID = {
 };
 
 function LoginExistingChar (buffer) {
-    
+
         this.id = ClientPacketID.LoginExistingChar /* 0 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -167,7 +167,7 @@ function LoginExistingChar (buffer) {
 }
 
 function ThrowDices (buffer) {
-    
+
         this.id = ClientPacketID.ThrowDices /* 1 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -187,7 +187,7 @@ function ThrowDices (buffer) {
 }
 
 function LoginNewChar (buffer) {
-    
+
         this.id = ClientPacketID.LoginNewChar /* 2 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -229,7 +229,7 @@ function LoginNewChar (buffer) {
 }
 
 function Talk (buffer) {
-    
+
         this.id = ClientPacketID.Talk /* 3 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -251,7 +251,7 @@ function Talk (buffer) {
 }
 
 function Yell (buffer) {
-    
+
         this.id = ClientPacketID.Yell /* 4 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -273,7 +273,7 @@ function Yell (buffer) {
 }
 
 function Whisper (buffer) {
-    
+
         this.id = ClientPacketID.Whisper /* 5 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -297,7 +297,7 @@ function Whisper (buffer) {
 }
 
 function Walk (buffer) {
-    
+
         this.id = ClientPacketID.Walk /* 6 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -319,7 +319,7 @@ function Walk (buffer) {
 }
 
 function RequestPositionUpdate (buffer) {
-    
+
         this.id = ClientPacketID.RequestPositionUpdate /* 7 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -339,7 +339,7 @@ function RequestPositionUpdate (buffer) {
 }
 
 function Attack (buffer) {
-    
+
         this.id = ClientPacketID.Attack /* 8 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -359,7 +359,7 @@ function Attack (buffer) {
 }
 
 function PickUp (buffer) {
-    
+
         this.id = ClientPacketID.PickUp /* 9 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -379,7 +379,7 @@ function PickUp (buffer) {
 }
 
 function SafeToggle (buffer) {
-    
+
         this.id = ClientPacketID.SafeToggle /* 10 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -399,7 +399,7 @@ function SafeToggle (buffer) {
 }
 
 function ResuscitationSafeToggle (buffer) {
-    
+
         this.id = ClientPacketID.ResuscitationSafeToggle /* 11 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -419,7 +419,7 @@ function ResuscitationSafeToggle (buffer) {
 }
 
 function RequestGuildLeaderInfo (buffer) {
-    
+
         this.id = ClientPacketID.RequestGuildLeaderInfo /* 12 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -439,7 +439,7 @@ function RequestGuildLeaderInfo (buffer) {
 }
 
 function RequestAtributes (buffer) {
-    
+
         this.id = ClientPacketID.RequestAtributes /* 13 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -459,7 +459,7 @@ function RequestAtributes (buffer) {
 }
 
 function RequestFame (buffer) {
-    
+
         this.id = ClientPacketID.RequestFame /* 14 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -479,7 +479,7 @@ function RequestFame (buffer) {
 }
 
 function RequestSkills (buffer) {
-    
+
         this.id = ClientPacketID.RequestSkills /* 15 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -499,7 +499,7 @@ function RequestSkills (buffer) {
 }
 
 function RequestMiniStats (buffer) {
-    
+
         this.id = ClientPacketID.RequestMiniStats /* 16 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -519,7 +519,7 @@ function RequestMiniStats (buffer) {
 }
 
 function CommerceEnd (buffer) {
-    
+
         this.id = ClientPacketID.CommerceEnd /* 17 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -539,7 +539,7 @@ function CommerceEnd (buffer) {
 }
 
 function UserCommerceEnd (buffer) {
-    
+
         this.id = ClientPacketID.UserCommerceEnd /* 18 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -559,7 +559,7 @@ function UserCommerceEnd (buffer) {
 }
 
 function UserCommerceConfirm (buffer) {
-    
+
         this.id = ClientPacketID.UserCommerceConfirm /* 19 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -579,7 +579,7 @@ function UserCommerceConfirm (buffer) {
 }
 
 function CommerceChat (buffer) {
-    
+
         this.id = ClientPacketID.CommerceChat /* 20 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -601,7 +601,7 @@ function CommerceChat (buffer) {
 }
 
 function BankEnd (buffer) {
-    
+
         this.id = ClientPacketID.BankEnd /* 21 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -621,7 +621,7 @@ function BankEnd (buffer) {
 }
 
 function UserCommerceOk (buffer) {
-    
+
         this.id = ClientPacketID.UserCommerceOk /* 22 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -641,7 +641,7 @@ function UserCommerceOk (buffer) {
 }
 
 function UserCommerceReject (buffer) {
-    
+
         this.id = ClientPacketID.UserCommerceReject /* 23 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -661,7 +661,7 @@ function UserCommerceReject (buffer) {
 }
 
 function Drop (buffer) {
-    
+
         this.id = ClientPacketID.Drop /* 24 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -685,7 +685,7 @@ function Drop (buffer) {
 }
 
 function CastSpell (buffer) {
-    
+
         this.id = ClientPacketID.CastSpell /* 25 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -707,7 +707,7 @@ function CastSpell (buffer) {
 }
 
 function LeftClick (buffer) {
-    
+
         this.id = ClientPacketID.LeftClick /* 26 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -731,7 +731,7 @@ function LeftClick (buffer) {
 }
 
 function DoubleClick (buffer) {
-    
+
         this.id = ClientPacketID.DoubleClick /* 27 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -755,7 +755,7 @@ function DoubleClick (buffer) {
 }
 
 function Work (buffer) {
-    
+
         this.id = ClientPacketID.Work /* 28 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -777,7 +777,7 @@ function Work (buffer) {
 }
 
 function UseSpellMacro (buffer) {
-    
+
         this.id = ClientPacketID.UseSpellMacro /* 29 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -797,7 +797,7 @@ function UseSpellMacro (buffer) {
 }
 
 function UseItem (buffer) {
-    
+
         this.id = ClientPacketID.UseItem /* 30 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -819,7 +819,7 @@ function UseItem (buffer) {
 }
 
 function CraftBlacksmith (buffer) {
-    
+
         this.id = ClientPacketID.CraftBlacksmith /* 31 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -841,7 +841,7 @@ function CraftBlacksmith (buffer) {
 }
 
 function CraftCarpenter (buffer) {
-    
+
         this.id = ClientPacketID.CraftCarpenter /* 32 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -863,7 +863,7 @@ function CraftCarpenter (buffer) {
 }
 
 function WorkLeftClick (buffer) {
-    
+
         this.id = ClientPacketID.WorkLeftClick /* 33 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -889,7 +889,7 @@ function WorkLeftClick (buffer) {
 }
 
 function CreateNewGuild (buffer) {
-    
+
         this.id = ClientPacketID.CreateNewGuild /* 34 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -917,7 +917,7 @@ function CreateNewGuild (buffer) {
 }
 
 function SpellInfo (buffer) {
-    
+
         this.id = ClientPacketID.SpellInfo /* 35 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -939,7 +939,7 @@ function SpellInfo (buffer) {
 }
 
 function EquipItem (buffer) {
-    
+
         this.id = ClientPacketID.EquipItem /* 36 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -961,7 +961,7 @@ function EquipItem (buffer) {
 }
 
 function ChangeHeading (buffer) {
-    
+
         this.id = ClientPacketID.ChangeHeading /* 37 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -983,7 +983,7 @@ function ChangeHeading (buffer) {
 }
 
 function ModifySkills (buffer) {
-    
+
         this.id = ClientPacketID.ModifySkills /* 38 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1005,7 +1005,7 @@ function ModifySkills (buffer) {
 }
 
 function Train (buffer) {
-    
+
         this.id = ClientPacketID.Train /* 39 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1027,7 +1027,7 @@ function Train (buffer) {
 }
 
 function CommerceBuy (buffer) {
-    
+
         this.id = ClientPacketID.CommerceBuy /* 40 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1051,7 +1051,7 @@ function CommerceBuy (buffer) {
 }
 
 function BankExtractItem (buffer) {
-    
+
         this.id = ClientPacketID.BankExtractItem /* 41 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1075,7 +1075,7 @@ function BankExtractItem (buffer) {
 }
 
 function CommerceSell (buffer) {
-    
+
         this.id = ClientPacketID.CommerceSell /* 42 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1099,7 +1099,7 @@ function CommerceSell (buffer) {
 }
 
 function BankDeposit (buffer) {
-    
+
         this.id = ClientPacketID.BankDeposit /* 43 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1123,7 +1123,7 @@ function BankDeposit (buffer) {
 }
 
 function ForumPost (buffer) {
-    
+
         this.id = ClientPacketID.ForumPost /* 44 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1149,7 +1149,7 @@ function ForumPost (buffer) {
 }
 
 function MoveSpell (buffer) {
-    
+
         this.id = ClientPacketID.MoveSpell /* 45 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1173,7 +1173,7 @@ function MoveSpell (buffer) {
 }
 
 function MoveBank (buffer) {
-    
+
         this.id = ClientPacketID.MoveBank /* 46 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1197,7 +1197,7 @@ function MoveBank (buffer) {
 }
 
 function ClanCodexUpdate (buffer) {
-    
+
         this.id = ClientPacketID.ClanCodexUpdate /* 47 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1221,7 +1221,7 @@ function ClanCodexUpdate (buffer) {
 }
 
 function UserCommerceOffer (buffer) {
-    
+
         this.id = ClientPacketID.UserCommerceOffer /* 48 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1247,7 +1247,7 @@ function UserCommerceOffer (buffer) {
 }
 
 function GuildAcceptPeace (buffer) {
-    
+
         this.id = ClientPacketID.GuildAcceptPeace /* 49 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1269,7 +1269,7 @@ function GuildAcceptPeace (buffer) {
 }
 
 function GuildRejectAlliance (buffer) {
-    
+
         this.id = ClientPacketID.GuildRejectAlliance /* 50 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1291,7 +1291,7 @@ function GuildRejectAlliance (buffer) {
 }
 
 function GuildRejectPeace (buffer) {
-    
+
         this.id = ClientPacketID.GuildRejectPeace /* 51 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1313,7 +1313,7 @@ function GuildRejectPeace (buffer) {
 }
 
 function GuildAcceptAlliance (buffer) {
-    
+
         this.id = ClientPacketID.GuildAcceptAlliance /* 52 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1335,7 +1335,7 @@ function GuildAcceptAlliance (buffer) {
 }
 
 function GuildOfferPeace (buffer) {
-    
+
         this.id = ClientPacketID.GuildOfferPeace /* 53 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1359,7 +1359,7 @@ function GuildOfferPeace (buffer) {
 }
 
 function GuildOfferAlliance (buffer) {
-    
+
         this.id = ClientPacketID.GuildOfferAlliance /* 54 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1383,7 +1383,7 @@ function GuildOfferAlliance (buffer) {
 }
 
 function GuildAllianceDetails (buffer) {
-    
+
         this.id = ClientPacketID.GuildAllianceDetails /* 55 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1405,7 +1405,7 @@ function GuildAllianceDetails (buffer) {
 }
 
 function GuildPeaceDetails (buffer) {
-    
+
         this.id = ClientPacketID.GuildPeaceDetails /* 56 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1427,7 +1427,7 @@ function GuildPeaceDetails (buffer) {
 }
 
 function GuildRequestJoinerInfo (buffer) {
-    
+
         this.id = ClientPacketID.GuildRequestJoinerInfo /* 57 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1449,7 +1449,7 @@ function GuildRequestJoinerInfo (buffer) {
 }
 
 function GuildAlliancePropList (buffer) {
-    
+
         this.id = ClientPacketID.GuildAlliancePropList /* 58 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1469,7 +1469,7 @@ function GuildAlliancePropList (buffer) {
 }
 
 function GuildPeacePropList (buffer) {
-    
+
         this.id = ClientPacketID.GuildPeacePropList /* 59 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1489,7 +1489,7 @@ function GuildPeacePropList (buffer) {
 }
 
 function GuildDeclareWar (buffer) {
-    
+
         this.id = ClientPacketID.GuildDeclareWar /* 60 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1511,7 +1511,7 @@ function GuildDeclareWar (buffer) {
 }
 
 function GuildNewWebsite (buffer) {
-    
+
         this.id = ClientPacketID.GuildNewWebsite /* 61 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1533,7 +1533,7 @@ function GuildNewWebsite (buffer) {
 }
 
 function GuildAcceptNewMember (buffer) {
-    
+
         this.id = ClientPacketID.GuildAcceptNewMember /* 62 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1555,7 +1555,7 @@ function GuildAcceptNewMember (buffer) {
 }
 
 function GuildRejectNewMember (buffer) {
-    
+
         this.id = ClientPacketID.GuildRejectNewMember /* 63 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1579,7 +1579,7 @@ function GuildRejectNewMember (buffer) {
 }
 
 function GuildKickMember (buffer) {
-    
+
         this.id = ClientPacketID.GuildKickMember /* 64 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1601,7 +1601,7 @@ function GuildKickMember (buffer) {
 }
 
 function GuildUpdateNews (buffer) {
-    
+
         this.id = ClientPacketID.GuildUpdateNews /* 65 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1623,7 +1623,7 @@ function GuildUpdateNews (buffer) {
 }
 
 function GuildMemberInfo (buffer) {
-    
+
         this.id = ClientPacketID.GuildMemberInfo /* 66 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1645,7 +1645,7 @@ function GuildMemberInfo (buffer) {
 }
 
 function GuildOpenElections (buffer) {
-    
+
         this.id = ClientPacketID.GuildOpenElections /* 67 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1665,7 +1665,7 @@ function GuildOpenElections (buffer) {
 }
 
 function GuildRequestMembership (buffer) {
-    
+
         this.id = ClientPacketID.GuildRequestMembership /* 68 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1689,7 +1689,7 @@ function GuildRequestMembership (buffer) {
 }
 
 function GuildRequestDetails (buffer) {
-    
+
         this.id = ClientPacketID.GuildRequestDetails /* 69 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1711,7 +1711,7 @@ function GuildRequestDetails (buffer) {
 }
 
 function Online (buffer) {
-    
+
         this.id = ClientPacketID.Online /* 70 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1731,7 +1731,7 @@ function Online (buffer) {
 }
 
 function Quit (buffer) {
-    
+
         this.id = ClientPacketID.Quit /* 71 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1751,7 +1751,7 @@ function Quit (buffer) {
 }
 
 function GuildLeave (buffer) {
-    
+
         this.id = ClientPacketID.GuildLeave /* 72 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1771,7 +1771,7 @@ function GuildLeave (buffer) {
 }
 
 function RequestAccountState (buffer) {
-    
+
         this.id = ClientPacketID.RequestAccountState /* 73 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1791,7 +1791,7 @@ function RequestAccountState (buffer) {
 }
 
 function PetStand (buffer) {
-    
+
         this.id = ClientPacketID.PetStand /* 74 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1811,7 +1811,7 @@ function PetStand (buffer) {
 }
 
 function PetFollow (buffer) {
-    
+
         this.id = ClientPacketID.PetFollow /* 75 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1831,7 +1831,7 @@ function PetFollow (buffer) {
 }
 
 function ReleasePet (buffer) {
-    
+
         this.id = ClientPacketID.ReleasePet /* 76 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1851,7 +1851,7 @@ function ReleasePet (buffer) {
 }
 
 function TrainList (buffer) {
-    
+
         this.id = ClientPacketID.TrainList /* 77 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1871,7 +1871,7 @@ function TrainList (buffer) {
 }
 
 function Rest (buffer) {
-    
+
         this.id = ClientPacketID.Rest /* 78 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1891,7 +1891,7 @@ function Rest (buffer) {
 }
 
 function Meditate (buffer) {
-    
+
         this.id = ClientPacketID.Meditate /* 79 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1911,7 +1911,7 @@ function Meditate (buffer) {
 }
 
 function Resucitate (buffer) {
-    
+
         this.id = ClientPacketID.Resucitate /* 80 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1931,7 +1931,7 @@ function Resucitate (buffer) {
 }
 
 function Heal (buffer) {
-    
+
         this.id = ClientPacketID.Heal /* 81 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1951,7 +1951,7 @@ function Heal (buffer) {
 }
 
 function Help (buffer) {
-    
+
         this.id = ClientPacketID.Help /* 82 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1971,7 +1971,7 @@ function Help (buffer) {
 }
 
 function RequestStats (buffer) {
-    
+
         this.id = ClientPacketID.RequestStats /* 83 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -1991,7 +1991,7 @@ function RequestStats (buffer) {
 }
 
 function CommerceStart (buffer) {
-    
+
         this.id = ClientPacketID.CommerceStart /* 84 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2011,7 +2011,7 @@ function CommerceStart (buffer) {
 }
 
 function BankStart (buffer) {
-    
+
         this.id = ClientPacketID.BankStart /* 85 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2031,7 +2031,7 @@ function BankStart (buffer) {
 }
 
 function Enlist (buffer) {
-    
+
         this.id = ClientPacketID.Enlist /* 86 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2051,7 +2051,7 @@ function Enlist (buffer) {
 }
 
 function Information (buffer) {
-    
+
         this.id = ClientPacketID.Information /* 87 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2071,7 +2071,7 @@ function Information (buffer) {
 }
 
 function Reward (buffer) {
-    
+
         this.id = ClientPacketID.Reward /* 88 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2091,7 +2091,7 @@ function Reward (buffer) {
 }
 
 function RequestMOTD (buffer) {
-    
+
         this.id = ClientPacketID.RequestMOTD /* 89 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2111,7 +2111,7 @@ function RequestMOTD (buffer) {
 }
 
 function UpTime (buffer) {
-    
+
         this.id = ClientPacketID.UpTime /* 90 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2131,7 +2131,7 @@ function UpTime (buffer) {
 }
 
 function PartyLeave (buffer) {
-    
+
         this.id = ClientPacketID.PartyLeave /* 91 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2151,7 +2151,7 @@ function PartyLeave (buffer) {
 }
 
 function PartyCreate (buffer) {
-    
+
         this.id = ClientPacketID.PartyCreate /* 92 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2171,7 +2171,7 @@ function PartyCreate (buffer) {
 }
 
 function PartyJoin (buffer) {
-    
+
         this.id = ClientPacketID.PartyJoin /* 93 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2191,7 +2191,7 @@ function PartyJoin (buffer) {
 }
 
 function Inquiry (buffer) {
-    
+
         this.id = ClientPacketID.Inquiry /* 94 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2211,7 +2211,7 @@ function Inquiry (buffer) {
 }
 
 function GuildMessage (buffer) {
-    
+
         this.id = ClientPacketID.GuildMessage /* 95 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2233,7 +2233,7 @@ function GuildMessage (buffer) {
 }
 
 function PartyMessage (buffer) {
-    
+
         this.id = ClientPacketID.PartyMessage /* 96 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2255,7 +2255,7 @@ function PartyMessage (buffer) {
 }
 
 function CentinelReport (buffer) {
-    
+
         this.id = ClientPacketID.CentinelReport /* 97 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2277,7 +2277,7 @@ function CentinelReport (buffer) {
 }
 
 function GuildOnline (buffer) {
-    
+
         this.id = ClientPacketID.GuildOnline /* 98 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2297,7 +2297,7 @@ function GuildOnline (buffer) {
 }
 
 function PartyOnline (buffer) {
-    
+
         this.id = ClientPacketID.PartyOnline /* 99 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2317,7 +2317,7 @@ function PartyOnline (buffer) {
 }
 
 function CouncilMessage (buffer) {
-    
+
         this.id = ClientPacketID.CouncilMessage /* 100 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2339,7 +2339,7 @@ function CouncilMessage (buffer) {
 }
 
 function RoleMasterRequest (buffer) {
-    
+
         this.id = ClientPacketID.RoleMasterRequest /* 101 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2361,7 +2361,7 @@ function RoleMasterRequest (buffer) {
 }
 
 function GMRequest (buffer) {
-    
+
         this.id = ClientPacketID.GMRequest /* 102 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2381,7 +2381,7 @@ function GMRequest (buffer) {
 }
 
 function BugReport (buffer) {
-    
+
         this.id = ClientPacketID.BugReport /* 103 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2403,7 +2403,7 @@ function BugReport (buffer) {
 }
 
 function ChangeDescription (buffer) {
-    
+
         this.id = ClientPacketID.ChangeDescription /* 104 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2425,7 +2425,7 @@ function ChangeDescription (buffer) {
 }
 
 function GuildVote (buffer) {
-    
+
         this.id = ClientPacketID.GuildVote /* 105 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2447,7 +2447,7 @@ function GuildVote (buffer) {
 }
 
 function Punishments (buffer) {
-    
+
         this.id = ClientPacketID.Punishments /* 106 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2469,7 +2469,7 @@ function Punishments (buffer) {
 }
 
 function ChangePassword (buffer) {
-    
+
         this.id = ClientPacketID.ChangePassword /* 107 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2493,7 +2493,7 @@ function ChangePassword (buffer) {
 }
 
 function Gamble (buffer) {
-    
+
         this.id = ClientPacketID.Gamble /* 108 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2515,7 +2515,7 @@ function Gamble (buffer) {
 }
 
 function InquiryVote (buffer) {
-    
+
         this.id = ClientPacketID.InquiryVote /* 109 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2537,7 +2537,7 @@ function InquiryVote (buffer) {
 }
 
 function LeaveFaction (buffer) {
-    
+
         this.id = ClientPacketID.LeaveFaction /* 110 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2557,7 +2557,7 @@ function LeaveFaction (buffer) {
 }
 
 function BankExtractGold (buffer) {
-    
+
         this.id = ClientPacketID.BankExtractGold /* 111 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2579,7 +2579,7 @@ function BankExtractGold (buffer) {
 }
 
 function BankDepositGold (buffer) {
-    
+
         this.id = ClientPacketID.BankDepositGold /* 112 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2601,7 +2601,7 @@ function BankDepositGold (buffer) {
 }
 
 function Denounce (buffer) {
-    
+
         this.id = ClientPacketID.Denounce /* 113 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2623,7 +2623,7 @@ function Denounce (buffer) {
 }
 
 function GuildFundate (buffer) {
-    
+
         this.id = ClientPacketID.GuildFundate /* 114 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2643,7 +2643,7 @@ function GuildFundate (buffer) {
 }
 
 function GuildFundation (buffer) {
-    
+
         this.id = ClientPacketID.GuildFundation /* 115 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2665,7 +2665,7 @@ function GuildFundation (buffer) {
 }
 
 function PartyKick (buffer) {
-    
+
         this.id = ClientPacketID.PartyKick /* 116 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2687,7 +2687,7 @@ function PartyKick (buffer) {
 }
 
 function PartySetLeader (buffer) {
-    
+
         this.id = ClientPacketID.PartySetLeader /* 117 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2709,7 +2709,7 @@ function PartySetLeader (buffer) {
 }
 
 function PartyAcceptMember (buffer) {
-    
+
         this.id = ClientPacketID.PartyAcceptMember /* 118 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2731,7 +2731,7 @@ function PartyAcceptMember (buffer) {
 }
 
 function Ping (buffer) {
-    
+
         this.id = ClientPacketID.Ping /* 119 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2751,7 +2751,7 @@ function Ping (buffer) {
 }
 
 function RequestPartyForm (buffer) {
-    
+
         this.id = ClientPacketID.RequestPartyForm /* 120 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2771,7 +2771,7 @@ function RequestPartyForm (buffer) {
 }
 
 function ItemUpgrade (buffer) {
-    
+
         this.id = ClientPacketID.ItemUpgrade /* 121 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2797,10 +2797,10 @@ function GMCommands (buffer) {
         this.id = ClientPacketID.GMCommands /* 122 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
-    
+
         }
     this.serialize = function(buffer) {
-    
+
     };
 
     this.dispatch = function (d){
@@ -2810,7 +2810,7 @@ function GMCommands (buffer) {
 }
 
 function InitCrafting (buffer) {
-    
+
         this.id = ClientPacketID.InitCrafting /* 123 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2834,7 +2834,7 @@ function InitCrafting (buffer) {
 }
 
 function Home (buffer) {
-    
+
         this.id = ClientPacketID.Home /* 124 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2854,7 +2854,7 @@ function Home (buffer) {
 }
 
 function ShowGuildNews (buffer) {
-    
+
         this.id = ClientPacketID.ShowGuildNews /* 125 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2874,7 +2874,7 @@ function ShowGuildNews (buffer) {
 }
 
 function ShareNpc (buffer) {
-    
+
         this.id = ClientPacketID.ShareNpc /* 126 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2894,7 +2894,7 @@ function ShareNpc (buffer) {
 }
 
 function StopSharingNpc (buffer) {
-    
+
         this.id = ClientPacketID.StopSharingNpc /* 127 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2914,7 +2914,7 @@ function StopSharingNpc (buffer) {
 }
 
 function Consultation (buffer) {
-    
+
         this.id = ClientPacketID.Consultation /* 128 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2934,7 +2934,7 @@ function Consultation (buffer) {
 }
 
 function MoveItem (buffer) {
-    
+
         this.id = ClientPacketID.MoveItem /* 129 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -2956,7 +2956,7 @@ function MoveItem (buffer) {
     };
 
 }
-var ClientGMPacketID = { 
+var ClientGMPacketID = {
     GMMessage : 1,
     ShowName : 2,
     OnlineRoyalArmy : 3,
@@ -3109,7 +3109,7 @@ var ClientGMPacketID = {
 };
 
 function GMMessage (buffer) {
-    
+
         this.id = ClientGMPacketID.GMMessage /* 1 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3131,7 +3131,7 @@ function GMMessage (buffer) {
 
 
 function ShowName (buffer) {
-    
+
         this.id = ClientGMPacketID.ShowName /* 2 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3151,7 +3151,7 @@ function ShowName (buffer) {
 
 
 function OnlineRoyalArmy (buffer) {
-    
+
         this.id = ClientGMPacketID.OnlineRoyalArmy /* 3 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3171,7 +3171,7 @@ function OnlineRoyalArmy (buffer) {
 
 
 function OnlineChaosLegion (buffer) {
-    
+
         this.id = ClientGMPacketID.OnlineChaosLegion /* 4 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3191,7 +3191,7 @@ function OnlineChaosLegion (buffer) {
 
 
 function GoNearby (buffer) {
-    
+
         this.id = ClientGMPacketID.GoNearby /* 5 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3213,7 +3213,7 @@ function GoNearby (buffer) {
 
 
 function Comment (buffer) {
-    
+
         this.id = ClientGMPacketID.Comment /* 6 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3235,7 +3235,7 @@ function Comment (buffer) {
 
 
 function ServerTime (buffer) {
-    
+
         this.id = ClientGMPacketID.ServerTime /* 7 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3255,7 +3255,7 @@ function ServerTime (buffer) {
 
 
 function Where (buffer) {
-    
+
         this.id = ClientGMPacketID.Where /* 8 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3277,7 +3277,7 @@ function Where (buffer) {
 
 
 function CreaturesInMap (buffer) {
-    
+
         this.id = ClientGMPacketID.CreaturesInMap /* 9 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3299,7 +3299,7 @@ function CreaturesInMap (buffer) {
 
 
 function WarpMeToTarget (buffer) {
-    
+
         this.id = ClientGMPacketID.WarpMeToTarget /* 10 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3319,7 +3319,7 @@ function WarpMeToTarget (buffer) {
 
 
 function WarpChar (buffer) {
-    
+
         this.id = ClientGMPacketID.WarpChar /* 11 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3347,7 +3347,7 @@ function WarpChar (buffer) {
 
 
 function Silence (buffer) {
-    
+
         this.id = ClientGMPacketID.Silence /* 12 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3369,7 +3369,7 @@ function Silence (buffer) {
 
 
 function SOSShowList (buffer) {
-    
+
         this.id = ClientGMPacketID.SOSShowList /* 13 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3389,7 +3389,7 @@ function SOSShowList (buffer) {
 
 
 function SOSRemove (buffer) {
-    
+
         this.id = ClientGMPacketID.SOSRemove /* 14 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3411,7 +3411,7 @@ function SOSRemove (buffer) {
 
 
 function GoToChar (buffer) {
-    
+
         this.id = ClientGMPacketID.GoToChar /* 15 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3433,7 +3433,7 @@ function GoToChar (buffer) {
 
 
 function Invisible (buffer) {
-    
+
         this.id = ClientGMPacketID.Invisible /* 16 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3453,7 +3453,7 @@ function Invisible (buffer) {
 
 
 function GMPanel (buffer) {
-    
+
         this.id = ClientGMPacketID.GMPanel /* 17 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3473,7 +3473,7 @@ function GMPanel (buffer) {
 
 
 function RequestUserList (buffer) {
-    
+
         this.id = ClientGMPacketID.RequestUserList /* 18 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3493,7 +3493,7 @@ function RequestUserList (buffer) {
 
 
 function Working (buffer) {
-    
+
         this.id = ClientGMPacketID.Working /* 19 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3513,7 +3513,7 @@ function Working (buffer) {
 
 
 function Hiding (buffer) {
-    
+
         this.id = ClientGMPacketID.Hiding /* 20 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3533,7 +3533,7 @@ function Hiding (buffer) {
 
 
 function Jail (buffer) {
-    
+
         this.id = ClientGMPacketID.Jail /* 21 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3559,7 +3559,7 @@ function Jail (buffer) {
 
 
 function KillNPC (buffer) {
-    
+
         this.id = ClientGMPacketID.KillNPC /* 22 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3579,7 +3579,7 @@ function KillNPC (buffer) {
 
 
 function WarnUser (buffer) {
-    
+
         this.id = ClientGMPacketID.WarnUser /* 23 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3603,7 +3603,7 @@ function WarnUser (buffer) {
 
 
 function EditChar (buffer) {
-    
+
         this.id = ClientGMPacketID.EditChar /* 24 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3631,7 +3631,7 @@ function EditChar (buffer) {
 
 
 function RequestCharInfo (buffer) {
-    
+
         this.id = ClientGMPacketID.RequestCharInfo /* 25 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3653,7 +3653,7 @@ function RequestCharInfo (buffer) {
 
 
 function RequestCharStats (buffer) {
-    
+
         this.id = ClientGMPacketID.RequestCharStats /* 26 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3675,7 +3675,7 @@ function RequestCharStats (buffer) {
 
 
 function RequestCharGold (buffer) {
-    
+
         this.id = ClientGMPacketID.RequestCharGold /* 27 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3697,7 +3697,7 @@ function RequestCharGold (buffer) {
 
 
 function RequestCharInventory (buffer) {
-    
+
         this.id = ClientGMPacketID.RequestCharInventory /* 28 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3719,7 +3719,7 @@ function RequestCharInventory (buffer) {
 
 
 function RequestCharBank (buffer) {
-    
+
         this.id = ClientGMPacketID.RequestCharBank /* 29 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3741,7 +3741,7 @@ function RequestCharBank (buffer) {
 
 
 function RequestCharSkills (buffer) {
-    
+
         this.id = ClientGMPacketID.RequestCharSkills /* 30 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3763,7 +3763,7 @@ function RequestCharSkills (buffer) {
 
 
 function ReviveChar (buffer) {
-    
+
         this.id = ClientGMPacketID.ReviveChar /* 31 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3785,7 +3785,7 @@ function ReviveChar (buffer) {
 
 
 function OnlineGM (buffer) {
-    
+
         this.id = ClientGMPacketID.OnlineGM /* 32 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3805,7 +3805,7 @@ function OnlineGM (buffer) {
 
 
 function OnlineMap (buffer) {
-    
+
         this.id = ClientGMPacketID.OnlineMap /* 33 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3827,7 +3827,7 @@ function OnlineMap (buffer) {
 
 
 function Forgive (buffer) {
-    
+
         this.id = ClientGMPacketID.Forgive /* 34 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3849,7 +3849,7 @@ function Forgive (buffer) {
 
 
 function Kick (buffer) {
-    
+
         this.id = ClientGMPacketID.Kick /* 35 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3871,7 +3871,7 @@ function Kick (buffer) {
 
 
 function Execute (buffer) {
-    
+
         this.id = ClientGMPacketID.Execute /* 36 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3893,7 +3893,7 @@ function Execute (buffer) {
 
 
 function BanChar (buffer) {
-    
+
         this.id = ClientGMPacketID.BanChar /* 37 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3917,7 +3917,7 @@ function BanChar (buffer) {
 
 
 function UnbanChar (buffer) {
-    
+
         this.id = ClientGMPacketID.UnbanChar /* 38 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3939,7 +3939,7 @@ function UnbanChar (buffer) {
 
 
 function NPCFollow (buffer) {
-    
+
         this.id = ClientGMPacketID.NPCFollow /* 39 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3959,7 +3959,7 @@ function NPCFollow (buffer) {
 
 
 function SummonChar (buffer) {
-    
+
         this.id = ClientGMPacketID.SummonChar /* 40 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -3981,7 +3981,7 @@ function SummonChar (buffer) {
 
 
 function SpawnListRequest (buffer) {
-    
+
         this.id = ClientGMPacketID.SpawnListRequest /* 41 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4001,7 +4001,7 @@ function SpawnListRequest (buffer) {
 
 
 function SpawnCreature (buffer) {
-    
+
         this.id = ClientGMPacketID.SpawnCreature /* 42 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4023,7 +4023,7 @@ function SpawnCreature (buffer) {
 
 
 function ResetNPCInventory (buffer) {
-    
+
         this.id = ClientGMPacketID.ResetNPCInventory /* 43 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4043,7 +4043,7 @@ function ResetNPCInventory (buffer) {
 
 
 function CleanWorld (buffer) {
-    
+
         this.id = ClientGMPacketID.CleanWorld /* 44 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4063,7 +4063,7 @@ function CleanWorld (buffer) {
 
 
 function ServerMessage (buffer) {
-    
+
         this.id = ClientGMPacketID.ServerMessage /* 45 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4085,7 +4085,7 @@ function ServerMessage (buffer) {
 
 
 function NickToIP (buffer) {
-    
+
         this.id = ClientGMPacketID.NickToIP /* 46 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4107,7 +4107,7 @@ function NickToIP (buffer) {
 
 
 function IPToNick (buffer) {
-    
+
         this.id = ClientGMPacketID.IPToNick /* 47 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4135,7 +4135,7 @@ function IPToNick (buffer) {
 
 
 function GuildOnlineMembers (buffer) {
-    
+
         this.id = ClientGMPacketID.GuildOnlineMembers /* 48 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4157,7 +4157,7 @@ function GuildOnlineMembers (buffer) {
 
 
 function TeleportCreate (buffer) {
-    
+
         this.id = ClientGMPacketID.TeleportCreate /* 49 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4185,7 +4185,7 @@ function TeleportCreate (buffer) {
 
 
 function TeleportDestroy (buffer) {
-    
+
         this.id = ClientGMPacketID.TeleportDestroy /* 50 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4205,7 +4205,7 @@ function TeleportDestroy (buffer) {
 
 
 function RainToggle (buffer) {
-    
+
         this.id = ClientGMPacketID.RainToggle /* 51 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4225,7 +4225,7 @@ function RainToggle (buffer) {
 
 
 function SetCharDescription (buffer) {
-    
+
         this.id = ClientGMPacketID.SetCharDescription /* 52 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4247,7 +4247,7 @@ function SetCharDescription (buffer) {
 
 
 function ForceMIDIToMap (buffer) {
-    
+
         this.id = ClientGMPacketID.ForceMIDIToMap /* 53 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4271,7 +4271,7 @@ function ForceMIDIToMap (buffer) {
 
 
 function ForceWAVEToMap (buffer) {
-    
+
         this.id = ClientGMPacketID.ForceWAVEToMap /* 54 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4299,7 +4299,7 @@ function ForceWAVEToMap (buffer) {
 
 
 function RoyalArmyMessage (buffer) {
-    
+
         this.id = ClientGMPacketID.RoyalArmyMessage /* 55 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4321,7 +4321,7 @@ function RoyalArmyMessage (buffer) {
 
 
 function ChaosLegionMessage (buffer) {
-    
+
         this.id = ClientGMPacketID.ChaosLegionMessage /* 56 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4343,7 +4343,7 @@ function ChaosLegionMessage (buffer) {
 
 
 function CitizenMessage (buffer) {
-    
+
         this.id = ClientGMPacketID.CitizenMessage /* 57 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4365,7 +4365,7 @@ function CitizenMessage (buffer) {
 
 
 function CriminalMessage (buffer) {
-    
+
         this.id = ClientGMPacketID.CriminalMessage /* 58 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4387,7 +4387,7 @@ function CriminalMessage (buffer) {
 
 
 function TalkAsNPC (buffer) {
-    
+
         this.id = ClientGMPacketID.TalkAsNPC /* 59 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4409,7 +4409,7 @@ function TalkAsNPC (buffer) {
 
 
 function DestroyAllItemsInArea (buffer) {
-    
+
         this.id = ClientGMPacketID.DestroyAllItemsInArea /* 60 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4429,7 +4429,7 @@ function DestroyAllItemsInArea (buffer) {
 
 
 function AcceptRoyalCouncilMember (buffer) {
-    
+
         this.id = ClientGMPacketID.AcceptRoyalCouncilMember /* 61 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4451,7 +4451,7 @@ function AcceptRoyalCouncilMember (buffer) {
 
 
 function AcceptChaosCouncilMember (buffer) {
-    
+
         this.id = ClientGMPacketID.AcceptChaosCouncilMember /* 62 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4473,7 +4473,7 @@ function AcceptChaosCouncilMember (buffer) {
 
 
 function ItemsInTheFloor (buffer) {
-    
+
         this.id = ClientGMPacketID.ItemsInTheFloor /* 63 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4493,7 +4493,7 @@ function ItemsInTheFloor (buffer) {
 
 
 function MakeDumb (buffer) {
-    
+
         this.id = ClientGMPacketID.MakeDumb /* 64 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4515,7 +4515,7 @@ function MakeDumb (buffer) {
 
 
 function MakeDumbNoMore (buffer) {
-    
+
         this.id = ClientGMPacketID.MakeDumbNoMore /* 65 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4537,7 +4537,7 @@ function MakeDumbNoMore (buffer) {
 
 
 function DumpIPTables (buffer) {
-    
+
         this.id = ClientGMPacketID.DumpIPTables /* 66 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4557,7 +4557,7 @@ function DumpIPTables (buffer) {
 
 
 function CouncilKick (buffer) {
-    
+
         this.id = ClientGMPacketID.CouncilKick /* 67 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4579,7 +4579,7 @@ function CouncilKick (buffer) {
 
 
 function SetTrigger (buffer) {
-    
+
         this.id = ClientGMPacketID.SetTrigger /* 68 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4601,7 +4601,7 @@ function SetTrigger (buffer) {
 
 
 function AskTrigger (buffer) {
-    
+
         this.id = ClientGMPacketID.AskTrigger /* 69 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4621,7 +4621,7 @@ function AskTrigger (buffer) {
 
 
 function BannedIPList (buffer) {
-    
+
         this.id = ClientGMPacketID.BannedIPList /* 70 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4641,7 +4641,7 @@ function BannedIPList (buffer) {
 
 
 function BannedIPReload (buffer) {
-    
+
         this.id = ClientGMPacketID.BannedIPReload /* 71 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4661,7 +4661,7 @@ function BannedIPReload (buffer) {
 
 
 function GuildMemberList (buffer) {
-    
+
         this.id = ClientGMPacketID.GuildMemberList /* 72 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4683,7 +4683,7 @@ function GuildMemberList (buffer) {
 
 
 function GuildBan (buffer) {
-    
+
         this.id = ClientGMPacketID.GuildBan /* 73 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4705,7 +4705,7 @@ function GuildBan (buffer) {
 
 
 function BanIP (buffer) {
-    
+
         this.id = ClientGMPacketID.BanIP /* 74 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4729,7 +4729,7 @@ function BanIP (buffer) {
 
 
 function UnbanIP (buffer) {
-    
+
         this.id = ClientGMPacketID.UnbanIP /* 75 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4751,7 +4751,7 @@ function UnbanIP (buffer) {
 
 
 function CreateItem (buffer) {
-    
+
         this.id = ClientGMPacketID.CreateItem /* 76 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4773,7 +4773,7 @@ function CreateItem (buffer) {
 
 
 function DestroyItems (buffer) {
-    
+
         this.id = ClientGMPacketID.DestroyItems /* 77 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4793,7 +4793,7 @@ function DestroyItems (buffer) {
 
 
 function ChaosLegionKick (buffer) {
-    
+
         this.id = ClientGMPacketID.ChaosLegionKick /* 78 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4817,7 +4817,7 @@ function ChaosLegionKick (buffer) {
 
 
 function RoyalArmyKick (buffer) {
-    
+
         this.id = ClientGMPacketID.RoyalArmyKick /* 79 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4841,7 +4841,7 @@ function RoyalArmyKick (buffer) {
 
 
 function ForceMIDIAll (buffer) {
-    
+
         this.id = ClientGMPacketID.ForceMIDIAll /* 80 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4863,7 +4863,7 @@ function ForceMIDIAll (buffer) {
 
 
 function ForceWAVEAll (buffer) {
-    
+
         this.id = ClientGMPacketID.ForceWAVEAll /* 81 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4885,7 +4885,7 @@ function ForceWAVEAll (buffer) {
 
 
 function RemovePunishment (buffer) {
-    
+
         this.id = ClientGMPacketID.RemovePunishment /* 82 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4911,7 +4911,7 @@ function RemovePunishment (buffer) {
 
 
 function TileBlockedToggle (buffer) {
-    
+
         this.id = ClientGMPacketID.TileBlockedToggle /* 83 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4931,7 +4931,7 @@ function TileBlockedToggle (buffer) {
 
 
 function KillNPCNoRespawn (buffer) {
-    
+
         this.id = ClientGMPacketID.KillNPCNoRespawn /* 84 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4951,7 +4951,7 @@ function KillNPCNoRespawn (buffer) {
 
 
 function KillAllNearbyNPCs (buffer) {
-    
+
         this.id = ClientGMPacketID.KillAllNearbyNPCs /* 85 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4971,7 +4971,7 @@ function KillAllNearbyNPCs (buffer) {
 
 
 function LastIP (buffer) {
-    
+
         this.id = ClientGMPacketID.LastIP /* 86 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -4993,7 +4993,7 @@ function LastIP (buffer) {
 
 
 function ChangeMOTD (buffer) {
-    
+
         this.id = ClientGMPacketID.ChangeMOTD /* 87 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5013,7 +5013,7 @@ function ChangeMOTD (buffer) {
 
 
 function SetMOTD (buffer) {
-    
+
         this.id = ClientGMPacketID.SetMOTD /* 88 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5035,7 +5035,7 @@ function SetMOTD (buffer) {
 
 
 function SystemMessage (buffer) {
-    
+
         this.id = ClientGMPacketID.SystemMessage /* 89 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5057,7 +5057,7 @@ function SystemMessage (buffer) {
 
 
 function CreateNPC (buffer) {
-    
+
         this.id = ClientGMPacketID.CreateNPC /* 90 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5079,7 +5079,7 @@ function CreateNPC (buffer) {
 
 
 function CreateNPCWithRespawn (buffer) {
-    
+
         this.id = ClientGMPacketID.CreateNPCWithRespawn /* 91 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5101,7 +5101,7 @@ function CreateNPCWithRespawn (buffer) {
 
 
 function ImperialArmour (buffer) {
-    
+
         this.id = ClientGMPacketID.ImperialArmour /* 92 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5125,7 +5125,7 @@ function ImperialArmour (buffer) {
 
 
 function ChaosArmour (buffer) {
-    
+
         this.id = ClientGMPacketID.ChaosArmour /* 93 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5149,7 +5149,7 @@ function ChaosArmour (buffer) {
 
 
 function NavigateToggle (buffer) {
-    
+
         this.id = ClientGMPacketID.NavigateToggle /* 94 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5169,7 +5169,7 @@ function NavigateToggle (buffer) {
 
 
 function ServerOpenToUsersToggle (buffer) {
-    
+
         this.id = ClientGMPacketID.ServerOpenToUsersToggle /* 95 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5189,7 +5189,7 @@ function ServerOpenToUsersToggle (buffer) {
 
 
 function TurnOffServer (buffer) {
-    
+
         this.id = ClientGMPacketID.TurnOffServer /* 96 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5209,7 +5209,7 @@ function TurnOffServer (buffer) {
 
 
 function TurnCriminal (buffer) {
-    
+
         this.id = ClientGMPacketID.TurnCriminal /* 97 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5231,7 +5231,7 @@ function TurnCriminal (buffer) {
 
 
 function ResetFactions (buffer) {
-    
+
         this.id = ClientGMPacketID.ResetFactions /* 98 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5253,7 +5253,7 @@ function ResetFactions (buffer) {
 
 
 function RemoveCharFromGuild (buffer) {
-    
+
         this.id = ClientGMPacketID.RemoveCharFromGuild /* 99 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5275,7 +5275,7 @@ function RemoveCharFromGuild (buffer) {
 
 
 function RequestCharMail (buffer) {
-    
+
         this.id = ClientGMPacketID.RequestCharMail /* 100 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5297,7 +5297,7 @@ function RequestCharMail (buffer) {
 
 
 function AlterPassword (buffer) {
-    
+
         this.id = ClientGMPacketID.AlterPassword /* 101 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5321,7 +5321,7 @@ function AlterPassword (buffer) {
 
 
 function AlterMail (buffer) {
-    
+
         this.id = ClientGMPacketID.AlterMail /* 102 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5345,7 +5345,7 @@ function AlterMail (buffer) {
 
 
 function AlterName (buffer) {
-    
+
         this.id = ClientGMPacketID.AlterName /* 103 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5369,7 +5369,7 @@ function AlterName (buffer) {
 
 
 function ToggleCentinelActivated (buffer) {
-    
+
         this.id = ClientGMPacketID.ToggleCentinelActivated /* 104 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5389,7 +5389,7 @@ function ToggleCentinelActivated (buffer) {
 
 
 function DoBackUp (buffer) {
-    
+
         this.id = ClientGMPacketID.DoBackUp /* 105 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5409,7 +5409,7 @@ function DoBackUp (buffer) {
 
 
 function ShowGuildMessages (buffer) {
-    
+
         this.id = ClientGMPacketID.ShowGuildMessages /* 106 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5431,7 +5431,7 @@ function ShowGuildMessages (buffer) {
 
 
 function SaveMap (buffer) {
-    
+
         this.id = ClientGMPacketID.SaveMap /* 107 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5451,7 +5451,7 @@ function SaveMap (buffer) {
 
 
 function ChangeMapInfoPK (buffer) {
-    
+
         this.id = ClientGMPacketID.ChangeMapInfoPK /* 108 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5473,7 +5473,7 @@ function ChangeMapInfoPK (buffer) {
 
 
 function ChangeMapInfoBackup (buffer) {
-    
+
         this.id = ClientGMPacketID.ChangeMapInfoBackup /* 109 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5495,7 +5495,7 @@ function ChangeMapInfoBackup (buffer) {
 
 
 function ChangeMapInfoRestricted (buffer) {
-    
+
         this.id = ClientGMPacketID.ChangeMapInfoRestricted /* 110 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5517,7 +5517,7 @@ function ChangeMapInfoRestricted (buffer) {
 
 
 function ChangeMapInfoNoMagic (buffer) {
-    
+
         this.id = ClientGMPacketID.ChangeMapInfoNoMagic /* 111 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5539,7 +5539,7 @@ function ChangeMapInfoNoMagic (buffer) {
 
 
 function ChangeMapInfoNoInvi (buffer) {
-    
+
         this.id = ClientGMPacketID.ChangeMapInfoNoInvi /* 112 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5561,7 +5561,7 @@ function ChangeMapInfoNoInvi (buffer) {
 
 
 function ChangeMapInfoNoResu (buffer) {
-    
+
         this.id = ClientGMPacketID.ChangeMapInfoNoResu /* 113 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5583,7 +5583,7 @@ function ChangeMapInfoNoResu (buffer) {
 
 
 function ChangeMapInfoLand (buffer) {
-    
+
         this.id = ClientGMPacketID.ChangeMapInfoLand /* 114 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5605,7 +5605,7 @@ function ChangeMapInfoLand (buffer) {
 
 
 function ChangeMapInfoZone (buffer) {
-    
+
         this.id = ClientGMPacketID.ChangeMapInfoZone /* 115 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5627,7 +5627,7 @@ function ChangeMapInfoZone (buffer) {
 
 
 function ChangeMapInfoStealNpc (buffer) {
-    
+
         this.id = ClientGMPacketID.ChangeMapInfoStealNpc /* 116 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5649,7 +5649,7 @@ function ChangeMapInfoStealNpc (buffer) {
 
 
 function ChangeMapInfoNoOcultar (buffer) {
-    
+
         this.id = ClientGMPacketID.ChangeMapInfoNoOcultar /* 117 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5671,7 +5671,7 @@ function ChangeMapInfoNoOcultar (buffer) {
 
 
 function ChangeMapInfoNoInvocar (buffer) {
-    
+
         this.id = ClientGMPacketID.ChangeMapInfoNoInvocar /* 118 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5693,7 +5693,7 @@ function ChangeMapInfoNoInvocar (buffer) {
 
 
 function SaveChars (buffer) {
-    
+
         this.id = ClientGMPacketID.SaveChars /* 119 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5713,7 +5713,7 @@ function SaveChars (buffer) {
 
 
 function CleanSOS (buffer) {
-    
+
         this.id = ClientGMPacketID.CleanSOS /* 120 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5733,7 +5733,7 @@ function CleanSOS (buffer) {
 
 
 function ShowServerForm (buffer) {
-    
+
         this.id = ClientGMPacketID.ShowServerForm /* 121 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5753,7 +5753,7 @@ function ShowServerForm (buffer) {
 
 
 function Night (buffer) {
-    
+
         this.id = ClientGMPacketID.Night /* 122 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5773,7 +5773,7 @@ function Night (buffer) {
 
 
 function KickAllChars (buffer) {
-    
+
         this.id = ClientGMPacketID.KickAllChars /* 123 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5793,7 +5793,7 @@ function KickAllChars (buffer) {
 
 
 function ReloadNPCs (buffer) {
-    
+
         this.id = ClientGMPacketID.ReloadNPCs /* 124 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5813,7 +5813,7 @@ function ReloadNPCs (buffer) {
 
 
 function ReloadServerIni (buffer) {
-    
+
         this.id = ClientGMPacketID.ReloadServerIni /* 125 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5833,7 +5833,7 @@ function ReloadServerIni (buffer) {
 
 
 function ReloadSpells (buffer) {
-    
+
         this.id = ClientGMPacketID.ReloadSpells /* 126 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5853,7 +5853,7 @@ function ReloadSpells (buffer) {
 
 
 function ReloadObjects (buffer) {
-    
+
         this.id = ClientGMPacketID.ReloadObjects /* 127 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5873,7 +5873,7 @@ function ReloadObjects (buffer) {
 
 
 function Restart (buffer) {
-    
+
         this.id = ClientGMPacketID.Restart /* 128 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5893,7 +5893,7 @@ function Restart (buffer) {
 
 
 function ResetAutoUpdate (buffer) {
-    
+
         this.id = ClientGMPacketID.ResetAutoUpdate /* 129 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5913,7 +5913,7 @@ function ResetAutoUpdate (buffer) {
 
 
 function ChatColor (buffer) {
-    
+
         this.id = ClientGMPacketID.ChatColor /* 130 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5939,7 +5939,7 @@ function ChatColor (buffer) {
 
 
 function Ignored (buffer) {
-    
+
         this.id = ClientGMPacketID.Ignored /* 131 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5959,7 +5959,7 @@ function Ignored (buffer) {
 
 
 function CheckSlot (buffer) {
-    
+
         this.id = ClientGMPacketID.CheckSlot /* 132 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -5983,7 +5983,7 @@ function CheckSlot (buffer) {
 
 
 function SetIniVar (buffer) {
-    
+
         this.id = ClientGMPacketID.SetIniVar /* 133 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -6009,7 +6009,7 @@ function SetIniVar (buffer) {
 
 
 function CreatePretorianClan (buffer) {
-    
+
         this.id = ClientGMPacketID.CreatePretorianClan /* 134 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -6035,7 +6035,7 @@ function CreatePretorianClan (buffer) {
 
 
 function RemovePretorianClan (buffer) {
-    
+
         this.id = ClientGMPacketID.RemovePretorianClan /* 135 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -6057,7 +6057,7 @@ function RemovePretorianClan (buffer) {
 
 
 function EnableDenounces (buffer) {
-    
+
         this.id = ClientGMPacketID.EnableDenounces /* 136 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -6077,7 +6077,7 @@ function EnableDenounces (buffer) {
 
 
 function ShowDenouncesList (buffer) {
-    
+
         this.id = ClientGMPacketID.ShowDenouncesList /* 137 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -6097,7 +6097,7 @@ function ShowDenouncesList (buffer) {
 
 
 function MapMessage (buffer) {
-    
+
         this.id = ClientGMPacketID.MapMessage /* 138 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -6119,7 +6119,7 @@ function MapMessage (buffer) {
 
 
 function SetDialog (buffer) {
-    
+
         this.id = ClientGMPacketID.SetDialog /* 139 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -6141,7 +6141,7 @@ function SetDialog (buffer) {
 
 
 function Impersonate (buffer) {
-    
+
         this.id = ClientGMPacketID.Impersonate /* 140 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -6161,7 +6161,7 @@ function Impersonate (buffer) {
 
 
 function Imitate (buffer) {
-    
+
         this.id = ClientGMPacketID.Imitate /* 141 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -6181,7 +6181,7 @@ function Imitate (buffer) {
 
 
 function RecordAdd (buffer) {
-    
+
         this.id = ClientGMPacketID.RecordAdd /* 142 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -6205,7 +6205,7 @@ function RecordAdd (buffer) {
 
 
 function RecordRemove (buffer) {
-    
+
         this.id = ClientGMPacketID.RecordRemove /* 143 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -6227,7 +6227,7 @@ function RecordRemove (buffer) {
 
 
 function RecordAddObs (buffer) {
-    
+
         this.id = ClientGMPacketID.RecordAddObs /* 144 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -6251,7 +6251,7 @@ function RecordAddObs (buffer) {
 
 
 function RecordListRequest (buffer) {
-    
+
         this.id = ClientGMPacketID.RecordListRequest /* 145 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -6271,7 +6271,7 @@ function RecordListRequest (buffer) {
 
 
 function RecordDetailsRequest (buffer) {
-    
+
         this.id = ClientGMPacketID.RecordDetailsRequest /* 146 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -6293,7 +6293,7 @@ function RecordDetailsRequest (buffer) {
 
 
 function AlterGuildName (buffer) {
-    
+
         this.id = ClientGMPacketID.AlterGuildName /* 147 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -6317,7 +6317,7 @@ function AlterGuildName (buffer) {
 
 
 function HigherAdminsMessage (buffer) {
-    
+
         this.id = ClientGMPacketID.HigherAdminsMessage /* 148 */;
         if (buffer){
         buffer.ReadByte(); /* PacketID */
@@ -6346,7 +6346,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 0:
         {
-                
+
             var Clase = buffer.ReadByte();
 
             handler.handleLogged( Clase );
@@ -6356,7 +6356,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 1:
         {
-                
+
 
             handler.handleRemoveDialogs(  );
 
@@ -6365,7 +6365,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 2:
         {
-                
+
             var CharIndex = buffer.ReadInteger();
 
             handler.handleRemoveCharDialog( CharIndex );
@@ -6375,7 +6375,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 3:
         {
-                
+
 
             handler.handleNavigateToggle(  );
 
@@ -6384,7 +6384,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 4:
         {
-                
+
 
             handler.handleDisconnect(  );
 
@@ -6393,7 +6393,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 5:
         {
-                
+
 
             handler.handleCommerceEnd(  );
 
@@ -6402,7 +6402,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 6:
         {
-                
+
 
             handler.handleBankEnd(  );
 
@@ -6411,7 +6411,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 7:
         {
-                
+
 
             handler.handleCommerceInit(  );
 
@@ -6420,7 +6420,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 8:
         {
-                
+
             var Banco = buffer.ReadLong();
 
             handler.handleBankInit( Banco );
@@ -6430,7 +6430,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 9:
         {
-                
+
             var DestUserName = buffer.ReadUnicodeString();
 
             handler.handleUserCommerceInit( DestUserName );
@@ -6440,7 +6440,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 10:
         {
-                
+
 
             handler.handleUserCommerceEnd(  );
 
@@ -6449,7 +6449,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 11:
         {
-                
+
 
             handler.handleUserOfferConfirm(  );
 
@@ -6458,7 +6458,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 12:
         {
-                
+
             var Chat = buffer.ReadUnicodeString();
             var FontIndex = buffer.ReadByte();
 
@@ -6469,7 +6469,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 13:
         {
-                
+
 
             handler.handleShowBlacksmithForm(  );
 
@@ -6478,7 +6478,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 14:
         {
-                
+
 
             handler.handleShowCarpenterForm(  );
 
@@ -6487,7 +6487,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 15:
         {
-                
+
             var Value = buffer.ReadInteger();
 
             handler.handleUpdateSta( Value );
@@ -6497,7 +6497,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 16:
         {
-                
+
             var Value = buffer.ReadInteger();
 
             handler.handleUpdateMana( Value );
@@ -6507,7 +6507,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 17:
         {
-                
+
             var Value = buffer.ReadInteger();
 
             handler.handleUpdateHP( Value );
@@ -6517,7 +6517,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 18:
         {
-                
+
             var Value = buffer.ReadLong();
 
             handler.handleUpdateGold( Value );
@@ -6527,7 +6527,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 19:
         {
-                
+
             var Value = buffer.ReadLong();
 
             handler.handleUpdateBankGold( Value );
@@ -6537,7 +6537,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 20:
         {
-                
+
             var Value = buffer.ReadLong();
 
             handler.handleUpdateExp( Value );
@@ -6547,7 +6547,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 21:
         {
-                
+
             var Map = buffer.ReadInteger();
             var Version = buffer.ReadInteger();
 
@@ -6558,7 +6558,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 22:
         {
-                
+
             var X = buffer.ReadByte();
             var Y = buffer.ReadByte();
 
@@ -6569,7 +6569,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 23:
         {
-                
+
             var Chat = buffer.ReadUnicodeString();
             var CharIndex = buffer.ReadInteger();
             var R = buffer.ReadByte();
@@ -6583,7 +6583,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 24:
         {
-                
+
             var Chat = buffer.ReadUnicodeString();
             var FontIndex = buffer.ReadByte();
 
@@ -6594,7 +6594,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 25:
         {
-                
+
             var Chat = buffer.ReadUnicodeString();
 
             handler.handleGuildChat( Chat );
@@ -6604,7 +6604,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 26:
         {
-                
+
             var Chat = buffer.ReadUnicodeString();
 
             handler.handleShowMessageBox( Chat );
@@ -6614,7 +6614,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 27:
         {
-                
+
             var UserIndex = buffer.ReadInteger();
 
             handler.handleUserIndexInServer( UserIndex );
@@ -6624,7 +6624,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 28:
         {
-                
+
             var CharIndex = buffer.ReadInteger();
 
             handler.handleUserCharIndexInServer( CharIndex );
@@ -6634,7 +6634,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 29:
         {
-                
+
             var CharIndex = buffer.ReadInteger();
             var Body = buffer.ReadInteger();
             var Head = buffer.ReadInteger();
@@ -6657,7 +6657,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 30:
         {
-                
+
             var CharIndex = buffer.ReadInteger();
 
             handler.handleCharacterRemove( CharIndex );
@@ -6667,7 +6667,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 31:
         {
-                
+
             var CharIndex = buffer.ReadInteger();
             var NewName = buffer.ReadUnicodeString();
 
@@ -6678,7 +6678,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 32:
         {
-                
+
             var CharIndex = buffer.ReadInteger();
             var X = buffer.ReadByte();
             var Y = buffer.ReadByte();
@@ -6690,7 +6690,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 33:
         {
-                
+
             var Direction = buffer.ReadByte();
 
             handler.handleForceCharMove( Direction );
@@ -6700,7 +6700,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 34:
         {
-                
+
             var CharIndex = buffer.ReadInteger();
             var Body = buffer.ReadInteger();
             var Head = buffer.ReadInteger();
@@ -6718,7 +6718,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 35:
         {
-                
+
             var X = buffer.ReadByte();
             var Y = buffer.ReadByte();
             var GrhIndex = buffer.ReadInteger();
@@ -6730,7 +6730,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 36:
         {
-                
+
             var X = buffer.ReadByte();
             var Y = buffer.ReadByte();
 
@@ -6741,7 +6741,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 37:
         {
-                
+
             var X = buffer.ReadByte();
             var Y = buffer.ReadByte();
             var Blocked = buffer.ReadBoolean();
@@ -6753,7 +6753,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 38:
         {
-                
+
             var MidiID = buffer.ReadInteger();
             var Loops = buffer.ReadInteger();
 
@@ -6764,7 +6764,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 39:
         {
-                
+
             var WaveID = buffer.ReadByte();
             var X = buffer.ReadByte();
             var Y = buffer.ReadByte();
@@ -6776,7 +6776,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 40:
         {
-                
+
             var Data = buffer.ReadUnicodeString();
 
             handler.handleGuildList( Data );
@@ -6786,7 +6786,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 41:
         {
-                
+
             var X = buffer.ReadByte();
             var Y = buffer.ReadByte();
 
@@ -6797,7 +6797,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 42:
         {
-                
+
 
             handler.handlePauseToggle(  );
 
@@ -6806,7 +6806,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 43:
         {
-                
+
 
             handler.handleRainToggle(  );
 
@@ -6815,7 +6815,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 44:
         {
-                
+
             var CharIndex = buffer.ReadInteger();
             var FX = buffer.ReadInteger();
             var FXLoops = buffer.ReadInteger();
@@ -6827,7 +6827,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 45:
         {
-                
+
             var MaxHp = buffer.ReadInteger();
             var MinHp = buffer.ReadInteger();
             var MaxMan = buffer.ReadInteger();
@@ -6846,7 +6846,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 46:
         {
-                
+
             var Skill = buffer.ReadByte();
 
             handler.handleWorkRequestTarget( Skill );
@@ -6856,7 +6856,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 47:
         {
-                
+
             var Slot = buffer.ReadByte();
             var ObjIndex = buffer.ReadInteger();
             var ObjName = buffer.ReadUnicodeString();
@@ -6877,7 +6877,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 48:
         {
-                
+
             var Slot = buffer.ReadByte();
             var ObjIndex = buffer.ReadInteger();
             var ObjName = buffer.ReadUnicodeString();
@@ -6897,7 +6897,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 49:
         {
-                
+
             var Slot = buffer.ReadByte();
             var SpellID = buffer.ReadInteger();
             var Name = buffer.ReadUnicodeString();
@@ -6909,7 +6909,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 50:
         {
-                
+
             var Fuerza = buffer.ReadByte();
             var Agilidad = buffer.ReadByte();
             var Inteligencia = buffer.ReadByte();
@@ -6923,11 +6923,11 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 51:
         {
-                
+
         /* Packet con count! */
         var Items = [];
         var Count = buffer.ReadInteger();
-        var i; 
+        var i;
         for (i=0; i<Count; ++i) {
             var e = {
                 Name : buffer.ReadUnicodeString(),
@@ -6937,7 +6937,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
                 LingO : buffer.ReadInteger(),
                 ArmasHerreroIndex : buffer.ReadInteger(),
                 ObjUpgrade : buffer.ReadInteger()
-            
+
             };
             Items.push(e);
         }
@@ -6948,11 +6948,11 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 52:
         {
-                
+
         /* Packet con count! */
         var Items = [];
         var Count = buffer.ReadInteger();
-        var i; 
+        var i;
         for (i=0; i<Count; ++i) {
             var e = {
                 Name : buffer.ReadUnicodeString(),
@@ -6962,7 +6962,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
                 LingO : buffer.ReadInteger(),
                 ArmasHerreroIndex : buffer.ReadInteger(),
                 ObjUpgrade : buffer.ReadInteger()
-            
+
             };
             Items.push(e);
         }
@@ -6973,11 +6973,11 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 53:
         {
-                
+
         /* Packet con count! */
         var Items = [];
         var Count = buffer.ReadInteger();
-        var i; 
+        var i;
         for (i=0; i<Count; ++i) {
             var e = {
                 Name : buffer.ReadUnicodeString(),
@@ -6986,7 +6986,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
                 MaderaElfica : buffer.ReadInteger(),
                 ObjCarpinteroIndex : buffer.ReadInteger(),
                 ObjUpgrade : buffer.ReadInteger()
-            
+
             };
             Items.push(e);
         }
@@ -6997,7 +6997,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 54:
         {
-                
+
 
             handler.handleRestOK(  );
 
@@ -7006,7 +7006,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 55:
         {
-                
+
             var Message = buffer.ReadUnicodeString();
 
             handler.handleErrorMsg( Message );
@@ -7016,7 +7016,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 56:
         {
-                
+
 
             handler.handleBlind(  );
 
@@ -7025,7 +7025,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 57:
         {
-                
+
 
             handler.handleDumb(  );
 
@@ -7034,7 +7034,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 58:
         {
-                
+
             var Texto = buffer.ReadUnicodeString();
             var Grh = buffer.ReadInteger();
 
@@ -7045,7 +7045,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 59:
         {
-                
+
             var Slot = buffer.ReadByte();
             var ObjName = buffer.ReadUnicodeString();
             var Amount = buffer.ReadInteger();
@@ -7065,7 +7065,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 60:
         {
-                
+
             var MaxAgu = buffer.ReadByte();
             var MinAgu = buffer.ReadByte();
             var MaxHam = buffer.ReadByte();
@@ -7078,7 +7078,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 61:
         {
-                
+
             var Asesino = buffer.ReadLong();
             var Bandido = buffer.ReadLong();
             var Burgues = buffer.ReadLong();
@@ -7094,7 +7094,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 62:
         {
-                
+
             var CiudadanosMatados = buffer.ReadLong();
             var CriminalesMatados = buffer.ReadLong();
             var UsuariosMatados = buffer.ReadLong();
@@ -7109,7 +7109,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 63:
         {
-                
+
             var SkillPoints = buffer.ReadInteger();
 
             handler.handleLevelUp( SkillPoints );
@@ -7119,7 +7119,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 64:
         {
-                
+
             var ForumType = buffer.ReadLong();
             var Title = buffer.ReadUnicodeString();
             var Author = buffer.ReadUnicodeString();
@@ -7132,7 +7132,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 65:
         {
-                
+
             var Visibilidad = buffer.ReadByte();
             var CanMakeSticky = buffer.ReadByte();
 
@@ -7143,7 +7143,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 66:
         {
-                
+
             var charIndex = buffer.ReadInteger();
             var invisible = buffer.ReadBoolean();
 
@@ -7154,7 +7154,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 67:
         {
-                
+
             var Fuerza = buffer.ReadByte();
             var Agilidad = buffer.ReadByte();
             var Inteligencia = buffer.ReadByte();
@@ -7168,7 +7168,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 68:
         {
-                
+
 
             handler.handleMeditateToggle(  );
 
@@ -7177,7 +7177,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 69:
         {
-                
+
 
             handler.handleBlindNoMore(  );
 
@@ -7186,7 +7186,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 70:
         {
-                
+
 
             handler.handleDumbNoMore(  );
 
@@ -7195,7 +7195,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 71:
         {
-                
+
         var i; var Skills= []; for (i=0; i<40; ++i) Skills[i] = buffer.ReadByte();
 
             handler.handleSendSkills( Skills );
@@ -7205,7 +7205,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 72:
         {
-                
+
             var Data = buffer.ReadUnicodeString();
 
             handler.handleTrainerCreatureList( Data );
@@ -7215,7 +7215,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 73:
         {
-                
+
             var News = buffer.ReadUnicodeString();
             var EnemiesList = buffer.ReadUnicodeString();
             var AlliesList = buffer.ReadUnicodeString();
@@ -7227,7 +7227,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 74:
         {
-                
+
             var Details = buffer.ReadUnicodeString();
 
             handler.handleOfferDetails( Details );
@@ -7237,7 +7237,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 75:
         {
-                
+
             var Data = buffer.ReadUnicodeString();
 
             handler.handleAlianceProposalsList( Data );
@@ -7247,7 +7247,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 76:
         {
-                
+
             var Data = buffer.ReadUnicodeString();
 
             handler.handlePeaceProposalsList( Data );
@@ -7257,7 +7257,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 77:
         {
-                
+
             var CharName = buffer.ReadUnicodeString();
             var Race = buffer.ReadByte();
             var Class = buffer.ReadByte();
@@ -7281,7 +7281,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 78:
         {
-                
+
             var GuildList = buffer.ReadUnicodeString();
             var MemberList = buffer.ReadUnicodeString();
             var GuildNews = buffer.ReadUnicodeString();
@@ -7294,7 +7294,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 79:
         {
-                
+
             var GuildList = buffer.ReadUnicodeString();
             var MemberList = buffer.ReadUnicodeString();
 
@@ -7305,7 +7305,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 80:
         {
-                
+
             var GuildName = buffer.ReadUnicodeString();
             var Founder = buffer.ReadUnicodeString();
             var FoundationDate = buffer.ReadUnicodeString();
@@ -7327,7 +7327,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 81:
         {
-                
+
 
             handler.handleShowGuildFundationForm(  );
 
@@ -7336,7 +7336,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 82:
         {
-                
+
 
             handler.handleParalizeOK(  );
 
@@ -7345,7 +7345,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 83:
         {
-                
+
             var Details = buffer.ReadUnicodeString();
 
             handler.handleShowUserRequest( Details );
@@ -7355,7 +7355,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 84:
         {
-                
+
 
             handler.handleTradeOK(  );
 
@@ -7364,7 +7364,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 85:
         {
-                
+
 
             handler.handleBankOK(  );
 
@@ -7373,7 +7373,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 86:
         {
-                
+
             var OfferSlot = buffer.ReadByte();
             var ObjIndex = buffer.ReadInteger();
             var Amount = buffer.ReadLong();
@@ -7393,7 +7393,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 87:
         {
-                
+
             var Night = buffer.ReadBoolean();
 
             handler.handleSendNight( Night );
@@ -7403,7 +7403,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 88:
         {
-                
+
 
             handler.handlePong(  );
 
@@ -7412,7 +7412,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 89:
         {
-                
+
             var CharIndex = buffer.ReadInteger();
             var NickColor = buffer.ReadByte();
             var Tag = buffer.ReadUnicodeString();
@@ -7424,7 +7424,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 90:
         {
-                
+
             var Data = buffer.ReadUnicodeString();
 
             handler.handleSpawnList( Data );
@@ -7434,7 +7434,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 91:
         {
-                
+
             var Data = buffer.ReadUnicodeString();
 
             handler.handleShowSOSForm( Data );
@@ -7444,7 +7444,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 92:
         {
-                
+
             var Data = buffer.ReadUnicodeString();
 
             handler.handleShowMOTDEditionForm( Data );
@@ -7454,7 +7454,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 93:
         {
-                
+
 
             handler.handleShowGMPanelForm(  );
 
@@ -7463,7 +7463,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 94:
         {
-                
+
             var Data = buffer.ReadUnicodeString();
 
             handler.handleUserNameList( Data );
@@ -7473,7 +7473,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 95:
         {
-                
+
             var Data = buffer.ReadUnicodeString();
 
             handler.handleShowDenounces( Data );
@@ -7483,15 +7483,15 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 96:
         {
-                
+
         /* Packet con count! */
         var Items = [];
         var Count = buffer.ReadByte();
-        var i; 
+        var i;
         for (i=0; i<Count; ++i) {
             var e = {
                 Usuario : buffer.ReadUnicodeString()
-            
+
             };
             Items.push(e);
         }
@@ -7502,7 +7502,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 97:
         {
-                
+
             var Creador = buffer.ReadUnicodeString();
             var Motivo = buffer.ReadUnicodeString();
             var Online = buffer.ReadBoolean();
@@ -7517,7 +7517,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 98:
         {
-                
+
 
             handler.handleShowGuildAlign(  );
 
@@ -7526,7 +7526,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 99:
         {
-                
+
             var EsLider = buffer.ReadByte();
             var Data = buffer.ReadUnicodeString();
             var Exp = buffer.ReadLong();
@@ -7538,7 +7538,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 100:
         {
-                
+
             var Fuerza = buffer.ReadByte();
             var Agilidad = buffer.ReadByte();
 
@@ -7549,7 +7549,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 101:
         {
-                
+
             var Fuerza = buffer.ReadByte();
 
             handler.handleUpdateStrenght( Fuerza );
@@ -7559,7 +7559,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 102:
         {
-                
+
             var Agilidad = buffer.ReadByte();
 
             handler.handleUpdateDexterity( Agilidad );
@@ -7569,7 +7569,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 103:
         {
-                
+
             var Mochila = buffer.ReadByte();
 
             handler.handleAddSlots( Mochila );
@@ -7579,7 +7579,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 104:
         {
-            
+
 
                 var msgIdx = buffer.ReadByte();
                 switch (msgIdx) {
@@ -7703,7 +7703,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 105:
         {
-                
+
 
             handler.handleStopWorking(  );
 
@@ -7712,7 +7712,7 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 106:
         {
-                
+
             var Slot = buffer.ReadByte();
 
             handler.handleCancelOfferItem( Slot );
@@ -9760,8 +9760,8 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
     ServerPacketDecodeAndDispatch(buffer, handler){
         ServerPacketDecodeAndDispatch(buffer, handler);
     }
-    
+
     }
 
     return Protocolo;
-}); 
+});

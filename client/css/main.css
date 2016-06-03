@@ -3457,7 +3457,7 @@ body {
 
 #chatbox {
   background-image: url("../graficos/ui/chatbox.png");
-  /*tamaño img conteindo en barra:*/
+  /*tama├▒o img conteindo en barra:*/
   -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../graficos/ui/chatbox.png', sizingMethod='scale')";
   -webkit-background-size: 100% 100%;
   /* Safari 3.0 */
@@ -3468,7 +3468,7 @@ body {
   background-size: 100% 100%;
   /* Gecko 2.0 (Firefox 4.0) and other CSS3-compliant browsers */
   background-size: contain;
-  /*fin tamaño img*/
+  /*fin tama├▒o img*/
   z-index: -1;
   -moz-transition: 0.2s top ease;
   -webkit-transition: 0.2s top ease;
@@ -3479,7 +3479,7 @@ body {
 #chatinput {
   color: #eee; }
 
-/* Tamaño contenedor (width seteado en js) */
+/* Tama├▒o contenedor (width seteado en js) */
 @media screen and (min-aspect-ratio: 7 / 5) and (max-aspect-ratio: 8 / 5) {
   #container {
     height: 85%; } }
@@ -4236,7 +4236,7 @@ not supported by any browser */ }
   height: 80%;
   display: inline-block; }
 
-#mensajeBotonCerrar {
+#mensajeBotonOk {
   width: 100%; }
 
 #boveda {
@@ -4308,10 +4308,6 @@ not supported by any browser */ }
 #configurarTeclas {
   width: 548px;
   height: 500px; }
-
-#configurarTeclasBotonCerrar {
-  left: 507px;
-  top: 12px; }
 
 #configurarTeclasCancelar {
   left: 2%;
@@ -4386,7 +4382,7 @@ not supported by any browser */ }
   height: 80%;
   display: inline-block; }
 
-#inGameMensajeBotonCerrar {
+#inGameMensajeBotonOk {
   width: 100%; }
 
 #popUpMapa {
@@ -4397,10 +4393,6 @@ not supported by any browser */ }
   width: 573px;
   height: 528px;
   background: url("../imagenes/popups/mapa1.jpg"); }
-
-#mapaBotonCerrar {
-  left: 527px;
-  top: 12px; }
 
 #mapaBotonToggle {
   position: absolute;
@@ -4451,10 +4443,6 @@ not supported by any browser */ }
 #opcionesConfigurarTeclas {
   top: 27%;
   left: 25%; }
-
-#opcionesBotonCerrar {
-  top: 4%;
-  left: 85%; }
 
 #popUpSkillsContenedorPuntosLibres {
   margin: 10px;
@@ -4517,11 +4505,6 @@ not supported by any browser */ }
   position: absolute;
   top: 90%;
   left: 10%; }
-
-#skillsBotonCerrar {
-  position: absolute;
-  top: 17px;
-  left: 540px; }
 
 #tirar {
   width: 216px;

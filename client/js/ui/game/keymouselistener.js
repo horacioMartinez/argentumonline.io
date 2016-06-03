@@ -1,6 +1,6 @@
 /**
  * Created by horacio on 4/6/16.
- */
+ **/
 
 define(['ui/game/keymouseinput'], function (KeyMouseInput) {
     class KeyMouseListener {
@@ -137,7 +137,7 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
                 var key = e.which;
 
                 if (key === self.keys.toggleChat) {
-                    $chat = $('#chatinput');
+                    var $chat = $('#chatinput');
                     if ($chat.attr('value') !== '') {
                         if (self.game.player) {
                             self.game.enviarChat($chat.val());

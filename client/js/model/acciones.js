@@ -108,8 +108,9 @@ define(['enums'], function (Enums) {
 
         doubleClick() {
             var gridPos = this.game.getMouseGridPosition();
-            if (this.game.logeado)
+            if (this.game.logeado) {
                 this.game.client.sendDoubleClick(gridPos.x, gridPos.y);
+            }
         }
 
         tratarDeTirarItem() {
