@@ -8,6 +8,8 @@ define(['jquery-ui'], function () {
 
     class ItemGrid {
         constructor(gridID, sortable) {
+            this.MAX_DELAY_DOUBLE_CLICK = 400;
+
             this.id = gridID;
             this.$this = $("#" + this.id);
             if (sortable) {
@@ -81,9 +83,15 @@ define(['jquery-ui'], function () {
             });
 
             if (self._doubleClickCallback) {
-                $item.dblclick(function () {
-                    self._doubleClickCallback(self._selectedSlot)
-                });
+                // DOBLE CLICK FIX: simulo doble click con el click para que ande ok en todos los browsers
+                $item.click(function () {
+                    var newTime = Date.now();
+                    var delta = newTime - (this.click_time || 0);
+                    this.click_time = newTime;
+                    if (delta < self.MAX_DELAY_DOUBLE_CLICK) {
+                        self._doubleClickCallback(self._selectedSlot);
+                    }
+                }.bind($item));
             }
             return $item;
         }

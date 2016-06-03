@@ -182,7 +182,7 @@ define({
         hechizoAtaque: 1000,
         trabajar: 700,
         usarItemConU: 450,
-        usarItemConDobleClick: 125,
+        usarItemConDobleClick: 500,
         requestPostionUpdate: 2000
 
     },
