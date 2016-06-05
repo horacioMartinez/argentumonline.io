@@ -1,15 +1,56 @@
-#popUpSkillsContenedorPuntosLibres {margin: 10px; color:white; text-align:center;
-  /*DEBUG:*/outline: dashed 2px green;  background-color:black;}
+#popUpSkillsContenedorPuntosLibres {
+  margin: 10px;
+  color: white;
+  text-align: center;
+  background-color: black;
+}
 
-#popUpSkills {min-width:600px;min-height:450px;}
-#popUpSkillsContenedorSkills {margin: 10px; text-align:center;  /*DEBUG:*/outline: dashed 2px green;}
-#popUpSkillsContenedorSkills span {position:relative; display:inline-block;}
+#popUpSkills {
+  min-width: 250px;
+  min-height: 500px;
+}
 
-.popUpSkillSkillElement {min-width: 150px; margin:10px; display: inline-block; color:white; outline: dashed 2px green; background: black;}
-.botonMasSkill {margin-left:4px;position:relative; display: inline-block; background:url('../imagenes/botonMas.png'); width:16px; height:16px;}
-.botonMasSkill:active {background-image: url("../imagenes/botonMasApretado.png");}
-.botonMenosSkill {margin-left:1px; position:relative; display: inline-block; background:url('../imagenes/botonMenos.png'); width:16px; height:16px;}
-.botonMenosSkill:active {background-image: url("../imagenes/botonMenosApretado.png");}
+#popUpSkillsContenedorSkills {
+  margin: 10px auto;
+  text-align: center;
+}
 
-#skillsBotonAceptar {position:absolute; top:90%;left:62%}
-#skillsBotonCancelar {position:absolute; top:90%;left:10%}
+.botonMasSkill {
+  @extend .botonImagen;
+  margin-left: 4px;
+  position: relative;
+  display: inline-block;
+  background: url('../imagenes/botonMas.png');
+  width: 16px;
+  height: 16px;
+}
+
+.botonMasSkill:active {
+  background-image: url("../imagenes/botonMasApretado.png");
+}
+
+.botonMenosSkill {
+  @extend .botonImagen;
+  margin-left: 1px;
+  position: relative;
+  display: inline-block;
+  background: url('../imagenes/botonMenos.png');
+  width: 16px;
+  height: 16px;
+}
+
+.botonMenosSkill:active {
+  background-image: url("../imagenes/botonMenosApretado.png");
+}
+
+#skillsBotonAceptar {
+  width: 40%;
+  float: right;
+  margin: auto;
+}
+
+#skillsBotonCancelar {
+  width: 40%;
+  float: left;
+  margin: auto;
+}

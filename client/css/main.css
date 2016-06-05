@@ -3294,7 +3294,7 @@ body .ui-tooltip {
   /*DEBUG:*/
   outline: dashed 2px green; }
 
-.botonImagen {
+.botonImagen, .botonMasSkill, .botonMenosSkill {
   width: auto;
   height: auto;
   cursor: pointer;
@@ -4131,7 +4131,7 @@ not supported by any browser */ }
   /*DEBUG:*/
   outline: dashed 2px green; }
 
-.botonImagen {
+.botonImagen, .botonMasSkill, .botonMenosSkill {
   width: auto;
   height: auto;
   cursor: pointer;
@@ -4448,31 +4448,15 @@ not supported by any browser */ }
   margin: 10px;
   color: white;
   text-align: center;
-  /*DEBUG:*/
-  outline: dashed 2px green;
   background-color: black; }
 
 #popUpSkills {
-  min-width: 600px;
-  min-height: 450px; }
+  min-width: 250px;
+  min-height: 500px; }
 
 #popUpSkillsContenedorSkills {
-  margin: 10px;
-  text-align: center;
-  /*DEBUG:*/
-  outline: dashed 2px green; }
-
-#popUpSkillsContenedorSkills span {
-  position: relative;
-  display: inline-block; }
-
-.popUpSkillSkillElement {
-  min-width: 150px;
-  margin: 10px;
-  display: inline-block;
-  color: white;
-  outline: dashed 2px green;
-  background: black; }
+  margin: 10px auto;
+  text-align: center; }
 
 .botonMasSkill {
   margin-left: 4px;
@@ -4497,14 +4481,14 @@ not supported by any browser */ }
   background-image: url("../imagenes/botonMenosApretado.png"); }
 
 #skillsBotonAceptar {
-  position: absolute;
-  top: 90%;
-  left: 62%; }
+  width: 40%;
+  float: right;
+  margin: auto; }
 
 #skillsBotonCancelar {
-  position: absolute;
-  top: 90%;
-  left: 10%; }
+  width: 40%;
+  float: left;
+  margin: auto; }
 
 #tirar {
   width: 216px;
