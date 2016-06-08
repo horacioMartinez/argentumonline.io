@@ -1,5 +1,5 @@
-define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'view/consola', 'view/charactertext', 'view/spritegrh', 'view/containerordenado'],
-    function (Enums, Font, PIXI, Camera, CharacterSprites, Consola, CharacterText, SpriteGrh, ContainerOrdenado) {
+define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'view/charactername', 'view/consola', 'view/charactertext', 'view/spritegrh', 'view/containerordenado'],
+    function (Enums, Font, PIXI, Camera, CharacterSprites, CharacterName, Consola, CharacterText, SpriteGrh, ContainerOrdenado) {
 
         class Renderer {
             constructor(assetManager, escala) {
@@ -25,7 +25,7 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
 
                 this.rescale(escala);
 
-                this.tablet = Detect.isTablet(window.innerWidth);
+                //this.tablet = Detect.isTablet(window.innerWidth);
 
                 this._spritesLayer2 = [];
                 this._spritesLayer3 = [];
@@ -44,19 +44,20 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
                 this.gameStage = new PIXI.Container();
                 this.layer1 = new PIXI.Container();
                 this.layer2 = new PIXI.Container();
+                this.gameNames = new PIXI.Container();
                 this.layer3 = new ContainerOrdenado(this.MAPA_WIDTH);
                 this.layer3.ordenado = true;
                 this.layer4 = new PIXI.Container();
-                this.gameText = new PIXI.Container(); // nota: los nombres no estan aca, solo los dialogos (no se puede meter los nombres porque pisan a algunos graficos y son pisados otros)
-                // todo?: que los nombres siempre pisen al grh1 y esten debajo de los demas, de esa forma en vez de hacerles el scale del juego se los puede agrandar como a los demas textos
+                this.gameChat = new PIXI.Container();
                 this.consola = new Consola(this.escala);
                 this.stage.addChild(this.gameStage);
                 this.stage.addChild(this.consola);
                 this.gameStage.addChild(this.layer1);
                 this.gameStage.addChild(this.layer2);
+                this.gameStage.addChild(this.gameNames);
                 this.gameStage.addChild(this.layer3);
                 this.gameStage.addChild(this.layer4);
-                this.gameStage.addChild(this.gameText); // todo? gametext abajo o arriba de layer4?
+                this.gameStage.addChild(this.gameChat); // todo? gametext abajo o arriba de layer4?
                 this._initTerrenoSpriteGrid(this.layer1);
             }
 
@@ -156,12 +157,20 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
                 sprite.zOffset = -30; // para que quede debajo de los objetos del mapa en el mismo y
                 char.sprite = sprite;
 
+                if (Name.trim()) {
+                    char.spriteNombre = new CharacterName(Name, clan, font, this.escala);
+                    this.gameNames.addChild(char.spriteNombre); // todo: container entre layers 2 y 3
+                }
+
                 char.texto = new CharacterText(this.escala);
-                this.gameText.addChild(char.texto);
+                this.gameChat.addChild(char.texto);
 
                 char.setOnPositionChange(function () {
                     if (this.sprite) {
                         this.sprite.setPosition(this.x, this.y);
+                    }
+                    if (this.spriteNombre) {
+                        this.spriteNombre.setPosition(this.x, this.y);
                     }
                     if (this.texto) {
                         this.texto.setPosition(this.x, this.y);
@@ -193,15 +202,26 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
             }
 
             cambiarNombreCharacter(char, nombre, clan, color) {
+                if (char.spriteNombre) {
+                    this.gameNames.removeChild(char.spriteNombre);
+                }
+                if (!nombre.trim()) {
+                    return;
+                }
                 var fontColor = color ? Font.NickColor[Font.NickColorIndex[color]] : Font.NickColor.CIUDADANO;
                 var font = Font.NOMBRE;
                 font.fill = fontColor;
-                char.sprite.setNombre(nombre, clan, font);
+                var nuevoNombre = new CharacterName(nombre, clan, font, this.escala);
+                this.gameNames.addChild(nuevoNombre);
+                char.spriteNombre = nuevoNombre;
             }
 
             sacarCharacter(char) {
                 this.layer3.removeChild(char.sprite);
-                this.gameText.removeChild(char.texto);
+                this.gameChat.removeChild(char.texto);
+                if (char.spriteNombre) {
+                    this.gameNames.removeChild(char.spriteNombre);
+                }
                 char.texto = null;
                 char.sprite = null;
             }
@@ -230,12 +250,19 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
                 this.gameStage.scale.x = escala;
                 this.gameStage.scale.y = escala;
 
-                this.gameText.scale.x = 1 / escala;
-                this.gameText.scale.y = 1 / escala;
+                this.gameChat.scale.x = 1 / escala;
+                this.gameChat.scale.y = 1 / escala;
+
+                this.gameNames.scale.x = 1 / escala;
+                this.gameNames.scale.y = 1 / escala;
+
                 this._syncGamePosition();
 
-                for (var i = 0; i < this.gameText.children.length; i++) {
-                    this.gameText.children[i].setEscala(escala);
+                for (var i = 0; i < this.gameChat.children.length; i++) {
+                    this.gameChat.children[i].setEscala(escala);
+                }
+                for (var name of this.gameNames.children) {
+                    name.setEscala(escala);
                 }
                 this.consola.setEscala(escala);
             }

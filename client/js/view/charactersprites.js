@@ -4,7 +4,7 @@
 
 define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh) {
 
-    function CharacterSprites(Heading, bodys, heads, headOffX, headOffY, weapons, shields, helmets, nombre, clan, font) {
+    function CharacterSprites(Heading, bodys, heads, headOffX, headOffY, weapons, shields, helmets) {
         /*
          Body, Head,Weapon,Shield,Helmet: vector con los grhs de los 4 headings. Cada uno de los headings puede contener un solo numero de grh frames de grhs + vel
          */
@@ -19,7 +19,7 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
         this.setWeapons(weapons);
         this.setShields(shields);
         this.setHelmets(helmets);
-        this.setNombre(nombre, clan, font);
+        //this.setNombre(nombre, clan, font);
         this._updateOrdenHijos();
     }
 
@@ -102,7 +102,7 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
             sprite.play();
         });
     };
-
+/*
     CharacterSprites.prototype.setNombre = function (nombre, clan, font) {
         if (this._nombre) {
             this.removeChild(this._nombre);
@@ -117,7 +117,7 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
             this._nombre.y = 32;
             this._nombre.x = this.bodySprite.x + 32 / 2 - this._nombre.width / 2;
         }
-    };
+    };*/
 
     CharacterSprites.prototype.cambiarHeading = function (heading) {
         if (this.heading === heading)

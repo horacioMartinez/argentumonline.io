@@ -13,6 +13,7 @@ define(["text!../../../menus/configurarTeclas.html!strip", 'utils/charcodemap', 
             this.nuevasKeys = null;
             this.updateKeysCb = updateKeysCb;
             this.showMensajeCb = showMensajeCb;
+            this.$this = this.getDomElement();
         }
 
         show() {
@@ -23,7 +24,7 @@ define(["text!../../../menus/configurarTeclas.html!strip", 'utils/charcodemap', 
 
         displayKeys() {
             var self = this;
-            this.$this.children('input').each(function () {
+            this.$this.find('input').each(function () {
 
                 var id = ($(this).attr('id'));
                 var accion = id.split('_')[1];

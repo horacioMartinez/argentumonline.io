@@ -34,6 +34,10 @@ define(['jquery-ui'], function () {
             this.visible = false;
         }
 
+        getDomElement(){
+            return this.$this;
+        }
+
         show() {
             this.clearDom();
             this.$parent.append(this.$this);

@@ -18,6 +18,7 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
             this.muerto = false;
             this.movement = new Transition();
             this.sprite = null;
+            this.spriteNombre = null;
             this.texto = null;
             this.nombre = Name;
             this.clan = clan;
