@@ -1,5 +1,31 @@
-#imagenMapa {width:573px;height:528px;background:url('../imagenes/popups/mapa1.jpg');}
-#mapaBotonToggle{position: absolute;left:45.5%; top:94%; width: 10%; height:5.2%;}
+#popUpMapa {
+  outline:2px dashed green;
+  min-width:580px;
+  min-height:530px;
+}
 
-#popUpMapa.mapaSeccionB #imagenMapa {background:url('../imagenes/popups/mapa2.jpg');}
-#popUpMapa.mapaSeccionB #mapaBotonToggle {position: absolute;left:45.5%; top:0.5%; width: 10%; height:5.2%;}
+#imagenMapa {
+  width: 573px;
+  height: 528px;
+  background: url('../imagenes/popups/mapa1.jpg');
+}
+
+#mapaBotonToggle {
+  position: absolute;
+  left: 45.5%;
+  top: 94%;
+  width: 10%;
+  height: 5.2%;
+}
+
+#popUpMapa.mapaSeccionB #imagenMapa {
+  background: url('../imagenes/popups/mapa2.jpg');
+}
+
+#popUpMapa.mapaSeccionB #mapaBotonToggle {
+  position: absolute;
+  left: 45.5%;
+  top: 0.5%;
+  width: 10%;
+  height: 5.2%;
+}

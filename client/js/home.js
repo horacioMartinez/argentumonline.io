@@ -1,5 +1,5 @@
 require.config({
-    urlArgs: "bust=v0.010", // Cambiar para refrescar cache
+    urlArgs: "bust=v0.0.1",
     paths: {
         "jquery": "lib/jquery",
         "jquery-ui": "lib/jquery-ui",

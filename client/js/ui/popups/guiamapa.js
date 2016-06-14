@@ -7,10 +7,8 @@ define(["text!../../../menus/mapa.html!strip", 'ui/popups/popup'], function (DOM
     class GuiaMapa extends PopUp {
         constructor(game, acciones) {
             var options = {
-                width:700,
-                height:700,
-                minWidth:700,
-                minHeight:700
+                width: 'auto',
+                height:'auto',
             };
             super(DOMdata,options);
             this.initCallbacks();

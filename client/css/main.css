@@ -4347,6 +4347,11 @@ not supported by any browser */ }
 #inGameMensajeBotonOk {
   width: 100%; }
 
+#popUpMapa {
+  outline: 2px dashed green;
+  min-width: 580px;
+  min-height: 530px; }
+
 #imagenMapa {
   width: 573px;
   height: 528px;

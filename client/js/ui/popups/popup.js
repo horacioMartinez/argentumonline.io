@@ -22,7 +22,6 @@ define(['jquery-ui'], function () {
             if (!general) {
                 var position = {position: {my: "center", at: "left+40%", of: "#container"}};
                 $.extend(options, position);
-                log.error(options);
             }
             this.$this.dialog(options);
             if (this.$this.siblings('#' + this.$this.attr('id')).length) { // TODO: no funciona esto

@@ -1,22 +1,74 @@
-#bovedaGridComprar {flex:1; margin-right:10px;}
-#bovedaGridVender {flex:1;}
+#bovedaGridComprar {
+  flex: 1;
+  margin-right: 10px;
+}
 
-#bovedaBotonRetirarOro {float:left;width:50px;height:50px;transform:scaleX(-1);background-image:url('../imagenes/oro_bolsa.svg');}
-#bovedaBotonRetirarOro:hover {background-image:url('../imagenes/oro_bolsa_hover.svg');}
+#bovedaGridVender {
+  flex: 1;
+}
 
-#bovedaBotonDepositarOro {float:right;width:50px; height:50px;background-image:url('../imagenes/oro_bolsa.svg');}
-#bovedaBotonDepositarOro:hover {background-image:url('../imagenes/oro_bolsa_hover.svg');}
+#bovedaBotonRetirarOro {
+  float: left;
+  width: 50px;
+  height: 50px;
+  transform: scaleX(-1);
+  background-image: url('../imagenes/oro_bolsa.svg');
+}
 
-#bovedaBotonRetirarItem {width:40%;float:left;margin:auto;}
-#bovedaBotonDepositarItem {width:40%;float:right;margin:auto;}
+#bovedaBotonRetirarOro:hover {
+  background-image: url('../imagenes/oro_bolsa_hover.svg');
+}
 
-#bovedaOroDisponibleLabel {font-size:16px;margin-right: 5px;}
-#bovedaOroDisponibleVal {font-size:16px;}
-#bovedaInputCantidadItem {font-size:14px;}
+#bovedaBotonDepositarOro {
+  float: right;
+  width: 50px;
+  height: 50px;
+  background-image: url('../imagenes/oro_bolsa.svg');
+}
 
-#bovedaOroDisponible {display:block;font-size:16px;}
+#bovedaBotonDepositarOro:hover {
+  background-image: url('../imagenes/oro_bolsa_hover.svg');
+}
 
-#bovedaMaxLabel{float:right; margin:auto 5px;}
-#bovedaMaxVal{float:right;}
+#bovedaBotonRetirarItem {
+  width: 40%;
+  float: left;
+  margin: auto;
+}
 
-#bovedaMinLabel {margin-right:5px;}
+#bovedaBotonDepositarItem {
+  width: 40%;
+  float: right;
+  margin: auto;
+}
+
+#bovedaOroDisponibleLabel {
+  font-size: 16px;
+  margin-right: 5px;
+}
+
+#bovedaOroDisponibleVal {
+  font-size: 16px;
+}
+
+#bovedaInputCantidadItem {
+  font-size: 14px;
+}
+
+#bovedaOroDisponible {
+  display: block;
+  font-size: 16px;
+}
+
+#bovedaMaxLabel {
+  float: right;
+  margin: auto 5px;
+}
+
+#bovedaMaxVal {
+  float: right;
+}
+
+#bovedaMinLabel {
+  margin-right: 5px;
+}
