@@ -6,7 +6,14 @@ define(["text!../../../menus/comerciar.html!strip", 'ui/popups/popup', 'ui/game/
 
     class Comerciar extends PopUp {
         constructor(game, acciones) {
-            super(DOMdata);
+
+            var options = {
+                width:500,
+                height:400,
+                minWidth:250,
+                minHeight:300
+            };
+            super(DOMdata,options);
 
             this.game = game;
             this.acciones = acciones;
@@ -42,6 +49,7 @@ define(["text!../../../menus/comerciar.html!strip", 'ui/popups/popup', 'ui/game/
 
         hide(incomingFromServer) {
             super.hide();
+            log.error("hideComerciar");
             if (!incomingFromServer) { // TODO: (en comerciar y en boveda!!) que el cliente no le tenga que mandar al sv cuando cierra, esta accion no deberia estar
                 this.acciones.cerrarComerciar();
             }

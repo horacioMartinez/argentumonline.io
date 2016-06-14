@@ -5,73 +5,57 @@
 define(['jquery-ui'], function () {
 
     class PopUp {
-        constructor(DOMdata, general) { // los pop ups generales se ven en todas las pantallas (no solo juego) y estan centrados en el medio
+        constructor(DOMdata, addiotionalOptions, general) { // los pop ups generales se ven en todas las pantallas (no solo juego) y estan centrados en el medio
             if (!DOMdata)
                 throw new Error("DOMdata required");
-
-            this.general = general;
-            if (general) {
-                this.$parent = $("#popUpsGenerales");
-            } else {
-                this.$parent = $("#popUpsJuego");
-            }
             this.$this = $(DOMdata);
 
-            if (this.$parent.children('#' + this.$this.attr('id')).length) {
+            var self = this;
+            var options = {
+                autoOpen: false,
+                dialogClass: 'dialog_default',
+                close: function (event, ui) {
+                    self.hide();
+                }
+            };
+            $.extend(options, addiotionalOptions);
+            if (!general) {
+                var position = {position: {my: "center", at: "left+40%", of: "#container"}};
+                $.extend(options, position);
+                log.error(options);
+            }
+            this.$this.dialog(options);
+            if (this.$this.siblings('#' + this.$this.attr('id')).length) { // TODO: no funciona esto
                 throw new Error("pop up inicializado dos veces: " + this.$this.attr('id'));
             }
 
-            this._addCloseButton(this.$this);
-            this.$this.hide();
-            this.$parent.append(this.$this);
-            this.$centering_container = $("#container");
-            this.$this.draggable({
-                cursor: "move",
-                /*containment: "parent"*/
-            });
-            this.$this.resizable();
-
             this.visible = false;
+            this._firstTimeClosed = true; // primera vez en cerrar es automaticamente al crearlo
         }
 
-        getDomElement(){
+        getDomElement() {
             return this.$this;
         }
 
         show() {
-            this.clearDom();
-            this.$parent.append(this.$this);
-            this.$this.show();
-
-            //centrado:
-            this.$this.css("top", (this.$centering_container.height() / 2) - (this.$this.outerHeight() / 2));
-            if (this.general) {
-                this.$this.css("left", (this.$centering_container.width() / 2) - (this.$this.outerWidth() / 2));
-            } else {
-                this.$this.css("left", ((this.$centering_container.width() / 2) * 0.8 - (this.$this.outerWidth() / 2)));
-            }
-
+            this.$this.dialog("open");
             this.visible = true;
         }
 
         hide() { // OJO, en algunos se cierra con el comando que viene del server (y se puede cerrar 2 veces)
-            this.$this.hide();
+            log.error("popUP HIDE");
+            if (this._firstTimeClosed) { // primera vez en cerrarse es al crearse
+                this._firstTimeClosed = false;
+                return;
+            }
+            this.$this.dialog("close");
             this.visible = false;
-            //this.$parent.detach(this.$this);
         }
 
         clearDom() {
+            return;
             this.$this.find('span').text('');
             this.$this.find('input').val('');
-        }
-
-        _addCloseButton($target){
-            var $button = $('<button class="botonCerrar"></button>');
-            let self = this;
-            $button.click(function () {
-               self.hide();
-            });
-            $target.append($button);
         }
 
     }

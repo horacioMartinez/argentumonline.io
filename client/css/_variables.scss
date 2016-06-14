@@ -1,0 +1,23 @@
+$anchoIconos: 25px;
+$altoIconos: 25px;
+
+/* PALETTE */
+$barra: #5e4f32;
+$barra_hover: #866c3c;
+
+$active_font: #977841;
+$text_font: #a69a84;
+$important_font: #dea53d;
+$indicator_font: #8f8766;  /*(por ej NIVEL 1 nivel en esta font y 1 en bold y blanco)*/
+$background_font: #5a4535;
+$disabled_font: #575757;
+
+
+$boton_normal_background: $barra /*$active_font*/;
+$boton_normal_background_hover: $barra_hover;
+$boton_normal_background_pressed: $disabled_font;
+
+$boton_normal_texto: black;
+$boton_normal_texto_hover: black;
+$boton_normal_texto_pressed: black;
+

@@ -1,6 +1,10 @@
-#popUpOpciones {position:absolute; width:322px;height:480px;}
-#sliderMusica {position:absolute;width:40%; height:1.5%; top:14%; left:30%;}
-#sliderSonido {position:absolute;width:40%; height:1.5%; top:18%; left:30%;}
-#checkboxMusica{position:absolute;top:13.5%; left:8%;}
-#checkboxSonido{position:absolute;top:16.6%; left:8%;}
-#opcionesConfigurarTeclas {top:27%; left:25%;}
+#configurarTeclasContenedor {
+  margin: 10px auto;
+  text-align: center;
+}
+
+#configurarTeclasContenedor{
+  input{
+    text-align:center;
+  }
+}

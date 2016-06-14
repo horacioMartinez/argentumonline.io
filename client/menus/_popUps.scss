@@ -3,27 +3,49 @@
 @import 'comerciar';
 @import 'mensajeGlobal';
 @import 'boveda';
-@import 'configurarTeclas';
 @import 'inGameMensaje';
 @import 'mapa';
 @import 'opciones';
 @import 'skills';
 @import 'tirar';
 
-#popUpsJuego, #popUpsGenerales {z-index:1000;}
 /* Reglas generales de popUps*/
-.popUp {display:inline-block; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.5);}
-.popUp {background-color: rgba(0,0,0,0.7); border: 15px solid white;
-    border-image: url('../imagenes/borde.png') 25 repeat}
-.popUp {position:absolute;}
-.popUp input {@extend .activeColor, .everywhereFont; border:none; outline:none; color: white; width:50px; background: rgba(255, 255, 255, 0.1) none; font-size: 14px;}
-.popUp ul {cursor:default;}
-.popUp span {display: inline-block; user-select: none; cursor: default;}
-.popUp .itemgrid { border: 1px solid #BBBDBF; }
-.popUp .itemgrid li {font-size:13px;}
+.dialogContent {
+  /*display:flex; flex:1;*/
+  background: none;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
-$anchoIconos: 250px;
-$altoIconos: 25px;
+.dialogContent input {
+  @extend .activeColor, .everywhereFont;
+  border: 1px solid rgba(0, 0, 0, 0.7);
+  outline: none;
+  color: white;
+  width: 50px;
+  background-color: rgba(0, 0, 0, 0.4);
+  font-size: 14px;
+}
+
+.dialogContent ul {
+  cursor: default;
+}
+
+.dialogContent span {
+  display: inline-block;
+  user-select: none;
+  cursor: default;
+}
+
+.dialogContent .itemgrid {
+  border: 1px solid #BBBDBF;
+}
+
+.dialogContent .itemgrid li {
+  font-size: 13px;
+}
 
 /* -------- DEBUG ------- */
 /*.popUp * {outline: dashed 2px green;}

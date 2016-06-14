@@ -3177,6 +3177,49 @@ body .ui-tooltip {
   /* support: IE8 */
   border-radius: 8px; }
 
+.dialog_default {
+  background-size: cover;
+  background: rgba(0, 0, 0, 0.9) url("../imagenes/textures/leather.jpg") no-repeat;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+  /*display:flex;flex-direction: column;*/
+  /*
+  .ui-dialog-content
+  {
+    position: relative;
+    border: 0;
+    padding: .5em 1em;
+    background: none;
+    overflow: auto;
+    zoom: 1;
+    background-color: #ffd;
+    border: solid 1px #ea7;
+  }
+*/
+  /*
+    .ui-widget-content
+    {
+      border:none;
+    }*/ }
+  .dialog_default .ui-icon-closethick {
+    display: none;
+    border: none;
+    margin: 0;
+    background-position: left top; }
+  .dialog_default .ui-dialog-titlebar-close {
+    background: url("../imagenes/X.png");
+    border: none;
+    width: 13px;
+    height: 13px;
+    padding: 0; }
+  .dialog_default .ui-dialog-titlebar-close:hover {
+    background-image: url("../imagenes/X_hover.png"); }
+  .dialog_default .ui-dialog-titlebar {
+    background: none; }
+  .dialog_default .ui-dialog-titlebar {
+    color: #aaa; }
+
+/* PALETTE */
+/*(por ej NIVEL 1 nivel en esta font y 1 en bold y blanco)*/
 @font-face {
   font-family: 'FuturaStd';
   src: url("../fonts/FuturaStd-Condensed.otf");
@@ -3222,12 +3265,12 @@ body .ui-tooltip {
   font-weight: normal;
   font-style: normal; }
 
-.everywhereMediumFont {
+.everywhereMediumFont, .dialog_default .ui-dialog-titlebar {
   font-family: 'FuturaStd',arial,serif;
   font-weight: normal;
   font-style: normal; }
 
-.everywhereFont, .popUp input {
+.everywhereFont, .dialogContent input {
   font-family: 'FuturaStd',arial,serif;
   font-weight: 300;
   font-style: normal; }
@@ -3237,38 +3280,39 @@ body .ui-tooltip {
   font-weight: bold;
   font-style: normal; }
 
-.activeColor, .popUp input {
+.activeColor, .dialogContent input {
   color: #ffffff; }
 
-.secondaryColor {
+.secondaryColor, .dialog_default .ui-dialog-titlebar {
   color: #BBBDBF; }
 
+.botonTransition, .dialog_default .ui-dialog-titlebar-close, .botonNormal {
+  transition: 0.2s linear; }
+
 .botonNormal {
-  background: none;
-  border: none;
+  background: #5e4f32;
+  border: 2px solid black;
   text-decoration: none;
-  color: #BBBDBF;
+  color: black;
   margin-top: 3px;
   margin-bottom: 3px;
-  /*
-  transition: 0.4s linear;
-  */
-  text-shadow: 1px 1px 1px #000;
+  /*text-shadow: 1px 1px 1px #000;*/
   outline: none;
   cursor: pointer;
   text-align: center;
-  font-family: 'FuturaStd',arial,serif;
+  font-family: 'FuturaStd', arial, serif;
   font-weight: normal;
   font-style: normal; }
 
 .botonNormal:hover {
-  color: #FFFFFF;
+  background-color: #866c3c;
+  color: black;
   /* background-color: #FFFFFF;*/ }
 
 .botonNormal:active {
-  /*DEBUGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG*/
-  background-color: #84212e;
-  /*---------------------------------------*/ }
+  background-color: #575757;
+  color: black;
+  /*text-shadow: none;*/ }
 
 .botonCerrar {
   display: block;
@@ -3587,35 +3631,6 @@ footer a {
   user-select: none;
                      /* non-prefixed version, currently
 not supported by any browser */ }
-
-/* Grid DE ITEMS para compra/venta por ej */
-.itemgrid {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  width: 160px; }
-
-.itemgrid li {
-  background-size: 100% 100%;
-  float: left;
-  width: 32px;
-  color: white;
-  height: 32px;
-  font-size: 2vh;
-  text-align: left;
-  vertical-align: text-top;
-  outline: 2px solid transparent;
-  cursor: default; }
-
-.itemgrid li.equiped {
-  outline-color: #FFD700;
-  outline-style: dashed;
-  outline-width: 1px; }
-
-.itemgrid li.selected {
-  outline-color: limegreen;
-  outline-style: dashed;
-  outline-width: 2px; }
 
 .divImagen {
   width: auto;
@@ -4014,6 +4029,37 @@ not supported by any browser */ }
   width: 5%;
   height: 80%; }
 
+.itemgrid {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 160px; }
+
+.itemgrid li {
+  background-size: 100% 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  float: left;
+  width: 32px;
+  color: white;
+  height: 32px;
+  font-size: 2vh;
+  text-align: left;
+  vertical-align: text-top;
+  cursor: default;
+  border-color: rgba(255, 255, 255, 0.5);
+  border-style: solid;
+  border-width: 1px; }
+
+.itemgrid li.equiped {
+  background-color: rgba(138, 243, 255, 0.5);
+  border-style: solid;
+  border-width: 1px; }
+
+.itemgrid li.selected {
+  border-color: limegreen;
+  border-style: solid;
+  border-width: 1px; }
+
 @font-face {
   font-family: 'FuturaStd';
   src: url("../fonts/FuturaStd-Condensed.otf");
@@ -4059,12 +4105,12 @@ not supported by any browser */ }
   font-weight: normal;
   font-style: normal; }
 
-.everywhereMediumFont {
+.everywhereMediumFont, .dialog_default .ui-dialog-titlebar {
   font-family: 'FuturaStd',arial,serif;
   font-weight: normal;
   font-style: normal; }
 
-.everywhereFont, .popUp input {
+.everywhereFont, .dialogContent input {
   font-family: 'FuturaStd',arial,serif;
   font-weight: 300;
   font-style: normal; }
@@ -4074,38 +4120,39 @@ not supported by any browser */ }
   font-weight: bold;
   font-style: normal; }
 
-.activeColor, .popUp input {
+.activeColor, .dialogContent input {
   color: #ffffff; }
 
-.secondaryColor {
+.secondaryColor, .dialog_default .ui-dialog-titlebar {
   color: #BBBDBF; }
 
+.botonTransition, .dialog_default .ui-dialog-titlebar-close, .botonNormal {
+  transition: 0.2s linear; }
+
 .botonNormal {
-  background: none;
-  border: none;
+  background: #5e4f32;
+  border: 2px solid black;
   text-decoration: none;
-  color: #BBBDBF;
+  color: black;
   margin-top: 3px;
   margin-bottom: 3px;
-  /*
-  transition: 0.4s linear;
-  */
-  text-shadow: 1px 1px 1px #000;
+  /*text-shadow: 1px 1px 1px #000;*/
   outline: none;
   cursor: pointer;
   text-align: center;
-  font-family: 'FuturaStd',arial,serif;
+  font-family: 'FuturaStd', arial, serif;
   font-weight: normal;
   font-style: normal; }
 
 .botonNormal:hover {
-  color: #FFFFFF;
+  background-color: #866c3c;
+  color: black;
   /* background-color: #FFFFFF;*/ }
 
 .botonNormal:active {
-  /*DEBUGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG*/
-  background-color: #84212e;
-  /*---------------------------------------*/ }
+  background-color: #575757;
+  color: black;
+  /*text-shadow: none;*/ }
 
 .botonCerrar {
   display: block;
@@ -4179,12 +4226,6 @@ not supported by any browser */ }
     background-image: url(../imagenes/boton-normal-pressed.png);
     color: grey;
 }*/
-#comerciar {
-  display: flex;
-  flex-direction: column;
-  min-width: 310px;
-  min-height: 350px; }
-
 #comerciarGridComprar {
   flex: 1;
   margin-right: 10px; }
@@ -4224,10 +4265,6 @@ not supported by any browser */ }
   float: right;
   margin: auto; }
 
-#mensajeGlobal {
-  width: 200px;
-  height: 120px; }
-
 #mensajeContenido {
   text-align: left;
   font-size: 16px;
@@ -4238,12 +4275,6 @@ not supported by any browser */ }
 
 #mensajeBotonOk {
   width: 100%; }
-
-#boveda {
-  display: flex;
-  flex-direction: column;
-  min-width: 310px;
-  min-height: 350px; }
 
 #bovedaGridComprar {
   flex: 1;
@@ -4305,21 +4336,6 @@ not supported by any browser */ }
 #bovedaMinLabel {
   margin-right: 5px; }
 
-#configurarTeclas {
-  width: 200px;
-  height: 400px; }
-
-#configurarTeclasContenedor {
-  margin: 10px auto;
-  text-align: center; }
-
-#configurarTeclasContenedor input {
-  text-align: center; }
-
-#inGameMensaje {
-  width: 200px;
-  height: 120px; }
-
 #inGameMensajeContenido {
   text-align: left;
   font-size: 16px;
@@ -4330,10 +4346,6 @@ not supported by any browser */ }
 
 #inGameMensajeBotonOk {
   width: 100%; }
-
-#popUpMapa {
-  min-width: 573px;
-  min-height: 528px; }
 
 #imagenMapa {
   width: 573px;
@@ -4357,48 +4369,18 @@ not supported by any browser */ }
   width: 10%;
   height: 5.2%; }
 
-#popUpOpciones {
-  position: absolute;
-  width: 322px;
-  height: 480px; }
+#configurarTeclasContenedor {
+  margin: 10px auto;
+  text-align: center; }
 
-#sliderMusica {
-  position: absolute;
-  width: 40%;
-  height: 1.5%;
-  top: 14%;
-  left: 30%; }
-
-#sliderSonido {
-  position: absolute;
-  width: 40%;
-  height: 1.5%;
-  top: 18%;
-  left: 30%; }
-
-#checkboxMusica {
-  position: absolute;
-  top: 13.5%;
-  left: 8%; }
-
-#checkboxSonido {
-  position: absolute;
-  top: 16.6%;
-  left: 8%; }
-
-#opcionesConfigurarTeclas {
-  top: 27%;
-  left: 25%; }
+#configurarTeclasContenedor input {
+  text-align: center; }
 
 #popUpSkillsContenedorPuntosLibres {
   margin: 10px;
   color: white;
   text-align: center;
   background-color: black; }
-
-#popUpSkills {
-  min-width: 250px;
-  min-height: 500px; }
 
 #popUpSkillsContenedorSkills {
   margin: 10px auto;
@@ -4436,10 +4418,6 @@ not supported by any browser */ }
   float: left;
   margin: auto; }
 
-#tirar {
-  width: 180px;
-  height: 70px; }
-
 #tirarBotonTirarTodo {
   float: right;
   width: 50%; }
@@ -4448,42 +4426,35 @@ not supported by any browser */ }
   float: left;
   width: 50%; }
 
-#popUpsJuego, #popUpsGenerales {
-  z-index: 1000; }
-
 /* Reglas generales de popUps*/
-.popUp {
-  display: inline-block;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.5); }
+.dialogContent {
+  /*display:flex; flex:1;*/
+  background: none;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column; }
 
-.popUp {
-  background-color: rgba(0, 0, 0, 0.7);
-  border: 15px solid white;
-  border-image: url("../imagenes/borde.png") 25 repeat; }
-
-.popUp {
-  position: absolute; }
-
-.popUp input {
-  border: none;
+.dialogContent input {
+  border: 1px solid rgba(0, 0, 0, 0.7);
   outline: none;
   color: white;
   width: 50px;
-  background: rgba(255, 255, 255, 0.1) none;
+  background-color: rgba(0, 0, 0, 0.4);
   font-size: 14px; }
 
-.popUp ul {
+.dialogContent ul {
   cursor: default; }
 
-.popUp span {
+.dialogContent span {
   display: inline-block;
   user-select: none;
   cursor: default; }
 
-.popUp .itemgrid {
+.dialogContent .itemgrid {
   border: 1px solid #BBBDBF; }
 
-.popUp .itemgrid li {
+.dialogContent .itemgrid li {
   font-size: 13px; }
 
 /* -------- DEBUG ------- */

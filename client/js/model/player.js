@@ -21,6 +21,7 @@ define(['model/character'], function (Character) {
             this.meditando = false;
         }
 
+        // TODO: aceleracion al comenzar y terminar de caminar
         comenzarCaminar(direccion) {
             this.moviendose++;
             this.lastDirPressed.push(direccion);

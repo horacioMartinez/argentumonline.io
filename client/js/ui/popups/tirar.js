@@ -6,8 +6,13 @@ define(["text!../../../menus/tirar.html!strip", 'ui/popups/popup', 'ui/popups/po
 
     class Tirar extends PopUp {
         constructor(game, acciones) {
-            super(DOMdata);
-
+            var options = {
+                width:150,
+                height:350,
+                minWidth:100,
+                minHeight:200
+            };
+            super(DOMdata,options);
             this.game = game;
             this.acciones = acciones;
             this.initCallbacks();

@@ -3,29 +3,32 @@
  */
 
 
-define(["text!../../../menus/configurarTeclas.html!strip", 'utils/charcodemap', 'ui/popups/popup'], function (DOMdata, CharCodeMap, PopUp) {
+define(['utils/charcodemap', 'ui/popups/popup'], function (CharCodeMap, PopUp) {
 
-    class ConfigurarTeclas extends PopUp {
+    class ConfigurarTeclas {
         constructor(storage, updateKeysCb, showMensajeCb) {
-            super(DOMdata);
             this.storage = storage;
-            this.initCallbacks();
             this.nuevasKeys = null;
             this.updateKeysCb = updateKeysCb;
             this.showMensajeCb = showMensajeCb;
-            this.$this = this.getDomElement();
         }
 
-        show() {
-            super.show();
+        onShow() {
             this.nuevasKeys = jQuery.extend({}, this.storage.getKeys()); // clonar
             this.displayKeys();
         }
 
+        onHide() {
+
+        }
+
+        setCerrarCallback(cerrarCallback){
+            this._cerrarCallback = cerrarCallback;
+        }
+
         displayKeys() {
             var self = this;
-            this.$this.find('input').each(function () {
-
+            $('#configurarTeclas').find('input').each(function () {
                 var id = ($(this).attr('id'));
                 var accion = id.split('_')[1];
                 if (!accion || !(self.nuevasKeys[accion])) {
@@ -51,11 +54,11 @@ define(["text!../../../menus/configurarTeclas.html!strip", 'utils/charcodemap', 
             var self = this;
 
             $("#configurarTeclasBotonCerrar").click(function () {
-                self.hide();
+                self._cerrarCallback();
             });
 
             $("#configurarTeclasCancelar").click(function () {
-                self.hide();
+                self._cerrarCallback();
             });
 
             $("#configurarTeclasRestaurarDefault").click(function () {
@@ -66,7 +69,7 @@ define(["text!../../../menus/configurarTeclas.html!strip", 'utils/charcodemap', 
             $("#configurarTeclasGuardarYSalir").click(function () {
                 self.storage.setKeys(self.nuevasKeys);
                 self.updateKeysCb(self.nuevasKeys);
-                self.hide();
+                self._cerrarCallback();
             });
 
             $('#configurarTeclas').on("keydown", 'input', function (event) {

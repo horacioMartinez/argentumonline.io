@@ -1,71 +1,79 @@
-.botonNormal {
-    background: none;
-    border:none;
-    text-decoration: none;
-    color: #BBBDBF;
-    margin-top:3px;
-    margin-bottom: 3px;
-    /*
-    transition: 0.4s linear;
-    */
-    text-shadow: 1px 1px 1px #000;
-    outline: none;
-    cursor: pointer;
-    text-align: center;
 
-    font-family: 'FuturaStd',arial,serif;
-    font-weight: normal;
-    font-style: normal;
+.botonTransition{
+  transition: 0.2s linear;
+}
+
+.botonNormal {
+  @extend .botonTransition;
+  background: $boton_normal_background;
+  border: 2px solid black;
+  text-decoration: none;
+  color: $boton_normal_texto;
+  margin-top: 3px;
+  margin-bottom: 3px;
+
+
+
+  /*text-shadow: 1px 1px 1px #000;*/
+
+  outline: none;
+  cursor: pointer;
+  text-align: center;
+
+  font-family: 'FuturaStd', arial, serif;
+  font-weight: normal;
+  font-style: normal;
 }
 
 .botonNormal:hover {
-    color: #FFFFFF;
-    /* background-color: #FFFFFF;*/
+  background-color: $boton_normal_background_hover;
+  color: $boton_normal_texto_hover;
+  /* background-color: #FFFFFF;*/
 }
+
 .botonNormal:active {
-    /*DEBUGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG*/
-    background-color: #84212e;
-    /*---------------------------------------*/
+
+  background-color: $boton_normal_background_pressed;
+  color: $boton_normal_texto_pressed;
+  /*text-shadow: none;*/
 }
 
 .botonCerrar {
-    display:block;
-    position:absolute;
-    top:-10px;
-    right:-10px;
-    width:14px;
-    height:13px;
-    border:none;
-    background:url('../imagenes/X.png') no-repeat center center;
-    cursor: pointer;
+  display: block;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 14px;
+  height: 13px;
+  border: none;
+  background: url('../imagenes/X.png') no-repeat center center;
+  cursor: pointer;
 }
 
 .botonCerrar:hover {
-    background:url('../imagenes/X_hover.png') no-repeat center center;
+  background: url('../imagenes/X_hover.png') no-repeat center center;
 }
 
-
-
 .botonInvisible {
-    background-color: Transparent;
-    background-repeat: no-repeat;
-    border: none;
-    cursor: pointer;
-    overflow: hidden;
-    outline: none;
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
 
-    /*DEBUG:*/
-    outline: dashed 2px green;
+  /*DEBUG:*/
+  outline: dashed 2px green;
 }
 
 .botonImagen {
-    width: auto;
-    height: auto;
-    cursor: pointer;
-    background: Transparent no-repeat;
-    background-size: contain;
-    border: none;
-    outline: none;
+  width: auto;
+  height: auto;
+  cursor: pointer;
+  background: Transparent no-repeat;
+  background-size: contain;
+  border: none;
+  outline: none;
 }
 
 /*

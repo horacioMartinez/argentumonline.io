@@ -6,7 +6,13 @@ define(["text!../../../menus/skills.html!strip", 'ui/popups/popup'], function (D
 
     class popUpSkills extends PopUp {
         constructor(game) {
-            super(DOMdata);
+            var options = {
+                width:200,
+                height:500,
+                minWidth:150,
+                minHeight:250
+            };
+            super(DOMdata,options);
             this.game = game;
             this.initCallbacks();
             this.skills = null;

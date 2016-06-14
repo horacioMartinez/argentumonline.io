@@ -3,6 +3,7 @@
 @import "vendor/jquery-ui.structure";
 @import "vendor/jquery-ui.theme";
 
+@import "jqueryUIoverwrite";
 @import "variables";
 @import "fonts";
 @import "botones";
@@ -12,4 +13,5 @@
 @import "login";
 @import "crearPj";
 @import "interfaz";
+@import "itemgrid";
 @import "../menus/popUps";

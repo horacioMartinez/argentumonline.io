@@ -1,0 +1,53 @@
+.dialog_default {
+  background-size: cover;
+  background: rgba(0, 0, 0, 0.9) url("../imagenes/textures/leather.jpg") no-repeat;
+
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+  /*display:flex;flex-direction: column;*/
+  /*
+  .ui-dialog-content
+  {
+    position: relative;
+    border: 0;
+    padding: .5em 1em;
+    background: none;
+    overflow: auto;
+    zoom: 1;
+    background-color: #ffd;
+    border: solid 1px #ea7;
+  }
+*/
+  .ui-icon-closethick{
+    display:none;
+    border:none;
+    margin:0;
+    background-position: left top;
+  }
+
+  .ui-dialog-titlebar-close{
+    @extend .botonTransition;
+    background: url('../imagenes/X.png');
+    border: none;
+    width: 13px;
+    height: 13px;
+    padding: 0;
+  }
+
+  .ui-dialog-titlebar-close:hover{
+    background-image:url('../imagenes/X_hover.png');
+  }
+
+  .ui-dialog-titlebar
+  {
+    @extend .everywhereMediumFont, .secondaryColor;
+    background:none;
+
+  }
+/*
+  .ui-widget-content
+  {
+    border:none;
+  }*/
+
+  .ui-dialog-titlebar { color:#aaa; }
+}

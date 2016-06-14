@@ -6,32 +6,36 @@
 </head>
 
 <style>
-    body { background: green; }
+    body {
+        background: green;
+    }
 </style>
 
 <body>
 
-<article id="comerciar" class="popUp">
-    <div>
-        <span id="comerciarNombre" class="everywhereFont secondaryColor">NOMBRE</span>
-        <span id="comerciarNombreValor" class="everywhereMediumFont activeColor">Pollo</span>
-        <span id="comerciarPrecioValor" class="everywhereBoldFont activeColor">343</span>
-        <span id="comerciarPrecio" class="everywhereFont secondaryColor">PRECIO</span>
-    </div>
-    <div style="margin: 5px 0;">
-        <span id="comerciarMin" class="everywhereFont secondaryColor">MIN</span>
-        <span id="comerciarMinValor" class="everywhereBoldFont activeColor">1</span>
-        <span id="comerciarMaxValor" class="everywhereBoldFont activeColor">3</span>
-        <span id="comerciarMax" class="everywhereFont secondaryColor">MAX</span>
-    </div>
-    <div style="margin:10px auto; width:100%; display:flex; flex:1;">
-        <ul id="comerciarGridComprar" class="itemgrid"></ul>
-        <ul id="comerciarGridVender" class="itemgrid"></ul>
-    </div>
-    <div style="text-align: center;">
-        <button id="comerciarBotonComprar" class="botonNormal">COMPRAR</button>
-        <input id="comerciarInputCantidad" type="number" value="1">
-        <button id="comerciarBotonVender" class="botonNormal">VENDER</button>
+<article id="comerciar" title="COMERCIAR">
+    <div class="dialogContent">
+        <div>
+            <span id="comerciarNombre" class="everywhereFont secondaryColor">NOMBRE</span>
+            <span id="comerciarNombreValor" class="everywhereMediumFont activeColor">Pollo</span>
+            <span id="comerciarPrecioValor" class="everywhereBoldFont activeColor">343</span>
+            <span id="comerciarPrecio" class="everywhereFont secondaryColor">PRECIO</span>
+        </div>
+        <div style="margin: 5px 0;">
+            <span id="comerciarMin" class="everywhereFont secondaryColor">MIN</span>
+            <span id="comerciarMinValor" class="everywhereBoldFont activeColor">1</span>
+            <span id="comerciarMaxValor" class="everywhereBoldFont activeColor">3</span>
+            <span id="comerciarMax" class="everywhereFont secondaryColor">MAX</span>
+        </div>
+        <div style="margin:10px auto; width:100%; display:flex; flex:1;">
+            <ul id="comerciarGridComprar" class="itemgrid"></ul>
+            <ul id="comerciarGridVender" class="itemgrid"></ul>
+        </div>
+        <div style="text-align: center;">
+            <button id="comerciarBotonComprar" class="botonNormal">COMPRAR</button>
+            <input id="comerciarInputCantidad" type="number" value="1">
+            <button id="comerciarBotonVender" class="botonNormal">VENDER</button>
+        </div>
     </div>
 </article>
 

@@ -3,7 +3,7 @@
  */
 
 
-define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups/comerciar', 'ui/popups/ingamemensaje', 'ui/game/interfaz', 'ui/popups/tirar', 'ui/popups/boveda', 'ui/popups/guiamapa', 'ui/popups/configurarteclas', 'ui/popups/opciones'], function (Enums, KeyMouseListener, popUpSkills, Comerciar, InGameMensaje, Interfaz, Tirar, Boveda, GuiaMapa, ConfigurarTeclas, Opciones) {
+define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups/comerciar', 'ui/popups/ingamemensaje', 'ui/game/interfaz', 'ui/popups/tirar', 'ui/popups/boveda', 'ui/popups/guiamapa', 'ui/popups/tabs/configurarteclas', 'ui/popups/opciones','ui/popups/tabs/audiotab'], function (Enums, KeyMouseListener, popUpSkills, Comerciar, InGameMensaje, Interfaz, Tirar, Boveda, GuiaMapa, ConfigurarTeclas, Opciones, AudioTab) {
 
     //TODO: crear los popups en run time con jquery y borrarlos cuando se cierran ?
 
@@ -20,8 +20,10 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
             this.tirar = new Tirar(game, acciones);
             this.boveda = new Boveda(game, acciones);
             this.guiaMapa = new GuiaMapa();
-            this.configurarTeclas = new ConfigurarTeclas(storage, this.updateKeysCallback.bind(this), this.showMensaje.bind(this));
-            this.opciones = new Opciones(game, storage, this.configurarTeclas);
+            var configurarTeclasTab = new ConfigurarTeclas(storage, this.updateKeysCallback.bind(this), this.showMensaje.bind(this));
+            var audioTab = new AudioTab(game, storage);
+
+            this.opciones = new Opciones(audioTab,configurarTeclasTab);
             this.skills = new popUpSkills(game);
 
             this._currentPopUp = 0; // mal
