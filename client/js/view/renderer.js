@@ -233,6 +233,9 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
 
             setCharVisible(char, visible) {
                 char.sprite.setVisible(visible);
+                if (char.spriteNombre) {
+                    char.spriteNombre.setVisible(visible);
+                }
             }
 
             agregarCharacterHoveringInfo(char, valor, font, duracion) {

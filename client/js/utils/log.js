@@ -36,4 +36,4 @@ Logger.prototype.error = function (message, stacktrace) {
     }
 };
 
-log = new Logger("debug");
+var log = new Logger("debug");

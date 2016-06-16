@@ -8,11 +8,11 @@
     modules: [
         {
             name: "main",
-            exclude: ["lib/pixi", "lib/websock", "lib/howler", "lib/jquery", "lib/jquery-ui", "text", "json"]
+            exclude: ["lib/pixi", "lib/websock", "lib/howler", "lib/jquery", "lib/jquery-ui","lib/bootstrap", "text", "json"]
         },
         {
             name: "home",
-            exclude: ["main", "lib/lodash", "lib/stacktrace", "lib/class"]
+            exclude: ["main", "lib/lodash", "lib/stacktrace"]
         }
     ],
     optimize: "none",

@@ -9,89 +9,100 @@
 <article id="popUpOpciones">
     <div class="dialogContent">
         <div id="popUpOpcionesTabs">
-            <ul>
-                <li><a href="#popUpOpcionesTabsAudio">AUDIO</a></li>
-                <li><a href="#configurarTeclas">CONFIGURAR TECLAS</a></li>
-            </ul>
-            <div id="popUpOpcionesTabsAudio">
-                <div id="sliderMusica"></div>
-                <div id="sliderSonido"></div>
-                <input id="checkboxMusica" type="checkbox">
-                <input id="checkboxSonido" type="checkbox">
-            </div>
+            <div class="tabs-left">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#popUpOpcionesOpcionesGenerales">Home</a></li>
+                    <li><a data-toggle="tab" href="#popUpOpcionesTabsAudio">AUDIO</a></li>
+                    <li><a data-toggle="tab" href="#configurarTeclas">CONFIGURAR TECLAS</a></li>
+                </ul>
 
-            <div id="configurarTeclas">
-                <table id="configurarTeclasContenedor">
-                    <tr>
-                        <td class="everywhereFont secondaryColor">ATACAR</td>
-                        <td><input class="activeColor" id="configurarTecla_atacar"></td>
-                    </tr>
-                    <tr>
-                        <td class="everywhereFont secondaryColor">AGARRAR</td>
-                        <td><input class="activeColor" id="configurarTecla_agarrar"></td>
-                    </tr>
-                    <tr>
-                        <td class="everywhereFont secondaryColor">EQUIPAR</td>
-                        <td><input class="activeColor" id="configurarTecla_equipar"></td>
-                    </tr>
-                    <tr>
-                        <td class="everywhereFont secondaryColor">TIRAR</td>
-                        <td><input class="activeColor" id="configurarTecla_tirar"></td>
-                    </tr>
-                    <tr>
-                        <td class="everywhereFont secondaryColor">USAR</td>
-                        <td><input class="activeColor" id="configurarTecla_usar"></td>
-                    </tr>
-                    <tr>
-                        <td class="everywhereFont secondaryColor">OCULTARSE</td>
-                        <td><input class="activeColor" id="configurarTecla_ocultarse"></td>
-                    </tr>
-                    <tr>
-                        <td class="everywhereFont secondaryColor">CAMINAR NORTE</td>
-                        <td><input class="activeColor" id="configurarTecla_caminarNorte"></td>
-                    </tr>
-                    <tr>
-                        <td class="everywhereFont secondaryColor">CAMINAR SUR</td>
-                        <td><input class="activeColor" id="configurarTecla_caminarSur"></td>
-                    </tr>
-                    <tr>
-                        <td class="everywhereFont secondaryColor">CAMINAR OESTE</td>
-                        <td><input class="activeColor" id="configurarTecla_caminarOeste"></td>
-                    </tr>
-                    <tr>
-                        <td class="everywhereFont secondaryColor">CAMINAR ESTE</td>
-                        <td><input class="activeColor" id="configurarTecla_caminarEste"></td>
-                    </tr>
+                <div class="tab-content">
 
-                    <tr>
-                        <td class="everywhereFont secondaryColor">CHAT</td>
-                        <td><input class="activeColor" id="configurarTecla_toggleChat"></td>
-                    </tr>
-                    <tr>
-                        <td class="everywhereFont secondaryColor">DESLAGEAR</td>
-                        <td><input class="activeColor" id="configurarTecla_deslagear"></td>
-                    </tr>
-                    <tr>
-                        <td class="everywhereFont secondaryColor">CERRAR MENUS</td>
-                        <td><input class="activeColor" id="configurarTecla_cerrar"></td>
-                    </tr>
+                    <div id="popUpOpcionesOpcionesGenerales" class="tab-pane active">
+                        Completar con opciones generales
+                    </div>
+
+                    <div id="popUpOpcionesTabsAudio" class="tab-pane">
+                        <div id="sliderMusica"></div>
+                        <div id="sliderSonido"></div>
+                        <input id="checkboxMusica" type="checkbox">
+                        <input id="checkboxSonido" type="checkbox">
+                    </div>
+
+                    <div id="configurarTeclas" class="tab-pane">
+                        <table id="configurarTeclasContenedor">
+                            <tr>
+                                <td class="everywhereFont secondaryColor">ATACAR</td>
+                                <td><input class="activeColor" id="configurarTecla_atacar"></td>
+                            </tr>
+                            <tr>
+                                <td class="everywhereFont secondaryColor">AGARRAR</td>
+                                <td><input class="activeColor" id="configurarTecla_agarrar"></td>
+                            </tr>
+                            <tr>
+                                <td class="everywhereFont secondaryColor">EQUIPAR</td>
+                                <td><input class="activeColor" id="configurarTecla_equipar"></td>
+                            </tr>
+                            <tr>
+                                <td class="everywhereFont secondaryColor">TIRAR</td>
+                                <td><input class="activeColor" id="configurarTecla_tirar"></td>
+                            </tr>
+                            <tr>
+                                <td class="everywhereFont secondaryColor">USAR</td>
+                                <td><input class="activeColor" id="configurarTecla_usar"></td>
+                            </tr>
+                            <tr>
+                                <td class="everywhereFont secondaryColor">OCULTARSE</td>
+                                <td><input class="activeColor" id="configurarTecla_ocultarse"></td>
+                            </tr>
+                            <tr>
+                                <td class="everywhereFont secondaryColor">CAMINAR NORTE</td>
+                                <td><input class="activeColor" id="configurarTecla_caminarNorte"></td>
+                            </tr>
+                            <tr>
+                                <td class="everywhereFont secondaryColor">CAMINAR SUR</td>
+                                <td><input class="activeColor" id="configurarTecla_caminarSur"></td>
+                            </tr>
+                            <tr>
+                                <td class="everywhereFont secondaryColor">CAMINAR OESTE</td>
+                                <td><input class="activeColor" id="configurarTecla_caminarOeste"></td>
+                            </tr>
+                            <tr>
+                                <td class="everywhereFont secondaryColor">CAMINAR ESTE</td>
+                                <td><input class="activeColor" id="configurarTecla_caminarEste"></td>
+                            </tr>
+
+                            <tr>
+                                <td class="everywhereFont secondaryColor">CHAT</td>
+                                <td><input class="activeColor" id="configurarTecla_toggleChat"></td>
+                            </tr>
+                            <tr>
+                                <td class="everywhereFont secondaryColor">DESLAGEAR</td>
+                                <td><input class="activeColor" id="configurarTecla_deslagear"></td>
+                            </tr>
+                            <tr>
+                                <td class="everywhereFont secondaryColor">CERRAR MENUS</td>
+                                <td><input class="activeColor" id="configurarTecla_cerrar"></td>
+                            </tr>
 
 
-                    <!-- Ejemplo de llenado
-                    <tr>
-                        <td class="everywhereFont secondaryColor">LANZAR SUPER HECHIZOS</td>
-                        <td class="everywhereBoldFont activeColor">28</td>
-                        <td><button class="botonMenosSkill"></button></td>
-                        <td><button class="botonMasSkill"></button></td>
-                    </tr>
-                    -->
-                </table>
-                <div style="text-align: center;margin: 20px auto;">
-                    <button id="configurarTeclasRestaurarDefault" class="botonNormal">RESTAURAR DEFAULT</button>
-                </div>
-                <div>
-                    <button id="configurarTeclasCancelar" class="botonNormal">CANCELAR</button>
-                    <button id="configurarTeclasGuardarYSalir" class="botonNormal">GUARDAR Y SALIR</button>
+                            <!-- Ejemplo de llenado
+                            <tr>
+                                <td class="everywhereFont secondaryColor">LANZAR SUPER HECHIZOS</td>
+                                <td class="everywhereBoldFont activeColor">28</td>
+                                <td><button class="botonMenosSkill"></button></td>
+                                <td><button class="botonMasSkill"></button></td>
+                            </tr>
+                            -->
+                        </table>
+                        <div style="text-align: center;margin: 20px auto;">
+                            <button id="configurarTeclasRestaurarDefault" class="botonNormal">RESTAURAR DEFAULT</button>
+                        </div>
+                        <div>
+                            <button id="configurarTeclasCancelar" class="botonNormal">CANCELAR</button>
+                            <button id="configurarTeclasGuardarYSalir" class="botonNormal">GUARDAR Y SALIR</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

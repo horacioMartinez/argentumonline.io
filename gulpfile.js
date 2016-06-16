@@ -9,7 +9,7 @@ gulp.task('autoprefixer', function() {
     return gulp.src('dakara-client-build/**/*.css')
         .pipe(sourcemaps.init())
         .pipe(postcss([autoprefixer({
-            browsers: ['last 2 versions']
+            browsers: ['last 5 versions']
         })]))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('dakara-client-build'));

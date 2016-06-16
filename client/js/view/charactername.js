@@ -12,6 +12,7 @@ define(['enums', 'lib/pixi'], function (Enums, PIXI) {
             super(nombre, font);
 
             this._estilo = font;
+            log.error(font);
             this._escala = escala;
             this.anchor.set(0.5, 0);
             this.setEscala(escala);
@@ -27,6 +28,10 @@ define(['enums', 'lib/pixi'], function (Enums, PIXI) {
             var font = {font: "900 " + Math.round(12*this._escala) +"px Arial"}; // TODO: mas lindo esto
             $.extend(this._estilo, this._estilo, font);
             this.style = this._estilo;
+        }
+
+        setVisible(visible){
+            this.visible  = visible;
         }
 
     }

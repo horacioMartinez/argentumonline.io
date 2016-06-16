@@ -42,7 +42,6 @@ define(['jquery-ui'], function () {
         }
 
         hide() { // OJO, en algunos se cierra con el comando que viene del server (y se puede cerrar 2 veces)
-            log.error("popUP HIDE");
             if (this._firstTimeClosed) { // primera vez en cerrarse es al crearse
                 this._firstTimeClosed = false;
                 return;
@@ -51,7 +50,7 @@ define(['jquery-ui'], function () {
             this.visible = false;
         }
 
-        clearDom() {
+        clearDom() { // todo: ver esto
             return;
             this.$this.find('span').text('');
             this.$this.find('input').val('');
