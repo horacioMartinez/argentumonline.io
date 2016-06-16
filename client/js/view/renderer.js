@@ -142,11 +142,10 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
                     headOffX = this.cuerpos[Body].offHeadX;
                     headOffY = this.cuerpos[Body].offHeadY;
                 }
-                var color = NickColor ? Font.NickColor[Font.NickColorIndex[NickColor]] : Font.NickColor.CIUDADANO;
-                var font = Font.NOMBRE;
-                font.fill = color;
 
-                var sprite = new CharacterSprites(Heading, bodys, heads, headOffX, headOffY, weapons, shields, helmets, Name, clan, font);
+                this.cambiarNombreCharacter(char,Name,clan,NickColor);
+
+                var sprite = new CharacterSprites(Heading, bodys, heads, headOffX, headOffY, weapons, shields, helmets);
                 sprite.setSombraSprite(this.assetManager.getGrh(24208));
 
                 this.layer3.addChild(sprite);
@@ -156,11 +155,6 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
 
                 sprite.zOffset = -30; // para que quede debajo de los objetos del mapa en el mismo y
                 char.sprite = sprite;
-
-                if (Name.trim()) {
-                    char.spriteNombre = new CharacterName(Name, clan, font, this.escala);
-                    this.gameNames.addChild(char.spriteNombre); // todo: container entre layers 2 y 3
-                }
 
                 char.texto = new CharacterText(this.escala);
                 this.gameChat.addChild(char.texto);
@@ -181,6 +175,7 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
             }
 
             cambiarCharacter(char, Body, Head, Heading, Weapon, Shield, Helmet, FX, FXLoops) {
+                // TODO: cambiar heading, FX y FXLOOPS
                 var bodys = this._getHeadingsGrhs(this.cuerpos, Body);
                 var heads = this._getHeadingsGrhs(this.cabezas, Head);
                 var weapons = this._getHeadingsGrhs(this.armas, Weapon);
@@ -204,6 +199,7 @@ define(['enums', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'vi
             cambiarNombreCharacter(char, nombre, clan, color) {
                 if (char.spriteNombre) {
                     this.gameNames.removeChild(char.spriteNombre);
+                    char.spriteNombre = null;
                 }
                 if (!nombre.trim()) {
                     return;
