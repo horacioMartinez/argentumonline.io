@@ -1,26 +1,19 @@
-var isInt = function (n) {
-    return (n % 1) === 0;
-};
+define(function () {
+    return {
+        isInt: function (n) {
+            return (n % 1) === 0;
+        },
 
-var TRANSITIONEND = 'transitionend webkitTransitionEnd oTransitionEnd';
+        // modulo que funciona tambien para los numeros negativos
+        modulo: function (num, max) {
+            return ((num % max) + max) % max;
+        },
 
-// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-window.requestAnimFrame = (function () {
-    return window.requestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame ||
-        window.oRequestAnimationFrame ||
-        window.msRequestAnimationFrame ||
-        function (/* function */ callback, /* DOMElement */ element) {
-            window.setTimeout(callback, 1000 / 60);
-        };
-})();
-
-// modulo que funciona tambien para los numeros negativos
-var modulo = function (num, max) {
-    return ((num % max) + max) % max;
-};
-
+        splitNullArray: function (array) {
+            return array.split("\u0000");
+        }
+    }
+});
 /*
  // busqueda binaria que devuelve {found,index} donde index es el index donde esta o si no lo encontro donde estaria
  // despues se lo puede insertar con list.splice(resultadoBusqueda.index, 0, item);

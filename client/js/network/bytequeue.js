@@ -107,12 +107,11 @@ define(function () {
 
         ReadBoolean() {
             var value = this.ReadByte();
-            if (value)
-                return true;
-            else
-                return false;
+            return !!value;
         }
 
+        // NOTA: cuando mandan muchos strings distintos vienen separados por 0, entonces separorlos con
+        // splitNullArray de utils
         ReadUnicodeString() {
             var isoArray = this.ws.rQshiftBytes(this.ws.rQshift16());
             return String.fromCharCode.apply(null, isoArray);

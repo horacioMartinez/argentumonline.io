@@ -1,4 +1,4 @@
-define(['enums', 'font', 'network/protocol', 'network/bytequeue', 'lib/websock'], function (Enums, Font, Protocolo, ByteQueue, __websock) {
+define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue', 'lib/websock'], function (Utils, Enums, Font, Protocolo, ByteQueue, __websock) {
 
     class GameClient {
         constructor(game, uiManager, gameUI, host, port) {
@@ -294,6 +294,8 @@ define(['enums', 'font', 'network/protocol', 'network/bytequeue', 'lib/websock']
 
         handleGuildList(Data) {
             console.log("TODO: handleGuildList ");
+            var nombres = Utils.splitNullArray(Data);
+            this.game.gameUI.clanes.setNombresClanes(nombres);
         }
 
         handleAreaChanged(X, Y) {
@@ -386,6 +388,8 @@ define(['enums', 'font', 'network/protocol', 'network/bytequeue', 'lib/websock']
              ObjCarpinteroIndex: ObjCarpinteroIndex,
              ObjUpgrade: ObjUpgrade,
              */
+            this.game.gameUI.carpinteria.setItems(Items);
+            this.game.gameUI.showCarpinteria();
             console.log("TODO: handleCarpenterObjects ");
         }
 
@@ -495,15 +499,26 @@ define(['enums', 'font', 'network/protocol', 'network/bytequeue', 'lib/websock']
         }
 
         handleGuildLeaderInfo(GuildList, MemberList, GuildNews, JoinRequests) {
+            //TODO: usar GuildNews
+
+            this.handleGuildMemberInfo(GuildList, MemberList);
+            log.error(aspirantes);
+            var aspirantes = Utils.splitNullArray(JoinRequests);
+            if (aspirantes[0]) {
+                this.game.gameUI.clanes.setNombresSolicitantes(aspirantes);
+            }
             console.log("TODO: handleGuildLeaderInfo ");
         }
 
         handleGuildMemberInfo(GuildList, MemberList) {
+            this.handleGuildList(GuildList);
+            var nombresMiembros = Utils.splitNullArray(MemberList);
+            this.game.gameUI.clanes.setNombresMiembros(nombresMiembros);
             console.log("TODO: handleGuildMemberInfo ");
         }
 
         handleGuildDetails(GuildName, Founder, FoundationDate, Leader, URL, MemberCount, ElectionsOpen, Aligment, EnemiesCount, AlliesCount, AntifactionPoints, Codex, GuildDesc) {
-            console.log("TODO: handleGuildDetails ");
+            this.game.gameUI.detallesClan.setClanInfo(GuildName, Founder, FoundationDate, Leader, URL, MemberCount, ElectionsOpen, Aligment, EnemiesCount, AlliesCount, AntifactionPoints, Codex, GuildDesc);
         }
 
         handleShowGuildFundationForm() {

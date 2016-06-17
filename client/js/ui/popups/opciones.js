@@ -2,24 +2,24 @@
  * Created by horacio on 5/2/16.
  */
 
-define(["text!../../../menus/opciones.html!strip", 'ui/popups/popup'], function (DOMdata, PopUp) {
-
+define(["text!../../../menus/opciones.html!strip", 'ui/popups/popup', 'ui/popups/tabs/configurarteclas', 'ui/popups/tabs/audiotab'], function (DOMdata, PopUp, ConfigurarTeclasTab, AudioTab) {
+    
     class Opciones extends PopUp {
-        constructor(audioTab, configurarTeclasTab) {
+        constructor(game, storage, updateKeysCallback, showMensajeCallback) {
             var options = {
-                width:500,
-                height:600,
-                minWidth:250,
-                minHeight:400
+                width: 500,
+                height: 600,
+                minWidth: 250,
+                minHeight: 400
             };
-            super(DOMdata,options);
-            this.audioTab = audioTab;
-            this.configurarTeclasTab = configurarTeclasTab;
+            super(DOMdata, options);
+            this.configurarTeclasTab = new ConfigurarTeclasTab(storage, updateKeysCallback, showMensajeCallback);
+            this.audioTab = new AudioTab(game, storage);
             this.initCallbacks();
-            audioTab.initCallbacks();
-            configurarTeclasTab.initCallbacks();
+            this.audioTab.initCallbacks();
+            this.configurarTeclasTab.initCallbacks();
             var self = this;
-            configurarTeclasTab.setCerrarCallback(function(){
+            this.configurarTeclasTab.setCerrarCallback(function () {
                 self.hide();
             });
         }

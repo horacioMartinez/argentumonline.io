@@ -27,6 +27,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 this.logeado = false; // NOTA: se pone logeado cuando llega el mensaje de logged, este es el ultimo de los mensajes al conectarse, asi que antes llega los mensajes de hechizos inventarios, etc. Deberia primero llegar esto y listo.. tambien deberia llegar el chardinex de tu pj al principio con este mensaje
                 this.inventario = new Inventario();
                 this.inventarioShop = new Inventario();
+                this.bankShop = new Inventario();
                 this.skills = new Skills();
                 this.hechizos = [];
 
@@ -548,8 +549,8 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
             }
 
             cambiarSlotRetirar(numSlot, ObjIndex, ObjName, Amount, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) {
-                this.inventarioShop.cambiarSlot(numSlot, ObjName, Amount, ObjSalePrice, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef);
-                this.gameUI.updateSlotShop(numSlot, this.inventarioShop.getSlot(numSlot));
+                this.bankShop.cambiarSlot(numSlot, ObjName, Amount, ObjSalePrice, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef);
+                this.gameUI.updateSlotBank(numSlot, this.bankShop.getSlot(numSlot));
             }
 
             togglePausa() {

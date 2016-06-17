@@ -66,6 +66,10 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
             $("#botonOpciones").click(function () {
                 self.game.gameUI.showOpciones();
             });
+            
+            $("#botonClanes").click(function(){
+                self.game.gameUI.showClanes();
+            });
 
             //FIX bug firefox que no previene movimiento scroll hehcizos
             if (Detect.isFirefox()) {

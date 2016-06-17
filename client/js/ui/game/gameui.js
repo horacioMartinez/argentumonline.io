@@ -2,8 +2,7 @@
  * Created by horacio on 2/21/16.
  */
 
-
-define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups/comerciar', 'ui/popups/ingamemensaje', 'ui/game/interfaz', 'ui/popups/tirar', 'ui/popups/boveda', 'ui/popups/guiamapa', 'ui/popups/tabs/configurarteclas', 'ui/popups/opciones','ui/popups/tabs/audiotab'], function (Enums, KeyMouseListener, popUpSkills, Comerciar, InGameMensaje, Interfaz, Tirar, Boveda, GuiaMapa, ConfigurarTeclas, Opciones, AudioTab) {
+define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups/comerciar', 'ui/popups/ingamemensaje', 'ui/game/interfaz', 'ui/popups/tirar', 'ui/popups/boveda', 'ui/popups/guiamapa', 'ui/popups/opciones', 'ui/popups/clanes', 'ui/popups/detallesclan', 'ui/popups/carpinteria'], function (Enums, KeyMouseListener, popUpSkills, Comerciar, InGameMensaje, Interfaz, Tirar, Boveda, GuiaMapa, Opciones, Clanes, DetallesClan, Carpinteria) {
 
     //TODO: crear los popups en run time con jquery y borrarlos cuando se cierran ?
 
@@ -20,13 +19,13 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
             this.tirar = new Tirar(game, acciones);
             this.boveda = new Boveda(game, acciones);
             this.guiaMapa = new GuiaMapa();
-            var configurarTeclasTab = new ConfigurarTeclas(storage, this.updateKeysCallback.bind(this), this.showMensaje.bind(this));
-            var audioTab = new AudioTab(game, storage);
 
-            this.opciones = new Opciones(audioTab,configurarTeclasTab);
+            this.opciones = new Opciones(game, storage, this.updateKeysCallback.bind(this), this.showMensaje.bind(this));
             this.skills = new popUpSkills(game);
+            this.detallesClan = new DetallesClan(game);
+            this.clanes = new Clanes(game, this.detallesClan, this.showMensaje.bind(this));
+            this.carpinteria = new Carpinteria(game);
 
-            this._currentPopUp = 0; // mal
             this.interfaz = new Interfaz(game, gameManager.macros, acciones);
             this.keyMouseListener = new KeyMouseListener(game, acciones, storage.getKeys());
             this.initDOM();
@@ -94,6 +93,14 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
             this.guiaMapa.show();
         }
 
+        showCarpinteria(){
+            this.carpinteria.show();
+        }
+
+        showClanes() {
+            this.clanes.show();
+        }
+
         updateSlotUser(numSlot, slot) { //todo: feo todo esto!
             if (slot) {
                 var numGrafico = this.game.assetManager.getNumGraficoFromGrh(slot.grh);
@@ -116,10 +123,18 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
             if (slot) {
                 var numGrafico = this.game.assetManager.getNumGraficoFromGrh(slot.grh);
                 this.comerciar.cambiarSlotCompra(numSlot, slot.cantidad, numGrafico);
-                this.boveda.cambiarSlotRetirar(numSlot, slot.cantidad, numGrafico);
             }
             else {
                 this.comerciar.borrarSlotCompra(numSlot);
+            }
+        }
+
+        updateSlotBank(numSlot, slot) {
+            if (slot) {
+                var numGrafico = this.game.assetManager.getNumGraficoFromGrh(slot.grh);
+                this.boveda.cambiarSlotRetirar(numSlot, slot.cantidad, numGrafico);
+            }
+            else {
                 this.boveda.borrarSlotRetirar(numSlot);
             }
         }

@@ -19,7 +19,7 @@ require.config({
     }
 });
 
-define(['lib/lodash', 'lib/stacktrace', 'utils/util'], function () {
+define(['lib/lodash', 'lib/stacktrace'], function () {
     require(['bootstrap']);
     require(["main"]);
 });
