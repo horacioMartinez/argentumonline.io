@@ -52,11 +52,11 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
             });
 
             $("#botonMacroHechizos").click(function () {
-                self.macros.comenzarLanzarHechizo();
+                self.macros.toggleHechizos();
             });
 
             $("#botonMacroTrabajo").click(function () {
-                self.macros.comenzarTrabajar();
+                self.macros.toggleTrabajar();
             });
 
             $("#botonMapa").click(function () {
@@ -96,7 +96,7 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
         }
 
         getSelectedSlotHechizo() {
-            res = $('#hechizos').val();
+            var res = $('#hechizos').val();
             if (res) {
                 return res;
             }

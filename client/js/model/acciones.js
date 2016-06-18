@@ -9,6 +9,8 @@ define(['enums'], function (Enums) {
             this.game = game;
             this.intervalos = intervalos;
             this.MAX_CANTIDAD_ITEM = 10000;
+            this.caminarCallback = null;
+            this.desactivarMacrosCallback = null;
         }
 
         agarrar() {
@@ -84,8 +86,10 @@ define(['enums'], function (Enums) {
         }
 
         caminar(direccion) {
-            if (this.game.logeado)
+            if (this.game.logeado) {
                 this.game.player.comenzarCaminar(direccion);
+                this.desactivarMacros();
+            }
         }
 
         terminarDeCaminar(direccion) {
@@ -93,23 +97,28 @@ define(['enums'], function (Enums) {
                 this.game.player.terminarDeCaminar(direccion);
         }
 
-        click() {
+        click(incomingFromMacro) {
             var gridPos = this.game.getMouseGridPosition();
             if (this.game.logeado) {
+                if (!incomingFromMacro)
+                    this.desactivarMacros();
                 if (this.game.trabajoPendiente) {
-                    this.game.gameUI.interfaz.setMouseCrosshair(false);
-                    this.game.client.sendWorkLeftClick(gridPos.x, gridPos.y, this.game.trabajoPendiente);
-                    this.game.trabajoPendiente = null;
-                }
-                else
+                    this.game.realizarTrabajoPendiente();
+                } else {
                     this.game.client.sendLeftClick(gridPos.x, gridPos.y);
+                }
             }
         }
 
         doubleClick() {
             var gridPos = this.game.getMouseGridPosition();
             if (this.game.logeado) {
-                this.game.client.sendDoubleClick(gridPos.x, gridPos.y);
+                this.desactivarMacros();
+                if (this.game.trabajoPendiente) {
+                    this.game.realizarTrabajoPendiente();
+                } else {
+                    this.game.client.sendDoubleClick(gridPos.x, gridPos.y);
+                }
             }
         }
 
@@ -200,11 +209,21 @@ define(['enums'], function (Enums) {
                 cantidad = this.game.atributos.oro;
             if (cantidad > this.MAX_CANTIDAD_ITEM)
                 cantidad = this.MAX_CANTIDAD_ITEM;
-            this.game.client.sendDrop(31, cantidad); // por alguna razon 31 es el "slot" del oro
+            this.game.client.sendDrop(31, cantidad); // por alguna razon 31 es el slot del oro
         }
 
         tirarTodoOro() {
             this.tirarOro(this.MAX_CANTIDAD_ITEM);
+        }
+
+        desactivarMacros() { // TODO, sacar esto y lo de abajo, usar event emiiter o algo mas lindo
+            //usado por macro
+            if (this.desactivarMacrosCallback)
+                this.desactivarMacrosCallback();
+        }
+
+        setDesactivarMacrosCallback(cb){
+            this.desactivarMacrosCallback = cb;
         }
 
     }

@@ -101,7 +101,10 @@ define(['ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mensaje'], fu
             document.addEventListener("touchstart", function () {
             }, false);
 
-            $(window).on('resize', self.resizeUi.bind(self));
+            var resizeCallback = this.resizeUi.bind(this);
+            $(window).resize(_.throttle(function (event) {
+                resizeCallback();
+            }, 100));
             // $(window).on('resize', _.debounce(function () {// <--- todo
             //               self.resizeUi.bind(self)
             //           }, 500));

@@ -542,6 +542,13 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 this.trabajoPendiente = skill;
             }
 
+            realizarTrabajoPendiente(){
+                var gridPos = this.getMouseGridPosition();
+                this.gameUI.interfaz.setMouseCrosshair(false);
+                this.client.sendWorkLeftClick(gridPos.x, gridPos.y, this.trabajoPendiente);
+                this.trabajoPendiente = null;
+            }
+
             cambiarSlotCompra(numSlot, ObjName, Amount, Price, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef) {
                 this.inventarioShop.cambiarSlot(numSlot, ObjName, Amount, Price, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef);
                 this.gameUI.updateSlotShop(numSlot, this.inventarioShop.getSlot(numSlot));

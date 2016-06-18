@@ -166,10 +166,12 @@ define({
         TE_HA_MATADO: " te ha matado!",
         HOGAR: "Has llegado a tu hogar. El viaje ha finalizado.",
         HOGAR_CANCEL: "Tu viaje ha sido cancelado.",
-        MACRO_TRABAJO_ACTIVADO: "Macro Trabajo ACTIVADO",
+        MACRO_TRABAJO_ACTIVADO: "Macro Trabajo ACTIVADO haz click sobre el objetivo",
         MACRO_TRABAJO_DESACTIVADO: "Macro Trabajo DESACTIVADO",
-        MACRO_HECHIZOS_ACTIVADO: "Auto lanzar hechizos activado",
+        MACRO_TABAJO_REQUIERE_EQUIPAR: "Necesitas seleccionar alguna herramienta para trabajar!",
+        MACRO_HECHIZOS_ACTIVADO: "Auto lanzar hechizos activado haz click sobre el objetivo",
         MACRO_HECHIZOS_DESACTIVADO: "Auto lanzar hechizos desactivado",
+        MACRO_HECHIZOS_REQUIRE_SELECCIONAR: "Necesitas seleccionar que hechizo lanzar",
     },
 
     Intervalo: {

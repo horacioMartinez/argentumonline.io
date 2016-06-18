@@ -11,6 +11,7 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
             this.setKeys(keys);
 
             this._prevKeyDown = [];
+            this.$gameCanvas = $('#gamecanvas');
         }
 
         setKeys(keys) {
@@ -28,9 +29,9 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
             $('#chatinput').blur();
         }
 
-        inGameMouseCoordinates(game, event) {
+        updateGameMouseCoordinates(game, event,$gameCanvas) {
 
-            var gamePos = $('#gamecanvas').offset(),
+            var gamePos = $gameCanvas.offset(),
                 width = game.renderer.pixiRenderer.width,
                 height = game.renderer.pixiRenderer.height,
                 mouse = game.mouse;
@@ -164,20 +165,24 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
 
             var self = this;
 
-            $('#gamecanvas').click(function (event) {
+            self.$gameCanvas.click(function (event) {
                 // TODO: si haces click afuera del menu pop up que lo cierre?
 
-                if (self.inGameMouseCoordinates(self.game, event)) {
+                if (self.updateGameMouseCoordinates(self.game, event, self.$gameCanvas)) {
                     self.inputHandler.click();
                 }
             });
 
-            $('#gamecanvas').dblclick(function (event) {
+            self.$gameCanvas.dblclick(function (event) {
                 // TODO: si haces click afuera del menu pop up que lo cierre?
-                if (self.inGameMouseCoordinates(self.game, event)) {
+                if (self.updateGameMouseCoordinates(self.game, event, self.$gameCanvas)) {
                     self.inputHandler.doubleClick();
                 }
             });
+
+            self.$gameCanvas.mousemove(_.debounce(function (event) {
+                self.updateGameMouseCoordinates(self.game, event, self.$gameCanvas);
+            }, 50));
 
             /*
              // DEBUG:
