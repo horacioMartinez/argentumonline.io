@@ -44,7 +44,7 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
             this.animarMovimiento();
 
             var self = this;
-            var tick = Math.round(32 / Math.round((this.moveSpeed / (1000 / 60))));
+            var tick = 32 / (this.moveSpeed / (1000 / 60));
 
             if (self.getDirMov() === Enums.Heading.oeste) {
 

@@ -184,9 +184,9 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
                 self.updateGameMouseCoordinates(self.game, event, self.$gameCanvas);
             }, 50));
 
-            /*
-             // DEBUG:
 
+             // DEBUG:
+/*
              $(window).bind('mousewheel DOMMouseScroll', function (event) {
              var escala;
              if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
@@ -201,8 +201,8 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
              self.game.renderer.stage.scale.y *= escala;
              self.game.renderer.stage.x = ((self.game.renderer.stage.width * (1 - self.game.renderer.stage.scale.x)) / 2);
              self.game.renderer.stage.y = ((self.game.renderer.stage.height * (1 - self.game.renderer.stage.scale.y)) / 2);
-             });
-             */
+             });*/
+
         }
 
         _downKey(key) {

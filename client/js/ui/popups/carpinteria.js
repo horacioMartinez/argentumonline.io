@@ -31,6 +31,7 @@ define(["text!../../../menus/carpinteria.html!strip", 'ui/popups/popup'], functi
         setItems(items){
             //TODO objUpgrade
 
+            var self = this;
             for (var item of items){
                 var $row = $('<tr></tr>');
 
@@ -51,11 +52,13 @@ define(["text!../../../menus/carpinteria.html!strip", 'ui/popups/popup'], functi
 
                 var $cellConstruir = $('<td></td>');
                 var $botonConstruir = $('<button class="botonNormal" >CONSTRUIR</button>');
-                $botonConstruir.click(function(){
-                    /* packet id 132
-                    packet id 32
-                     */
 
+                $botonConstruir.data("itemIndex", item.ObjCarpinteroIndex);
+                $botonConstruir.click(function(){
+                    var cantidadAConstruir = $('#carpinteriaCantidadAConstruir').val();
+                    self.game.client.sendInitCrafting(cantidadAConstruir,cantidadAConstruir);//horrible esto, que se haga de 1 (cambiar sv)
+                    var itemIndex = $(this).data("itemIndex");
+                    self.game.client.sendCraftCarpenter(itemIndex);
                 });
                 $cellConstruir.append($botonConstruir);
                 $row.append($cellConstruir);

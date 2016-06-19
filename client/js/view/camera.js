@@ -9,10 +9,11 @@ define(['enums'], function (Enums) {
             this.centerPosY = 0;
             this.gridX = 0;
             this.gridY = 0;
-            this.offset = 0.5;
 
             this.gridW = 17;
             this.gridH = 13;
+            
+
         }
 
         setPosition(x, y) {

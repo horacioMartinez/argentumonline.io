@@ -25,8 +25,6 @@ define(function () {
                 var diff = this.endValue - this.startValue;
                 var i = this.startValue + ((diff / this.duration) * this.elapsed);
 
-                i = Math.round(i);
-
                 if (this.elapsed >= this.duration || ( (diff > 0) && (i >= this.endValue) ) || ( (diff < 0 ) && (i <= this.endValue))) {
                     this.stop();
                     if (this.stopFunction) {

@@ -287,7 +287,7 @@ define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/character
                 this._drawTerrenoIni();
             }
 
-            resetCameraPosition(gridX, gridY) { // hecha por mi
+            resetCameraPosition(gridX, gridY) {
                 this.camera.lookAtGridPos(gridX, gridY);
             }
 
@@ -488,9 +488,6 @@ define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/character
 
             resetPos(gridX, gridY) {
                 this.drawMapaIni(gridX, gridY);
-                //this.resetCameraPosition(gridX, gridY);
-                //this._syncGamePosition();
-                //this._drawTerrenoIni();
             }
 
             toggleLluvia() {
