@@ -38,6 +38,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
 
                 this.lloviendo = false;
                 this.bajoTecho = false;
+                this.ignorarProximoSonidoPaso = false;
             }
 
             setup(client, gameUI, renderer) {
@@ -283,6 +284,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                                         break;
                                 }
                                 this.player.forceCaminar(dir);
+                                this.ignorarProximoSonidoPaso = true; // que no haga sonido este paso forzado
                             }
                             // -- fin --
 
@@ -391,7 +393,11 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                             self.client.sendWalk(direccion);
                         self.actualizarMovPos(self.player, direccion);
                         self.actualizarBajoTecho();
-                        self.playSonidoPaso(self.player);
+                        if (self.ignorarProximoSonidoPaso) {
+                            self.ignorarProximoSonidoPaso = false;
+                        } else {
+                            self.playSonidoPaso(self.player);
+                        }
                         self.actualizarIndicadorPosMapa();
                     }
                 });
@@ -542,7 +548,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 this.trabajoPendiente = skill;
             }
 
-            realizarTrabajoPendiente(){
+            realizarTrabajoPendiente() {
                 var gridPos = this.getMouseGridPosition();
                 this.gameUI.interfaz.setMouseCrosshair(false);
                 this.client.sendWorkLeftClick(gridPos.x, gridPos.y, this.trabajoPendiente);

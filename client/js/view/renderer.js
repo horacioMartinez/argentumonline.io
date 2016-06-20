@@ -1,5 +1,5 @@
 define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'view/charactername', 'view/consola', 'view/charactertext', 'view/spritegrh', 'view/containerordenado'],
-    function (Enums, Util, Font, PIXI, Camera, CharacterSprites, CharacterName, Consola, CharacterText, SpriteGrh, ContainerOrdenado) {
+    function (Enums, Utils, Font, PIXI, Camera, CharacterSprites, CharacterName, Consola, CharacterText, SpriteGrh, ContainerOrdenado) {
 
         class Renderer {
             constructor(assetManager, escala) {
@@ -336,48 +336,48 @@ define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/character
 
                 switch (dir) {
                     case Enums.Heading.norte:
-                        var j = Util.modulo(this._lowestRowTerreno - 1, rows);
+                        var j = Utils.modulo(this._lowestRowTerreno - 1, rows);
                         for (var i = 0; i < this.terreno.length; i++) {
                             this.terreno[i][j].setPosition(this.terreno[i][j].x, this.terreno[i][j].y - (rows * this.tilesize));
-                            var grh = this.mapa.getGrh1(gridXIni + Util.modulo(i - this._lowestColTerreno, cols), gridYIni - 1);
+                            var grh = this.mapa.getGrh1(gridXIni + Utils.modulo(i - this._lowestColTerreno, cols), gridYIni - 1);
                             if (grh)
                                 this.terreno[i][j].cambiarGrh(this.assetManager.getTerrenoGrh(grh));
                         }
 
-                        this._lowestRowTerreno = Util.modulo(this._lowestRowTerreno - 1, rows);
+                        this._lowestRowTerreno = Utils.modulo(this._lowestRowTerreno - 1, rows);
                         break;
 
                     case Enums.Heading.oeste:
-                        var i = Util.modulo(this._lowestColTerreno - 1, cols);
+                        var i = Utils.modulo(this._lowestColTerreno - 1, cols);
                         for (var j = 0; j < this.terreno[i].length; j++) {
                             this.terreno[i][j].setPosition(this.terreno[i][j].x - (cols * this.tilesize), this.terreno[i][j].y);
-                            var grh = this.mapa.getGrh1(gridXIni - 1, gridYIni + Util.modulo(j - this._lowestRowTerreno, rows));
+                            var grh = this.mapa.getGrh1(gridXIni - 1, gridYIni + Utils.modulo(j - this._lowestRowTerreno, rows));
                             if (grh)
                                 this.terreno[i][j].cambiarGrh(this.assetManager.getTerrenoGrh(grh));
                         }
-                        this._lowestColTerreno = Util.modulo(this._lowestColTerreno - 1, cols);
+                        this._lowestColTerreno = Utils.modulo(this._lowestColTerreno - 1, cols);
                         break;
 
                     case Enums.Heading.sur:
                         var j = this._lowestRowTerreno;
                         for (var i = 0; i < this.terreno.length; i++) {
                             this.terreno[i][j].setPosition(this.terreno[i][j].x, (this.terreno[i][j].y + (rows * this.tilesize)));
-                            var grh = this.mapa.getGrh1(gridXIni + Util.modulo(i - this._lowestColTerreno, cols), gridYIni + rows);
+                            var grh = this.mapa.getGrh1(gridXIni + Utils.modulo(i - this._lowestColTerreno, cols), gridYIni + rows);
                             if (grh)
                                 this.terreno[i][j].cambiarGrh(this.assetManager.getTerrenoGrh(grh));
                         }
-                        this._lowestRowTerreno = Util.modulo(this._lowestRowTerreno + 1, rows);
+                        this._lowestRowTerreno = Utils.modulo(this._lowestRowTerreno + 1, rows);
                         break;
 
                     case Enums.Heading.este:
                         var i = this._lowestColTerreno;
                         for (var j = 0; j < this.terreno[i].length; j++) {
                             this.terreno[i][j].setPosition((this.terreno[i][j].x + cols * this.tilesize), this.terreno[i][j].y);
-                            var grh = this.mapa.getGrh1(gridXIni + cols, gridYIni + Util.modulo(j - this._lowestRowTerreno, rows));
+                            var grh = this.mapa.getGrh1(gridXIni + cols, gridYIni + Utils.modulo(j - this._lowestRowTerreno, rows));
                             if (grh)
                                 this.terreno[i][j].cambiarGrh(this.assetManager.getTerrenoGrh(grh));
                         }
-                        this._lowestColTerreno = Util.modulo(this._lowestColTerreno + 1, cols);
+                        this._lowestColTerreno = Utils.modulo(this._lowestColTerreno + 1, cols);
                         break;
 
                     default:
@@ -492,12 +492,12 @@ define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/character
 
             toggleLluvia() {
                 if (this.containerLluvia)
-                    this.hideLluvia();
+                    this.removeLluvia();
                 else
-                    this.showLluvia();
+                    this.createLluvia();
             }
 
-            hideLluvia() {
+            removeLluvia() {
                 if (!this.containerLluvia)
                     return;
                 PIXI.ticker.shared.remove(this._updateGotas, this);
@@ -506,7 +506,7 @@ define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/character
                 this.containerLluvia = null;
             }
 
-            showLluvia() {
+            createLluvia() {
                 if (this.containerLluvia)
                     return;
                 this.gotas = [];

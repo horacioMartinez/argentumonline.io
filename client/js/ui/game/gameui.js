@@ -2,7 +2,7 @@
  * Created by horacio on 2/21/16.
  */
 
-define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups/comerciar', 'ui/popups/ingamemensaje', 'ui/game/interfaz', 'ui/popups/tirar', 'ui/popups/boveda', 'ui/popups/guiamapa', 'ui/popups/opciones', 'ui/popups/clanes', 'ui/popups/detallesclan', 'ui/popups/carpinteria'], function (Enums, KeyMouseListener, popUpSkills, Comerciar, InGameMensaje, Interfaz, Tirar, Boveda, GuiaMapa, Opciones, Clanes, DetallesClan, Carpinteria) {
+define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups/comerciar', 'ui/popups/ingamemensaje', 'ui/game/interfaz', 'ui/popups/tirar', 'ui/popups/boveda', 'ui/popups/guiamapa', 'ui/popups/opciones', 'ui/popups/clanes', 'ui/popups/detallesclan', 'ui/popups/carpinteria', 'ui/popups/herreria'], function (Enums, KeyMouseListener, popUpSkills, Comerciar, InGameMensaje, Interfaz, Tirar, Boveda, GuiaMapa, Opciones, Clanes, DetallesClan, Carpinteria, Herreria) {
 
     //TODO: crear los popups en run time con jquery y borrarlos cuando se cierran ?
 
@@ -25,11 +25,11 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
             this.detallesClan = new DetallesClan(game);
             this.clanes = new Clanes(game, this.detallesClan, this.showMensaje.bind(this));
             this.carpinteria = new Carpinteria(game);
+            this.herreria = new Herreria(game);
 
             this.interfaz = new Interfaz(game, gameManager.macros, acciones);
             this.keyMouseListener = new KeyMouseListener(game, acciones, storage.getKeys());
             this.initDOM();
-            this.$popUps = $("#popUpsJuego");
         }
 
         initDOM() {
@@ -49,8 +49,8 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
             this.keyMouseListener.setKeys(keys);
         }
 
-        hayPopUpActivo() {
-            return !(this.$popUps.children(':visible').length === 0);
+        hayPopUpActivo() {// TODO: arreglar esto ( ahora dialogs se meten en el body)
+            //return !(this.$popUps.children(':visible').length === 0);
         }
 
         showComerciar() {
@@ -93,8 +93,12 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
             this.guiaMapa.show();
         }
 
-        showCarpinteria(){
+        showCarpinteria() {
             this.carpinteria.show();
+        }
+
+        showHerreria() {
+            this.herreria.show();
         }
 
         showClanes() {

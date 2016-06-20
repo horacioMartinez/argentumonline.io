@@ -312,13 +312,13 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
             if (this.game.lloviendo) {
                 if (this.game.map.mapaOutdoor()) {
                     this.game.assetManager.audio.IniciarSonidoLluvia(bajoTecho);
-                    this.game.renderer.showLluvia();
+                    this.game.renderer.createLluvia();
                 }
             }
             else {
                 if (this.game.map.mapaOutdoor()) {
                     this.game.assetManager.audio.finalizarSonidoLluvia(bajoTecho);
-                    this.game.renderer.hideLluvia();
+                    this.game.renderer.removeLluvia();
                 }
             }
         }
@@ -363,6 +363,8 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
              ArmasHerreroIndex: ArmasHerreroIndex,
              ObjUpgrade: ObjUpgrade,
              */
+            this.game.gameUI.herreria.setWeapons(Items);
+            this.game.gameUI.showHerreria();
             console.log("TODO: handleBlacksmithWeapons ");
         }
 
@@ -376,6 +378,8 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
              ArmasHerreroIndex: ArmasHerreroIndex,
              ObjUpgrade: ObjUpgrade,
              */
+            this.game.gameUI.herreria.setArmors(Items);
+            this.game.gameUI.showHerreria();
             console.log("TODO: handleBlacksmithArmors ");
         }
 

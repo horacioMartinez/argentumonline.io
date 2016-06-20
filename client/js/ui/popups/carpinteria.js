@@ -56,7 +56,7 @@ define(["text!../../../menus/carpinteria.html!strip", 'ui/popups/popup'], functi
                 $botonConstruir.data("itemIndex", item.ObjCarpinteroIndex);
                 $botonConstruir.click(function(){
                     var cantidadAConstruir = $('#carpinteriaCantidadAConstruir').val();
-                    self.game.client.sendInitCrafting(cantidadAConstruir,cantidadAConstruir);//horrible esto, que se haga de 1 (cambiar sv)
+                    self.game.client.sendInitCrafting(cantidadAConstruir,1);//TODO: horrible esto, que se haga de 1 (cambiar sv)
                     var itemIndex = $(this).data("itemIndex");
                     self.game.client.sendCraftCarpenter(itemIndex);
                 });

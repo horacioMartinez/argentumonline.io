@@ -19,6 +19,8 @@ define(['model/character'], function (Character) {
 
             this.paralizado = false;
             this.meditando = false;
+
+            this.moveSpeed = 230; // PJ TODO: setear bien estos valores, fijarse que en lo posible no haya resetmovements (esto pasa si la animacion es mas lenta que el llamado a cambiar de pos)
         }
 
         // TODO: aceleracion al comenzar y terminar de caminar
