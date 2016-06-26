@@ -30,9 +30,13 @@ define(["text!../../../menus/carpinteria.html!strip", 'ui/popups/popup'], functi
          */
         setItems(items){
             //TODO objUpgrade
-
+            if (items.length < 1){
+                // TODO: decir que no peude construir items pq le falta skills
+            }
+            
             var self = this;
             for (var item of items){
+
                 var $row = $('<tr></tr>');
 
                 var numGraf = this.game.assetManager.getNumGraficoFromGrh(item.GrhIndex);

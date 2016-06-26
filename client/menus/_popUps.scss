@@ -10,12 +10,15 @@
 
 /* Reglas generales de popUps*/
 .dialogContent {
+  @extend .inner_border_default;
+  box-sizing: border-box;
   /*display:flex; flex:1;*/
   background: none;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
+  color: $text_font; /*default font */
 }
 
 .dialogContent input {

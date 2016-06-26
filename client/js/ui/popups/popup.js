@@ -16,7 +16,15 @@ define(['jquery-ui'], function () {
                 dialogClass: 'dialog_default',
                 close: function (event, ui) {
                     self.hide();
-                }
+                },
+                resize: function() { // fix TEMPORAL de bug resize http://stackoverflow.com/a/35912702
+                    var heightPadding = parseInt($(this).css('padding-top'), 10) + parseInt($(this).css('padding-bottom'), 10),
+                        widthPadding = parseInt($(this).css('padding-left'), 10) + parseInt($(this).css('padding-right'), 10),
+                        titlebarMargin = parseInt($(this).prev('.ui-dialog-titlebar').css('margin-bottom'), 10);
+                    $(this).height($(this).parent().height() - $(this).prev('.ui-dialog-titlebar').outerHeight(true) - heightPadding - titlebarMargin);
+
+                    $(this).width($(this).prev('.ui-dialog-titlebar').outerWidth(true) - widthPadding);
+                },
             };
             $.extend(options, addiotionalOptions);
             if (!general) {

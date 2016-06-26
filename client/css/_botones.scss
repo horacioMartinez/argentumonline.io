@@ -4,9 +4,10 @@
 }
 
 .botonNormal {
-  @extend .botonTransition;
-  background: $boton_normal_background;
-  border: 2px solid black;
+  //@extend .botonTransition;
+  background-image: url('../imagenes/botones/boton_normal.png');
+  background-size: 100% 100%;
+  border: none;
   text-decoration: none;
   color: $boton_normal_texto;
   margin-top: 3px;
@@ -14,7 +15,7 @@
 
 
 
-  /*text-shadow: 1px 1px 1px #000;*/
+  text-shadow: 1px 1px 1px #000;
 
   outline: none;
   cursor: pointer;
@@ -26,14 +27,13 @@
 }
 
 .botonNormal:hover {
-  background-color: $boton_normal_background_hover;
+  background-image: url('../imagenes/botones/boton_normal_hover.png');
   color: $boton_normal_texto_hover;
   /* background-color: #FFFFFF;*/
 }
 
 .botonNormal:active {
-
-  background-color: $boton_normal_background_pressed;
+  background-image: url('../imagenes/botones/boton_normal_push.png');
   color: $boton_normal_texto_pressed;
   /*text-shadow: none;*/
 }

@@ -9,9 +9,9 @@
   background-size: 100% 100%;
   background-color:  rgba(255, 255, 255, 0.1);
   float: left;
-  width: 32px;
+  width: $anchoItems;
   color: white;
-  height: 32px;
+  height: $altoItems;
   font-size: 2vh;
   text-align: left;
   vertical-align: text-top;
@@ -19,6 +19,7 @@
   border-color: rgba(255, 255, 255, 0.5);
   border-style: solid;
   border-width: 1px;
+  margin: 1px;
 }
 
 .itemgrid li.equiped {

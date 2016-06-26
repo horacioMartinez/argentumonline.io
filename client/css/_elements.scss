@@ -1,0 +1,20 @@
+.inner_border_default { // TODO: checkear que quede bien
+  border: 12px solid black ; //fallback
+  border-image: url("../imagenes/container_content_iner_border.png") 30 repeat;
+  //box-sizing: border-box;
+}
+
+.exterior_border_default { // TODO: checkear que quede bien
+  border: 10px solid black ; //fallback
+  border-image: url("../imagenes/borde.png") 20 round /*stretch*/;
+  /*box-sizing: border-box;*/
+}
+
+.heading_border_default {
+  border: 2px solid black ; //fallback
+  border-image-source: url("../imagenes/borde_heading.png");
+  border-image-slice: 14 14 28 14;
+  border-image-repeat: round;
+  border-image-width: 5px 5px 10px 5px;
+  /*box-sizing: border-box;*/
+}

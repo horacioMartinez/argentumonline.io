@@ -1,7 +1,5 @@
-/* General Layout */	
+/* General Layout */
 
-
-html {-webkit-text-size-adjust: 100%}
 html, body {height:100%;}
 
 body {padding:0;margin:0;background:#111;overflow:hidden;border-top:2px solid #707070;}
@@ -12,16 +10,14 @@ canvas { position:absolute;image-rendering:auto;}
 
 /*.started #canvas {cursor:none;}*/
 
-h1 {font-weight:normal;}
-
 .preload {display:none;}
 
 
 
 /* States & Transitions */
-#intro {-moz-transition:0.4s opacity linear;-webkit-transition:0.4s opacity linear;-o-transition:0.4s opacity linear;-ms-transition:0.4s opacity linear;transition:0.4s opacity linear;}
-#container {z-index:100;background:rgba(0,0,0,0);-moz-transition:1s opacity linear 0.5s;-webkit-transition:1s opacity linear 0.5s;-o-transition:1s opacity linear 0.5s;-ms-transition:1s opacity linear 0.5s;transition:1s opacity linear 0.5s;}
-.intro #container {display:none;}
+#container {z-index:10;background:rgba(0,0,0,0);-moz-transition:1s opacity linear 0.5s;-webkit-transition:1s opacity linear 0.5s;-o-transition:1s opacity linear 0.5s;-ms-transition:1s opacity linear 0.5s;transition:1s opacity linear 0.5s;}
+#container {width: 100%; height: 90%; position: absolute; top:0; bottom: 5%; left: 0; right: 0; margin: auto;} /* el width de setea para que quede del ratio adecaudo en el programa de js */
+
 .login #container, .jugar #container, .crear #container {display:block;}
 .login #juego, .login #crearPJ {display:none;} .login #conectar {display:block;}
 .crear #juego, .crear #conectar {display:none;} .crear #crearPJ {display:block;}
@@ -31,7 +27,7 @@ h1 {font-weight:normal;}
 
 body {background-color:#000;}
 
-#container {background:#000;width: 100%; height: 90%; position: absolute; top:0; bottom: 5%; left: 0; right: 0; margin: auto;} /* el width de setea para que quede del ratio adecaudo en el programa de js */
+
 
 #gamecanvas {position:absolute;top:7.8%;left:1.45%;z-index: -2} /* margenes de la interfaz */
 

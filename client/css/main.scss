@@ -1,6 +1,6 @@
 @import "vendor/jquery-ui";
 @import "vendor/jquery-ui.structure";
-@import "vendor/jquery-ui.theme";
+//@import "vendor/jquery-ui.theme";
 
 @import "vendor/bootstrap";
 
@@ -10,9 +10,12 @@
 @import "variables";
 @import "fonts";
 @import "botones";
+@import "elements";
 
 @import "general";
 @import "common";
+
+@import "intro";
 @import "login";
 @import "crearPj";
 @import "interfaz";
