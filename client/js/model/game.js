@@ -374,10 +374,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 log.error("inicializar player");
                 this.player = new Player(CharIndex, X, Y, Heading, nombre, clan);
 
-                if ((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal))
-                    this.player.muerto = true;
-                else
-                    this.player.muerto = false;
+                this.player.muerto = !!((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal));
 
                 this.entityGrid[X][Y][1] = this.player;
                 this.characters[CharIndex] = this.player;
@@ -624,7 +621,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 this.logeado = true;
                 this.started = true;
                 this.tick();
-                this.hasNeverStarted = false;
                 log.info("Game loop started.");
             }
 

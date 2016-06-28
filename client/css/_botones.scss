@@ -1,10 +1,11 @@
-
-.botonTransition{
-  transition: 0.2s linear;
+.botonDefault {
+  box-shadow: 0px 0px 49px -6px rgba(0, 0, 0, 0.75);
+  //transition: 0.2s linear;
 }
 
 .botonNormal {
   //@extend .botonTransition;
+  @extend .botonDefault;
   background-image: url('../imagenes/botones/boton_normal.png');
   background-size: 100% 100%;
   border: none;
@@ -12,8 +13,6 @@
   color: $boton_normal_texto;
   margin-top: 3px;
   margin-bottom: 3px;
-
-
 
   text-shadow: 1px 1px 1px #000;
 
@@ -36,22 +35,6 @@
   background-image: url('../imagenes/botones/boton_normal_push.png');
   color: $boton_normal_texto_pressed;
   /*text-shadow: none;*/
-}
-
-.botonCerrar {
-  display: block;
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  width: 14px;
-  height: 13px;
-  border: none;
-  background: url('../imagenes/X.png') no-repeat center center;
-  cursor: pointer;
-}
-
-.botonCerrar:hover {
-  background: url('../imagenes/X_hover.png') no-repeat center center;
 }
 
 .botonInvisible {

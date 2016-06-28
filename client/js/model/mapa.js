@@ -40,36 +40,29 @@ define([], function () {
                 this.data.layers[gridX - 1][gridY - 1][0] = 0;
         }
 
-        getGrh1(gridX, gridY) { //devuelve indice de grafico de la primer lagridYer
-            if (this.data.layers[gridX - 1])
-                if (this.data.layers[gridX - 1][gridY - 1])
-                    if (this.data.layers[gridX - 1][gridY - 1][1])
-                        return this.data.layers[gridX - 1][gridY - 1][1];
+        getGrh(numGrh, gridX, gridY) {
+            if (this.data.layers[gridX - 1] &&
+                this.data.layers[gridX - 1][gridY - 1] &&
+                this.data.layers[gridX - 1][gridY - 1][numGrh]) {
+                return this.data.layers[gridX - 1][gridY - 1][numGrh];
+            }
             return 0;
+        }
+
+        getGrh1(gridX, gridY) { //devuelve indice de grafico de la primer lagridYer
+            return this.getGrh(1,gridX,gridY);
         }
 
         getGrh2(gridX, gridY) {
-            if (this.data.layers[gridX - 1])
-                if (this.data.layers[gridX - 1][gridY - 1])
-                    if (this.data.layers[gridX - 1][gridY - 1][2])
-                        return this.data.layers[gridX - 1][gridY - 1][2];
-            return 0;
+            return this.getGrh(2,gridX,gridY);
         }
 
         getGrh3(gridX, gridY) {
-            if (this.data.layers[gridX - 1])
-                if (this.data.layers[gridX - 1][gridY - 1])
-                    if (this.data.layers[gridX - 1][gridY - 1][3])
-                        return this.data.layers[gridX - 1][gridY - 1][3];
-            return 0;
+            return this.getGrh(3,gridX,gridY);
         }
 
         getGrh4(gridX, gridY) {
-            if (this.data.layers[gridX - 1])
-                if (this.data.layers[gridX - 1][gridY - 1])
-                    if (this.data.layers[gridX - 1][gridY - 1][4])
-                        return this.data.layers[gridX - 1][gridY - 1][4];
-            return 0;
+            return this.getGrh(4,gridX,gridY);
         }
 
         isBajoTecho(gridX, gridY) {

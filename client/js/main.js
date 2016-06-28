@@ -7,13 +7,13 @@
 define(['app', 'assets/assetmanager', 'ui/uimanager', 'storage/storage'], function (App, AssetManager, UIManager, Storage) {
     var app, uiManager, assetManager, storage;
 
-    var setupAudio = function (audio, storage) {
+    function setupAudio(audio, storage) {
         audio.setSoundMuted(storage.getSoundMuted());
         audio.setMusicMuted(storage.getMusicMuted());
         audio.setMusicVolume(storage.getMusicVolume());
         audio.setSoundVolume(storage.getSoundVolume());
         audio.setMusic("intro");
-    };
+    }
 
     var initApp = function () {
         $(document).ready(function () {

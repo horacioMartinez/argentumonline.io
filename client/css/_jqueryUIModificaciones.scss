@@ -33,16 +33,27 @@
   }
 
   .ui-dialog-titlebar-close{
-    @extend .botonTransition;
-    background: url('../imagenes/X.png');
+    @extend .botonDefault;
+    display: block;
+    position: absolute;
+    top: 18px;
+    right: 7px;
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-image: url('../imagenes/botones/boton_cerrar.png');
+    background-size: 100% 100%;
     border: none;
-    width: 13px;
-    height: 13px;
-    padding: 0;
+    outline: none;
+    cursor: pointer;
   }
 
   .ui-dialog-titlebar-close:hover{
-    background-image:url('../imagenes/X_hover.png');
+    background-image: url('../imagenes/botones/boton_cerrar_hover.png');
+  }
+
+  .ui-dialog-titlebar-close:active {
+    background-image: url('../imagenes/botones/boton_cerrar_push.png');
   }
 
   .ui-dialog-titlebar

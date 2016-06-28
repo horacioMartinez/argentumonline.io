@@ -7461,13 +7461,22 @@ button.close {
     margin: 0;
     background-position: left top; }
   .dialog_default .ui-dialog-titlebar-close {
-    background: url("../imagenes/X.png");
+    display: block;
+    position: absolute;
+    top: 18px;
+    right: 7px;
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-image: url("../imagenes/botones/boton_cerrar.png");
+    background-size: 100% 100%;
     border: none;
-    width: 13px;
-    height: 13px;
-    padding: 0; }
+    outline: none;
+    cursor: pointer; }
   .dialog_default .ui-dialog-titlebar-close:hover {
-    background-image: url("../imagenes/X_hover.png"); }
+    background-image: url("../imagenes/botones/boton_cerrar_hover.png"); }
+  .dialog_default .ui-dialog-titlebar-close:active {
+    background-image: url("../imagenes/botones/boton_cerrar_push.png"); }
   .dialog_default .ui-dialog-titlebar {
     background: url("../imagenes/background_heading.png");
     background-size: 100% 100%;
@@ -7632,8 +7641,8 @@ button.close {
 .secondaryColor, .dialog_default .ui-dialog-titlebar {
   color: #BBBDBF; }
 
-.botonTransition, .dialog_default .ui-dialog-titlebar-close {
-  transition: 0.2s linear; }
+.botonDefault, .dialog_default .ui-dialog-titlebar-close, .botonNormal {
+  box-shadow: 0px 0px 49px -6px rgba(0, 0, 0, 0.75); }
 
 .botonNormal {
   background-image: url("../imagenes/botones/boton_normal.png");
@@ -7660,20 +7669,6 @@ button.close {
   background-image: url("../imagenes/botones/boton_normal_push.png");
   color: white;
   /*text-shadow: none;*/ }
-
-.botonCerrar {
-  display: block;
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  width: 14px;
-  height: 13px;
-  border: none;
-  background: url("../imagenes/X.png") no-repeat center center;
-  cursor: pointer; }
-
-.botonCerrar:hover {
-  background: url("../imagenes/X_hover.png") no-repeat center center; }
 
 .botonInvisible {
   background-color: Transparent;

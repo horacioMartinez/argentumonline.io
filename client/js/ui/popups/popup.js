@@ -10,8 +10,10 @@ define(['jquery-ui'], function () {
                 throw new Error("DOMdata required");
             this.$this = $(DOMdata);
 
+            var parentID = "#container";
             var self = this;
             var options = {
+                appendTo: parentID,
                 autoOpen: false,
                 dialogClass: 'dialog_default',
                 close: function (event, ui) {
@@ -31,7 +33,10 @@ define(['jquery-ui'], function () {
                 var position = {position: {my: "center", at: "left+40%", of: "#container"}};
                 $.extend(options, position);
             }
-            this.$this.dialog(options);
+            this.$this.dialog(options).parent().draggable({
+                containment: parentID
+            });
+
             if (this.$this.siblings('#' + this.$this.attr('id')).length) { // TODO: no funciona esto
                 throw new Error("pop up inicializado dos veces: " + this.$this.attr('id'));
             }
