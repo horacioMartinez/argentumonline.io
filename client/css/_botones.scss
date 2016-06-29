@@ -1,11 +1,10 @@
-.botonDefault {
+.defaults_boton {
   box-shadow: 0px 0px 49px -6px rgba(0, 0, 0, 0.75);
-  //transition: 0.2s linear;
 }
 
 .botonNormal {
   //@extend .botonTransition;
-  @extend .botonDefault;
+  @extend .defaults_boton;
   background-image: url('../imagenes/botones/boton_normal.png');
   background-size: 100% 100%;
   border: none;
@@ -23,6 +22,9 @@
   font-family: 'FuturaStd', arial, serif;
   font-weight: normal;
   font-style: normal;
+
+  width: 161px;
+  height:53px;
 }
 
 .botonNormal:hover {

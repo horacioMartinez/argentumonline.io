@@ -39,7 +39,6 @@ define(["text!../../../menus/opciones.html!strip", 'ui/popups/popup', 'ui/popups
         initCallbacks() {
             var self = this;
 
-            //$( "#popUpOpcionesTabs" ).tabs(); // TODO
 
             $("#opcionesBotonCerrar").click(function () {
                 self.hide();

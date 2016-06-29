@@ -1,6 +1,6 @@
 .inner_border_default { // TODO: checkear que quede bien
-  border: 12px solid black ; //fallback
-  border-image: url("../imagenes/container_content_iner_border.png") 30 repeat;
+  border: 8px solid black ; //fallback
+  border-image: url("../imagenes/container_content_iner_border.png") 20 repeat;
   //box-sizing: border-box;
 }
 

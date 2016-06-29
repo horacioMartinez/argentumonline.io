@@ -7486,92 +7486,19 @@ button.close {
     margin: 0;
     padding: 0; }
 
-.tabs-below > .nav-tabs,
-.tabs-right > .nav-tabs,
-.tabs-left > .nav-tabs {
-  border-bottom: 0; }
+.nav-pills > li > a {
+  background: url("../imagenes/background_tab.png") repeat;
+  border-radius: 0; }
 
-.tab-content > .tab-pane,
-.pill-content > .pill-pane {
-  display: none; }
+.nav-pills > li > a:hover {
+  background-image: url("../imagenes/background_tab.png");
+  background-repeat: repeat;
+  background: rgba(255, 255, 255, 0.1); }
 
-.tab-content > .active,
-.pill-content > .active {
-  display: block; }
-
-.tabs-below > .nav-tabs {
-  border-top: 1px solid #ddd; }
-
-.tabs-below > .nav-tabs > li {
-  margin-top: -1px;
-  margin-bottom: 0; }
-
-.tabs-below > .nav-tabs > li > a {
-  -webkit-border-radius: 0 0 4px 4px;
-  -moz-border-radius: 0 0 4px 4px;
-  border-radius: 0 0 4px 4px; }
-
-.tabs-below > .nav-tabs > li > a:hover,
-.tabs-below > .nav-tabs > li > a:focus {
-  border-top-color: #ddd;
-  border-bottom-color: transparent; }
-
-.tabs-below > .nav-tabs > .active > a,
-.tabs-below > .nav-tabs > .active > a:hover,
-.tabs-below > .nav-tabs > .active > a:focus {
-  border-color: transparent #ddd #ddd #ddd; }
-
-.tabs-left > .nav-tabs > li,
-.tabs-right > .nav-tabs > li {
-  float: none; }
-
-.tabs-left > .nav-tabs > li > a,
-.tabs-right > .nav-tabs > li > a {
-  min-width: 74px;
-  margin-right: 0;
-  margin-bottom: 3px; }
-
-.tabs-left > .nav-tabs {
-  float: left;
-  margin-right: 19px;
-  border-right: 1px solid #ddd; }
-
-.tabs-left > .nav-tabs > li > a {
-  margin-right: -1px;
-  -webkit-border-radius: 4px 0 0 4px;
-  -moz-border-radius: 4px 0 0 4px;
-  border-radius: 4px 0 0 4px; }
-
-.tabs-left > .nav-tabs > li > a:hover,
-.tabs-left > .nav-tabs > li > a:focus {
-  border-color: #eeeeee #dddddd #eeeeee #eeeeee; }
-
-.tabs-left > .nav-tabs .active > a,
-.tabs-left > .nav-tabs .active > a:hover,
-.tabs-left > .nav-tabs .active > a:focus {
-  border-color: #ddd transparent #ddd #ddd;
-  *border-right-color: #ffffff; }
-
-.tabs-right > .nav-tabs {
-  float: right;
-  margin-left: 19px;
-  border-left: 1px solid #ddd; }
-
-.tabs-right > .nav-tabs > li > a {
-  margin-left: -1px;
-  -webkit-border-radius: 0 4px 4px 0;
-  -moz-border-radius: 0 4px 4px 0;
-  border-radius: 0 4px 4px 0; }
-
-.tabs-right > .nav-tabs > li > a:hover,
-.tabs-right > .nav-tabs > li > a:focus {
-  border-color: #eeeeee #eeeeee #eeeeee #dddddd; }
-
-.tabs-right > .nav-tabs .active > a,
-.tabs-right > .nav-tabs .active > a:hover,
-.tabs-right > .nav-tabs .active > a:focus {
-  border-color: #ddd #ddd #ddd transparent;
-  *border-left-color: #ffffff; }
+.nav-pills > li > a:active {
+  background-image: url("../imagenes/background_tab.png");
+  background-repeat: repeat;
+  background: rgba(0, 0, 0, 0.02); }
 
 /* PALETTE */
 /*(por ej NIVEL 1 nivel en esta font y 1 en bold y blanco)*/
@@ -7641,7 +7568,7 @@ button.close {
 .secondaryColor, .dialog_default .ui-dialog-titlebar {
   color: #BBBDBF; }
 
-.botonDefault, .dialog_default .ui-dialog-titlebar-close, .botonNormal {
+.defaults_boton, .dialog_default .ui-dialog-titlebar-close, .botonNormal {
   box-shadow: 0px 0px 49px -6px rgba(0, 0, 0, 0.75); }
 
 .botonNormal {
@@ -7658,7 +7585,9 @@ button.close {
   text-align: center;
   font-family: 'FuturaStd', arial, serif;
   font-weight: normal;
-  font-style: normal; }
+  font-style: normal;
+  width: 161px;
+  height: 53px; }
 
 .botonNormal:hover {
   background-image: url("../imagenes/botones/boton_normal_hover.png");
@@ -7728,9 +7657,9 @@ button.close {
     background-image: url(../imagenes/boton-normal-pressed.png);
     color: grey;
 }*/
-.inner_border_default, .dialogContent {
-  border: 12px solid black;
-  border-image: url("../imagenes/container_content_iner_border.png") 30 repeat; }
+.inner_border_default, .dialogContent, .tabsContainer {
+  border: 8px solid black;
+  border-image: url("../imagenes/container_content_iner_border.png") 20 repeat; }
 
 .exterior_border_default, .dialog_default {
   border: 10px solid black;
@@ -8443,12 +8372,10 @@ not supported by any browser */ }
   margin-right: 5px; }
 
 #comerciarBotonComprar {
-  width: 40%;
   float: left;
   margin: auto; }
 
 #comerciarBotonVender {
-  width: 40%;
   float: right;
   margin: auto; }
 
@@ -8490,12 +8417,10 @@ not supported by any browser */ }
   background-image: url("../imagenes/oro_bolsa_hover.svg"); }
 
 #bovedaBotonRetirarItem {
-  width: 40%;
   float: left;
   margin: auto; }
 
 #bovedaBotonDepositarItem {
-  width: 40%;
   float: right;
   margin: auto; }
 
@@ -8623,7 +8548,7 @@ not supported by any browser */ }
   box-sizing: border-box;
   /*display:flex; flex:1;*/
   background: none;
-  width: 100%;
+  width: auto;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -8651,6 +8576,15 @@ not supported by any browser */ }
 
 .dialogContent .itemgrid li {
   font-size: 13px; }
+
+.tabsContainer {
+  box-sizing: border-box;
+  background: none; }
+
+.tabsFiller {
+  background: url("../imagenes/background_tab.png") repeat;
+  flex: 1;
+  margin-top: 2px; }
 
 /* -------- DEBUG ------- */
 /*.popUp * {outline: dashed 2px green;}

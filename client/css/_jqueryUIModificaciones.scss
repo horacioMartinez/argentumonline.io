@@ -33,7 +33,7 @@
   }
 
   .ui-dialog-titlebar-close{
-    @extend .botonDefault;
+    @extend .defaults_boton;
     display: block;
     position: absolute;
     top: 18px;
