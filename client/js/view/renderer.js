@@ -160,14 +160,16 @@ define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/character
                 this.gameChat.addChild(char.texto);
 
                 char.setOnPositionChange(function () {
+                    var spriteX = Math.round(this.x);
+                    var spriteY = Math.round(this.y);
                     if (this.sprite) {
-                        this.sprite.setPosition(this.x, this.y);
+                        this.sprite.setPosition(spriteX, spriteY);
                     }
                     if (this.spriteNombre) {
-                        this.spriteNombre.setPosition(this.x, this.y);
+                        this.spriteNombre.setPosition(spriteX, spriteY);
                     }
                     if (this.texto) {
-                        this.texto.setPosition(this.x, this.y);
+                        this.texto.setPosition(spriteX, spriteY);
                     }
                 }.bind(char));
 
@@ -292,8 +294,8 @@ define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/character
             }
 
             _syncGamePosition() {
-                this.gameStage.x = -this.camera.x * this.escala;
-                this.gameStage.y = -this.camera.y * this.escala;
+                this.gameStage.x = Math.round(-this.camera.x * this.escala);
+                this.gameStage.y = Math.round(-this.camera.y * this.escala);
             }
 
             entityVisiblePorCamara(entity, heightTileOffset) {

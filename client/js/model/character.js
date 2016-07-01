@@ -44,7 +44,7 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
             this.animarMovimiento();
 
             var self = this;
-            var tick = 32 / (this.moveSpeed / (1000 / 60));
+            var distPrimerFrame = 32 / (this.moveSpeed / (1000 / 60));
 
             if (self.getDirMov() === Enums.Heading.oeste) {
 
@@ -60,7 +60,7 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
                             callback_mov(self.x, self.y);
                         self.hasMoved();
                     },
-                    self.x - tick,
+                    self.x - distPrimerFrame,
                     self.x - 32,
                     self.moveSpeed);
             }
@@ -77,7 +77,7 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
                             callback_mov(self.x, self.y);
                         self.hasMoved();
                     },
-                    self.x + tick,
+                    self.x + distPrimerFrame,
                     self.x + 32,
                     self.moveSpeed);
             }
@@ -94,7 +94,7 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
                             callback_mov(self.x, self.y);
                         self.hasMoved();
                     },
-                    self.y - tick,
+                    self.y - distPrimerFrame,
                     self.y - 32,
                     self.moveSpeed);
             }
@@ -111,13 +111,15 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
                             callback_mov(self.x, self.y);
                         self.hasMoved();
                     },
-                    self.y + tick,
+                    self.y + distPrimerFrame,
                     self.y + 32,
                     self.moveSpeed);
             }
 
             PIXI.ticker.shared.add(this._updateMovement, this);
         }
+
+        // TODO (MUY IMPORTANTE) reveer esto de movimientos,  usar aceleracion ? mov del player en 1 solo event
 
         _updateMovement(delta) {
             if (this.movement.inProgress) {
