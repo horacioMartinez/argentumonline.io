@@ -1,0 +1,27 @@
+.form_element_base {
+  @extend .activeColor, .everywhereFont;
+  border-width: 2px ;
+  border-style: solid ;
+  border-color: $form_elements_border_color ;
+  border-radius: 2px ;
+  background: $form_elements_background_color;
+  box-shadow: 0px 0px 5px -1px rgba(0,0,0,0.75);
+}
+
+.form_element_base:focus {
+  outline-color: $form_elements_item_color;
+  box-shadow: 0 0 5px $form_elements_item_color;
+}
+
+input {
+  @extend .form_element_base;
+}
+
+ul {
+  cursor: default;
+}
+
+span {
+  user-select: none;
+  cursor: default;
+}

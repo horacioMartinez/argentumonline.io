@@ -71,3 +71,59 @@
     padding:0;
   }
 }
+
+/* slider */
+
+/* hardcodeado con una imagen de fondo, hacerlo bien usando bordes de color y fondo negro*/
+.ui-slider {
+
+  /*  border-width: 10px !important;
+  border-style: solid !important;
+  border-color: $default_color !important;
+  border-radius: 25px !important;
+  background: black !important;*/
+
+  border:none;
+  background: url('../imagenes/slider/scale_bar.png') no-repeat;
+  background-size: 100% 100%;
+  width: 100%;
+  height: 20px;
+}
+
+.ui-slider .ui-slider-handle{
+  background: url('../imagenes/slider/scale_bar_handler.png') no-repeat;
+  background-size: 100% 100%;
+  border: none;
+  outline:none;
+  cursor: pointer;
+  width: 30px;
+  height: 40px;
+  margin-left: -15px;
+  margin-top: -5px;
+}
+
+.ui-slider .ui-slider-handle:hover {
+  background-image: url('../imagenes/slider/scale_bar_handler_hover.png');
+}
+
+.ui-slider-horizontal .ui-slider-range {
+  position: absolute;
+  height: 6px;
+
+  margin-left: 8px !important;
+  margin-top: 7px;
+  //background: #f99;
+  background: $form_elements_item_color;
+  box-shadow: inset 2px 0px 1px 1px rgba(0,0,0,0.5);
+  //background: linear-gradient(top, #ffffff 0%,#eaeaea 100%);
+  //position: absolute;
+  //border: 0;
+  //top: 0;
+  //height: 100%;
+  //border-radius: 25px;
+}
+
+.ui-slider-vertical .ui-slider-range {
+  left: 0;
+  width: 6px;
+}

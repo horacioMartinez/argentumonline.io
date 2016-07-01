@@ -1,4 +1,6 @@
 @charset "UTF-8";
+/* PALETTE */
+/*(por ej NIVEL 1 nivel en esta font y 1 en bold y blanco)*/
 /*! jQuery UI - v1.11.4 - 2016-06-20
 * http://jqueryui.com
 * Includes: core.css, draggable.css, resizable.css, selectable.css, sortable.css, accordion.css, autocomplete.css, button.css, datepicker.css, dialog.css, menu.css, progressbar.css, selectmenu.css, slider.css, spinner.css, tabs.css, tooltip.css
@@ -7486,6 +7488,46 @@ button.close {
     margin: 0;
     padding: 0; }
 
+/* slider */
+/* hardcodeado con una imagen de fondo, hacerlo bien usando bordes de color y fondo negro*/
+.ui-slider {
+  /*  border-width: 10px !important;
+  border-style: solid !important;
+  border-color: $default_color !important;
+  border-radius: 25px !important;
+  background: black !important;*/
+  border: none;
+  background: url("../imagenes/slider/scale_bar.png") no-repeat;
+  background-size: 100% 100%;
+  width: 100%;
+  height: 20px; }
+
+.ui-slider .ui-slider-handle {
+  background: url("../imagenes/slider/scale_bar_handler.png") no-repeat;
+  background-size: 100% 100%;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  width: 30px;
+  height: 40px;
+  margin-left: -15px;
+  margin-top: -5px; }
+
+.ui-slider .ui-slider-handle:hover {
+  background-image: url("../imagenes/slider/scale_bar_handler_hover.png"); }
+
+.ui-slider-horizontal .ui-slider-range {
+  position: absolute;
+  height: 6px;
+  margin-left: 8px !important;
+  margin-top: 7px;
+  background: #978471;
+  box-shadow: inset 2px 0px 1px 1px rgba(0, 0, 0, 0.5); }
+
+.ui-slider-vertical .ui-slider-range {
+  left: 0;
+  width: 6px; }
+
 .nav-pills > li > a {
   background: url("../imagenes/background_tab.png") repeat;
   border-radius: 0; }
@@ -7500,8 +7542,23 @@ button.close {
   background-repeat: repeat;
   background: rgba(0, 0, 0, 0.02); }
 
-/* PALETTE */
-/*(por ej NIVEL 1 nivel en esta font y 1 en bold y blanco)*/
+.inner_border_default, .dialogContent, .tabsContainer {
+  border: 8px solid black;
+  border-image: url("../imagenes/container_content_iner_border.png") 20 repeat; }
+
+.exterior_border_default, .dialog_default {
+  border: 10px solid black;
+  border-image: url("../imagenes/borde.png") 20 round;
+  /*box-sizing: border-box;*/ }
+
+.heading_border_default, .dialog_default .ui-dialog-titlebar {
+  border: 2px solid black;
+  border-image-source: url("../imagenes/borde_heading.png");
+  border-image-slice: 14 14 28 14;
+  border-image-repeat: round;
+  border-image-width: 5px 5px 10px 5px;
+  /*box-sizing: border-box;*/ }
+
 @font-face {
   font-family: 'FuturaStd';
   src: url("../fonts/FuturaStd-Condensed.otf");
@@ -7552,7 +7609,7 @@ button.close {
   font-weight: normal;
   font-style: normal; }
 
-.everywhereFont, .dialogContent input {
+.everywhereFont, .form_element_base, input {
   font-family: 'FuturaStd',arial,serif;
   font-weight: 300;
   font-style: normal; }
@@ -7562,7 +7619,7 @@ button.close {
   font-weight: bold;
   font-style: normal; }
 
-.activeColor, .dialogContent input {
+.activeColor, .form_element_base, input {
   color: #ffffff; }
 
 .secondaryColor, .dialog_default .ui-dialog-titlebar {
@@ -7586,9 +7643,14 @@ button.close {
   font-family: 'FuturaStd', arial, serif;
   font-weight: normal;
   font-style: normal;
-  width: 161px;
-  height: 53px; }
+  width: 121px;
+  height: 44px; }
 
+/*
+.botonNormal:focus {
+  background-image: url('../imagenes/botones/boton_normal_hover.png');
+  color: $boton_normal_texto_hover;
+}*/
 .botonNormal:hover {
   background-image: url("../imagenes/botones/boton_normal_hover.png");
   color: white;
@@ -7657,22 +7719,24 @@ button.close {
     background-image: url(../imagenes/boton-normal-pressed.png);
     color: grey;
 }*/
-.inner_border_default, .dialogContent, .tabsContainer {
-  border: 8px solid black;
-  border-image: url("../imagenes/container_content_iner_border.png") 20 repeat; }
+.form_element_base, input {
+  border-width: 2px;
+  border-style: solid;
+  border-color: #453c36;
+  border-radius: 2px;
+  background: #191411;
+  box-shadow: 0px 0px 5px -1px rgba(0, 0, 0, 0.75); }
 
-.exterior_border_default, .dialog_default {
-  border: 10px solid black;
-  border-image: url("../imagenes/borde.png") 20 round;
-  /*box-sizing: border-box;*/ }
+.form_element_base:focus, input:focus {
+  outline-color: #978471;
+  box-shadow: 0 0 5px #978471; }
 
-.heading_border_default, .dialog_default .ui-dialog-titlebar {
-  border: 2px solid black;
-  border-image-source: url("../imagenes/borde_heading.png");
-  border-image-slice: 14 14 28 14;
-  border-image-repeat: round;
-  border-image-width: 5px 5px 10px 5px;
-  /*box-sizing: border-box;*/ }
+ul {
+  cursor: default; }
+
+span {
+  user-select: none;
+  cursor: default; }
 
 /* General Layout */
 html, body {
@@ -8552,24 +8616,8 @@ not supported by any browser */ }
   height: 100%;
   display: flex;
   flex-direction: column;
-  color: #a69a84;
+  color: #6b5f52;
   /*default font */ }
-
-.dialogContent input {
-  border: 1px solid rgba(0, 0, 0, 0.7);
-  outline: none;
-  color: white;
-  width: 50px;
-  background-color: rgba(0, 0, 0, 0.4);
-  font-size: 14px; }
-
-.dialogContent ul {
-  cursor: default; }
-
-.dialogContent span {
-  display: inline-block;
-  user-select: none;
-  cursor: default; }
 
 .dialogContent .itemgrid {
   border: 1px solid #BBBDBF; }

@@ -1,3 +1,5 @@
+@import "variables";
+
 @import "vendor/jquery-ui";
 @import "vendor/jquery-ui.structure";
 //@import "vendor/jquery-ui.theme";
@@ -7,10 +9,10 @@
 @import "jqueryUIModificaciones";
 @import "bootstrapModificaciones";
 
-@import "variables";
+@import "borders";
 @import "fonts";
 @import "botones";
-@import "elements";
+@import "formElements";
 
 @import "general";
 @import "common";

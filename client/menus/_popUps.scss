@@ -21,26 +21,6 @@
   color: $text_font; /*default font */
 }
 
-.dialogContent input {
-  @extend .activeColor, .everywhereFont;
-  border: 1px solid rgba(0, 0, 0, 0.7);
-  outline: none;
-  color: white;
-  width: 50px;
-  background-color: rgba(0, 0, 0, 0.4);
-  font-size: 14px;
-}
-
-.dialogContent ul {
-  cursor: default;
-}
-
-.dialogContent span {
-  display: inline-block;
-  user-select: none;
-  cursor: default;
-}
-
 .dialogContent .itemgrid {
   border: 1px solid #BBBDBF;
 }

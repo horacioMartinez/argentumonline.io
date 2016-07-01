@@ -29,11 +29,13 @@ define([], function () {
             var self = this;
 
             $("#sliderMusica").slider({
+                range: "min",
                 slide: function (event, ui) {
                     self.game.assetManager.audio.setMusicVolume(ui.value / 100);
                 }
             });
             $("#sliderSonido").slider({
+                range: "min",
                 slide: function (event, ui) {
                     self.game.assetManager.audio.setSoundVolume(ui.value / 100);
                 }

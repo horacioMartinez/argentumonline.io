@@ -23,9 +23,15 @@
   font-weight: normal;
   font-style: normal;
 
-  width: 161px;
-  height:53px;
+  width: 121px;
+  height:44px;
 }
+
+/*
+.botonNormal:focus {
+  background-image: url('../imagenes/botones/boton_normal_hover.png');
+  color: $boton_normal_texto_hover;
+}*/
 
 .botonNormal:hover {
   background-image: url('../imagenes/botones/boton_normal_hover.png');
@@ -38,6 +44,7 @@
   color: $boton_normal_texto_pressed;
   /*text-shadow: none;*/
 }
+
 
 .botonInvisible {
   background-color: Transparent;

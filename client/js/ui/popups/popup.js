@@ -26,16 +26,14 @@ define(['jquery-ui'], function () {
                     $(this).height($(this).parent().height() - $(this).prev('.ui-dialog-titlebar').outerHeight(true) - heightPadding - titlebarMargin);
 
                     $(this).width($(this).prev('.ui-dialog-titlebar').outerWidth(true) - widthPadding);
-                },
+                }
             };
             $.extend(options, addiotionalOptions);
             if (!general) {
                 var position = {position: {my: "center", at: "left+40%", of: "#container"}};
                 $.extend(options, position);
             }
-            this.$this.dialog(options).parent().draggable({
-                containment: parentID
-            });
+            this.$this.dialog(options).parent().draggable( "option", "containment", parentID );
 
             if (this.$this.siblings('#' + this.$this.attr('id')).length) { // TODO: no funciona esto
                 throw new Error("pop up inicializado dos veces: " + this.$this.attr('id'));
