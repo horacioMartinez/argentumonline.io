@@ -5,10 +5,11 @@
 define(['ui/game/keymouseinput'], function (KeyMouseInput) {
     class KeyMouseListener {
 
-        constructor(game, acciones, keys) {
+        constructor(game, acciones, keys, comandosChat) {
             this.game = game; // todo: sacar de aca !?
             this.inputHandler = new KeyMouseInput(game, acciones);
             this.setKeys(keys);
+            this.comandosChat = comandosChat;
 
             this._prevKeyDown = [];
             this.$gameCanvas = $('#gamecanvas');
@@ -141,7 +142,11 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
                     var $chat = $('#chatinput');
                     if ($chat.attr('value') !== '') {
                         if (self.game.player) {
-                            self.game.enviarChat($chat.val());
+                            var chat = $chat.val();
+                            var res = self.comandosChat.parsearChat(chat);
+                            if (res) {
+                                self.game.client.sendTalk(res);
+                            }
                         }
                         $chat.val('');
                         self.hideChat();

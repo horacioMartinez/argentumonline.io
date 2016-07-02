@@ -5,8 +5,9 @@
 define(['enums', 'font'], function (Enums, Font) {
 
     class ComandosChat {
-        constructor(game) {
+        constructor(game, acciones) {
             this.game = game;
+            this.acciones = acciones;
         }
 
         _checkearYescribirMuerto() {
@@ -75,12 +76,7 @@ define(['enums', 'font'], function (Enums, Font) {
 
                         case "/MEDITAR":
 
-                            if (!this._checkearYescribirMuerto()) {
-                                if (this.game.player.mana === this.game.atributos.maxMana)
-                                    this.game.escribirMsgConsola("Tu mana ya está llena", Font.INFO);
-                                else
-                                    this.game.client.sendMeditate();
-                            }
+                            this.acciones.meditar();
                             break;
 
                         case "/CONSULTA":

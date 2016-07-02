@@ -2,7 +2,7 @@
  * Created by horacio on 5/3/16.
  */
 
-define(['model/game', 'model/intervalos', 'model/acciones', 'model/macros'], function (Game, Intervalos, Acciones, Macros) {
+define(['model/game', 'model/intervalos', 'model/acciones', 'model/comandoschat'], function (Game, Intervalos, Acciones, ComandosChat) {
 
     class GameManager {
         constructor(assetManager, renderer) {
@@ -11,7 +11,7 @@ define(['model/game', 'model/intervalos', 'model/acciones', 'model/macros'], fun
 
             this.intervalos = new Intervalos();
             this.acciones = new Acciones(this.game, this.intervalos);
-            this.macros = new Macros(this.game, this.intervalos, this.acciones);
+            this.comandosChat =  new ComandosChat(this.game, this.acciones);
         }
 
         setup(client, gameUI) {

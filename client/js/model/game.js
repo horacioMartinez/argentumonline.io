@@ -1,5 +1,5 @@
-define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character', 'model/comandoschat', 'model/atributos', 'model/inventario', 'model/skills', 'enums', 'font'],
-    function (Mapa, Updater, Item, Player, Character, ComandosChat, Atributos, Inventario, Skills, Enums, Font) {
+define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character', 'model/atributos', 'model/inventario', 'model/skills', 'enums', 'font'],
+    function (Mapa, Updater, Item, Player, Character, Atributos, Inventario, Skills, Enums, Font) {
         class Game {
             constructor(assetManager) {
                 this.init(assetManager);
@@ -7,7 +7,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
 
             init(assetManager) { // temporal
                 this.atributos = new Atributos(this);
-                this.comandosChat = new ComandosChat(this);
                 this.map = new Mapa();
                 this.assetManager = assetManager;
 
@@ -103,12 +102,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 if (this.characters[charIndex]) {
                     this.renderer.setCharacterChat(this.characters[charIndex], chat, r, g, b);
                 }
-            }
-
-            enviarChat(message) {
-                var res = this.comandosChat.parsearChat(message);
-                if (res)
-                    this.client.sendTalk(res);
             }
 
             actualizarMovPos(char, direccion) {

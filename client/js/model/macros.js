@@ -10,8 +10,6 @@ define(['enums', 'font', 'lib/pixi'], function (Enums, Font, PIXI) {
             this.intervalos = intervalos;
             this.acciones = acciones;
 
-            acciones.setDesactivarMacrosCallback(this.desactivarMacros.bind(this));
-
             this.trabajando = false;
             this.lanzandoHechizo = false;
         }

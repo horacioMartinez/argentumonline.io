@@ -2,15 +2,14 @@
  * Created by horacio on 4/9/16.
  */
 
-define(['enums'], function (Enums) {
+define(['enums',  'model/macros'], function (Enums, Macros) {
 
     class Acciones {
         constructor(game, intervalos) {
             this.game = game;
             this.intervalos = intervalos;
             this.MAX_CANTIDAD_ITEM = 10000;
-            this.caminarCallback = null;
-            this.desactivarMacrosCallback = null;
+            this.macros = new Macros(this.game, this.intervalos, this);
         }
 
         agarrar() {
@@ -215,15 +214,28 @@ define(['enums'], function (Enums) {
         tirarTodoOro() {
             this.tirarOro(this.MAX_CANTIDAD_ITEM);
         }
-
-        desactivarMacros() { // TODO, sacar esto y lo de abajo, usar event emiiter o algo mas lindo
-            //usado por macro
-            if (this.desactivarMacrosCallback)
-                this.desactivarMacrosCallback();
+        
+        meditar() {
+            if (this.game.player.muerto) {
+                this.game.escribirMsgConsola(Enums.MensajeConsola.ESTAS_MUERTO, Font.INFO);
+                return;
+            }
+            if (this.game.player.mana === this.game.atributos.maxMana)
+                this.game.escribirMsgConsola("Tu mana ya está llena", Font.INFO);
+            else
+                this.game.client.sendMeditate();
+        }
+        
+        toggleMacroHechizos() {
+            this.macros.toggleHechizos();
         }
 
-        setDesactivarMacrosCallback(cb){
-            this.desactivarMacrosCallback = cb;
+        toggleMacroTrabajar() {
+            this.macros.toggleTrabajar();
+        }
+
+        desactivarMacros() {
+            this.macros.desactivarMacros();
         }
 
     }

@@ -105,6 +105,16 @@ define(['enums'], function (Enums) {
                 case keys.tirar:
                     acciones.tratarDeTirarItem();
                     break;
+                case keys.meditar:
+                    acciones.meditar();
+                    break;
+                case keys.macroHechizos:
+                    acciones.toggleMacroHechizos();
+                    break;
+                case keys.macroTrabajar:
+                    acciones.toggleMacroTrabajar();
+                    break;
+
                 default:
                     continuar = true;
                     break;

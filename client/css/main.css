@@ -7735,8 +7735,7 @@ ul {
   cursor: default; }
 
 span {
-  user-select: none;
-  cursor: default; }
+  user-select: none; }
 
 /* General Layout */
 html, body {

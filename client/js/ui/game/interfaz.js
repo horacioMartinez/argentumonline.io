@@ -5,9 +5,8 @@
 define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGrid) {
 
     class Interfaz {
-        constructor(game, macros, acciones) {
+        constructor(game, acciones) {
             this.acciones = acciones;
-            this.macros = macros;
             this.game = game;
             this.inventarioGrid = new ItemGrid("itemsGrid", true);
             var self = this;
@@ -52,11 +51,11 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
             });
 
             $("#botonMacroHechizos").click(function () {
-                self.macros.toggleHechizos();
+                self.acciones.toggleMacroHechizos();
             });
 
             $("#botonMacroTrabajo").click(function () {
-                self.macros.toggleTrabajar();
+                self.acciones.toggleMacroTrabajar();
             });
 
             $("#botonMapa").click(function () {

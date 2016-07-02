@@ -10,6 +10,7 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
         constructor(gameManager, storage) {
             var game = gameManager.game;
             var acciones = gameManager.acciones;
+            var comandosChat = gameManager.comandosChat;
             this.acciones = acciones;
             this.game = game;
             this.storage = storage;
@@ -27,8 +28,8 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
             this.carpinteria = new Carpinteria(game);
             this.herreria = new Herreria(game);
 
-            this.interfaz = new Interfaz(game, gameManager.macros, acciones);
-            this.keyMouseListener = new KeyMouseListener(game, acciones, storage.getKeys());
+            this.interfaz = new Interfaz(game, acciones);
+            this.keyMouseListener = new KeyMouseListener(game, acciones, storage.getKeys(), comandosChat);
             this.initDOM();
         }
 

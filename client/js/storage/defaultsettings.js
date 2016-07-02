@@ -4,6 +4,10 @@
 
 define(["utils/charcodemap"], function (CharCodeMap) {
 
+    function getKeyNumber(name){
+        return CharCodeMap.keys.indexOf(name);
+    }
+
     return {
         keys: {
             toggleChat: CharCodeMap.keys.indexOf("ENTER"),
@@ -19,7 +23,11 @@ define(["utils/charcodemap"], function (CharCodeMap) {
             deslagear: CharCodeMap.keys.indexOf("L"),
             ocultarse: CharCodeMap.keys.indexOf("O"),
             tirar: CharCodeMap.keys.indexOf("T"),
-            usar: CharCodeMap.keys.indexOf("U")
+            usar: CharCodeMap.keys.indexOf("U"),
+            meditar: CharCodeMap.keys.indexOf("F6"),
+            macroHechizos : CharCodeMap.keys.indexOf("F7"),
+            macroTrabajar : CharCodeMap.keys.indexOf("F8")
+
         },
         audio: {
             soundMuted: false,
