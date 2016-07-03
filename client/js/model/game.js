@@ -254,7 +254,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                             log.error("DRAW MAPA INICIAL!!! MAPA:" + this.map.numero + " X: " + X + " Y: " + Y);
 
                             // --- esto para que se setee al player una pos "anterior" a la del cambio de mapa para que de la ilusion que avanza un tile (sino se deberia quedar quieto esperando el intervalo o traeria problemas en mapas donde entras mirando la salida (ademas de que pasarias siempre en la 2da pos)) ---
-                            if (this.player.moviendose) {
+                            if (this.player.estaMoviendose()) {
                                 var dir;
                                 switch (this.player.getDirMov()) {
                                     case Enums.Heading.sur:
@@ -452,6 +452,8 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
 
                 this.player.setOnMoverse(
                     function (x, y) {
+                        x = Math.round(x);
+                        y = Math.round(y);
                         self.renderer.moverPosition(x - self.renderer.camera.centerPosX, y - self.renderer.camera.centerPosY);
                     });
 
@@ -595,9 +597,10 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
             tick() {
                 this.currentTime = Date.now();
                 if (this.started) {
+
+                    this.renderer.renderFrame();
                     if (!this.isPaused)
                         this.updater.update();
-                    this.renderer.renderFrame();
                 }
 
                 if (!this.isStopped) {
@@ -652,7 +655,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                  Entonces: si haces click en el centro y te estas moviendo lo rederijo al tile del pj.
                  (en el eje y no hay problema porque acepta 2 posiciones distintas)
                  */
-                if (this.player.movement.inProgress && offsetX) {
+                if (this.player.movementTransition.inProgress && offsetX) {
 
                     if (this.player.heading === Enums.Heading.oeste) {
                         x = x + 1; // fix de pos de c.gridX

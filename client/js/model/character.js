@@ -16,7 +16,7 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
             this.heading = Heading;
 
             this.muerto = false;
-            this.movement = new Transition();
+            this.movementTransition = new Transition();
             this.sprite = null;
             this.spriteNombre = null;
             this.texto = null;
@@ -44,18 +44,18 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
             this.animarMovimiento();
 
             var self = this;
-            var distPrimerFrame = 32 / (this.moveSpeed / (1000 / 60));
+            var distPrimerFrame = 0 ; //32 / (this.moveSpeed / (1000 / 60));
 
             if (self.getDirMov() === Enums.Heading.oeste) {
 
-                self.movement.start(
+                self.movementTransition.start(
                     function (x) {
                         self.setPosition(x, self.y);
                         if (callback_mov)
                             callback_mov(self.x, self.y);
                     },
                     function () {
-                        self.setPosition(self.movement.endValue, self.y);
+                        self.setPosition(self.movementTransition.endValue, self.y);
                         if (callback_mov)
                             callback_mov(self.x, self.y);
                         self.hasMoved();
@@ -65,14 +65,14 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
                     self.moveSpeed);
             }
             else if (self.getDirMov() === Enums.Heading.este) {
-                self.movement.start(
+                self.movementTransition.start(
                     function (x) {
                         self.setPosition(x, self.y);
                         if (callback_mov)
                             callback_mov(self.x, self.y);
                     },
                     function () {
-                        self.setPosition(self.movement.endValue, self.y);
+                        self.setPosition(self.movementTransition.endValue, self.y);
                         if (callback_mov)
                             callback_mov(self.x, self.y);
                         self.hasMoved();
@@ -82,14 +82,14 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
                     self.moveSpeed);
             }
             else if (self.getDirMov() === Enums.Heading.norte) {
-                self.movement.start(
+                self.movementTransition.start(
                     function (y) {
                         self.setPosition(self.x, y);
                         if (callback_mov)
                             callback_mov(self.x, self.y);
                     },
                     function () {
-                        self.setPosition(self.x, self.movement.endValue);
+                        self.setPosition(self.x, self.movementTransition.endValue);
                         if (callback_mov)
                             callback_mov(self.x, self.y);
                         self.hasMoved();
@@ -99,14 +99,14 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
                     self.moveSpeed);
             }
             else if (self.getDirMov() === Enums.Heading.sur) {
-                self.movement.start(
+                self.movementTransition.start(
                     function (y) {
                         self.setPosition(self.x, y);
                         if (callback_mov)
                             callback_mov(self.x, self.y);
                     },
                     function () {
-                        self.setPosition(self.x, self.movement.endValue);
+                        self.setPosition(self.x, self.movementTransition.endValue);
                         if (callback_mov)
                             callback_mov(self.x, self.y);
                         self.hasMoved();
@@ -122,8 +122,8 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
         // TODO (MUY IMPORTANTE) reveer esto de movimientos,  usar aceleracion ? mov del player en 1 solo event
 
         _updateMovement(delta) {
-            if (this.movement.inProgress) {
-                this.movement.step(delta * (1 / 60) * 1000);
+            if (this.movementTransition.inProgress) {
+                this.movementTransition.step(delta * (1 / 60) * 1000);
             }
         }
 
@@ -136,11 +136,11 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
         }
 
         resetMovement() {
-            if (this.movement.inProgress) {
-                log.error("reset movement!!!");
-                this.movement.stop();
-                if (this.movement.stopFunction)
-                    this.movement.stopFunction();
+            if (this.movementTransition.inProgress) {
+                log.error("reset movementTransition!!!");
+                this.movementTransition.stop();
+                if (this.movementTransition.stopFunction)
+                    this.movementTransition.stopFunction();
             }
         }
 

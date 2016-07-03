@@ -10,23 +10,23 @@ define(["utils/charcodemap"], function (CharCodeMap) {
 
     return {
         keys: {
-            toggleChat: CharCodeMap.keys.indexOf("ENTER"),
-            cerrar: CharCodeMap.keys.indexOf("ESCAPE"),
-            atacar: CharCodeMap.keys.indexOf("CONTROL"),
-            caminarNorte: CharCodeMap.keys.indexOf("UP"),
-            caminarSur: CharCodeMap.keys.indexOf("DOWN"),
-            caminarOeste: CharCodeMap.keys.indexOf("LEFT"),
-            caminarEste: CharCodeMap.keys.indexOf("RIGHT"),
-            agarrar: CharCodeMap.keys.indexOf("A"),
-            seguro: CharCodeMap.keys.indexOf("S"),
-            equipar: CharCodeMap.keys.indexOf("E"),
-            deslagear: CharCodeMap.keys.indexOf("L"),
-            ocultarse: CharCodeMap.keys.indexOf("O"),
-            tirar: CharCodeMap.keys.indexOf("T"),
-            usar: CharCodeMap.keys.indexOf("U"),
-            meditar: CharCodeMap.keys.indexOf("F6"),
-            macroHechizos : CharCodeMap.keys.indexOf("F7"),
-            macroTrabajar : CharCodeMap.keys.indexOf("F8")
+            toggleChat: getKeyNumber("ENTER"),
+            cerrar: getKeyNumber("ESCAPE"),
+            atacar: getKeyNumber("CONTROL"),
+            caminarNorte: getKeyNumber("UP"),
+            caminarSur: getKeyNumber("DOWN"),
+            caminarOeste: getKeyNumber("LEFT"),
+            caminarEste: getKeyNumber("RIGHT"),
+            agarrar: getKeyNumber("A"),
+            seguro: getKeyNumber("S"),
+            equipar: getKeyNumber("E"),
+            deslagear: getKeyNumber("L"),
+            ocultarse: getKeyNumber("O"),
+            tirar: getKeyNumber("T"),
+            usar: getKeyNumber("U"),
+            meditar: getKeyNumber("F6"),
+            macroHechizos : getKeyNumber("F7"),
+            macroTrabajar : getKeyNumber("F8")
 
         },
         audio: {

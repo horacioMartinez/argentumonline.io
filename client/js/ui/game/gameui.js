@@ -110,17 +110,21 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
             if (slot) {
                 var numGrafico = this.game.assetManager.getNumGraficoFromGrh(slot.grh);
                 this.interfaz.cambiarSlotInventario(numSlot, slot.cantidad, numGrafico, slot.equipado);
-                if (this.comerciar.visible)
+                if (this.comerciar.visible) {
                     this.comerciar.cambiarSlotVenta(numSlot, slot.cantidad, numGrafico);
-                if (this.boveda.visible)
+                }
+                if (this.boveda.visible) {
                     this.boveda.cambiarSlotDepositar(numSlot, slot.cantidad, numGrafico);
+                }
             }
             else {
                 this.interfaz.borrarSlotInventario(numSlot);
-                if (this.comerciar.visible)
+                if (this.comerciar.visible) {
                     this.comerciar.borrarSlotVenta(numSlot);
-                if (this.boveda.visible)
+                }
+                if (this.boveda.visible) {
                     this.boveda.borrarSlotDepositar(numSlot);
+                }
             }
         }
 
@@ -138,8 +142,7 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
             if (slot) {
                 var numGrafico = this.game.assetManager.getNumGraficoFromGrh(slot.grh);
                 this.boveda.cambiarSlotRetirar(numSlot, slot.cantidad, numGrafico);
-            }
-            else {
+            } else {
                 this.boveda.borrarSlotRetirar(numSlot);
             }
         }

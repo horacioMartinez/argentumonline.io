@@ -7,8 +7,9 @@ define([], function () {
 
         update() {
             if (this.game.logeado) {
-                if (this.game.player)
+                if (this.game.player) {
                     this.updateComenzarMovimientoPlayer();
+                }
             }
         }
 

@@ -247,7 +247,7 @@ define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/character
 
             rescale(escala) {
                 this.escala = escala;
-                this.pixiRenderer.resize(this.camera.gridW * this.tilesize * escala, this.camera.gridH * this.tilesize * escala);
+                this.pixiRenderer.resize(Math.round(this.camera.gridW * this.tilesize * escala) , Math.round(this.camera.gridH * this.tilesize * escala) );
                 this.gameStage.scale.x = escala;
                 this.gameStage.scale.y = escala;
 
@@ -294,8 +294,8 @@ define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/character
             }
 
             _syncGamePosition() {
-                this.gameStage.x = Math.round(-this.camera.x * this.escala);
-                this.gameStage.y = Math.round(-this.camera.y * this.escala);
+                this.gameStage.x = - Math.round(this.camera.x * this.escala);
+                this.gameStage.y = - Math.round (this.camera.y * this.escala);
             }
 
             entityVisiblePorCamara(entity, heightTileOffset) {
