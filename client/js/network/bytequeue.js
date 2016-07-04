@@ -46,10 +46,11 @@ define(function () {
         }
 
         WriteBoolean(value) {
-            if (value)
+            if (value) {
                 this._data.push(1);
-            else
+            } else {
                 this._data.push(0);
+            }
         }
 
         WriteUnicodeStringFixed(string) {
@@ -77,7 +78,9 @@ define(function () {
 
             var int = this.ws.rQshift16();
             if (int & 0x8000) // ultimo bit de los 16 es 1 -> numero negativo, extiendo los demas bits
+            {
                 int = int | 0xFFFF0000;
+            }
             return int;
         }
 
@@ -100,8 +103,9 @@ define(function () {
             var buffer = new ArrayBuffer(8);
             var byteView = new Uint8Array(buffer);
             var floatView = new Float64Array(buffer);
-            for (var i = 0; i < 8; i++)
+            for (var i = 0; i < 8; i++) {
                 byteView[i] = this.ws.rQshift8();
+            }
             return floatView[0];
         }
 

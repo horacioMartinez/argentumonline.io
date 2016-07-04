@@ -45,8 +45,9 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
     };
 
     CharacterSprites.prototype.setSombraSprite = function (grh) {
-        if (this._sombraSprite)
+        if (this._sombraSprite) {
             return;
+        }
         this._sombraSprite = new SpriteGrh(grh);
         this.addChild(this._sombraSprite);
         this._sombraSprite.zIndex = -1;
@@ -57,12 +58,14 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
     CharacterSprites.prototype._updateSombraSpriteSize = function () {
         if (this._sombraSprite) {
             var w;
-            if (this.bodySprite)
+            if (this.bodySprite) {
                 w = this.bodySprite.width < 32 ? 32 : this.bodySprite.width;
-            else
+            } else {
                 w = 32;
-            if (w !== this._sombraSprite.width)
+            }
+            if (w !== this._sombraSprite.width) {
                 this._sombraSprite.setSize(w, w);
+            }
         }
     };
 
@@ -85,8 +88,9 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
         if ((gridX !== this._gridX) || (gridY !== this._gridY)) {
             this._gridX = gridX;
             this._gridY = gridY;
-            if (this._onGridPositionChange)
+            if (this._onGridPositionChange) {
                 this._onGridPositionChange();
+            }
         }
     };
 
@@ -102,26 +106,27 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
             sprite.play();
         });
     };
-/*
-    CharacterSprites.prototype.setNombre = function (nombre, clan, font) {
-        if (this._nombre) {
-            this.removeChild(this._nombre);
-            this._nombre = null;
-        }
-        if (clan)
-            nombre = nombre + "\n" + clan;
+    /*
+     CharacterSprites.prototype.setNombre = function (nombre, clan, font) {
+     if (this._nombre) {
+     this.removeChild(this._nombre);
+     this._nombre = null;
+     }
+     if (clan)
+     nombre = nombre + "\n" + clan;
 
-        if (nombre) {
-            this._nombre = new PIXI.Text(nombre, font);
-            this.addChild(this._nombre);
-            this._nombre.y = 32;
-            this._nombre.x = this.bodySprite.x + 32 / 2 - this._nombre.width / 2;
-        }
-    };*/
+     if (nombre) {
+     this._nombre = new PIXI.Text(nombre, font);
+     this.addChild(this._nombre);
+     this._nombre.y = 32;
+     this._nombre.x = this.bodySprite.x + 32 / 2 - this._nombre.width / 2;
+     }
+     };*/
 
     CharacterSprites.prototype.cambiarHeading = function (heading) {
-        if (this.heading === heading)
+        if (this.heading === heading) {
             return;
+        }
 
         this.heading = heading;
         this.setBodys(this.bodys, this.headOffX, this.headOffY, true);
@@ -234,14 +239,16 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
             sprite.visible = visible;
         });
         this._sombraSprite.visible = visible;
-        if (this._nombre)
+        if (this._nombre) {
             this._nombre.visible = visible;
+        }
     };
 
     CharacterSprites.prototype._setHeadingSprite = function (varSprite, grhs) {
         if (!grhs) {
-            if (varSprite)
+            if (varSprite) {
                 this.removeChild(varSprite);
+            }
             return null;
         }
         if (varSprite) {
@@ -250,16 +257,19 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
         }
         var nuevoSprite = new SpriteGrh(grhs[this.heading], 1);
         this.addChild(nuevoSprite);
-        if (this._velocidad)
+        if (this._velocidad) {
             nuevoSprite.setSpeed(this._velocidad);
+        }
         nuevoSprite.visible = this._visible;
         return nuevoSprite;
     };
 
     CharacterSprites.prototype._setHeadOffset = function (headOffX, headOffY) {
-        if (this.headOffX)
-            if ((this.headOffX === headOffX) && (this.headOffY === headOffY))
+        if (this.headOffX) {
+            if ((this.headOffX === headOffX) && (this.headOffY === headOffY)) {
                 return;
+            }
+        }
 
         this.headOffX = headOffX || 0;
         this.headOffY = headOffY || 0;
@@ -281,16 +291,21 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
     };
 
     CharacterSprites.prototype._forEachHeadingSprite = function (callback) {
-        if (this.bodySprite)
+        if (this.bodySprite) {
             callback(this.bodySprite);
-        if (this.headSprite)
+        }
+        if (this.headSprite) {
             callback(this.headSprite);
-        if (this.weaponSprite)
+        }
+        if (this.weaponSprite) {
             callback(this.weaponSprite);
-        if (this.shieldSprite)
+        }
+        if (this.shieldSprite) {
             callback(this.shieldSprite);
-        if (this.helmetSprite)
+        }
+        if (this.helmetSprite) {
             callback(this.helmetSprite);
+        }
     };
 
     return CharacterSprites;

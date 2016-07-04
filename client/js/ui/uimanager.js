@@ -120,8 +120,9 @@ define(['ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mensaje'], fu
             $('#container').width(escala * 800);
             $('#chatbox input').css("font-size", Math.floor(12 * escala) + 'px');
 
-            if (this.gameUI)
+            if (this.gameUI) {
                 this.gameUI.resize(escala);
+            }
         }
 
         hideIntro() { // TODO

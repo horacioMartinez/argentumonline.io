@@ -47,7 +47,7 @@ define(["text!../../../menus/herreria.html!strip", 'ui/popups/popup'], function 
                 $row.append($cell);
 
                 var $cellRequerimientos = $('<td></td>');
-                $cellRequerimientos.text('Require lingote hierro: ' + item.LingH+ " , lingote plata " + item.LingP + " y lingote de oro: " + item.LingO);
+                $cellRequerimientos.text('Require lingote hierro: ' + item.LingH + " , lingote plata " + item.LingP + " y lingote de oro: " + item.LingO);
                 // TODO: graficos madera y madera elfica
                 $row.append($cellRequerimientos);
 

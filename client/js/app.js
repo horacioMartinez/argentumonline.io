@@ -77,14 +77,17 @@ define(['model/gamemanager', 'view/renderer', 'network/gameclient'], function (G
         }
 
         tryStartingGame() {
-            if (this.starting) return;
+            if (this.starting) {
+                return;
+            }
 
             log.info(" Trying to start game...");
 
             var username = this.uiManager.loginUI.getUsername();
             var userpw = this.uiManager.loginUI.getPassword();
-            if (!this.validarLogin(username, userpw))
+            if (!this.validarLogin(username, userpw)) {
                 return;
+            }
 
             this.starting = true;
             this.uiManager.loginUI.setPlayButtonState(false);
@@ -92,8 +95,9 @@ define(['model/gamemanager', 'view/renderer', 'network/gameclient'], function (G
         }
 
         startGame(newChar, username, userpw, raza, genero, clase, cabeza, mail, ciudad) {
-            if (this.gameManager.game.started)
+            if (this.gameManager.game.started) {
                 return;
+            }
             //this.center();
             this.gameManager.game.inicializar(username);
             if (!newChar) {

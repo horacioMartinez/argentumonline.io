@@ -48,8 +48,9 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
             this._removerTexto(this.children[0])
         }
         var y = 0;
-        if (this.children[0])
+        if (this.children[0]) {
             y = this.children[0].height * this.children.length;
+        }
         texto.y = y;
         texto.duracion = 1000;
         texto.tiempoPasado = 0;

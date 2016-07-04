@@ -26,26 +26,30 @@ define(['json!../../indices/graficos.json',
             }
 
             getNumGraficoFromGrh(grh) {
-                if (this.indices[grh] && this.indices[grh].grafico)
+                if (this.indices[grh] && this.indices[grh].grafico) {
                     return this.indices[grh].grafico;
+                }
             }
 
             getFaceGrafFromNum(numHead) {
-                if (!this.cabezas[numHead])
+                if (!this.cabezas[numHead]) {
                     return;
+                }
                 var grh = this.cabezas[numHead].down;
                 return this.getNumGraficoFromGrh(grh);
             }
 
             getGrh(grh) {
-                if (!this.grhs[grh])
+                if (!this.grhs[grh]) {
                     this.loadGrh(grh);
+                }
                 return this.grhs[grh];
             }
 
             getTerrenoGrh(grh) { // TODO: cuando se implemente con rendertexture el mapa, sacar esto y usar getgrh, sirve para que el grid del terreno no se vea discontinuo
-                if (!this.grhs[grh])
+                if (!this.grhs[grh]) {
                     this.loadGrh(grh);
+                }
                 var res = this.grhs[grh];
                 if (!res.terrenoSeteado) {
                     if (!res.frames) {
@@ -69,8 +73,9 @@ define(['json!../../indices/graficos.json',
                     var frameNumbers = this.indices[grh].frames;
                     var vecgrhs = [];
                     for (var j = 0; j < frameNumbers.length; j++) {
-                        if (!this.grhs[frameNumbers[j]])
+                        if (!this.grhs[frameNumbers[j]]) {
                             this._loadGrhGrafico(frameNumbers[j]);
+                        }
                         vecgrhs.push(this.grhs[frameNumbers[j]]);
                     }
                     this.grhs[grh] = {frames: vecgrhs, velocidad: this.indices[grh].velocidad};

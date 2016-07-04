@@ -100,8 +100,9 @@ define(['lib/howler', 'lib/pixi'],
                     this.PRELOAD_MAPAS.push(i);
                 }
                 for (var i = 0; i < this.assetManager.indices.length; i++) {
-                    if (this.assetManager.indices[i])
+                    if (this.assetManager.indices[i]) {
                         this.PRELOAD_GRHS.push(i);
+                    }
                 }
                 this.preload(terminar_callback);
             }

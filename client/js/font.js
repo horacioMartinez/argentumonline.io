@@ -8,7 +8,7 @@ define(["utils/palette"], function (Palette) {
             1: "CRIMINAL",
             2: "CIUDADANO",
         },
-        
+
         NickColor: {
             CRIMINAL: Palette.get('red'),
             CIUDADANO: Palette.get('blue')
@@ -64,7 +64,7 @@ define(["utils/palette"], function (Palette) {
         },
 
         CLAN_CHAT: {
-            fill: Palette.get('cyan','A200')
+            fill: Palette.get('cyan', 'A200')
         },
 
         NOTIFICATION: {

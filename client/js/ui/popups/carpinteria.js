@@ -8,12 +8,12 @@ define(["text!../../../menus/carpinteria.html!strip", 'ui/popups/popup'], functi
         constructor(game) {
 
             var options = {
-                width:500,
-                height:400,
-                minWidth:250,
-                minHeight:300
+                width: 500,
+                height: 400,
+                minWidth: 250,
+                minHeight: 300
             };
-            super(DOMdata,options);
+            super(DOMdata, options);
 
             this.game = game;
             this.initCallbacks();
@@ -28,14 +28,14 @@ define(["text!../../../menus/carpinteria.html!strip", 'ui/popups/popup'], functi
          ObjCarpinteroIndex: ObjCarpinteroIndex,
          ObjUpgrade: ObjUpgrade,
          */
-        setItems(items){
+        setItems(items) {
             //TODO objUpgrade
-            if (items.length < 1){
+            if (items.length < 1) {
                 // TODO: decir que no peude construir items pq le falta skills
             }
-            
+
             var self = this;
-            for (var item of items){
+            for (var item of items) {
 
                 var $row = $('<tr></tr>');
 
@@ -58,9 +58,9 @@ define(["text!../../../menus/carpinteria.html!strip", 'ui/popups/popup'], functi
                 var $botonConstruir = $('<button class="botonNormal" >CONSTRUIR</button>');
 
                 $botonConstruir.data("itemIndex", item.ObjCarpinteroIndex);
-                $botonConstruir.click(function(){
+                $botonConstruir.click(function () {
                     var cantidadAConstruir = $('#carpinteriaCantidadAConstruir').val();
-                    self.game.client.sendInitCrafting(cantidadAConstruir,1);//TODO: horrible esto, que se haga de 1 (cambiar sv)
+                    self.game.client.sendInitCrafting(cantidadAConstruir, 1);//TODO: horrible esto, que se haga de 1 (cambiar sv)
                     var itemIndex = $(this).data("itemIndex");
                     self.game.client.sendCraftCarpenter(itemIndex);
                 });
@@ -70,7 +70,7 @@ define(["text!../../../menus/carpinteria.html!strip", 'ui/popups/popup'], functi
             }
         }
 
-        initCallbacks(){
+        initCallbacks() {
 
         }
     }

@@ -50,10 +50,11 @@ define(['jquery-ui'], function () {
             $item.text(cantidad + "");
             var url = "url(graficos/" + numGraf + ".png)";
             $item.css('background-image', url);
-            if (equiped)
+            if (equiped) {
                 $item.addClass("equiped");
-            else
+            } else {
                 $item.removeClass("equiped");
+            }
         }
 
         _getItem(numSlot) {
@@ -78,8 +79,9 @@ define(['jquery-ui'], function () {
                 $currentItem.addClass("selected");
                 $currentItem.siblings().removeClass("selected");
                 self._selectedSlot = $currentItem.data("slot");
-                if (self._selectionCallback)
+                if (self._selectionCallback) {
                     self._selectionCallback(self._selectedSlot);
+                }
             });
 
             if (self._doubleClickCallback) {
@@ -98,8 +100,9 @@ define(['jquery-ui'], function () {
 
         borrarSlot(numSlot) {
             var $item = this._getItem(numSlot);
-            if ($item)
+            if ($item) {
                 $item.remove();
+            }
         }
 
         clear() {

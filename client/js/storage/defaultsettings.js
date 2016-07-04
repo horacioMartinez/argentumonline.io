@@ -4,7 +4,7 @@
 
 define(["utils/charcodemap"], function (CharCodeMap) {
 
-    function getKeyNumber(name){
+    function getKeyNumber(name) {
         return CharCodeMap.keys.indexOf(name);
     }
 
@@ -26,10 +26,10 @@ define(["utils/charcodemap"], function (CharCodeMap) {
             tirar: getKeyNumber("T"),
             usar: getKeyNumber("U"),
             meditar: getKeyNumber("F6"),
-            domar : getKeyNumber("D"),
+            domar: getKeyNumber("D"),
             robar: getKeyNumber("R"),
-            macroHechizos : getKeyNumber("F7"),
-            macroTrabajo : getKeyNumber("F8")
+            macroHechizos: getKeyNumber("F7"),
+            macroTrabajo: getKeyNumber("F8")
 
         },
         audio: {

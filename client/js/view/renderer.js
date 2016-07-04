@@ -1,4 +1,4 @@
-define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'view/charactername', 'view/consola', 'view/charactertext', 'view/spritegrh', 'view/containerordenado'],
+define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'view/charactername', 'view/consola', 'view/charactertext', 'view/spritegrh', 'view/containerordenado'],
     function (Enums, Utils, Font, PIXI, Camera, CharacterSprites, CharacterName, Consola, CharacterText, SpriteGrh, ContainerOrdenado) {
 
         class Renderer {
@@ -74,8 +74,9 @@ define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/character
                         var screenY = (gridYIni + j) * this.tilesize;
                         this.terreno[i][j].setPosition(screenX, screenY);
 
-                        if (this.mapa.getGrh1(gridXIni + i, gridYIni + j))
+                        if (this.mapa.getGrh1(gridXIni + i, gridYIni + j)) {
                             this.terreno[i][j].cambiarGrh(this.assetManager.getTerrenoGrh(this.mapa.getGrh1(gridXIni + i, gridYIni + j)));
+                        }
                     }
                 }
             }
@@ -93,12 +94,15 @@ define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/character
             }
 
             _getHeadingsGrhs(varIndice, num) {
-                if (!num)
+                if (!num) {
                     return null;
-                if (!varIndice[num])
+                }
+                if (!varIndice[num]) {
                     return null;
-                if (!varIndice[num].down)
+                }
+                if (!varIndice[num].down) {
                     return null;
+                }
                 var res = [];
                 res[Enums.Heading.norte] = this.assetManager.getGrh(varIndice[num].up);
                 res[Enums.Heading.este] = this.assetManager.getGrh(varIndice[num].right);
@@ -123,8 +127,9 @@ define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/character
             }
 
             sacarItem(item) {
-                if (!item.sprite)
+                if (!item.sprite) {
                     return;
+                }
                 this.layer3.removeChild(item.sprite);
                 item.sprite = null;
             }
@@ -143,7 +148,7 @@ define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/character
                     headOffY = this.cuerpos[Body].offHeadY;
                 }
 
-                this.cambiarNombreCharacter(char,Name,clan,NickColor);
+                this.cambiarNombreCharacter(char, Name, clan, NickColor);
 
                 var sprite = new CharacterSprites(Heading, bodys, heads, headOffX, headOffY, weapons, shields, helmets);
                 sprite.setSombraSprite(this.assetManager.getGrh(24208));
@@ -247,7 +252,7 @@ define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/character
 
             rescale(escala) {
                 this.escala = escala;
-                this.pixiRenderer.resize(Math.round(this.camera.gridW * this.tilesize * escala) , Math.round(this.camera.gridH * this.tilesize * escala) );
+                this.pixiRenderer.resize(Math.round(this.camera.gridW * this.tilesize * escala), Math.round(this.camera.gridH * this.tilesize * escala));
                 this.gameStage.scale.x = escala;
                 this.gameStage.scale.y = escala;
 
@@ -294,13 +299,14 @@ define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/character
             }
 
             _syncGamePosition() {
-                this.gameStage.x = - Math.round(this.camera.x * this.escala);
-                this.gameStage.y = - Math.round (this.camera.y * this.escala);
+                this.gameStage.x = -Math.round(this.camera.x * this.escala);
+                this.gameStage.y = -Math.round(this.camera.y * this.escala);
             }
 
             entityVisiblePorCamara(entity, heightTileOffset) {
-                if (!entity.sprite)
+                if (!entity.sprite) {
                     return false;
+                }
 
                 var entityRect = entity.sprite.getBounds().clone();
                 if (!entityRect.width) {
@@ -342,8 +348,9 @@ define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/character
                         for (var i = 0; i < this.terreno.length; i++) {
                             this.terreno[i][j].setPosition(this.terreno[i][j].x, this.terreno[i][j].y - (rows * this.tilesize));
                             var grh = this.mapa.getGrh1(gridXIni + Utils.modulo(i - this._lowestColTerreno, cols), gridYIni - 1);
-                            if (grh)
+                            if (grh) {
                                 this.terreno[i][j].cambiarGrh(this.assetManager.getTerrenoGrh(grh));
+                            }
                         }
 
                         this._lowestRowTerreno = Utils.modulo(this._lowestRowTerreno - 1, rows);
@@ -354,8 +361,9 @@ define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/character
                         for (var j = 0; j < this.terreno[i].length; j++) {
                             this.terreno[i][j].setPosition(this.terreno[i][j].x - (cols * this.tilesize), this.terreno[i][j].y);
                             var grh = this.mapa.getGrh1(gridXIni - 1, gridYIni + Utils.modulo(j - this._lowestRowTerreno, rows));
-                            if (grh)
+                            if (grh) {
                                 this.terreno[i][j].cambiarGrh(this.assetManager.getTerrenoGrh(grh));
+                            }
                         }
                         this._lowestColTerreno = Utils.modulo(this._lowestColTerreno - 1, cols);
                         break;
@@ -365,8 +373,9 @@ define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/character
                         for (var i = 0; i < this.terreno.length; i++) {
                             this.terreno[i][j].setPosition(this.terreno[i][j].x, (this.terreno[i][j].y + (rows * this.tilesize)));
                             var grh = this.mapa.getGrh1(gridXIni + Utils.modulo(i - this._lowestColTerreno, cols), gridYIni + rows);
-                            if (grh)
+                            if (grh) {
                                 this.terreno[i][j].cambiarGrh(this.assetManager.getTerrenoGrh(grh));
+                            }
                         }
                         this._lowestRowTerreno = Utils.modulo(this._lowestRowTerreno + 1, rows);
                         break;
@@ -376,8 +385,9 @@ define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/character
                         for (var j = 0; j < this.terreno[i].length; j++) {
                             this.terreno[i][j].setPosition((this.terreno[i][j].x + cols * this.tilesize), this.terreno[i][j].y);
                             var grh = this.mapa.getGrh1(gridXIni + cols, gridYIni + Utils.modulo(j - this._lowestRowTerreno, rows));
-                            if (grh)
+                            if (grh) {
                                 this.terreno[i][j].cambiarGrh(this.assetManager.getTerrenoGrh(grh));
+                            }
                         }
                         this._lowestColTerreno = Utils.modulo(this._lowestColTerreno + 1, cols);
                         break;
@@ -391,8 +401,9 @@ define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/character
             _removeChilds(padre, gridHijos) {
                 _.each(gridHijos, function (fila) {
                     _.each(fila, function (hijo) {
-                        if (hijo)
+                        if (hijo) {
                             padre.removeChild(hijo);
+                        }
                     });
                 });
             }
@@ -447,24 +458,27 @@ define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/character
                     var grh4 = self.mapa.getGrh4(i, j);
                     var nuevoSprite;
                     if (grh2) {
-                        if (self._spritesLayer2[i][j])
+                        if (self._spritesLayer2[i][j]) {
                             return;
+                        }
                         nuevoSprite = new SpriteGrh(self.assetManager.getTerrenoGrh(grh2));
                         self.layer2.addChild(nuevoSprite);
                         nuevoSprite.setPosition(screenX, screenY);
                         self._spritesLayer2[i][j] = (nuevoSprite);
                     }
                     if (grh3) {
-                        if (self._spritesLayer3[i][j])
+                        if (self._spritesLayer3[i][j]) {
                             return;
+                        }
                         nuevoSprite = new SpriteGrh(self.assetManager.getGrh(grh3));
                         self.layer3.addChild(nuevoSprite);
                         nuevoSprite.setPosition(screenX, screenY);
                         self._spritesLayer3[i][j] = (nuevoSprite);
                     }
                     if (grh4) {
-                        if (self._spritesLayer4[i][j])
+                        if (self._spritesLayer4[i][j]) {
                             return;
+                        }
                         nuevoSprite = new SpriteGrh(self.assetManager.getGrh(grh4));
                         self.layer4.addChild(nuevoSprite);
                         nuevoSprite.setPosition(screenX, screenY);
@@ -493,15 +507,17 @@ define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/character
             }
 
             toggleLluvia() {
-                if (this.containerLluvia)
+                if (this.containerLluvia) {
                     this.removeLluvia();
-                else
+                } else {
                     this.createLluvia();
+                }
             }
 
             removeLluvia() {
-                if (!this.containerLluvia)
+                if (!this.containerLluvia) {
                     return;
+                }
                 PIXI.ticker.shared.remove(this._updateGotas, this);
                 this.stage.removeChild(this.containerLluvia);
                 this.gotas = null;
@@ -509,8 +525,9 @@ define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/character
             }
 
             createLluvia() {
-                if (this.containerLluvia)
+                if (this.containerLluvia) {
                     return;
+                }
                 this.gotas = [];
                 this.containerLluvia = new PIXI.ParticleContainer();
                 var indice = this.stage.getChildIndex(this.gameStage) + 1;
@@ -520,8 +537,9 @@ define(['enums','utils/util', 'font', 'lib/pixi', 'view/camera', 'view/character
 
                 var velocidad = 7 + Math.pow(anguloBase, 2) * 15;
                 var cantidadGotas = Math.floor((100 + anguloBase * 250) * this.escala);
-                if (Math.random() < 0.5)
+                if (Math.random() < 0.5) {
                     anguloBase = -anguloBase;
+                }
                 for (var i = 0; i < cantidadGotas; ++i) {
                     var gota = new PIXI.Sprite.fromImage("graficos/extras/gota.png");
 

@@ -7,12 +7,12 @@ define(["text!../../../menus/skills.html!strip", 'ui/popups/popup'], function (D
     class popUpSkills extends PopUp {
         constructor(game) {
             var options = {
-                width:200,
-                height:500,
-                minWidth:150,
-                minHeight:250
+                width: 200,
+                height: 500,
+                minWidth: 150,
+                minHeight: 250
             };
-            super(DOMdata,options);
+            super(DOMdata, options);
             this.game = game;
             this.initCallbacks();
             this.skills = null;
@@ -66,7 +66,7 @@ define(["text!../../../menus/skills.html!strip", 'ui/popups/popup'], function (D
 
             $("#popUpSkillsContenedorSkills").append('<tr>'
                 + '<td class="everywhereFont secondaryColor" id=' + textoId + '></td>'
-                + '<td class="everywhereBoldFont activeColor" id=' + puntosId +'></td>'
+                + '<td class="everywhereBoldFont activeColor" id=' + puntosId + '></td>'
                 + '<td><button id=' + botonMenosId + ' class="botonMenosSkill"></button></td>'
                 + '<td><button id=' + botonMasId + ' class="botonMasSkill"></button></td>'
                 + '</tr>');
@@ -85,8 +85,9 @@ define(["text!../../../menus/skills.html!strip", 'ui/popups/popup'], function (D
             $botonMenos.data("numSkill", numSkill);
             $botonMenos.on("click", function () {
                 var numSkill = $(this).data("numSkill");
-                if (self.skills.getPuntosSkill(numSkill) <= self.game.skills.getPuntosSkill(numSkill))
+                if (self.skills.getPuntosSkill(numSkill) <= self.game.skills.getPuntosSkill(numSkill)) {
                     return;
+                }
                 self.skills.desAsignarSkill(numSkill);
                 self._updateSkill(numSkill);
                 self._updatePuntosLibres();
@@ -97,19 +98,19 @@ define(["text!../../../menus/skills.html!strip", 'ui/popups/popup'], function (D
             $("#popUpSkillsContenedorPuntosLibres").text("PUNTOS LIBRES: " + this.skills.puntosLibres);
         }
 
-        _updateSkill(numSkill,nombre,puntos) {
+        _updateSkill(numSkill, nombre, puntos) {
             nombre = nombre || this.skills.getNombreSkill(numSkill);
             puntos = puntos || this.skills.getPuntosSkill(numSkill);
             var id = this._getSkillTextDOMid(numSkill);
             let puntosid = this._getSkillPointsDOMid(numSkill);
             $("#" + id).text(nombre.toUpperCase());
-            $("#"+puntosid).text(puntos);
+            $("#" + puntosid).text(puntos);
         }
 
         _updateSkillsPoints() {
             var self = this;
             this.skills.forEachSkill(function (numSkill, puntos, porcentaje, nombre) {
-                self._updateSkill(numSkill,nombre.puntos);
+                self._updateSkill(numSkill, nombre.puntos);
             });
         }
 
@@ -134,11 +135,13 @@ define(["text!../../../menus/skills.html!strip", 'ui/popups/popup'], function (D
             this.skills.forEachSkill(function (numSkill, puntos, porcentaje, nombre) {
                 var puntosAdicionales = puntos - self.game.skills.getPuntosSkill(numSkill);
                 res.push(puntosAdicionales);
-                if (puntosAdicionales)
+                if (puntosAdicionales) {
                     modificados = true;
+                }
             });
-            if (!modificados)
+            if (!modificados) {
                 return null;
+            }
             return res;
         }
     }

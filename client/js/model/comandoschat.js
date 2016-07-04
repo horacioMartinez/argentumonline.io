@@ -32,11 +32,12 @@ define(['enums', 'font'], function (Enums, Font) {
                             break;
 
                         case "/SALIR":
-                            if (this.game.playerState.paralizado)
+                            if (this.game.playerState.paralizado) {
                                 this.game.escribirMsgConsola("No puedes salir estando paralizado.", Font.WARNING);
-                            else {
-                                if (this.game.macroActivado)
+                            } else {
+                                if (this.game.macroActivado) {
                                     this.game.desactivarMacro();
+                                }
                                 this.game.client.sendQuit();
                             }
                             break;
@@ -45,33 +46,39 @@ define(['enums', 'font'], function (Enums, Font) {
                             this.game.client.sendGuildLeave();
                             break;
                         case "/BALANCE":
-                            if (!this._checkearYescribirMuerto())
+                            if (!this._checkearYescribirMuerto()) {
                                 this.game.client.sendRequestAccountState();
+                            }
                             break;
 
                         case "/QUIETO":
-                            if (!this._checkearYescribirMuerto())
+                            if (!this._checkearYescribirMuerto()) {
                                 this.game.client.sendPetStand();
+                            }
                             break;
 
                         case "/ACOMPAÑAR":
-                            if (!this._checkearYescribirMuerto())
+                            if (!this._checkearYescribirMuerto()) {
                                 this.game.client.sendPetFollow();
+                            }
                             break;
 
                         case "/LIBERAR":
-                            if (!this._checkearYescribirMuerto())
+                            if (!this._checkearYescribirMuerto()) {
                                 this.game.client.sendReleasePet();
+                            }
                             break;
 
                         case "/ENTRENAR":
-                            if (!this._checkearYescribirMuerto())
+                            if (!this._checkearYescribirMuerto()) {
                                 this.game.client.sendTrainList();
+                            }
                             break;
 
                         case "/DESCANSAR":
-                            if (!this._checkearYescribirMuerto())
+                            if (!this._checkearYescribirMuerto()) {
                                 this.game.client.sendRest();
+                            }
                             break;
 
                         case "/MEDITAR":
@@ -102,16 +109,18 @@ define(['enums', 'font'], function (Enums, Font) {
                         case "/COMERCIAR":
                             if (!this._checkearYescribirMuerto) {
 
-                                if (this.game.comerciando)
+                                if (this.game.comerciando) {
                                     this.game.escribirMsgConsola("Ya estás comerciando", Font.INFO);
-                                else
+                                } else {
                                     this.game.client.sendCommerceStart();
+                                }
                             }
 
                             break;
                         case "/BOVEDA":
-                            if (!this._checkearYescribirMuerto)
+                            if (!this._checkearYescribirMuerto) {
                                 this.game.client.sendBankStart();
+                            }
 
                             break;
                         case "/ENLISTAR":
@@ -139,59 +148,68 @@ define(['enums', 'font'], function (Enums, Font) {
 
                             break;
                         case "/CREARPARTY":
-                            if (!this._checkearYescribirMuerto)
+                            if (!this._checkearYescribirMuerto) {
                                 this.game.client.sendPartyCreate();
+                            }
 
                             break;
                         case "/PARTY":
-                            if (!this._checkearYescribirMuerto)
+                            if (!this._checkearYescribirMuerto) {
                                 this.game.client.sendPartyJoin();
+                            }
                             break;
 
                         case "/COMPARTIRNPC":
-                            if (!this._checkearYescribirMuerto)
+                            if (!this._checkearYescribirMuerto) {
                                 this.game.client.sendShareNpc();
+                            }
 
                             break;
                         case "/NOCOMPARTIRNPC":
-                            if (!this._checkearYescribirMuerto)
+                            if (!this._checkearYescribirMuerto) {
                                 this.game.client.sendStopSharingNpc();
+                            }
 
                             break;
                         case "/ENCUESTA":
-                            if (args.length === 0)
+                            if (args.length === 0) {
                                 this.game.client.sendInquiry();
-                            else {
-                                if (!isNaN(args[0]) && (args[0] < 256))
+                            } else {
+                                if (!isNaN(args[0]) && (args[0] < 256)) {
                                     this.game.client.sendInquiryVote(args[0]);
-                                else
+                                } else {
                                     this.game.escribirMsgConsola("Para votar una opción, escribe /encuesta NUMERODEOPCION, por ejemplo para votar la opcion 1, escribe /encuesta 1.", Font.WARNING);
+                                }
                             }
 
                             break;
                         case "/CMSG":
-                            if (args.length)
+                            if (args.length) {
                                 this.game.client.sendGuildMessage(args.join(" "));
-                            else
+                            } else {
                                 this.game.escribirMsgConsola("Escriba un mensaje.", Font.INFO);
+                            }
 
                             break;
                         case "/PMSG":
-                            if (args.length)
+                            if (args.length) {
                                 this.game.client.sendPartyMessage(args.join(" "));
-                            else
+                            } else {
                                 this.game.escribirMsgConsola("Escriba un mensaje.");
+                            }
 
                             break;
                         case "/CENTINELA":
                             if (args.length) {
-                                if (!isNaN(args[0]) && (args[0] < 65536))
+                                if (!isNaN(args[0]) && (args[0] < 65536)) {
                                     this.game.client.sendCentinelReport(CInt(ArgumentosRaw))();
-                                else
+                                } else {
                                     this.game.escribirMsgConsola("El código de verificación debe ser numérico. Utilice /centinela X, siendo X el código de verificación.");
+                                }
                             }
-                            else
+                            else {
                                 this.game.escribirMsgConsola("Faltan parámetros. Utilice /centinela X, siendo X el código de verificación.");
+                            }
                             break;
 
                         case "/ONLINECLAN":
@@ -203,17 +221,19 @@ define(['enums', 'font'], function (Enums, Font) {
 
                             break;
                         case "/BMSG":
-                            if (args.length)
+                            if (args.length) {
                                 this.game.client.sendCouncilMessage(args.join(" "));
-                            else
+                            } else {
                                 this.game.escribirMsgConsola("Escriba un mensaje.");
+                            }
 
                             break;
                         case "/ROL":
-                            if (args.length)
+                            if (args.length) {
                                 this.game.client.sendRoleMasterRequest(args.join(" "));
-                            else
+                            } else {
                                 this.game.escribirMsgConsola("Escriba una pregunta.");
+                            }
 
                             break;
                         case "/GM":
@@ -221,31 +241,33 @@ define(['enums', 'font'], function (Enums, Font) {
 
                             break;
                         case "/_BUG":
-                            if (args.length)
+                            if (args.length) {
                                 this.game.client.sendBugReport(args.join(" "));
-                            else
+                            } else {
                                 this.game.escribirMsgConsola("Escriba una descripción del bug.");
+                            }
 
                             break;
                         case "/DESC":
-                            if (!this._checkearYescribirMuerto())
+                            if (!this._checkearYescribirMuerto()) {
                                 this.game.client.sendChangeDescription(args.join(" "));
+                            }
 
                             break;
                         case "/VOTO":
-                            if (args.length)
+                            if (args.length) {
                                 this.game.client.sendGuildVote(args.join(" "));
-                            else
-
+                            } else {
                                 this.game.escribirMsgConsola("Faltan parámetros. Utilice /voto NICKNAME.");
+                            }
 
                             break;
                         case "/PENAS":
-                            if (args.length)
+                            if (args.length) {
                                 this.game.client.sendPunishments(args.join(" "));
-                            else
-
+                            } else {
                                 this.game.escribirMsgConsola("Faltan parámetros. Utilice /penas NICKNAME.");
+                            }
 
                             break;
                         case "/CONTRASEÑA":
@@ -255,32 +277,37 @@ define(['enums', 'font'], function (Enums, Font) {
                         case "/APOSTAR":
                             if (!this._checkearYescribirMuerto()) {
                                 if (args.length) {
-                                    if (!isNaN(args[0]) && (args[0] < 65536))
+                                    if (!isNaN(args[0]) && (args[0] < 65536)) {
                                         this.game.client.sendGamble(args[0]);
-                                    else
+                                    } else {
                                         this.game.escribirMsgConsola("Cantidad incorrecta. Utilice /apostar CANTIDAD.");
+                                    }
                                 }
-                                else
+                                else {
                                     this.game.escribirMsgConsola("Faltan parámetros. Utilice /apostar CANTIDAD.");
+                                }
                             }
 
                             break;
                         case "/RETIRARFACCION":
-                            if (!this._checkearYescribirMuerto())
+                            if (!this._checkearYescribirMuerto()) {
                                 this.game.client.sendLeaveFaction();
+                            }
 
                             break;
                         case "/RETIRAR":
                             if (!this._checkearYescribirMuerto()) {
 
                                 if (args.length) {
-                                    if (!isNaN(args[0]))
+                                    if (!isNaN(args[0])) {
                                         this.game.client.sendBankExtractGold(args[0]);
-                                    else
+                                    } else {
                                         this.game.escribirMsgConsola("Cantidad incorrecta. Utilice /retirar CANTIDAD.");
+                                    }
                                 }
-                                else
+                                else {
                                     this.game.escribirMsgConsola("Cantidad incorrecta. Utilice /retirar CANTIDAD.");
+                                }
 
                             }
 
@@ -289,28 +316,32 @@ define(['enums', 'font'], function (Enums, Font) {
                             if (!this._checkearYescribirMuerto()) {
 
                                 if (args.length) {
-                                    if (!isNaN(args[0]))
+                                    if (!isNaN(args[0])) {
                                         this.game.client.sendBankDepositGold(args[0]);
-                                    else
+                                    } else {
                                         this.game.escribirMsgConsola("Cantidad incorecta. Utilice /depositar CANTIDAD.");
+                                    }
                                 }
-                                else
+                                else {
                                     this.game.escribirMsgConsola("Faltan parámetros. Utilice /depositar CANTIDAD.");
+                                }
                             }
 
                             break;
                         case "/DENUNCIAR":
-                            if (args.length)
+                            if (args.length) {
                                 this.game.client.sendDenounce(args.join(" "));
-                            else
+                            } else {
                                 this.game.escribirMsgConsola("Formule su denuncia.");
+                            }
 
                             break;
                         case "/FUNDARCLAN":
-                            if (this.game.atributos.nivel > 24)
+                            if (this.game.atributos.nivel > 24) {
                                 this.game.client.sendGuildFundate();
-                            else
+                            } else {
                                 this.game.escribirMsgConsola("Para fundar un clan tienes que ser nivel 25 y tener 90 skills en liderazgo.");
+                            }
 
                             break;
                         case "/FUNDARCLANGM":
@@ -318,26 +349,27 @@ define(['enums', 'font'], function (Enums, Font) {
                             break;
 
                         case "/ECHARPARTY":
-                            if (args.length)
+                            if (args.length) {
                                 this.game.client.sendPartyKick(args.join(" "));
-                            else
+                            } else {
                                 this.game.escribirMsgConsola("Faltan parámetros. Utilice /echarparty NICKNAME.");
+                            }
 
                             break;
                         case "/PARTYLIDER":
-                            if (args.length)
+                            if (args.length) {
                                 this.game.client.sendPartySetLeader(args.join(" "));
-                            else
-
+                            } else {
                                 this.game.escribirMsgConsola("Faltan parámetros. Utilice /partylider NICKNAME.");
+                            }
 
                             break;
                         case "/ACCEPTPARTY":
-                            if (args.length)
+                            if (args.length) {
                                 this.game.client.sendPartyAcceptMember(args.join(" "));
-                            else
-
+                            } else {
                                 this.game.escribirMsgConsola("Faltan parámetros. Utilice /acceptparty NICKNAME.");
+                            }
                             break;
 
                         default:
@@ -347,10 +379,12 @@ define(['enums', 'font'], function (Enums, Font) {
                     }
 
                 }
-                else
+                else {
                     valido = false;
-                if (!valido)
+                }
+                if (!valido) {
                     this.game.escribirMsgConsola("Comando invalido", Font.WARNING);
+                }
             }
 
             else {

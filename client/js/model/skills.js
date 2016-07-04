@@ -36,8 +36,9 @@ define(['enums'], function (Enums) {
 
         asignarSkill(numSkill) {
             var skill = this._skills[numSkill];
-            if ((this.puntosLibres < 1 ) || (skill.puntos >= this.MAX_PUNTOS_SKILL ))
+            if ((this.puntosLibres < 1 ) || (skill.puntos >= this.MAX_PUNTOS_SKILL )) {
                 return false;
+            }
             this.puntosLibres--;
             this._skills[numSkill].puntos++;
             return true;
@@ -45,8 +46,9 @@ define(['enums'], function (Enums) {
 
         desAsignarSkill(numSkill) {
             var skill = this._skills[numSkill];
-            if (skill.puntos < 0)
+            if (skill.puntos < 0) {
                 return false;
+            }
             this.puntosLibres++;
             this._skills[numSkill].puntos--;
         }

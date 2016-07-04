@@ -63,11 +63,13 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
             var posUltimoEspacioPrimerBloque = idx;
             while ((idx != -1) && (idx < CharacterText.MAXIMO_LARGO_CHAT - 1 )) {
                 idx = str.indexOf(' ', idx + 1);
-                if (idx > 0)
+                if (idx > 0) {
                     posUltimoEspacioPrimerBloque = idx;
+                }
             }
-            if (posUltimoEspacioPrimerBloque > 0)
+            if (posUltimoEspacioPrimerBloque > 0) {
                 resultado.push(str.slice(0, posUltimoEspacioPrimerBloque));
+            }
             str = str.slice(posUltimoEspacioPrimerBloque + 1, str.length);
         }
         resultado.push(str);
@@ -119,8 +121,9 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
             this.tiempoPasado += delta;
             this.y -= delta / 5;
             var alpha = ((this.duracion - this.tiempoPasado) / this.duracion );
-            if (alpha >= 0)
+            if (alpha >= 0) {
                 this.alpha = alpha;
+            }
             if (this.tiempoPasado > this.duracion) {
                 PIXI.ticker.shared.remove(this.updateInfo, this);
                 self.removeChild(this);

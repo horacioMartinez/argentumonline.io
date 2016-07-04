@@ -12,7 +12,6 @@ define(['enums'], function (Enums) {
 
             this.gridW = 17;
             this.gridH = 13;
-            
 
         }
 
@@ -40,8 +39,9 @@ define(['enums'], function (Enums) {
         }
 
         posFueraDeMapa(gridX, gridY) { //esto deberia estar en el mapa y blabhblahblah
-            if (((gridX > 100) || (gridX < 1)) || ((gridY > 100) || (gridY < 1)))
+            if (((gridX > 100) || (gridX < 1)) || ((gridY > 100) || (gridY < 1))) {
                 return true;
+            }
         }
 
         forEachVisiblePosition(callback, extraX, extraY) { // TODO: poner mas extra en el eje y?
@@ -51,14 +51,18 @@ define(['enums'], function (Enums) {
             var maxY = this.gridY + this.gridH + extraY;
             var gridiniX = this.gridX - extraX;
             var maxX = this.gridX + this.gridW + extraX;
-            if (gridIniY < 1)
+            if (gridIniY < 1) {
                 gridIniY = 1;
-            if (maxY > 100)
+            }
+            if (maxY > 100) {
                 maxY = 100;
-            if (gridiniX < 1)
+            }
+            if (gridiniX < 1) {
                 gridiniX = 1;
-            if (maxX > 100)
+            }
+            if (maxX > 100) {
                 maxX = 100;
+            }
             for (; gridIniY < maxY; gridIniY++) {
                 for (var gX = gridiniX; gX < maxX; gX++) {
                     callback(gX, gridIniY);
@@ -72,43 +76,55 @@ define(['enums'], function (Enums) {
             var izqGridX = this.gridX - extraX;
             var derGridX = this.gridX + this.gridW - 1 + extraX;
 
-            if (topGridY < 1)
+            if (topGridY < 1) {
                 topGridY = 1;
-            if (botGridY > 100)
+            }
+            if (botGridY > 100) {
                 botGridY = 100;
-            if (izqGridX < 1)
+            }
+            if (izqGridX < 1) {
                 izqGridX = 1;
-            if (derGridX > 100)
+            }
+            if (derGridX > 100) {
                 derGridX = 100;
+            }
 
             switch (direccion) {
                 case Enums.Heading.oeste:
                     izqGridX -= 1;
-                    if (izqGridX < 1)
+                    if (izqGridX < 1) {
                         return;
-                    for (var y = topGridY; y <= botGridY; y++)
+                    }
+                    for (var y = topGridY; y <= botGridY; y++) {
                         callback(izqGridX, y);
+                    }
                     break;
                 case Enums.Heading.este:
                     derGridX += 1;
-                    if (derGridX > 100)
+                    if (derGridX > 100) {
                         return;
-                    for (var y = topGridY; y <= botGridY; y++)
+                    }
+                    for (var y = topGridY; y <= botGridY; y++) {
                         callback(derGridX, y);
+                    }
                     break;
                 case Enums.Heading.norte:
                     topGridY -= 1; //extras en el norte se ignoran
-                    if (topGridY < 1)
+                    if (topGridY < 1) {
                         return;
-                    for (var x = izqGridX; x <= derGridX; x++)
+                    }
+                    for (var x = izqGridX; x <= derGridX; x++) {
                         callback(x, topGridY);
+                    }
                     break;
                 case Enums.Heading.sur:
                     botGridY += 1;
-                    if (botGridY > 100)
-                        return; // <-- ojo
-                    for (var x = izqGridX; x <= derGridX; x++)
+                    if (botGridY > 100) {
+                        return;
+                    } // <-- ojo
+                    for (var x = izqGridX; x <= derGridX; x++) {
                         callback(x, botGridY);
+                    }
                     break;
                 default:
                     log.error("Heading invalido");

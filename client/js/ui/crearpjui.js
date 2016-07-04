@@ -13,10 +13,11 @@ define(['enums', 'ui/game/itemgrid'], function (Enums, ItemGrid) {
         }
 
         inicializar() {
-            if (this._inicializado)
+            if (this._inicializado) {
                 return;
-            else
+            } else {
                 this._inicializado = true;
+            }
 
             var self = this;
 

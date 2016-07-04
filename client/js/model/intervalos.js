@@ -50,24 +50,28 @@ define(['enums'], function (Enums) {
         }
 
         requestAtacar(time) {
-            if (time > ( this.times.ataqueConArco + Enums.Intervalo.ataqueConArco))
-                if (time > ( this.times.hechizoAtaque + Enums.Intervalo.hechizoAtaque))
+            if (time > ( this.times.ataqueConArco + Enums.Intervalo.ataqueConArco)) {
+                if (time > ( this.times.hechizoAtaque + Enums.Intervalo.hechizoAtaque)) {
                     if (time > ( this.times.ataque + Enums.Intervalo.ataque)) {
                         this.times.ataque = time;
                         this.times.ataqueHechizo = time;
                         return true;
                     }
+                }
+            }
             return false;
         }
 
         requestLanzarHechizo(time) {
-            if (time > ( this.times.ataqueConArco + Enums.Intervalo.ataqueConArco))
-                if (time > ( this.times.ataqueHechizo + Enums.Intervalo.ataqueHechizo))
+            if (time > ( this.times.ataqueConArco + Enums.Intervalo.ataqueConArco)) {
+                if (time > ( this.times.ataqueHechizo + Enums.Intervalo.ataqueHechizo)) {
                     if (time > ( this.times.hechizo + Enums.Intervalo.hechizo)) {
                         this.times.hechizo = time;
                         this.times.hechizoAtaque = time;
                         return true;
                     }
+                }
+            }
             return false;
         }
 
@@ -95,7 +99,7 @@ define(['enums'], function (Enums) {
             return false;
         }
 
-        requestDomar(time){
+        requestDomar(time) {
             if (time > ( this.times.domar + Enums.Intervalo.domar)) {
                 this.times.domar = time;
                 return true;
@@ -103,14 +107,14 @@ define(['enums'], function (Enums) {
             return false;
         }
 
-        requestRobar(time){
+        requestRobar(time) {
             if (time > ( this.times.robar + Enums.Intervalo.robar)) {
                 this.times.robar = time;
                 return true;
             }
             return false;
         }
-        
+
     }
 
     return Intervalos;

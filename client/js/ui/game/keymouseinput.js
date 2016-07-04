@@ -24,15 +24,17 @@ define(['enums'], function (Enums) {
         }
 
         click() {
-            if ((!this.game.started) || (this.game.isPaused))
+            if ((!this.game.started) || (this.game.isPaused)) {
                 return;
+            }
             this.acciones.click();
         }
 
         doubleClick() {
 
-            if ((!this.game.started) || (this.game.isPaused))
+            if ((!this.game.started) || (this.game.isPaused)) {
                 return;
+            }
             this.acciones.doubleClick();
         }
 
@@ -41,8 +43,9 @@ define(['enums'], function (Enums) {
             var acciones = this.acciones;
             var keys = this.keys;
 
-            if (!game.started)
+            if (!game.started) {
                 return;
+            }
             switch (key) {
                 case keys.caminarOeste:
                     acciones.terminarDeCaminar(Enums.Heading.oeste);
@@ -67,8 +70,9 @@ define(['enums'], function (Enums) {
             var acciones = this.acciones;
             var keys = this.keys;
 
-            if (!game.started)
+            if (!game.started) {
                 return;
+            }
 
             var continuar = false;
             switch (key) {

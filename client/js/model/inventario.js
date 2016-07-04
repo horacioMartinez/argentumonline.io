@@ -28,8 +28,7 @@ define([], function () {
                     precio: Price,
                     equipado: Equiped
                 };
-            }
-            else {
+            } else {
                 nuevoSlot = null;
             }
 
@@ -49,8 +48,9 @@ define([], function () {
         }
 
         isValidSlot(cantidad, grh) {
-            if ((cantidad > 0) && (grh > 0))
+            if ((cantidad > 0) && (grh > 0)) {
                 return true;
+            }
             return false;
         }
 

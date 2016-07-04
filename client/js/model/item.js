@@ -9,5 +9,5 @@ define(['model/entity'], function (Entity) {
 
     }
     return Item;
-    
+
 });

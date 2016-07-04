@@ -231,10 +231,11 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
             //     log.error("trato de saccar al player");
             //     return;
             // }
-            if (!this.game.characters[CharIndex])
+            if (!this.game.characters[CharIndex]) {
                 log.error("trato de sacar character inexistente");
-            else
+            } else {
                 this.game.sacarEntity(this.game.characters[CharIndex]);
+            }
             console.log("TODO: handleCharacterRemove ");
         }
 
@@ -273,7 +274,9 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         handlePlayWave(WaveID, X, Y) {
             //TODO : reveer esto !!
             if (( X < 0 ) || (Y < 0) || this.game.renderer.camera.isVisiblePosition(X, Y + 2, 2, 4)) // +2 porque extraY de visible no checkea para arriba
+            {
                 this.game.assetManager.audio.playSound(WaveID);
+            }
         }
 
         handleGuildList(Data) {
@@ -435,8 +438,9 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleSetInvisible(charIndex, invisible) {
             var char = this.game.characters[charIndex];
-            if (char)
+            if (char) {
                 this.game.renderer.setCharVisible(char, !invisible);
+            }
         }
 
         handleDiceRoll(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion) {
@@ -545,8 +549,9 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         handleUpdateTagAndStatus(CharIndex, NickColor, Tag) {
             // TODO: arreglar en el server, siempre manda charIndex = 1
             var char = this.game.characters[CharIndex];
-            if (!char)
+            if (!char) {
                 return;
+            }
 
             var nombre, clan;
             if (Tag.indexOf("<") > 0) {

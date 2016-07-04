@@ -165,7 +165,7 @@ define(['enums', 'font', 'model/macros'], function (Enums, Font, Macros) {
         }
 
         robar() {
-            if (!this.intervalos.requestRobar(this.game.currentTime)){
+            if (!this.intervalos.requestRobar(this.game.currentTime)) {
                 return;
             }
             this.game.client.sendWork(Enums.Skill.robar);

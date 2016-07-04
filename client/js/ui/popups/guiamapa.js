@@ -8,9 +8,9 @@ define(["text!../../../menus/mapa.html!strip", 'ui/popups/popup'], function (DOM
         constructor(game, acciones) {
             var options = {
                 width: 'auto',
-                height:'auto',
+                height: 'auto',
             };
-            super(DOMdata,options);
+            super(DOMdata, options);
             this.initCallbacks();
         }
 

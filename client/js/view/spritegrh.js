@@ -11,16 +11,18 @@ define(['lib/pixi'], function (PIXI) {
         if (grh.frames) { //grh animado
             PIXI.extras.MovieClip.call(this, grh.frames);
             this._setSpeed(grh.velocidad);
-            if (!cantLoops)
+            if (!cantLoops) {
                 this.play();
+            }
         }
         else {
             var aux = [];
             aux.push(grh);
             PIXI.extras.MovieClip.call(this, aux);
         }
-        if (cantLoops)
+        if (cantLoops) {
             this.loop = false;
+        }
         this.onComplete = function () {
             this.gotoAndStop(0);
         };
@@ -32,8 +34,9 @@ define(['lib/pixi'], function (PIXI) {
     SpriteGrh.prototype = Object.create(PIXI.extras.MovieClip.prototype);
 
     SpriteGrh.prototype.play = function () {
-        if (this.textures.length > 1)
+        if (this.textures.length > 1) {
             PIXI.extras.MovieClip.prototype.play.call(this);
+        }
     };
 
     SpriteGrh.prototype._setSpeed = function (velocidad) {
@@ -65,8 +68,9 @@ define(['lib/pixi'], function (PIXI) {
         if ((gridX !== this._gridX) || (gridY !== this._gridY)) {
             this._gridX = gridX;
             this._gridY = gridY;
-            if (this._onGridPositionChange)
+            if (this._onGridPositionChange) {
                 this._onGridPositionChange();
+            }
         }
     };
 
@@ -84,9 +88,9 @@ define(['lib/pixi'], function (PIXI) {
 
     SpriteGrh.prototype.cambiarGrh = function (grh) {
         //temporal
-        if (this._grh === grh)
+        if (this._grh === grh) {
             return;
-        else {
+        } else {
             this._grh = grh;
         }
         //<<temporal
@@ -105,8 +109,9 @@ define(['lib/pixi'], function (PIXI) {
         }
         this.gotoAndStop(0);
         this._posicionarGrafico();
-        if (grh.frames && this.loop)
+        if (grh.frames && this.loop) {
             this.play();
+        }
     };
 
     return SpriteGrh;

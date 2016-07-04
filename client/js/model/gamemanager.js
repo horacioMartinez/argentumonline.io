@@ -11,7 +11,7 @@ define(['model/game', 'model/intervalos', 'model/acciones', 'model/comandoschat'
 
             this.intervalos = new Intervalos();
             this.acciones = new Acciones(this.game, this.intervalos);
-            this.comandosChat =  new ComandosChat(this.game, this.acciones);
+            this.comandosChat = new ComandosChat(this.game, this.acciones);
         }
 
         setup(client, gameUI) {

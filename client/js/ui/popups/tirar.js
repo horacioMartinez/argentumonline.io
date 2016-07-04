@@ -7,12 +7,12 @@ define(["text!../../../menus/tirar.html!strip", 'ui/popups/popup', 'ui/popups/po
     class Tirar extends PopUp {
         constructor(game, acciones) {
             var options = {
-                width:150,
-                height:350,
-                minWidth:100,
-                minHeight:200
+                width: 150,
+                height: 350,
+                minWidth: 100,
+                minHeight: 200
             };
-            super(DOMdata,options);
+            super(DOMdata, options);
             this.game = game;
             this.acciones = acciones;
             this.initCallbacks();
@@ -29,20 +29,22 @@ define(["text!../../../menus/tirar.html!strip", 'ui/popups/popup', 'ui/popups/po
                 var cantidad = $("#tirarInputCantidad").val();
                 if (!isNaN(cantidad)) {
                     if (cantidad > 0) {
-                        if (self.tirandoOro)
+                        if (self.tirandoOro) {
                             self.acciones.tirarOro(cantidad);
-                        else
+                        } else {
                             self.acciones.tirarSelectedItem(cantidad);
+                        }
                     }
                 }
                 self.hide();
             });
 
             $("#tirarBotonTirarTodo").click(function () {
-                if (self.tirandoOro)
+                if (self.tirandoOro) {
                     self.acciones.tirarTodoOro();
-                else
+                } else {
                     self.acciones.tirarTodoSelectedItem();
+                }
                 self.hide();
             });
         }

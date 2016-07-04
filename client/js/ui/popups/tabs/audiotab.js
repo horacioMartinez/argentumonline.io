@@ -24,8 +24,8 @@ define([], function () {
             $("#checkboxMusica").prop('checked', !this.storage.getMusicMuted());
             $("#checkboxSonido").prop('checked', !this.storage.getSoundMuted());
         }
-        
-        initCallbacks(){
+
+        initCallbacks() {
             var self = this;
 
             $("#sliderMusica").slider({

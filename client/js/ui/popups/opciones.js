@@ -3,7 +3,7 @@
  */
 
 define(["text!../../../menus/opciones.html!strip", 'ui/popups/popup', 'ui/popups/tabs/configurarteclas', 'ui/popups/tabs/audiotab'], function (DOMdata, PopUp, ConfigurarTeclasTab, AudioTab) {
-    
+
     class Opciones extends PopUp {
         constructor(game, storage, updateKeysCallback, showMensajeCallback) {
             var options = {
@@ -38,7 +38,6 @@ define(["text!../../../menus/opciones.html!strip", 'ui/popups/popup', 'ui/popups
 
         initCallbacks() {
             var self = this;
-
 
             $("#opcionesBotonCerrar").click(function () {
                 self.hide();

@@ -65,8 +65,8 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
             $("#botonOpciones").click(function () {
                 self.game.gameUI.showOpciones();
             });
-            
-            $("#botonClanes").click(function(){
+
+            $("#botonClanes").click(function () {
                 self.game.gameUI.showClanes();
             });
 
@@ -90,8 +90,9 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
 
         getSelectedSlotInventario() {
             var slot = this.inventarioGrid.getSelectedSlot();
-            if (slot > 0)
+            if (slot > 0) {
                 return slot;
+            }
         }
 
         getSelectedSlotHechizo() {
@@ -99,8 +100,9 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
             if (res) {
                 return res;
             }
-            else
+            else {
                 return 0;
+            }
         }
 
         modificarSlotHechizo(slot, texto) {
@@ -129,10 +131,11 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
         _updateBarra(cant, max, $barra, $label, invertida) {
             var porcentaje = 100;
             if (max) {
-                if (invertida)
+                if (invertida) {
                     porcentaje = 100 - Math.floor((cant / max) * 100);
-                else
+                } else {
                     porcentaje = Math.floor((cant / max) * 100);
+                }
             }
             $barra.css("width", porcentaje + "%");
             $label.text(cant + "/" + max);
@@ -174,22 +177,25 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
             if (visible) {
                 $("#gamecanvas").addClass("crosshair");
             }
-            else
+            else {
                 $("#gamecanvas").removeClass("crosshair");
+            }
         }
 
         setSeguroResucitacion(activado) {
-            if (!activado)
+            if (!activado) {
                 $("#botonSeguroResucitar").addClass("seguroOff");
-            else
+            } else {
                 $("#botonSeguroResucitar").removeClass("seguroOff");
+            }
         }
 
         setSeguroAtacar(activado) {
-            if (!activado)
+            if (!activado) {
                 $("#botonSeguroAtacar").addClass("seguroOff");
-            else
+            } else {
                 $("#botonSeguroAtacar").removeClass("seguroOff");
+            }
         }
 
         setHechizosScrollFirefoxFix(self) {

@@ -16,8 +16,10 @@
 
         keys = [];
 
-        for (var key in obj) if (obj.hasOwnProperty(key)) {
-            keys.push(key);
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                keys.push(key);
+            }
         }
 
         return keys;

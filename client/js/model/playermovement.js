@@ -4,7 +4,7 @@
 
 define(['model/character'], function (Character) {
 
-    class PlayerMovement{
+    class PlayerMovement {
 
         constructor(game) {
             /*this.game.player = null;*/
@@ -53,7 +53,7 @@ define(['model/character'], function (Character) {
                 return false;
             }
             if (this.puedeCaminarCallback(this.getDirMov())) {
-                if ( this.forcedCaminarQueue.length > 0) {
+                if (this.forcedCaminarQueue.length > 0) {
                     this.caminandoForzado = true;
                 }
                 this.caminarCallback(this.getDirMov(), this.caminandoForzado);
@@ -94,7 +94,7 @@ define(['model/character'], function (Character) {
                 if (this._tratarDeCaminar()) {
                     let dir = this.getDirMov();
                     this._comenzarMoverseCallback(dir);
-                    this.game.player.mover(dir,this._moverseCallback, this._hasMoved.bind(this));
+                    this.game.player.mover(dir, this._moverseCallback, this._hasMoved.bind(this));
                     return true;
                 }
             }
@@ -105,7 +105,7 @@ define(['model/character'], function (Character) {
             this.forcedCaminarQueue.push(direccion);
         }
 
-        estaMoviendose(){
+        estaMoviendose() {
             return (this.forcedCaminarQueue.length > 0 || this.dirPressedStack.length > 0);
         }
 

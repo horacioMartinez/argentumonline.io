@@ -6,8 +6,9 @@ define(['jquery-ui'], function () {
 
     class PopUp {
         constructor(DOMdata, addiotionalOptions, general) { // los pop ups generales se ven en todas las pantallas (no solo juego) y estan centrados en el medio
-            if (!DOMdata)
+            if (!DOMdata) {
                 throw new Error("DOMdata required");
+            }
             this.$this = $(DOMdata);
 
             var parentID = "#container";
@@ -19,7 +20,7 @@ define(['jquery-ui'], function () {
                 close: function (event, ui) {
                     self.hide();
                 },
-                resize: function() { // fix TEMPORAL de bug resize http://stackoverflow.com/a/35912702
+                resize: function () { // fix TEMPORAL de bug resize http://stackoverflow.com/a/35912702
                     var heightPadding = parseInt($(this).css('padding-top'), 10) + parseInt($(this).css('padding-bottom'), 10),
                         widthPadding = parseInt($(this).css('padding-left'), 10) + parseInt($(this).css('padding-right'), 10),
                         titlebarMargin = parseInt($(this).prev('.ui-dialog-titlebar').css('margin-bottom'), 10);
@@ -33,7 +34,7 @@ define(['jquery-ui'], function () {
                 var position = {position: {my: "center", at: "left+40%", of: "#container"}};
                 $.extend(options, position);
             }
-            this.$this.dialog(options).parent().draggable( "option", "containment", parentID );
+            this.$this.dialog(options).parent().draggable("option", "containment", parentID);
 
             if (this.$this.siblings('#' + this.$this.attr('id')).length) { // TODO: no funciona esto
                 throw new Error("pop up inicializado dos veces: " + this.$this.attr('id'));

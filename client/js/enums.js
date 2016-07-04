@@ -187,8 +187,8 @@ define({
         usarItemConU: 450,
         usarItemConDobleClick: 500,
         requestPostionUpdate: 2000,
-        domar:700,
-        robar:700
+        domar: 700,
+        robar: 700
     },
 
     SONIDOS: {

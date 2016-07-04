@@ -8,12 +8,12 @@ define(["text!../../../menus/comerciar.html!strip", 'ui/popups/popup', 'ui/game/
         constructor(game, acciones) {
 
             var options = {
-                width:500,
-                height:400,
-                minWidth:250,
-                minHeight:300
+                width: 500,
+                height: 400,
+                minWidth: 250,
+                minHeight: 300
             };
-            super(DOMdata,options);
+            super(DOMdata, options);
 
             this.game = game;
             this.acciones = acciones;
@@ -119,15 +119,19 @@ define(["text!../../../menus/comerciar.html!strip", 'ui/popups/popup', 'ui/game/
             var minLabel = "";
             var maxLabel = "";
 
-            if (item.minDef)
+            if (item.minDef) {
                 minLabel = "MIN DEFENSA";
-            if (item.minHit)
+            }
+            if (item.minHit) {
                 minLabel = "MIN GOLPE";
+            }
 
-            if (item.maxDef)
+            if (item.maxDef) {
                 maxLabel = "MAX DEFENSA";
-            if (item.maxHit)
+            }
+            if (item.maxHit) {
                 maxLabel = "MAX GOLPE";
+            }
 
             var minVal = item.minDef || item.minHit;
             var maxVal = item.maxDef || item.maxHit;
@@ -136,10 +140,12 @@ define(["text!../../../menus/comerciar.html!strip", 'ui/popups/popup', 'ui/game/
         }
 
         completarLabels(nombreVal, precioVal, minLabel, minVal, maxLabel, maxVal) {
-            if (!minLabel)
+            if (!minLabel) {
                 minVal = "";
-            if (!maxLabel)
+            }
+            if (!maxLabel) {
                 maxVal = "";
+            }
 
             $('#comerciarPrecio').text("PRECIO");
             $('#comerciarNombre').text("NOMBRE");

@@ -4,7 +4,7 @@
 
 define([], function () {
 
-    class PlayerState{
+    class PlayerState {
         constructor() {
             /*this.muerto = false;*/
             this.navegando = false;

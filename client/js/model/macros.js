@@ -31,9 +31,10 @@ define(['enums', 'font', 'lib/pixi'], function (Enums, Font, PIXI) {
         }
 
         comenzarTrabajar() {
-            if (this.trabajando)
+            if (this.trabajando) {
                 return;
-            if (!this.game.gameUI.interfaz.getSelectedSlotInventario()){
+            }
+            if (!this.game.gameUI.interfaz.getSelectedSlotInventario()) {
                 this.game.escribirMsgConsola(Enums.MensajeConsola.MACRO_TABAJO_REQUIERE_EQUIPAR, Font.WARNING);
                 return;
             }
@@ -45,8 +46,9 @@ define(['enums', 'font', 'lib/pixi'], function (Enums, Font, PIXI) {
         }
 
         terminarTrabajar() {
-            if (!this.trabajando)
+            if (!this.trabajando) {
                 return;
+            }
             this.game.escribirMsgConsola(Enums.MensajeConsola.MACRO_TRABAJO_DESACTIVADO, Font.WARNING);
 
             PIXI.ticker.shared.remove(this._updateTrabajar, this);
@@ -54,8 +56,9 @@ define(['enums', 'font', 'lib/pixi'], function (Enums, Font, PIXI) {
         }
 
         _updateTrabajar() { // TODO: que no checkee cada vez ? funcion on timer...
-            if (!this.intervalos.requestMacroTrabajo(this.game.currentTime))
+            if (!this.intervalos.requestMacroTrabajo(this.game.currentTime)) {
                 return;
+            }
             if (this.game.trabajoPendiente) {
                 this.acciones.click(true);
             } else {
@@ -64,9 +67,10 @@ define(['enums', 'font', 'lib/pixi'], function (Enums, Font, PIXI) {
         }
 
         comenzarLanzarHechizo() {
-            if (this.lanzandoHechizo)
+            if (this.lanzandoHechizo) {
                 return;
-            if (!this.game.gameUI.interfaz.getSelectedSlotHechizo()){
+            }
+            if (!this.game.gameUI.interfaz.getSelectedSlotHechizo()) {
                 this.game.escribirMsgConsola(Enums.MensajeConsola.MACRO_HECHIZOS_REQUIRE_SELECCIONAR, Font.WARNING);
                 return;
             }
@@ -77,16 +81,18 @@ define(['enums', 'font', 'lib/pixi'], function (Enums, Font, PIXI) {
         }
 
         terminarLanzarHechizo() {
-            if (!this.lanzandoHechizo)
+            if (!this.lanzandoHechizo) {
                 return;
+            }
             this.game.escribirMsgConsola(Enums.MensajeConsola.MACRO_HECHIZOS_DESACTIVADO, Font.WARNING);
             PIXI.ticker.shared.remove(this._updateHechizos, this);
             this.lanzandoHechizo = false;
         }
 
         _updateHechizos() {
-            if (!this.intervalos.requestMacroHechizo(this.game.currentTime))
+            if (!this.intervalos.requestMacroHechizo(this.game.currentTime)) {
                 return;
+            }
             if (this.game.trabajoPendiente) {
                 this.acciones.click(true);
             } else {

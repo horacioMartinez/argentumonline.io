@@ -26,8 +26,9 @@ define([], function () {
         }
 
         setVida(min, max) {
-            if (!max)
+            if (!max) {
                 max = this.maxHp;
+            }
             if ((this.hp !== min) || (this.maxHp !== max)) {
                 this.hp = min;
                 this.maxHp = max;
@@ -36,8 +37,9 @@ define([], function () {
         }
 
         setMana(MinMan, MaxMan) {
-            if (!MaxMan && (MaxMan !== 0))
+            if (!MaxMan && (MaxMan !== 0)) {
                 MaxMan = this.maxMana;
+            }
 
             if ((this.mana !== MinMan) || (this.maxMana !== MaxMan)) {
                 this.mana = MinMan;
@@ -47,8 +49,9 @@ define([], function () {
         }
 
         setStamina(MinSta, MaxSta) {
-            if (!MaxSta)
+            if (!MaxSta) {
                 MaxSta = this.maxStamina;
+            }
             if ((this.stamina !== MinSta) || this.maxStamina !== MaxSta) {
                 this.stamina = MinSta;
                 this.maxStamina = MaxSta;
@@ -57,8 +60,9 @@ define([], function () {
         }
 
         setAgua(MinAgu, MaxAgu) {
-            if (!MaxAgu)
+            if (!MaxAgu) {
                 MaxAgu = this.maxAgua;
+            }
             if ((this.agua !== MinAgu) || (this.maxAgua !== MaxAgu)) {
                 this.maxAgua = MaxAgu;
                 this.agua = MinAgu;
@@ -67,8 +71,9 @@ define([], function () {
         }
 
         setHambre(MinHam, MaxHam) {
-            if (!MaxHam)
+            if (!MaxHam) {
                 MaxHam = this.maxHambre;
+            }
             if ((this.hambre !== MinHam) || (this.maxHambre !== MaxHam)) {
                 this.hambre = MinHam;
                 this.maxHambre = MaxHam;
@@ -77,8 +82,9 @@ define([], function () {
         }
 
         setExp(minExp, maxExp) {
-            if (!maxExp)
+            if (!maxExp) {
                 maxExp = this.maxExp;
+            }
             if ((this.exp !== minExp) || (this.maxExp !== maxExp)) {
                 this.exp = minExp;
                 this.maxExp = maxExp;

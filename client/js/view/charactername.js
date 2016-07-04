@@ -9,7 +9,7 @@ define(['enums', 'lib/pixi'], function (Enums, PIXI) {
             if (clan) {
                 nombre = nombre + "\n" + clan;
             }
-            $.extend(font,font, {align:'center'});
+            $.extend(font, font, {align: 'center'});
             super(nombre, font);
             this._estilo = font;
             this._escala = escala;
@@ -22,17 +22,17 @@ define(['enums', 'lib/pixi'], function (Enums, PIXI) {
             this.y = (y + 32) * this._escala;
         }
 
-        setEscala(escala){
+        setEscala(escala) {
             this.x = this.x * (escala / this._escala);
             this.y = this.y * (escala / this._escala);
             this._escala = escala;
-            var font = {font: "900 " + Math.round(12*this._escala) +"px Arial"}; // TODO: mas lindo esto
+            var font = {font: "900 " + Math.round(12 * this._escala) + "px Arial"}; // TODO: mas lindo esto
             $.extend(this._estilo, this._estilo, font);
             this.style = this._estilo;
         }
 
-        setVisible(visible){
-            this.visible  = visible;
+        setVisible(visible) {
+            this.visible = visible;
         }
 
     }

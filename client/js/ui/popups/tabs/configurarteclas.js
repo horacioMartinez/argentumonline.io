@@ -22,7 +22,7 @@ define(['utils/charcodemap', 'ui/popups/popup'], function (CharCodeMap, PopUp) {
 
         }
 
-        setCerrarCallback(cerrarCallback){
+        setCerrarCallback(cerrarCallback) {
             this._cerrarCallback = cerrarCallback;
         }
 
