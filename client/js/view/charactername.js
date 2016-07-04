@@ -9,8 +9,8 @@ define(['enums', 'lib/pixi'], function (Enums, PIXI) {
             if (clan) {
                 nombre = nombre + "\n" + clan;
             }
+            $.extend(font,font, {align:'center'});
             super(nombre, font);
-
             this._estilo = font;
             this._escala = escala;
             this.anchor.set(0.5, 0);

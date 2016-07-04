@@ -14,7 +14,7 @@ define(['enums', 'font', 'lib/pixi'], function (Enums, Font, PIXI) {
             this.lanzandoHechizo = false;
         }
 
-        toggleTrabajar() {
+        toggleTrabajo() {
             if (this.trabajando) {
                 this.terminarTrabajar();
             } else {

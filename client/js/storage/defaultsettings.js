@@ -10,7 +10,8 @@ define(["utils/charcodemap"], function (CharCodeMap) {
 
     return {
         keys: {
-            toggleChat: getKeyNumber("ENTER"),
+            chat: getKeyNumber("ENTER"),
+            chatClan: getKeyNumber("DELETE"),
             cerrar: getKeyNumber("ESCAPE"),
             atacar: getKeyNumber("CONTROL"),
             caminarNorte: getKeyNumber("UP"),
@@ -25,8 +26,10 @@ define(["utils/charcodemap"], function (CharCodeMap) {
             tirar: getKeyNumber("T"),
             usar: getKeyNumber("U"),
             meditar: getKeyNumber("F6"),
+            domar : getKeyNumber("D"),
+            robar: getKeyNumber("R"),
             macroHechizos : getKeyNumber("F7"),
-            macroTrabajar : getKeyNumber("F8")
+            macroTrabajo : getKeyNumber("F8")
 
         },
         audio: {

@@ -1,5 +1,5 @@
-define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character', 'model/atributos', 'model/inventario', 'model/skills', 'model/playerstate', 'model/playermovement', 'enums', 'font'],
-    function (Mapa, Updater, Item, Player, Character, Atributos, Inventario, Skills, PlayerState, PlayerMovement, Enums, Font) {
+define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atributos', 'model/inventario', 'model/skills', 'model/playerstate', 'model/playermovement', 'enums', 'font'],
+    function (Mapa, Updater, Item, Character, Atributos, Inventario, Skills, PlayerState, PlayerMovement, Enums, Font) {
         class Game {
             constructor(assetManager) {
                 this.init(assetManager);
@@ -358,7 +358,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                     }
                     this.playerMovement.forceCaminar(dir);
                     this.ignorarProximoSonidoPaso = true; // que no haga sonido este paso forzado
-
                 }
 
                 // -- fin --
@@ -393,7 +392,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
 
             inicializarPlayer(CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan, NickColor, Privileges) {
                 log.error("inicializar player");
-                this.player = new Player(CharIndex, X, Y, Heading, nombre, clan);
+                this.player = new Character(CharIndex, X, Y, Heading, nombre, clan);
 
                 this.player.muerto = !!((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal));
 
@@ -421,7 +420,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 c.setGridPosition(gridX, gridY);
                 this.entityGrid[gridX][gridY][1] = c; // TODO <- esto puede traer problemas
 
-                if (c instanceof Player) {
+                if (c === this.player) {
                     console.log(" reseteando pos player");
                     if (!noReDraw) {
                         this.renderer.resetPos(gridX, gridY);
@@ -712,10 +711,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 return {x: x, y: y};
             }
 
-            /**
-             * Loops through all the entities currently present in the game.
-             * @param {Function} callback The function to call back (must accept one entity argument).
-             */
             forEachEntity(callback) {
                 _.each(this.characters, function (entity, index) {
                     if (entity) {
@@ -731,7 +726,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
 
             }
 
-            forEachCharacter(callback) { // TODO (importante): este _.each itera solo los elementos del array?, dado que characters tiene por ej elementos en [3] y [5323] ("sparse array"), quiero imaginar que solo itera los elementos y no va desde 0 a 5323 probando con cada uno no?
+            forEachCharacter(callback) {
                 _.each(this.characters, function (entity) {
                     if (entity) {
                         callback(entity);

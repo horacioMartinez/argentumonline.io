@@ -11,7 +11,7 @@ define(['model/character'], function (Character) {
 
             this.game = game;
             this.forcedCaminarQueue = [];
-            this.moviendoseForzado = false;
+            this.caminandoForzado = false;
             this.dirPressedStack = [];
             this.caminarCallback = null;
             this.puedeCaminarCallback = null;
@@ -54,9 +54,9 @@ define(['model/character'], function (Character) {
             }
             if (this.puedeCaminarCallback(this.getDirMov())) {
                 if ( this.forcedCaminarQueue.length > 0) {
-                    this.moviendoseForzado = true;
+                    this.caminandoForzado = true;
                 }
-                this.caminarCallback(this.getDirMov(), this.moviendoseForzado);
+                this.caminarCallback(this.getDirMov(), this.caminandoForzado);
                 this.game.player.cambiarHeading(this.getDirMov());
                 return true;
             }
@@ -83,9 +83,9 @@ define(['model/character'], function (Character) {
         }
 
         _hasMoved() { //llamdo por el hasmoved del player
-            if (this.moviendoseForzado) { // moviendoseForzado difiere de forcedcaminar en que este se setea una vez que comienza el movimiento, el otro cuando le llega el mensaje. Es necesario este checkeo porque si llega el mensaje y esta en movimiento, el hasmoved de ese movimiento afectaria al forcedcaminar
+            if (this.caminandoForzado) { // moviendoseForzado difiere de forcedcaminar en que este se setea una vez que comienza el movimiento, el otro cuando le llega el mensaje. Es necesario este checkeo porque si llega el mensaje y esta en movimiento, el hasmoved de ese movimiento afectaria al forcedcaminar
                 this.forcedCaminarQueue.shift(); // remueve primer index, ForcedCaminar es una cola con los mensajes de caminar forzado que llegaron
-                this.moviendoseForzado = false;
+                this.caminandoForzado = false;
             }
         }
 

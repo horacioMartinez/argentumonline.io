@@ -19,8 +19,9 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
         setMusic(nombre) { // todo: unload cada vez que cmabia?? <<- ALGO ANDA MAL y SIGUE AUMENTANDO MEMORIA, ver el task manager de chrome
 
             if (this.musicEnabled) {
-                if (this.currentMusic)
+                if (this.currentMusic) {
                     this.currentMusic.stop();
+                }
 
                 this.currentMusic = new Howler.Howl({
                     urls: ['audio/musica/' + nombre + '.m4a'],
@@ -46,48 +47,56 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
         }
 
         _cargarSonido(nombre, loop, onEnd) {
-            if (this.sounds[nombre])
+            if (this.sounds[nombre]) {
                 return;
+            }
 
             this.sounds[nombre] = new Howler.Howl({
                 urls: ['audio/sonidos/' + nombre + '.m4a']
             });
 
-            if (loop)
+            if (loop) {
                 this.sounds[nombre].loop(loop);
-            if (onEnd)
+            }
+            if (onEnd) {
                 this.sounds[nombre].on("onend", onEnd);
+            }
         }
 
         finalizarSonidoLluvia(bajoTecho) {
             this.stopLluvia();
-            if (!this.soundEnabled)
+            if (!this.soundEnabled) {
                 return;
+            }
             var nombre;
-            if (bajoTecho)
+            if (bajoTecho) {
                 nombre = Enums.SONIDOS.lluvia_end_indoor;
-            else
+            } else {
                 nombre = Enums.SONIDOS.lluvia_end_outdoor;
+            }
             this.playSound(nombre);
             this.sounds[nombre].volume(0.2 * this.soundVolume);
         }
 
         IniciarSonidoLluvia(bajoTecho) {
             var nombre;
-            if (!this.soundEnabled)
+            if (!this.soundEnabled) {
                 return;
-            if (bajoTecho)
+            }
+            if (bajoTecho) {
                 nombre = Enums.SONIDOS.lluvia_start_indoor;
-            else
+            } else {
                 nombre = Enums.SONIDOS.lluvia_start_outdoor;
+            }
             this.playSound(nombre, false, this.playLoopLluvia(bajoTecho));
             this.sounds[nombre].volume(0.2 * this.soundVolume);
         }
 
         playLoopLluvia(bajoTecho) {
             this.stopLluvia();
-            if (!this.soundEnabled)
+            if (!this.soundEnabled) {
                 return;
+            }
             var nombre, sprite;
             if (bajoTecho) {
                 nombre = Enums.SONIDOS.lluvia_indoor;
@@ -107,24 +116,28 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
         }
 
         stopLluvia() {
-            if (this.sounds[Enums.SONIDOS.lluvia_indoor])
+            if (this.sounds[Enums.SONIDOS.lluvia_indoor]) {
                 this.sounds[Enums.SONIDOS.lluvia_indoor].stop();
-            if (this.sounds[Enums.SONIDOS.lluvia_outdoor])
+            }
+            if (this.sounds[Enums.SONIDOS.lluvia_outdoor]) {
                 this.sounds[Enums.SONIDOS.lluvia_outdoor].stop();
+            }
         }
 
         toggleSound() {
             if (this.soundEnabled) {
 
                 this.soundEnabled = false;
-                if (this.currentMusic)
+                if (this.currentMusic) {
                     this.currentMusic.pause();
+                }
 
             } else {
                 this.soundEnabled = true;
 
-                if (this.currentMusic)
+                if (this.currentMusic) {
                     this.currentMusic.play();
+                }
             }
         }
 
@@ -135,11 +148,13 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
         setMusicMuted(muted) {
             this.musicEnabled = !muted;
             if (this.musicEnabled) {
-                if (this.mutedMusicName)
+                if (this.mutedMusicName) {
                     this.setMusic(this.mutedMusicName);
+                }
             } else {
-                if (this.currentMusic)
+                if (this.currentMusic) {
                     this.currentMusic.stop();
+                }
             }
         }
 
@@ -153,13 +168,15 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
 
         setMusicVolume(volume) {
             this.musicVolume = volume;
-            if (this.currentMusic)
+            if (this.currentMusic) {
                 this.currentMusic.volume(this.musicVolume);
+            }
         }
 
         stopMusic() {
-            if (this.currentMusic)
+            if (this.currentMusic) {
                 this.currentMusic.stop();
+            }
         }
     }
 

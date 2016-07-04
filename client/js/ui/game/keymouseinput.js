@@ -111,8 +111,14 @@ define(['enums'], function (Enums) {
                 case keys.macroHechizos:
                     acciones.toggleMacroHechizos();
                     break;
-                case keys.macroTrabajar:
-                    acciones.toggleMacroTrabajar();
+                case keys.macroTrabajo:
+                    acciones.toggleMacroTrabajo();
+                    break;
+                case keys.domar:
+                    acciones.domar();
+                    break;
+                case keys.robar:
+                    acciones.robar();
                     break;
 
                 default:

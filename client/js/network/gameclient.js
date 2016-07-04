@@ -21,8 +21,8 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         _connect(conectarse_callback) {
-            this.ws.open("ws://ec2-54-94-134-88.sa-east-1.compute.amazonaws.com:8666");
-            //this.ws.open("ws://localhost:8666");
+            //this.ws.open("ws://ec2-54-94-134-88.sa-east-1.compute.amazonaws.com:8666");
+            this.ws.open("ws://localhost:8666");
             var self = this;
             this.ws.on('open', function () {
                 self.conectado = true;
@@ -205,6 +205,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleGuildChat(Chat) {
+            this.game.escribirMsgConsola(Chat, Font.CLAN_CHAT);
             console.log("TODO: handleGuildChat ");
         }
 
@@ -676,9 +677,6 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
                 case Enums.Skill.pesca:
                     this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_PESCA, Font.SKILLINFO);
                     break;
-                case Enums.Skill.robar:
-                    this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_ROBAR, Font.SKILLINFO);
-                    break;
                 case Enums.Skill.talar:
                     this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_TALAR, Font.SKILLINFO);
                     break;
@@ -690,6 +688,12 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
                     break;
                 case Enums.Skill.proyectiles:
                     this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_PROYECTILES, Font.SKILLINFO);
+                    break;
+                case Enums.Skill.robar:
+                    this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_ROBAR, Font.SKILLINFO);
+                    break;
+                case Enums.Skill.domar:
+                    this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_DOMAR, Font.SKILLINFO);
                     break;
                 default:
                     log.error("Numero de skill invalido: " + skill)
@@ -767,7 +771,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleCantUseWhileMeditating() {
-            this.game.escribirMsgConsola(Enums.MensajeConsola.USAR_MEDITANDO, Font.FIGHT);
+            this.game.escribirMsgConsola(Enums.MensajeConsola.USAR_MEDITANDO, Font.NOTIFICATION);
         }
 
         handleEarnExp() {

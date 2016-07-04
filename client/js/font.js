@@ -62,6 +62,15 @@ define(["utils/palette"], function (Palette) {
         TALK: {
             fill: Palette.get('white')
         },
+
+        CLAN_CHAT: {
+            fill: Palette.get('cyan','A200')
+        },
+
+        NOTIFICATION: {
+            fill: Palette.get('orange')
+        },
+
         FIGHT: {
             fill: Palette.get('red'),
             bold: 1

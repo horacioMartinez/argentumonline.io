@@ -2,7 +2,7 @@
  * Created by horacio on 4/9/16.
  */
 
-define(['enums',  'model/macros'], function (Enums, Macros) {
+define(['enums', 'font', 'model/macros'], function (Enums, Font, Macros) {
 
     class Acciones {
         constructor(game, intervalos) {
@@ -33,28 +33,32 @@ define(['enums',  'model/macros'], function (Enums, Macros) {
         }
 
         requestPosUpdate() {
-            if (this.intervalos.requestPosUpdate(this.game.currentTime))
+            if (this.intervalos.requestPosUpdate(this.game.currentTime)) {
                 this.game.client.sendRequestPositionUpdate();
+            }
         }
 
         equiparSelectedItem() {
             var slot = this.game.gameUI.interfaz.getSelectedSlotInventario();
-            if (slot)
+            if (slot) {
                 this.game.client.sendEquipItem(slot);
+            }
         }
 
         usarConU() {
             var slot = this.game.gameUI.interfaz.getSelectedSlotInventario();
-            if (!slot)
+            if (!slot) {
                 return;
+            }
             if (this.intervalos.requestUsarConU(this.game.currentTime)) {
                 this.game.client.sendUseItem(slot);
             }
         }
 
         usarConDobleClick(slot) {
-            if (!slot)
+            if (!slot) {
                 return;
+            }
             if (this.intervalos.requestUsarConDobleClick(this.game.currentTime)) {
                 this.game.client.sendUseItem(slot);
             }
@@ -92,15 +96,17 @@ define(['enums',  'model/macros'], function (Enums, Macros) {
         }
 
         terminarDeCaminar(direccion) {
-            if (this.game.logeado)
+            if (this.game.logeado) {
                 this.game.playerMovement.terminarDeCaminar(direccion);
+            }
         }
 
         click(incomingFromMacro) {
             var gridPos = this.game.getMouseGridPosition();
             if (this.game.logeado) {
-                if (!incomingFromMacro)
+                if (!incomingFromMacro) {
                     this.desactivarMacros();
+                }
                 if (this.game.trabajoPendiente) {
                     this.game.realizarTrabajoPendiente();
                 } else {
@@ -127,30 +133,49 @@ define(['enums',  'model/macros'], function (Enums, Macros) {
                 return;
             }
             var selectedSlot = this.game.gameUI.interfaz.getSelectedSlotInventario();
-            if (!selectedSlot)
+            if (!selectedSlot) {
                 return;
+            }
             var amount = this.game.inventario.getSlot(selectedSlot).cantidad;
-            if (amount === 1)
+            if (amount === 1) {
                 this.tirarSelectedItem(1);
-            else {
+            } else {
                 this.game.gameUI.showTirar();
             }
         }
 
         lanzarHechizo() { /*todo: slot por parametro*/
-            if (!this.intervalos.requestLanzarHechizo(this.game.currentTime))
+            if (!this.intervalos.requestLanzarHechizo(this.game.currentTime)) {
                 return;
+            }
             var slot = this.game.gameUI.interfaz.getSelectedSlotHechizo();
-            if (!slot)
+            if (!slot) {
                 return;
+            }
             this.game.client.sendCastSpell(slot);
             this.game.client.sendWork(Enums.Skill.magia);
         }
 
+        domar() {
+            if (!this.intervalos.requestDomar(this.game.currentTime)) {
+                return;
+            }
+            log.error("DOMAR!");
+            this.game.client.sendWork(Enums.Skill.domar);
+        }
+
+        robar() {
+            if (!this.intervalos.requestRobar(this.game.currentTime)){
+                return;
+            }
+            this.game.client.sendWork(Enums.Skill.robar);
+        }
+
         requestInfoHechizo() {
             var slot = this.game.gameUI.interfaz.getSelectedSlotHechizo();
-            if (slot)
+            if (slot) {
                 this.game.client.sendSpellInfo(slot);
+            }
         }
 
         comprar(slot, cantidad) {
@@ -187,8 +212,9 @@ define(['enums',  'model/macros'], function (Enums, Macros) {
 
         tirarSelectedItem(cantidad) {
             var selectedSlot = this.game.gameUI.interfaz.getSelectedSlotInventario();
-            if (!selectedSlot)
+            if (!selectedSlot) {
                 return;
+            }
             if (cantidad >= this.game.inventario.getSlot(selectedSlot).cantidad) {
                 cantidad = this.game.inventario.getSlot(selectedSlot).cantidad;
                 this.game.gameUI.interfaz.resetSelectedSlotInventario();
@@ -198,40 +224,44 @@ define(['enums',  'model/macros'], function (Enums, Macros) {
 
         tirarTodoSelectedItem() {
             var selectedSlot = this.game.gameUI.interfaz.getSelectedSlotInventario();
-            if (!selectedSlot)
+            if (!selectedSlot) {
                 return;
+            }
             this.tirarSelectedItem(this.game.inventario.getSlot(selectedSlot).cantidad);
         }
 
         tirarOro(cantidad) {
-            if (cantidad > (this.game.atributos.oro))
+            if (cantidad > (this.game.atributos.oro)) {
                 cantidad = this.game.atributos.oro;
-            if (cantidad > this.MAX_CANTIDAD_ITEM)
+            }
+            if (cantidad > this.MAX_CANTIDAD_ITEM) {
                 cantidad = this.MAX_CANTIDAD_ITEM;
+            }
             this.game.client.sendDrop(31, cantidad); // por alguna razon 31 es el slot del oro
         }
 
         tirarTodoOro() {
             this.tirarOro(this.MAX_CANTIDAD_ITEM);
         }
-        
+
         meditar() {
             if (this.game.player.muerto) {
-                this.game.escribirMsgConsola(Enums.MensajeConsola.ESTAS_MUERTO, Font.INFO);
+                this.game.escribirMsgConsola(Enums.MensajeConsola.ESTAS_MUERTO, Font.NOTIFICATION);
                 return;
             }
-            if (this.game.atributos.mana === this.game.atributos.maxMana)
-                this.game.escribirMsgConsola("Tu mana ya está llena", Font.INFO);
-            else
+            if (this.game.atributos.mana === this.game.atributos.maxMana) {
+                this.game.escribirMsgConsola("Tu mana ya esta llena", Font.NOTIFICATION);
+            } else {
                 this.game.client.sendMeditate();
+            }
         }
-        
+
         toggleMacroHechizos() {
             this.macros.toggleHechizos();
         }
 
-        toggleMacroTrabajar() {
-            this.macros.toggleTrabajar();
+        toggleMacroTrabajo() {
+            this.macros.toggleTrabajo();
         }
 
         desactivarMacros() {

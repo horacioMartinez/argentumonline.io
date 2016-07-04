@@ -6,7 +6,7 @@ define([], function () {
 
     class PlayerState{
         constructor() {
-            this.muerto = false;
+            /*this.muerto = false;*/
             this.navegando = false;
             this.paralizado = false;
             this.meditando = false;

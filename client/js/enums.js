@@ -152,6 +152,7 @@ define({
         TRABAJO_MINERIA: "Haz click sobre el yacimiento...",
         TRABAJO_FUNDIRMETAL: "Haz click sobre la fragua...",
         TRABAJO_PROYECTILES: "Haz click sobre la víctima...",
+        TRABAJO_DOMAR: "Haz click sobre la criatura...",
         ENTRAR_PARTY_1: "Si deseas entrar en una party con ",
         ENTRAR_PARTY_2: ", escribe /entrarparty",
         NENE: "Cantidad de NPCs: ",
@@ -185,8 +186,9 @@ define({
         trabajar: 700,
         usarItemConU: 450,
         usarItemConDobleClick: 500,
-        requestPostionUpdate: 2000
-
+        requestPostionUpdate: 2000,
+        domar:700,
+        robar:700
     },
 
     SONIDOS: {

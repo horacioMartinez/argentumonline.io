@@ -12,20 +12,21 @@ define(['enums'], function (Enums) {
                 hechizo: time,
                 ataqueHechizo: time,
                 hechizoAtaque: time,
-                trabajar: time,
                 usarItemConU: time,
                 usarItemConDobleClick: time,
                 requestPostionUpdate: time,
                 macroTrabajo: time,
-                macroHechizo: time
+                macroHechizo: time,
+                domar: time,
+                robar: time
             };
 
-            this.INTERVALO_MACRO_TRABAJAR = Math.floor(Enums.Intervalo.usarItemConU / 2) + 75; // dividido 2 porque la mitad en usar u la otra en clickear
+            this.INTERVALO_MACRO_TRABAJO = Math.floor(Enums.Intervalo.usarItemConU / 2) + 75; // dividido 2 porque la mitad en usar u la otra en clickear
             this.INTERVALO_MACRO_HECHIZO = Math.floor(Enums.Intervalo.hechizo / 2) + 75;
         }
 
         requestMacroTrabajo(time) {
-            if (time > ( this.times.macroTrabajo + this.INTERVALO_MACRO_TRABAJAR)) {
+            if (time > ( this.times.macroTrabajo + this.INTERVALO_MACRO_TRABAJO)) {
                 this.times.macroTrabajo = time;
                 return true;
             }
@@ -93,6 +94,23 @@ define(['enums'], function (Enums) {
             }
             return false;
         }
+
+        requestDomar(time){
+            if (time > ( this.times.domar + Enums.Intervalo.domar)) {
+                this.times.domar = time;
+                return true;
+            }
+            return false;
+        }
+
+        requestRobar(time){
+            if (time > ( this.times.robar + Enums.Intervalo.robar)) {
+                this.times.robar = time;
+                return true;
+            }
+            return false;
+        }
+        
     }
 
     return Intervalos;

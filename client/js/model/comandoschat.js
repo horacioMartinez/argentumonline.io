@@ -12,7 +12,7 @@ define(['enums', 'font'], function (Enums, Font) {
 
         _checkearYescribirMuerto() {
             if (this.game.player.muerto) {
-                this.game.escribirMsgConsola(Enums.MensajeConsola.ESTAS_MUERTO, Font.INFO);
+                this.game.escribirMsgConsola(Enums.MensajeConsola.ESTAS_MUERTO, Font.NOTIFICATION);
                 return true;
             }
             return false;

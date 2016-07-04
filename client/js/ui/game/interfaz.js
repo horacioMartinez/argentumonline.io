@@ -55,7 +55,7 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
             });
 
             $("#botonMacroTrabajo").click(function () {
-                self.acciones.toggleMacroTrabajar();
+                self.acciones.toggleMacroTrabajo();
             });
 
             $("#botonMapa").click(function () {

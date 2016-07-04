@@ -13,6 +13,8 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
 
             this._prevKeyDown = [];
             this.$gameCanvas = $('#gamecanvas');
+
+            this.talkingToClan = false;
         }
 
         setKeys(keys) {
@@ -30,7 +32,7 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
             $('#chatinput').blur();
         }
 
-        updateGameMouseCoordinates(game, event,$gameCanvas) {
+        updateGameMouseCoordinates(game, event, $gameCanvas) {
 
             var gamePos = $gameCanvas.offset(),
                 width = game.renderer.pixiRenderer.width,
@@ -86,8 +88,9 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
             });
 
             $(document).keydown(function (e) {
-                if (!self.game.started)
+                if (!self.game.started) {
                     return;
+                }
 
                 var key = e.which;
 
@@ -99,28 +102,44 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
                     if (!self.game.gameUI.hayPopUpActivo()) { // si hay un popup abierto dejar que siga la tecla al pop up, sino no
                         return false;
                     }
-                    else
+                    else {
                         return;
+                    }
                 }
 
-                if (self.game.isPaused || (self.game.gameUI.hayPopUpActivo()))
+                if (self.game.isPaused || (self.game.gameUI.hayPopUpActivo())) {
                     return;
+                }
 
                 // lo de abajo se ejecuta solo si no hay un pop up abierto
 
                 var $chatb = $('#chatbox');
 
-                if (key === self.keys.toggleChat) {
+                if (key === self.keys.chat) {
                     if ($chatb.hasClass('active')) {
+                        self._trySendingChat();
                         self.hideChat();
                     } else {
                         self.showChat();
                     }
                 }
 
+                if (key === self.keys.chatClan) {
+                    if ($chatb.hasClass('active')) {
+                        if (self.talkingToClan) {
+                            self._trySendingChat();
+                            self.hideChat();
+                        }
+                    } else {
+                        self.talkingToClan = true;
+                        self.showChat();
+                    }
+                }
+
                 if (!$chatb.hasClass('active')) {
-                    if (self._isKeyDown(key))
+                    if (self._isKeyDown(key)) {
                         return false;
+                    }
                     self._downKey(key);
 
                     return self.inputHandler.keyDown(key); // << return false previene el default y hace que no se propague mas
@@ -131,6 +150,26 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
 
         }
 
+        _trySendingChat() {
+            var $chat = $('#chatinput');
+            if ($chat.attr('value') !== '') {
+                if (this.game.player) {
+                    var chat = $chat.val();
+
+                    if (this.talkingToClan) {
+                        this.game.client.sendGuildMessage(chat);
+                        this.talkingToClan = false;
+                    } else {
+                        var res = this.comandosChat.parsearChat(chat);
+                        if (res) {
+                            this.game.client.sendTalk(res);
+                        }
+                    }
+                }
+                $chat.val('');
+            }
+        }
+
         _initChatKeyListener() {
             var self = this;
 
@@ -138,24 +177,10 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
 
                 var key = e.which;
 
-                if (key === self.keys.toggleChat) {
-                    var $chat = $('#chatinput');
-                    if ($chat.attr('value') !== '') {
-                        if (self.game.player) {
-                            var chat = $chat.val();
-                            var res = self.comandosChat.parsearChat(chat);
-                            if (res) {
-                                self.game.client.sendTalk(res);
-                            }
-                        }
-                        $chat.val('');
-                        self.hideChat();
-                        $('#gamecanvas').focus();
-                        return false;
-                    } else {
-                        self.hideChat();
-                        return false;
-                    }
+                if (key === self.keys.chat) {
+                    self._trySendingChat();
+                    self.hideChat();
+                    return false;
                 }
 
                 if (key === self.keys.cerrar) {
@@ -189,9 +214,8 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
                 self.updateGameMouseCoordinates(self.game, event, self.$gameCanvas);
             }, 50));
 
-
-             // DEBUG:
-/*
+            // DEBUG:
+            /*
              $(window).bind('mousewheel DOMMouseScroll', function (event) {
              var escala;
              if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
@@ -219,8 +243,9 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
         }
 
         _isKeyDown(key) {
-            if (this._prevKeyDown[key])
+            if (this._prevKeyDown[key]) {
                 return true;
+            }
             return false;
         }
 
