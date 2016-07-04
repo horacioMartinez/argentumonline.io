@@ -1,11 +1,14 @@
-define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character', 'model/atributos', 'model/inventario', 'model/skills', 'enums', 'font'],
-    function (Mapa, Updater, Item, Player, Character, Atributos, Inventario, Skills, Enums, Font) {
+define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character', 'model/atributos', 'model/inventario', 'model/skills', 'model/playerstate', 'model/playermovement', 'enums', 'font'],
+    function (Mapa, Updater, Item, Player, Character, Atributos, Inventario, Skills, PlayerState, PlayerMovement, Enums, Font) {
         class Game {
             constructor(assetManager) {
                 this.init(assetManager);
             }
 
             init(assetManager) { // temporal
+                this.playerMovement = new PlayerMovement(this);
+                this.initPlayerMovementCallbacks();
+                this.playerState = new PlayerState();
                 this.atributos = new Atributos(this);
                 this.map = new Mapa();
                 this.assetManager = assetManager;
@@ -93,8 +96,9 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
             }
 
             escribirMsgConsola(texto, font) {
-                if (!font)
+                if (!font) {
                     font = Font.INFO;
+                }
                 this.renderer.agregarTextoConsola(texto, font);
             }
 
@@ -106,9 +110,12 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
 
             actualizarMovPos(char, direccion) {
                 // Se setea la pos del grid nomas porque la (x,y) la usa para la animacion el character ( y la actualiza el al final)
-                if (this.entityGrid[char.gridX][char.gridY][1])
+                if (this.entityGrid[char.gridX][char.gridY][1]) {
                     if (this.entityGrid[char.gridX][char.gridY][1].id === char.id) // es necesario checkear que sean iguales porque puede que haya otro char que piso la dir de este (pisar caspers)
+                    {
                         this.entityGrid[char.gridX][char.gridY][1] = null;
+                    }
+                }
 
                 switch (direccion) {
                     case  Enums.Heading.oeste:
@@ -140,8 +147,9 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 if (this.bajoTecho !== bajoTecho) {
                     this.bajoTecho = bajoTecho;
                     this.renderer.setBajoTecho(bajoTecho);
-                    if (this.lloviendo && this.map.mapaOutdoor())
+                    if (this.lloviendo && this.map.mapaOutdoor()) {
                         this.assetManager.audio.playLoopLluvia(bajoTecho);
+                    }
                 }
             }
 
@@ -149,8 +157,9 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 var self = this;
                 this.forEachEntity(
                     function (entity, index) {
-                        if (entity !== self.player)
+                        if (entity !== self.player) {
                             self.sacarEntity(entity);
+                        }
                     }
                 );
             }
@@ -158,8 +167,9 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
             _removeAllEntities() {
                 var self = this;
                 this.forEachEntity(function (entity) {
-                    if (entity.id !== self.player.id)
+                    if (entity.id !== self.player.id) {
                         self.sacarEntity(entity);
+                    }
                 });
                 this.items = [];
             }
@@ -192,11 +202,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                         this.resetPosCharacter(CharIndex, X, Y);
                         log.error("moverCharacter: cambiar pos player a x:" + X + " y:" + Y);
                     }
-                    else
-                        return;
-                }
-
-                else {
+                } else {
                     var c = this.characters[CharIndex];
                     if (!c) {
                         //log.error("mover character inexistente:");// + CharIndex);
@@ -211,22 +217,24 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                         this.actualizarMovPos(c, dir);
                         this.playSonidoPaso(c);
                     }
-
                 }
+
             }
 
             playSonidoPaso(char) {
-                if (char.muerto || !this.renderer.entityEnTileVisible(char))
+                if (char.muerto || !this.renderer.entityEnTileVisible(char)) {
                     return;
-                if (this.player.navegando) { //todo: que sea dependiendo si el char navega, no el player
+                }
+                if (this.playerState.navegando) { //todo: que sea dependiendo si el char navega, no el player
                     this.assetManager.audio.playSound(Enums.SONIDOS.pasoNavegando);
                 }
                 else {
                     char.pasoDerecho = !char.pasoDerecho;
-                    if (char.pasoDerecho)
+                    if (char.pasoDerecho) {
                         this.assetManager.audio.playSound(Enums.SONIDOS.paso1);
-                    else
+                    } else {
                         this.assetManager.audio.playSound(Enums.SONIDOS.paso2);
+                    }
                 }
             }
 
@@ -238,8 +246,9 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                     //log.error(" cambiar character inexistente ");
                     return;
                 }
-                if (Heading !== c.heading)
+                if (Heading !== c.heading) {
                     c.cambiarHeading(Heading);
+                }
                 c.muerto = !!((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal));
 
                 this.renderer.cambiarCharacter(c, Body, Head, Heading, Weapon, Shield, Helmet, FX, FXLoops);
@@ -250,41 +259,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
 
                 if (this.characters[CharIndex]) {
                     if (CharIndex === this.player.id) {
-                        if ((X !== this.player.gridX) || (Y !== this.player.gridY)) { // cuando pasa de mapa vuelve a mandar el crear de tu pj, directamente cambio pos e ignoro lo demas (esta es la unica forma de saber las pos en el cambio)
-                            log.error("DRAW MAPA INICIAL!!! MAPA:" + this.map.numero + " X: " + X + " Y: " + Y);
-
-                            // --- esto para que se setee al player una pos "anterior" a la del cambio de mapa para que de la ilusion que avanza un tile (sino se deberia quedar quieto esperando el intervalo o traeria problemas en mapas donde entras mirando la salida (ademas de que pasarias siempre en la 2da pos)) ---
-                            if (this.player.estaMoviendose()) {
-                                var dir;
-                                switch (this.player.getDirMov()) {
-                                    case Enums.Heading.sur:
-                                        Y = Y - 1;
-                                        dir = Enums.Heading.sur;
-                                        break;
-                                    case Enums.Heading.norte:
-                                        Y = Y + 1;
-                                        dir = Enums.Heading.norte;
-                                        break;
-                                    case Enums.Heading.este:
-                                        X = X - 1;
-                                        dir = Enums.Heading.este;
-                                        break;
-                                    case Enums.Heading.oeste:
-                                        X = X + 1;
-                                        dir = Enums.Heading.oeste;
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                this.player.forceCaminar(dir);
-                                this.ignorarProximoSonidoPaso = true; // que no haga sonido este paso forzado
-                            }
-                            // -- fin --
-
-                            this.resetPosCharacter(this.player.id, X, Y, true);
-                            this.renderer.drawMapaIni(this.player.gridX, this.player.gridY);
-
-                        }
+                        this.resetPosCharacter(this.player.id, X, Y, true);
                         return;
                     }
                     log.error("tratando de agregar character habiendo un character con mismo charindex existente");
@@ -306,10 +281,11 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 }
                 var c = new Character(CharIndex, X, Y, Heading, nombre, clan);
 
-                if ((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal))
+                if ((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal)) {
                     c.muerto = true;
-                else
+                } else {
                     c.muerto = false;
+                }
 
                 this.entityGrid[X][Y][1] = c;
                 this.characters[CharIndex] = c;
@@ -321,11 +297,13 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
 
             agregarItem(grhIndex, gridX, gridY) { // TODO: rever si ahora que no hay que updatear hace falta tenerlos en un array
                 var viejoItem = this.entityGrid[gridX][gridY][0];
-                if (viejoItem)
+                if (viejoItem) {
                     this.sacarEntity(viejoItem);
+                }
                 var id = 0;
-                while (this.items[id])
+                while (this.items[id]) {
                     id++;
+                }
                 var item = new Item(id, gridX, gridY);
                 this.entityGrid[gridX][gridY][0] = item;
                 this.items[id] = item;
@@ -337,6 +315,56 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 if (item) {
                     this.sacarEntity(item);
                 }
+            }
+
+            changePlayerIndex(CharIndex) {
+                if (this.player.id !== CharIndex) {
+                    log.error("NUEVO PLAYER INDEX: " + CharIndex);
+                    var prevPlayerCharacter = this.player;
+                    this.player = this.characters[CharIndex];
+                    this.sacarEntity(prevPlayerCharacter);
+
+                }
+                this.inicializarPlayerEnMapa();
+            }
+
+            inicializarPlayerEnMapa() {
+                var X = this.player.gridX;
+                var Y = this.player.gridY;
+                log.error("DRAW MAPA INICIAL!!! MAPA:" + this.map.numero + " X: " + X + " Y: " + Y);
+                // --- esto para que se setee al player una pos "anterior" a la del cambio de mapa para que de la ilusion que avanza un tile (sino se deberia quedar quieto esperando el intervalo o traeria problemas en mapas donde entras mirando la salida (ademas de que pasarias siempre en la 2da pos)) ---
+
+                if (this.playerMovement.estaMoviendose()) {
+                    var dir;
+                    switch (this.playerMovement.getDirMov()) {
+                        case Enums.Heading.sur:
+                            Y = Y - 1;
+                            dir = Enums.Heading.sur;
+                            break;
+                        case Enums.Heading.norte:
+                            Y = Y + 1;
+                            dir = Enums.Heading.norte;
+                            break;
+                        case Enums.Heading.este:
+                            X = X - 1;
+                            dir = Enums.Heading.este;
+                            break;
+                        case Enums.Heading.oeste:
+                            X = X + 1;
+                            dir = Enums.Heading.oeste;
+                            break;
+                        default:
+                            break;
+                    }
+                    this.playerMovement.forceCaminar(dir);
+                    this.ignorarProximoSonidoPaso = true; // que no haga sonido este paso forzado
+
+                }
+
+                // -- fin --
+
+                this.resetPosCharacter(this.player.id, X, Y, true);
+                this.renderer.drawMapaIni(this.player.gridX, this.player.gridY);
             }
 
             toggleSeguroResucitar() {
@@ -376,92 +404,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 this.renderer.agregarCharacter(this.player, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan,
                     NickColor);
 
-                var self = this;
-                this.player.onCaminar(function (direccion, forced) {
-                    {
-                        if (!forced)
-                            self.client.sendWalk(direccion);
-                        self.actualizarMovPos(self.player, direccion);
-                        self.actualizarBajoTecho();
-                        if (self.ignorarProximoSonidoPaso) {
-                            self.ignorarProximoSonidoPaso = false;
-                        } else {
-                            self.playSonidoPaso(self.player);
-                        }
-                        self.actualizarIndicadorPosMapa();
-                    }
-                });
-
-                this.player.onCambioHeading(function (direccion) {
-                    self.client.sendChangeHeading(direccion);
-                });
-
-                this.player.onPuedeCaminar(function (direccion) {
-
-                    if (self.player.paralizado)
-                        return false;
-                    if (self.player.meditando) {
-                        // envia solo 1 vez el mensaje de caminar para que deje de meditar, feo esto
-                        if (!this._waltkToCancelMeditarSent) {
-                            self.client.sendWalk(direccion);
-                        }
-                        this._waltkToCancelMeditarSent = true;
-                        return false;
-                    } else {
-                        this._waltkToCancelMeditarSent = false;
-                    }
-
-                    var x = self.player.gridX;
-                    var y = self.player.gridY;
-                    switch (direccion) {
-                        case Enums.Heading.oeste:
-                            x--;
-                            break;
-                        case Enums.Heading.este:
-                            x++;
-                            break;
-                        case Enums.Heading.norte:
-                            y--;
-                            break;
-                        case Enums.Heading.sur:
-                            y++;
-                            break;
-                        default:
-                            log.error("Direccion invalida!");
-                    }
-
-                    if (self.map.isBlocked(x, y))
-                        return false;
-
-                    if (self.map.hayAgua(x, y) !== self.player.navegando)
-                        return false;
-
-                    if (self.entityGrid[x][y][1]) {
-                        if (!self.entityGrid[x][y][1].muerto) {
-                            return false;
-                        }
-                        else {
-                            // tienen que estar o ambos en agua o ambos en tierra (player y casper)
-                            if (!(self.map.hayAgua(x, y) === self.map.hayAgua(self.player.gridX, self.player.gridY)))
-                                return false;
-                        }
-                    }
-
-                    return true;
-                });
-
-                this.player.setOnMoverse(
-                    function (x, y) {
-                        x = Math.round(x);
-                        y = Math.round(y);
-                        self.renderer.moverPosition(x - self.renderer.camera.centerPosX, y - self.renderer.camera.centerPosY);
-                    });
-
-                this.player.setOnMoverseBegin(
-                    function (dir) {
-                        self.renderer.updateTilesMov(dir);
-                    });
-
                 this.actualizarIndicadorPosMapa();
             }
 
@@ -471,18 +413,19 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                     log.error(" Reset pos de character no existente, charindex=" + charIndex);
                     return;
                 }
-                if (this.entityGrid[c.gridX][c.gridY][1] === c)
+                if (this.entityGrid[c.gridX][c.gridY][1] === c) {
                     this.entityGrid[c.gridX][c.gridY][1] = null;
+                }
 
-                var prevPos = {x: c.gridX, y: c.gridY};
                 c.resetMovement();
                 c.setGridPosition(gridX, gridY);
                 this.entityGrid[gridX][gridY][1] = c; // TODO <- esto puede traer problemas
 
                 if (c instanceof Player) {
                     console.log(" reseteando pos player");
-                    if (!noReDraw)
+                    if (!noReDraw) {
                         this.renderer.resetPos(gridX, gridY);
+                    }
                     this.actualizarBajoTecho();
                     this.actualizarIndicadorPosMapa();
                 }
@@ -498,10 +441,11 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
 
                 if (this.lloviendo && prevMapa) {
                     if (this.map.mapaOutdoor() !== prevMapa.mapaOutdoor()) {
-                        if (this.map.mapaOutdoor())
+                        if (this.map.mapaOutdoor()) {
                             this.assetManager.audio.IniciarSonidoLluvia();
-                        else
+                        } else {
                             this.assetManager.audio.finalizarSonidoLluvia();
+                        }
                         this.renderer.toggleLluvia();
                     }
                 }
@@ -524,15 +468,108 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 this.forEachEntity(
                     function (entity, index) {
                         if (( (entity.gridY < MinLimiteY) || (entity.gridY > MaxLimiteY) ) || ( (entity.gridX < MinLimiteX) || (entity.gridX > MaxLimiteX) )) {
-                            if (entity !== self.player)
+                            if (entity !== self.player) {
                                 self.sacarEntity(entity);
+                            }
                         }
                     }
                 );
             }
 
             forceCaminar(direccion) {
-                this.player.forceCaminar(direccion);
+                this.playerMovement.forceCaminar(direccion);
+            }
+
+            initPlayerMovementCallbacks() {
+                this.playerMovement.setOnCaminar(function (direccion, forced) {
+                    {
+                        if (!forced) {
+                            this.client.sendWalk(direccion);
+                        }
+                        this.actualizarMovPos(this.player, direccion);
+                        this.actualizarBajoTecho();
+                        if (this.ignorarProximoSonidoPaso) {
+                            this.ignorarProximoSonidoPaso = false;
+                        } else {
+                            this.playSonidoPaso(this.player);
+                        }
+                        this.actualizarIndicadorPosMapa();
+                    }
+                }.bind(this));
+
+                this.playerMovement.setOnCambioHeading(function (direccion) {
+                    this.client.sendChangeHeading(direccion);
+                }.bind(this));
+
+                this.playerMovement.setOnPuedeCaminar(function (direccion) {
+
+                    if (this.playerState.paralizado) {
+                        return false;
+                    }
+                    if (this.playerState.meditando) {
+                        // envia solo 1 vez el mensaje de caminar para que deje de meditar, feo esto
+                        if (!this._waltkToCancelMeditarSent) {
+                            this.client.sendWalk(direccion);
+                        }
+                        this._waltkToCancelMeditarSent = true;
+                        return false;
+                    } else {
+                        this._waltkToCancelMeditarSent = false;
+                    }
+
+                    var x = this.player.gridX;
+                    var y = this.player.gridY;
+                    switch (direccion) {
+                        case Enums.Heading.oeste:
+                            x--;
+                            break;
+                        case Enums.Heading.este:
+                            x++;
+                            break;
+                        case Enums.Heading.norte:
+                            y--;
+                            break;
+                        case Enums.Heading.sur:
+                            y++;
+                            break;
+                        default:
+                            log.error("Direccion invalida!");
+                    }
+
+                    if (this.map.isBlocked(x, y)) {
+                        return false;
+                    }
+
+                    if (this.map.hayAgua(x, y) !== this.playerState.navegando) {
+                        return false;
+                    }
+
+                    if (this.entityGrid[x][y][1]) {
+                        if (!this.entityGrid[x][y][1].muerto) {
+                            return false;
+                        }
+                        else {
+                            // tienen que estar o ambos en agua o ambos en tierra (player y casper)
+                            if (!(this.map.hayAgua(x, y) === this.map.hayAgua(this.player.gridX, this.player.gridY))) {
+                                return false;
+                            }
+                        }
+                    }
+
+                    return true;
+                }.bind(this));
+
+                this.playerMovement.setOnMoverse(
+                    function (x, y) {
+                        x = Math.round(x);
+                        y = Math.round(y);
+                        this.renderer.moverPosition(x - this.renderer.camera.centerPosX, y - this.renderer.camera.centerPosY);
+                    }.bind(this));
+
+                this.playerMovement.setOnMoverseBegin(
+                    function (dir) {
+                        this.renderer.updateTilesMov(dir);
+                    }.bind(this));
             }
 
             setTrabajoPendiente(skill) {
@@ -568,8 +605,9 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                     return;
                 }
                 if (FX === 0) {
-                    if (this.characters[CharIndex].sprite)
+                    if (this.characters[CharIndex].sprite) {
                         this.characters[CharIndex].sprite.removerFxsInfinitos();
+                    }
                     return;
                 }
                 FXLoops = FXLoops + 1;
@@ -599,8 +637,9 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                 if (this.started) {
 
                     this.renderer.renderFrame();
-                    if (!this.isPaused)
+                    if (!this.isPaused) {
                         this.updater.update();
+                    }
                 }
 
                 if (!this.isStopped) {
@@ -610,8 +649,9 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
 
             start() {
 
-                if (this.started)
+                if (this.started) {
                     return;
+                }
                 this.renderer.drawMapaIni(this.player.gridX, this.player.gridY);
 
                 this.logeado = true;
@@ -655,16 +695,18 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
                  Entonces: si haces click en el centro y te estas moviendo lo rederijo al tile del pj.
                  (en el eje y no hay problema porque acepta 2 posiciones distintas)
                  */
-                if (this.player.movementTransition.inProgress && offsetX) {
+                if (this.playerMovement.estaMoviendose() && offsetX) {
 
                     if (this.player.heading === Enums.Heading.oeste) {
                         x = x + 1; // fix de pos de c.gridX
-                        if (x === (this.player.gridX + 1))
+                        if (x === (this.player.gridX + 1)) {
                             x--;
+                        }
                     }
                     if (this.player.heading === Enums.Heading.este) {
-                        if (x === this.player.gridX - 1)
+                        if (x === this.player.gridX - 1) {
                             x++;
+                        }
                     }
                 }
                 return {x: x, y: y};
@@ -676,28 +718,32 @@ define(['model/mapa', 'updater', 'model/item', 'model/player', 'model/character'
              */
             forEachEntity(callback) {
                 _.each(this.characters, function (entity, index) {
-                    if (entity)
+                    if (entity) {
                         callback(entity, index);
+                    }
                 });
 
                 _.each(this.items, function (entity, index) {
-                    if (entity)
+                    if (entity) {
                         callback(entity, index);
+                    }
                 });
 
             }
 
             forEachCharacter(callback) { // TODO (importante): este _.each itera solo los elementos del array?, dado que characters tiene por ej elementos en [3] y [5323] ("sparse array"), quiero imaginar que solo itera los elementos y no va desde 0 a 5323 probando con cada uno no?
                 _.each(this.characters, function (entity) {
-                    if (entity)
+                    if (entity) {
                         callback(entity);
+                    }
                 });
             }
 
             forEachItem(callback) {
                 _.each(this.items, function (entity) {
-                    if (entity)
+                    if (entity) {
                         callback(entity);
+                    }
                 });
             }
 

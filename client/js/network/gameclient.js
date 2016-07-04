@@ -105,7 +105,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleNavigateToggle() {
-            this.game.player.navegando = !this.game.player.navegando;
+            this.game.playerState.navegando = !this.game.playerState.navegando;
             console.log("TODO: handleNavigateToggle ");
         }
 
@@ -218,24 +218,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleUserCharIndexInServer(CharIndex) {
-            if (this.game.player.id !== CharIndex) {
-                log.error("WTF EL CHARINDEX CAMBIA?: playerID" + this.game.player.id + " cambiado a charindex " + CharIndex);
-
-                this.game.characters[this.game.player.id] = null;
-                var x, y;
-                if (this.game.characters[CharIndex]) {
-                    x = this.game.characters[CharIndex].gridX;
-                    y = this.game.characters[CharIndex].gridY;
-                    this.game.sacarEntity(this.game.characters[CharIndex]);
-                }
-
-                this.game.player.id = CharIndex;
-                this.game.characters[CharIndex] = this.game.player;
-
-                if (x) { // hack para "agregar player" y que detecte cambio de mapa, dado que el sv mando las pos de cambio al char creado con el otro charindex
-                    this.game.agregarCharacter(this.game.player.id, 0, 0, 0, x, y);
-                }
-            }
+            this.game.changePlayerIndex(CharIndex);
         }
 
         handleCharacterCreate(CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, Name, NickColor, Privileges) {
@@ -243,12 +226,12 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleCharacterRemove(CharIndex) {
-            if (CharIndex === this.game.player.id) {
-                log.error("trato de saccar al player");
-                return;
-            }
+            // if (CharIndex === this.game.player.id) {
+            //     log.error("trato de saccar al player");
+            //     return;
+            // }
             if (!this.game.characters[CharIndex])
-                log.error("trato de sacar entity inexistente");
+                log.error("trato de sacar character inexistente");
             else
                 this.game.sacarEntity(this.game.characters[CharIndex]);
             console.log("TODO: handleCharacterRemove ");
@@ -460,7 +443,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleMeditateToggle() {
-            this.game.player.meditando = !this.game.player.meditando;
+            this.game.playerState.meditando = !this.game.playerState.meditando;
             console.log("TODO: handleMeditateToggle ");
         }
 
@@ -530,7 +513,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleParalizeOK() {
-            this.game.player.paralizado = !this.game.player.paralizado;
+            this.game.playerState.paralizado = !this.game.playerState.paralizado;
             console.log("TODO: handleParalizeOK ");
         }
 

@@ -14,7 +14,7 @@ define([], function () {
         }
 
         updateComenzarMovimientoPlayer() { // todo: hacerlo dentro de player y sacar por completo esta clase
-            this.game.player.tratarDeMover();
+            this.game.playerMovement.tratarDeMover();
         }
 
     }

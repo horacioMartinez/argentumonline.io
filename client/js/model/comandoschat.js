@@ -32,7 +32,7 @@ define(['enums', 'font'], function (Enums, Font) {
                             break;
 
                         case "/SALIR":
-                            if (this.game.player.paralizado)
+                            if (this.game.playerState.paralizado)
                                 this.game.escribirMsgConsola("No puedes salir estando paralizado.", Font.WARNING);
                             else {
                                 if (this.game.macroActivado)

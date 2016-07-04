@@ -28,6 +28,11 @@ define(['enums'], function (Enums) {
             this.setPosition(x * 32, y * 32);
         }
 
+        setGridPositionOnly(gridX, gridY) {
+            this.gridX = gridX;
+            this.gridY = gridY;
+        }
+
         esPosAdyacente(gridX, gridY) { // devulve el heading si la pos es adyacente, sino 0
             if ((gridY === this.gridY) && (gridX === this.gridX + 1 ))
                 return Enums.Heading.este;

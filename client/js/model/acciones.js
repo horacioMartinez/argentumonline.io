@@ -86,14 +86,14 @@ define(['enums',  'model/macros'], function (Enums, Macros) {
 
         caminar(direccion) {
             if (this.game.logeado) {
-                this.game.player.comenzarCaminar(direccion);
+                this.game.playerMovement.comenzarCaminar(direccion);
                 this.desactivarMacros();
             }
         }
 
         terminarDeCaminar(direccion) {
             if (this.game.logeado)
-                this.game.player.terminarDeCaminar(direccion);
+                this.game.playerMovement.terminarDeCaminar(direccion);
         }
 
         click(incomingFromMacro) {
@@ -220,7 +220,7 @@ define(['enums',  'model/macros'], function (Enums, Macros) {
                 this.game.escribirMsgConsola(Enums.MensajeConsola.ESTAS_MUERTO, Font.INFO);
                 return;
             }
-            if (this.game.player.mana === this.game.atributos.maxMana)
+            if (this.game.atributos.mana === this.game.atributos.maxMana)
                 this.game.escribirMsgConsola("Tu mana ya está llena", Font.INFO);
             else
                 this.game.client.sendMeditate();
