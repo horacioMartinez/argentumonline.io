@@ -7,6 +7,9 @@ define(['lib/pixi'], function (PIXI) {
     function SpriteGrh(grh, cantLoops) {
 
         this._velocidadSeteada = false;
+        this._playedLoops = 0;
+        this._cantLoops = cantLoops || 0;
+        this._realOnComplete = null;
 
         if (grh.frames) { //grh animado
             PIXI.extras.MovieClip.call(this, grh.frames);
@@ -14,8 +17,7 @@ define(['lib/pixi'], function (PIXI) {
             if (!cantLoops) {
                 this.play();
             }
-        }
-        else {
+        } else {
             var aux = [];
             aux.push(grh);
             PIXI.extras.MovieClip.call(this, aux);
@@ -23,8 +25,19 @@ define(['lib/pixi'], function (PIXI) {
         if (cantLoops) {
             this.loop = false;
         }
+
+        var self = this;
         this.onComplete = function () {
-            this.gotoAndStop(0);
+            if (self._playedLoops < self._cantLoops) {
+                self._playedLoops++;
+                self.gotoAndStop(0);
+                self._play();
+            } else {
+                self.gotoAndStop(0);
+                if (this._realOnComplete){
+                    this._realOnComplete();
+                }
+            }
         };
 
         this._posicionarGrafico();
@@ -35,16 +48,24 @@ define(['lib/pixi'], function (PIXI) {
 
     SpriteGrh.prototype.play = function () {
         if (this.textures.length > 1) {
-            PIXI.extras.MovieClip.prototype.play.call(this);
+            this._playedLoops = 1;
+            this._play();
         }
+    };
+
+    SpriteGrh.prototype._play = function () {
+        PIXI.extras.MovieClip.prototype.play.call(this);
+    };
+
+    SpriteGrh.prototype.setOnComplete = function (cb) {
+        this._realOnComplete = cb;
     };
 
     SpriteGrh.prototype._setSpeed = function (velocidad) {
         var duracion;
         if (this._velocidadSeteada) {
             duracion = this._velocidadSeteada;
-        }
-        else {
+        } else {
             duracion = velocidad;
         }
         var fps = (this.textures.length / duracion) * 1000;
@@ -101,8 +122,7 @@ define(['lib/pixi'], function (PIXI) {
         if (grh.frames) { //grh animado
             this.textures = grh.frames;
             this._setSpeed(grh.velocidad);
-        }
-        else {
+        } else {
             var aux = [];
             aux.push(grh);
             this.textures = aux;

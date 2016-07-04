@@ -34,9 +34,9 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
         if (loops > 0) {
             nuevoSprite.play();
             var self = this;
-            nuevoSprite.onComplete = function () {
-                self.removeChild(this);
-            };
+            nuevoSprite.setOnComplete(function () {
+                self.removeChild(nuevoSprite);
+            });
         }
         else {
             nuevoSprite.zIndex--; // asi los fxs salen arriba de los infinitos (como meditar)
