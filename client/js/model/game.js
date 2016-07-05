@@ -57,27 +57,30 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 this.updater = updater;
             }
 
-            recibirDanio(parteCuerpo, danio) {
+            recibirDanioCriatura(parteCuerpo, danio) {
 
                 var txt = "";
+                var formatMessage = function(bodyPartMessage){
+                  return Enums.MensajeConsola.MENSAJE_1 + bodyPartMessage + danio + Enums.MensajeConsola.MENSAJE_2;
+                };
                 switch (parteCuerpo) {
                     case Enums.ParteCuerpo.cabeza:
-                        txt = Enums.MensajeConsola.MENSAJE_GOLPE_CABEZA + danio + Enums.MensajeConsola.MENSAJE_2;
+                        txt = formatMessage(Enums.MensajeConsola.MENSAJE_GOLPE_CABEZA);
                         break;
                     case Enums.ParteCuerpo.brazoIzquierdo:
-                        txt = Enums.MensajeConsola.MENSAJE_GOLPE_BRAZO_IZQ + danio + Enums.MensajeConsola.MENSAJE_2;
+                        txt = formatMessage(Enums.MensajeConsola.MENSAJE_GOLPE_BRAZO_IZQ);
                         break;
                     case Enums.ParteCuerpo.brazoDerecho:
-                        txt = Enums.MensajeConsola.MENSAJE_GOLPE_BRAZO_DER + danio + Enums.MensajeConsola.MENSAJE_2;
+                        txt = formatMessage(Enums.MensajeConsola.MENSAJE_GOLPE_BRAZO_DER);
                         break;
                     case Enums.ParteCuerpo.piernaIzquierda:
-                        txt = Enums.MensajeConsola.MENSAJE_GOLPE_PIERNA_IZQ + danio + Enums.MensajeConsola.MENSAJE_2;
+                        txt = formatMessage(Enums.MensajeConsola.MENSAJE_GOLPE_PIERNA_IZQ);
                         break;
                     case Enums.ParteCuerpo.piernaDerecha:
-                        txt = Enums.MensajeConsola.MENSAJE_GOLPE_PIERNA_DER + danio + Enums.MensajeConsola.MENSAJE_2;
+                        txt = formatMessage(Enums.MensajeConsola.MENSAJE_GOLPE_PIERNA_DER);
                         break;
                     case Enums.ParteCuerpo.torso:
-                        txt = Enums.MensajeConsola.MENSAJE_GOLPE_TORSO + danio + Enums.MensajeConsola.MENSAJE_2;
+                        txt = formatMessage(Enums.MensajeConsola.MENSAJE_GOLPE_TORSO);
                         break;
                     default:
                         log.error("Mensaje de parte de cuerpo invalido");
@@ -87,12 +90,80 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 this.renderer.agregarTextoConsola(txt, Font.FIGHT);
             }
 
-            realizarDanio(danio) {
+            recibirDanioUser(parteCuerpo, danio, attackerIndex){
+                var txt = "";
+                let attackerName = this.characters[attackerIndex].nombre;
+                var formatMessage = function(bodyPartMessage){
+                    return Enums.MensajeConsola.MENSAJE_1 + attackerName + bodyPartMessage + danio + Enums.MensajeConsola.MENSAJE_2;
+                };
+                switch (parteCuerpo) {
+                    case Enums.ParteCuerpo.cabeza:
+                        txt = formatMessage(Enums.MensajeConsola.RECIBE_IMPACTO_CABEZA);
+                        break;
+                    case Enums.ParteCuerpo.brazoIzquierdo:
+                        txt = formatMessage(Enums.MensajeConsola.RECIBE_IMPACTO_BRAZO_IZQ);
+                        break;
+                    case Enums.ParteCuerpo.brazoDerecho:
+                        txt = formatMessage(Enums.MensajeConsola.RECIBE_IMPACTO_BRAZO_DER);
+                        break;
+                    case Enums.ParteCuerpo.piernaIzquierda:
+                        txt = formatMessage(Enums.MensajeConsola.RECIBE_IMPACTO_PIERNA_IZQ);
+                        break;
+                    case Enums.ParteCuerpo.piernaDerecha:
+                        txt = formatMessage(Enums.MensajeConsola.RECIBE_IMPACTO_PIERNA_DER);
+                        break;
+                    case Enums.ParteCuerpo.torso:
+                        txt = formatMessage(Enums.MensajeConsola.RECIBE_IMPACTO_TORSO);
+                        break;
+                    default:
+                        log.error("Mensaje de parte de cuerpo invalido");
+                }
+
+                this.renderer.agregarCharacterHoveringInfo(this.player, -danio, Font.CANVAS_DANIO_RECIBIDO);
+                this.renderer.agregarTextoConsola(txt, Font.FIGHT);
+            }
+
+            realizarDanioCriatura(danio) {
                 var char = this.player.lastAttackedTarget;
                 if (char) {
                     this.renderer.agregarCharacterHoveringInfo(char, danio, Font.CANVAS_DANIO_REALIZADO);
-                    this.renderer.agregarTextoConsola(Enums.MensajeConsola.MENSAJE_GOLPE_CRIATURA_1 + danio + Enums.MensajeConsola.MENSAJE_2, Font.FIGHT);
                 }
+                this.renderer.agregarTextoConsola(Enums.MensajeConsola.MENSAJE_GOLPE_CRIATURA_1 + danio + Enums.MensajeConsola.MENSAJE_2, Font.FIGHT);
+            }
+
+            realizarDanioPlayer(danio,parteCuerpo,victimIndex) {
+                let victim = this.characters[victimIndex];
+                let attackerName = this.characters[victimIndex].nombre;
+
+                this.renderer.agregarCharacterHoveringInfo(victim, danio, Font.CANVAS_DANIO_REALIZADO);
+
+                var formatMessage = function(bodyPartMessage){
+                    return Enums.MensajeConsola.PRODUCE_IMPACTO_1+ attackerName + bodyPartMessage + danio + Enums.MensajeConsola.MENSAJE_2;
+                };
+                let txt = "";
+                switch (parteCuerpo) {
+                    case Enums.ParteCuerpo.cabeza:
+                        txt = formatMessage(Enums.MensajeConsola.PRODUCE_IMPACTO_CABEZA);
+                        break;
+                    case Enums.ParteCuerpo.brazoIzquierdo:
+                        txt = formatMessage(Enums.MensajeConsola.PRODUCE_IMPACTO_BRAZO_IZQ);
+                        break;
+                    case Enums.ParteCuerpo.brazoDerecho:
+                        txt = formatMessage(Enums.MensajeConsola.PRODUCE_IMPACTO_BRAZO_DER);
+                        break;
+                    case Enums.ParteCuerpo.piernaIzquierda:
+                        txt = formatMessage(Enums.MensajeConsola.PRODUCE_IMPACTO_PIERNA_IZQ);
+                        break;
+                    case Enums.ParteCuerpo.piernaDerecha:
+                        txt = formatMessage(Enums.MensajeConsola.PRODUCE_IMPACTO_PIERNA_DER);
+                        break;
+                    case Enums.ParteCuerpo.torso:
+                        txt = formatMessage(Enums.MensajeConsola.PRODUCE_IMPACTO_TORSO);
+                        break;
+                    default:
+                        log.error("Mensaje de parte de cuerpo invalido");
+                }
+                this.renderer.agregarTextoConsola(txt, Font.FIGHT);
             }
 
             escribirMsgConsola(texto, font) {

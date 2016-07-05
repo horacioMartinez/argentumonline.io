@@ -628,11 +628,11 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleNPCHitUser(parteCuerpo, danio) {
-            this.game.recibirDanio(parteCuerpo, danio);
+            this.game.recibirDanioCriatura(parteCuerpo, danio);
         }
 
         handleUserHitNPC(danio) {
-            this.game.realizarDanio(danio);
+            this.game.realizarDanioCriatura(danio);
         }
 
         handleUserAttackedSwing(a) {
@@ -641,6 +641,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleUserHittedByUser(attackerIndex, bodyPart, danio) {
             console.log("TODO: handleUserHittedByUser");
+            this.game.recibirDanioUser(bodyPart, danio, attackerIndex)
             /*
              Dim AttackerName As String
 
@@ -670,7 +671,8 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
              */
         }
 
-        handleUserHittedUser(attackerIndex, bodyPart, danio) {
+        handleUserHittedUser(victimIndex, bodyPart, danio) {
+            this.game.realizarDanioPlayer(danio,bodyPart,victimIndex);
             console.log("TODO: handleUserHittedUser");
         }
 

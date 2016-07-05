@@ -11,7 +11,7 @@ define({
         NPCSwing: 1,
         NPCKillUser: 2,
         BlockedWithShieldUser: 3,
-        BlockedWithShieldother: 4,
+        BlockedWithShieldOther: 4,
         UserSwing: 5,
         SafeModeOn: 6,
         SafeModeOff: 7,

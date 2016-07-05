@@ -11,10 +11,10 @@ define(['jquery-ui'], function () {
             }
             this.$this = $(DOMdata);
 
-            var parentID = "#container";
+            this.parentID = "#container";
             var self = this;
-            var options = {
-                appendTo: parentID,
+            this.options = {
+                appendTo: self.parentID,
                 autoOpen: false,
                 dialogClass: 'dialog_default',
                 close: function (event, ui) {
@@ -29,19 +29,28 @@ define(['jquery-ui'], function () {
                     $(this).width($(this).prev('.ui-dialog-titlebar').outerWidth(true) - widthPadding);
                 }
             };
-            $.extend(options, addiotionalOptions);
+            $.extend(this.options, addiotionalOptions);
             if (!general) {
                 var position = {position: {my: "center", at: "left+40%", of: "#container"}};
-                $.extend(options, position);
+                $.extend(this.options, position);
             }
-            this.$this.dialog(options).parent().draggable("option", "containment", parentID);
 
-            if (this.$this.siblings('#' + this.$this.attr('id')).length) { // TODO: no funciona esto
-                throw new Error("pop up inicializado dos veces: " + this.$this.attr('id'));
-            }
+            this._createDom();
 
             this.visible = false;
-            this._firstTimeClosed = true; // primera vez en cerrar es automaticamente al crearlo
+        }
+
+        _createDom(){
+            this.$this.dialog(this.options).parent().draggable("option", "containment", this.parentID);
+            this._checkDuplicate();
+        }
+        _checkDuplicate(){
+            let myID = this.$this.attr('id');
+            this.$this.parent().siblings(".ui-dialog").each( function () {
+                if ($(this).find('#' + myID).length) {
+                    throw new Error("pop up inicializado dos veces: " + myID);
+                }
+            });
         }
 
         getDomElement() {
@@ -49,15 +58,12 @@ define(['jquery-ui'], function () {
         }
 
         show() {
+            //this._createDom();
             this.$this.dialog("open");
             this.visible = true;
         }
 
         hide() { // OJO, en algunos se cierra con el comando que viene del server (y se puede cerrar 2 veces)
-            if (this._firstTimeClosed) { // primera vez en cerrarse es al crearse
-                this._firstTimeClosed = false;
-                return;
-            }
             this.$this.dialog("close");
             this.visible = false;
         }
