@@ -635,40 +635,16 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
             this.game.realizarDanioCriatura(danio);
         }
 
-        handleUserAttackedSwing(a) {
+        handleUserAttackedSwing(attackerIndex) {
+            let attackerName = this.game.characters[attackerIndex].nombre;
+            let text =  Enums.MensajeConsola.MENSAJE_1 + attackerName + Enums.MensajeConsola.ATAQUE_FALLO;
+            this.game.escribirMsgConsola(text, Font.FIGHT);
             console.log("TODO: handleUserAttackedSwing");
         }
 
         handleUserHittedByUser(attackerIndex, bodyPart, danio) {
             console.log("TODO: handleUserHittedByUser");
-            this.game.recibirDanioUser(bodyPart, danio, attackerIndex)
-            /*
-             Dim AttackerName As String
-
-             AttackerName = GetRawName(charlist(incomingData.ReadInteger()).Nombre)
-             BodyPart = incomingData.ReadByte()
-             Daño = incomingData.ReadInteger()
-
-             Select Case BodyPart
-             Case bCabeza
-             Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & MENSAJE_RECIBE_IMPACTO_CABEZA & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
-
-             Case bBrazoIzquierdo
-             Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & MENSAJE_RECIBE_IMPACTO_BRAZO_IZQ & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
-
-             Case bBrazoDerecho
-             Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & MENSAJE_RECIBE_IMPACTO_BRAZO_DER & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
-
-             Case bPiernaIzquierda
-             Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & MENSAJE_RECIBE_IMPACTO_PIERNA_IZQ & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
-
-             Case bPiernaDerecha
-             Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & MENSAJE_RECIBE_IMPACTO_PIERNA_DER & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
-
-             Case bTorso
-             Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_1 & AttackerName & MENSAJE_RECIBE_IMPACTO_TORSO & Daño & MENSAJE_2, 255, 0, 0, True, False, True)
-             End Select
-             */
+            this.game.recibirDanioUser(bodyPart, danio, attackerIndex);
         }
 
         handleUserHittedUser(victimIndex, bodyPart, danio) {
@@ -709,7 +685,10 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleHaveKilledUser(victimIndex, exp) {
-            /* '"¡" & .name & " te ha matado!" */
+            let victimName = this.game.characters[victimIndex].nombre;
+            this.game.escribirMsgConsola(Enums.MensajeConsola.HAS_MATADO_A + victimName + Enums.MensajeConsola.MENSAJE_22,Font.FIGHT);
+            this.game.escribirMsgConsola(Enums.MensajeConsola.HAS_GANADO_EXPE_1 + exp + Enums.MensajeConsola.HAS_GANADO_EXPE_2,Font.FIGHT);
+
             console.log("TODO: handleHaveKilledUser");
         }
 
@@ -722,6 +701,8 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleUserKill(attackerIndex) {
+            let attackerName = this.game.characters[attackerIndex].nombre;
+            this.game.escribirMsgConsola(attackerName + Enums.MensajeConsola.TE_HA_MATADO, Font.FIGHT);
             console.log("TODO: handleUserKill");
         }
 

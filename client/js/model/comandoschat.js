@@ -372,6 +372,10 @@ define(['enums', 'font'], function (Enums, Font) {
                             }
                             break;
 
+                        case "/HOGAR":
+                            this.game.client.sendHome();
+                            break;
+
                         default:
                             valido = false;
                             break;
@@ -1494,8 +1498,6 @@ define(['enums', 'font'], function (Enums, Font) {
  Call ShowConsoleMsg("Prámetros incorrectos. Utilice /SETINIVAR LLAVE CLAVE VALOR")
  End If
 
- Case "/HOGAR"
- Call WriteHome
 
  Case "/SETDIALOG"
  If notNullArguments Then
