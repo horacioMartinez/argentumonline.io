@@ -20,7 +20,7 @@ Detect.isTablet = function (screenWidth) {
 
 Detect.isWindows = function () {
     return Detect.userAgentContains('Windows');
-}
+};
 
 Detect.isChromeOnWindows = function () {
     return Detect.userAgentContains('Chrome') && Detect.userAgentContains('Windows');

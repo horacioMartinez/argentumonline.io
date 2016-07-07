@@ -1,4 +1,6 @@
 define({
+    /* valor default primer elemento enums en VB: 0 */
+
     Heading: {
         norte: 1,
         este: 2,
@@ -201,6 +203,15 @@ define({
         lluvia_start_outdoor: "lluviaoutst",
         lluvia_end_indoor: "lluviainend",
         lluvia_end_outdoor: "lluviaoutend",
+    },
+
+    ClanType: {
+        ROYAL_ARMY: 0,
+        EVIL: 1,
+        NEUTRAL: 2,
+        GM: 3,
+        LEGAL: 4,
+        CRIMINAL: 5
     }
 });
 

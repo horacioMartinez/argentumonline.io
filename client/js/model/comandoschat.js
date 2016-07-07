@@ -50,7 +50,7 @@ define(['enums', 'font'], function (Enums, Font) {
                                 this.game.client.sendRequestAccountState();
                             }
                             break;
-
+                        
                         case "/QUIETO":
                             if (!this._checkearYescribirMuerto()) {
                                 this.game.client.sendPetStand();
@@ -344,9 +344,6 @@ define(['enums', 'font'], function (Enums, Font) {
                             }
 
                             break;
-                        case "/FUNDARCLANGM":
-                            this.game.client.sendGuildFundation(eClanType.ct_GM);
-                            break;
 
                         case "/ECHARPARTY":
                             if (args.length) {
@@ -406,6 +403,9 @@ define(['enums', 'font'], function (Enums, Font) {
  '
  ' BEGIN GM COMMANDS
  '
+ case "/FUNDARCLANGM":
+ this.game.client.sendGuildFundation(eClanType.ct_GM);
+ break;
 
  Case "/GMSG"
  If notNullArguments Then

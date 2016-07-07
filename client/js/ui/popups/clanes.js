@@ -2,27 +2,31 @@
  * Created by horacio on 6/16/16.
  */
 
-define(["text!../../../menus/clanes.html!strip", 'ui/popups/popup'], function (DOMdata, PopUp) {
+define(["text!../../../menus/clanes.html!strip", 'ui/popups/popup', 'ui/popups/tabs/clanesSearch','ui/popups/tabs/miembrosClan','ui/popups/tabs/solicitudesClan'], function (DOMdata, PopUp, ClanesSearchTab, MiembrosClanTab, SolicitudesClanTab) {
 
     class Clanes extends PopUp {
-        constructor(game, detallesClan, showMensajeCb) {
+
+        constructor(game, detallesClan, showMensajeCb, solicitudClanCb) {
 
             var options = {
-                width: 500,
-                height: 400,
+                width: 800,
+                height: 600,
                 minWidth: 250,
                 minHeight: 300
             };
             super(DOMdata, options);
 
+
             this.game = game;
             this.detallesClan = detallesClan;
             this.showMensajeCb = showMensajeCb;
 
+            this.searchTab = new ClanesSearchTab(game, detallesClan, showMensajeCb, solicitudClanCb);
+            this.miembrosTab = new MiembrosClanTab();
+            this.solicitudesTab = new SolicitudesClanTab();
+            
             this.initCallbacks();
-            this.$clanesNameList = $("#clanesNameList");
-            this.$miembrosNameList = $("#clanesMembersList");
-            this.$solicitantesNameList = $("#clanesMembershipRequestList");
+
         }
 
         show() {
@@ -31,24 +35,15 @@ define(["text!../../../menus/clanes.html!strip", 'ui/popups/popup'], function (D
         }
 
         setNombresClanes(nombresClanes) {
-            for (var nombre of nombresClanes) {
-                var $nuevoClan = $("<option>").text(nombre);
-                this.$clanesNameList.append($nuevoClan);
-            }
+            this.searchTab.setNombresClanes(nombresClanes);
         }
 
         setNombresMiembros(nombresMiembros) {
-            for (var nombre of nombresMiembros) {
-                var $nuevoMiembro = $("<option>").text(nombre);
-                this.$miembrosNameList.append($nuevoMiembro);
-            }
+            this.miembrosTab.setNombresMiembros(nombresMiembros);
         }
 
         setNombresSolicitantes(nombresSolicitantes) {
-            for (var nombre of nombresSolicitantes) {
-                var $nuevoSolicitante = $("<option>").text(nombre);
-                this.$solicitantesNameList.append($nuevoSolicitante);
-            }
+            this.solicitudesTab.setNombresSolicitantes(nombresSolicitantes);
         }
 
         hide(incomingFromServer) {
@@ -57,14 +52,7 @@ define(["text!../../../menus/clanes.html!strip", 'ui/popups/popup'], function (D
 
         initCallbacks() {
             var self = this;
-            $("#clanesBotonDetallesClan").click(function () {
-                var clanSeleccionado = self.$clanesNameList.find('option:selected').text();
-                if (!clanSeleccionado) {
-                    self.showMensajeCb("Debes seleccionar un clan");
-                } else {
-                    self.detallesClan.show(clanSeleccionado);
-                }
-            });
+            
         }
 
         clearDom() {

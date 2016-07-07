@@ -16,8 +16,6 @@ define(["text!../../../menus/opciones.html!strip", 'ui/popups/popup', 'ui/popups
             this.configurarTeclasTab = new ConfigurarTeclasTab(storage, updateKeysCallback, showMensajeCallback);
             this.audioTab = new AudioTab(game, storage);
             this.initCallbacks();
-            this.audioTab.initCallbacks();
-            this.configurarTeclasTab.initCallbacks();
             var self = this;
             this.configurarTeclasTab.setCerrarCallback(function () {
                 self.hide();

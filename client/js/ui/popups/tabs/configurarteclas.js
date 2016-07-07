@@ -11,6 +11,7 @@ define(['utils/charcodemap', 'ui/popups/popup'], function (CharCodeMap, PopUp) {
             this.nuevasKeys = null;
             this.updateKeysCb = updateKeysCb;
             this.showMensajeCb = showMensajeCb;
+            this.initCallbacks();
         }
 
         onShow() {

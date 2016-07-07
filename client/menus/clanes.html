@@ -7,26 +7,68 @@
 
 
 <article id="clanes" title="CLANES">
-    <div class="dialogContent">
-        <select id="clanesNameList" class="form-control"></select>
-        <button id="clanesBotonDetallesClan" class="botonNormal">DETALLES</button>
+    <div style="height:100%; display: flex;  flex-direction: row;">
 
-        <!-- ESTO ESTA ADEMAS DE LO ANTERIOR ADENTRO DE CLAN SI ES MIEMBRO DE UN CLAN ( Y NO LIDER) -->
-
-        <div class="jumbotron">
-            <h4>MIEMBRO</h4>
-            <select id="clanesMembersList" class="form-control"></select>
+        <div class="tabsContainer" style="display: flex; flex-direction: column;">
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href="#clanesSearchTab" data-toggle="tab">CLANES</a></li>
+                <li><a href="#clanesMiembrosTab" data-toggle="tab">MIEMBRO</a></li>
+                <li><a href="#clanesLiderTab" data-toggle="tab">LIDER</a></li>
+            </ul>
+            <div class="tabsFiller"></div>
         </div>
 
 
-        <!-- ESTO ESTA ADEMAS DE LO ANTERIOR ADENTRO DE CLAN SI ES LIDER DE UN CLAN -->
-        <div class="jumbotron">
-            <h4>LIDER</h4>
-            <select id="clanesMembershipRequestList" class="form-control"></select>
-            <button id="TBD1" class="botonNormal">hechar miembro</button>
-            <button id="TBD2" class="botonNormal">aceptar solicitud</button>
-            <button id="TBD3" class="botonNormal">rechazar solicitud</button>
+        <div class="tab-content dialogContent" style="flex: 1;">
+            <div id="clanesSearchTab" class="tab-pane active">
+                <div class="input-group">
+                    <input type="Search" placeholder="Nombre" class="form-control"/>
+                    <div class="input-group-btn">
+                        <button class="btn btn-info">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </div>
+                </div>
 
+                <select id="clanesSearchListaClanes" class="form-control" size="4">
+                    <!-- <option>CLAN UNO</option> -->
+                </select>
+
+                <!---
+                <div style="display:flex; flex:1;">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item active">Ejemplo Clan</a>
+                        <a href="#" class="list-group-item">Second item</a>
+                        <a href="#" class="list-group-item">Third item</a>
+                    </div>
+                </div> -->
+                <button id="clanesSearchBotonCrear" class="botonNormal">CREAR</button>
+                <button id="clanesSearchBotonDetalles" class="botonNormal">DETALLES</button>
+                <button id="clanesSearchBotonIngresar" class="botonNormal">APLICARSE</button>
+            </div>
+
+            <div id="clanesMiembrosTab" class="tab-pane">
+                <button id="clanesMiembrosBotonNoticias" class="botonNormal">NOTICIAS</button>
+                <div class="input-group">
+                    <input type="Search" placeholder="Nombre" class="form-control"/>
+                    <div class="input-group-btn">
+                        <button class="btn btn-info">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </div>
+                </div>
+                <select id="clanesMembersList" class="form-control" size="4"></select>
+                <button id="clanesMiembrosBotonDetalles" class="botonNormal">DETALLES</button>
+                <button id="clanesMiembrosBotonHechar" class="botonNormal">HECHAR</button>
+            </div>
+
+            <div id="clanesLiderTab" class="tab-pane">
+                <select id="clanesMembershipRequestList" class="form-control" size="4"></select>
+
+                <button id="TBD1" class="botonNormal">hechar miembro</button>
+                <button id="TBD2" class="botonNormal">aceptar solicitud</button>
+                <button id="TBD3" class="botonNormal">rechazar solicitud</button>
+            </div>
         </div>
 
     </div>

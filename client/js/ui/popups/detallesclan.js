@@ -5,7 +5,7 @@
 define(["text!../../../menus/detallesClan.html!strip", 'ui/popups/popup'], function (DOMdata, PopUp) {
 
     class DetallesClan extends PopUp {
-        constructor(game) {
+        constructor(game,solicitudClanCb) {
 
             var options = {
                 width: 500,
@@ -17,7 +17,10 @@ define(["text!../../../menus/detallesClan.html!strip", 'ui/popups/popup'], funct
 
             this.game = game;
             this.clan = "";
+            this.$botonAbrirSolicitud = $("#detallesClan_botonAplicarse");
+            this.$botonCerrar = $("#detallesClan_botonCerrar");
 
+            this.solicitudClanCb = solicitudClanCb;
             this.initCallbacks();
         }
 
@@ -28,17 +31,31 @@ define(["text!../../../menus/detallesClan.html!strip", 'ui/popups/popup'], funct
         }
 
         setClanInfo(GuildName, Founder, FoundationDate, Leader, URL, MemberCount, ElectionsOpen, Aligment, EnemiesCount, AlliesCount, AntifactionPoints, Codex, GuildDesc) {
-            //TODO
+            $("#detallesClan_nombre").text(GuildName);
+            $("#detallesClan_miembros").text(MemberCount);
+            $("#detallesClan_fundador").text(Founder);
+            $("#detallesClan_lider").text(Leader);
+            $("#detallesClan_web").text(URL);
+            $("#detallesClan_enemigos").text(EnemiesCount);
+            $("#detallesClan_aliados").text(AlliesCount);
+            $("#detallesClan_puntosAntifaccion").text(AntifactionPoints);
+            $("#detallesClan_fechaCreacion").text(FoundationDate);
+            $("#detallesClan_elecciones").text(ElectionsOpen);
+            $("#detallesClan_alineacion").text(Aligment);
+            $("#detallesClan_codex").text(Codex);
+            $("#detallesClan_descripcion").text(GuildDesc);
         }
 
         initCallbacks() {
             var self = this;
 
-            $("#detallesClanBotonEnviarSolicitud").click(function () {
-                var textoSolicitud = $("#detallesClanInputSolicitud").val();
-                self.game.client.sendGuildRequestMembership(self.clan, textoSolicitud);
+            this.$botonAbrirSolicitud.click(function () {
+                self.solicitudClanCb(self.clan);
             });
 
+            this.$botonCerrar.click(function(){
+                self.hide();
+            });
         }
 
     }

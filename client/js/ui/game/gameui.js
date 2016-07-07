@@ -2,7 +2,11 @@
  * Created by horacio on 2/21/16.
  */
 
-define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups/comerciar', 'ui/popups/ingamemensaje', 'ui/game/interfaz', 'ui/popups/tirar', 'ui/popups/boveda', 'ui/popups/guiamapa', 'ui/popups/opciones', 'ui/popups/clanes', 'ui/popups/detallesclan', 'ui/popups/carpinteria', 'ui/popups/herreria'], function (Enums, KeyMouseListener, popUpSkills, Comerciar, InGameMensaje, Interfaz, Tirar, Boveda, GuiaMapa, Opciones, Clanes, DetallesClan, Carpinteria, Herreria) {
+define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups/comerciar', 'ui/popups/ingamemensaje',
+    'ui/game/interfaz', 'ui/popups/tirar', 'ui/popups/boveda', 'ui/popups/guiamapa', 'ui/popups/opciones', 'ui/popups/carpinteria',
+    'ui/popups/herreria', 'ui/popups/clanes', 'ui/popups/detallesclan', 'ui/popups/solicitudclan', 'ui/popups/eleccionfaccionclan'],
+    function (Enums, KeyMouseListener, popUpSkills, Comerciar, InGameMensaje, Interfaz, Tirar, Boveda, GuiaMapa, Opciones,
+              Carpinteria, Herreria, Clanes, DetallesClan, SolicitudClan, EleccionFaccionClan) {
 
     //TODO: crear los popups en run time con jquery y borrarlos cuando se cierran ?
 
@@ -23,8 +27,11 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
 
             this.opciones = new Opciones(game, storage, this.updateKeysCallback.bind(this), this.showMensaje.bind(this));
             this.skills = new popUpSkills(game);
-            this.detallesClan = new DetallesClan(game);
-            this.clanes = new Clanes(game, this.detallesClan, this.showMensaje.bind(this));
+            this.detallesClan = new DetallesClan(game, this._showSolicitudClan.bind(this));
+            this.clanes = new Clanes(game, this.detallesClan, this.showMensaje.bind(this), this._showSolicitudClan.bind(this));
+            this.solicitudClan = new SolicitudClan(game);
+            this.eleccionFaccionClan = new EleccionFaccionClan(game);
+
             this.carpinteria = new Carpinteria(game);
             this.herreria = new Herreria(game);
 
@@ -50,8 +57,8 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
             this.keyMouseListener.setKeys(keys);
         }
 
-        hayPopUpActivo() {// TODO: arreglar esto ( ahora dialogs se meten en el body)
-            //return !(this.$popUps.children(':visible').length === 0);
+        hayPopUpActivo() {
+            return ($('#container').children('.ui-dialog:visible').length != 0)
         }
 
         showComerciar() {
@@ -104,6 +111,18 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
 
         showClanes() {
             this.clanes.show();
+        }
+
+        _showSolicitudClan(clan) {
+            this.solicitudClan.show(clan);
+        }
+
+        setNombresClanes(nombres){
+            this.clanes.setNombresClanes(nombres);
+        }
+        
+        showEleccionFaccionClan(){
+            this.eleccionFaccionClan.show();
         }
 
         updateSlotUser(numSlot, slot) { //todo: feo todo esto!

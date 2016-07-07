@@ -27,7 +27,7 @@ define(['jquery-ui'], function () {
                     $(this).height($(this).parent().height() - $(this).prev('.ui-dialog-titlebar').outerHeight(true) - heightPadding - titlebarMargin);
 
                     $(this).width($(this).prev('.ui-dialog-titlebar').outerWidth(true) - widthPadding);
-                }
+                },
             };
             $.extend(this.options, addiotionalOptions);
             if (!general) {

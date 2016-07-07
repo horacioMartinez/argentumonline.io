@@ -8,6 +8,7 @@ define([], function () {
         constructor(game, storage) {
             this.game = game;
             this.storage = storage;
+            this.initCallbacks();
         }
 
         onHide() {
