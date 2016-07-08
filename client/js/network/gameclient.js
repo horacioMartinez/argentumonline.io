@@ -514,6 +514,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleShowGuildFundationForm() {
+            this.game.gameUI.showCrearClan();
             console.log("TODO: handleShowGuildFundationForm ");
         }
 

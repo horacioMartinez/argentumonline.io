@@ -4,9 +4,10 @@
 
 define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups/comerciar', 'ui/popups/ingamemensaje',
     'ui/game/interfaz', 'ui/popups/tirar', 'ui/popups/boveda', 'ui/popups/guiamapa', 'ui/popups/opciones', 'ui/popups/carpinteria',
-    'ui/popups/herreria', 'ui/popups/clanes', 'ui/popups/detallesclan', 'ui/popups/solicitudclan', 'ui/popups/eleccionfaccionclan'],
+    'ui/popups/herreria', 'ui/popups/clanes', 'ui/popups/detallesclan', 'ui/popups/solicitudclan', 'ui/popups/eleccionfaccionclan',
+    'ui/popups/crearclan'],
     function (Enums, KeyMouseListener, popUpSkills, Comerciar, InGameMensaje, Interfaz, Tirar, Boveda, GuiaMapa, Opciones,
-              Carpinteria, Herreria, Clanes, DetallesClan, SolicitudClan, EleccionFaccionClan) {
+              Carpinteria, Herreria, Clanes, DetallesClan, SolicitudClan, EleccionFaccionClan, CrearClan) {
 
     //TODO: crear los popups en run time con jquery y borrarlos cuando se cierran ?
 
@@ -19,18 +20,21 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
             this.game = game;
             this.storage = storage;
 
+            let showMensajeFunction = this.showMensaje.bind(this);
+            
             this.inGameMensaje = new InGameMensaje();
             this.comerciar = new Comerciar(game, acciones);
             this.tirar = new Tirar(game, acciones);
             this.boveda = new Boveda(game, acciones);
             this.guiaMapa = new GuiaMapa();
 
-            this.opciones = new Opciones(game, storage, this.updateKeysCallback.bind(this), this.showMensaje.bind(this));
+            this.opciones = new Opciones(game, storage, this.updateKeysCallback.bind(this), showMensajeFunction);
             this.skills = new popUpSkills(game);
             this.detallesClan = new DetallesClan(game, this._showSolicitudClan.bind(this));
-            this.clanes = new Clanes(game, this.detallesClan, this.showMensaje.bind(this), this._showSolicitudClan.bind(this));
+            this.clanes = new Clanes(game, this.detallesClan, showMensajeFunction, this._showSolicitudClan.bind(this));
             this.solicitudClan = new SolicitudClan(game);
             this.eleccionFaccionClan = new EleccionFaccionClan(game);
+            this.crearClan = new CrearClan(game,showMensajeFunction);
 
             this.carpinteria = new Carpinteria(game);
             this.herreria = new Herreria(game);
@@ -123,6 +127,10 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
         
         showEleccionFaccionClan(){
             this.eleccionFaccionClan.show();
+        }
+
+        showCrearClan(){
+            this.crearClan.show();
         }
 
         updateSlotUser(numSlot, slot) { //todo: feo todo esto!

@@ -5,7 +5,8 @@
 define(["text!../../../menus/eleccionFaccionClan.html!strip", 'enums','ui/popups/popup'], function (DOMdata, Enums, PopUp) {
 
     class EleccionFaccionClan extends PopUp {
-        constructor() {
+        constructor(game) {
+
             var options = {
                 width: 150,
                 height: 300,
@@ -13,12 +14,13 @@ define(["text!../../../menus/eleccionFaccionClan.html!strip", 'enums','ui/popups
                 minHeight: 200
             };
             super(DOMdata, options, true);
+
+            this.game = game;
             this.initCallbacks();
         }
 
         _seleccionarAlineacion(alineacion) {
-            log.error(alineacion);
-            //this.game.client.sendGuildFundation(alineacion);
+            this.game.client.sendGuildFundation(alineacion);
             this.hide();
         }
 

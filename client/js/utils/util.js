@@ -11,6 +11,10 @@ define(function () {
 
         splitNullArray: function (array) {
             return array.split("\u0000");
+        },
+
+        joinNullArray: function (array) {
+            return array.join("\u0000");
         }
     }
 });
