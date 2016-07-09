@@ -3,7 +3,7 @@
  */
 
 
-define(['enums'], function (Enums) {
+define(['enums', 'utils/charcodemap'], function (Enums, CharcodeMap) {
     class KeyMouseInput {
         constructor(game, acciones) {
             this.acciones = acciones;
@@ -130,6 +130,19 @@ define(['enums'], function (Enums) {
                     break;
             }
             return continuar;
+        }
+
+        ignoredKey(key) {
+            for (var accionKey in this.keys) {
+                if (this.keys.hasOwnProperty(accionKey)){
+                    if (this.keys[accionKey] === key) {
+                        return false;
+                    }
+                }
+            }
+            if ((key >= CharcodeMap.keys.indexOf("F1")) && key <= CharcodeMap.keys.indexOf("F12")) {
+                return true;
+            }
         }
     }
 

@@ -94,6 +94,9 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
 
                 var key = e.which;
 
+                if (self.inputHandler.ignoredKey(key)) {
+                    return false;
+                }
                 if (self.inputHandler.isCaminarKey(key)) {
                     if (!self._isKeyDown(key)) {
                         self.inputHandler.keyDown(key);

@@ -75,7 +75,7 @@ define(['jquery-ui'], function () {
         }
 
         show() {
-            //this._createDom();
+            this.clearDom();
             this.$this.dialog("open");
             this.visible = true;
         }
@@ -86,8 +86,7 @@ define(['jquery-ui'], function () {
         }
 
         clearDom() { // todo: ver esto
-            return;
-            this.$this.find('span').text('');
+            //this.$this.find('span').text('');
             this.$this.find('input').val('');
         }
 

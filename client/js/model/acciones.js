@@ -160,7 +160,6 @@ define(['enums', 'font', 'model/macros'], function (Enums, Font, Macros) {
             if (!this.intervalos.requestDomar(this.game.currentTime)) {
                 return;
             }
-            log.error("DOMAR!");
             this.game.client.sendWork(Enums.Skill.domar);
         }
 

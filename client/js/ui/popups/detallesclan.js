@@ -30,6 +30,7 @@ define(["text!../../../menus/detallesClan.html!strip", 'ui/popups/popup'], funct
             this.clan = targetClan;
         }
 
+
         setClanInfo(GuildName, Founder, FoundationDate, Leader, URL, MemberCount, ElectionsOpen, Aligment, EnemiesCount, AlliesCount, AntifactionPoints, Codex, GuildDesc) {
             $("#detallesClan_nombre").text(GuildName);
             $("#detallesClan_miembros").text(MemberCount);

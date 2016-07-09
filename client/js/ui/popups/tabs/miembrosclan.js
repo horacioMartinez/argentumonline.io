@@ -19,6 +19,7 @@ define([], function () {
         }
 
         setNombresMiembros(nombresMiembros) {
+            this.$miembrosNameList.empty();
             for (var nombre of nombresMiembros) {
                 var $nuevoMiembro = $("<option>").text(nombre);
                 this.$miembrosNameList.append($nuevoMiembro);

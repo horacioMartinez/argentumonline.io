@@ -31,6 +31,7 @@ define([], function () {
         }
 
         setNombresSolicitantes(nombresSolicitantes) {
+            this.$solicitantesNameList.empty();
             for (var nombre of nombresSolicitantes) {
                 var $nuevoSolicitante = $("<option>").text(nombre);
                 this.$solicitantesNameList.append($nuevoSolicitante);
@@ -49,6 +50,7 @@ define([], function () {
                 this._ejecutarConSolicitante(
                     function (pj) {
                         this.game.client.sendGuildAcceptNewMember(pj);
+                        this.game.client.sendRequestGuildLeaderInfo();
                     }.bind(this));
             });
 
@@ -56,6 +58,7 @@ define([], function () {
                 this._ejecutarConSolicitante(
                     function (pj) {
                         this.game.client.sendGuildRejectNewMember(pj);
+                        this.game.client.sendRequestGuildLeaderInfo();
                     }.bind(this));
             });
         }

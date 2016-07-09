@@ -23,6 +23,7 @@ define([], function () {
         }
 
         setNombresClanes(nombresClanes) {
+            this.$clanesNameList.empty();
             for (var nombre of nombresClanes) {
                 var $nuevoClan = $("<option>").text(nombre);
                 this.$clanesNameList.append($nuevoClan);
@@ -54,6 +55,7 @@ define([], function () {
             this.$botonCrearClan.click(function(){
                 if (self.game.atributos.nivel > 24) { // todo: checkear skills ?
                     self.game.client.sendGuildFundate();
+                    self.hide();
                 } else {
                     self.showMensajeCb("Para fundar un clan tienes que ser nivel 25 y tener 90 skills en liderazgo.");
                 }
