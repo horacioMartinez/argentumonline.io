@@ -471,6 +471,9 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleGuildNews(News, EnemiesList, AlliesList) {
+            let enemigos = Utils.splitNullArray(EnemiesList);
+            let aliados = Utils.splitNullArray(AlliesList);
+            this.game.gameUI.showNoticiasClan(News,enemigos,aliados);
             console.log("TODO: handleGuildNews ");
         }
 
@@ -487,6 +490,9 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleCharacterInfo(CharName, Race, Class, Gender, Level, Gold, Bank, Reputation, PreviousPetitions, CurrentGuild, PreviousGuilds, RoyalArmy, ChaosLegion, CiudadanosMatados, CriminalesMatados) {
+            let previousGuilds = /*Utils.joinNullArray*/(PreviousGuilds);
+            let previousPetitions = /*Utils.joinNullArray*/(PreviousPetitions);
+            this.game.gameUI.showDetallesPersonaje(CharName, Race, Class, Gender, Level, Gold, Bank, Reputation, previousPetitions, CurrentGuild, previousGuilds, RoyalArmy, ChaosLegion, CiudadanosMatados, CriminalesMatados);
             console.log("TODO: handleCharacterInfo ");
         }
 

@@ -40,17 +40,34 @@ define(['jquery-ui'], function () {
             this.visible = false;
         }
 
-        _createDom(){
+        _createDom() {
             this.$this.dialog(this.options).parent().draggable("option", "containment", this.parentID);
             this._checkDuplicate();
         }
-        _checkDuplicate(){
+
+        _checkDuplicate() {
             let myID = this.$this.attr('id');
-            this.$this.parent().siblings(".ui-dialog").each( function () {
+            this.$this.parent().siblings(".ui-dialog").each(function () {
                 if ($(this).find('#' + myID).length) {
                     throw new Error("pop up inicializado dos veces: " + myID);
                 }
             });
+        }
+
+        _inicializarTabDesactivable($tab) {
+            $tab.children('a[data-toggle="tab"]').click(function () {
+                if ($(this).parent().hasClass('disabled')) {
+                    return false;
+                }
+            });
+        }
+
+        _activarTab($tab) {
+            $tab.removeClass('disabled');
+        }
+
+        _desactivarTab($tab) {
+            $tab.addClass('disabled');
         }
 
         getDomElement() {

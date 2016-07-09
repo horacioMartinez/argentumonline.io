@@ -12,8 +12,10 @@
         <div class="tabsContainer" style="display: flex; flex-direction: column;">
             <ul class="nav nav-pills nav-stacked">
                 <li><a href="#clanesSearchTab" data-toggle="tab">CLANES</a></li>
-                <li><a href="#clanesMiembrosTab" data-toggle="tab">MIEMBRO</a></li>
-                <li><a href="#clanesLiderTab" data-toggle="tab">LIDER</a></li>
+                <li id="clanesMiembrosTabButton" class="disabled"><a href="#clanesMiembrosTab" data-toggle="tab" >MIEMBRO</a></li>
+                <li id="clanesSolicitudesTabButton" class="disabled"><a href="#clanesSolicitudesTab" data-toggle="tab">LIDER</a></li>
+                <li id="clanesSettingsTabButton" class="disabled"><a href="#clanesSettingsTab" data-toggle="tab">SETTINGS</a></li>
+
             </ul>
             <div class="tabsFiller"></div>
         </div>
@@ -62,12 +64,23 @@
                 <button id="clanesMiembrosBotonHechar" class="botonNormal">HECHAR</button>
             </div>
 
-            <div id="clanesLiderTab" class="tab-pane">
+            <div id="clanesSolicitudesTab" class="tab-pane">
                 <select id="clanesMembershipRequestList" class="form-control" size="4"></select>
 
-                <button id="TBD1" class="botonNormal">hechar miembro</button>
-                <button id="TBD2" class="botonNormal">aceptar solicitud</button>
-                <button id="TBD3" class="botonNormal">rechazar solicitud</button>
+                <button id="clanesLiderBotonVerPeticion" class="botonNormal">VER PETICION</button>
+                <button id="clanesLiderBotonDetalles" class="botonNormal">DETALLES</button>
+                <button id="clanesLiderBotonAceptar" class="botonNormal">ACEPTAR SOLICITUD</button>
+                <button id="clanesLiderBotonRechazar" class="botonNormal">RECHAZAR SOLICITUD</button>
+            </div>
+
+            <div id="clanesSettingsTab" class="tab-pane">
+                TODO: hacerlo igual al menu que se muestra al crear y que lo edites directamente de ahi, no con botones
+                <button id="TBD_1" class="botonNormal">EDITAR CODEX</button>
+                <button id="TBD_2" class="botonNormal">EDITAR NOTICIAS</button>
+                <button id="TBD_3" class="botonNormal">EDITAR DESCRIPCION</button>
+                <button id="TBD_4" class="botonNormal">EDITAR WEBSITE</button>
+                <button id="TBD_5" class="botonNormal">PROPUESTA DE PAZ</button>
+                <button id="TBD_6" class="botonNormal">PROPUESTA DE ALUMNOS</button>
             </div>
         </div>
 
