@@ -58,7 +58,7 @@ define(["text!../../../menus/skills.html!strip", 'ui/popups/popup'], function (D
 
         _createSkill(numSkill, nombre, puntos, porcentaje) {
             var self = this;
-            var id = this._getSkillDOMid(numSkill);
+            //var id = this._getSkillDOMid(numSkill);
             var textoId = this._getSkillTextDOMid(numSkill);
             var puntosId = this._getSkillPointsDOMid(numSkill);
             var botonMasId = "popUpSkills_botonMasSkill_" + numSkill;

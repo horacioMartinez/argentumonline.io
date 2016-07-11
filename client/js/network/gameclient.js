@@ -337,6 +337,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleAtributes(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion) {
+            this.game.gameUI.setAtributosInfo(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion);
             console.log("TODO: handleAtributes ");
         }
 
@@ -416,10 +417,12 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleFame(Asesino, Bandido, Burgues, Ladron, Noble, Plebe, Promedio) {
+            this.game.gameUI.setFameInfo(Asesino, Bandido, Burgues, Ladron, Noble, Plebe, Promedio);
             console.log("TODO: handleFame ");
         }
 
         handleMiniStats(CiudadanosMatados, CriminalesMatados, UsuariosMatados, NpcsMuertos, Clase, Pena) {
+            this.game.gameUI.setMiniStats(CiudadanosMatados, CriminalesMatados, UsuariosMatados, NpcsMuertos, Clase, Pena);
             console.log("TODO: handleMiniStats ");
         }
 

@@ -62,6 +62,10 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
                 self.game.gameUI.showMapa();
             });
 
+            $("#botonEstadisticas").click(function () {
+                self.game.gameUI.showEstadisticas();
+            });
+
             $("#botonOpciones").click(function () {
                 self.game.gameUI.showOpciones();
             });
