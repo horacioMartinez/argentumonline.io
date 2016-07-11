@@ -74,6 +74,10 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
                 self.game.gameUI.showClanes();
             });
 
+            $("#botonParty").click(function(){
+               self.game.client.sendRequestPartyForm();
+            });
+
             //FIX bug firefox que no previene movimiento scroll hehcizos
             if (Detect.isFirefox()) {
                 self.setHechizosScrollFirefoxFix(self);

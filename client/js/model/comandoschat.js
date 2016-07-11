@@ -107,7 +107,7 @@ define(['enums', 'font'], function (Enums, Font) {
 
                             break;
                         case "/COMERCIAR":
-                            if (!this._checkearYescribirMuerto) {
+                            if (!this._checkearYescribirMuerto()) {
 
                                 if (this.game.comerciando) {
                                     this.game.escribirMsgConsola("Ya estás comerciando", Font.INFO);
@@ -118,7 +118,7 @@ define(['enums', 'font'], function (Enums, Font) {
 
                             break;
                         case "/BOVEDA":
-                            if (!this._checkearYescribirMuerto) {
+                            if (!this._checkearYescribirMuerto()) {
                                 this.game.client.sendBankStart();
                             }
 
@@ -148,25 +148,25 @@ define(['enums', 'font'], function (Enums, Font) {
 
                             break;
                         case "/CREARPARTY":
-                            if (!this._checkearYescribirMuerto) {
+                            if (!this._checkearYescribirMuerto()) {
                                 this.game.client.sendPartyCreate();
                             }
 
                             break;
                         case "/PARTY":
-                            if (!this._checkearYescribirMuerto) {
+                            if (!this._checkearYescribirMuerto()) {
                                 this.game.client.sendPartyJoin();
                             }
                             break;
 
                         case "/COMPARTIRNPC":
-                            if (!this._checkearYescribirMuerto) {
+                            if (!this._checkearYescribirMuerto()) {
                                 this.game.client.sendShareNpc();
                             }
 
                             break;
                         case "/NOCOMPARTIRNPC":
-                            if (!this._checkearYescribirMuerto) {
+                            if (!this._checkearYescribirMuerto()) {
                                 this.game.client.sendStopSharingNpc();
                             }
 
@@ -202,7 +202,7 @@ define(['enums', 'font'], function (Enums, Font) {
                         case "/CENTINELA":
                             if (args.length) {
                                 if (!isNaN(args[0]) && (args[0] < 65536)) {
-                                    this.game.client.sendCentinelReport(CInt(ArgumentosRaw))();
+                                    this.game.client.sendCentinelReport(args[0]);
                                 } else {
                                     this.game.escribirMsgConsola("El código de verificación debe ser numérico. Utilice /centinela X, siendo X el código de verificación.");
                                 }

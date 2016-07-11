@@ -615,6 +615,8 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleShowPartyForm(EsLider, Data, Exp) {
+            Data = Utils.splitNullArray(Data);
+            this.game.gameUI.showParty(EsLider, Data, Exp);
             console.log("TODO: handleShowPartyForm ");
         }
 

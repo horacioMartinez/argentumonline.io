@@ -5,12 +5,11 @@
 define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups/comerciar', 'ui/popups/ingamemensaje',
         'ui/game/interfaz', 'ui/popups/tirar', 'ui/popups/boveda', 'ui/popups/guiamapa', 'ui/popups/opciones', 'ui/popups/carpinteria',
         'ui/popups/herreria', 'ui/popups/clanes', 'ui/popups/detallesclan', 'ui/popups/solicitudclan', 'ui/popups/eleccionfaccionclan',
-        'ui/popups/crearclan', 'ui/popups/noticiasclan', 'ui/popups/detallespersonaje', 'ui/popups/estadisticas'],
+        'ui/popups/crearclan', 'ui/popups/noticiasclan', 'ui/popups/detallespersonaje', 'ui/popups/estadisticas', 'ui/popups/partylider',
+        'ui/popups/partymiembro'],
     function (Enums, KeyMouseListener, popUpSkills, Comerciar, InGameMensaje, Interfaz, Tirar, Boveda, GuiaMapa, Opciones,
               Carpinteria, Herreria, Clanes, DetallesClan, SolicitudClan, EleccionFaccionClan, CrearClan, NoticiasClan,
-              DetallesPersonaje, Estadisticas) {
-
-        //TODO: crear los popups en run time con jquery y borrarlos cuando se cierran ?
+              DetallesPersonaje, Estadisticas, PartyLider, PartyMiembro) {
 
         class GameUI {
             constructor(gameManager, storage) {
@@ -41,6 +40,8 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
                 this.detallesPersonaje = new DetallesPersonaje();
 
                 this.estadisticas = new Estadisticas(game);
+                this.partyLider = new PartyLider(game, showMensajeFunction);
+                this.partyMiembro= new PartyMiembro(game, showMensajeFunction);
 
                 this.carpinteria = new Carpinteria(game);
                 this.herreria = new Herreria(game);
@@ -149,6 +150,14 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
 
             showEstadisticas() {
                 this.estadisticas.show();
+            }
+
+            showParty(esLider, data, exp){
+                if (esLider) {
+                    this.partyLider.show(data, exp);
+                } else {
+                    this.partyMiembro.show(data,exp);
+                }
             }
 
             setAtributosInfo(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion) {

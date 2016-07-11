@@ -16,6 +16,8 @@ define(["text!../../../menus/crearClan.html!strip", 'ui/popups/popup', 'utils/ut
             super(DOMdata, options);
 
             this.game = game;
+            this.showMensajeCb = showMensajeCb;
+            
             this.$botonCrear = $("#crearClanBotonCrear");
             this.$botonCancelar = $("#crearClanBotonCancelar");
 
@@ -24,7 +26,6 @@ define(["text!../../../menus/crearClan.html!strip", 'ui/popups/popup', 'utils/ut
             this.$inputDescripcion = $("#crearClanDescripcion");
             this.prefixCodex = "crearClanCodex_";
 
-            this.showMensajeCb = showMensajeCb;
             this.initCallbacks();
         }
 
