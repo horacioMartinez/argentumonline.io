@@ -3,9 +3,9 @@ define([], function () {
         constructor(numMap, data) {
             this.numero = numMap;
             this.data = data;
-            this.isLoaded = false;
             this.height = 100;
             this.width = 100;
+            this.isLoaded = false;
         }
 
         mapaOutdoor() {

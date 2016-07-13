@@ -16,19 +16,26 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
             this.mutedMusicName = null;
         }
 
-        setMusic(nombre) { // todo: unload cada vez que cmabia?? <<- ALGO ANDA MAL y SIGUE AUMENTANDO MEMORIA, ver el task manager de chrome
-
+        setMusic(nombre) { // todo: unload cada vez que cmabia??
             if (this.musicEnabled) {
                 if (this.currentMusic) {
-                    this.currentMusic.stop();
+                    let fadingOutMusic = this.currentMusic;
+                    fadingOutMusic.fade(fadingOutMusic.volume(),0,1000);
+                    fadingOutMusic.once("fade", () =>{
+                        fadingOutMusic.stop();
+                    });
+                    //this.currentMusic.stop();
                 }
 
                 this.currentMusic = new Howler.Howl({
-                    urls: ['audio/musica/' + nombre + '.m4a'],
+                    src: ['audio/musica/' + nombre + '.m4a'],
                     loop: true
                 });
-                this.currentMusic.play();
+
+                // TODO: fade y que se ejecuten los dos la mismo tiempo? (por alguna rezon no anda)
+                //this.currentMusic.fade(0,this.musicVolume,1000);
                 this.currentMusic.volume(this.musicVolume);
+                this.currentMusic.play();
             }
             else {
                 this.mutedMusicName = nombre;
@@ -36,23 +43,25 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
 
         }
 
-        playSound(nombre, loop, onEnd) {
+        playSound(nombre, loop, onEnd, volume) {
             if (this.soundEnabled) {
+                volume = volume || 1;
                 if (!this.sounds[nombre]) {
                     this._cargarSonido(nombre, loop, onEnd);
                 }
+                this.sounds[nombre].volume(this.soundVolume * volume);
                 this.sounds[nombre].play();
-                this.sounds[nombre].volume(this.soundVolume);
             }
         }
 
-        _cargarSonido(nombre, loop, onEnd) {
+        _cargarSonido(nombre, loop, onEnd, sprite) {
             if (this.sounds[nombre]) {
                 return;
             }
 
             this.sounds[nombre] = new Howler.Howl({
-                urls: ['audio/sonidos/' + nombre + '.m4a']
+                src: ['audio/sonidos/' + nombre + '.m4a'],
+                sprite: sprite
             });
 
             if (loop) {
@@ -74,8 +83,7 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
             } else {
                 nombre = Enums.SONIDOS.lluvia_end_outdoor;
             }
-            this.playSound(nombre);
-            this.sounds[nombre].volume(0.2 * this.soundVolume);
+            this.playSound(nombre,false,null,0.2);
         }
 
         IniciarSonidoLluvia(bajoTecho) {
@@ -88,8 +96,7 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
             } else {
                 nombre = Enums.SONIDOS.lluvia_start_outdoor;
             }
-            this.playSound(nombre, false, this.playLoopLluvia(bajoTecho));
-            this.sounds[nombre].volume(0.2 * this.soundVolume);
+            this.playSound(nombre, false, this.playLoopLluvia(bajoTecho),0.2);
         }
 
         playLoopLluvia(bajoTecho) {
@@ -108,11 +115,10 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
             }
 
             if (!this.sounds[nombre]) { //cargar con sprite para que loopee bien
-                this._cargarSonido(nombre, true);
-                this.sounds[nombre].sprite(sprite);
+                this._cargarSonido(nombre, true, null, sprite);
             }
-            this.sounds[nombre].play("lluvia");
             this.sounds[nombre].volume(0.4 * this.soundVolume);
+            this.sounds[nombre].play("lluvia");
         }
 
         stopLluvia() {

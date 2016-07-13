@@ -46,7 +46,7 @@ define(['json!../../indices/graficos.json',
                 return this.grhs[grh];
             }
 
-            getTerrenoGrh(grh) { // TODO: cuando se implemente con rendertexture el mapa, sacar esto y usar getgrh, sirve para que el grid del terreno no se vea discontinuo
+            getTerrenoGrh(grh) { // TODO: si se implemente con rendertexture el mapa, sacar esto y usar getgrh, sirve para que el grid del terreno no se vea discontinuo
                 if (!this.grhs[grh]) {
                     this.loadGrh(grh);
                 }
@@ -107,7 +107,7 @@ define(['json!../../indices/graficos.json',
              alert("Se produjo algun error cargando la página, probá recargandola");
              });*/
 
-            getMapaSync(numMapa) { // TODO: ver de comprimir y guardar todos los mapas en el localstorage
+            getMapaSync(numMapa) {
                 if (!this.dataMapas[numMapa]) {
                     var self = this;
                     $.ajax({
