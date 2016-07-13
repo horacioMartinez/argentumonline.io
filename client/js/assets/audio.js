@@ -13,6 +13,11 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
             this.musicVolume = 1.0;
             this.sounds = [];
 
+            this.MUSIC_PATH = 'audio/musica/';
+            this.SOUND_PATH = 'audio/sonidos/';
+            this.MAIN_EXTENSION = '.webm';
+            this.SECONDARY_EXTENSION = '.mp3';
+
             this.mutedMusicName = null;
         }
 
@@ -20,15 +25,15 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
             if (this.musicEnabled) {
                 if (this.currentMusic) {
                     let fadingOutMusic = this.currentMusic;
-                    fadingOutMusic.fade(fadingOutMusic.volume(),0,1000);
-                    fadingOutMusic.once("fade", () =>{
+                    fadingOutMusic.fade(fadingOutMusic.volume(), 0, 1000);
+                    fadingOutMusic.once("fade", () => {
                         fadingOutMusic.stop();
                     });
                     //this.currentMusic.stop();
                 }
 
                 this.currentMusic = new Howler.Howl({
-                    src: ['audio/musica/' + nombre + '.m4a'],
+                    src: [this.MUSIC_PATH + nombre + this.MAIN_EXTENSION, this.MUSIC_PATH + nombre + this.SECONDARY_EXTENSION],
                     loop: true
                 });
 
@@ -60,7 +65,7 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
             }
 
             this.sounds[nombre] = new Howler.Howl({
-                src: ['audio/sonidos/' + nombre + '.m4a'],
+                src: [this.SOUND_PATH + nombre + this.MAIN_EXTENSION, this.SOUND_PATH + nombre + this.SECONDARY_EXTENSION],
                 sprite: sprite
             });
 
@@ -83,7 +88,7 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
             } else {
                 nombre = Enums.SONIDOS.lluvia_end_outdoor;
             }
-            this.playSound(nombre,false,null,0.2);
+            this.playSound(nombre, false, null, 0.2);
         }
 
         IniciarSonidoLluvia(bajoTecho) {
@@ -96,7 +101,7 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
             } else {
                 nombre = Enums.SONIDOS.lluvia_start_outdoor;
             }
-            this.playSound(nombre, false, this.playLoopLluvia(bajoTecho),0.2);
+            this.playSound(nombre, false, this.playLoopLluvia(bajoTecho), 0.2);
         }
 
         playLoopLluvia(bajoTecho) {
