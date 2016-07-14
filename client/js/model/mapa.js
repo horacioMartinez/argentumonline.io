@@ -8,18 +8,19 @@ define([], function () {
             this.tempBlockData = [];
             this.data = null;
             this.isLoaded = false;
-            this.loadedCb = null;
+            this.loadedCbs = [];
         }
 
         mapaOutdoor() {
-            if (!this.isLoaded){ // TODO
-                return true;
-            }
             return this.data.outdoor;
         }
 
-        setLoadedCb(func){
-            this.loadedCb = func;
+        onceLoaded(f) {
+            if (this.isLoaded) {
+                f();
+            } else {
+                this.loadedCbs.push(f);
+            }
         }
 
         setData(data) {
@@ -29,23 +30,16 @@ define([], function () {
             }
             this.tempBlockData = null;
             this.isLoaded = true;
-            if (this.loadedCb){
-                this.loadedCb();
+            for (var f of this.loadedCbs) {
+                f();
             }
         }
 
         isBlocked(gridX, gridY) {
-            if (!this.isLoaded) {
-                return false;
-            }
             return this.data.layers[gridX - 1][gridY - 1][0];
         }
 
         hayAgua(gridX, gridY) {
-            if (!this.isLoaded) {
-                return false;
-            }
-
             var grh1 = this.getGrh1(gridX, gridY);
             var grh2 = this.getGrh2(gridX, gridY);
 
@@ -102,9 +96,6 @@ define([], function () {
         }
 
         isBajoTecho(gridX, gridY) {
-            if (!this.isLoaded) {
-                return false;
-            }
             if (this.data.layers[gridX - 1][gridY - 1][5]) {
                 return true;
             } else {
@@ -113,9 +104,6 @@ define([], function () {
         }
 
         isOutOfBounds(gridX, gridY) {
-            if (!this.isLoaded) {
-                return false;
-            }
             return (gridX < 0 || gridX >= this.width || gridY < 0 || gridY >= this.height);
         }
     }

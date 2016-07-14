@@ -295,19 +295,21 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleRainToggle() {
             this.game.lloviendo = !this.game.lloviendo;
-            var bajoTecho = this.game.bajoTecho;
-            if (this.game.lloviendo) {
-                if (this.game.map.mapaOutdoor()) {
-                    this.game.assetManager.audio.IniciarSonidoLluvia(bajoTecho);
-                    this.game.renderer.createLluvia();
+            this.game.map.onceLoaded(() => {
+                var bajoTecho = this.game.bajoTecho;
+                if (this.game.lloviendo) {
+                    if (this.game.map.mapaOutdoor()) {
+                        this.game.assetManager.audio.IniciarSonidoLluvia(bajoTecho);
+                        this.game.renderer.createLluvia();
+                    }
                 }
-            }
-            else {
-                if (this.game.map.mapaOutdoor()) {
-                    this.game.assetManager.audio.finalizarSonidoLluvia(bajoTecho);
-                    this.game.renderer.removeLluvia();
+                else {
+                    if (this.game.map.mapaOutdoor()) {
+                        this.game.assetManager.audio.finalizarSonidoLluvia(bajoTecho);
+                        this.game.renderer.removeLluvia();
+                    }
                 }
-            }
+            });
         }
 
         handleCreateFX(CharIndex, FX, FXLoops) {
@@ -476,7 +478,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         handleGuildNews(News, EnemiesList, AlliesList) {
             let enemigos = Utils.splitNullArray(EnemiesList);
             let aliados = Utils.splitNullArray(AlliesList);
-            this.game.gameUI.showNoticiasClan(News,enemigos,aliados);
+            this.game.gameUI.showNoticiasClan(News, enemigos, aliados);
             console.log("TODO: handleGuildNews ");
         }
 
@@ -650,7 +652,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleUserAttackedSwing(attackerIndex) {
             let attackerName = this.game.characters[attackerIndex].nombre;
-            let text =  Enums.MensajeConsola.MENSAJE_1 + attackerName + Enums.MensajeConsola.ATAQUE_FALLO;
+            let text = Enums.MensajeConsola.MENSAJE_1 + attackerName + Enums.MensajeConsola.ATAQUE_FALLO;
             this.game.escribirMsgConsola(text, Font.FIGHT);
             console.log("TODO: handleUserAttackedSwing");
         }
@@ -661,7 +663,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleUserHittedUser(victimIndex, bodyPart, danio) {
-            this.game.realizarDanioPlayer(danio,bodyPart,victimIndex);
+            this.game.realizarDanioPlayer(danio, bodyPart, victimIndex);
             console.log("TODO: handleUserHittedUser");
         }
 
@@ -699,8 +701,8 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleHaveKilledUser(victimIndex, exp) {
             let victimName = this.game.characters[victimIndex].nombre;
-            this.game.escribirMsgConsola(Enums.MensajeConsola.HAS_MATADO_A + victimName + Enums.MensajeConsola.MENSAJE_22,Font.FIGHT);
-            this.game.escribirMsgConsola(Enums.MensajeConsola.HAS_GANADO_EXPE_1 + exp + Enums.MensajeConsola.HAS_GANADO_EXPE_2,Font.FIGHT);
+            this.game.escribirMsgConsola(Enums.MensajeConsola.HAS_MATADO_A + victimName + Enums.MensajeConsola.MENSAJE_22, Font.FIGHT);
+            this.game.escribirMsgConsola(Enums.MensajeConsola.HAS_GANADO_EXPE_1 + exp + Enums.MensajeConsola.HAS_GANADO_EXPE_2, Font.FIGHT);
 
             console.log("TODO: handleHaveKilledUser");
         }

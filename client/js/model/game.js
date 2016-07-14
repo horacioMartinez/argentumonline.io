@@ -214,14 +214,16 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
             }
 
             actualizarBajoTecho() {
-                var bajoTecho = this.map.isBajoTecho(this.player.gridX, this.player.gridY);
-                if (this.bajoTecho !== bajoTecho) {
-                    this.bajoTecho = bajoTecho;
-                    this.renderer.setBajoTecho(bajoTecho);
-                    if (this.lloviendo && this.map.mapaOutdoor()) {
-                        this.assetManager.audio.playLoopLluvia(bajoTecho);
+                this.map.onceLoaded(() => {
+                    var bajoTecho = this.map.isBajoTecho(this.player.gridX, this.player.gridY);
+                    if (this.bajoTecho !== bajoTecho) {
+                        this.bajoTecho = bajoTecho;
+                        this.renderer.setBajoTecho(bajoTecho);
+                        if (this.lloviendo && this.map.mapaOutdoor()) {
+                            this.assetManager.audio.playLoopLluvia(bajoTecho);
+                        }
                     }
-                }
+                });
             }
 
             _removeAllEntitys() {
@@ -435,10 +437,8 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                     this.renderer.drawMapaIni(this.player.gridX, this.player.gridY);
                 };
                 if (!this.map.isLoaded) {
-                    this.playerMovement.disable();
-                    this.map.setLoadedCb(() => {
+                    this.map.onceLoaded(() => {
                         f();
-                        this.playerMovement.enable();
                     });
                 } else {
                     f();
@@ -515,24 +515,29 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 var prevMapa = this.map;
                 this.map = new Mapa(numeroMapa);
                 this.renderer.cambiarMapa(this.map);
-
+                
                 this.assetManager.getMapaASync(
                     numeroMapa,
                     (mapData) => {
                         if (this.map.numero === numeroMapa) {
                             this.map.setData(mapData);
                         }
-                        if (this.lloviendo && prevMapa) {
-                            if (this.map.mapaOutdoor() !== prevMapa.mapaOutdoor()) {
-                                if (this.map.mapaOutdoor()) {
-                                    this.assetManager.audio.IniciarSonidoLluvia();
-                                } else {
-                                    this.assetManager.audio.finalizarSonidoLluvia();
-                                }
-                                this.renderer.toggleLluvia();
-                            }
-                        }
                     });
+
+                this.playerMovement.disable();
+                this.map.onceLoaded( () => {
+                    this.playerMovement.enable();
+                    if (this.lloviendo && prevMapa) {
+                        if (this.map.mapaOutdoor() !== prevMapa.mapaOutdoor()) {
+                            if (this.map.mapaOutdoor()) {
+                                this.assetManager.audio.IniciarSonidoLluvia();
+                            } else {
+                                this.assetManager.audio.finalizarSonidoLluvia();
+                            }
+                            this.renderer.toggleLluvia();
+                        }
+                    }
+                });
                 this._removeAllEntities();
             }
 

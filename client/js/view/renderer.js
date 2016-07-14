@@ -61,7 +61,6 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                 this._initTerrenoSpriteGrid(this.layer1);
             }
 
-            // TODO!: (MUY IMPORTANTE) probar con rendertexture en las layers 1,2 y 4. (para los tiles animados generar un sprite)
             _drawTerrenoIni() {
                 var gridXIni = this.camera.gridX - this.POSICIONES_EXTRA_TERRENO;
                 var gridYIni = this.camera.gridY - this.POSICIONES_EXTRA_TERRENO;
@@ -479,7 +478,6 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
             }
 
             _drawSpritesIni() {
-                //this.layer2.removeChildren();
                 this._removeChilds(this.layer2, this._spritesLayer2);
                 this._removeChilds(this.layer3, this._spritesLayer3);
                 this._removeChilds(this.layer4, this._spritesLayer4);
