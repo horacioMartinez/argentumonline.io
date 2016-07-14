@@ -18,10 +18,15 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
             this.MAIN_EXTENSION = '.webm';
             this.SECONDARY_EXTENSION = '.mp3';
 
-            this.mutedMusicName = null;
+            this.currentMusicName = null;
         }
 
         setMusic(nombre) { // todo: unload cada vez que cmabia??
+            if (nombre === this.currentMusicName){
+                return;
+            }
+            this.currentMusicName = nombre;
+
             if (this.musicEnabled) {
                 if (this.currentMusic) {
                     let fadingOutMusic = this.currentMusic;
@@ -42,10 +47,6 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
                 this.currentMusic.volume(this.musicVolume);
                 this.currentMusic.play();
             }
-            else {
-                this.mutedMusicName = nombre;
-            }
-
         }
 
         playSound(nombre, loop, onEnd, volume) {
@@ -159,8 +160,8 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
         setMusicMuted(muted) {
             this.musicEnabled = !muted;
             if (this.musicEnabled) {
-                if (this.mutedMusicName) {
-                    this.setMusic(this.mutedMusicName);
+                if (this.currentMusicName) {
+                    this.setMusic(this.currentMusicName);
                 }
             } else {
                 if (this.currentMusic) {

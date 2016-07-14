@@ -288,6 +288,11 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
 
             drawMapaIni(gridX, gridY) { // SOLO USARLO EN CAMBIO DE MAPA, SINO USAR RESETPOS. Limpia vectores, dibuja el terreno del mapa, almacena los tiles animados
                 log.error("dibujando inicialmente mapa, solo deberia pasar en cambio de map");
+
+                if (!this.mapa.isLoaded) {
+                    log.error("DRAW MAPA INI SIN QUE ESTE CARGADO");
+                    return;
+                }
                 this.resetCameraPosition(gridX, gridY);
                 this._syncGamePosition();
                 this._drawSpritesIni();
@@ -332,11 +337,14 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
             }
 
             updateTilesMov(dir) {
-                this.updateTerrenoMov(dir);
-                this.updateLayersMov(dir);
+                if (!this.mapa.isLoaded) {
+                    return;
+                }
+                this._updateTerrenoMov(dir);
+                this._updateLayersMov(dir);
             }
 
-            updateTerrenoMov(dir) { // al moverse mueve la columna/fila que queda atras al frente de todo
+            _updateTerrenoMov(dir) { // al moverse mueve la columna/fila que queda atras al frente de todo
                 var gridXIni = this.camera.gridX - this.POSICIONES_EXTRA_TERRENO;
                 var gridYIni = this.camera.gridY - this.POSICIONES_EXTRA_TERRENO;
                 var cols = this.camera.gridW + this.POSICIONES_EXTRA_TERRENO * 2;
@@ -347,10 +355,12 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                         var j = Utils.modulo(this._lowestRowTerreno - 1, rows);
                         for (var i = 0; i < this.terreno.length; i++) {
                             this.terreno[i][j].setPosition(this.terreno[i][j].x, this.terreno[i][j].y - (rows * this.tilesize));
+
                             var grh = this.mapa.getGrh1(gridXIni + Utils.modulo(i - this._lowestColTerreno, cols), gridYIni - 1);
                             if (grh) {
                                 this.terreno[i][j].cambiarGrh(this.assetManager.getTerrenoGrh(grh));
                             }
+
                         }
 
                         this._lowestRowTerreno = Utils.modulo(this._lowestRowTerreno - 1, rows);
@@ -360,10 +370,12 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                         var i = Utils.modulo(this._lowestColTerreno - 1, cols);
                         for (var j = 0; j < this.terreno[i].length; j++) {
                             this.terreno[i][j].setPosition(this.terreno[i][j].x - (cols * this.tilesize), this.terreno[i][j].y);
+
                             var grh = this.mapa.getGrh1(gridXIni - 1, gridYIni + Utils.modulo(j - this._lowestRowTerreno, rows));
                             if (grh) {
                                 this.terreno[i][j].cambiarGrh(this.assetManager.getTerrenoGrh(grh));
                             }
+
                         }
                         this._lowestColTerreno = Utils.modulo(this._lowestColTerreno - 1, cols);
                         break;
@@ -372,10 +384,12 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                         var j = this._lowestRowTerreno;
                         for (var i = 0; i < this.terreno.length; i++) {
                             this.terreno[i][j].setPosition(this.terreno[i][j].x, (this.terreno[i][j].y + (rows * this.tilesize)));
+
                             var grh = this.mapa.getGrh1(gridXIni + Utils.modulo(i - this._lowestColTerreno, cols), gridYIni + rows);
                             if (grh) {
                                 this.terreno[i][j].cambiarGrh(this.assetManager.getTerrenoGrh(grh));
                             }
+
                         }
                         this._lowestRowTerreno = Utils.modulo(this._lowestRowTerreno + 1, rows);
                         break;
@@ -384,10 +398,12 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                         var i = this._lowestColTerreno;
                         for (var j = 0; j < this.terreno[i].length; j++) {
                             this.terreno[i][j].setPosition((this.terreno[i][j].x + cols * this.tilesize), this.terreno[i][j].y);
+
                             var grh = this.mapa.getGrh1(gridXIni + cols, gridYIni + Utils.modulo(j - this._lowestRowTerreno, rows));
                             if (grh) {
                                 this.terreno[i][j].cambiarGrh(this.assetManager.getTerrenoGrh(grh));
                             }
+
                         }
                         this._lowestColTerreno = Utils.modulo(this._lowestColTerreno + 1, cols);
                         break;
@@ -398,57 +414,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                 }
             }
 
-            _removeChilds(padre, gridHijos) {
-                _.each(gridHijos, function (fila) {
-                    _.each(fila, function (hijo) {
-                        if (hijo) {
-                            padre.removeChild(hijo);
-                        }
-                    });
-                });
-            }
-
-            _drawSpritesIni() {
-
-                this._removeChilds(this.layer2, this._spritesLayer2);
-                this._removeChilds(this.layer3, this._spritesLayer3);
-                this._removeChilds(this.layer4, this._spritesLayer4);
-                for (var k = 0; k <= 100; k++) {
-                    this._spritesLayer2[k] = [];
-                    this._spritesLayer3[k] = [];
-                    this._spritesLayer4[k] = [];
-                }
-                var nuevoSprite;
-
-                var self = this;
-                this.camera.forEachVisiblePosition(function (i, j) {
-                    var screenX = i * self.tilesize;
-                    var screenY = j * self.tilesize;
-                    var grh2 = self.mapa.getGrh2(i, j);
-                    var grh3 = self.mapa.getGrh3(i, j);
-                    var grh4 = self.mapa.getGrh4(i, j);
-                    if (grh2) {
-                        nuevoSprite = new SpriteGrh(self.assetManager.getTerrenoGrh(grh2));
-                        nuevoSprite.setPosition(screenX, screenY);
-                        self.layer2.addChild(nuevoSprite);
-                        self._spritesLayer2[i][j] = nuevoSprite;
-                    }
-                    if (grh3) {
-                        nuevoSprite = new SpriteGrh(self.assetManager.getGrh(grh3));
-                        self.layer3.addChild(nuevoSprite);
-                        nuevoSprite.setPosition(screenX, screenY);
-                        self._spritesLayer3[i][j] = nuevoSprite;
-                    }
-                    if (grh4) {
-                        nuevoSprite = new SpriteGrh(self.assetManager.getGrh(grh4));
-                        nuevoSprite.setPosition(screenX, screenY);
-                        self.layer4.addChild(nuevoSprite);
-                        self._spritesLayer4[i][j] = nuevoSprite;
-                    }
-                }, this.POSICIONES_EXTRA_RENDER_X, this.POSICIONES_EXTRA_RENDER_Y);
-            }
-
-            updateLayersMov(dir) {
+            _updateLayersMov(dir) {
                 var self = this;
                 this.camera.forEachVisibleNextLinea(dir, function (i, j) {
                     var screenX = i * self.tilesize;
@@ -498,6 +464,56 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                     if (self._spritesLayer4[i][j]) {
                         self.layer4.removeChild(self._spritesLayer4[i][j]);
                         self._spritesLayer4[i][j] = null;
+                    }
+                }, this.POSICIONES_EXTRA_RENDER_X, this.POSICIONES_EXTRA_RENDER_Y);
+            }
+
+            _removeChilds(padre, gridHijos) {
+                _.each(gridHijos, function (fila) {
+                    _.each(fila, function (hijo) {
+                        if (hijo) {
+                            padre.removeChild(hijo);
+                        }
+                    });
+                });
+            }
+
+            _drawSpritesIni() {
+                //this.layer2.removeChildren();
+                this._removeChilds(this.layer2, this._spritesLayer2);
+                this._removeChilds(this.layer3, this._spritesLayer3);
+                this._removeChilds(this.layer4, this._spritesLayer4);
+                for (var k = 0; k <= 100; k++) {
+                    this._spritesLayer2[k] = [];
+                    this._spritesLayer3[k] = [];
+                    this._spritesLayer4[k] = [];
+                }
+                var nuevoSprite;
+
+                var self = this;
+                this.camera.forEachVisiblePosition(function (i, j) {
+                    var screenX = i * self.tilesize;
+                    var screenY = j * self.tilesize;
+                    var grh2 = self.mapa.getGrh2(i, j);
+                    var grh3 = self.mapa.getGrh3(i, j);
+                    var grh4 = self.mapa.getGrh4(i, j);
+                    if (grh2) {
+                        nuevoSprite = new SpriteGrh(self.assetManager.getTerrenoGrh(grh2));
+                        nuevoSprite.setPosition(screenX, screenY);
+                        self.layer2.addChild(nuevoSprite);
+                        self._spritesLayer2[i][j] = nuevoSprite;
+                    }
+                    if (grh3) {
+                        nuevoSprite = new SpriteGrh(self.assetManager.getGrh(grh3));
+                        self.layer3.addChild(nuevoSprite);
+                        nuevoSprite.setPosition(screenX, screenY);
+                        self._spritesLayer3[i][j] = nuevoSprite;
+                    }
+                    if (grh4) {
+                        nuevoSprite = new SpriteGrh(self.assetManager.getGrh(grh4));
+                        nuevoSprite.setPosition(screenX, screenY);
+                        self.layer4.addChild(nuevoSprite);
+                        self._spritesLayer4[i][j] = nuevoSprite;
                     }
                 }, this.POSICIONES_EXTRA_RENDER_X, this.POSICIONES_EXTRA_RENDER_Y);
             }

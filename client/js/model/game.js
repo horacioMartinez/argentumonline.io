@@ -60,8 +60,8 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
             recibirDanioCriatura(parteCuerpo, danio) {
 
                 var txt = "";
-                var formatMessage = function(bodyPartMessage){
-                  return Enums.MensajeConsola.MENSAJE_1 + bodyPartMessage + danio + Enums.MensajeConsola.MENSAJE_2;
+                var formatMessage = function (bodyPartMessage) {
+                    return Enums.MensajeConsola.MENSAJE_1 + bodyPartMessage + danio + Enums.MensajeConsola.MENSAJE_2;
                 };
                 switch (parteCuerpo) {
                     case Enums.ParteCuerpo.cabeza:
@@ -90,10 +90,10 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 this.renderer.agregarTextoConsola(txt, Font.FIGHT);
             }
 
-            recibirDanioUser(parteCuerpo, danio, attackerIndex){
+            recibirDanioUser(parteCuerpo, danio, attackerIndex) {
                 var txt = "";
                 let attackerName = this.characters[attackerIndex].nombre;
-                var formatMessage = function(bodyPartMessage){
+                var formatMessage = function (bodyPartMessage) {
                     return Enums.MensajeConsola.MENSAJE_1 + attackerName + bodyPartMessage + danio + Enums.MensajeConsola.MENSAJE_2;
                 };
                 switch (parteCuerpo) {
@@ -131,14 +131,14 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 this.renderer.agregarTextoConsola(Enums.MensajeConsola.MENSAJE_GOLPE_CRIATURA_1 + danio + Enums.MensajeConsola.MENSAJE_2, Font.FIGHT);
             }
 
-            realizarDanioPlayer(danio,parteCuerpo,victimIndex) {
+            realizarDanioPlayer(danio, parteCuerpo, victimIndex) {
                 let victim = this.characters[victimIndex];
                 let attackerName = this.characters[victimIndex].nombre;
 
                 this.renderer.agregarCharacterHoveringInfo(victim, danio, Font.CANVAS_DANIO_REALIZADO);
 
-                var formatMessage = function(bodyPartMessage){
-                    return Enums.MensajeConsola.PRODUCE_IMPACTO_1+ attackerName + bodyPartMessage + danio + Enums.MensajeConsola.MENSAJE_2;
+                var formatMessage = function (bodyPartMessage) {
+                    return Enums.MensajeConsola.PRODUCE_IMPACTO_1 + attackerName + bodyPartMessage + danio + Enums.MensajeConsola.MENSAJE_2;
                 };
                 let txt = "";
                 switch (parteCuerpo) {
@@ -404,37 +404,45 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 var Y = this.player.gridY;
                 log.error("DRAW MAPA INICIAL!!! MAPA:" + this.map.numero + " X: " + X + " Y: " + Y);
                 // --- esto para que se setee al player una pos "anterior" a la del cambio de mapa para que de la ilusion que avanza un tile (sino se deberia quedar quieto esperando el intervalo o traeria problemas en mapas donde entras mirando la salida (ademas de que pasarias siempre en la 2da pos)) ---
-
-                if (this.playerMovement.estaMoviendose()) {
-                    var dir;
-                    switch (this.playerMovement.getDirMov()) {
-                        case Enums.Heading.sur:
-                            Y = Y - 1;
-                            dir = Enums.Heading.sur;
-                            break;
-                        case Enums.Heading.norte:
-                            Y = Y + 1;
-                            dir = Enums.Heading.norte;
-                            break;
-                        case Enums.Heading.este:
-                            X = X - 1;
-                            dir = Enums.Heading.este;
-                            break;
-                        case Enums.Heading.oeste:
-                            X = X + 1;
-                            dir = Enums.Heading.oeste;
-                            break;
-                        default:
-                            break;
+                let f = () => {
+                    if (this.playerMovement.estaMoviendose()) {
+                        var dir;
+                        switch (this.playerMovement.getDirMov()) {
+                            case Enums.Heading.sur:
+                                Y = Y - 1;
+                                dir = Enums.Heading.sur;
+                                break;
+                            case Enums.Heading.norte:
+                                Y = Y + 1;
+                                dir = Enums.Heading.norte;
+                                break;
+                            case Enums.Heading.este:
+                                X = X - 1;
+                                dir = Enums.Heading.este;
+                                break;
+                            case Enums.Heading.oeste:
+                                X = X + 1;
+                                dir = Enums.Heading.oeste;
+                                break;
+                            default:
+                                break;
+                        }
+                        this.playerMovement.forceCaminar(dir);
+                        this.ignorarProximoSonidoPaso = true; // que no haga sonido este paso forzado
                     }
-                    this.playerMovement.forceCaminar(dir);
-                    this.ignorarProximoSonidoPaso = true; // que no haga sonido este paso forzado
+
+                    this.resetPosCharacter(this.player.id, X, Y, true);
+                    this.renderer.drawMapaIni(this.player.gridX, this.player.gridY);
+                };
+                if (!this.map.isLoaded) {
+                    this.playerMovement.disable();
+                    this.map.setLoadedCb(() => {
+                        f();
+                        this.playerMovement.enable();
+                    });
+                } else {
+                    f();
                 }
-
-                // -- fin --
-
-                this.resetPosCharacter(this.player.id, X, Y, true);
-                this.renderer.drawMapaIni(this.player.gridX, this.player.gridY);
             }
 
             toggleSeguroResucitar() {
@@ -505,21 +513,27 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 /* todo: cambiar esto si deja de ser sync: */
                 //this._removeAllEntitys();
                 var prevMapa = this.map;
-                this.map = new Mapa(numeroMapa, this.assetManager.getMapaSync(numeroMapa));
-                this._removeAllEntities();
+                this.map = new Mapa(numeroMapa);
                 this.renderer.cambiarMapa(this.map);
 
-                if (this.lloviendo && prevMapa) {
-                    if (this.map.mapaOutdoor() !== prevMapa.mapaOutdoor()) {
-                        if (this.map.mapaOutdoor()) {
-                            this.assetManager.audio.IniciarSonidoLluvia();
-                        } else {
-                            this.assetManager.audio.finalizarSonidoLluvia();
+                this.assetManager.getMapaASync(
+                    numeroMapa,
+                    (mapData) => {
+                        if (this.map.numero === numeroMapa) {
+                            this.map.setData(mapData);
                         }
-                        this.renderer.toggleLluvia();
-                    }
-                }
-
+                        if (this.lloviendo && prevMapa) {
+                            if (this.map.mapaOutdoor() !== prevMapa.mapaOutdoor()) {
+                                if (this.map.mapaOutdoor()) {
+                                    this.assetManager.audio.IniciarSonidoLluvia();
+                                } else {
+                                    this.assetManager.audio.finalizarSonidoLluvia();
+                                }
+                                this.renderer.toggleLluvia();
+                            }
+                        }
+                    });
+                this._removeAllEntities();
             }
 
             actualizarIndicadorPosMapa() {
@@ -722,7 +736,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 if (this.started) {
                     return;
                 }
-                this.renderer.drawMapaIni(this.player.gridX, this.player.gridY);
 
                 this.logeado = true;
                 this.started = true;

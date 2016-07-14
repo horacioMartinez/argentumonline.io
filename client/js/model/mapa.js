@@ -1,22 +1,51 @@
 define([], function () {
     class Mapa {
-        constructor(numMap, data) {
+        constructor(numMap) {
             this.numero = numMap;
-            this.data = data;
             this.height = 100;
             this.width = 100;
+
+            this.tempBlockData = [];
+            this.data = null;
             this.isLoaded = false;
+            this.loadedCb = null;
         }
 
         mapaOutdoor() {
+            if (!this.isLoaded){ // TODO
+                return true;
+            }
             return this.data.outdoor;
         }
 
+        setLoadedCb(func){
+            this.loadedCb = func;
+        }
+
+        setData(data) {
+            this.data = data;
+            for (var block of this.tempBlockData) {
+                this.data.layers[block.gridX - 1][block.gridY - 1][0] = block.blocked;
+            }
+            this.tempBlockData = null;
+            this.isLoaded = true;
+            if (this.loadedCb){
+                this.loadedCb();
+            }
+        }
+
         isBlocked(gridX, gridY) {
+            if (!this.isLoaded) {
+                return false;
+            }
             return this.data.layers[gridX - 1][gridY - 1][0];
         }
 
         hayAgua(gridX, gridY) {
+            if (!this.isLoaded) {
+                return false;
+            }
+
             var grh1 = this.getGrh1(gridX, gridY);
             var grh2 = this.getGrh2(gridX, gridY);
 
@@ -39,11 +68,12 @@ define([], function () {
         }
 
         setBlockPosition(gridX, gridY, blocked) {
-            if (blocked) {
-                this.data.layers[gridX - 1][gridY - 1][0] = 1;
-            } else {
-                this.data.layers[gridX - 1][gridY - 1][0] = 0;
+            blocked = blocked ? true : false;
+            if (!this.isLoaded) {
+                this.tempBlockData.push({gridX: gridX, gridY: gridY, blocked: blocked});
+                return false;
             }
+            this.data.layers[gridX - 1][gridY - 1][0] = blocked;
         }
 
         getGrh(numGrh, gridX, gridY) {
@@ -72,6 +102,9 @@ define([], function () {
         }
 
         isBajoTecho(gridX, gridY) {
+            if (!this.isLoaded) {
+                return false;
+            }
             if (this.data.layers[gridX - 1][gridY - 1][5]) {
                 return true;
             } else {
@@ -80,6 +113,9 @@ define([], function () {
         }
 
         isOutOfBounds(gridX, gridY) {
+            if (!this.isLoaded) {
+                return false;
+            }
             return (gridX < 0 || gridX >= this.width || gridY < 0 || gridY >= this.height);
         }
     }

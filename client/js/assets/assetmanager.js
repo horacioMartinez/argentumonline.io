@@ -125,6 +125,26 @@ define(['json!../../indices/graficos.json',
                 return this.dataMapas[numMapa];
             }
 
+            getMapaASync(numMapa, completeCallback) {
+                if (!this.dataMapas[numMapa]) {
+                    var self = this;
+                    $.ajax({
+                        type: 'GET',
+                        url: "mapas/mapa" + numMapa + ".json",
+                        dataType: 'json',
+                        data: null
+                    }).done(function (data) {
+                        self.dataMapas[numMapa] = data;
+                        completeCallback(self.dataMapas[numMapa]);
+                    }).fail(function () {
+                        alert("Error cargando mapa " + numMapa);
+                        self.getMapaASync(numMapa, completeCallback);
+                    });
+                } else {
+                    completeCallback(this.dataMapas[numMapa]);
+                }
+            }
+
             preload(terminar_callback) {
                 this.preloader.preload(terminar_callback);
             }

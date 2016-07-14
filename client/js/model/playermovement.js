@@ -19,6 +19,16 @@ define(['model/character'], function (Character) {
             this.lastAttackedTarget = null;
 
             this.moveSpeed = 230; // usar la del character?
+
+            this.enabled = true;
+        }
+
+        enable(){
+            this.enabled = true;
+        }
+
+        disable() {
+            this.enabled = false;
         }
 
         // TODO: aceleracion al comenzar y terminar de caminar ?
@@ -49,7 +59,7 @@ define(['model/character'], function (Character) {
 
         _tratarDeCaminar() {
 
-            if (!this.getDirMov()) {
+            if (!this.getDirMov() || !this.enabled) {
                 return false;
             }
             if (this.puedeCaminarCallback(this.getDirMov())) {
