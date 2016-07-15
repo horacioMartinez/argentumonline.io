@@ -295,7 +295,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleRainToggle() {
             this.game.lloviendo = !this.game.lloviendo;
-            this.game.map.onceLoaded(() => {
+            this.game.map.onceLoaded((mapa) => {
                 var bajoTecho = this.game.bajoTecho;
                 if (this.game.lloviendo) {
                     if (this.game.map.mapaOutdoor()) {

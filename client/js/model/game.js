@@ -214,7 +214,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
             }
 
             actualizarBajoTecho() {
-                this.map.onceLoaded(() => {
+                this.map.onceLoaded((mapa) => {
                     var bajoTecho = this.map.isBajoTecho(this.player.gridX, this.player.gridY);
                     if (this.bajoTecho !== bajoTecho) {
                         this.bajoTecho = bajoTecho;
@@ -436,13 +436,9 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                     this.resetPosCharacter(this.player.id, X, Y, true);
                     this.renderer.drawMapaIni(this.player.gridX, this.player.gridY);
                 };
-                if (!this.map.isLoaded) {
-                    this.map.onceLoaded(() => {
-                        f();
-                    });
-                } else {
+                this.map.onceLoaded((mapa) => {
                     f();
-                }
+                });
             }
 
             toggleSeguroResucitar() {
@@ -512,10 +508,12 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
             cambiarMapa(numeroMapa) {
                 /* todo: cambiar esto si deja de ser sync: */
                 //this._removeAllEntitys();
-                var prevMapa = this.map;
+                if (!this.map.isLoaded) {
+                    this.map.removeCallbacks();
+                }
                 this.map = new Mapa(numeroMapa);
                 this.renderer.cambiarMapa(this.map);
-                
+
                 this.assetManager.getMapaASync(
                     numeroMapa,
                     (mapData) => {
@@ -525,16 +523,15 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                     });
 
                 this.playerMovement.disable();
-                this.map.onceLoaded( () => {
+                this.map.onceLoaded((mapa) => {
                     this.playerMovement.enable();
-                    if (this.lloviendo && prevMapa) {
-                        if (this.map.mapaOutdoor() !== prevMapa.mapaOutdoor()) {
-                            if (this.map.mapaOutdoor()) {
-                                this.assetManager.audio.IniciarSonidoLluvia();
-                            } else {
-                                this.assetManager.audio.finalizarSonidoLluvia();
-                            }
-                            this.renderer.toggleLluvia();
+                    if (this.lloviendo) {
+                        if (this.map.mapaOutdoor()) {
+                            this.assetManager.audio.IniciarSonidoLluvia();
+                            this.renderer.createLluvia();
+                        } else {
+                            this.assetManager.audio.finalizarSonidoLluvia();
+                            this.renderer.removeLluvia();
                         }
                     }
                 });

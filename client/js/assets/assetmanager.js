@@ -4,7 +4,8 @@ define(['json!../../indices/graficos.json',
         'json!../../indices/cascos.json',
         'json!../../indices/cuerpos.json',
         'json!../../indices/escudos.json',
-        'json!../../indices/fxs.json', 'lib/pixi', 'assets/preloader', 'assets/audio', 'enums'],
+        'json!../../indices/fxs.json',
+        'lib/pixi', 'assets/preloader', 'assets/audio', 'enums'],
     function (jsonGraficos, jsonArmas, jsonCabezas, jsonCascos, jsonCuerpos, jsonEscudos, jsonFxs, PIXI, Preloader, Audio, Enums) {
 
         class AssetManager {
@@ -112,6 +113,24 @@ define(['json!../../indices/graficos.json',
                     completeCallback(this.dataMapas[numMapa]);
                 }
             }
+/*
+            getMapaASync(numMapa, completeCallback) {
+                if (!this.dataMapas[numMapa]) {
+                    var self = this;
+                    $.ajax({
+                        type: 'GET',
+                        url: "mapas/mapa" + numMapa + ".json",
+                        dataType: 'json',
+                        success: function (data) {
+                            self.dataMapas[numMapa] = data;
+                        },
+                        data: null,
+                        async: false
+                    });
+                }
+                completeCallback(this.dataMapas[numMapa]);
+                //return this.dataMapas[numMapa];
+            }*/
 
             preload(terminar_callback) {
                 this.preloader.preload(terminar_callback);

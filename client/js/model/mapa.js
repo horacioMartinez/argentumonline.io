@@ -15,9 +15,13 @@ define([], function () {
             return this.data.outdoor;
         }
 
+        removeCallbacks(){
+            this.loadedCallbacks = [];
+        }
+
         onceLoaded(f) {
             if (this.isLoaded) {
-                f();
+                f(this);
             } else {
                 this.loadedCallbacks.push(f);
             }
@@ -25,13 +29,13 @@ define([], function () {
 
         setData(data) {
             this.data = data;
+            this.isLoaded = true;
             for (var block of this.tempBlockData) {
-                this.data.layers[block.gridX - 1][block.gridY - 1][0] = block.blocked;
+                this.setBlockPosition(block.gridX , block.gridY,block.blocked );
             }
             this.tempBlockData = null;
-            this.isLoaded = true;
             for (var f of this.loadedCallbacks) {
-                f();
+                f(this);
             }
             this.loadedCallbacks = null;
         }
@@ -63,11 +67,11 @@ define([], function () {
         }
 
         setBlockPosition(gridX, gridY, blocked) {
-            blocked = blocked ? true : false;
             if (!this.isLoaded) {
                 this.tempBlockData.push({gridX: gridX, gridY: gridY, blocked: blocked});
                 return false;
             }
+            blocked = blocked ? true : false;
             this.data.layers[gridX - 1][gridY - 1][0] = blocked;
         }
 
