@@ -8,7 +8,7 @@ define([], function () {
             this.tempBlockData = [];
             this.data = null;
             this.isLoaded = false;
-            this.loadedCbs = [];
+            this.loadedCallbacks = [];
         }
 
         mapaOutdoor() {
@@ -19,7 +19,7 @@ define([], function () {
             if (this.isLoaded) {
                 f();
             } else {
-                this.loadedCbs.push(f);
+                this.loadedCallbacks.push(f);
             }
         }
 
@@ -30,9 +30,10 @@ define([], function () {
             }
             this.tempBlockData = null;
             this.isLoaded = true;
-            for (var f of this.loadedCbs) {
+            for (var f of this.loadedCallbacks) {
                 f();
             }
+            this.loadedCallbacks = null;
         }
 
         isBlocked(gridX, gridY) {

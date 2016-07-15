@@ -93,38 +93,6 @@ define(['json!../../indices/graficos.json',
                 this.grhs[grh] = new PIXI.Texture(this._baseTextures[numGrafico], new PIXI.Rectangle(this.indices[grh].offX, this.indices[grh].offY, this.indices[grh].width, this.indices[grh].height));
             }
 
-            /*getMapa: function(numMapa){
-             if (!this.mapaActual)
-             this.mapaActual= JSON.parse(mapa1);
-             return this.mapaActual;
-             }*/
-
-            /*
-             $.getJSON('simple.json')
-             .success(function(data) {
-             alert(data.simple);
-             }).error(function(xhr) {
-             alert("Se produjo algun error cargando la página, probá recargandola");
-             });*/
-
-            getMapaSync(numMapa) {
-                if (!this.dataMapas[numMapa]) {
-                    var self = this;
-                    $.ajax({
-                        type: 'GET',
-                        url: "mapas/mapa" + numMapa + ".json",
-                        dataType: 'json',
-                        success: function (data) {
-                            self.dataMapas[numMapa] = data;
-                        },
-                        data: null,
-                        async: false
-                    });
-                }
-
-                return this.dataMapas[numMapa];
-            }
-
             getMapaASync(numMapa, completeCallback) {
                 if (!this.dataMapas[numMapa]) {
                     var self = this;

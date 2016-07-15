@@ -20,15 +20,15 @@ define(['model/character'], function (Character) {
 
             this.moveSpeed = 230; // usar la del character?
 
-            this.enabled = true;
+            this._enabled = true;
         }
 
         enable(){
-            this.enabled = true;
+            this._enabled = true;
         }
 
         disable() {
-            this.enabled = false;
+            this._enabled = false;
         }
 
         // TODO: aceleracion al comenzar y terminar de caminar ?
@@ -59,7 +59,7 @@ define(['model/character'], function (Character) {
 
         _tratarDeCaminar() {
 
-            if (!this.getDirMov() || !this.enabled) {
+            if (!this.getDirMov() || !this._enabled) {
                 return false;
             }
             if (this.puedeCaminarCallback(this.getDirMov())) {
