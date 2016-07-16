@@ -24,6 +24,7 @@ define(['json!../../indices/graficos.json',
                 this.grhs = [];
                 this.dataMapas = [];
                 this.preloader = new Preloader(this);
+                //PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.NEAREST;
             }
 
             getNumGraficoFromGrh(grh) {
@@ -52,7 +53,7 @@ define(['json!../../indices/graficos.json',
                     this.loadGrh(grh);
                 }
                 var res = this.grhs[grh];
-                if (!res.terrenoSeteado) {
+                if (!res.scaleModeSeteado) {
                     if (!res.frames) {
                         res.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
                     }
@@ -61,7 +62,7 @@ define(['json!../../indices/graficos.json',
                             res.frames[i].baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
                         }
                     }
-                    res.terrenoSeteado = true;
+                    res.scaleModeSeteado = true;
                 }
                 return res;
             }

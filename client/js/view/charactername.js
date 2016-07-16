@@ -17,7 +17,7 @@ define(['enums', 'lib/pixi'], function (Enums, PIXI) {
             this.setEscala(escala);
         }
 
-        setPosition(x, y) {
+        setPosition(x, y) { // TODO: numeros no enteros ? ( si se rodondean se ve cortado al caminar el nombre ?)
             this.x = ( x + 16 ) * this._escala;
             this.y = (y + 32) * this._escala;
         }

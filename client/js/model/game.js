@@ -647,8 +647,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
 
                 this.playerMovement.setOnMoverse(
                     function (x, y) {
-                        x = Math.round(x);
-                        y = Math.round(y);
                         this.renderer.moverPosition(x - this.renderer.camera.centerPosX, y - this.renderer.camera.centerPosY);
                     }.bind(this));
 

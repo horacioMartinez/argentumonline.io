@@ -30,6 +30,9 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                 this._spritesLayer2 = [];
                 this._spritesLayer3 = [];
                 this._spritesLayer4 = [];
+
+                this._lowestRowTerreno = null;
+                this._lowestColTerreno = null;
             }
 
             _inicializarPixi() {
@@ -73,8 +76,9 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                         var screenY = (gridYIni + j) * this.tilesize;
                         this.terreno[i][j].setPosition(screenX, screenY);
 
-                        if (this.mapa.getGrh1(gridXIni + i, gridYIni + j)) {
-                            this.terreno[i][j].cambiarGrh(this.assetManager.getTerrenoGrh(this.mapa.getGrh1(gridXIni + i, gridYIni + j)));
+                        var grh = this.mapa.getGrh1(gridXIni + i, gridYIni + j);
+                        if (grh) {
+                            this.terreno[i][j].cambiarGrh(this.assetManager.getTerrenoGrh(grh));
                         }
                     }
                 }
@@ -86,7 +90,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                 for (var i = 0; i < this.camera.gridW + this.POSICIONES_EXTRA_TERRENO * 2; i++) {
                     this.terreno[i] = [];
                     for (var j = 0; j < this.camera.gridH + this.POSICIONES_EXTRA_TERRENO * 2; j++) {
-                        this.terreno[i][j] = new SpriteGrh(this.assetManager.getGrh(1)); // grh null <-- todo (poco importante) arreglar esto?
+                        this.terreno[i][j] = new SpriteGrh(this.assetManager.getTerrenoGrh(1)); // grh null <-- todo (poco importante) arreglar esto?
                         this.layer1.addChild(this.terreno[i][j]);
                     }
                 }
@@ -164,8 +168,8 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                 this.gameChat.addChild(char.texto);
 
                 char.setOnPositionChange(function () {
-                    var spriteX = Math.round(this.x);
-                    var spriteY = Math.round(this.y);
+                    var spriteX = this.x;
+                    var spriteY = this.y;
                     if (this.sprite) {
                         this.sprite.setPosition(spriteX, spriteY);
                     }
@@ -594,6 +598,16 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
 
             renderFrame() {
                 this.pixiRenderer.render(this.stage);
+/*
+                let testPosEnteras = (c) => {
+                    if ( (Math.round(c.x) !== c.x) || (Math.round(c.y) !== c.y) ){
+                        log.error(c._grh);
+                        throw new Error("ERROR!!!!!!!!!!!: X:" + c.x+ " Y:" + c.y);
+                    }
+                    c.children.forEach(testPosEnteras);
+                };
+                testPosEnteras(this.stage);
+*/
             }
 
             cambiarMapa(mapa) {

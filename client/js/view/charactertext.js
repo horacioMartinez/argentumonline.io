@@ -32,11 +32,11 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
         this.estiloChat = $.extend({}, aux, Font.TALK);
         if (this._chat) {
             this._chat.style = this.estiloChat;
-            this._chat.x = this._chat.x * (escala / this._escala);
-            this._chat.y = this._chat.y * (escala / this._escala);
+            this._chat.x = Math.round(this._chat.x * (escala / this._escala));
+            this._chat.y = Math.round(this._chat.y * (escala / this._escala));
         }
-        this.x = this.x * (escala / this._escala);
-        this.y = this.y * (escala / this._escala);
+        this.x = Math.round(this.x * (escala / this._escala));
+        this.y = Math.round(this.y * (escala / this._escala));
 
         this._escala = escala;
 
@@ -51,8 +51,8 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
     };
 
     CharacterText.prototype.setPosition = function (x, y) {
-        this.x = x * this._escala;
-        this.y = y * this._escala;
+        this.x = Math.round(x * this._escala);
+        this.y = Math.round(y * this._escala);
     };
 
     CharacterText.prototype._formatearChat = function (str) {
@@ -93,8 +93,8 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
         PIXI.ticker.shared.add(this._chat.updateChat, this._chat);
 
         this.addChild(this._chat);
-        this._chat.x = 32 * this._escala / 2 - this._chat.width / 2;
-        this._chat.y = -28 * this._escala - this._chat.height;
+        this._chat.x = Math.round(32 * this._escala / 2 - this._chat.width / 2);
+        this._chat.y = Math.round(-28 * this._escala - this._chat.height);
     };
 
     CharacterText.prototype.removerChat = function (chat) {

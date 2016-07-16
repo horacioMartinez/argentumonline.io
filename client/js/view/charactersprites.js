@@ -81,8 +81,8 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
     };
 
     CharacterSprites.prototype.setPosition = function (x, y) { // TODO: usar los getters y setters de x e y como en sprite
-        this.x = x;
-        this.y = y;
+        this.x = Math.round(x);
+        this.y = Math.round(y);
         var gridX = Math.round(x / 32);
         var gridY = Math.round(y / 32);
         if ((gridX !== this._gridX) || (gridY !== this._gridY)) {
