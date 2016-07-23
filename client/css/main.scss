@@ -1,21 +1,23 @@
-@import "variables";
-
 @import "vendor/jquery-ui";
 @import "vendor/jquery-ui.structure";
 //@import "vendor/jquery-ui.theme";
 
 @import "vendor/bootstrap";
 
+@import "variables";
+@import "utils";
+
 @import "jqueryUIModificaciones";
 @import "bootstrapModificaciones";
 
+@import "icons";
 @import "borders";
 @import "fonts";
 @import "botones";
 @import "formElements";
 
+@import "global";
 @import "general";
-@import "common";
 
 @import "intro";
 @import "login";

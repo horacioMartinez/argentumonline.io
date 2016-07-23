@@ -1,0 +1,27 @@
+.icon-base {
+  position: relative;
+  display: inline-block;
+  float:left;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.icon-normal {
+  @extend .icon-base;
+  width:32px;
+  height:32px;
+}
+
+.icon-grande {
+  @extend .icon-base;
+  width:64px;
+  height:64px;
+}
+
+.icon-menu {
+  @extend .icon-base;
+  width:44px;
+  height:44px;
+  display: block;
+}

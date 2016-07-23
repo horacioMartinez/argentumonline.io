@@ -65,7 +65,7 @@ define(["text!../../../menus/skills.html!strip", 'ui/popups/popup'], function (D
             var botonMenosId = "popUpSkills_botonMenosSkill_" + numSkill;
 
             $("#popUpSkillsContenedorSkills").append('<tr>'
-                + '<td class="everywhereFont secondaryColor" id=' + textoId + '></td>'
+                + '<td class="secondaryColor" id=' + textoId + '></td>'
                 + '<td class="everywhereBoldFont activeColor" id=' + puntosId + '></td>'
                 + '<td><button id=' + botonMenosId + ' class="botonMenosSkill"></button></td>'
                 + '<td><button id=' + botonMasId + ' class="botonMasSkill"></button></td>'

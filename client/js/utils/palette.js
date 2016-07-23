@@ -1,4 +1,5 @@
-/* google-material-color v1.2.6
+/* MODIFICACION DE
+ * google-material-color v1.2.6
  * https://github.com/danlevan/google-material-color
  */
 (function (root, factory) {

@@ -8,3 +8,21 @@
     text-align:center;
   }
 }
+
+#opcionesIconoMenuWrench{
+  background-image: url('../imagenes/interfaz/iconos/wrench.png');
+}
+
+.nav-pills > li.active > { // VER COMO HACER BIEN ESTO
+  #opcionesIconoMenuWrench{
+    background-image: url('../imagenes/interfaz/iconos/wrench_active.png');
+  }
+}
+
+#opcionesIconoMenuAudio{
+  background-image: url('../imagenes/interfaz/iconos/speaker.png');
+}
+
+#opcionesIconoMenuTeclado{
+  background-image: url('../imagenes/interfaz/iconos/keyboard.png');
+}

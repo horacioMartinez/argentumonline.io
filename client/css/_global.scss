@@ -1,0 +1,10 @@
+// cambair el default, que usa el de webkit (-webkit-focus-ring-color) (que es azul) a $border_focus_color
+// >>>>>>>>>>>>>> ¡¡OJO!! !important <<<<<<<<<<<<<<<<
+:focus {
+  outline-color: $border_focus_color !important;
+}
+
+/* chrome cambia el color de background del input a amarillo cuando se usa autocomplete */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+}

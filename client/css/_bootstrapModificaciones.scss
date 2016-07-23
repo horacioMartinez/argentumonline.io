@@ -1,4 +1,5 @@
 .nav-pills > li > a {
+  padding: 0;
   background: /*rgba(0, 0, 0, 0.9)*/ url("../imagenes/background_tab.png") repeat;
   border-radius: 0;
 }
@@ -14,6 +15,7 @@
   background-repeat: repeat;
   background: rgba(0, 0, 0, 0.02);
 }
+
 
 ////////////// tabs derechas e izquierdas: http://stackoverflow.com/a/18443236 ////////////
 //.tabs-below > .nav-tabs,

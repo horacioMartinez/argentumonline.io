@@ -58,7 +58,7 @@
 
   .ui-dialog-titlebar
   {
-    @extend .everywhereMediumFont, .secondaryColor, .heading_border_default;
+    @extend .headingFont, .heading_border_default;
     background: url("../imagenes/background_heading.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;

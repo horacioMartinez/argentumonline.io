@@ -70,7 +70,7 @@ define(["text!../../../menus/estadisticas.html!strip", 'ui/popups/popup'], funct
             var self = this;
             this.skills.forEachSkill(function (numSkill, puntos, porcentaje, nombre) {
                 self.$contenedorSkills.append('<tr>'
-                    + '<td class="everywhereFont secondaryColor">'+nombre+'</td>'
+                    + '<td class="secondaryColor">'+nombre+'</td>'
                     + '<td class="everywhereBoldFont">'+puntos+'</td>'
                     + '<td class="everywhereBoldFont">'+porcentaje+"%"+'</td>'
                     + '</tr>');

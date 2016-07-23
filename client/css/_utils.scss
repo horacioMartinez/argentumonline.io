@@ -1,14 +1,3 @@
-/* Typography*/
-@font-face {
-    font-family: 'Asul';
-    src: url(../fonts/asul-regular.ttf)
-}
-/* Estos settings globales son pisadas por el reset en main.css, acordarse de sacar el default de ahi!*/
-* { font-size: 2vh;
-    font-family: 'Asul', serif;
-    -webkit-font-smoothing: antialiased;
-}
-
 .horizontal_center {
     text-align: center;
     display: block;

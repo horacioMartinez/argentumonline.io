@@ -3,29 +3,22 @@ $altoIconos: 25px;
 $anchoItems: 5vh;
 $altoItems: 5vh;
 
-/* PALETTE */
+$text_color: #978577;
+
+$border_focus_color : #978471;
+
 $barra: #5e4f32;
 $barra_hover: #866c3c;
 
 $active_font: #977841;
-$text_font: #6b5f52;
 $important_font: #dea53d;
 $indicator_font: #8f8766;  /*(por ej NIVEL 1 nivel en esta font y 1 en bold y blanco)*/
 $background_font: #5a4535;
 $disabled_font: #575757;
-
 $form_elements_border_color : #453c36;
 $form_elements_item_color: #978471;
 $form_elements_background_color: #191411;
 
-
-//
-//$boton_normal_background: $barra /*$active_font*/;
-//$boton_normal_background_hover: $barra_hover;
-//$boton_normal_background_pressed: $disabled_font;
-
 $boton_normal_texto: white;
 $boton_normal_texto_hover: white;
 $boton_normal_texto_pressed: white;
-
-

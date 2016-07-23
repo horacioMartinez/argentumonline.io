@@ -27,6 +27,10 @@ canvas { position:absolute;image-rendering:auto;}
 
 body {background-color:#000;}
 
+body {
+	color: $text_color;
+}
+
 
 
 #gamecanvas {position:absolute;top:7.8%;left:1.45%;z-index: -2} /* margenes de la interfaz */
@@ -34,16 +38,24 @@ body {background-color:#000;}
 #chatbox {height:6.5%;width:63%;position:absolute;left:4%;top:92%} 
 #chatbox.active {top:85.5%;}
 #chatbox input {font-size:12px;background:none;width:100%;border:0;margin-left:2%;margin-top:2%}
-#chatbox {background-image:url('../graficos/ui/chatbox.png'); 
-/*tamaño img conteindo en barra:*/
--ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../graficos/ui/chatbox.png', sizingMethod='scale')";
--webkit-background-size: 100% 100%;           /* Safari 3.0 */
--moz-background-size: 100% 100%;           /* Gecko 1.9.2 (Firefox 3.6) */
--o-background-size: 100% 100%;           /* Opera 9.5 */
-background-size: 100% 100%;           /* Gecko 2.0 (Firefox 4.0) and other CSS3-compliant browsers */
-background-size: contain;
-/*fin tamaño img*/
-z-index: -1;-moz-transition:0.2s top ease;-webkit-transition:0.2s top ease;-o-transition:0.2s top ease;-ms-transition:0.2s top ease;transition:0.2s top ease;}
+
+#chatbox {
+	background-image: url('../graficos/ui/chatbox.png');
+	/*tamaño img conteindo en barra:*/
+	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../graficos/ui/chatbox.png', sizingMethod='scale')";
+	-webkit-background-size: 100% 100%; /* Safari 3.0 */
+	-moz-background-size: 100% 100%; /* Gecko 1.9.2 (Firefox 3.6) */
+	-o-background-size: 100% 100%; /* Opera 9.5 */
+	background-size: 100% 100%; /* Gecko 2.0 (Firefox 4.0) and other CSS3-compliant browsers */
+	background-size: contain;
+	/*fin tamaño img*/
+	z-index: -1;
+	-moz-transition: 0.2s top ease;
+	-webkit-transition: 0.2s top ease;
+	-o-transition: 0.2s top ease;
+	-ms-transition: 0.2s top ease;
+	transition: 0.2s top ease;
+}
 #chatinput {color:#eee;}
 
 
