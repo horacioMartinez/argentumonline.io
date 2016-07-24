@@ -50,11 +50,6 @@ define(['enums'], function (Enums) {
             return 0;
         }
 
-        fadeIn(currentTime) {
-            this.isFading = true;
-            this.startFadingTime = currentTime;
-        }
-
         blink(speed, callback) {
             var self = this;
 

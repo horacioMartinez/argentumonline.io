@@ -48,10 +48,7 @@ define([], function () {
         }
 
         isValidSlot(cantidad, grh) {
-            if ((cantidad > 0) && (grh > 0)) {
-                return true;
-            }
-            return false;
+            return !!((cantidad > 0) && (grh > 0));
         }
 
     }

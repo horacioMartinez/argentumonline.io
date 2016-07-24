@@ -36,11 +36,9 @@ define(["text!../../../menus/opciones.html!strip", 'ui/popups/popup', 'ui/popups
 
         initCallbacks() {
             var self = this;
-
-            $("#opcionesBotonCerrar").click(function () {
-                self.hide();
+            $('#opcionesSliderPantalla').slider({
+                range: "min",
             });
-
         }
 
     }

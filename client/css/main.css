@@ -8550,13 +8550,6 @@ footer a {
   width: 10%;
   height: 5.2%; }
 
-#configurarTeclasContenedor {
-  margin: 10px auto;
-  text-align: center; }
-
-#configurarTeclasContenedor input {
-  text-align: center; }
-
 #opcionesIconoMenuWrench {
   background-image: url("../imagenes/interfaz/iconos/wrench.png"); }
 
