@@ -3,24 +3,27 @@
   color:#fff !important;
 }
 
-.nav-pills > li > a {
-  padding: 0;
-  background: /*rgba(0, 0, 0, 0.9)*/
-          url("../imagenes/background_tab.png") repeat;
-  border-radius: 0;
+.panel-heading-collapse {
+  @extend .panel-heading;
+  cursor: pointer;
 }
 
-.nav-pills > li > a:hover {
-  background-image: url("../imagenes/background_tab.png");
-  background-repeat: repeat;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.nav-pills > li > a:active {
-  background-image: url("../imagenes/background_tab.png");
-  background-repeat: repeat;
-  background: rgba(0, 0, 0, 0.02);
-}
+//.nav-pills > li{
+//  background: /*rgba(0, 0, 0, 0.9)*/
+//          url("../imagenes/background_tab.png") repeat;
+//}
+//
+//.nav-pills > li:hover {
+//  background-image: url("../imagenes/background_tab.png");
+//  background-repeat: repeat;
+//  background: rgba(255, 255, 255, 0.1);
+//}
+//
+//.nav-pills > li:active {
+//  background-image: url("../imagenes/background_tab.png");
+//  background-repeat: repeat;
+//  background: rgba(0, 0, 0, 0.02);
+//}
 
 ////////////// tabs derechas e izquierdas: http://stackoverflow.com/a/18443236 ////////////
 //.tabs-below > .nav-tabs,

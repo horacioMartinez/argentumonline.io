@@ -1,0 +1,24 @@
+#clanesMainTabButton{
+  background-image: url('../imagenes/interfaz/iconos/shield.png');
+}
+#clanesMainTabButton.active{
+  background-image: url('../imagenes/interfaz/iconos/shield_active.png');
+}
+#clanesMiembrosTabButton{
+  background-image: url('../imagenes/interfaz/iconos/group.png');
+}
+#clanesMiembrosTabButton.active{
+  background-image: url('../imagenes/interfaz/iconos/group_active.png');
+}
+#clanesSolicitudesTabButton{
+  background-image: url('../imagenes/interfaz/iconos/crown.png');
+}
+#clanesSolicitudesTabButton.active{
+  background-image: url('../imagenes/interfaz/iconos/crown_active.png');
+}
+#clanesSettingsTabButton{
+  background-image: url('../imagenes/interfaz/iconos/settings.png');
+}
+#clanesSettingsTabButton.active{
+  background-image: url('../imagenes/interfaz/iconos/settings_active.png');
+}

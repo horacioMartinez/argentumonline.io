@@ -12,15 +12,9 @@
 
         <div class="tabsContainer" style="display: flex; flex-direction: column;">
             <ul class="nav nav-pills nav-stacked">
-                <li><a href="#popUpOpcionesOpcionesGenerales" data-toggle="tab">
-                    <div class="icon-menu" id="opcionesIconoMenuWrench"></div>
-                </a></li>
-                <li><a href="#popUpOpcionesTabsAudio" data-toggle="tab">
-                    <div class="icon-menu" id="opcionesIconoMenuAudio"></div>
-                </a></li>
-                <li><a href="#configurarTeclas" data-toggle="tab">
-                    <div class="icon-menu" id="opcionesIconoMenuTeclado"></div>
-                </a></li>
+                <li class="icon-menu" id="opcionesIconoMenuWrench" href="#popUpOpcionesOpcionesGenerales" data-toggle="tab"></li>
+                <li class="icon-menu" id="opcionesIconoMenuAudio" href="#popUpOpcionesTabsAudio" data-toggle="tab"></li>
+                <li class="icon-menu" id="opcionesIconoMenuTeclado" href="#configurarTeclas" data-toggle="tab"></li>
             </ul>
             <div class="tabsFiller"></div>
         </div>
@@ -132,7 +126,7 @@
 
                 <div class="panel-group">
                     <div class="panel panel-default">
-                        <div class="panel-heading" data-toggle="collapse" href="#opcinesTeclasPanelMovimiento">
+                        <div class="panel-heading-collapse" data-toggle="collapse" href="#opcinesTeclasPanelMovimiento">
                             <h4 class="panel-title">
                                 Movimiento
                             </h4>
@@ -159,7 +153,7 @@
                         </div>
                     </div>
                     <div class="panel panel-default">
-                        <div class="panel-heading" data-toggle="collapse" href="#opcinesTeclasPanelAcciones">
+                        <div class="panel-heading-collapse" data-toggle="collapse" href="#opcinesTeclasPanelAcciones">
                             <h4 class="panel-title">
                                 Acciones
                             </h4>
@@ -219,7 +213,7 @@
                         </div>
                     </div>
                     <div class="panel panel-default">
-                        <div class="panel-heading" data-toggle="collapse" href="#opcinesTeclasPanelMacros">
+                        <div class="panel-heading-collapse" data-toggle="collapse" href="#opcinesTeclasPanelMacros">
                             <h4 class="panel-title">
                                 Macros
                             </h4>
@@ -238,7 +232,7 @@
                         </div>
                     </div>
                     <div class="panel panel-default">
-                        <div class="panel-heading" data-toggle="collapse" href="#opcinesTeclasPanelChat">
+                        <div class="panel-heading-collapse" data-toggle="collapse" href="#opcinesTeclasPanelChat">
                             <h4 class="panel-title">
                                 Chat
                             </h4>
@@ -258,12 +252,13 @@
                         </div>
                     </div>
 
-                    <div style="text-align: center;margin: 20px auto;">
-                        <button id="configurarTeclasRestaurarDefault" class="btn btn-default">Restaurar Default</button>
-                    </div>
-                    <div>
-                        <button id="configurarTeclasCancelar" class="btn btn-default">Cancelar</button>
-                        <button id="configurarTeclasGuardarYSalir" class="btn btn-default">Guardar y salir</button>
+                    <div class="btn-toolbar">
+                        <button id="configurarTeclasRestaurarDefault" class="btn btn-default pull-left">Restaurar
+                            Default
+                        </button>
+                        <button id="configurarTeclasGuardarYSalir" class="btn btn-default pull-right">Guardar y salir
+                        </button>
+                        <button id="configurarTeclasCancelar" class="btn btn-default pull-right">Cancelar</button>
                     </div>
                 </div>
             </div>

@@ -13,16 +13,22 @@
   background-image: url('../imagenes/interfaz/iconos/wrench.png');
 }
 
-.nav-pills > li.active > { // VER COMO HACER BIEN ESTO
-  #opcionesIconoMenuWrench{
-    background-image: url('../imagenes/interfaz/iconos/wrench_active.png');
-  }
+#opcionesIconoMenuWrench.active{
+  background-image: url('../imagenes/interfaz/iconos/wrench_active.png');
 }
 
 #opcionesIconoMenuAudio{
   background-image: url('../imagenes/interfaz/iconos/speaker.png');
 }
 
+#opcionesIconoMenuAudio.active{
+  background-image: url('../imagenes/interfaz/iconos/speaker_active.png');
+}
+
 #opcionesIconoMenuTeclado{
   background-image: url('../imagenes/interfaz/iconos/keyboard.png');
+}
+
+#opcionesIconoMenuTeclado.active{
+  background-image: url('../imagenes/interfaz/iconos/keyboard_active.png');
 }
