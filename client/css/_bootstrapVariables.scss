@@ -3,7 +3,7 @@
 $component-active-bg: #c54337;
 
 $font-family-base: 'Myriad Pro', arial, serif;
-// $brand-primary: #694c3b; // ??
+$brand-primary: #de8b47; // ??
 $text-color: $color_texto;
 // inactivo: 69584d
 // activo: 99877a
@@ -21,3 +21,6 @@ $input-border-focus: $border_focus_color;
 $btn-default-color: #fff;
 $btn-default-bg: #694f41;
 $btn-default-border: darken($btn-default-bg, 5%);
+
+//panels:
+$panel-bg: rgba(150, 122, 99, 0.2);
