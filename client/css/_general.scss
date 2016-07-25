@@ -27,12 +27,6 @@ canvas { position:absolute;image-rendering:auto;}
 
 body {background-color:#000;}
 
-body {
-	color: $text_color;
-}
-
-
-
 #gamecanvas {position:absolute;top:7.8%;left:1.45%;z-index: -2} /* margenes de la interfaz */
 
 #chatbox {height:6.5%;width:63%;position:absolute;left:4%;top:92%} 

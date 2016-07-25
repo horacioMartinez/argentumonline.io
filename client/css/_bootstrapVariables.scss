@@ -3,6 +3,21 @@
 $component-active-bg: #c54337;
 
 $font-family-base: 'Myriad Pro', arial, serif;
+// $brand-primary: #694c3b; // ??
+$text-color: $color_texto;
+// inactivo: 69584d
+// activo: 99877a
+$padding-base-vertical: 3px;
+$padding-base-horizontal: 12px;
 
-$brand-primary : #c1ae99; // color titulos del ui original
-$input-border-focus : $border_focus_color;
+$border-radius-base: 2px;
+
+$input-color: $color_texto_input;
+$input-bg: $form_elements_background_color;
+$input-border: $form_elements_border_color;
+$input-border-focus: $border_focus_color;
+
+// botones:
+$btn-default-color: #fff;
+$btn-default-bg: #694f41;
+$btn-default-border: darken($btn-default-bg, 5%);

@@ -22,12 +22,6 @@
   height:44px;
 }
 
-/*
-.botonNormal:focus {
-  background-image: url('../imagenes/botones/boton_normal_hover.png');
-  color: $boton_normal_texto_hover;
-}*/
-
 .botonNormal:hover {
   background-image: url('../imagenes/botones/boton_normal_hover.png');
   color: $boton_normal_texto_hover;
@@ -39,6 +33,45 @@
   color: $boton_normal_texto_pressed;
   /*text-shadow: none;*/
 }
+
+//.botonTest  {
+//  //@extend .botonTransition;
+//  //@extend .defaults_boton;
+//  background-color: hsl(36, 34%, 40%) !important;
+//  background-repeat: repeat-x;
+//  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bb9f76", endColorstr="#886c43");
+//  background-image: linear-gradient(#bb9f76, #886c43);
+//  border-color: #886c43 #886c43 hsl(36, 34%, 35%);
+//  color: $boton_normal_texto !important;
+//  text-shadow: 1px 1px 1px #000;
+//  -webkit-font-smoothing: antialiased;
+//}
+
+.botonTest  {
+  //@extend .botonTransition;
+  //@extend .defaults_boton;
+  box-shadow:inset 0px 1px 0px 0px #a6827e;
+  background:linear-gradient(to bottom, #7d5d3b 5%, #634b30 100%);
+  background-color:#7d5d3b;
+  border-radius:2px;
+  border:1px solid #54381e;
+  display:inline-block;
+  cursor:pointer;
+  color:#ffffff;
+  padding:3px 12px;
+  text-shadow:0px 1px 0px #4d3534;
+}
+
+.botonTest:hover {
+  background:linear-gradient(to bottom, #634b30 5%, #7d5d3b 100%);
+  background-color:#634b30;
+}
+
+.botonTest:active {
+  position:relative;
+  top:1px;
+}
+
 
 
 .botonInvisible {
