@@ -30,7 +30,10 @@ define(['model/mapa', 'model/item', 'model/character', 'enums'],
             }
 
             sacarCharacter(c) {
-
+                let index = this.characters.indexOf(c);
+                if (index > -1) {
+                    this.characters.splice(index, 1)
+                }
             }
 
             addItem(item) {
@@ -38,7 +41,10 @@ define(['model/mapa', 'model/item', 'model/character', 'enums'],
             }
 
             sacarItem(item) {
-
+                let index = this.items.indexOf(item);
+                if (index > -1) {
+                    this.items.splice(index, 1)
+                }
             }
 
             getItemInGridPos(gridX, gridY) {
@@ -47,14 +53,14 @@ define(['model/mapa', 'model/item', 'model/character', 'enums'],
                 })
             }
 
-            forEachEntity(callback) {
-                _.each(this.characters, function (entity, index) {
-                    callback(entity, index);
-                });
-
-                _.each(this.items, function (entity, index) {
-                    callback(entity, index);
-                });
+            forEachEntity(callback) { // loopeo al revez asi permite remover items en callback
+                let i;
+                for (i = this.characters.length - 1; i >= 0; i--) {
+                    callback(this.characters[i], i);
+                }
+                for (i = this.items.length - 1; i >= 0; i--) {
+                    callback(this.items[i], i);
+                }
             }
 
             //
