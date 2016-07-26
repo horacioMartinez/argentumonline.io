@@ -68,21 +68,29 @@ define(['enums', 'font', 'model/macros'], function (Enums, Font, Macros) {
         atacar() {
             if (this.intervalos.requestAtacar(this.game.currentTime)) {
                 this.game.client.sendAttack();
+                let x, y;
                 switch (this.game.player.heading) { // todo: hacerlo con el arco y con hechizos tambien
                     case  Enums.Heading.oeste:
-                        this.game.player.lastAttackedTarget = this.game.entityGrid[this.game.player.gridX - 1][this.game.player.gridY][1];
+                        x = this.game.player.gridX - 1;
+                        y = this.game.player.gridY;
                         break;
                     case  Enums.Heading.este:
-                        this.game.player.lastAttackedTarget = this.game.entityGrid[this.game.player.gridX + 1][this.game.player.gridY][1];
+                        x = this.game.player.gridX + 1;
+                        y = this.game.player.gridY;
                         break;
                     case  Enums.Heading.norte:
-                        this.game.player.lastAttackedTarget = this.game.entityGrid[this.game.player.gridX][this.game.player.gridY - 1][1];
+                        x = this.game.player.gridX;
+                        y = this.game.player.gridY - 1;
                         break;
                     case  Enums.Heading.sur:
-                        this.game.player.lastAttackedTarget = this.game.entityGrid[this.game.player.gridX][this.game.player.gridY + 1][1];
+                        x = this.game.player.gridX;
+                        y = this.game.player.gridY + 1;
                         break;
                     default:
                         log.error(" Direccion de player invalida!");
+                }
+                if (x && y) {
+                    this.game.player.lastAttackedTarget = this.game.world.getCharacterInGridPos(x, y);
                 }
             }
 
