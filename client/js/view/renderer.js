@@ -167,7 +167,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                 char.texto = new CharacterText(this.escala);
                 this.gameChat.addChild(char.texto);
 
-                char.setOnPositionChange(function () {
+                char.on('positionChange', function () {
                     var spriteX = this.x;
                     var spriteY = this.y;
                     if (this.sprite) {
@@ -179,9 +179,9 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                     if (this.texto) {
                         this.texto.setPosition(spriteX, spriteY);
                     }
-                }.bind(char));
+                });
 
-                char.onPositionChange();
+                char.emit('positionChange');
             }
 
             cambiarCharacter(char, Body, Head, Heading, Weapon, Shield, Helmet, FX, FXLoops) {

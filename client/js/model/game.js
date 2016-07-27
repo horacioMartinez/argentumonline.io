@@ -327,7 +327,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 }
 
                 var c = new Character(CharIndex, X, Y, Heading, nombre, clan);
-
+                
                 if ((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal)) {
                     c.muerto = true;
                 } else {

@@ -22398,11 +22398,11 @@ Object.defineProperties(BitmapText.prototype, {
     tint: {
         get: function ()
         {
-            return this._estilo.tint;
+            return this._font.tint;
         },
         set: function (value)
         {
-            this._estilo.tint = (typeof value === 'number' && value >= 0) ? value : 0xFFFFFF;
+            this._font.tint = (typeof value === 'number' && value >= 0) ? value : 0xFFFFFF;
 
             this.dirty = true;
         }
@@ -22418,11 +22418,11 @@ Object.defineProperties(BitmapText.prototype, {
     align: {
         get: function ()
         {
-            return this._estilo.align;
+            return this._font.align;
         },
         set: function (value)
         {
-            this._estilo.align = value || 'left';
+            this._font.align = value || 'left';
 
             this.dirty = true;
         }
@@ -22437,7 +22437,7 @@ Object.defineProperties(BitmapText.prototype, {
     font: {
         get: function ()
         {
-            return this._estilo;
+            return this._font;
         },
         set: function (value)
         {
@@ -22448,12 +22448,12 @@ Object.defineProperties(BitmapText.prototype, {
             if (typeof value === 'string') {
                 value = value.split(' ');
 
-                this._estilo.name = value.length === 1 ? value[0] : value.slice(1).join(' ');
-                this._estilo.size = value.length >= 2 ? parseInt(value[0], 10) : BitmapText.fonts[this._estilo.name].size;
+                this._font.name = value.length === 1 ? value[0] : value.slice(1).join(' ');
+                this._font.size = value.length >= 2 ? parseInt(value[0], 10) : BitmapText.fonts[this._font.name].size;
             }
             else {
-                this._estilo.name = value.name;
-                this._estilo.size = typeof value.size === 'number' ? value.size : parseInt(value.size, 10);
+                this._font.name = value.name;
+                this._font.size = typeof value.size === 'number' ? value.size : parseInt(value.size, 10);
             }
 
             this.dirty = true;
@@ -22491,7 +22491,7 @@ Object.defineProperties(BitmapText.prototype, {
  */
 BitmapText.prototype.updateText = function ()
 {
-    var data = BitmapText.fonts[this._estilo.name];
+    var data = BitmapText.fonts[this._font.name];
     var pos = new core.Point();
     var prevCharCode = null;
     var chars = [];
@@ -22499,7 +22499,7 @@ BitmapText.prototype.updateText = function ()
     var maxLineWidth = 0;
     var lineWidths = [];
     var line = 0;
-    var scale = this._estilo.size / data.size;
+    var scale = this._font.size / data.size;
     var lastSpace = -1;
     var maxLineHeight = 0;
 
@@ -22564,11 +22564,11 @@ BitmapText.prototype.updateText = function ()
     {
         var alignOffset = 0;
 
-        if (this._estilo.align === 'right')
+        if (this._font.align === 'right')
         {
             alignOffset = maxLineWidth - lineWidths[i];
         }
-        else if (this._estilo.align === 'center')
+        else if (this._font.align === 'center')
         {
             alignOffset = (maxLineWidth - lineWidths[i]) / 2;
         }
