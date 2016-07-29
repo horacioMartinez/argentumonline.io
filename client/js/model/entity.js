@@ -30,7 +30,7 @@ define(['enums', 'lib/pixi'], function (Enums, PIXI) {
         setPosition(x, y) {
             this._x = x;
             this._y = y;
-            this.emit('positionChange');
+            this.emit('positionChanged');
         }
 
         setGridPosition(gridX, gridY) {

@@ -292,12 +292,17 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                     //log.error(" cambiar character inexistente ");
                     return;
                 }
-                if (Heading !== c.heading) {
-                    c.cambiarHeading(Heading);
-                }
+                c.heading = Heading;
                 c.muerto = !!((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal));
 
-                this.renderer.cambiarCharacter(c, Body, Head, Heading, Weapon, Shield, Helmet, FX, FXLoops);
+                c.body = Body;
+                c.head = Head;
+                c.heading = Heading;
+                c.weapon = Weapon;
+                c.shield = Shield;
+                c.helmet = Helmet;
+                c.fx = FX;
+                c.fxLoops = FXLoops;
             }
 
             agregarCharacter(CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, Name,
@@ -326,8 +331,8 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                     return;
                 }
 
-                var c = new Character(CharIndex, X, Y, Heading, nombre, clan);
-                
+                var c = new Character(CharIndex, X, Y, Heading, nombre, clan, Body, Head, Weapon, Shield, Helmet, FX, FXLoops, NickColor);
+
                 if ((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal)) {
                     c.muerto = true;
                 } else {
@@ -337,14 +342,13 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 this.setCharacterFX(CharIndex, FX, FXLoops);
 
                 this.world.addCharacter(c);
-                this.renderer.agregarCharacter(c, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan,
-                    NickColor);
+                this.renderer.agregarCharacter(c);
             }
 
             agregarItem(grhIndex, gridX, gridY) {
                 // TODO: reveer esto de sacar cuando agrega
 
-                let viejoItem = this.world.getItemInGridPos(gridX,gridY);
+                let viejoItem = this.world.getItemInGridPos(gridX, gridY);
                 if (viejoItem) {
                     this.sacarEntity(viejoItem);
                 }
@@ -355,7 +359,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
             }
 
             sacarItem(gridX, gridY) {
-                let item = this.world.getItemInGridPos(gridX,gridY);
+                let item = this.world.getItemInGridPos(gridX, gridY);
                 if (item) {
                     this.sacarEntity(item);
                 }
@@ -438,16 +442,13 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
 
             inicializarPlayer(CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan, NickColor, Privileges) {
                 log.error("inicializar player");
-                this.player = new Character(CharIndex, X, Y, Heading, nombre, clan);
+                this.player = new Character(CharIndex, X, Y, Heading, nombre, clan, Body, Head, Weapon, Shield, Helmet, FX, FXLoops, NickColor);
 
                 this.player.muerto = !!((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal));
 
-
                 this.setCharacterFX(CharIndex, FX, FXLoops);
                 this.world.addCharacter(this.player);
-                this.renderer.agregarCharacter(this.player, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan,
-                    NickColor);
-
+                this.renderer.agregarCharacter(this.player);
                 this.actualizarIndicadorPosMapa();
             }
 
@@ -596,7 +597,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                         return false;
                     }
 
-                    let charInPos = this.world.getCharacterInGridPos(x,y);
+                    let charInPos = this.world.getCharacterInGridPos(x, y);
                     if (charInPos) {
                         if (!charInPos.muerto) {
                             return false;

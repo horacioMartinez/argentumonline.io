@@ -4,7 +4,7 @@
 
 define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh) {
 
-    function CharacterSprites(Heading, bodys, heads, headOffX, headOffY, weapons, shields, helmets) {
+    function CharacterSprites() {
         /*
          Body, Head,Weapon,Shield,Helmet: vector con los grhs de los 4 headings. Cada uno de los headings puede contener un solo numero de grh frames de grhs + vel
          */
@@ -13,14 +13,6 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
         this._visible = true; // todo: ver el todo del setvisible
         this.OFFSET_HEAD = -34;
         this._fxsInfinitos = [];
-        this.heading = Heading;
-        this.setBodys(bodys, headOffX, headOffY);
-        this.setHeads(heads);
-        this.setWeapons(weapons);
-        this.setShields(shields);
-        this.setHelmets(helmets);
-        //this.setNombre(nombre, clan, font);
-        this._updateOrdenHijos();
     }
 
     CharacterSprites.prototype = Object.create(PIXI.Container.prototype);

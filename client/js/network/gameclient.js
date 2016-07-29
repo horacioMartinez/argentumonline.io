@@ -35,7 +35,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
                         self.protocolo.ServerPacketDecodeAndDispatch(self.byteQueue, self);
                     }
                 } catch (e) {
-                    alert(' Protocolo - ' + e.name + ': ' + e.message + " - " + e.stack);
+                    //alert(' Protocolo - ' + e.name + ': ' + e.message + " - " + e.stack); // TODO: descomentar
                     log.error(' Protocolo - ' + e.name + ': ' + e.message + " - " + e.stack);
                 }
             });
@@ -571,7 +571,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
                 nombre = Tag;
                 clan = null;
             }
-            this.game.renderer.cambiarNombreCharacter(char, nombre, clan, NickColor);
+            char.setName(nombre, clan, NickColor);
 
             console.log("TODO: handleUpdateTagAndStatus ");
         }

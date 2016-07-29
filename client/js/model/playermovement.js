@@ -23,7 +23,7 @@ define(['model/character'], function (Character) {
             this._enabled = true;
         }
 
-        enable(){
+        enable() {
             this._enabled = true;
         }
 
@@ -67,12 +67,12 @@ define(['model/character'], function (Character) {
                     this.caminandoForzado = true;
                 }
                 this.caminarCallback(this.getDirMov(), this.caminandoForzado);
-                this.game.player.cambiarHeading(this.getDirMov());
+                this.game.player.heading = this.getDirMov();
                 return true;
             }
             else {
                 if (this.game.player.heading !== this.getDirMov()) {
-                    this.game.player.cambiarHeading(this.getDirMov());
+                    this.game.player.heading = this.getDirMov();
                     this.cambioHeadingCallback(this.game.player.heading);
                 }
                 return false;
