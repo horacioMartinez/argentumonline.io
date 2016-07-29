@@ -229,7 +229,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                         log.error("TRATANDO DE SACAR AL PLAYER!");
                         return;
                     }
-                    this.renderer.sacarCharacter(entity);
                     this.world.sacarCharacter(entity);
                 }
                 else if (entity instanceof Item) {
@@ -342,7 +341,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 this.setCharacterFX(CharIndex, FX, FXLoops);
 
                 this.world.addCharacter(c);
-                this.renderer.agregarCharacter(c);
             }
 
             agregarItem(grhIndex, gridX, gridY) {
@@ -448,7 +446,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
 
                 this.setCharacterFX(CharIndex, FX, FXLoops);
                 this.world.addCharacter(this.player);
-                this.renderer.agregarCharacter(this.player);
                 this.actualizarIndicadorPosMapa();
             }
 

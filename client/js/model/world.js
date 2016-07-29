@@ -27,9 +27,11 @@ define(['model/mapa', 'model/item', 'model/character', 'enums'],
 
             addCharacter(char) {
                 this.characters.push(char);
+                this.renderer.agregarCharacter(char);
             }
 
             sacarCharacter(c) {
+                this.renderer.sacarCharacter(c);
                 let index = this.characters.indexOf(c);
                 if (index > -1) {
                     this.characters.splice(index, 1)
