@@ -1,37 +1,46 @@
-define(['enums'], function (Enums) {
+define(['enums', 'lib/pixi'], function (Enums, PIXI) {
 
-    class Entity {
+    class Entity extends PIXI.utils.EventEmitter{
         constructor(gridX, gridY) {
+            super();
             var self = this;
+            this._x = null;
+            this._y = null;
+            this._gridX = null;
+            this._gridY = null;
             this.setGridPosition(gridX, gridY);
         }
 
-        setOnPositionChange(posChangeCallback) {
-            this._onPositionChange = posChangeCallback;
+        get x(){
+            return this._x;
         }
 
-        onPositionChange() {
-            this._onPositionChange();
+        get y(){
+            return this._y;
+        }
+
+        get gridX(){
+            return this._gridX;
+        }
+
+        get gridY(){
+            return this._gridY;
         }
 
         setPosition(x, y) {
-            this.x = x;
-            this.y = y;
-            if (this._onPositionChange) {
-                this._onPositionChange();
-            }
+            this._x = x;
+            this._y = y;
+            this.emit('positionChanged');
         }
 
-        setGridPosition(x, y) {
-            this.gridX = x;
-            this.gridY = y;
-
-            this.setPosition(x * 32, y * 32);
+        setGridPosition(gridX, gridY) {
+            this.setGridPositionOnly(gridX,gridY);
+            this.setPosition(gridX*32,gridY*32);
         }
 
         setGridPositionOnly(gridX, gridY) {
-            this.gridX = gridX;
-            this.gridY = gridY;
+            this._gridX = gridX;
+            this._gridY = gridY;
         }
 
         esPosAdyacente(gridX, gridY) { // devulve el heading si la pos es adyacente, sino 0

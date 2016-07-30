@@ -137,28 +137,38 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                 item.sprite = null;
             }
 
-            agregarCharacter(char, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, Name, clan,
-                             NickColor) {
-                var bodys = this._getHeadingsGrhs(this.cuerpos, Body);
-                var heads = this._getHeadingsGrhs(this.cabezas, Head);
-                var weapons = this._getHeadingsGrhs(this.armas, Weapon);
-                var shields = this._getHeadingsGrhs(this.escudos, Shield);
-                var helmets = this._getHeadingsGrhs(this.cascos, Helmet);
-                var headOffX = 0;
-                var headOffY = 0;
-                if (this.cuerpos[Body]) {
-                    headOffX = this.cuerpos[Body].offHeadX;
-                    headOffY = this.cuerpos[Body].offHeadY;
-                }
+            agregarCharacter(char) {
+                var self = this;               
 
-                this.cambiarNombreCharacter(char, Name, clan, NickColor);
+                let f = function () {
+                    var char = this;
+                    var nombre = char.nombre;
+                    var clan = char.clan;
+                    var color = char.nickColor;
+                    if (char.spriteNombre) {
+                        self.gameNames.removeChild(char.spriteNombre);
+                        char.spriteNombre = null;
+                    }
+                    if (!nombre.trim()) {
+                        return;
+                    }
+                    var fontColor = color ? Font.NickColor[Font.NickColorIndex[color]] : Font.NickColor.CIUDADANO;
+                    var font = Font.NOMBRE;
+                    font.fill = fontColor;
+                    var nuevoNombre = new CharacterName(nombre, clan, font, self.escala);
+                    self.gameNames.addChild(nuevoNombre);
+                    char.spriteNombre = nuevoNombre;
+                };
 
-                var sprite = new CharacterSprites(Heading, bodys, heads, headOffX, headOffY, weapons, shields, helmets);
+                char.on('nameChanged', f);
+
+                char.emit('nameChanged');
+
+                var sprite = new CharacterSprites();
                 sprite.setSombraSprite(this.assetManager.getGrh(24208));
 
                 this.layer3.addChild(sprite);
 
-                var self = this;
                 sprite.setSpeed(char.moveSpeed);
 
                 sprite.zOffset = -30; // para que quede debajo de los objetos del mapa en el mismo y
@@ -167,10 +177,10 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                 char.texto = new CharacterText(this.escala);
                 this.gameChat.addChild(char.texto);
 
-                char.setOnPositionChange(function () {
+                char.on('positionChanged', function () {
                     var spriteX = this.x;
                     var spriteY = this.y;
-                    if (this.sprite) {
+                    if (this.sprite) {//sacar
                         this.sprite.setPosition(spriteX, spriteY);
                     }
                     if (this.spriteNombre) {
@@ -179,47 +189,62 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                     if (this.texto) {
                         this.texto.setPosition(spriteX, spriteY);
                     }
-                }.bind(char));
+                });
 
-                char.onPositionChange();
-            }
+                char.emit('positionChanged');
 
-            cambiarCharacter(char, Body, Head, Heading, Weapon, Shield, Helmet, FX, FXLoops) {
-                // TODO: cambiar heading, FX y FXLOOPS
-                var bodys = this._getHeadingsGrhs(this.cuerpos, Body);
-                var heads = this._getHeadingsGrhs(this.cabezas, Head);
-                var weapons = this._getHeadingsGrhs(this.armas, Weapon);
-                var shields = this._getHeadingsGrhs(this.escudos, Shield);
-                var helmets = this._getHeadingsGrhs(this.cascos, Helmet);
-                var headOffX = 0;
-                var headOffY = 0;
-                if (this.cuerpos[Body]) {
-                    headOffX = this.cuerpos[Body].offHeadX;
-                    headOffY = this.cuerpos[Body].offHeadY;
-                }
-                // TODO (IMPORTANTE) que solo cambie los que son distintos!
-                char.sprite.setBodys(bodys, headOffX, headOffY);
-                char.sprite.setHeads(heads);
-                char.sprite.setWeapons(weapons);
-                char.sprite.setShields(shields);
-                char.sprite.setHelmets(helmets);
-                char.sprite._updateOrdenHijos();
-            }
+                char.on('headingChanged', function () {
+                    char.sprite.cambiarHeading(char.heading);
+                });
 
-            cambiarNombreCharacter(char, nombre, clan, color) {
-                if (char.spriteNombre) {
-                    this.gameNames.removeChild(char.spriteNombre);
-                    char.spriteNombre = null;
-                }
-                if (!nombre.trim()) {
-                    return;
-                }
-                var fontColor = color ? Font.NickColor[Font.NickColorIndex[color]] : Font.NickColor.CIUDADANO;
-                var font = Font.NOMBRE;
-                font.fill = fontColor;
-                var nuevoNombre = new CharacterName(nombre, clan, font, this.escala);
-                this.gameNames.addChild(nuevoNombre);
-                char.spriteNombre = nuevoNombre;
+                char.emit('headingChanged');
+
+                char.on('bodyChanged', function () {
+                    var Body = char.body;
+                    var bodys = self._getHeadingsGrhs(self.cuerpos, Body);
+                    var headOffX = 0;
+                    var headOffY = 0;
+                    if (self.cuerpos[Body]) {
+                        headOffX = self.cuerpos[Body].offHeadX;
+                        headOffY = self.cuerpos[Body].offHeadY;
+                    }
+                    char.sprite.setBodys(bodys, headOffX, headOffY);
+                });
+
+                char.emit('bodyChanged');
+
+                char.on('headChanged', function () {
+                    var Head = char.head;
+                    var heads = self._getHeadingsGrhs(self.cabezas, Head);
+                    char.sprite.setHeads(heads);
+                });
+
+                char.emit('headChanged');
+
+                char.on('weaponChanged', function () {
+                    var Weapon = char.weapon;
+                    var weapons = self._getHeadingsGrhs(self.armas, Weapon);
+                    char.sprite.setWeapons(weapons);
+                });
+
+                char.emit('weaponChanged');
+
+                char.on('shieldChanged', function () {
+                    var Shield = char.shield;
+                    var shields = self._getHeadingsGrhs(self.escudos, Shield);
+                    char.sprite.setShields(shields);
+                });
+
+                char.emit('shieldChanged');
+
+                char.on('helmetChanged', function () {
+                    var Helmet = char.helmet;
+                    var helmets = self._getHeadingsGrhs(self.cascos, Helmet);
+                    char.sprite.setHelmets(helmets);
+                });
+
+                char.emit('helmetChanged');
+
             }
 
             sacarCharacter(char) {
@@ -598,16 +623,16 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
 
             renderFrame() {
                 this.pixiRenderer.render(this.stage);
-/*
-                let testPosEnteras = (c) => {
-                    if ( (Math.round(c.x) !== c.x) || (Math.round(c.y) !== c.y) ){
-                        log.error(c._grh);
-                        throw new Error("ERROR!!!!!!!!!!!: X:" + c.x+ " Y:" + c.y);
-                    }
-                    c.children.forEach(testPosEnteras);
-                };
-                testPosEnteras(this.stage);
-*/
+                /*
+                 let testPosEnteras = (c) => {
+                 if ( (Math.round(c.x) !== c.x) || (Math.round(c.y) !== c.y) ){
+                 log.error(c._grh);
+                 throw new Error("ERROR!!!!!!!!!!!: X:" + c.x+ " Y:" + c.y);
+                 }
+                 c.children.forEach(testPosEnteras);
+                 };
+                 testPosEnteras(this.stage);
+                 */
             }
 
             cambiarMapa(mapa) {

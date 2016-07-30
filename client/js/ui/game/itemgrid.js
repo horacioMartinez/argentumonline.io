@@ -3,9 +3,7 @@
  */
 
 define(['jquery-ui'], function () {
-
-    //TODO: crear los popups en run time con jquery y borrarlos cuando se cierran
-
+    
     class ItemGrid {
         constructor(gridID, sortable) {
             this.MAX_DELAY_DOUBLE_CLICK = 400;

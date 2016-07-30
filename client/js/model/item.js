@@ -1,9 +1,8 @@
 define(['model/entity'], function (Entity) {
 
     class Item extends Entity {
-        constructor(id, gridX, gridY) {
+        constructor(gridX, gridY) {
             super(gridX, gridY);
-            this.id = id;
             this.sprite = null;
         }
 

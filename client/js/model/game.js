@@ -1,5 +1,5 @@
-define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atributos', 'model/inventario', 'model/skills', 'model/playerstate', 'model/playermovement', 'enums', 'font'],
-    function (Mapa, Updater, Item, Character, Atributos, Inventario, Skills, PlayerState, PlayerMovement, Enums, Font) {
+define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atributos', 'model/inventario', 'model/skills', 'model/playerstate', 'model/playermovement', 'enums', 'font', 'model/world'],
+    function (Mapa, Updater, Item, Character, Atributos, Inventario, Skills, PlayerState, PlayerMovement, Enums, Font, World) {
         class Game {
             constructor(assetManager) {
                 this.init(assetManager);
@@ -19,10 +19,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
 
                 this.updater = null;
 
-                // items: se ven abajo de tod0 (items, sprites de sangre, etc) , characters: npcs, bichos, jugadores (incluye el propio) ambos osn entity
-                this.entityGrid = null;
-                this.characters = []; // characters indexeados por ID
-                this.items = []; // idem items
                 this.username = null;
                 // Player
                 this.player = null;
@@ -47,6 +43,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 this.client = client;
                 this.gameUI = gameUI;
                 this.renderer = renderer;
+                this.world = new World(renderer);
             }
 
             setStorage(storage) {
@@ -92,7 +89,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
 
             recibirDanioUser(parteCuerpo, danio, attackerIndex) {
                 var txt = "";
-                let attackerName = this.characters[attackerIndex].nombre;
+                let attackerName = this.world.getCharacter(attackerIndex).nombre;
                 var formatMessage = function (bodyPartMessage) {
                     return Enums.MensajeConsola.MENSAJE_1 + attackerName + bodyPartMessage + danio + Enums.MensajeConsola.MENSAJE_2;
                 };
@@ -132,8 +129,8 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
             }
 
             realizarDanioPlayer(danio, parteCuerpo, victimIndex) {
-                let victim = this.characters[victimIndex];
-                let attackerName = this.characters[victimIndex].nombre;
+                let victim = this.world.getCharacter(victimIndex);
+                let attackerName = this.world.getCharacter(victimIndex).nombre;
 
                 this.renderer.agregarCharacterHoveringInfo(victim, danio, Font.CANVAS_DANIO_REALIZADO);
 
@@ -173,44 +170,32 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 this.renderer.agregarTextoConsola(texto, font);
             }
 
-            escribirChat(chat, charIndex, r, g, b) { // TODO: colores?
-                if (this.characters[charIndex]) {
-                    this.renderer.setCharacterChat(this.characters[charIndex], chat, r, g, b);
+            escribirChat(chat, charIndex, r, g, b) {
+                let c = this.world.getCharacter(charIndex);
+                if (c) {
+                    this.renderer.setCharacterChat(c, chat, r, g, b);
                 }
             }
 
             actualizarMovPos(char, direccion) {
                 // Se setea la pos del grid nomas porque la (x,y) la usa para la animacion el character ( y la actualiza el al final)
-                if (this.entityGrid[char.gridX][char.gridY][1]) {
-                    if (this.entityGrid[char.gridX][char.gridY][1].id === char.id) // es necesario checkear que sean iguales porque puede que haya otro char que piso la dir de este (pisar caspers)
-                    {
-                        this.entityGrid[char.gridX][char.gridY][1] = null;
-                    }
-                }
-
                 switch (direccion) {
                     case  Enums.Heading.oeste:
-                        this.entityGrid[char.gridX - 1][char.gridY][1] = char;
                         char.setGridPositionOnly(char.gridX - 1, char.gridY); //
                         break;
                     case  Enums.Heading.este:
-                        this.entityGrid[char.gridX + 1][char.gridY][1] = char;
                         char.setGridPositionOnly(char.gridX + 1, char.gridY);
                         break;
                     case  Enums.Heading.norte:
-                        this.entityGrid[char.gridX][char.gridY - 1][1] = char;
                         char.setGridPositionOnly(char.gridX, char.gridY - 1);
                         break;
                     case  Enums.Heading.sur:
-                        this.entityGrid[char.gridX][char.gridY + 1][1] = char;
                         char.setGridPositionOnly(char.gridX, char.gridY + 1);
                         break;
                     default:
                         log.error(" Direccion de movimiento invalida!");
 
                 }
-
-                // hacer para que se vea animacion y demas... de los characters
             }
 
             actualizarBajoTecho() {
@@ -226,25 +211,13 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 });
             }
 
-            _removeAllEntitys() {
-                var self = this;
-                this.forEachEntity(
-                    function (entity, index) {
-                        if (entity !== self.player) {
-                            self.sacarEntity(entity);
-                        }
-                    }
-                );
-            }
-
             _removeAllEntities() {
                 var self = this;
-                this.forEachEntity(function (entity) {
+                this.world.forEachEntity(function (entity) {
                     if (entity.id !== self.player.id) {
                         self.sacarEntity(entity);
                     }
                 });
-                this.items = [];
             }
 
             sacarEntity(entity) {
@@ -253,15 +226,11 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                         log.error("TRATANDO DE SACAR AL PLAYER!");
                         return;
                     }
-                    this.renderer.sacarCharacter(this.characters[entity.id]);
-                    this.entityGrid[entity.gridX][entity.gridY][1] = null;
-                    this.characters[entity.id] = null;
+                    this.world.sacarCharacter(entity);
                 }
                 else if (entity instanceof Item) {
-                    var item = this.items[entity.id];
-                    this.renderer.sacarItem(item);
-                    this.entityGrid[item.gridX][item.gridY][0] = null;
-                    this.items[entity.id] = null;
+                    this.renderer.sacarItem(entity);
+                    this.world.sacarItem(entity);
                 }
                 else {
                     log.error("Tipo de entity desconocido!");
@@ -276,7 +245,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                         log.error("moverCharacter: cambiar pos player a x:" + X + " y:" + Y);
                     }
                 } else {
-                    var c = this.characters[CharIndex];
+                    var c = this.world.getCharacter(CharIndex);
                     if (!c) {
                         //log.error("mover character inexistente:");// + CharIndex);
                         return;
@@ -313,24 +282,28 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
 
             cambiarCharacter(CharIndex, Body, Head, Heading, Weapon, Shield, Helmet, FX, FXLoops) { // TODO: que solo cambie los que son diferentes!
 
-                var c = this.characters[CharIndex];
+                var c = this.world.getCharacter(CharIndex);
 
                 if (!c) {
                     //log.error(" cambiar character inexistente ");
                     return;
                 }
-                if (Heading !== c.heading) {
-                    c.cambiarHeading(Heading);
+                if ( c=== this.player && !c.estaMoviendose()) {
+                    c.heading = Heading;
                 }
-                c.muerto = !!((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal));
-
-                this.renderer.cambiarCharacter(c, Body, Head, Heading, Weapon, Shield, Helmet, FX, FXLoops);
+                c.body = Body;
+                c.head = Head;
+                c.weapon = Weapon;
+                c.shield = Shield;
+                c.helmet = Helmet;
+                c.fx = FX;
+                c.fxLoops = FXLoops;
             }
 
             agregarCharacter(CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, Name,
                              NickColor, Privileges) {
 
-                if (this.characters[CharIndex]) {
+                if (this.world.getCharacter(CharIndex)) {
                     if (CharIndex === this.player.id) {
                         this.resetPosCharacter(this.player.id, X, Y, true);
                         return;
@@ -338,53 +311,41 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                     log.error("tratando de agregar character habiendo un character con mismo charindex existente");
                     return;
                 }
-                var nombre, clan;
+
+                let nombre, clan;
                 if (Name.indexOf("<") > 0) {
                     nombre = Name.slice(Name, Name.indexOf("<") - 1);
                     clan = Name.slice(Name.indexOf("<"), Name.length);
-                }
-                else {
+                } else {
                     nombre = Name;
                     clan = null;
                 }
 
-                if ((!this.player) && ( this.username.toUpperCase() === nombre.toUpperCase())) { // mal esto, se deberia hacer comparando el charindex pero no se puede porque el server manda el char index del pj despues de crear los chars
-                    this.inicializarPlayer(CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan, NickColor, Privileges);
-                    return;
-                }
-                var c = new Character(CharIndex, X, Y, Heading, nombre, clan);
-
-                if ((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal)) {
-                    c.muerto = true;
-                } else {
-                    c.muerto = false;
-                }
-
-                this.entityGrid[X][Y][1] = c;
-                this.characters[CharIndex] = c;
-
+                var c = new Character(CharIndex, X, Y, Heading, nombre, clan, Body, Head, Weapon, Shield, Helmet, FX, FXLoops, NickColor);
                 this.setCharacterFX(CharIndex, FX, FXLoops);
-                this.renderer.agregarCharacter(c, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan,
-                    NickColor);
+                this.world.addCharacter(c);
+
+                if ((!this.player) && ( this.username.toUpperCase() === nombre.toUpperCase())) { // mal esto, se deberia hacer comparando el charindex pero no se puede porque el server manda el char index del pj despues de crear los chars
+                    this.player = c;
+                    this.actualizarIndicadorPosMapa();
+                }
             }
 
-            agregarItem(grhIndex, gridX, gridY) { // TODO: rever si ahora que no hay que updatear hace falta tenerlos en un array
-                var viejoItem = this.entityGrid[gridX][gridY][0];
+            agregarItem(grhIndex, gridX, gridY) {
+                // TODO: reveer esto de sacar cuando agrega
+
+                let viejoItem = this.world.getItemInGridPos(gridX, gridY);
                 if (viejoItem) {
                     this.sacarEntity(viejoItem);
                 }
-                var id = 0;
-                while (this.items[id]) {
-                    id++;
-                }
-                var item = new Item(id, gridX, gridY);
-                this.entityGrid[gridX][gridY][0] = item;
-                this.items[id] = item;
+                var item = new Item(gridX, gridY);
+                this.world.addItem(item);
                 this.renderer.agregarItem(item, grhIndex);
+
             }
 
             sacarItem(gridX, gridY) {
-                var item = this.items[this.entityGrid[gridX][gridY][0].id];
+                let item = this.world.getItemInGridPos(gridX, gridY);
                 if (item) {
                     this.sacarEntity(item);
                 }
@@ -394,7 +355,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 if (this.player.id !== CharIndex) {
                     log.error("NUEVO PLAYER INDEX: " + CharIndex);
                     var prevPlayerCharacter = this.player;
-                    this.player = this.characters[CharIndex];
+                    this.player = this.world.getCharacter(CharIndex);
                     this.sacarEntity(prevPlayerCharacter);
 
                 }
@@ -407,7 +368,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 log.error("DRAW MAPA INICIAL!!! MAPA:" + this.map.numero + " X: " + X + " Y: " + Y);
                 // --- esto para que se setee al player una pos "anterior" a la del cambio de mapa para que de la ilusion que avanza un tile (sino se deberia quedar quieto esperando el intervalo o traeria problemas en mapas donde entras mirando la salida (ademas de que pasarias siempre en la 2da pos)) ---
                 let f = () => {
-                    if (this.playerMovement.estaMoviendose()) {
+                    if (this.playerMovement.estaCaminando()) {
                         var dir;
                         switch (this.playerMovement.getDirMov()) {
                             case Enums.Heading.sur:
@@ -465,35 +426,15 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                  this.uiRenderer.modificarSlotHechizos(slot, nombre);*/
             }
 
-            inicializarPlayer(CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan, NickColor, Privileges) {
-                log.error("inicializar player");
-                this.player = new Character(CharIndex, X, Y, Heading, nombre, clan);
-
-                this.player.muerto = !!((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal));
-
-                this.entityGrid[X][Y][1] = this.player;
-                this.characters[CharIndex] = this.player;
-
-                this.setCharacterFX(CharIndex, FX, FXLoops);
-                this.renderer.agregarCharacter(this.player, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan,
-                    NickColor);
-
-                this.actualizarIndicadorPosMapa();
-            }
-
             resetPosCharacter(charIndex, gridX, gridY, noReDraw) {
-                var c = this.characters[charIndex];
+                let c = this.world.getCharacter(charIndex);
                 if (!c) {
                     log.error(" Reset pos de character no existente, charindex=" + charIndex);
                     return;
                 }
-                if (this.entityGrid[c.gridX][c.gridY][1] === c) {
-                    this.entityGrid[c.gridX][c.gridY][1] = null;
-                }
 
                 c.resetMovement();
                 c.setGridPosition(gridX, gridY);
-                this.entityGrid[gridX][gridY][1] = c; // TODO <- esto puede traer problemas
 
                 if (c === this.player) {
                     console.log(" reseteando pos player");
@@ -551,7 +492,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 var MaxLimiteY = MinLimiteY + 26;
 
                 var self = this;
-                this.forEachEntity(
+                this.world.forEachEntity(
                     function (entity, index) {
                         if (( (entity.gridY < MinLimiteY) || (entity.gridY > MaxLimiteY) ) || ( (entity.gridX < MinLimiteX) || (entity.gridX > MaxLimiteX) )) {
                             if (entity !== self.player) {
@@ -580,6 +521,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                             this.playSonidoPaso(this.player);
                         }
                         this.actualizarIndicadorPosMapa();
+                        this.renderer.updateTilesMov(direccion);
                     }
                 }.bind(this));
 
@@ -630,8 +572,9 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                         return false;
                     }
 
-                    if (this.entityGrid[x][y][1]) {
-                        if (!this.entityGrid[x][y][1].muerto) {
+                    let charInPos = this.world.getCharacterInGridPos(x, y);
+                    if (charInPos) {
+                        if (!charInPos.muerto) {
                             return false;
                         }
                         else {
@@ -645,15 +588,11 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                     return true;
                 }.bind(this));
 
-                this.playerMovement.setOnMoverse(
+                this.playerMovement.setOnMoverseUpdate(
                     function (x, y) {
                         this.renderer.moverPosition(x - this.renderer.camera.centerPosX, y - this.renderer.camera.centerPosY);
                     }.bind(this));
 
-                this.playerMovement.setOnMoverseBegin(
-                    function (dir) {
-                        this.renderer.updateTilesMov(dir);
-                    }.bind(this));
             }
 
             setTrabajoPendiente(skill) {
@@ -684,35 +623,24 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
             }
 
             setCharacterFX(CharIndex, FX, FXLoops) {
-                if (!this.characters[CharIndex]) {
+                let c = this.world.getCharacter(CharIndex);
+                if (!c) {
                     log.error("crear fx en character inexistente");
                     return;
                 }
                 if (FX === 0) {
-                    if (this.characters[CharIndex].sprite) {
-                        this.characters[CharIndex].sprite.removerFxsInfinitos();
+                    if (c.sprite) {
+                        c.sprite.removerFxsInfinitos();
                     }
                     return;
                 }
                 FXLoops = FXLoops + 1;
-                this.renderer.setCharacterFX(this.characters[CharIndex], FX, FXLoops);
-            }
-
-            initEntityGrid() {
-                this.entityGrid = [];
-                for (var i = 1; i < this.map.height + 1; i += 1) {
-                    this.entityGrid[i] = [];
-                    for (var j = 1; j < this.map.width + 1; j += 1) {
-                        this.entityGrid[i][j] = []; // [1] = son cosas que bloquena (PJS,NPCS, ETC) , [0] son cosas pisables, items , etc
-                    }
-                }
-                log.info("Initialized the entity grid.");
+                this.renderer.setCharacterFX(c, FX, FXLoops);
             }
 
             inicializar(username) {
                 this.username = username;
                 this.setUpdater(new Updater(this));
-                this.initEntityGrid();
                 this.ready = true;
             }
 
@@ -748,19 +676,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 this.isStopped = true;
             }
 
-            entityIdExists(id) {
-                return id in this.entities;
-            }
-
-            getEntityById(id) {
-                if (id in this.entities) {
-                    return this.entities[id];
-                }
-                else {
-                    log.error("Unknown entity id : " + id, true);
-                }
-            }
-
             getMouseGridPosition() { // TODO: usar InteractionManager para detectar sprite clickeado y rederigir a ese tile???
                 var ts = this.renderer.tilesize,
                     c = this.renderer.camera,
@@ -778,7 +693,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                  Entonces: si haces click en el centro y te estas moviendo lo rederijo al tile del pj.
                  (en el eje y no hay problema porque acepta 2 posiciones distintas)
                  */
-                if (this.playerMovement.estaMoviendose() && offsetX) {
+                if (this.playerMovement.estaCaminando() && offsetX) {
 
                     if (this.player.heading === Enums.Heading.oeste) {
                         x = x + 1; // fix de pos de c.gridX
@@ -793,37 +708,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                     }
                 }
                 return {x: x, y: y};
-            }
-
-            forEachEntity(callback) {
-                _.each(this.characters, function (entity, index) {
-                    if (entity) {
-                        callback(entity, index);
-                    }
-                });
-
-                _.each(this.items, function (entity, index) {
-                    if (entity) {
-                        callback(entity, index);
-                    }
-                });
-
-            }
-
-            forEachCharacter(callback) {
-                _.each(this.characters, function (entity) {
-                    if (entity) {
-                        callback(entity);
-                    }
-                });
-            }
-
-            forEachItem(callback) {
-                _.each(this.items, function (entity) {
-                    if (entity) {
-                        callback(entity);
-                    }
-                });
             }
 
             resize(escala) {

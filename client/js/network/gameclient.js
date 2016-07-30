@@ -35,7 +35,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
                         self.protocolo.ServerPacketDecodeAndDispatch(self.byteQueue, self);
                     }
                 } catch (e) {
-                    alert(' Protocolo - ' + e.name + ': ' + e.message + " - " + e.stack);
+                    //alert(' Protocolo - ' + e.name + ': ' + e.message + " - " + e.stack); // TODO: descomentar
                     log.error(' Protocolo - ' + e.name + ': ' + e.message + " - " + e.stack);
                 }
             });
@@ -227,14 +227,11 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleCharacterRemove(CharIndex) {
-            // if (CharIndex === this.game.player.id) {
-            //     log.error("trato de saccar al player");
-            //     return;
-            // }
-            if (!this.game.characters[CharIndex]) {
+            let c = this.game.world.getCharacter(CharIndex);
+            if (!c) {
                 log.error("trato de sacar character inexistente");
             } else {
-                this.game.sacarEntity(this.game.characters[CharIndex]);
+                this.game.sacarEntity(c);
             }
             console.log("TODO: handleCharacterRemove ");
         }
@@ -442,7 +439,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleSetInvisible(charIndex, invisible) {
-            var char = this.game.characters[charIndex];
+            var char = this.game.world.getCharacter(charIndex);
             if (char) {
                 this.game.renderer.setCharVisible(char, !invisible);
             }
@@ -560,7 +557,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleUpdateTagAndStatus(CharIndex, NickColor, Tag) {
             // TODO: arreglar en el server, siempre manda charIndex = 1
-            var char = this.game.characters[CharIndex];
+            var char = this.game.world.getCharacter(CharIndex);
             if (!char) {
                 return;
             }
@@ -574,7 +571,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
                 nombre = Tag;
                 clan = null;
             }
-            this.game.renderer.cambiarNombreCharacter(char, nombre, clan, NickColor);
+            char.setName(nombre, clan, NickColor);
 
             console.log("TODO: handleUpdateTagAndStatus ");
         }
@@ -651,7 +648,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleUserAttackedSwing(attackerIndex) {
-            let attackerName = this.game.characters[attackerIndex].nombre;
+            let attackerName = this.game.world.getCharacter(attackerIndex).nombre;
             let text = Enums.MensajeConsola.MENSAJE_1 + attackerName + Enums.MensajeConsola.ATAQUE_FALLO;
             this.game.escribirMsgConsola(text, Font.FIGHT);
             console.log("TODO: handleUserAttackedSwing");
@@ -700,7 +697,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleHaveKilledUser(victimIndex, exp) {
-            let victimName = this.game.characters[victimIndex].nombre;
+            let victimName = this.game.world.getCharacter(victimIndex).nombre;
             this.game.escribirMsgConsola(Enums.MensajeConsola.HAS_MATADO_A + victimName + Enums.MensajeConsola.MENSAJE_22, Font.FIGHT);
             this.game.escribirMsgConsola(Enums.MensajeConsola.HAS_GANADO_EXPE_1 + exp + Enums.MensajeConsola.HAS_GANADO_EXPE_2, Font.FIGHT);
 
@@ -716,7 +713,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleUserKill(attackerIndex) {
-            let attackerName = this.game.characters[attackerIndex].nombre;
+            let attackerName = this.game.world.getCharacter(attackerIndex).nombre;
             this.game.escribirMsgConsola(attackerName + Enums.MensajeConsola.TE_HA_MATADO, Font.FIGHT);
             console.log("TODO: handleUserKill");
         }
