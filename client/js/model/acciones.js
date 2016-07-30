@@ -89,9 +89,7 @@ define(['enums', 'font', 'model/macros'], function (Enums, Font, Macros) {
                     default:
                         log.error(" Direccion de player invalida!");
                 }
-                if (x && y) {
-                    this.game.player.lastAttackedTarget = this.game.world.getCharacterInGridPos(x, y);
-                }
+                this.game.player.lastAttackedTarget = this.game.world.getCharacterInGridPos(x, y);
             }
 
         }

@@ -16,9 +16,8 @@ define(['model/character'], function (Character) {
             this.caminarCallback = null;
             this.puedeCaminarCallback = null;
             this.cambioHeadingCallback = null;
-            this.lastAttackedTarget = null;
 
-            this.moveSpeed = 230; // usar la del character?
+            //this.moveSpeed = 230; // usar la del character?
 
             this._enabled = true;
         }
@@ -48,15 +47,10 @@ define(['model/character'], function (Character) {
             this.cambioHeadingCallback = callback;
         }
 
-        // moverse tiene que ver con el renderer, caminar con enviar mensajes del sv
-        setOnMoverse(callback) { // cb params: x,y
-            this._moverseCallback = callback;
+        setOnMoverseUpdate(callback) { // cb params: x,y
+            this._moverseUpdateCallback = callback;
         }
-
-        setOnMoverseBegin(cb) {
-            this._comenzarMoverseCallback = cb;
-        }
-
+        
         _tratarDeCaminar() {
 
             if (!this.getDirMov() || !this._enabled) {
@@ -100,11 +94,10 @@ define(['model/character'], function (Character) {
         }
 
         tratarDeMover() {
-            if ((this.estaMoviendose() && this.game.player.movementTransition.inProgress === false)) {
+            if ((this.estaCaminando() && !this.game.player.estaMoviendose())) {
                 if (this._tratarDeCaminar()) {
                     let dir = this.getDirMov();
-                    this._comenzarMoverseCallback(dir);
-                    this.game.player.mover(dir, this._moverseCallback, this._hasMoved.bind(this));
+                    this.game.player.mover(dir, this._moverseUpdateCallback, this._hasMoved.bind(this));
                     return true;
                 }
             }
@@ -115,7 +108,7 @@ define(['model/character'], function (Character) {
             this.forcedCaminarQueue.push(direccion);
         }
 
-        estaMoviendose() {
+        estaCaminando() {
             return (this.forcedCaminarQueue.length > 0 || this.dirPressedStack.length > 0);
         }
 

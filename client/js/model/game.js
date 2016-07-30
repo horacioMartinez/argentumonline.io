@@ -179,7 +179,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
 
             actualizarMovPos(char, direccion) {
                 // Se setea la pos del grid nomas porque la (x,y) la usa para la animacion el character ( y la actualiza el al final)
-
                 switch (direccion) {
                     case  Enums.Heading.oeste:
                         char.setGridPositionOnly(char.gridX - 1, char.gridY); //
@@ -197,8 +196,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                         log.error(" Direccion de movimiento invalida!");
 
                 }
-
-                // hacer para que se vea animacion y demas... de los characters
             }
 
             actualizarBajoTecho() {
@@ -291,12 +288,11 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                     //log.error(" cambiar character inexistente ");
                     return;
                 }
-                c.heading = Heading;
-                c.muerto = !!((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal));
-
+                if ( c=== this.player && !c.estaMoviendose()) {
+                    c.heading = Heading;
+                }
                 c.body = Body;
                 c.head = Head;
-                c.heading = Heading;
                 c.weapon = Weapon;
                 c.shield = Shield;
                 c.helmet = Helmet;
@@ -325,22 +321,14 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                     clan = null;
                 }
 
-                if ((!this.player) && ( this.username.toUpperCase() === nombre.toUpperCase())) { // mal esto, se deberia hacer comparando el charindex pero no se puede porque el server manda el char index del pj despues de crear los chars
-                    this.inicializarPlayer(CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan, NickColor, Privileges);
-                    return;
-                }
-
                 var c = new Character(CharIndex, X, Y, Heading, nombre, clan, Body, Head, Weapon, Shield, Helmet, FX, FXLoops, NickColor);
-
-                if ((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal)) {
-                    c.muerto = true;
-                } else {
-                    c.muerto = false;
-                }
-
                 this.setCharacterFX(CharIndex, FX, FXLoops);
-
                 this.world.addCharacter(c);
+
+                if ((!this.player) && ( this.username.toUpperCase() === nombre.toUpperCase())) { // mal esto, se deberia hacer comparando el charindex pero no se puede porque el server manda el char index del pj despues de crear los chars
+                    this.player = c;
+                    this.actualizarIndicadorPosMapa();
+                }
             }
 
             agregarItem(grhIndex, gridX, gridY) {
@@ -350,7 +338,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 if (viejoItem) {
                     this.sacarEntity(viejoItem);
                 }
-                var item = new Item(0, gridX, gridY);// TODO: id 0 en todos?
+                var item = new Item(gridX, gridY);
                 this.world.addItem(item);
                 this.renderer.agregarItem(item, grhIndex);
 
@@ -380,7 +368,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 log.error("DRAW MAPA INICIAL!!! MAPA:" + this.map.numero + " X: " + X + " Y: " + Y);
                 // --- esto para que se setee al player una pos "anterior" a la del cambio de mapa para que de la ilusion que avanza un tile (sino se deberia quedar quieto esperando el intervalo o traeria problemas en mapas donde entras mirando la salida (ademas de que pasarias siempre en la 2da pos)) ---
                 let f = () => {
-                    if (this.playerMovement.estaMoviendose()) {
+                    if (this.playerMovement.estaCaminando()) {
                         var dir;
                         switch (this.playerMovement.getDirMov()) {
                             case Enums.Heading.sur:
@@ -436,17 +424,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 this.gameUI.interfaz.modificarSlotHechizo(slot, nombre);
                 /*if (this.logeado)
                  this.uiRenderer.modificarSlotHechizos(slot, nombre);*/
-            }
-
-            inicializarPlayer(CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, nombre, clan, NickColor, Privileges) {
-                log.error("inicializar player");
-                this.player = new Character(CharIndex, X, Y, Heading, nombre, clan, Body, Head, Weapon, Shield, Helmet, FX, FXLoops, NickColor);
-
-                this.player.muerto = !!((Head === Enums.Muerto.cabezaCasper) || (Body === Enums.Muerto.cuerpoFragataFantasmal));
-
-                this.setCharacterFX(CharIndex, FX, FXLoops);
-                this.world.addCharacter(this.player);
-                this.actualizarIndicadorPosMapa();
             }
 
             resetPosCharacter(charIndex, gridX, gridY, noReDraw) {
@@ -544,6 +521,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                             this.playSonidoPaso(this.player);
                         }
                         this.actualizarIndicadorPosMapa();
+                        this.renderer.updateTilesMov(direccion);
                     }
                 }.bind(this));
 
@@ -610,15 +588,11 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                     return true;
                 }.bind(this));
 
-                this.playerMovement.setOnMoverse(
+                this.playerMovement.setOnMoverseUpdate(
                     function (x, y) {
                         this.renderer.moverPosition(x - this.renderer.camera.centerPosX, y - this.renderer.camera.centerPosY);
                     }.bind(this));
 
-                this.playerMovement.setOnMoverseBegin(
-                    function (dir) {
-                        this.renderer.updateTilesMov(dir);
-                    }.bind(this));
             }
 
             setTrabajoPendiente(skill) {
@@ -719,7 +693,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                  Entonces: si haces click en el centro y te estas moviendo lo rederijo al tile del pj.
                  (en el eje y no hay problema porque acepta 2 posiciones distintas)
                  */
-                if (this.playerMovement.estaMoviendose() && offsetX) {
+                if (this.playerMovement.estaCaminando() && offsetX) {
 
                     if (this.player.heading === Enums.Heading.oeste) {
                         x = x + 1; // fix de pos de c.gridX

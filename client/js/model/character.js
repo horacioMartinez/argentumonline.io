@@ -18,7 +18,6 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
 
             this._heading = Heading;
 
-            this.muerto = false;
             this.movementTransition = new Transition();
             this.sprite = null;
             this.spriteNombre = null;
@@ -37,10 +36,6 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
         }
 
 
-        getDirMov() {
-            return this._heading;
-        }
-
         mover(dir, movimientoCallback, finMovimientoCallback) {
             this.resetMovement();
             this.heading = dir;
@@ -53,7 +48,7 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
             var self = this;
             var distPrimerFrame = 0; //32 / (this.moveSpeed / (1000 / 60));
 
-            if (self.getDirMov() === Enums.Heading.oeste) {
+            if (self.heading === Enums.Heading.oeste) {
 
                 self.movementTransition.start(
                     function (x) {
@@ -67,7 +62,7 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
                         if (callback_mov) {
                             callback_mov(self.x, self.y);
                         }
-                        self.hasMoved();
+                        self._hasMoved();
 
                         if (finMovimientoCallback) {
                             finMovimientoCallback();
@@ -77,7 +72,7 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
                     self.x - 32,
                     self.moveSpeed);
             }
-            else if (self.getDirMov() === Enums.Heading.este) {
+            else if (self.heading === Enums.Heading.este) {
                 self.movementTransition.start(
                     function (x) {
                         self.setPosition(x, self.y);
@@ -90,7 +85,7 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
                         if (callback_mov) {
                             callback_mov(self.x, self.y);
                         }
-                        self.hasMoved();
+                        self._hasMoved();
                         if (finMovimientoCallback) {
                             finMovimientoCallback();
                         }
@@ -99,7 +94,7 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
                     self.x + 32,
                     self.moveSpeed);
             }
-            else if (self.getDirMov() === Enums.Heading.norte) {
+            else if (self.heading === Enums.Heading.norte) {
                 self.movementTransition.start(
                     function (y) {
                         self.setPosition(self.x, y);
@@ -112,7 +107,7 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
                         if (callback_mov) {
                             callback_mov(self.x, self.y);
                         }
-                        self.hasMoved();
+                        self._hasMoved();
                         if (finMovimientoCallback) {
                             finMovimientoCallback();
                         }
@@ -121,7 +116,7 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
                     self.y - 32,
                     self.moveSpeed);
             }
-            else if (self.getDirMov() === Enums.Heading.sur) {
+            else if (self.heading === Enums.Heading.sur) {
                 self.movementTransition.start(
                     function (y) {
                         self.setPosition(self.x, y);
@@ -134,7 +129,7 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
                         if (callback_mov) {
                             callback_mov(self.x, self.y);
                         }
-                        self.hasMoved();
+                        self._hasMoved();
                         if (finMovimientoCallback) {
                             finMovimientoCallback();
                         }
@@ -147,20 +142,25 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
             PIXI.ticker.shared.add(this._updateMovement, this);
         }
 
+
+        estaMoviendose(){
+            return this.movementTransition.inProgress;
+        }
+
         // TODO (MUY IMPORTANTE) reveer esto de movimientos,  usar aceleracion ? mov del player en 1 solo event
 
         _updateMovement(delta) {
-            if (this.movementTransition.inProgress) {
+            if (this.estaMoviendose()) {
                 this.movementTransition.step(delta * (1 / 60) * 1000);
             }
         }
 
-        hasMoved() { // se ejecuta al finalizar de caminar
+        _hasMoved() { // se ejecuta al finalizar de caminar
             PIXI.ticker.shared.remove(this._updateMovement, this);
         }
 
         resetMovement() {
-            if (this.movementTransition.inProgress) {
+            if (this.estaMoviendose()) {
                 log.error("reset movement!!!");
                 this.movementTransition.stop();
                 if (this.movementTransition.stopFunction) {
@@ -175,6 +175,9 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
             }
         }
 
+        get muerto(){
+            return !((this._head !== Enums.Muerto.cabezaCasper) && (this._body !== Enums.Muerto.cuerpoFragataFantasmal));
+        }
 
         get heading(){
             return this._heading;
