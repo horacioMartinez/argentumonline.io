@@ -7590,6 +7590,9 @@ button.close {
   display: block;
   cursor: pointer; }
 
+.icon-menu.disabled {
+  cursor: not-allowed; }
+
 .inner_border_default, .dialogContent, .tabsContainer {
   border: 8px solid black;
   border-image: url("../imagenes/container_content_iner_border.png") 20 repeat; }

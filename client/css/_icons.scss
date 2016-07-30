@@ -26,3 +26,7 @@
   display: block;
   cursor:pointer; // << sacar de aca??
 }
+
+.icon-menu.disabled {
+  cursor:not-allowed; // << sacar de aca??
+}

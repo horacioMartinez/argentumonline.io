@@ -55,8 +55,8 @@ define(['jquery-ui'], function () {
         }
 
         _inicializarTabDesactivable($tab) {
-            $tab.children('a[data-toggle="tab"]').click(function () {
-                if ($(this).parent().hasClass('disabled')) {
+            $tab.click(function () {
+                if ($(this).hasClass('disabled')) {
                     return false;
                 }
             });
