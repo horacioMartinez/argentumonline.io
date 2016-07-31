@@ -7451,17 +7451,7 @@ button.close {
   float: none; }
 
 .noselect {
-  -webkit-touch-callout: none;
-  /* iOS Safari */
-  -webkit-user-select: none;
-  /* Chrome/Safari/Opera */
-  -moz-user-select: none;
-  /* Firefox */
-  -ms-user-select: none;
-  /* IE/Edge */
-  user-select: none;
-  /* non-prefixed version, currently
-   not supported by any browser */ }
+  user-select: none; }
 
 .divImagen {
   width: auto;
@@ -7887,7 +7877,7 @@ body {
 
 #chatbox {
   background-image: url("../graficos/ui/chatbox.png");
-  /*tamaño img conteindo en barra:*/
+  /*tama├▒o img conteindo en barra:*/
   -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../graficos/ui/chatbox.png', sizingMethod='scale')";
   -webkit-background-size: 100% 100%;
   /* Safari 3.0 */
@@ -7898,7 +7888,7 @@ body {
   background-size: 100% 100%;
   /* Gecko 2.0 (Firefox 4.0) and other CSS3-compliant browsers */
   background-size: contain;
-  /*fin tamaño img*/
+  /*fin tama├▒o img*/
   z-index: -1;
   -moz-transition: 0.2s top ease;
   -webkit-transition: 0.2s top ease;
@@ -7909,7 +7899,7 @@ body {
 #chatinput {
   color: #eee; }
 
-/* Tamaño contenedor (width seteado en js) */
+/* Tama├▒o contenedor (width seteado en js) */
 @media screen and (min-aspect-ratio: 7 / 5) and (max-aspect-ratio: 8 / 5) {
   #container {
     height: 85%; } }
@@ -8662,6 +8652,7 @@ footer a {
 
 /* Reglas generales de popUps*/
 .dialogContent {
+  padding: 8px;
   box-sizing: border-box;
   /*display:flex; flex:1;*/
   background: none;

@@ -1,4 +1,4 @@
-define(['storage/defaultsettings', 'jquery-ui'], function (DefaultSettings) {
+define(['storage/defaultsettings'], function (DefaultSettings) {
     class Storage {
         constructor() {
             if (this.hasLocalStorage() && localStorage.data) {

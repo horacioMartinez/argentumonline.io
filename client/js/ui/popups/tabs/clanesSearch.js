@@ -2,7 +2,7 @@
  * Created by horacio on 7/6/16.
  */
 
-define([], function () {
+define(['../../utils/searchinputfilter'], function (SearchInputFilter) {
 
     class ClanesSearch {
         constructor(game, detallesClan, showMensajeCb, solicitudClanCb) {
@@ -11,6 +11,7 @@ define([], function () {
             this.showMensajeCb = showMensajeCb;
             this.solicitudClanCb = solicitudClanCb;
 
+            this.$inputClanName = $("#clanesSearchTabInputNombre");
             this.$clanesNameList = $("#clanesSearchListaClanes");
             this.$botonCrearClan = $("#clanesSearchBotonCrear");
             this.$botonIngresarClan = $("#clanesSearchBotonIngresar");
@@ -36,6 +37,10 @@ define([], function () {
         
         initCallbacks() {
             var self = this;
+
+
+            SearchInputFilter.makeInputFilterElement(this.$inputClanName, this.$clanesNameList, 'option' );
+
             this.$botonDetallesClan.click(function () {
                 var clanSeleccionado = self._getClanSeleccionado();
                 if (!clanSeleccionado) {

@@ -2,7 +2,7 @@
  * Created by horacio on 7/7/16.
  */
 
-define([], function () {
+define(['../../utils/searchinputfilter'], function (SearchInputFilter) {
 
     class MiembrosClan {
         constructor(game, showMensajeCb) {
@@ -10,6 +10,7 @@ define([], function () {
 
             this.showMensajeCb = showMensajeCb;
 
+            this.$inputSearchMember = $("#clanesMiembrosTabInputNombre");
             this.$miembrosNameList = $("#clanesMembersList");
             this.$botonNoticias = $("#clanesMiembrosBotonNoticias");
             this.$botonDetalles = $("#clanesMiembrosBotonDetalles");
@@ -33,6 +34,8 @@ define([], function () {
         initCallbacks() {
             var self = this;
 
+            SearchInputFilter.makeInputFilterElement(this.$inputSearchMember, this.$miembrosNameList, 'option' );
+            
             this.$botonNoticias.click(function () {
                 self.game.client.sendShowGuildNews();
             });
