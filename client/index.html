@@ -30,45 +30,76 @@
         <img id="logo" src="imagenes/logo.png" class="horizontal_center">
         <input id="loginNombre" type="text" placeholder="Nombre" maxlength="15" class="horizontal_center">
         <input id="loginContrasenia" type="password" placeholder="Contraseña" maxlength="15" class="horizontal_center">
-        <button id="botonJugar" class="botonNormal horizontal_center">Jugar</button>
-        <button id="botonCrearPJ" class="botonNormal horizontal_center">Crear Personaje</button>
+        <button id="botonJugar" class="btn btn-default horizontal_center">Jugar</button>
+        <button id="botonCrearPJ" class="btn btn-default horizontal_center">Crear Personaje</button>
     </div>
 
     <!-- Pantalla de crear PJ -->
-    <div id="crearPJ">
-        <input id="crearNombreInput" type="text" placeholder="Nombre" maxlength="15" class="horizontal_center">
-        <input id="crearPasswordInput" type="password" placeholder="Contraseña" maxlength="15"
-               class="horizontal_center">
-        <input id="crearRepetirPasswordInput" type="password" placeholder="Repetir contraseña" maxlength="15"
-               class="horizontal_center">
-        <input id="crearMailInput" type="email" placeholder="Mail" class="horizontal_center">
+    <div id="crearPJ" style="width:100%; height:100%;" class="exterior_border_default">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="exterior_border_default">
+                        <div class="inner_border_default background_default horizontal_center">
+                            <div style="margin-top:4px;margin-bottom:14px;">
+                                <button id="crearBotonGeneroFemenino" class="botonImagen"
+                                        style="margin-right:15px;"></button>
+                                <button id="crearBotonGeneroMasculino" class="botonImagen selected"></button>
+                            </div>
+                            <div class="form-group">
+                                <label for="crearSelectClase">Clase</label>
+                                <select id="crearSelectClase" class="form-control"></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="crearSelectRaza">Raza</label>
+                                <select id="crearSelectRaza" class="form-control"></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="crearSelectCiudad">Ciudad natal</label>
+                                <select id="crearSelectCiudad" class="form-control"></select>
+                            </div>
+                            <div class="form-group">
+                                <select id="crearSelectGenero" class="form-control"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
 
-        <div id="crearPjCenter">
-            <div id="crearPjSeleccion">
-                <select id="crearSelectClase"></select>
-                <select id="crearSelectCiudad"></select>
-                <select id="crearSelectRaza"></select>
-                <select id="crearSelectGenero"></select>
+                </div>
+                <div class="col-sm-4">
+
+                </div>
+            </div>
+            <input id="crearNombreInput" type="text" placeholder="Nombre" maxlength="15" class="horizontal_center">
+            <input id="crearPasswordInput" type="password" placeholder="Contraseña" maxlength="15"
+                   class="horizontal_center">
+            <input id="crearRepetirPasswordInput" type="password" placeholder="Repetir contraseña" maxlength="15"
+                   class="horizontal_center">
+            <input id="crearMailInput" type="email" placeholder="Mail" class="horizontal_center">
+
+            <div id="crearPjCenter">
+
+
+                <div id="crearPjAtributos">
+                    <button id="crearBotonTirarDados" class="btn btn-default">Tirar Dados</button>
+                    <span id="crearDadoFuerza"></span>
+                    <span id="crearDadoAgilidad"></span>
+                    <span id="crearDadoInteligencia"></span>
+                    <span id="crearDadoCarisma"></span>
+                    <span id="crearDadoConstitucion"></span>
+                </div>
             </div>
 
-            <div id="crearPjAtributos">
-                <button id="crearBotonTirarDados" class="botonNormal">Tirar Dados</button>
-                <span id="crearDadoFuerza"></span>
-                <span id="crearDadoAgilidad"></span>
-                <span id="crearDadoInteligencia"></span>
-                <span id="crearDadoCarisma"></span>
-                <span id="crearDadoConstitucion"></span>
-            </div>
 
+            <!--<div id="crearPjSeleccionCabezaDiv">-->
+            <!--<ul id="crearPjSeleccionCabeza" class="itemgrid"></ul>-->
+            <!--</div>-->
+
+
+            <button id="crearBotonCrear" class="btn btn-primary">Crear personaje</button>
+            <button id="crearBotonVolver" class="btn btn-default">Volver</button>
         </div>
-
-        <div id="crearPjSeleccionCabezaDiv">
-            <ul id="crearPjSeleccionCabeza" class="itemgrid"></ul>
-        </div>
-
-
-        <button id="crearBotonCrear" class="botonNormal">Crear personaje</button>
-        <button id="crearBotonVolver" class="botonNormal">Volver</button>
     </div>
 
     <!-- Pantalla de juego-->
@@ -124,11 +155,11 @@
                         <span id="barraSedTexto"></span>
                     </div>
 
-                    <button id="botonMapa" class="botonNormal">Mapa</button>
-                    <button id="botonParty" class="botonNormal">Party</button>
-                    <button id="botonOpciones" class="botonNormal">Opciones</button>
-                    <button id="botonEstadisticas" class="botonNormal">Estadisticas</button>
-                    <button id="botonClanes" class="botonNormal">Clanes</button>
+                    <button id="botonMapa" class="btn btn-default">Mapa</button>
+                    <button id="botonParty" class="btn btn-default">Party</button>
+                    <button id="botonOpciones" class="btn btn-default">Opciones</button>
+                    <button id="botonEstadisticas" class="btn btn-default">Estadisticas</button>
+                    <button id="botonClanes" class="btn btn-default">Clanes</button>
 
                 </div>
                 <button id="botonTirarOro" class="botonInvisible"></button>
@@ -167,9 +198,10 @@
         <span class="dash">&ndash;</span> <a class="clickable" target="_blank" href="http://foros.dakaraonline.org/">Foro</a>
     </div>
     <div id="credits-link" class="clickable">
-        <span class="dash">&ndash;</span> <a class="clickable" target="_blank" href="http://wiki.dakaraonline.org/wiki/start">Wiki</a>
+        <span class="dash">&ndash;</span> <a class="clickable" target="_blank"
+                                             href="http://wiki.dakaraonline.org/wiki/start">Wiki</a>
     </div>
- </footer>
+</footer>
 
 <script type="text/javascript">
     if (!Detect.supportsWebSocket()) {
@@ -185,10 +217,17 @@
 
 <!-- google analytics -->
 <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
     ga('create', 'UA-79364108-1', 'auto');
     ga('send', 'pageview');
