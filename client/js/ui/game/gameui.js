@@ -112,8 +112,8 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
                 this.guiaMapa.show();
             }
 
-            showCarpinteria() {
-                this.carpinteria.show();
+            showCarpinteria(items) {
+                this.carpinteria.show(items);
             }
 
             showHerreria() {

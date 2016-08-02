@@ -7550,12 +7550,39 @@ button.close {
   left: 0;
   width: 6px; }
 
+/*(por ej NIVEL 1 nivel en esta font y 1 en bold y blanco)*/
 .panel-heading, .panel-heading-collapse {
   background-color: rgba(150, 122, 99, 0.2) !important;
   color: #fff !important; }
 
 .panel-heading-collapse {
   cursor: pointer; }
+
+/* TODO: modificar background en mixin */
+.btn-primary {
+  background-color: #de8b47;
+  background-image: linear-gradient(#e3b58f, #de8b47);
+  border-color: #de8b47; }
+
+.btn-default {
+  background-color: #694f41;
+  background-image: linear-gradient(#8c766b, #694f41);
+  border-color: #694f41; }
+
+.styledDiv {
+  background-color: #191411;
+  border: 1px solid #453c36;
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s; }
+  .styledDiv:focus {
+    border-color: #978471;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(151, 132, 113, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(151, 132, 113, 0.6); }
 
 .icon-base, .icon-normal, .icon-grande, .icon-menu {
   position: relative;
@@ -7598,6 +7625,11 @@ button.close {
   border-image-repeat: round;
   border-image-width: 5px 5px 10px 5px;
   /*box-sizing: border-box;*/ }
+
+.selected_border, #crearBotonGeneroFemenino, #crearBotonGeneroFemenino.selected, #crearBotonGeneroMasculino, #crearBotonGeneroMasculino.selected {
+  border-color: white;
+  border-style: solid;
+  border-width: 2px; }
 
 @font-face {
   font-family: 'Myriad Pro';
@@ -8020,12 +8052,7 @@ footer a {
   background-image: url("../imagenes/interfaz/iconos/gender_icon_female.png"), url("../imagenes/botones/bg_square_button.png");
   background-repeat: no-repeat;
   background-size: 60%, contain;
-  border-style: solid;
-  border-color: transparent;
-  border-width: 2px; }
-
-#crearBotonGeneroFemenino.selected {
-  border-color: white; }
+  border-color: transparent; }
 
 #crearBotonGeneroMasculino {
   width: 60px;
@@ -8034,12 +8061,40 @@ footer a {
   background-image: url("../imagenes/interfaz/iconos/gender_icon_male.png"), url("../imagenes/botones/bg_square_button.png");
   background-repeat: no-repeat;
   background-size: 70%, contain;
-  border-color: transparent;
-  border-style: solid;
-  border-width: 2px; }
+  border-color: transparent; }
 
-#crearBotonGeneroMasculino.selected {
-  border-color: white; }
+#crearPjSeleccionCabezaBotonIzq {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-image: url("../imagenes/botones/arrow_left.png"); }
+
+#crearPjSeleccionCabezaBotonDer {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-image: url("../imagenes/botones/arrow_right.png"); }
+
+#crearPjSeleccionCabezaImagenIzq {
+  box-sizing: content-box;
+  display: inline-block;
+  width: 28px;
+  height: 33px;
+  background-size: 400%; }
+
+#crearPjSeleccionCabezaImagenCenter {
+  box-sizing: content-box;
+  display: inline-block;
+  width: 34px;
+  height: 40px;
+  background-size: 400%; }
+
+#crearPjSeleccionCabezaImagenDer {
+  box-sizing: content-box;
+  display: inline-block;
+  width: 28px;
+  height: 33px;
+  background-size: 400%; }
 
 /*Interfaz: elementos dentro de la pantalla de juego (inventario, etc)*/
 #gamecanvas.crosshair {

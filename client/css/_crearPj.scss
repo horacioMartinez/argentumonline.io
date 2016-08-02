@@ -17,6 +17,7 @@
 //#crearPjSeleccionCabeza {border: solid 2px white;padding:2px;width:160px;height:32px;margin-left:auto;margin-right:auto; overflow:auto;}
 //#crearPjSeleccionCabeza.itemgrid li {background-size: 136px 100px}
 #crearBotonGeneroFemenino {
+  @extend .selected_border;
   width: 60px;
   height: 60px;
   background-position: center;
@@ -24,28 +25,62 @@
   background-repeat: no-repeat;
   background-size: 60%, contain;
 
-  border-style: solid;
   border-color: transparent;
-  border-width: 2px;
 }
 
 #crearBotonGeneroFemenino.selected {
-  border-color: white;
+  @extend .selected_border;
 }
 
 #crearBotonGeneroMasculino {
+  @extend .selected_border;
   width: 60px;
   height: 60px;
   background-position: center;
   background-image: url('../imagenes/interfaz/iconos/gender_icon_male.png'), url('../imagenes/botones/bg_square_button.png');
   background-repeat: no-repeat;
   background-size: 70%, contain;
-
   border-color: transparent;
-  border-style: solid;
-  border-width: 2px;
 }
 
 #crearBotonGeneroMasculino.selected {
-  border-color: white;
+  @extend .selected_border;
+}
+
+#crearPjSeleccionCabezaBotonIzq {
+  display:inline-block;
+  width: 40px;
+  height: 40px;
+  background-image: url('../imagenes/botones/arrow_left.png')
+}
+
+#crearPjSeleccionCabezaBotonDer {
+  display:inline-block;
+  width: 40px;
+  height: 40px;
+  background-image: url('../imagenes/botones/arrow_right.png')
+}
+
+#crearPjSeleccionCabezaImagenIzq {
+  box-sizing:content-box;
+  display:inline-block;
+  width: 28px;
+  height: 33px;
+  background-size: 400%;
+}
+
+#crearPjSeleccionCabezaImagenCenter {
+  box-sizing:content-box; // no tomar al borde como parte del tamaño total
+  display:inline-block;
+  width: 34px;
+  height: 40px;
+  background-size: 400%;
+}
+
+#crearPjSeleccionCabezaImagenDer {
+  box-sizing:content-box;
+  display:inline-block;
+  width: 28px;
+  height: 33px;
+  background-size: 400%;
 }

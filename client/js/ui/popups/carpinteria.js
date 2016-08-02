@@ -28,6 +28,12 @@ define(["text!../../../menus/carpinteria.html!strip", 'ui/popups/popup'], functi
          ObjCarpinteroIndex: ObjCarpinteroIndex,
          ObjUpgrade: ObjUpgrade,
          */
+
+        show(items) {
+            super.show();
+            this.setItems(items);
+        }
+        
         setItems(items) {
             //TODO objUpgrade
             if (items.length < 1) {

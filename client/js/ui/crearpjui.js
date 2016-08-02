@@ -2,14 +2,19 @@
  * Created by horacio on 2/27/16.
  */
 
-define(['enums', 'ui/game/itemgrid'], function (Enums, ItemGrid) {
+define(['enums', 'utils/util'], function (Enums, Utils) {
     class CrearPjUI {
         constructor(assetManager, mensaje) {
             this.assetManager = assetManager;
             this.mensaje = mensaje;
             this._inicializado = false;
             this.LARGO_MINIMO_PASSWORD = 5;
-            this.cabezasGrid = null;
+            this.offsetSelectedCabeza = 0;
+
+            this.$imgCabezaIzq = $('#crearPjSeleccionCabezaImagenIzq');
+            this.$imgCabezaCentro = $('#crearPjSeleccionCabezaImagenCenter');
+            this.$imgCabezaDer = $('#crearPjSeleccionCabezaImagenDer');
+
         }
 
         inicializar() {
@@ -63,7 +68,14 @@ define(['enums', 'ui/game/itemgrid'], function (Enums, ItemGrid) {
                 self.updateCabezas();
             });
 
-            this.cabezasGrid = new ItemGrid('crearPjSeleccionCabeza');
+            $('#crearPjSeleccionCabezaBotonIzq').click( () =>{
+                this.offsetSelectedCabeza--;
+                this.updateCabezas();
+            });
+            $('#crearPjSeleccionCabezaBotonDer').click( () =>{
+                this.offsetSelectedCabeza++;
+                this.updateCabezas();
+            });
             this.updateCabezas();
         }
 
@@ -101,7 +113,7 @@ define(['enums', 'ui/game/itemgrid'], function (Enums, ItemGrid) {
                 var genero = $("#crearSelectGenero").val();
                 var clase = $("#crearSelectClase").val();
                 var ciudad = $("#crearSelectCiudad").val();
-                var cabeza = self.cabezasGrid.getSelectedSlot();
+                var cabeza = null; // TODO
 
                 if (!cabeza) {
                     self.mensaje.show("Debes elegir una cabeza");
@@ -129,17 +141,36 @@ define(['enums', 'ui/game/itemgrid'], function (Enums, ItemGrid) {
             });
         }
 
-        updateCabezas() {
+        getCabezaNum(offset) {
             var raza = $("#crearSelectRaza").val();
             var genero = $("#crearSelectGenero").val();
 
-            this.cabezasGrid.clear();
             var cabezas = this.getPrimerYUltimaCabezaNum(genero, raza);
+            var incremento = Utils.modulo(offset, (cabezas.ultima - cabezas.primera));
 
-            for (var i = cabezas.primera; i <= cabezas.ultima; i++) {
-                var numGraf = this.assetManager.getFaceGrafFromNum(i);
-                this.cabezasGrid.modificarSlot(i, '', numGraf);
-            }
+            return cabezas.primera + incremento;
+        }
+
+        updateCabezas() {
+            var cabezaIzq = this.getCabezaNum(this.offsetSelectedCabeza - 1);
+            var cabezaCentro = this.getCabezaNum(this.offsetSelectedCabeza);
+            var cabezaDer = this.getCabezaNum(this.offsetSelectedCabeza + 1);
+            var numGrafIzq = this.assetManager.getFaceGrafFromNum(cabezaIzq);
+            var numGrafCentro = this.assetManager.getFaceGrafFromNum(cabezaCentro);
+            var numGrafDer = this.assetManager.getFaceGrafFromNum(cabezaDer);
+
+            var url = "url(graficos/" + numGrafIzq + ".png)";
+            this.$imgCabezaIzq.css('background-image', url);
+            url = "url(graficos/" + numGrafCentro + ".png)";
+            this.$imgCabezaCentro.css('background-image', url);
+            url = "url(graficos/" + numGrafDer + ".png)";
+            this.$imgCabezaDer.css('background-image', url);
+
+            // var numGraf = this.assetManager.getFaceGrafFromNum(i);
+            // for (var i = cabezas.primera; i <= cabezas.ultima; i++) {
+            //     var numGraf = this.assetManager.getFaceGrafFromNum(i);
+            //     //this.cabezasGrid.modificarSlot(i, '', numGraf);
+            // }
         }
 
         updateDados(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion) {

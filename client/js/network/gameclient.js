@@ -35,7 +35,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
                         self.protocolo.ServerPacketDecodeAndDispatch(self.byteQueue, self);
                     }
                 } catch (e) {
-                    //alert(' Protocolo - ' + e.name + ': ' + e.message + " - " + e.stack); // TODO: descomentar
+                    alert(' Protocolo - ' + e.name + ': ' + e.message + " - " + e.stack); // TODO: descomentar
                     log.error(' Protocolo - ' + e.name + ': ' + e.message + " - " + e.stack);
                 }
             });
@@ -379,8 +379,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
              ObjCarpinteroIndex: ObjCarpinteroIndex,
              ObjUpgrade: ObjUpgrade,
              */
-            this.game.gameUI.carpinteria.setItems(Items);
-            this.game.gameUI.showCarpinteria();
+            this.game.gameUI.showCarpinteria(Items);
             console.log("TODO: handleCarpenterObjects ");
         }
 

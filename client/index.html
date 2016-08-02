@@ -48,54 +48,77 @@
                             </div>
                             <div class="form-group">
                                 <label for="crearSelectClase">Clase</label>
-                                <select id="crearSelectClase" class="form-control"></select>
+                                <select id="crearSelectClase" class="form-control text-center"></select>
                             </div>
                             <div class="form-group">
                                 <label for="crearSelectRaza">Raza</label>
-                                <select id="crearSelectRaza" class="form-control"></select>
+                                <select id="crearSelectRaza" class="form-control text-center"></select>
                             </div>
                             <div class="form-group">
                                 <label for="crearSelectCiudad">Ciudad natal</label>
-                                <select id="crearSelectCiudad" class="form-control"></select>
+                                <select id="crearSelectCiudad" class="form-control text-center"></select>
                             </div>
                             <div class="form-group">
-                                <select id="crearSelectGenero" class="form-control"></select>
+                                <select id="crearSelectGenero" class="form-control text-center"></select>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-4">
-
+                    <div class="exterior_border_default">
+                        <div class="inner_border_default background_default horizontal_center">
+                            <div id="crearPjSeleccionCabezaDiv" class="styledDiv">
+                                <button id="crearPjSeleccionCabezaBotonIzq" class="botonImagen"></button>
+                                <div id="crearPjSeleccionCabezaImagenIzq" class="divImagen"></div>
+                                <div id="crearPjSeleccionCabezaImagenCenter" class="divImagen selected_border"></div>
+                                <div id="crearPjSeleccionCabezaImagenDer" class="divImagen"></div>
+                                <button id="crearPjSeleccionCabezaBotonDer" class="botonImagen"></button>
+                                <ul id="crearPjSeleccionCabeza"></ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-sm-4">
-
+                    <div class="exterior_border_default">
+                        <div class="inner_border_default background_default horizontal_center">
+                            <div id="crearPjAtributos">
+                                <div style="margin-top:4px;margin-bottom:14px;">
+                                    <button id="crearBotonTirarDados" class="btn btn-default">Tirar Dados</button>
+                                </div>
+                                <div>
+                                    <span id="crearDadoFuerza"></span> <span id="crearDadoFuerzaModificador"></span>
+                                </div>
+                                <div>
+                                    <span id="crearDadoAgilidad"></span> <span id="crearDadoAgilidadModificador"></span>
+                                </div>
+                                <div>
+                                    <span id="crearDadoInteligencia"></span> <span
+                                        id="crearDadoInteligenciaModificador"></span>
+                                </div>
+                                <div>
+                                    <span id="crearDadoCarisma"></span> <span id="crearDadoCarismaModificador"></span>
+                                </div>
+                                <div>
+                                    <span id="crearDadoConstitucion"></span> <span
+                                        id="crearDadoConstitucionModificador"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <input id="crearNombreInput" type="text" placeholder="Nombre" maxlength="15" class="horizontal_center">
-            <input id="crearPasswordInput" type="password" placeholder="Contraseña" maxlength="15"
-                   class="horizontal_center">
-            <input id="crearRepetirPasswordInput" type="password" placeholder="Repetir contraseña" maxlength="15"
-                   class="horizontal_center">
-            <input id="crearMailInput" type="email" placeholder="Mail" class="horizontal_center">
-
-            <div id="crearPjCenter">
 
 
-                <div id="crearPjAtributos">
-                    <button id="crearBotonTirarDados" class="btn btn-default">Tirar Dados</button>
-                    <span id="crearDadoFuerza"></span>
-                    <span id="crearDadoAgilidad"></span>
-                    <span id="crearDadoInteligencia"></span>
-                    <span id="crearDadoCarisma"></span>
-                    <span id="crearDadoConstitucion"></span>
-                </div>
+            <div>
+                <input id="crearNombreInput" type="text" placeholder="Nombre" maxlength="15"
+                       class="horizontal_center">
+                <input id="crearPasswordInput" type="password" placeholder="Contraseña" maxlength="15"
+                       class="horizontal_center">
+                <input id="crearRepetirPasswordInput" type="password" placeholder="Repetir contraseña"
+                       maxlength="15"
+                       class="horizontal_center">
+                <input id="crearMailInput" type="email" placeholder="Mail" class="horizontal_center">
             </div>
-
-
-            <!--<div id="crearPjSeleccionCabezaDiv">-->
-            <!--<ul id="crearPjSeleccionCabeza" class="itemgrid"></ul>-->
-            <!--</div>-->
-
 
             <button id="crearBotonCrear" class="btn btn-primary">Crear personaje</button>
             <button id="crearBotonVolver" class="btn btn-default">Volver</button>
