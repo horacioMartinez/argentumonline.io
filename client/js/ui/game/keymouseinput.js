@@ -133,6 +133,7 @@ define(['enums', 'utils/charcodemap'], function (Enums, CharcodeMap) {
         }
 
         ignoredKey(key) {
+            //si la tecla corresponde a alguna accion no ignorarla
             for (var accionKey in this.keys) {
                 if (this.keys.hasOwnProperty(accionKey)){
                     if (this.keys[accionKey] === key) {
@@ -140,6 +141,8 @@ define(['enums', 'utils/charcodemap'], function (Enums, CharcodeMap) {
                     }
                 }
             }
+
+            // si la tecla es algun F1...F12 ignorarla
             if ((key >= CharcodeMap.keys.indexOf("F1")) && key <= CharcodeMap.keys.indexOf("F12")) {
                 return true;
             }

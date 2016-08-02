@@ -36,14 +36,16 @@ define(['enums'],
                 }
             }
 
-            addItem(item) {
+            addItem(item, grhIndex) {
                 this.items.push(item);
+                this.renderer.agregarItem(item, grhIndex);
             }
 
             sacarItem(item) {
                 let index = this.items.indexOf(item);
                 if (index > -1) {
-                    this.items.splice(index, 1)
+                    this.items.splice(index, 1);
+                    this.renderer.sacarItem(item);
                 }
             }
 

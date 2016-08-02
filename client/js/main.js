@@ -1,4 +1,6 @@
-/* Copyright (C) Horacio Martinez - All Rights Reserved
+/**
+ * @license
+ * Copyright (C) Horacio Martinez - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
  * Proprietary and confidential
  * Written by Horacio Martinez <hmk142@hotmail.com>, May 2016

@@ -113,7 +113,7 @@ define(['enums', 'utils/util'], function (Enums, Utils) {
                 var genero = $("#crearSelectGenero").val();
                 var clase = $("#crearSelectClase").val();
                 var ciudad = $("#crearSelectCiudad").val();
-                var cabeza = null; // TODO
+                var cabeza = self.getCabezaNum(self.offsetSelectedCabeza);
 
                 if (!cabeza) {
                     self.mensaje.show("Debes elegir una cabeza");

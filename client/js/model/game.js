@@ -1,5 +1,6 @@
-define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atributos', 'model/inventario', 'model/skills', 'model/playerstate', 'model/playermovement', 'enums', 'font', 'model/world'],
-    function (Mapa, Updater, Item, Character, Atributos, Inventario, Skills, PlayerState, PlayerMovement, Enums, Font, World) {
+define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atributos', 'model/inventario', 'model/skills',
+        'model/playerstate', 'model/playermovement', 'enums', 'model/world','model/gametext'],
+    function (Mapa, Updater, Item, Character, Atributos, Inventario, Skills, PlayerState, PlayerMovement, Enums, World, GameText) {
         class Game {
             constructor(assetManager) {
                 this.init(assetManager);
@@ -44,6 +45,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 this.gameUI = gameUI;
                 this.renderer = renderer;
                 this.world = new World(renderer);
+                this.gameText = new GameText(renderer);
             }
 
             setStorage(storage) {
@@ -55,126 +57,31 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
             }
 
             recibirDanioCriatura(parteCuerpo, danio) {
-
-                var txt = "";
-                var formatMessage = function (bodyPartMessage) {
-                    return Enums.MensajeConsola.MENSAJE_1 + bodyPartMessage + danio + Enums.MensajeConsola.MENSAJE_2;
-                };
-                switch (parteCuerpo) {
-                    case Enums.ParteCuerpo.cabeza:
-                        txt = formatMessage(Enums.MensajeConsola.MENSAJE_GOLPE_CABEZA);
-                        break;
-                    case Enums.ParteCuerpo.brazoIzquierdo:
-                        txt = formatMessage(Enums.MensajeConsola.MENSAJE_GOLPE_BRAZO_IZQ);
-                        break;
-                    case Enums.ParteCuerpo.brazoDerecho:
-                        txt = formatMessage(Enums.MensajeConsola.MENSAJE_GOLPE_BRAZO_DER);
-                        break;
-                    case Enums.ParteCuerpo.piernaIzquierda:
-                        txt = formatMessage(Enums.MensajeConsola.MENSAJE_GOLPE_PIERNA_IZQ);
-                        break;
-                    case Enums.ParteCuerpo.piernaDerecha:
-                        txt = formatMessage(Enums.MensajeConsola.MENSAJE_GOLPE_PIERNA_DER);
-                        break;
-                    case Enums.ParteCuerpo.torso:
-                        txt = formatMessage(Enums.MensajeConsola.MENSAJE_GOLPE_TORSO);
-                        break;
-                    default:
-                        log.error("Mensaje de parte de cuerpo invalido");
-                }
-
-                this.renderer.agregarCharacterHoveringInfo(this.player, -danio, Font.CANVAS_DANIO_RECIBIDO);
-                this.renderer.agregarTextoConsola(txt, Font.FIGHT);
+                this.gameText.playerHitByMob(this.player, parteCuerpo,danio);
             }
 
             recibirDanioUser(parteCuerpo, danio, attackerIndex) {
-                var txt = "";
                 let attackerName = this.world.getCharacter(attackerIndex).nombre;
-                var formatMessage = function (bodyPartMessage) {
-                    return Enums.MensajeConsola.MENSAJE_1 + attackerName + bodyPartMessage + danio + Enums.MensajeConsola.MENSAJE_2;
-                };
-                switch (parteCuerpo) {
-                    case Enums.ParteCuerpo.cabeza:
-                        txt = formatMessage(Enums.MensajeConsola.RECIBE_IMPACTO_CABEZA);
-                        break;
-                    case Enums.ParteCuerpo.brazoIzquierdo:
-                        txt = formatMessage(Enums.MensajeConsola.RECIBE_IMPACTO_BRAZO_IZQ);
-                        break;
-                    case Enums.ParteCuerpo.brazoDerecho:
-                        txt = formatMessage(Enums.MensajeConsola.RECIBE_IMPACTO_BRAZO_DER);
-                        break;
-                    case Enums.ParteCuerpo.piernaIzquierda:
-                        txt = formatMessage(Enums.MensajeConsola.RECIBE_IMPACTO_PIERNA_IZQ);
-                        break;
-                    case Enums.ParteCuerpo.piernaDerecha:
-                        txt = formatMessage(Enums.MensajeConsola.RECIBE_IMPACTO_PIERNA_DER);
-                        break;
-                    case Enums.ParteCuerpo.torso:
-                        txt = formatMessage(Enums.MensajeConsola.RECIBE_IMPACTO_TORSO);
-                        break;
-                    default:
-                        log.error("Mensaje de parte de cuerpo invalido");
-                }
-
-                this.renderer.agregarCharacterHoveringInfo(this.player, -danio, Font.CANVAS_DANIO_RECIBIDO);
-                this.renderer.agregarTextoConsola(txt, Font.FIGHT);
+                this.gameText.playerHitByUser(this.player, parteCuerpo,danio,attackerName);
             }
 
             realizarDanioCriatura(danio) {
-                var char = this.player.lastAttackedTarget;
-                if (char) {
-                    this.renderer.agregarCharacterHoveringInfo(char, danio, Font.CANVAS_DANIO_REALIZADO);
-                }
-                this.renderer.agregarTextoConsola(Enums.MensajeConsola.MENSAJE_GOLPE_CRIATURA_1 + danio + Enums.MensajeConsola.MENSAJE_2, Font.FIGHT);
+                let char = this.playerState.lastAttackedTarget;
+                this.gameText.playerHitMob(char,danio);
             }
 
             realizarDanioPlayer(danio, parteCuerpo, victimIndex) {
                 let victim = this.world.getCharacter(victimIndex);
-                let attackerName = this.world.getCharacter(victimIndex).nombre;
-
-                this.renderer.agregarCharacterHoveringInfo(victim, danio, Font.CANVAS_DANIO_REALIZADO);
-
-                var formatMessage = function (bodyPartMessage) {
-                    return Enums.MensajeConsola.PRODUCE_IMPACTO_1 + attackerName + bodyPartMessage + danio + Enums.MensajeConsola.MENSAJE_2;
-                };
-                let txt = "";
-                switch (parteCuerpo) {
-                    case Enums.ParteCuerpo.cabeza:
-                        txt = formatMessage(Enums.MensajeConsola.PRODUCE_IMPACTO_CABEZA);
-                        break;
-                    case Enums.ParteCuerpo.brazoIzquierdo:
-                        txt = formatMessage(Enums.MensajeConsola.PRODUCE_IMPACTO_BRAZO_IZQ);
-                        break;
-                    case Enums.ParteCuerpo.brazoDerecho:
-                        txt = formatMessage(Enums.MensajeConsola.PRODUCE_IMPACTO_BRAZO_DER);
-                        break;
-                    case Enums.ParteCuerpo.piernaIzquierda:
-                        txt = formatMessage(Enums.MensajeConsola.PRODUCE_IMPACTO_PIERNA_IZQ);
-                        break;
-                    case Enums.ParteCuerpo.piernaDerecha:
-                        txt = formatMessage(Enums.MensajeConsola.PRODUCE_IMPACTO_PIERNA_DER);
-                        break;
-                    case Enums.ParteCuerpo.torso:
-                        txt = formatMessage(Enums.MensajeConsola.PRODUCE_IMPACTO_TORSO);
-                        break;
-                    default:
-                        log.error("Mensaje de parte de cuerpo invalido");
-                }
-                this.renderer.agregarTextoConsola(txt, Font.FIGHT);
+                this.gameText.playerHitUser(victim, parteCuerpo,danio);
             }
 
             escribirMsgConsola(texto, font) {
-                if (!font) {
-                    font = Font.INFO;
-                }
-                this.renderer.agregarTextoConsola(texto, font);
+                this.gameText.consoleMsg(texto,font);
             }
 
             escribirChat(chat, charIndex, r, g, b) {
                 let c = this.world.getCharacter(charIndex);
-                if (c) {
-                    this.renderer.setCharacterChat(c, chat, r, g, b);
-                }
+                this.gameText.chat(c, chat, r, g, b);
             }
 
             actualizarMovPos(char, direccion) {
@@ -229,7 +136,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                     this.world.sacarCharacter(entity);
                 }
                 else if (entity instanceof Item) {
-                    this.renderer.sacarItem(entity);
                     this.world.sacarItem(entity);
                 }
                 else {
@@ -339,8 +245,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                     this.sacarEntity(viejoItem);
                 }
                 var item = new Item(gridX, gridY);
-                this.world.addItem(item);
-                this.renderer.agregarItem(item, grhIndex);
+                this.world.addItem(item,grhIndex);
 
             }
 

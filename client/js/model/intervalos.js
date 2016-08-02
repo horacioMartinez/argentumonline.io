@@ -25,7 +25,12 @@ define(['enums'], function (Enums) {
             this.INTERVALO_MACRO_HECHIZO = Math.floor(Enums.Intervalo.hechizo / 2) + 75;
         }
 
-        requestMacroTrabajo(time) {
+        _getTime() {
+            return Date.now();
+        }
+
+        requestMacroTrabajo() {
+            let time = this._getTime();
             if (time > ( this.times.macroTrabajo + this.INTERVALO_MACRO_TRABAJO)) {
                 this.times.macroTrabajo = time;
                 return true;
@@ -33,7 +38,8 @@ define(['enums'], function (Enums) {
             return false;
         }
 
-        requestMacroHechizo(time) {
+        requestMacroHechizo() {
+            let time = this._getTime();
             if (time > ( this.times.macroHechizo + this.INTERVALO_MACRO_HECHIZO)) {
                 this.times.macroHechizo = time;
                 return true;
@@ -41,7 +47,8 @@ define(['enums'], function (Enums) {
             return false;
         }
 
-        requestPosUpdate(time) {
+        requestPosUpdate() {
+            let time = this._getTime();
             if (time > ( this.times.requestPostionUpdate + Enums.Intervalo.requestPostionUpdate)) {
                 this.times.requestPostionUpdate = time;
                 return true;
@@ -49,7 +56,8 @@ define(['enums'], function (Enums) {
             return false;
         }
 
-        requestAtacar(time) {
+        requestAtacar() {
+            let time = this._getTime();
             if (time > ( this.times.ataqueConArco + Enums.Intervalo.ataqueConArco)) {
                 if (time > ( this.times.hechizoAtaque + Enums.Intervalo.hechizoAtaque)) {
                     if (time > ( this.times.ataque + Enums.Intervalo.ataque)) {
@@ -62,7 +70,8 @@ define(['enums'], function (Enums) {
             return false;
         }
 
-        requestLanzarHechizo(time) {
+        requestLanzarHechizo() {
+            let time = this._getTime();
             if (time > ( this.times.ataqueConArco + Enums.Intervalo.ataqueConArco)) {
                 if (time > ( this.times.ataqueHechizo + Enums.Intervalo.ataqueHechizo)) {
                     if (time > ( this.times.hechizo + Enums.Intervalo.hechizo)) {
@@ -75,7 +84,8 @@ define(['enums'], function (Enums) {
             return false;
         }
 
-        requestAtacarConArco(time) {
+        requestAtacarConArco() {
+            let time = this._getTime();
             if (time > ( this.times.ataqueConArco + Enums.Intervalo.ataqueConArco)) {
                 this.times.ataqueConArco = time;
                 return true;
@@ -83,7 +93,8 @@ define(['enums'], function (Enums) {
             return false;
         }
 
-        requestUsarConU(time) {
+        requestUsarConU() {
+            let time = this._getTime();
             if (time > ( this.times.usarItemConU + Enums.Intervalo.usarItemConU)) {
                 this.times.usarItemConU = time;
                 return true;
@@ -91,7 +102,8 @@ define(['enums'], function (Enums) {
             return false;
         }
 
-        requestUsarConDobleClick(time) {
+        requestUsarConDobleClick() {
+            let time = this._getTime();
             if (time > ( this.times.usarItemConDobleClick + Enums.Intervalo.usarItemConDobleClick)) {
                 this.times.usarItemConDobleClick = time;
                 return true;
@@ -99,7 +111,8 @@ define(['enums'], function (Enums) {
             return false;
         }
 
-        requestDomar(time) {
+        requestDomar() {
+            let time = this._getTime();
             if (time > ( this.times.domar + Enums.Intervalo.domar)) {
                 this.times.domar = time;
                 return true;
@@ -107,7 +120,8 @@ define(['enums'], function (Enums) {
             return false;
         }
 
-        requestRobar(time) {
+        requestRobar() {
+            let time = this._getTime();
             if (time > ( this.times.robar + Enums.Intervalo.robar)) {
                 this.times.robar = time;
                 return true;

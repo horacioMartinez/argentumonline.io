@@ -56,7 +56,7 @@ define(['enums', 'font', 'lib/pixi'], function (Enums, Font, PIXI) {
         }
 
         _updateTrabajar() { // TODO: que no checkee cada vez ? funcion on timer...
-            if (!this.intervalos.requestMacroTrabajo(this.game.currentTime)) {
+            if (!this.intervalos.requestMacroTrabajo()) {
                 return;
             }
             if (this.game.trabajoPendiente) {
@@ -90,7 +90,7 @@ define(['enums', 'font', 'lib/pixi'], function (Enums, Font, PIXI) {
         }
 
         _updateHechizos() {
-            if (!this.intervalos.requestMacroHechizo(this.game.currentTime)) {
+            if (!this.intervalos.requestMacroHechizo()) {
                 return;
             }
             if (this.game.trabajoPendiente) {

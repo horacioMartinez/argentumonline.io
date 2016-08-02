@@ -33,7 +33,7 @@ define(['enums', 'font', 'model/macros'], function (Enums, Font, Macros) {
         }
 
         requestPosUpdate() {
-            if (this.intervalos.requestPosUpdate(this.game.currentTime)) {
+            if (this.intervalos.requestPosUpdate()) {
                 this.game.client.sendRequestPositionUpdate();
             }
         }
@@ -50,7 +50,7 @@ define(['enums', 'font', 'model/macros'], function (Enums, Font, Macros) {
             if (!slot) {
                 return;
             }
-            if (this.intervalos.requestUsarConU(this.game.currentTime)) {
+            if (this.intervalos.requestUsarConU()) {
                 this.game.client.sendUseItem(slot);
             }
         }
@@ -59,14 +59,14 @@ define(['enums', 'font', 'model/macros'], function (Enums, Font, Macros) {
             if (!slot) {
                 return;
             }
-            if (this.intervalos.requestUsarConDobleClick(this.game.currentTime)) {
+            if (this.intervalos.requestUsarConDobleClick()) {
                 this.game.client.sendUseItem(slot);
             }
 
         }
 
         atacar() {
-            if (this.intervalos.requestAtacar(this.game.currentTime)) {
+            if (this.intervalos.requestAtacar()) {
                 this.game.client.sendAttack();
                 let x, y;
                 switch (this.game.player.heading) { // todo: hacerlo con el arco y con hechizos tambien
@@ -89,7 +89,7 @@ define(['enums', 'font', 'model/macros'], function (Enums, Font, Macros) {
                     default:
                         log.error(" Direccion de player invalida!");
                 }
-                this.game.player.lastAttackedTarget = this.game.world.getCharacterInGridPos(x, y);
+                this.game.playerState.lastAttackedTarget = this.game.world.getCharacterInGridPos(x, y);
             }
 
         }
@@ -151,7 +151,7 @@ define(['enums', 'font', 'model/macros'], function (Enums, Font, Macros) {
         }
 
         lanzarHechizo() { /*todo: slot por parametro*/
-            if (!this.intervalos.requestLanzarHechizo(this.game.currentTime)) {
+            if (!this.intervalos.requestLanzarHechizo()) {
                 return;
             }
             var slot = this.game.gameUI.interfaz.getSelectedSlotHechizo();
@@ -163,14 +163,14 @@ define(['enums', 'font', 'model/macros'], function (Enums, Font, Macros) {
         }
 
         domar() {
-            if (!this.intervalos.requestDomar(this.game.currentTime)) {
+            if (!this.intervalos.requestDomar()) {
                 return;
             }
             this.game.client.sendWork(Enums.Skill.domar);
         }
 
         robar() {
-            if (!this.intervalos.requestRobar(this.game.currentTime)) {
+            if (!this.intervalos.requestRobar()) {
                 return;
             }
             this.game.client.sendWork(Enums.Skill.robar);
