@@ -6341,7 +6341,6 @@ function HigherAdminsMessage (buffer) {
 function ServerPacketDecodeAndDispatch(buffer, handler) {
     if (buffer.length() < 1) return;
     var PacketID = buffer.ReadByte();
-
     switch (PacketID) {
 
         case 0:
@@ -6797,8 +6796,6 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 42:
         {
-                
-
             handler.handlePauseToggle(  );
 
             break;

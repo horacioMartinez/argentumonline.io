@@ -262,6 +262,10 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                 char.texto.setChat(chat, color);
             }
 
+            removerChat(char){
+                char.texto.removerChat();
+            }
+
             setCharVisible(char, visible) {
                 char.sprite.setVisible(visible);
                 if (char.spriteNombre) {

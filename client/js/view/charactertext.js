@@ -97,13 +97,12 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
         this._chat.y = Math.round(-28 * this._escala - this._chat.height);
     };
 
-    CharacterText.prototype.removerChat = function (chat) {
+    CharacterText.prototype.removerChat = function () {
         if (this._chat) {
             PIXI.ticker.shared.remove(this._chat.updateChat, this._chat);
             this.removeChild(this._chat);
         }
         this._chat = null;
-
     };
 
     //TODO: ordenar codigo repetido y animacion bien hecha (ademas en el chat animarlo cuando aparece, como que suba un poco)

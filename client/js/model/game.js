@@ -1,5 +1,5 @@
 define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atributos', 'model/inventario', 'model/skills',
-        'model/playerstate', 'model/playermovement', 'enums', 'model/world','model/gametext'],
+        'model/playerstate', 'model/playermovement', 'enums', 'model/world', 'model/gametext'],
     function (Mapa, Updater, Item, Character, Atributos, Inventario, Skills, PlayerState, PlayerMovement, Enums, World, GameText) {
         class Game {
             constructor(assetManager) {
@@ -57,26 +57,26 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
             }
 
             recibirDanioCriatura(parteCuerpo, danio) {
-                this.gameText.playerHitByMob(this.player, parteCuerpo,danio);
+                this.gameText.playerHitByMob(this.player, parteCuerpo, danio);
             }
 
             recibirDanioUser(parteCuerpo, danio, attackerIndex) {
                 let attackerName = this.world.getCharacter(attackerIndex).nombre;
-                this.gameText.playerHitByUser(this.player, parteCuerpo,danio,attackerName);
+                this.gameText.playerHitByUser(this.player, parteCuerpo, danio, attackerName);
             }
 
             realizarDanioCriatura(danio) {
                 let char = this.playerState.lastAttackedTarget;
-                this.gameText.playerHitMob(char,danio);
+                this.gameText.playerHitMob(char, danio);
             }
 
             realizarDanioPlayer(danio, parteCuerpo, victimIndex) {
                 let victim = this.world.getCharacter(victimIndex);
-                this.gameText.playerHitUser(victim, parteCuerpo,danio);
+                this.gameText.playerHitUser(victim, parteCuerpo, danio);
             }
 
             escribirMsgConsola(texto, font) {
-                this.gameText.consoleMsg(texto,font);
+                this.gameText.consoleMsg(texto, font);
             }
 
             escribirChat(chat, charIndex, r, g, b) {
@@ -187,14 +187,13 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
             }
 
             cambiarCharacter(CharIndex, Body, Head, Heading, Weapon, Shield, Helmet, FX, FXLoops) { // TODO: que solo cambie los que son diferentes!
-
                 var c = this.world.getCharacter(CharIndex);
 
                 if (!c) {
                     //log.error(" cambiar character inexistente ");
                     return;
                 }
-                if ( c=== this.player && !c.estaMoviendose()) {
+                if ((c !== this.player) || (c === this.player && !c.estaMoviendose())) {
                     c.heading = Heading;
                 }
                 c.body = Body;
@@ -209,15 +208,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
             agregarCharacter(CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, Name,
                              NickColor, Privileges) {
 
-                if (this.world.getCharacter(CharIndex)) {
-                    if (CharIndex === this.player.id) {
-                        this.resetPosCharacter(this.player.id, X, Y, true);
-                        return;
-                    }
-                    log.error("tratando de agregar character habiendo un character con mismo charindex existente");
-                    return;
-                }
-
                 let nombre, clan;
                 if (Name.indexOf("<") > 0) {
                     nombre = Name.slice(Name, Name.indexOf("<") - 1);
@@ -225,6 +215,17 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 } else {
                     nombre = Name;
                     clan = null;
+                }
+
+                if (this.world.getCharacter(CharIndex)) {
+                    if (CharIndex === this.player.id) { //"cambio de mapa", TODO: ver bien esto
+                        this.player.setName(nombre,clan,NickColor);
+                        this.renderer.removerChat(this.player);
+                        this.resetPosCharacter(this.player.id, X, Y, true);
+                        return;
+                    }
+                    log.error("tratando de agregar character habiendo un character con mismo charindex existente");
+                    return;
                 }
 
                 var c = new Character(CharIndex, X, Y, Heading, nombre, clan, Body, Head, Weapon, Shield, Helmet, FX, FXLoops, NickColor);
@@ -245,7 +246,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                     this.sacarEntity(viejoItem);
                 }
                 var item = new Item(gridX, gridY);
-                this.world.addItem(item,grhIndex);
+                this.world.addItem(item, grhIndex);
 
             }
 
