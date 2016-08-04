@@ -2,7 +2,7 @@
  * Created by horacio on 7/3/16.
  */
 
-define(['model/character'], function (Character) {
+define([], function () {
 
     class PlayerMovement {
 

@@ -35,7 +35,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
                         self.protocolo.ServerPacketDecodeAndDispatch(self.byteQueue, self);
                     }
                 } catch (e) {
-                    alert(' Protocolo - ' + e.name + ': ' + e.message + " - " + e.stack); // TODO: descomentar
+                    alert(' Protocolo - ' + e.name + ': ' + e.message + " - " + e.stack);
                     log.error(' Protocolo - ' + e.name + ': ' + e.message + " - " + e.stack);
                 }
             });

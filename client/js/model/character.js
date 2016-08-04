@@ -37,6 +37,23 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
 
 
         mover(dir, movimientoCallback, finMovimientoCallback) {
+            switch (dir) {  // Se setea la pos del grid nomas porque la (x,y) la usa para la animacion el character ( y la va actualizando)
+                case  Enums.Heading.oeste:
+                    this.setGridPositionOnly(this.gridX - 1, this.gridY);
+                    break;
+                case  Enums.Heading.este:
+                    this.setGridPositionOnly(this.gridX + 1, this.gridY);
+                    break;
+                case  Enums.Heading.norte:
+                    this.setGridPositionOnly(this.gridX, this.gridY - 1);
+                    break;
+                case  Enums.Heading.sur:
+                    this.setGridPositionOnly(this.gridX, this.gridY + 1);
+                    break;
+                default:
+                    log.error(" Direccion de movimiento invalida!");
+            }
+            
             this.resetMovement();
             this.heading = dir;
             this._crearMovimiento(movimientoCallback, finMovimientoCallback);

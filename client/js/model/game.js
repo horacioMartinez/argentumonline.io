@@ -84,27 +84,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 this.gameText.chat(c, chat, r, g, b);
             }
 
-            actualizarMovPos(char, direccion) {
-                // Se setea la pos del grid nomas porque la (x,y) la usa para la animacion el character ( y la actualiza el al final)
-                switch (direccion) {
-                    case  Enums.Heading.oeste:
-                        char.setGridPositionOnly(char.gridX - 1, char.gridY); //
-                        break;
-                    case  Enums.Heading.este:
-                        char.setGridPositionOnly(char.gridX + 1, char.gridY);
-                        break;
-                    case  Enums.Heading.norte:
-                        char.setGridPositionOnly(char.gridX, char.gridY - 1);
-                        break;
-                    case  Enums.Heading.sur:
-                        char.setGridPositionOnly(char.gridX, char.gridY + 1);
-                        break;
-                    default:
-                        log.error(" Direccion de movimiento invalida!");
-
-                }
-            }
-
             actualizarBajoTecho() {
                 this.map.onceLoaded((mapa) => {
                     var bajoTecho = this.map.isBajoTecho(this.player.gridX, this.player.gridY);
@@ -157,14 +136,21 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                         return;
                     }
                     var dir = c.esPosAdyacente(gridX, gridY);
-                    if (!this.renderer.entityVisiblePorCamara(c, 1) || !dir) {
-                        this.resetPosCharacter(CharIndex, gridX, gridY);
-                    }
-                    else {
+                    if (dir && this.renderer.entityVisiblePorCamara(c, 1)) {
                         c.mover(dir);
-                        this.actualizarMovPos(c, dir);
                         this.playSonidoPaso(c);
                     }
+                    else { // posicion no adyacente, entonces resetear la posicion (no hacerlo caminar)
+                        this.resetPosCharacter(CharIndex, gridX, gridY);
+                    }
+                    /* TODO:
+                     * // si esta el jugador en la pos destino, lo  vuelvo una atras
+                     * // esto pasa cuando uno trata de caminar y llega tarde un msj
+                     * // del server para mover el char a donde ibas a caminar
+                     * if (this.player.gridX === gridX && this.player.gridY === gridY){
+                     *     this.playerMovement.rollbackLastMovement();
+                     * }
+                     */
                 }
 
             }
@@ -219,7 +205,8 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
 
                 if (this.world.getCharacter(CharIndex)) {
                     if (CharIndex === this.player.id) { //"cambio de mapa", TODO: ver bien esto
-                        this.player.setName(nombre,clan,NickColor);
+                        // setear cosas que pueden cambiar al cambiar mapa (color nombre, sacar chat,pos)
+                        this.player.setName(nombre, clan, NickColor);
                         this.renderer.removerChat(this.player);
                         this.resetPosCharacter(this.player.id, X, Y, true);
                         return;
@@ -343,7 +330,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 c.setGridPosition(gridX, gridY);
 
                 if (c === this.player) {
-                    console.log(" reseteando pos player");
+                    log.error(" reseteando pos player");
                     if (!noReDraw) {
                         this.renderer.resetPos(gridX, gridY);
                     }
@@ -419,7 +406,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                         if (!forced) {
                             this.client.sendWalk(direccion);
                         }
-                        this.actualizarMovPos(this.player, direccion);
                         this.actualizarBajoTecho();
                         if (this.ignorarProximoSonidoPaso) {
                             this.ignorarProximoSonidoPaso = false;

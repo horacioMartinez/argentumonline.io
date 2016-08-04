@@ -28,9 +28,14 @@ define(['json!../../indices/graficos.json',
             }
 
             getNumGraficoFromGrh(grh) {
-                if (this.indices[grh] && this.indices[grh].grafico) {
+                if (!this.indices[grh]) {
+                    return null;
+                }
+                if (this.indices[grh].grafico) {
                     return this.indices[grh].grafico;
                 }
+                // animacion, devuelvo grafico del primer frame
+                return this.getNumGraficoFromGrh(this.indices[grh].frames[0]);
             }
 
             getFaceGrafFromNum(numHead) {
@@ -38,6 +43,14 @@ define(['json!../../indices/graficos.json',
                     return;
                 }
                 var grh = this.cabezas[numHead].down;
+                return this.getNumGraficoFromGrh(grh);
+            }
+
+            getBodyGrafFromNum(numCuerpo) {
+                if (!this.cuerpos[numCuerpo]) {
+                    return;
+                }
+                var grh = this.cuerpos[numCuerpo].down;
                 return this.getNumGraficoFromGrh(grh);
             }
 

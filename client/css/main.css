@@ -8080,21 +8080,45 @@ footer a {
   display: inline-block;
   width: 28px;
   height: 33px;
-  background-size: 400%; }
+  background-size: 400%;
+  margin-right: 4px;
+  margin-left: 4px; }
 
 #crearPjSeleccionCabezaImagenCenter {
   box-sizing: content-box;
   display: inline-block;
   width: 34px;
   height: 40px;
-  background-size: 400%; }
+  background-size: 400%;
+  margin-right: 4px;
+  margin-left: 4px; }
 
 #crearPjSeleccionCabezaImagenDer {
   box-sizing: content-box;
   display: inline-block;
   width: 28px;
   height: 33px;
+  background-size: 400%;
+  margin-right: 4px;
+  margin-left: 4px; }
+
+#crearPjImagenPersonaje {
+  display: inline-block;
+  width: 50px;
+  height: 90px;
+  background-size: 600%;
+  margin-top: 11px; }
+
+#crearPjImagenCabezaPersonaje {
+  display: inline-block;
+  position: absolute;
+  right: 11px;
+  width: 28px;
+  height: 33px;
   background-size: 400%; }
+
+#crearPjImagenCabezaPersonaje.petizo {
+  margin-top: 19px; }
 
 /*Interfaz: elementos dentro de la pantalla de juego (inventario, etc)*/
 #gamecanvas.crosshair {
