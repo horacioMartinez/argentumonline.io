@@ -1,31 +1,30 @@
-#popUpMapa {
-  outline:2px dashed green;
-  min-width:580px;
-  min-height:530px;
-}
-
 #imagenMapa {
-  width: 573px;
-  height: 528px;
-  background: url('../imagenes/popups/mapa1.jpg');
+  width: 100%;
+  height: 100%;
+  background-size:100% 100%;
+  background-image: url('../imagenes/popups/mapa1.jpg');
 }
 
-#mapaBotonToggle {
-  position: absolute;
-  left: 45.5%;
-  top: 94%;
-  width: 10%;
-  height: 5.2%;
+#imagenMapaDungeons {
+  width: 100%;
+  height: 100%;
+  background-size:100% 100%;
+  background-image: url('../imagenes/popups/mapa2.jpg');
 }
 
-#popUpMapa.mapaSeccionB #imagenMapa {
-  background: url('../imagenes/popups/mapa2.jpg');
+
+#mapaIconoMapaGlobal{
+  background-image: url('../imagenes/interfaz/iconos/map.png');
 }
 
-#popUpMapa.mapaSeccionB #mapaBotonToggle {
-  position: absolute;
-  left: 45.5%;
-  top: 0.5%;
-  width: 10%;
-  height: 5.2%;
+#mapaIconoMapaGlobal.active{
+  background-image: url('../imagenes/interfaz/iconos/map_active.png');
+}
+
+#mapaIconoDungeons{
+  background-image: url('../imagenes/interfaz/iconos/cave.png');
+}
+
+#mapaIconoDungeons.active{
+  background-image: url('../imagenes/interfaz/iconos/cave_active.png');
 }

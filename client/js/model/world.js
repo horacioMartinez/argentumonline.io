@@ -29,9 +29,9 @@ define(['enums'],
             }
 
             sacarCharacter(c) {
-                this.renderer.sacarCharacter(c);
                 let index = this.characters.indexOf(c);
                 if (index > -1) {
+                    this.renderer.sacarCharacter(c);
                     this.characters.splice(index, 1)
                 }
             }

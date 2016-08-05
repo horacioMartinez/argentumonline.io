@@ -1,4 +1,4 @@
-Hacer footer de botones en menu que usa tabs:
+############################ Hacer footer de botones en menu que usa tabs: ############################
 
 tab:
 <div id="..." class="tab-pane" style="width:100%;height:100%;">

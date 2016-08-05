@@ -7,8 +7,8 @@ define(["text!../../../menus/mapa.html!strip", 'ui/popups/popup'], function (DOM
     class GuiaMapa extends PopUp {
         constructor(game, acciones) {
             var options = {
-                width: 'auto',
-                height: 'auto',
+                width: 555,
+                height: 500,
             };
             super(DOMdata, options);
             this.initCallbacks();
@@ -19,9 +19,9 @@ define(["text!../../../menus/mapa.html!strip", 'ui/popups/popup'], function (DOM
             $("#mapaBotonCerrar").click(function () {
                 self.hide();
             });
-            $("#mapaBotonToggle").click(function () {
-                $("#popUpMapa").toggleClass("mapaSeccionB");
-            });
+            // $("#mapaBotonToggle").click(function () {
+            //     $("#popUpMapa").toggleClass("mapaSeccionB");
+            // });
 
         }
     }

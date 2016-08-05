@@ -37,6 +37,7 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
         }
         PIXI.ticker.shared.remove(spriteTexto.updateChat, spriteTexto);
         this.removeChild(spriteTexto);
+        spriteTexto.destroy();
     };
 
     Consola.prototype.agregarTexto = function (texto, font) {

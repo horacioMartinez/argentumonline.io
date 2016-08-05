@@ -252,7 +252,13 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                 this.gameChat.removeChild(char.texto);
                 if (char.spriteNombre) {
                     this.gameNames.removeChild(char.spriteNombre);
+                    char.spriteNombre.destroy();
+                    char.spriteNombre = null;
                 }
+                /* destroy necesario en textos y meshes
+                 http://www.html5gamedevs.com/topic/19815-correct-way-of-deleting-a-display-object/
+                 */
+                char.texto.destroy();
                 char.texto = null;
                 char.sprite = null;
             }

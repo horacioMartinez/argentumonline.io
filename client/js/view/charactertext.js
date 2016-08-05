@@ -101,6 +101,7 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
         if (this._chat) {
             PIXI.ticker.shared.remove(this._chat.updateChat, this._chat);
             this.removeChild(this._chat);
+            this._chat.destroy();
         }
         this._chat = null;
     };
