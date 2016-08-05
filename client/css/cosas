@@ -1,0 +1,24 @@
+Hacer footer de botones en menu que usa tabs:
+
+tab:
+<div id="..." class="tab-pane" style="width:100%;height:100%;">
+
+contenido que no sea del footer:
+     <div style="width:100%;height:100%;display:flex; flex-direction: column;">
+     ...
+        <div class="scrollFlex"> // <<<---- este se expande
+            .
+            .
+            .
+        </div>
+     ...
+     </div>
+
+footer de botones:
+    <div class="modal-footer">
+        <div class="btn-toolbar">
+        ...
+        </div>
+    </div>
+fin:
+</div>

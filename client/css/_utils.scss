@@ -23,3 +23,10 @@
   border: none;
   outline: none;
 }
+
+/* elemento que estando en un container flex se expande y al haber overflow se scrollea (por ej grids items comerciar) */
+.scrollFlex {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 2px;
+}

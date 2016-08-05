@@ -7462,6 +7462,12 @@ button.close {
   border: none;
   outline: none; }
 
+/* elemento que estando en un container flex se expande y al haber overflow se scrollea (por ej grids items comerciar) */
+.scrollFlex {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 2px; }
+
 .dialog_default {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
   padding: 0;
@@ -7557,6 +7563,13 @@ button.close {
 
 .panel-heading-collapse {
   cursor: pointer; }
+
+.form-horizontal .control-label {
+  font-weight: normal;
+  text-align: left; }
+
+.form-horizontal .btn {
+  margin: 14px 0px; }
 
 /* TODO: modificar background en mixin */
 .btn-primary {

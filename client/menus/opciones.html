@@ -12,7 +12,8 @@
 
         <div class="tabsContainer" style="display: flex; flex-direction: column;">
             <ul class="nav nav-pills nav-stacked">
-                <li class="icon-menu active" id="opcionesIconoMenuWrench" href="#popUpOpcionesOpcionesGenerales" data-toggle="tab"></li>
+                <li class="icon-menu active" id="opcionesIconoMenuWrench" href="#popUpOpcionesOpcionesGenerales"
+                    data-toggle="tab"></li>
                 <li class="icon-menu" id="opcionesIconoMenuAudio" href="#popUpOpcionesTabsAudio" data-toggle="tab"></li>
                 <li class="icon-menu" id="opcionesIconoMenuTeclado" href="#configurarTeclas" data-toggle="tab"></li>
             </ul>
@@ -23,230 +24,248 @@
         <div class="tab-content dialogContent" style="flex: 1;">
 
             <div id="popUpOpcionesOpcionesGenerales" class="tab-pane active">
-                <h4>Pantalla</h4>
-                <div class="form-group">
-                    <div class="col-sm-6">Tamaño pantalla:</div>
-                    <div class="col-sm-6">
-                        <div id="opcionesSliderPantalla"></div>
+                <div class="form-horizontal">
+                    <h4>Pantalla</h4>
+                    <div class="form-group">
+                        <label for="opcionesSliderPantalla" class="col-sm-6 control-label">Tamaño pantalla:</label>
+                        <div class="col-sm-6">
+                            <div id="opcionesSliderPantalla"></div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="checkbox">
-                    <label><input type="checkbox" value="">Pantalla completa</label>
-                </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" value="">Graficar lluvia</label>
-                </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" value="">Mostrar FPS</label>
-                </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" value="">Mostrar ping</label>
-                </div>
-                <h4>Interfaz</h4>
 
-                <div class="form-group">
-                    <label for="opcionesSelectIdioma" class="col-sm-6 control-label">Lenguaje:</label>
-                    <div class="col-sm-6">
-                        <select class="form-control" id="opcionesSelectIdioma">
-                            <option>Español</option>
-                        </select>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="">Pantalla completa</label>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-sm-6">
-                        Tamaño interfaz:
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="">Graficar lluvia</label>
                     </div>
-                    <div class="col-sm-6">
-                        <select class="form-control">
-                            <option>Normal</option>
-                        </select>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="">Mostrar FPS</label>
                     </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="">Mostrar ping</label>
+                    </div>
+                    <h4>Interfaz</h4>
+
+                    <div class="form-group">
+                        <label for="opcionesSelectIdioma" class="col-sm-6 control-label">Lenguaje:</label>
+                        <div class="col-sm-6">
+                            <select class="form-control" id="opcionesSelectIdioma">
+                                <option>Español</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="opcionesSelectTamañoInterfaz" class="col-sm-6 control-label">Tamaño
+                            interfaz:</label>
+                        <div class="col-sm-6">
+                            <select class="form-control" id="opcionesSelectTamañoInterfaz">
+                                <option>Normal</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="">Desabilitar cerrar ventana con ESC</label>
+                    </div>
+
+                    <button class="btn btn-default">Restaurar defaults</button>
                 </div>
-
-
-                <div class="checkbox">
-                    <label><input type="checkbox" value="">Desabilitar cerrar ventana con ESC</label>
-                </div>
-
-                <button class="btn  btn-default">Restaurar defaults</button>
             </div>
 
             <div id="popUpOpcionesTabsAudio" class="tab-pane">
-                <div class="checkbox">
-                    <label><input id="checkboxMusica" type="checkbox" value="">Musica activada</label>
-                </div>
-                <div class="checkbox">
-                    <label><input id="checkboxSonido" type="checkbox" value="">Sonido activado</label>
-                </div>
-                <div class="checkbox">
-                    <label><input id="checkboxSonidoLluvia" type="checkbox" value="">Sonido lluvia activado</label>
-                </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" value="">Silenciar cuando la ventana esta oculta</label>
-                </div>
+                <div class="form-horizontal">
+                    <div class="checkbox">
+                        <label><input id="checkboxMusica" type="checkbox" value="">Musica activada</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input id="checkboxSonido" type="checkbox" value="">Sonido activado</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input id="checkboxSonidoLluvia" type="checkbox" value="">Sonido lluvia activado</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="">Silenciar cuando la ventana esta oculta</label>
+                    </div>
 
-                <div>
-                    Volumen Musica:
-                    <div style="display:inline-block; width:40%; float:right; padding-right:15px;">
-                        <div id="sliderMusica"></div>
+                    <div class="form-group">
+                        <label for="sliderMusica" class="col-sm-6 control-label">Volumen Musica:</label>
+                        <div class="col-sm-6">
+                            <div id="sliderMusica"></div>
+                        </div>
                     </div>
-                </div>
 
-                <div>
-                    Volumen Sonido:
-                    <div style="display:inline-block; width:40%; float:right; padding-right:15px;">
-                        <div id="sliderSonido"></div>
+                    <div class="form-group">
+                        <label for="sliderSonido" class="col-sm-6 control-label">Volumen Sonido:</label>
+                        <div class="col-sm-6">
+                            <div id="sliderSonido"></div>
+                        </div>
                     </div>
+
+                    <!-- TODO!
+                    <div>
+                        Volumen UI:
+                        <div style="display:inline-block; width:40%; float:right; padding-right:15px;">
+                            <div id="sliderVolumenUI"></div>
+                        </div>
+                    </div> -->
+                    <button class="btn btn-default">Restaurar defaults</button>
                 </div>
-                <!-- TODO!
-                <div>
-                    Volumen UI:
-                    <div style="display:inline-block; width:40%; float:right; padding-right:15px;">
-                        <div id="sliderVolumenUI"></div>
-                    </div>
-                </div> -->
-                <button class="btn btn-default">Restaurar defaults</button>
             </div>
 
-            <div id="configurarTeclas" class="tab-pane">
+            <div id="configurarTeclas" class="tab-pane" style="width:100%;height:100%;">
+                <!--<div style="flex-direction: column; display:flex; flex: 1;">-->
+                <!--TEST-->
+                <div style="width:100%;height:100%;display:flex; flex-direction: column;">
+                    <!--TEST-->
+                    <div class="scrollFlex">
+                        <div class="panel-group">
+                            <div class="panel panel-default">
+                                <div class="panel-heading-collapse" data-toggle="collapse"
+                                     href="#opcinesTeclasPanelMovimiento">
+                                    <h4 class="panel-title">
+                                        Movimiento
+                                    </h4>
+                                </div>
+                                <div id="opcinesTeclasPanelMovimiento" class="panel-collapse collapse">
+                                    <table class="table">
+                                        <tr>
+                                            <td>Caminar norte</td>
+                                            <td><input id="configurarTecla_caminarNorte" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Caminar sur</td>
+                                            <td><input id="configurarTecla_caminarSur" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Caminar oeste</td>
+                                            <td><input id="configurarTecla_caminarOeste" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Caminar este</td>
+                                            <td><input id="configurarTecla_caminarEste" class="form-control"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading-collapse" data-toggle="collapse"
+                                     href="#opcinesTeclasPanelAcciones">
+                                    <h4 class="panel-title">
+                                        Acciones
+                                    </h4>
+                                </div>
+                                <div id="opcinesTeclasPanelAcciones" class="panel-collapse collapse">
+                                    <table class="table">
+                                        <tr>
+                                            <td>Atacar</td>
+                                            <td><input id="configurarTecla_atacar" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Agarrar</td>
+                                            <td><input id="configurarTecla_agarrar" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Equipar</td>
+                                            <td><input id="configurarTecla_equipar" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tirar</td>
+                                            <td><input id="configurarTecla_tirar" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Usar</td>
+                                            <td><input id="configurarTecla_usar" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ocultarse</td>
+                                            <td><input id="configurarTecla_ocultarse" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Corregir posicion</td>
+                                            <td><input id="configurarTecla_deslagear" class="form-control"></td>
+                                        </tr>
 
-                <div class="panel-group">
-                    <div class="panel panel-default">
-                        <div class="panel-heading-collapse" data-toggle="collapse" href="#opcinesTeclasPanelMovimiento">
-                            <h4 class="panel-title">
-                                Movimiento
-                            </h4>
-                        </div>
-                        <div id="opcinesTeclasPanelMovimiento" class="panel-collapse collapse">
-                            <table class="table">
-                                <tr>
-                                    <td>CAMINAR NORTE</td>
-                                    <td><input id="configurarTecla_caminarNorte" class="form-control"></td>
-                                </tr>
-                                <tr>
-                                    <td>CAMINAR SUR</td>
-                                    <td><input id="configurarTecla_caminarSur" class="form-control"></td>
-                                </tr>
-                                <tr>
-                                    <td>CAMINAR OESTE</td>
-                                    <td><input id="configurarTecla_caminarOeste"></td>
-                                </tr>
-                                <tr>
-                                    <td>CAMINAR ESTE</td>
-                                    <td><input id="configurarTecla_caminarEste"></td>
-                                </tr>
-                            </table>
+                                        <tr>
+                                            <td>Meditar</td>
+                                            <td><input id="configurarTecla_meditar" class="form-control"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Domar</td>
+                                            <td><input id="configurarTecla_domar" class="form-control"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Robar</td>
+                                            <td><input id="configurarTecla_robar" class="form-control"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Seguro resucitacion</td>
+                                            <td><input id="configurarTecla_seguroResucitacion" class="form-control">
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading-collapse" data-toggle="collapse"
+                                     href="#opcinesTeclasPanelMacros">
+                                    <h4 class="panel-title">
+                                        Macros
+                                    </h4>
+                                </div>
+                                <div id="opcinesTeclasPanelMacros" class="panel-collapse collapse">
+                                    <table class="table">
+                                        <tr>
+                                            <td>Macro hechizos</td>
+                                            <td><input id="configurarTecla_macroHechizos" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Macro trabajo</td>
+                                            <td><input id="configurarTecla_macroTrabajo" class="form-control"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading-collapse" data-toggle="collapse"
+                                     href="#opcinesTeclasPanelChat">
+                                    <h4 class="panel-title">
+                                        Chat
+                                    </h4>
+                                </div>
+                                <div id="opcinesTeclasPanelChat" class="panel-collapse collapse">
+                                    <table class="table">
+                                        <tr>
+                                            <td>Chat</td>
+                                            <td><input id="configurarTecla_chat" class="form-control"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Chat clan</td>
+                                            <td><input id="configurarTecla_chatClan" class="form-control"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading-collapse" data-toggle="collapse" href="#opcinesTeclasPanelAcciones">
-                            <h4 class="panel-title">
-                                Acciones
-                            </h4>
+                    <div class="modal-footer">
+                        <div class="btn-toolbar">
+                            <button id="configurarTeclasRestaurarDefault" class="btn btn-default pull-left">Restaurar
+                                Default
+                            </button>
+                            <button id="configurarTeclasGuardarYSalir" class="btn btn-primary pull-right">Guardar y
+                                salir
+                            </button>
+                            <button id="configurarTeclasCancelar" class="btn btn-default pull-right">Cancelar</button>
                         </div>
-                        <div id="opcinesTeclasPanelAcciones" class="panel-collapse collapse">
-                            <table class="table">
-                                <tr>
-                                    <td>ATACAR</td>
-                                    <td><input id="configurarTecla_atacar" class="form-control"></td>
-                                </tr>
-                                <tr>
-                                    <td>AGARRAR</td>
-                                    <td><input id="configurarTecla_agarrar" class="form-control"></td>
-                                </tr>
-                                <tr>
-                                    <td>EQUIPAR</td>
-                                    <td><input id="configurarTecla_equipar" class="form-control"></td>
-                                </tr>
-                                <tr>
-                                    <td>TIRAR</td>
-                                    <td><input id="configurarTecla_tirar" class="form-control"></td>
-                                </tr>
-                                <tr>
-                                    <td>USAR</td>
-                                    <td><input id="configurarTecla_usar" class="form-control"></td>
-                                </tr>
-                                <tr>
-                                    <td>OCULTARSE</td>
-                                    <td><input id="configurarTecla_ocultarse" class="form-control"></td>
-                                </tr>
-                                <tr>
-                                    <td>CORREGIR POSICION</td>
-                                    <td><input id="configurarTecla_deslagear" class="form-control"></td>
-                                </tr>
-
-                                <tr>
-                                    <td>MEDITAR</td>
-                                    <td><input id="configurarTecla_meditar" class="form-control"></td>
-                                </tr>
-
-                                <tr>
-                                    <td>DOMAR</td>
-                                    <td><input id="configurarTecla_domar" class="form-control"></td>
-                                </tr>
-
-                                <tr>
-                                    <td>ROBAR</td>
-                                    <td><input id="configurarTecla_robar" class="form-control"></td>
-                                </tr>
-
-                                <tr>
-                                    <td>SEGURO RESUCITACION</td>
-                                    <td><input id="configurarTecla_seguroResucitacion" class="form-control"></td>
-                                </tr>
-
-                            </table>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading-collapse" data-toggle="collapse" href="#opcinesTeclasPanelMacros">
-                            <h4 class="panel-title">
-                                Macros
-                            </h4>
-                        </div>
-                        <div id="opcinesTeclasPanelMacros" class="panel-collapse collapse">
-                            <table class="table">
-                                <tr>
-                                    <td>MACRO HECHIZOS</td>
-                                    <td><input id="configurarTecla_macroHechizos" class="form-control"></td>
-                                </tr>
-                                <tr>
-                                    <td>MACRO TRABAJO</td>
-                                    <td><input id="configurarTecla_macroTrabajo" class="form-control"></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading-collapse" data-toggle="collapse" href="#opcinesTeclasPanelChat">
-                            <h4 class="panel-title">
-                                Chat
-                            </h4>
-                        </div>
-                        <div id="opcinesTeclasPanelChat" class="panel-collapse collapse">
-                            <table class="table">
-                                <tr>
-                                    <td>CHAT</td>
-                                    <td><input id="configurarTecla_chat" class="form-control"></td>
-                                </tr>
-
-                                <tr>
-                                    <td>CHAT CLAN</td>
-                                    <td><input id="configurarTecla_chatClan" class="form-control"></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="btn-toolbar">
-                        <button id="configurarTeclasRestaurarDefault" class="btn btn-default pull-left">Restaurar
-                            Default
-                        </button>
-                        <button id="configurarTeclasGuardarYSalir" class="btn btn-default pull-right">Guardar y salir
-                        </button>
-                        <button id="configurarTeclasCancelar" class="btn btn-default pull-right">Cancelar</button>
                     </div>
                 </div>
             </div>
