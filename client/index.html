@@ -20,7 +20,7 @@
 <body class="intro inventarioActivo">
 <noscript>
     <div class="alert">
-        Necesitas activar Javascript para jugar Dakara Online
+        Necesitas tener Javascript para jugar Dakara Online, actualizá tu navegador
     </div>
 </noscript>
 
@@ -40,11 +40,11 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="exterior_border_default">
-                        <div class="inner_border_default background_default horizontal_center">
+                        <div id="crearPjDiv" class="inner_border_default background_default horizontal_center">
                             <div style="margin-top:4px;margin-bottom:14px;">
                                 <button id="crearBotonGeneroFemenino" class="botonImagen"
                                         style="margin-right:15px;"></button>
-                                <button id="crearBotonGeneroMasculino" class="botonImagen selected"></button>
+                                <button id="crearBotonGeneroMasculino" class="botonImagen"></button>
                             </div>
                             <div class="form-group">
                                 <label for="crearSelectClase">Clase</label>
@@ -57,9 +57,6 @@
                             <div class="form-group">
                                 <label for="crearSelectCiudad">Ciudad natal</label>
                                 <select id="crearSelectCiudad" class="form-control text-center"></select>
-                            </div>
-                            <div class="form-group">
-                                <select id="crearSelectGenero" class="form-control text-center"></select>
                             </div>
                         </div>
                     </div>
@@ -75,7 +72,8 @@
                                 <button id="crearPjSeleccionCabezaBotonDer" class="botonImagen"></button>
                             </div>
                             <br>
-                            <div class="styledDiv" style="display:inline-block;margin-top:40px;padding:5px 5px 0px 5px;">
+                            <div class="styledDiv"
+                                 style="display:inline-block;margin-top:40px;padding:5px 5px 0px 5px;">
                                 <div style="position: relative;">
                                     <div id="crearPjImagenCabezaPersonaje" class="divImagen"></div>
                                     <div id="crearPjImagenPersonaje" class="divImagen"></div>
@@ -89,7 +87,7 @@
                         <div class="inner_border_default background_default horizontal_center">
                             <div id="crearPjAtributos">
                                 <div style="margin-top:4px;margin-bottom:14px;">
-                                    <button id="crearBotonTirarDados" class="btn btn-default">Tirar Dados</button>
+                                    <button id="crearBotonTirarDados" class="botonImagen"></button>
                                 </div>
                                 <div>
                                     <span id="crearDadoFuerza"></span> <span id="crearDadoFuerzaModificador"></span>

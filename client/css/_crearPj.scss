@@ -1,21 +1,25 @@
-/*#crearPJ {margin:5vh;}
-#crearPJ input {margin-bottom:16px;font-size:14px; clear:both; width:150px; float:right; margin-right:43%;}
-/*#crearNombreInput {margin:20vh;}*/
-//
-//#crearPJ {height:100%;width:100%;}
-//
-//#crearPjCenter {width:100%;overflow:auto;padding-top:6vh;padding-bottom:3vh;}
-//#crearPjSeleccion {float:right;margin-right:35%}
-//#crearPjSeleccion select {font-size:14px;margin-top:7px;margin-bottom:34px;display:block;}
-//#crearPjSeleccion option {font-size:14px;}
-//
-//#crearPjAtributos {float:right;margin-right:152px;line-height:30px;padding:5px;}
-//#crearPjAtributos span { font-size:20px; color:yellow; width:100%; text-align: center; display: block}
-//#crearDadoFuerza {margin-top:2vh;}
-//
-//#crearPjSeleccionCabezaDiv {margin-bottom:70px;}
-//#crearPjSeleccionCabeza {border: solid 2px white;padding:2px;width:160px;height:32px;margin-left:auto;margin-right:auto; overflow:auto;}
-//#crearPjSeleccionCabeza.itemgrid li {background-size: 136px 100px}
+#crearPjDiv select{
+  @extend .horizontal_center;
+  max-width:180px;
+  text-align: center;
+  text-align-last:center;
+}
+
+#crearBotonTirarDados{
+  width: 100px;
+  height: 100px;
+  background-position: center;
+  background-image: url('../imagenes/interfaz/iconos/dice.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  border:none;
+  outline:none;
+}
+
+#crearBotonTirarDados:hover{
+  background-image: url('../imagenes/interfaz/iconos/dice_hover.png');
+}
+
 #crearBotonGeneroFemenino {
   @extend .selected_border;
   width: 60px;

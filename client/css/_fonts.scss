@@ -57,7 +57,8 @@
 }
 
 .headingFont {
-  @extend .secondaryColor;
+  //@extend .secondaryColor;
+  color: #bda186;
   font-weight: bold;
 }
 

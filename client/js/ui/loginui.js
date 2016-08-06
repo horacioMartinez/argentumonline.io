@@ -2,9 +2,10 @@
  * Created by horacio on 4/6/16.
  */
 
-define([], function () {
+define(['utils/charcodemap'], function (CharcodeMap) {
     class LoginUI {
         constructor() {
+            this.enableLoginPressingEnter();
         }
 
         setBotonJugarCallback(cb) {
@@ -16,6 +17,28 @@ define([], function () {
         setBotonCrearCallback(cb) {
             $('#botonCrearPJ').click(function () {
                 cb();
+            });
+        }
+
+        enableLoginPressingEnter() {
+
+            let loginKeyPressFunc = (keyNumber) => {
+
+                if (keyNumber === CharcodeMap.keys.indexOf("ENTER")) {
+                    let $playButton = $('#botonJugar');
+                    if (!$playButton.prop('disabled')) {
+                        $playButton.click();
+                    }
+                    return false;
+                }
+            };
+
+            $('#loginNombre').keypress(function (e) {
+                loginKeyPressFunc(e.which);
+            });
+
+            $('#loginContrasenia').keypress(function (e) {
+                loginKeyPressFunc(e.which);
             });
         }
 

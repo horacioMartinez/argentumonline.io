@@ -7440,7 +7440,7 @@ button.close {
   .hidden-print {
     display: none !important; } }
 /*(por ej NIVEL 1 nivel en esta font y 1 en bold y blanco)*/
-.horizontal_center {
+.horizontal_center, #crearPjDiv select {
   text-align: center;
   display: block;
   margin: 0 auto; }
@@ -7493,7 +7493,7 @@ button.close {
   .dialog_default .ui-dialog-titlebar-close {
     display: block;
     position: absolute;
-    top: 18px;
+    top: 14px;
     right: 7px;
     width: 20px;
     height: 20px;
@@ -7680,13 +7680,14 @@ button.close {
 .activeColor {
   color: #ffffff; }
 
-.secondaryColor, .headingFont, .dialog_default .ui-dialog-titlebar {
+.secondaryColor {
   color: #BBBDBF; }
 
 .buttonFont, .defaults_boton, .dialog_default .ui-dialog-titlebar-close, .botonNormal {
   font-weight: bold; }
 
 .headingFont, .dialog_default .ui-dialog-titlebar {
+  color: #bda186;
   font-weight: bold; }
 
 .defaults_boton, .dialog_default .ui-dialog-titlebar-close, .botonNormal {
@@ -8055,9 +8056,24 @@ footer a {
 #botonCrearPJ {
   margin-bottom: 3vh; }
 
-/*#crearPJ {margin:5vh;}
-#crearPJ input {margin-bottom:16px;font-size:14px; clear:both; width:150px; float:right; margin-right:43%;}
-/*#crearNombreInput {margin:20vh;}*/
+#crearPjDiv select {
+  max-width: 180px;
+  text-align: center;
+  text-align-last: center; }
+
+#crearBotonTirarDados {
+  width: 100px;
+  height: 100px;
+  background-position: center;
+  background-image: url("../imagenes/interfaz/iconos/dice.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: none;
+  outline: none; }
+
+#crearBotonTirarDados:hover {
+  background-image: url("../imagenes/interfaz/iconos/dice_hover.png"); }
+
 #crearBotonGeneroFemenino {
   width: 60px;
   height: 60px;

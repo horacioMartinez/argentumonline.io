@@ -62,12 +62,19 @@ define(['enums', 'utils/util'], function (Enums, Utils) {
             this.modificarSlotInput($sel, id, Enums.Clase.trabajador, "Trabajador");
             this.modificarSlotInput($sel, id, Enums.Clase.pirata, "Pirata");
 
-            id = "crearSelectGenero";
-            $sel = $('#' + id);
-            this.modificarSlotInput($sel, id, Enums.Genero.hombre, "Hombre");
-            this.modificarSlotInput($sel, id, Enums.Genero.mujer, "Mujer");
-            $sel.change(function () {
-                self._updatePJ();
+            $("#crearBotonGeneroMasculino").addClass('selected');
+            $("#crearBotonGeneroFemenino").removeClass('selected');
+
+            $("#crearBotonGeneroMasculino").click( () =>{
+                $("#crearBotonGeneroMasculino").toggleClass('selected');
+                $("#crearBotonGeneroFemenino").toggleClass('selected');
+                this._updatePJ();
+            });
+
+            $("#crearBotonGeneroFemenino").click( () =>{
+                $("#crearBotonGeneroMasculino").toggleClass('selected');
+                $("#crearBotonGeneroFemenino").toggleClass('selected');
+                this._updatePJ();
             });
 
             $('#crearPjSeleccionCabezaBotonIzq').click(() => {
@@ -82,7 +89,7 @@ define(['enums', 'utils/util'], function (Enums, Utils) {
         }
 
         _getGenero() {
-            return parseInt($("#crearSelectGenero").val());
+            return $("#crearBotonGeneroMasculino").hasClass('selected') ? Enums.Genero.hombre : Enums.Genero.mujer;
         }
 
         _getRaza() {
@@ -119,8 +126,8 @@ define(['enums', 'utils/util'], function (Enums, Utils) {
                 var password = $("#crearPasswordInput").val();
                 var password2 = $("#crearRepetirPasswordInput").val();
                 var mail = $("#crearMailInput").val();
-                var raza = $("#crearSelectRaza").val();
-                var genero = $("#crearSelectGenero").val();
+                var raza = this._getRaza();
+                var genero = this._getGenero();
                 var clase = $("#crearSelectClase").val();
                 var ciudad = $("#crearSelectCiudad").val();
                 var cabeza = self._getCabezaNum(self.offsetSelectedCabeza);
@@ -192,8 +199,8 @@ define(['enums', 'utils/util'], function (Enums, Utils) {
         }
 
         _updateCuerpo() {
-            var raza = $("#crearSelectRaza").val();
-            var genero = $("#crearSelectGenero").val();
+            var raza = this._getRaza();
+            var genero = this._getGenero();
 
             var numCuerpo = this._getCuerpoNum(genero, raza);
             var numGraf = this.assetManager.getBodyGrafFromNum(numCuerpo);
