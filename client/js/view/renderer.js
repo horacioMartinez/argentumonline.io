@@ -38,6 +38,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
             _inicializarPixi() {
                 this.pixiRenderer = new PIXI.autoDetectRenderer(this.camera.gridW * this.tilesize, this.camera.gridH * this.tilesize);
                 $(this.pixiRenderer.view).css('position', 'relative');
+                $(this.pixiRenderer.view).css('display', 'block');
                 $("#gamecanvas").append(this.pixiRenderer.view);
                 this._initStage();
             }

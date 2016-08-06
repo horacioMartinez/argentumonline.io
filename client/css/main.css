@@ -7828,8 +7828,14 @@ input:-webkit-autofill {
 .background_default, .dialog_default {
   background: url("../imagenes/background.png") repeat; }
 
-html, body {
-  height: 100%; }
+#menuJuego, #chatbox, footer, #container {
+  user-select: none;
+  /* DEJAR PREFIJOS DE BROWSERS EN ESTO */
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  -ms-user-select: none;
+  /* ********************************** */ }
 
 body {
   padding: 0;
@@ -7838,17 +7844,6 @@ body {
   overflow: hidden;
   border-top: 2px solid #707070; }
 
-canvas {
-  position: absolute;
-  image-rendering: auto; }
-
-#canvas, #bar-container, #chatbox, #canvasborder, footer, #container, #achievement-notification {
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -o-user-select: none;
-  -ms-user-select: none; }
-
-/*.started #canvas {cursor:none;}*/
 .preload {
   display: none; }
 
@@ -7856,10 +7851,6 @@ canvas {
 #container {
   z-index: 10;
   background: transparent;
-  -moz-transition: 1s opacity linear 0.5s;
-  -webkit-transition: 1s opacity linear 0.5s;
-  -o-transition: 1s opacity linear 0.5s;
-  -ms-transition: 1s opacity linear 0.5s;
   transition: 1s opacity linear 0.5s; }
 
 #container {
@@ -7892,19 +7883,12 @@ canvas {
   display: none; }
 
 .jugar #juego {
-  display: block; }
+  display: flex;
+  flex-direction: row; }
 
-/*  ACA: */
 body {
   background-color: #000; }
 
-#gamecanvas {
-  position: absolute;
-  top: 7.8%;
-  left: 1.45%;
-  z-index: -2; }
-
-/* margenes de la interfaz */
 #chatbox {
   height: 6.5%;
   width: 63%;
@@ -7925,27 +7909,10 @@ body {
 
 #chatbox {
   background-image: url("../graficos/ui/chatbox.png");
-  /*tama├▒o img conteindo en barra:*/
-  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../graficos/ui/chatbox.png', sizingMethod='scale')";
-  -webkit-background-size: 100% 100%;
-  /* Safari 3.0 */
-  -moz-background-size: 100% 100%;
-  /* Gecko 1.9.2 (Firefox 3.6) */
-  -o-background-size: 100% 100%;
-  /* Opera 9.5 */
-  background-size: 100% 100%;
-  /* Gecko 2.0 (Firefox 4.0) and other CSS3-compliant browsers */
   background-size: contain;
   /*fin tama├▒o img*/
   z-index: -1;
-  -moz-transition: 0.2s top ease;
-  -webkit-transition: 0.2s top ease;
-  -o-transition: 0.2s top ease;
-  -ms-transition: 0.2s top ease;
   transition: 0.2s top ease; }
-
-#chatinput {
-  color: #eee; }
 
 /* Tama├▒o contenedor (width seteado en js) */
 @media screen and (min-aspect-ratio: 7 / 5) and (max-aspect-ratio: 8 / 5) {
@@ -7974,10 +7941,6 @@ footer {
   text-align: center;
   width: 100%;
   color: #c6c0a3;
-  -moz-transition: 0.2s opacity linear;
-  -webkit-transition: 0.2s opacity linear;
-  -o-transition: 0.2s opacity linear;
-  -ms-transition: 0.2s opacity linear;
   transition: 0.2s opacity linear; }
 
 footer:hover {
@@ -8017,22 +7980,12 @@ footer a {
   cursor: pointer; }
 
 #sharing a:hover {
-  -moz-transform: scale(1.2);
-  -webkit-transform: scale(1.2);
-  -o-transform: scale(1.2);
   transform: scale(1.2); }
 
 #sharing a:active {
-  -moz-transform: scale(1);
-  -webkit-transform: scale(1);
-  -o-transform: scale(1);
   transform: scale(1); }
 
 #intro {
-  -moz-transition: 0.4s opacity linear;
-  -webkit-transition: 0.4s opacity linear;
-  -o-transition: 0.4s opacity linear;
-  -ms-transition: 0.4s opacity linear;
   transition: 0.4s opacity linear; }
 
 .intro #container {
@@ -8154,41 +8107,21 @@ footer a {
   margin-top: 19px; }
 
 /*Interfaz: elementos dentro de la pantalla de juego (inventario, etc)*/
+#gamecanvas {
+  display: inline-block; }
+
 #gamecanvas.crosshair {
   cursor: crosshair; }
 
 /* <--- esto deberia estar en otro lado */
-#interfaz span {
+#menuJuego span {
   cursor: default; }
 
-#bordeIzquierda {
+#menuJuego {
+  flex: 1;
+  display: inline-block;
+  position: relative;
   background-size: 100% 100%;
-  position: absolute;
-  height: 100%;
-  width: 1.375%;
-  background-image: url("../imagenes/interfaz/bordeIzquierda.png"); }
-
-#bordeArriba {
-  background-size: 100% 100%;
-  position: absolute;
-  width: 100%;
-  height: 7.8%;
-  background-image: url("../imagenes/interfaz/bordeArriba.png"); }
-
-#bordeAbajo {
-  background-size: 100% 100%;
-  position: absolute;
-  width: 100%;
-  height: 9.6%;
-  top: 90.4%;
-  background-image: url("../imagenes/interfaz/bordeAbajo.png"); }
-
-#bordeDerecha {
-  background-size: 100% 100%;
-  position: absolute;
-  height: 100%;
-  width: 30.6%;
-  left: 69.4%;
   background-image: url("../imagenes/interfaz/bordeDerecha.png"); }
 
 #InventarioHechizos {

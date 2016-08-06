@@ -130,77 +130,68 @@
     </div>
 
     <!-- Pantalla de juego-->
-    <div id="juego">
-        <div id="gamecanvas" class="clickable">
-        </div>
+    <div id="juego" class="exterior_border_default">
+        <div id="gamecanvas" class="clickable"></div>
         <div id="chatbox">
             <input id="chatinput" type="text" class="form-control" maxlength="60" autocomplete="off">
         </div>
 
         <!--interfaz ingame-->
-        <div id="interfaz">
-            <div id="bordeIzquierda"></div>
-            <div id="bordeArriba"></div>
-
-            <div id="bordeAbajo">
-                <div id="barraExp">
-                    <div id="barraExpUsada"></div>
-                    <span id="barraExpTexto"></span>
-                    <button id="botonAsignarSkills" class="botonImagen"></button>
-                    <span id="indicadorNivel"></span>
-                </div>
+        <div id="menuJuego">
+            <div id="barraExp">
+                <div id="barraExpUsada"></div>
+                <span id="barraExpTexto"></span>
+                <button id="botonAsignarSkills" class="botonImagen"></button>
+                <span id="indicadorNivel"></span>
             </div>
 
-            <div id="bordeDerecha">
-                <div id="InventarioHechizos" class="inventario">
-                    <ul id="itemsGrid" class="itemgrid"></ul>
-                    <select id="hechizos" size="2"></select>
-                    <button id="botonInventario" class="botonInvisible"></button>
-                    <button id="botonHechizos" class="botonInvisible"></button>
-                    <button id="botonLanzar" class="botonInvisible"></button>
-                    <button id="botonInfo" class="botonInvisible"></button>
-                </div>
-                <div id="barras">
-                    <div id="barraEnergia">
-                        <div id="barraEnergiaUsada"></div> <!-- Porcentaje usado (en negro) de la barra -->
-                        <span id="barraEnergiaTexto"></span>
-                    </div>
-                    <div id="barraMana">
-                        <div id="barraManaUsada"></div>
-                        <span id="barraManaTexto"></span>
-                    </div>
-                    <div id="barraSalud">
-                        <div id="barraSaludUsada"></div>
-                        <span id="barraSaludTexto"></span>
-                    </div>
-                    <div id="barraHambre">
-                        <div id="barraHambreUsada"></div>
-                        <span id="barraHambreTexto"></span>
-                    </div>
-                    <div id="barraSed">
-                        <div id="barraSedUsada"></div>
-                        <span id="barraSedTexto"></span>
-                    </div>
-
-                    <button id="botonMapa" class="btn btn-default">Mapa</button>
-                    <button id="botonParty" class="btn btn-default">Party</button>
-                    <button id="botonOpciones" class="btn btn-default">Ajustes</button>
-                    <button id="botonEstadisticas" class="btn btn-default">Estadisticas</button>
-                    <button id="botonClanes" class="btn btn-default">Clanes</button>
-
-                </div>
-                <button id="botonTirarOro" class="botonInvisible"></button>
-                <span id="indicadorAgilidad"></span>
-                <span id="indicadorFuerza"></span>
-                <span id="indicadorOro"></span>
-                <button id="botonSeguroResucitar" class="botonImagen"></button>
-                <button id="botonSeguroAtacar" class="botonImagen"></button>
-                <button id="botonMacroHechizos" class="botonImagen"></button>
-                <button id="botonMacroTrabajo" class="botonImagen"></button>
-                <span id="indicadorMapa"></span>
+            <div id="InventarioHechizos" class="inventario">
+                <ul id="itemsGrid" class="itemgrid"></ul>
+                <select id="hechizos" size="2"></select>
+                <button id="botonInventario" class="botonInvisible"></button>
+                <button id="botonHechizos" class="botonInvisible"></button>
+                <button id="botonLanzar" class="botonInvisible"></button>
+                <button id="botonInfo" class="botonInvisible"></button>
             </div>
+            <div id="barras">
+                <div id="barraEnergia">
+                    <div id="barraEnergiaUsada"></div> <!-- Porcentaje usado (en negro) de la barra -->
+                    <span id="barraEnergiaTexto"></span>
+                </div>
+                <div id="barraMana">
+                    <div id="barraManaUsada"></div>
+                    <span id="barraManaTexto"></span>
+                </div>
+                <div id="barraSalud">
+                    <div id="barraSaludUsada"></div>
+                    <span id="barraSaludTexto"></span>
+                </div>
+                <div id="barraHambre">
+                    <div id="barraHambreUsada"></div>
+                    <span id="barraHambreTexto"></span>
+                </div>
+                <div id="barraSed">
+                    <div id="barraSedUsada"></div>
+                    <span id="barraSedTexto"></span>
+                </div>
+
+                <button id="botonMapa" class="btn btn-default">Mapa</button>
+                <button id="botonParty" class="btn btn-default">Party</button>
+                <button id="botonOpciones" class="btn btn-default">Ajustes</button>
+                <button id="botonEstadisticas" class="btn btn-default">Estadisticas</button>
+                <button id="botonClanes" class="btn btn-default">Clanes</button>
+
+            </div>
+            <button id="botonTirarOro" class="botonInvisible"></button>
+            <span id="indicadorAgilidad"></span>
+            <span id="indicadorFuerza"></span>
+            <span id="indicadorOro"></span>
+            <button id="botonSeguroResucitar" class="botonImagen"></button>
+            <button id="botonSeguroAtacar" class="botonImagen"></button>
+            <button id="botonMacroHechizos" class="botonImagen"></button>
+            <button id="botonMacroTrabajo" class="botonImagen"></button>
+            <span id="indicadorMapa"></span>
         </div>
-
 
         <!-- FIN Pantalla de juego y interfaz ingame -->
 

@@ -1,62 +1,326 @@
 /*Interfaz: elementos dentro de la pantalla de juego (inventario, etc)*/
 
-#gamecanvas.crosshair {cursor:crosshair;} /* <--- esto deberia estar en otro lado */
-#interfaz span {cursor:default;}
+#gamecanvas{
+  display: inline-block;
+}
+#gamecanvas.crosshair {
+  cursor: crosshair;
+}
 
-#bordeIzquierda {background-size: 100% 100%; position:absolute; height:100%; width:1.375%;background-image:url('../imagenes/interfaz/bordeIzquierda.png');}
-#bordeArriba {background-size: 100% 100%;position:absolute; width:100%; height:7.8%;background-image:url('../imagenes/interfaz/bordeArriba.png')}
-#bordeAbajo {background-size: 100% 100%; position:absolute; width:100%; height:9.6%; top:90.4%; background-image:url('../imagenes/interfaz/bordeAbajo.png')}
+/* <--- esto deberia estar en otro lado */
+#menuJuego span {
+  cursor: default;
+}
 
-#bordeDerecha {background-size: 100% 100%;position:absolute; height:100%; width:30.6%; left:69.4%;background-image:url('../imagenes/interfaz/bordeDerecha.png')}
+#menuJuego {
+  flex: 1;
+  display: inline-block;
+  position: relative;
+  background-size: 100% 100%;
+  background-image: url('../imagenes/interfaz/bordeDerecha.png')
+}
 
-#InventarioHechizos {background-size: 100% 100%; position:absolute; width:80.816%; height:56.4%; left:10.61%; top:2.8%;}
-#InventarioHechizos {background-image:url('../imagenes/interfaz/centroHechizos.jpg');}
-#botonInventario {position: absolute;left:0%; top:0%; width: 48.5%; height:14.2%;}
-#botonHechizos {position: absolute; left:48.5%; top:0%; width: 51.5%; height:14.2%;}
-#botonLanzar {position: absolute;left:0%; top:82%; width: 50%; height:12%;}
-#botonInfo {position: absolute; left:50%; top:82%; width: 50%; height:12%;}
-#itemsGrid {position: absolute; left:8.6%; top:15%; width: 80.9%; height:56.74%; display:none;}
-#itemsGrid li {width: 20%; height: 20%;}
-#hechizos {color: white; background: black;position: absolute; left:5.6%; top:14.19%; width: 90%; height:63.8%;}
+#InventarioHechizos {
+  background-size: 100% 100%;
+  position: absolute;
+  width: 80.816%;
+  height: 56.4%;
+  left: 10.61%;
+  top: 2.8%;
+}
 
-.inventarioActivo #botonInfo {display:none;}
-.inventarioActivo #botonLanzar {display:none;}
-.inventarioActivo #hechizos {display:none;}
-.inventarioActivo #itemsGrid {display:inline-block;}
-.inventarioActivo #InventarioHechizos {background-image:url('../imagenes/interfaz/centroInventario.jpg');}
+#InventarioHechizos {
+  background-image: url('../imagenes/interfaz/centroHechizos.jpg');
+}
 
-#barras span {color:white;display: inline-block;position: absolute; top:0; bottom: 0; left: 0; right: 0; margin: auto;text-align: center;}
-#barraEnergia, #barraMana, #barraSalud, #barraHambre, #barraSed {background-color: Transparent; position: absolute; left:11.84%; width: 30.6%; height:2.2%;}
-#barraEnergia {top:68.6%;}
-#barraMana {top:73.4%;}
-#barraSalud{top:77.6%;}
-#barraHambre {top:82.2%;}
-#barraSed {top:86.4%;}
-#barraEnergiaUsada, #barraManaUsada, #barraSaludUsada, #barraHambreUsada, #barraSedUsada {background-color: black;float:right; height:100%; width:30%; outline: dashed 2px green;}
+#botonInventario {
+  position: absolute;
+  left: 0%;
+  top: 0%;
+  width: 48.5%;
+  height: 14.2%;
+}
 
-#barraExpTexto {text-align: center;  margin: 0;    position: absolute;    top: 50%;    left: 50%;    margin-right: -50%;    transform: translate(-50%, -50%);/*borde negro de font: */color: white;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;}
-#barraExp {background-color: Transparent; position: relative; top:28.1%; left:3.875%; width: 62.875%; height:38.8%;}
-#barraExpUsada {float:left; height:100%; width:30%; background:url('../imagenes/interfaz/barraExp.png');background-size: cover; }
-#indicadorNivel {top:13%;left:70%;position:absolute;color:yellow}
+#botonHechizos {
+  position: absolute;
+  left: 48.5%;
+  top: 0%;
+  width: 51.5%;
+  height: 14.2%;
+}
 
-#indicadorAgilidad, #indicadorFuerza, #indicadorOro, #indicadorMapa {position: absolute; text-align: center;}
-#indicadorOro{left:69%;top:61.6%;color:#FFD700;text-align: left;}
-#indicadorFuerza{left:37%;top:60.6%;color:#B8860B;}
-#indicadorAgilidad{left:21.5%;top:60.6%;color:#D2691E;}
-#indicadorMapa{left:11%;top:93%;color:yellow;white-space: pre;}
+#botonLanzar {
+  position: absolute;
+  left: 0%;
+  top: 82%;
+  width: 50%;
+  height: 12%;
+}
 
-#botonTirarOro {position: absolute; left:61.5%; top:61%; width:6.5%; height:3.7%;}
-#botonSeguroResucitar {position: absolute;left:50.8%; top:90.6%; width:10.3%; height:6%; background-image: none}
-#botonSeguroResucitar.seguroOff {background-image: url("../imagenes/interfaz/resucitationSafeOff.png");}
-#botonSeguroAtacar {position: absolute;left:60.1%; top:90.5%; width:11%; height:6.1%;background-image: none}
-#botonSeguroAtacar.seguroOff {background-image: url("../imagenes/interfaz/attackSafeOff.png");}
-#botonMacroHechizos{position: absolute;left:70%; top:90.6%; width:10.3%; height:6%; background-image: url("../imagenes/interfaz/macroHechizos.jpg");}
-#botonMacroTrabajo{position: absolute;left:80%; top:90.6%; width:10.3%; height:6%; background-image: url("../imagenes/interfaz/macroTrabajo.jpg");}
+#botonInfo {
+  position: absolute;
+  left: 50%;
+  top: 82%;
+  width: 50%;
+  height: 12%;
+}
 
-#botonMapa {position: absolute; left:53.5%; top:68%; width:35.5%; height:3.6%;}
-#botonParty {position: absolute; left:53.5%; top:72%; width:35.5%; height:3.6%;}
-#botonOpciones {position: absolute; left:53.5%; top:76%; width:35.5%; height:3.6%;}
-#botonEstadisticas {position: absolute; left:53.5%; top:80%; width:35.5%; height:3.6%;}
-#botonClanes {position: absolute; left:53.5%; top:84%; width:35.5%; height:3.6%;}
+#itemsGrid {
+  position: absolute;
+  left: 8.6%;
+  top: 15%;
+  width: 80.9%;
+  height: 56.74%;
+  display: none;
+}
 
-#botonAsignarSkills {position:absolute;background-image: url("../imagenes/interfaz/botonAsignarSkills.png");left:55%; top:10%;width:5%;height:80%}
+#itemsGrid li {
+  width: 20%;
+  height: 20%;
+}
+
+#hechizos {
+  color: white;
+  background: black;
+  position: absolute;
+  left: 5.6%;
+  top: 14.19%;
+  width: 90%;
+  height: 63.8%;
+}
+
+.inventarioActivo #botonInfo {
+  display: none;
+}
+
+.inventarioActivo #botonLanzar {
+  display: none;
+}
+
+.inventarioActivo #hechizos {
+  display: none;
+}
+
+.inventarioActivo #itemsGrid {
+  display: inline-block;
+}
+
+.inventarioActivo #InventarioHechizos {
+  background-image: url('../imagenes/interfaz/centroInventario.jpg');
+}
+
+#barras span {
+  color: white;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  text-align: center;
+}
+
+#barraEnergia, #barraMana, #barraSalud, #barraHambre, #barraSed {
+  background-color: Transparent;
+  position: absolute;
+  left: 11.84%;
+  width: 30.6%;
+  height: 2.2%;
+}
+
+#barraEnergia {
+  top: 68.6%;
+}
+
+#barraMana {
+  top: 73.4%;
+}
+
+#barraSalud {
+  top: 77.6%;
+}
+
+#barraHambre {
+  top: 82.2%;
+}
+
+#barraSed {
+  top: 86.4%;
+}
+
+#barraEnergiaUsada, #barraManaUsada, #barraSaludUsada, #barraHambreUsada, #barraSedUsada {
+  background-color: black;
+  float: right;
+  height: 100%;
+  width: 30%;
+  outline: dashed 2px green;
+}
+
+#barraExpTexto {
+  text-align: center;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%); /*borde negro de font: */
+  color: white;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+#barraExp {
+  background-color: Transparent;
+  position: relative;
+  top: 28.1%;
+  left: 3.875%;
+  width: 62.875%;
+  height: 38.8%;
+}
+
+#barraExpUsada {
+  float: left;
+  height: 100%;
+  width: 30%;
+  background: url('../imagenes/interfaz/barraExp.png');
+  background-size: cover;
+}
+
+#indicadorNivel {
+  top: 13%;
+  left: 70%;
+  position: absolute;
+  color: yellow
+}
+
+#indicadorAgilidad, #indicadorFuerza, #indicadorOro, #indicadorMapa {
+  position: absolute;
+  text-align: center;
+}
+
+#indicadorOro {
+  left: 69%;
+  top: 61.6%;
+  color: #FFD700;
+  text-align: left;
+}
+
+#indicadorFuerza {
+  left: 37%;
+  top: 60.6%;
+  color: #B8860B;
+}
+
+#indicadorAgilidad {
+  left: 21.5%;
+  top: 60.6%;
+  color: #D2691E;
+}
+
+#indicadorMapa {
+  left: 11%;
+  top: 93%;
+  color: yellow;
+  white-space: pre;
+}
+
+#botonTirarOro {
+  position: absolute;
+  left: 61.5%;
+  top: 61%;
+  width: 6.5%;
+  height: 3.7%;
+}
+
+#botonSeguroResucitar {
+  position: absolute;
+  left: 50.8%;
+  top: 90.6%;
+  width: 10.3%;
+  height: 6%;
+  background-image: none
+}
+
+#botonSeguroResucitar.seguroOff {
+  background-image: url("../imagenes/interfaz/resucitationSafeOff.png");
+}
+
+#botonSeguroAtacar {
+  position: absolute;
+  left: 60.1%;
+  top: 90.5%;
+  width: 11%;
+  height: 6.1%;
+  background-image: none
+}
+
+#botonSeguroAtacar.seguroOff {
+  background-image: url("../imagenes/interfaz/attackSafeOff.png");
+}
+
+#botonMacroHechizos {
+  position: absolute;
+  left: 70%;
+  top: 90.6%;
+  width: 10.3%;
+  height: 6%;
+  background-image: url("../imagenes/interfaz/macroHechizos.jpg");
+}
+
+#botonMacroTrabajo {
+  position: absolute;
+  left: 80%;
+  top: 90.6%;
+  width: 10.3%;
+  height: 6%;
+  background-image: url("../imagenes/interfaz/macroTrabajo.jpg");
+}
+
+#botonMapa {
+  position: absolute;
+  left: 53.5%;
+  top: 68%;
+  width: 35.5%;
+  height: 3.6%;
+}
+
+#botonParty {
+  position: absolute;
+  left: 53.5%;
+  top: 72%;
+  width: 35.5%;
+  height: 3.6%;
+}
+
+#botonOpciones {
+  position: absolute;
+  left: 53.5%;
+  top: 76%;
+  width: 35.5%;
+  height: 3.6%;
+}
+
+#botonEstadisticas {
+  position: absolute;
+  left: 53.5%;
+  top: 80%;
+  width: 35.5%;
+  height: 3.6%;
+}
+
+#botonClanes {
+  position: absolute;
+  left: 53.5%;
+  top: 84%;
+  width: 35.5%;
+  height: 3.6%;
+}
+
+#botonAsignarSkills {
+  position: absolute;
+  background-image: url("../imagenes/interfaz/botonAsignarSkills.png");
+  left: 55%;
+  top: 10%;
+  width: 5%;
+  height: 80%
+}

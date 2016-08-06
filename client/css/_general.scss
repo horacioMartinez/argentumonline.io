@@ -1,93 +1,211 @@
 /* General Layout */
 .background_default {
-	background: url("../imagenes/background.png") repeat;
+  background: url("../imagenes/background.png") repeat;
 }
 
-html, body {height:100%;}
+//html, body {
+//  height: 100%;
+//}
 
-body {padding:0;margin:0;background:#111;overflow:hidden;border-top:2px solid #707070;}
+#menuJuego, #chatbox, footer, #container {
+  user-select: none;
+  /* DEJAR PREFIJOS DE BROWSERS EN ESTO */
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  -ms-user-select: none;
+  /* ********************************** */
+}
 
-canvas { position:absolute;image-rendering:auto;}
 
-#canvas, #bar-container, #chatbox, #canvasborder, footer, #container, #achievement-notification {-moz-user-select:none;-webkit-user-select:none;-o-user-select:none;-ms-user-select:none;}
+body {
+  padding: 0;
+  margin: 0;
+  background: #111;
+  overflow: hidden;
+  border-top: 2px solid #707070;
+}
 
-/*.started #canvas {cursor:none;}*/
-
-.preload {display:none;}
-
-
+.preload {
+  display: none;
+}
 
 /* States & Transitions */
-#container {z-index:10;background:rgba(0,0,0,0);-moz-transition:1s opacity linear 0.5s;-webkit-transition:1s opacity linear 0.5s;-o-transition:1s opacity linear 0.5s;-ms-transition:1s opacity linear 0.5s;transition:1s opacity linear 0.5s;}
-#container {width: 100%; height: 90%; position: absolute; top:0; bottom: 5%; left: 0; right: 0; margin: auto;} /* el width de setea para que quede del ratio adecaudo en el programa de js */
+#container {
+  z-index: 10;
+  background: rgba(0, 0, 0, 0);
+  transition: 1s opacity linear 0.5s;
+}
 
-.login #container, .jugar #container, .crear #container {display:block;}
-.login #juego, .login #crearPJ {display:none;} .login #conectar {display:block;}
-.crear #juego, .crear #conectar {display:none;} .crear #crearPJ {display:block;}
-.jugar #crearPJ, .jugar #conectar {display:none;} .jugar #juego {display:block;}
+#container {
+  width: 100%;
+  height: 90%;
+  position: absolute;
+  top: 0;
+  bottom: 5%;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
 
-/*  ACA: */
+/* el width de setea para que quede del ratio adecaudo en el programa de js */
 
-body {background-color:#000;}
+.login #container, .jugar #container, .crear #container {
+  display: block;
+}
 
-#gamecanvas {position:absolute;top:7.8%;left:1.45%;z-index: -2} /* margenes de la interfaz */
+.login #juego, .login #crearPJ {
+  display: none;
+}
 
-#chatbox {height:6.5%;width:63%;position:absolute;left:4%;top:92%} 
-#chatbox.active {top:85.5%;}
-#chatbox input {font-size:12px;background:none;width:100%;border:0;margin-left:2%;margin-top:2%}
+.login #conectar {
+  display: block;
+}
+
+.crear #juego, .crear #conectar {
+  display: none;
+}
+
+.crear #crearPJ {
+  display: block;
+}
+
+.jugar #crearPJ, .jugar #conectar {
+  display: none;
+}
+
+.jugar #juego {
+  display: flex;
+  flex-direction: row;
+}
+
+body {
+  background-color: #000;
+}
 
 #chatbox {
-	background-image: url('../graficos/ui/chatbox.png');
-	/*tamaño img conteindo en barra:*/
-	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../graficos/ui/chatbox.png', sizingMethod='scale')";
-	-webkit-background-size: 100% 100%; /* Safari 3.0 */
-	-moz-background-size: 100% 100%; /* Gecko 1.9.2 (Firefox 3.6) */
-	-o-background-size: 100% 100%; /* Opera 9.5 */
-	background-size: 100% 100%; /* Gecko 2.0 (Firefox 4.0) and other CSS3-compliant browsers */
-	background-size: contain;
-	/*fin tamaño img*/
-	z-index: -1;
-	-moz-transition: 0.2s top ease;
-	-webkit-transition: 0.2s top ease;
-	-o-transition: 0.2s top ease;
-	-ms-transition: 0.2s top ease;
-	transition: 0.2s top ease;
+  height: 6.5%;
+  width: 63%;
+  position: absolute;
+  left: 4%;
+  top: 92%
 }
-#chatinput {color:#eee;}
 
+#chatbox.active {
+  top: 85.5%;
+}
+
+#chatbox input {
+  font-size: 12px;
+  background: none;
+  width: 100%;
+  border: 0;
+  margin-left: 2%;
+  margin-top: 2%
+}
+
+#chatbox {
+  background-image: url('../graficos/ui/chatbox.png');
+  background-size: contain;
+  /*fin tamaño img*/
+  z-index: -1;
+  transition: 0.2s top ease;
+}
 
 /* Tamaño contenedor (width seteado en js) */
 
-@media screen and (min-aspect-ratio: 7/5) and (max-aspect-ratio: 8/5){
-	#container {height:85%;}
+@media screen and (min-aspect-ratio: 7/5) and (max-aspect-ratio: 8/5) {
+  #container {
+    height: 85%;
+  }
 }
 
-@media screen and (min-aspect-ratio: 13/10) and (max-aspect-ratio: 7/5){
-	#container {height:80%;}
+@media screen and (min-aspect-ratio: 13/10) and (max-aspect-ratio: 7/5) {
+  #container {
+    height: 80%;
+  }
 }
 
-@media screen and (min-aspect-ratio: 6/5) and (max-aspect-ratio: 13/10){
-	#container {height:75%;}
+@media screen and (min-aspect-ratio: 6/5) and (max-aspect-ratio: 13/10) {
+  #container {
+    height: 75%;
+  }
 }
 
-@media screen and (max-aspect-ratio: 6/5){
-	#container {height:65%;}
+@media screen and (max-aspect-ratio: 6/5) {
+  #container {
+    height: 65%;
+  }
 }
 
 /* Footer */
 
-.facebook {background:url('../imagenes/facebook.png');}
-.twitter{background:url('../imagenes/twitter.png');}
+.facebook {
+  background: url('../imagenes/facebook.png');
+}
 
-footer {position:absolute;bottom:3%;left:0;text-align:center;width:100%;color:#c6c0a3;-moz-transition:0.2s opacity linear;-webkit-transition:0.2s opacity linear;-o-transition:0.2s opacity linear;-ms-transition:0.2s opacity linear;transition:0.2s opacity linear;}
+.twitter {
+  background: url('../imagenes/twitter.png');
+}
 
-footer:hover {opacity:1;}
-footer div  {font-size: 16px;display:inline-block;}
-footer a  {font-size: 16px;}
-#sharing a {display:block;float:right;position:relative;top:-2px;}
-#sharing .facebook {height:22px;width:22px;background-size: cover;margin:0 12px 0 12px;}
-#sharing .twitter {height:22px;width:32px;background-size:     cover;margin:0 12px 0 0;}
-#legal-link a, #credits-link a, #privacy-link a {text-decoration:none;color:inherit;}
-#credits-link a:hover , #privacy-link  a:hover, #legal-link a:hover{color:#fcda5c;cursor:pointer;}
-#sharing a:hover {-moz-transform:scale(1.2);-webkit-transform:scale(1.2);-o-transform:scale(1.2);transform:scale(1.2);}
-#sharing a:active {-moz-transform:scale(1);-webkit-transform:scale(1);-o-transform:scale(1);transform:scale(1);}
+footer {
+  position: absolute;
+  bottom: 3%;
+  left: 0;
+  text-align: center;
+  width: 100%;
+  color: #c6c0a3;
+  transition: 0.2s opacity linear;
+}
+
+footer:hover {
+  opacity: 1;
+}
+
+footer div {
+  font-size: 16px;
+  display: inline-block;
+}
+
+footer a {
+  font-size: 16px;
+}
+
+#sharing a {
+  display: block;
+  float: right;
+  position: relative;
+  top: -2px;
+}
+
+#sharing .facebook {
+  height: 22px;
+  width: 22px;
+  background-size: cover;
+  margin: 0 12px 0 12px;
+}
+
+#sharing .twitter {
+  height: 22px;
+  width: 32px;
+  background-size: cover;
+  margin: 0 12px 0 0;
+}
+
+#legal-link a, #credits-link a, #privacy-link a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#credits-link a:hover, #privacy-link a:hover, #legal-link a:hover {
+  color: #fcda5c;
+  cursor: pointer;
+}
+
+#sharing a:hover {
+  transform: scale(1.2);
+}
+
+#sharing a:active {
+  transform: scale(1);
+}

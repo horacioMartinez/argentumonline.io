@@ -112,12 +112,12 @@ define(['ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mensaje'], fu
         }
 
         getEscala() {
-            return $('#container').height() / 500;
+            return $('#container').height() / 416;
         }
 
         resizeUi() {
             var escala = this.getEscala();
-            $('#container').width(escala * 800);
+            $('#container').width(escala * 716); //300 de offset para interfaz derecha
             $('#chatbox input').css("font-size", Math.floor(12 * escala) + 'px');
 
             if (this.gameUI) {
