@@ -7453,7 +7453,7 @@ button.close {
 .noselect {
   user-select: none; }
 
-.divImagen {
+.divImagen, #barraEnergia, #barraMana, #barraSalud, #barraHambre, #barraSed, #barraEnergiaUsada, #barraManaUsada, #barraSaludUsada, #barraHambreUsada, #barraSedUsada {
   width: auto;
   height: auto;
   background: Transparent;
@@ -7557,6 +7557,34 @@ button.close {
   width: 6px; }
 
 /*(por ej NIVEL 1 nivel en esta font y 1 en bold y blanco)*/
+.margenBoton, .form-horizontal .btn {
+  margin-top: 14px;
+  margin-bottom: 14px; }
+
+/*input {
+  @extend .form-control;
+}*/
+/*.form_element_base {
+  @extend .activeColor, .everywhereFont;
+  border-width: 2px ;
+  border-style: solid ;
+  border-color: $form_elements_border_color ;
+  border-radius: 2px ;
+  background: $form_elements_background_color;
+  box-shadow: 0px 0px 5px -1px rgba(0,0,0,0.75);
+}
+
+input {
+  @extend .form_element_base;
+}
+
+ul {
+  cursor: default;
+}
+
+span {
+  user-select: none;
+}*/
 .panel-heading, .panel-heading-collapse {
   background-color: rgba(150, 122, 99, 0.2) !important;
   color: #fff !important; }
@@ -7567,9 +7595,6 @@ button.close {
 .form-horizontal .control-label {
   font-weight: normal;
   text-align: left; }
-
-.form-horizontal .btn {
-  margin: 14px 0px; }
 
 /* TODO: modificar background en mixin */
 .btn-primary {
@@ -7626,7 +7651,7 @@ button.close {
   border: 8px solid black;
   border-image: url("../imagenes/container_content_iner_border.png") 20 repeat; }
 
-.exterior_border_default, .dialog_default {
+.exterior_border_default, .dialog_default, #menuJuego {
   border: 10px solid black;
   border-image: url("../imagenes/borde.png") 20 round;
   /*box-sizing: border-box;*/ }
@@ -7793,6 +7818,10 @@ button.close {
     background-image: url(../imagenes/boton-normal-pressed.png);
     color: grey;
 }*/
+.margenBoton, .form-horizontal .btn {
+  margin-top: 14px;
+  margin-bottom: 14px; }
+
 /*input {
   @extend .form-control;
 }*/
@@ -7825,7 +7854,7 @@ input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px white inset; }
 
 /* General Layout */
-.background_default, .dialog_default {
+.background_default, .dialog_default, #menuJuego {
   background: url("../imagenes/background.png") repeat; }
 
 #menuJuego, #chatbox, footer, #container {
@@ -8115,14 +8144,16 @@ footer a {
 
 /* <--- esto deberia estar en otro lado */
 #menuJuego span {
-  cursor: default; }
+  cursor: default;
+  font-weight: bold; }
 
 #menuJuego {
+  border-right-width: 0px;
+  border-top-width: 0px;
+  border-bottom-width: 0px;
   flex: 1;
   display: inline-block;
-  position: relative;
-  background-size: 100% 100%;
-  background-image: url("../imagenes/interfaz/bordeDerecha.png"); }
+  position: relative; }
 
 #InventarioHechizos {
   background-size: 100% 100%;
@@ -8211,11 +8242,13 @@ footer a {
   text-align: center; }
 
 #barraEnergia, #barraMana, #barraSalud, #barraHambre, #barraSed {
-  background-color: Transparent;
   position: absolute;
-  left: 11.84%;
-  width: 30.6%;
-  height: 2.2%; }
+  left: 8%;
+  width: 84.6%;
+  height: 2.5%;
+  outline: dashed 2px yellow;
+  background-size: 100% 100%;
+  background-image: url("../imagenes/interfaz/barras/barra_background.png"); }
 
 #barraEnergia {
   top: 68.6%; }
@@ -8233,11 +8266,26 @@ footer a {
   top: 86.4%; }
 
 #barraEnergiaUsada, #barraManaUsada, #barraSaludUsada, #barraHambreUsada, #barraSedUsada {
-  background-color: black;
-  float: right;
+  background-size: 100% 100%;
+  float: left;
   height: 100%;
   width: 30%;
   outline: dashed 2px green; }
+
+#barraEnergiaUsada {
+  background-image: url("../imagenes/interfaz/barras/barra_energia.png"); }
+
+#barraManaUsada {
+  background-image: url("../imagenes/interfaz/barras/barra_mana.png"); }
+
+#barraSaludUsada {
+  background-image: url("../imagenes/interfaz/barras/barra_vida.png"); }
+
+#barraHambreUsada {
+  background-image: url("../imagenes/interfaz/barras/barra_hambre.png"); }
+
+#barraSedUsada {
+  background-image: url("../imagenes/interfaz/barras/barra_sed.png"); }
 
 #barraExpTexto {
   text-align: center;
@@ -8317,6 +8365,7 @@ footer a {
   background-image: url("../imagenes/interfaz/resucitationSafeOff.png"); }
 
 #botonSeguroAtacar {
+  border: dashed 2px green;
   position: absolute;
   left: 60.1%;
   top: 90.5%;
@@ -8342,41 +8391,6 @@ footer a {
   width: 10.3%;
   height: 6%;
   background-image: url("../imagenes/interfaz/macroTrabajo.jpg"); }
-
-#botonMapa {
-  position: absolute;
-  left: 53.5%;
-  top: 68%;
-  width: 35.5%;
-  height: 3.6%; }
-
-#botonParty {
-  position: absolute;
-  left: 53.5%;
-  top: 72%;
-  width: 35.5%;
-  height: 3.6%; }
-
-#botonOpciones {
-  position: absolute;
-  left: 53.5%;
-  top: 76%;
-  width: 35.5%;
-  height: 3.6%; }
-
-#botonEstadisticas {
-  position: absolute;
-  left: 53.5%;
-  top: 80%;
-  width: 35.5%;
-  height: 3.6%; }
-
-#botonClanes {
-  position: absolute;
-  left: 53.5%;
-  top: 84%;
-  width: 35.5%;
-  height: 3.6%; }
 
 #botonAsignarSkills {
   position: absolute;

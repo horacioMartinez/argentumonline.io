@@ -58,24 +58,8 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
                 self.acciones.toggleMacroTrabajo();
             });
 
-            $("#botonMapa").click(function () {
-                self.game.gameUI.showMapa();
-            });
-
-            $("#botonEstadisticas").click(function () {
-                self.game.gameUI.showEstadisticas();
-            });
-
-            $("#botonOpciones").click(function () {
-                self.game.gameUI.showOpciones();
-            });
-
-            $("#botonClanes").click(function () {
-                self.game.gameUI.showClanes();
-            });
-
-            $("#botonParty").click(function(){
-               self.game.client.sendRequestPartyForm();
+            $("#menuJuegoBotonMenu").click(function(){
+                self.game.gameUI.showMenu();
             });
 
             //FIX bug firefox que no previene movimiento scroll hehcizos
@@ -136,37 +120,33 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
             $("#indicadorOro").text(oro);
         }
 
-        _updateBarra(cant, max, $barra, $label, invertida) {
+        _updateBarra(cant, max, $barra, $label) {
             var porcentaje = 100;
             if (max) {
-                if (invertida) {
-                    porcentaje = 100 - Math.floor((cant / max) * 100);
-                } else {
                     porcentaje = Math.floor((cant / max) * 100);
-                }
             }
             $barra.css("width", porcentaje + "%");
             $label.text(cant + "/" + max);
         }
 
         updateBarraEnergia(cant, max) {
-            this._updateBarra(cant, max, $("#barraEnergiaUsada"), $("#barraEnergiaTexto"), true);
+            this._updateBarra(cant, max, $("#barraEnergiaUsada"), $("#barraEnergiaTexto"));
         }
 
         updateBarraVida(cant, max) {
-            this._updateBarra(cant, max, $("#barraSaludUsada"), $("#barraSaludTexto"), true);
+            this._updateBarra(cant, max, $("#barraSaludUsada"), $("#barraSaludTexto"));
         }
 
         updateBarraMana(cant, max) {
-            this._updateBarra(cant, max, $("#barraManaUsada"), $("#barraManaTexto"), true);
+            this._updateBarra(cant, max, $("#barraManaUsada"), $("#barraManaTexto"));
         }
 
         updateBarraHambre(cant, max) {
-            this._updateBarra(cant, max, $("#barraHambreUsada"), $("#barraHambreTexto"), true);
+            this._updateBarra(cant, max, $("#barraHambreUsada"), $("#barraHambreTexto"));
         }
 
         updateBarraSed(cant, max) {
-            this._updateBarra(cant, max, $("#barraSedUsada"), $("#barraSedTexto"), true);
+            this._updateBarra(cant, max, $("#barraSedUsada"), $("#barraSedTexto"));
         }
 
         updateBarraExp(cant, max) {

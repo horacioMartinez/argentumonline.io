@@ -1,8 +1,9 @@
 /*Interfaz: elementos dentro de la pantalla de juego (inventario, etc)*/
 
-#gamecanvas{
+#gamecanvas {
   display: inline-block;
 }
+
 #gamecanvas.crosshair {
   cursor: crosshair;
 }
@@ -10,14 +11,17 @@
 /* <--- esto deberia estar en otro lado */
 #menuJuego span {
   cursor: default;
+  font-weight: bold;
 }
 
 #menuJuego {
+  @extend .background_default, .exterior_border_default;
+  border-right-width: 0px;
+  border-top-width: 0px;
+  border-bottom-width: 0px;
   flex: 1;
   display: inline-block;
   position: relative;
-  background-size: 100% 100%;
-  background-image: url('../imagenes/interfaz/bordeDerecha.png')
 }
 
 #InventarioHechizos {
@@ -122,39 +126,68 @@
 }
 
 #barraEnergia, #barraMana, #barraSalud, #barraHambre, #barraSed {
-  background-color: Transparent;
+  @extend .divImagen;
   position: absolute;
-  left: 11.84%;
-  width: 30.6%;
-  height: 2.2%;
+  left: 8%;
+  width: 84.6%;
+  height: 2.5%;
+  outline: dashed 2px yellow;
+  background-size: 100% 100%;
+  background-image: url('../imagenes/interfaz/barras/barra_background.png');
 }
 
 #barraEnergia {
+
   top: 68.6%;
 }
 
 #barraMana {
+
   top: 73.4%;
 }
 
 #barraSalud {
+
   top: 77.6%;
 }
 
 #barraHambre {
+
   top: 82.2%;
 }
 
 #barraSed {
+
   top: 86.4%;
 }
 
 #barraEnergiaUsada, #barraManaUsada, #barraSaludUsada, #barraHambreUsada, #barraSedUsada {
-  background-color: black;
-  float: right;
+  @extend .divImagen;
+  background-size: 100% 100%;
+  float: left;
   height: 100%;
   width: 30%;
   outline: dashed 2px green;
+}
+
+#barraEnergiaUsada {
+  background-image: url('../imagenes/interfaz/barras/barra_energia.png');
+}
+
+#barraManaUsada {
+  background-image: url('../imagenes/interfaz/barras/barra_mana.png');
+}
+
+#barraSaludUsada {
+  background-image: url('../imagenes/interfaz/barras/barra_vida.png');
+}
+
+#barraHambreUsada {
+  background-image: url('../imagenes/interfaz/barras/barra_hambre.png');
+}
+
+#barraSedUsada {
+  background-image: url('../imagenes/interfaz/barras/barra_sed.png');
 }
 
 #barraExpTexto {
@@ -246,6 +279,7 @@
 }
 
 #botonSeguroAtacar {
+  border: dashed 2px green;
   position: absolute;
   left: 60.1%;
   top: 90.5%;
@@ -274,46 +308,6 @@
   width: 10.3%;
   height: 6%;
   background-image: url("../imagenes/interfaz/macroTrabajo.jpg");
-}
-
-#botonMapa {
-  position: absolute;
-  left: 53.5%;
-  top: 68%;
-  width: 35.5%;
-  height: 3.6%;
-}
-
-#botonParty {
-  position: absolute;
-  left: 53.5%;
-  top: 72%;
-  width: 35.5%;
-  height: 3.6%;
-}
-
-#botonOpciones {
-  position: absolute;
-  left: 53.5%;
-  top: 76%;
-  width: 35.5%;
-  height: 3.6%;
-}
-
-#botonEstadisticas {
-  position: absolute;
-  left: 53.5%;
-  top: 80%;
-  width: 35.5%;
-  height: 3.6%;
-}
-
-#botonClanes {
-  position: absolute;
-  left: 53.5%;
-  top: 84%;
-  width: 35.5%;
-  height: 3.6%;
 }
 
 #botonAsignarSkills {

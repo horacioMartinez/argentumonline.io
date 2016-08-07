@@ -6,10 +6,10 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
         'ui/game/interfaz', 'ui/popups/tirar', 'ui/popups/boveda', 'ui/popups/guiamapa', 'ui/popups/opciones', 'ui/popups/carpinteria',
         'ui/popups/herreria', 'ui/popups/clanes', 'ui/popups/detallesclan', 'ui/popups/solicitudclan', 'ui/popups/eleccionfaccionclan',
         'ui/popups/crearclan', 'ui/popups/noticiasclan', 'ui/popups/detallespersonaje', 'ui/popups/estadisticas', 'ui/popups/partylider',
-        'ui/popups/partymiembro'],
+        'ui/popups/partymiembro', 'ui/popups/menu'],
     function (Enums, KeyMouseListener, popUpSkills, Comerciar, InGameMensaje, Interfaz, Tirar, Boveda, GuiaMapa, Opciones,
               Carpinteria, Herreria, Clanes, DetallesClan, SolicitudClan, EleccionFaccionClan, CrearClan, NoticiasClan,
-              DetallesPersonaje, Estadisticas, PartyLider, PartyMiembro) {
+              DetallesPersonaje, Estadisticas, PartyLider, PartyMiembro, Menu) {
 
         class GameUI {
             constructor(gameManager, storage) {
@@ -30,6 +30,9 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
 
                 this.opciones = new Opciones(game, storage, this.updateKeysCallback.bind(this), showMensajeFunction);
                 this.skills = new popUpSkills(game);
+
+                this.menu = new Menu(game,this.showMapa.bind(this),this.showEstadisticas.bind(this), 
+                    this.showClanes.bind(this),this.showOpciones.bind(this));
 
                 this.detallesClan = new DetallesClan(game, this._showSolicitudClan.bind(this));
                 this.clanes = new Clanes(game, this.detallesClan, showMensajeFunction, this._showSolicitudClan.bind(this));
@@ -158,6 +161,10 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
                 } else {
                     this.partyMiembro.show(data,exp);
                 }
+            }
+
+            showMenu(){
+                this.menu.show();
             }
 
             setAtributosInfo(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion) {

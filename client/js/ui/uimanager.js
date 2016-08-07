@@ -11,6 +11,11 @@ define(['ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mensaje'], fu
             this.crearPjUI = new CrearPjUI(this.assetManager, this.mensaje);
 
             this.gameUI = null;
+
+            //en px
+            this.widthMenuJuego = 154;
+            this.widthJuego = 17 * 32;
+            this.heightJuego = 13 * 32;
         }
 
         center() {
@@ -112,12 +117,14 @@ define(['ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mensaje'], fu
         }
 
         getEscala() {
-            return $('#container').height() / 416;
+            // el height del container se setea por media querys y a partir de eso sale la escala de lo demas
+            // escala = 1 <=> height = 32*13 = 416
+            return $('#container').height() / this.heightJuego;
         }
 
         resizeUi() {
             var escala = this.getEscala();
-            $('#container').width(escala * 716); //300 de offset para interfaz derecha
+            $('#container').width(escala * (this.widthJuego + this.widthMenuJuego) + $('#menuJuego').css("border-left-width"));
             $('#chatbox input').css("font-size", Math.floor(12 * escala) + 'px');
 
             if (this.gameUI) {

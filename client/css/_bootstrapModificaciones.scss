@@ -1,5 +1,6 @@
 @import "bootstrapVariables";
 @import "vendor/bootstrap/variables";
+@import "formElements";
 
 .panel-heading {
   background-color: rgba(150, 122, 99, 0.2) !important;
@@ -21,7 +22,7 @@
 }
 
 .form-horizontal .btn {
-  margin: 14px 0px;
+  @extend .margenBoton;
 }
 
 /* TODO: modificar background en mixin */
