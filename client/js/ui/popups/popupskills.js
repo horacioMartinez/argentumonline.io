@@ -95,7 +95,7 @@ define(["text!../../../menus/skills.html!strip", 'ui/popups/popup'], function (D
         }
 
         _updatePuntosLibres() {
-            $("#popUpSkillsContenedorPuntosLibres").text("PUNTOS LIBRES: " + this.skills.puntosLibres);
+            $("#popUpSkillsContenedorPuntosLibres").text("Puntos libres: " + this.skills.puntosLibres);
         }
 
         _updateSkill(numSkill, nombre, puntos) {

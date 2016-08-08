@@ -130,30 +130,35 @@
     </div>
 
     <!-- Pantalla de juego-->
-    <div id="juego" class="exterior_border_default">
+    <div id="juego" class="exterior_border_default background_default">
         <div id="gamecanvas" class="clickable"></div>
-        <div id="chatbox">
-            <input id="chatinput" type="text" class="form-control" maxlength="60" autocomplete="off">
+        <div id="chatbox" class="exterior_border_default background_default">
+            <div id="chatinputContainer" class="inner_border_default">
+                <div style="width:100%; display:flex;">
+                    <input id="chatinput" type="text" class="form-control" maxlength="60" autocomplete="off">
+                    <button id="botonChatInput" class="botonImagen"></button>
+                </div>
+            </div>
         </div>
 
-        <!--interfaz ingame-->
-        <div id="menuJuego" >
-            <div id="barraExp">
-                <div id="barraExpUsada"></div>
-                <span id="barraExpTexto"></span>
-                <button id="botonAsignarSkills" class="botonImagen"></button>
-                <span id="indicadorNivel"></span>
-            </div>
-            <button id="menuJuegoBotonMenu" class="btn btn-default">MENU</button>
-            <div id="InventarioHechizos" class="inventario">
+        <!--interfaz de la derecha ingame-->
+        <div id="menuJuego">
+            <button id="botonAsignarSkills" class="botonImagen"></button>
+            <span id="indicadorNivel"></span>
+            <button id="menuJuegoBotonMenu" class="botonImagen"></button>
+            <div id="InventarioHechizos">
                 <ul id="itemsGrid" class="itemgrid"></ul>
                 <select id="hechizos" size="2"></select>
-                <button id="botonInventario" class="botonInvisible"></button>
-                <button id="botonHechizos" class="botonInvisible"></button>
-                <button id="botonLanzar" class="botonInvisible"></button>
-                <button id="botonInfo" class="botonInvisible"></button>
+                <button id="botonInventario" class="btn btn-default">Inventario</button>
+                <button id="botonHechizos" class="btn btn-default">Hechizos</button>
+                <button id="botonLanzar" class="btn btn-default">Lanzar</button>
+                <button id="botonInfo" class="btn btn-default">Info</button>
             </div>
             <div id="barras">
+                <div id="barraExp">
+                    <div id="barraExpUsada"></div>
+                    <span id="barraExpTexto"></span>
+                </div>
                 <div id="barraEnergia">
                     <div id="barraEnergiaUsada"></div> <!-- Porcentaje usado (en negro) de la barra -->
                     <span id="barraEnergiaTexto"></span>
@@ -175,7 +180,7 @@
                     <span id="barraSedTexto"></span>
                 </div>
             </div>
-            <button id="botonTirarOro" class="botonInvisible"></button>
+            <button id="botonTirarOro" class="botonImagen"></button>
             <span id="indicadorAgilidad"></span>
             <span id="indicadorFuerza"></span>
             <span id="indicadorOro"></span>

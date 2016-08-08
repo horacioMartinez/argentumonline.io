@@ -109,21 +109,25 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
         }
 
         updateAgilidad(agi) {
-            $("#indicadorAgilidad").text(agi);
+            $("#indicadorAgilidad").text("A: " + agi);
         }
 
         updateFuerza(fuerza) {
-            $("#indicadorFuerza").text(fuerza);
+            $("#indicadorFuerza").text("F: " + fuerza);
         }
 
         updateOro(oro) {
             $("#indicadorOro").text(oro);
         }
 
-        _updateBarra(cant, max, $barra, $label) {
+        _updateBarra(cant, max, $barra, $label, invertida) {
             var porcentaje = 100;
             if (max) {
+                if (invertida) {
+                    porcentaje = 100 - Math.floor((cant / max) * 100);
+                } else {
                     porcentaje = Math.floor((cant / max) * 100);
+                }
             }
             $barra.css("width", porcentaje + "%");
             $label.text(cant + "/" + max);

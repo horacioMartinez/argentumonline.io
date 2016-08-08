@@ -118,7 +118,7 @@ define(['ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mensaje'], fu
 
         getEscala() {
             // el height del container se setea por media querys y a partir de eso sale la escala de lo demas
-            // escala = 1 <=> height = 32*13 = 416
+            // escala = 1 <=> height = this.heightJuego
             return $('#container').height() / this.heightJuego;
         }
 

@@ -7,8 +7,8 @@ define(["text!../../../menus/inGameMensaje.html!strip", 'ui/popups/popup'], func
     class InGameMensaje extends PopUp {
         constructor() {
             var options = {
-                width: 450,
-                height: 300,
+                width: 350,
+                height: 200,
                 minWidth: 200,
                 minHeight: 150
             };

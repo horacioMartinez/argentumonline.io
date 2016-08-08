@@ -8,15 +8,8 @@
 //}
 
 #menuJuego, #chatbox, footer, #container {
-  user-select: none;
-  /* DEJAR PREFIJOS DE BROWSERS EN ESTO */
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -o-user-select: none;
-  -ms-user-select: none;
-  /* ********************************** */
+  @extend .noselect;
 }
-
 
 body {
   padding: 0;
@@ -47,6 +40,7 @@ body {
   right: 0;
   margin: auto;
 }
+
 
 /* el width de setea para que quede del ratio adecaudo en el programa de js */
 
@@ -81,35 +75,6 @@ body {
 
 body {
   background-color: #000;
-}
-
-#chatbox {
-  height: 6.5%;
-  width: 63%;
-  position: absolute;
-  left: 4%;
-  top: 92%
-}
-
-#chatbox.active {
-  top: 85.5%;
-}
-
-#chatbox input {
-  font-size: 12px;
-  background: none;
-  width: 100%;
-  border: 0;
-  margin-left: 2%;
-  margin-top: 2%
-}
-
-#chatbox {
-  background-image: url('../graficos/ui/chatbox.png');
-  background-size: contain;
-  /*fin tamaño img*/
-  z-index: -1;
-  transition: 0.2s top ease;
 }
 
 /* Tamaño contenedor (width seteado en js) */

@@ -1,14 +1,53 @@
 /*Interfaz: elementos dentro de la pantalla de juego (inventario, etc)*/
 
+$left_align_percentage: 8%;
+
 #gamecanvas {
   display: inline-block;
 }
 
+/* esto deberia estar en otro lado */
 #gamecanvas.crosshair {
   cursor: crosshair;
 }
 
-/* <--- esto deberia estar en otro lado */
+#chatbox {
+  border-bottom: 0;
+  height: 50px;
+  width: 63%;
+  position: absolute;
+  left: 5%;
+  bottom: -13px;
+  z-index: 1;
+  //transition: 0.2s top ease;
+  display:none;
+}
+
+#chatbox.active {
+  display: inline-block;
+}
+
+#chatinputContainer{
+  border-bottom: 0;
+}
+
+#chatinput{
+  flex:1;
+  margin-right: 2px;
+  display: inline-block;
+}
+
+#botonChatInput{
+  height:27px;
+  width:52px;
+  margin-right: 5px;
+  background-image: url('../imagenes/botones/chat_send_btn.png');
+  background-size: 100% 100%;
+  display:inline-block;
+}
+
+
+
 #menuJuego span {
   cursor: default;
   font-weight: bold;
@@ -34,7 +73,7 @@
 }
 
 #InventarioHechizos {
-  background-image: url('../imagenes/interfaz/centroHechizos.jpg');
+  //background-image: url('../imagenes/interfaz/centroHechizos.jpg');
 }
 
 #botonInventario {
@@ -71,7 +110,7 @@
 
 #itemsGrid {
   position: absolute;
-  left: 8.6%;
+  left: $left_align_percentage;
   top: 15%;
   width: 80.9%;
   height: 56.74%;
@@ -110,7 +149,7 @@
 }
 
 .inventarioActivo #InventarioHechizos {
-  background-image: url('../imagenes/interfaz/centroInventario.jpg');
+  //background-image: url('../imagenes/interfaz/centroInventario.jpg');
 }
 
 #barras span {
@@ -125,13 +164,12 @@
   text-align: center;
 }
 
-#barraEnergia, #barraMana, #barraSalud, #barraHambre, #barraSed {
+#barraEnergia, #barraMana, #barraSalud, #barraHambre, #barraSed, #barraExp {
   @extend .divImagen;
   position: absolute;
-  left: 8%;
+  left: $left_align_percentage;
   width: 84.6%;
   height: 2.5%;
-  outline: dashed 2px yellow;
   background-size: 100% 100%;
   background-image: url('../imagenes/interfaz/barras/barra_background.png');
 }
@@ -161,13 +199,17 @@
   top: 86.4%;
 }
 
-#barraEnergiaUsada, #barraManaUsada, #barraSaludUsada, #barraHambreUsada, #barraSedUsada {
+#barraExp {
+  top:2%;
+}
+
+#barraEnergiaUsada, #barraManaUsada, #barraSaludUsada, #barraHambreUsada, #barraSedUsada, #barraExpUsada {
   @extend .divImagen;
   background-size: 100% 100%;
+  transition: width 0.5s;
   float: left;
   height: 100%;
   width: 30%;
-  outline: dashed 2px green;
 }
 
 #barraEnergiaUsada {
@@ -190,38 +232,14 @@
   background-image: url('../imagenes/interfaz/barras/barra_sed.png');
 }
 
-#barraExpTexto {
-  text-align: center;
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%); /*borde negro de font: */
-  color: white;
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-}
-
-#barraExp {
-  background-color: Transparent;
-  position: relative;
-  top: 28.1%;
-  left: 3.875%;
-  width: 62.875%;
-  height: 38.8%;
-}
-
 #barraExpUsada {
-  float: left;
-  height: 100%;
-  width: 30%;
-  background: url('../imagenes/interfaz/barraExp.png');
-  background-size: cover;
+  background-image: url('../imagenes/interfaz/barras/barra_experiencia.png');
+
 }
 
 #indicadorNivel {
-  top: 13%;
-  left: 70%;
+  top: 0%;
+  left: 20%;
   position: absolute;
   color: yellow
 }
@@ -231,22 +249,22 @@
   text-align: center;
 }
 
-#indicadorOro {
-  left: 69%;
+#indicadorOro { //TODO: corregir esto, ponerlo con la imagen en una div y posicionar absolutamente esa div
+  left: 17%;
   top: 61.6%;
-  color: #FFD700;
+  color: $gold_currency_color;
   text-align: left;
 }
 
 #indicadorFuerza {
-  left: 37%;
+  left: 67.5%;
   top: 60.6%;
   color: #B8860B;
 }
 
 #indicadorAgilidad {
-  left: 21.5%;
-  top: 60.6%;
+  left: 67.5%;
+  top: 63.5%;
   color: #D2691E;
 }
 
@@ -259,10 +277,11 @@
 
 #botonTirarOro {
   position: absolute;
-  left: 61.5%;
+  left: $left_align_percentage;
   top: 61%;
-  width: 6.5%;
-  height: 3.7%;
+  width: 11%;
+  height: 3.5%;
+  background-image: url("../imagenes/interfaz/iconos/coin.png");
 }
 
 #botonSeguroResucitar {
@@ -313,8 +332,17 @@
 #botonAsignarSkills {
   position: absolute;
   background-image: url("../imagenes/interfaz/botonAsignarSkills.png");
-  left: 55%;
-  top: 10%;
-  width: 5%;
-  height: 80%
+  left: 75%;
+  top: 1%;
+  width: 15%;
+  height: 2%
+}
+
+#menuJuegoBotonMenu {
+  position: absolute;
+  background-image: url("../imagenes/botones/menu.png");
+  width:18%;
+  height:6%;
+  top: 93% ;
+  left:4%;
 }

@@ -12,6 +12,12 @@
 
 .noselect {
   user-select: none;
+  /* DEJAR PREFIJOS DE BROWSERS EN ESTO */
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  -ms-user-select: none;
+  /* ********************************** */
 }
 
 .divImagen {

@@ -13,8 +13,11 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
 
             this._prevKeyDown = [];
             this.$gameCanvas = $('#gamecanvas');
+            this.$chatButton = $('#botonChatInput');
 
             this.talkingToClan = false;
+
+            this._initChatButtonCallback();
         }
 
         setKeys(keys) {
@@ -72,7 +75,7 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
 
         initListeners() {
             var self = this;
-            $('#chatbox').attr('value', '');
+            //$('#chatbox').attr('value', '');
             this._initMouseListeners();
             this._initDocumentKeysListeners();
             this._initChatKeyListener();
@@ -120,8 +123,7 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
 
                 if (key === self.keys.chat) {
                     if ($chatb.hasClass('active')) {
-                        self._trySendingChat();
-                        self.hideChat();
+                        self._submitChat();
                     } else {
                         self.showChat();
                     }
@@ -130,8 +132,7 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
                 if (key === self.keys.chatClan) {
                     if ($chatb.hasClass('active')) {
                         if (self.talkingToClan) {
-                            self._trySendingChat();
-                            self.hideChat();
+                            self._submitChat();
                         }
                     } else {
                         self.talkingToClan = true;
@@ -151,6 +152,17 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
                 }
             });
 
+        }
+
+        _submitChat() {
+            this.$chatButton.click();
+        }
+
+        _initChatButtonCallback() {
+            this.$chatButton.click(() => {
+                this._trySendingChat();
+                this.hideChat();
+            });
         }
 
         _trySendingChat() {
@@ -181,8 +193,7 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
                 var key = e.which;
 
                 if (key === self.keys.chat) {
-                    self._trySendingChat();
-                    self.hideChat();
+                    self._submitChat();
                     return false;
                 }
 
@@ -217,7 +228,7 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
                 self.updateGameMouseCoordinates(self.game, event, self.$gameCanvas);
             }, 50));
 
-            // DEBUG:
+            // DEBUG------------------------------ NO SACAR----------------------------------- :
             /*
              $(window).bind('mousewheel DOMMouseScroll', function (event) {
              var escala;
@@ -234,6 +245,7 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
              self.game.renderer.stage.x = ((self.game.renderer.stage.width * (1 - self.game.renderer.stage.scale.x)) / 2);
              self.game.renderer.stage.y = ((self.game.renderer.stage.height * (1 - self.game.renderer.stage.scale.y)) / 2);
              });*/
+            // ----------------------------------- NO SACAR----------------------------------- :
 
         }
 
