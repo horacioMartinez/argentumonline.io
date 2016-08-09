@@ -6,5 +6,10 @@
 
 /* chrome cambia el color de background del input a amarillo cuando se usa autocomplete */
 input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  -webkit-box-shadow: 0 0 0px 1000px $input-bg inset;
+  -webkit-text-fill-color: $input-color !important;
+}
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px $input-bg inset;
+  -webkit-text-fill-color: $input-color !important;
 }

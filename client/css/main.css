@@ -4066,7 +4066,7 @@ output {
   padding-top: 4px;
   font-size: 14px;
   line-height: 1.42857;
-  color: #665a51; }
+  color: #9f8e80; }
 
 .form-control {
   display: block;
@@ -4075,7 +4075,7 @@ output {
   padding: 3px 12px;
   font-size: 14px;
   line-height: 1.42857;
-  color: #665a51;
+  color: #9f8e80;
   background-color: #191411;
   background-image: none;
   border: 1px solid #453c36;
@@ -4091,12 +4091,12 @@ output {
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(151, 132, 113, 0.6);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(151, 132, 113, 0.6); }
   .form-control::-moz-placeholder {
-    color: #999;
+    color: #554b3f;
     opacity: 1; }
   .form-control:-ms-input-placeholder {
-    color: #999; }
+    color: #554b3f; }
   .form-control::-webkit-input-placeholder {
-    color: #999; }
+    color: #554b3f; }
   .form-control::-ms-expand {
     border: 0;
     background-color: transparent; }
@@ -5122,7 +5122,7 @@ tbody.collapse.in {
   font-size: 14px;
   font-weight: normal;
   line-height: 1;
-  color: #665a51;
+  color: #9f8e80;
   text-align: center;
   background-color: #eeeeee;
   border: 1px solid #453c36;
@@ -7857,7 +7857,12 @@ span {
 
 /* chrome cambia el color de background del input a amarillo cuando se usa autocomplete */
 input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px white inset; }
+  -webkit-box-shadow: 0 0 0px 1000px #191411 inset;
+  -webkit-text-fill-color: #9f8e80 !important; }
+
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #191411 inset;
+  -webkit-text-fill-color: #9f8e80 !important; }
 
 /* General Layout */
 .background_default, .dialog_default, #menuJuego {
@@ -7868,7 +7873,9 @@ body {
   margin: 0;
   background: url("../imagenes/background_images/login.png");
   background-size: cover;
-  overflow: hidden;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   border-top: 2px solid #707070; }
 
 .preload {
@@ -7990,23 +7997,24 @@ footer a {
 .intro #container {
   display: none; }
 
-#logo {
-  margin-top: 10vh;
-  margin-bottom: 10vh; }
+#conectar {
+  margin-top: 9vh; }
+
+#loginBox {
+  margin-top: 6vh;
+  width: 300px; }
 
 #loginNombre {
-  font-size: 14px;
-  margin-bottom: 3vh; }
+  width: 70%;
+  margin-top: 20px; }
 
 #loginContrasenia {
-  font-size: 14px;
-  margin-bottom: 6vh; }
-
-#botonJugar {
-  margin-bottom: 2vh; }
+  width: 70%;
+  margin-top: 10px;
+  margin-bottom: 24px; }
 
 #botonCrearPJ {
-  margin-bottom: 3vh; }
+  margin-bottom: 16px; }
 
 #crearPjDiv select {
   max-width: 180px;

@@ -1,7 +1,26 @@
-#logo {margin-top:10vh;margin-bottom:10vh;}
+//#logo {margin-top:10vh;margin-bottom:10vh;}
+//
+//#loginBox{margin-bottom:3vh;width:10%;}
+#conectar {
+  margin-top: 9vh;
+}
 
-#loginNombre{font-size:14px;margin-bottom:3vh;}
-#loginContrasenia{font-size:14px; margin-bottom:6vh;}
+#loginBox {
+  margin-top: 6vh;
+  width:300px;
+}
 
-#botonJugar{margin-bottom:2vh;}
-#botonCrearPJ{margin-bottom:3vh;}
+#loginNombre{
+  width:70%;
+  margin-top: 20px;
+}
+
+#loginContrasenia{
+  width:70%;
+  margin-top: 10px;
+  margin-bottom: 24px;
+}
+
+#botonCrearPJ{
+  margin-bottom: 16px;
+}

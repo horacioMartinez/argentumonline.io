@@ -13,21 +13,8 @@ define(["text!../../../menus/menu.html!strip", 'ui/popups/popup'], function (DOM
                 minHeight: 280
             };
             super(DOMdata, options);
-            this.game = game;
-            this.showMapaCb = showMapaCb;
-            this.showEstadisticasCb = showEstadisticasCb;
-            this.showClanesCb = showClanesCb;
-            this.showOpcionesCb = showOpcionesCb;
 
             this.initCallbacks();
-        }
-
-        show() {
-            super.show();
-        }
-
-        hide() {
-            super.hide();
         }
 
         initCallbacks() {

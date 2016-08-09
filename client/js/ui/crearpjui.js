@@ -2,13 +2,13 @@
  * Created by horacio on 2/27/16.
  */
 
-define(['enums', 'utils/util'], function (Enums, Utils) {
+define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Utils, DialogCrearPersonaje) {
     class CrearPjUI {
         constructor(assetManager, mensaje) {
             this.assetManager = assetManager;
-            this.mensaje = mensaje;
+            
+            
             this._inicializado = false;
-            this.LARGO_MINIMO_PASSWORD = 5;
             this.offsetSelectedCabeza = 0;
 
             this.$imgCabezaIzq = $('#crearPjSeleccionCabezaImagenIzq');
@@ -17,6 +17,8 @@ define(['enums', 'utils/util'], function (Enums, Utils) {
 
             this.$imagenCuerpo = $('#crearPjImagenPersonaje');
             this.$imagenCabezaCuerpo = $('#crearPjImagenCabezaPersonaje');
+            
+            this.dialogCrearPersonaje = new DialogCrearPersonaje(mensaje);
         }
 
         inicializar() {
@@ -65,13 +67,13 @@ define(['enums', 'utils/util'], function (Enums, Utils) {
             $("#crearBotonGeneroMasculino").addClass('selected');
             $("#crearBotonGeneroFemenino").removeClass('selected');
 
-            $("#crearBotonGeneroMasculino").click( () =>{
+            $("#crearBotonGeneroMasculino").click(() => {
                 $("#crearBotonGeneroMasculino").toggleClass('selected');
                 $("#crearBotonGeneroFemenino").toggleClass('selected');
                 this._updatePJ();
             });
 
-            $("#crearBotonGeneroFemenino").click( () =>{
+            $("#crearBotonGeneroFemenino").click(() => {
                 $("#crearBotonGeneroMasculino").toggleClass('selected');
                 $("#crearBotonGeneroFemenino").toggleClass('selected');
                 this._updatePJ();
@@ -114,47 +116,56 @@ define(['enums', 'utils/util'], function (Enums, Utils) {
         }
 
         setBotonVolverCallback(cb) {
+            var self = this;
             $('#crearBotonVolver').click(function () {
+                self.dialogCrearPersonaje.hide();
                 cb();
             });
         }
 
         setBotonCrearCallback(cb) {
             var self = this;
+
+            self.dialogCrearPersonaje.crearCb = cb;
+
             $('#crearBotonCrear').click(function () {
-                var nombre = $("#crearNombreInput").val();
-                var password = $("#crearPasswordInput").val();
-                var password2 = $("#crearRepetirPasswordInput").val();
-                var mail = $("#crearMailInput").val();
-                var raza = this._getRaza();
-                var genero = this._getGenero();
+                var raza = self._getRaza();
+                var genero = self._getGenero();
                 var clase = $("#crearSelectClase").val();
                 var ciudad = $("#crearSelectCiudad").val();
                 var cabeza = self._getCabezaNum(self.offsetSelectedCabeza);
 
-                if (!cabeza) {
-                    self.mensaje.show("Debes elegir una cabeza");
-                }
+                self.dialogCrearPersonaje.show(raza, genero, clase, ciudad, cabeza);
+                //
+                // var nombre = $("#crearNombreInput").val();
+                // var password = $("#crearPasswordInput").val();
+                // var password2 = $("#crearRepetirPasswordInput").val();
+                // var mail = $("#crearMailInput").val();
 
-                if (!(nombre && password && password2 && raza && genero && clase && cabeza && mail && ciudad)) {
-                    self.mensaje.show("Debes completar todos los campos");
-                    return;
-                }
-                if (!self.emailValido(mail)) {
-                    self.mensaje.show("Mail invalido");
-                    return;
-                }
-                if (!self.passwordValido(password)) {
-                    self.mensaje.show("El password debe contener " + self.LARGO_MINIMO_PASSWORD + " o mas caracteres");
-                    return;
-                }
-
-                if (!( password === password2)) {
-                    self.mensaje.show("Los passwords ingresados no coinciden");
-                    return;
-                }
-
-                cb(nombre, password, raza, genero, clase, cabeza, mail, ciudad);
+                //
+                // if (!cabeza) {
+                //     self.mensaje.show("Debes elegir una cabeza");
+                // }
+                //
+                // if (!(nombre && password && password2 && raza && genero && clase && cabeza && mail && ciudad)) {
+                //     self.mensaje.show("Debes completar todos los campos");
+                //     return;
+                // }
+                // if (!self.emailValido(mail)) {
+                //     self.mensaje.show("Mail invalido");
+                //     return;
+                // }
+                // if (!self.passwordValido(password)) {
+                //     self.mensaje.show("El password debe contener " + self.LARGO_MINIMO_PASSWORD + " o mas caracteres");
+                //     return;
+                // }
+                //
+                // if (!( password === password2)) {
+                //     self.mensaje.show("Los passwords ingresados no coinciden");
+                //     return;
+                // }
+                //
+                // cb(nombre, password, raza, genero, clase, cabeza, mail, ciudad);
             });
         }
 
@@ -214,16 +225,6 @@ define(['enums', 'utils/util'], function (Enums, Utils) {
             $('#crearDadoInteligencia').text("Inteligencia: " + Inteligencia);
             $('#crearDadoCarisma').text("Carisma: " + Carisma);
             $('#crearDadoConstitucion').text("Constitucion: " + Constitucion);
-        }
-
-        emailValido(email) {
-            // Regex borrowed from http://stackoverflow.com/a/46181/393005
-            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return re.test(email);
-        }
-
-        passwordValido(pw) {
-            return (!(pw.length < this.LARGO_MINIMO_PASSWORD))
         }
 
         getPrimerYUltimaCabezaNum() {

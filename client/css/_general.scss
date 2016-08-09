@@ -16,8 +16,10 @@ body {
   margin: 0;
   background: url("../imagenes/background_images/login.png");
   background-size: cover;
-
-  overflow: hidden;
+  background-position: center; // dejar para que clipee de arriba y abajo
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  //overflow: hidden;
   border-top: 2px solid #707070;
 }
 
