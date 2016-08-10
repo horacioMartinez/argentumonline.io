@@ -16,8 +16,8 @@ define(["text!../../../menus/boveda.html!strip", 'ui/popups/popup', 'ui/game/ite
             this.game = game;
             this.acciones = acciones;
 
-            this.shopGrid = new ItemGrid("bovedaGridComprar", true);
-            this.userGrid = new ItemGrid("bovedaGridVender", true);
+            this.shopGrid = new ItemGrid("bovedaGridComprar");
+            this.userGrid = new ItemGrid("bovedaGridVender");
             this.initCallbacks();
         }
 
@@ -31,8 +31,8 @@ define(["text!../../../menus/boveda.html!strip", 'ui/popups/popup', 'ui/game/ite
                     self.userGrid.modificarSlot(slot.numero, slot.cantidad, numGraf);
                 });
 
-            this.shopGrid.resetSelectedSlot();
-            this.userGrid.resetSelectedSlot();
+            this.shopGrid.deselect();
+            this.userGrid.deselect();
         }
 
         hide(incomingFromServer) {

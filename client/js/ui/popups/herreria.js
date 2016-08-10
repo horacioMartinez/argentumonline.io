@@ -52,7 +52,7 @@ define(["text!../../../menus/herreria.html!strip", 'ui/popups/popup'], function 
                 $row.append($cellRequerimientos);
 
                 var $cellConstruir = $('<td></td>');
-                var $botonConstruir = $('<button class="botonNormal" >CONSTRUIR</button>');
+                var $botonConstruir = $('<button class="btn btn-default" >Construir</button>');
 
                 $botonConstruir.data("itemIndex", item.ArmasHerreroIndex);
                 $botonConstruir.click(function () {

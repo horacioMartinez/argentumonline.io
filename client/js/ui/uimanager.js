@@ -94,15 +94,6 @@ define(['ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mensaje'], fu
                 return false;
             });
 
-            /*
-             var data = self.storage.data;
-             if (data.hasAlreadyPlayed) {
-             if (data.player.name && data.player.name !== "") {
-             $('#playername').html(data.player.name);
-             $('#playerimage').attr('src', data.player.image);
-             }
-             }*/
-
             document.addEventListener("touchstart", function () {
             }, false);
 
@@ -110,9 +101,6 @@ define(['ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mensaje'], fu
             $(window).resize(_.throttle(function (event) {
                 resizeCallback();
             }, 100));
-            // $(window).on('resize', _.debounce(function () {// <--- todo
-            //               self.resizeUi.bind(self)
-            //           }, 500));
 
         }
 

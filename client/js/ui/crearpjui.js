@@ -4,10 +4,10 @@
 
 define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Utils, DialogCrearPersonaje) {
     class CrearPjUI {
-        constructor(assetManager, mensaje) {
+        constructor(assetManager, showMensajeCb) {
             this.assetManager = assetManager;
-            
-            
+            this.showMensajeCb = showMensajeCb;
+
             this._inicializado = false;
             this.offsetSelectedCabeza = 0;
 
@@ -17,8 +17,13 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
 
             this.$imagenCuerpo = $('#crearPjImagenPersonaje');
             this.$imagenCabezaCuerpo = $('#crearPjImagenCabezaPersonaje');
-            
-            this.dialogCrearPersonaje = new DialogCrearPersonaje(mensaje);
+
+            this._dialogCrearPersonaje = null;
+        }
+
+        get dialogCrearPersonaje() {
+            this._dialogCrearPersonaje = this._dialogCrearPersonaje || new DialogCrearPersonaje(this.showMensajeCb);
+            return this._dialogCrearPersonaje;
         }
 
         inicializar() {
@@ -51,15 +56,15 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
 
             id = "crearSelectClase";
             $sel = $('#' + id);
-            this.modificarSlotInput($sel, id, Enums.Clase.mago, "Mago");
             this.modificarSlotInput($sel, id, Enums.Clase.clerigo, "Clérigo");
             this.modificarSlotInput($sel, id, Enums.Clase.guerrero, "Guerrero");
+            this.modificarSlotInput($sel, id, Enums.Clase.mago, "Mago");
+            this.modificarSlotInput($sel, id, Enums.Clase.paladin, "Paladín");
             this.modificarSlotInput($sel, id, Enums.Clase.asesino, "Asesino");
             this.modificarSlotInput($sel, id, Enums.Clase.ladron, "Ladrón");
             this.modificarSlotInput($sel, id, Enums.Clase.bardo, "Bardo");
             this.modificarSlotInput($sel, id, Enums.Clase.druida, "Druida");
             this.modificarSlotInput($sel, id, Enums.Clase.bandido, "Bandido");
-            this.modificarSlotInput($sel, id, Enums.Clase.paladin, "Paladín");
             this.modificarSlotInput($sel, id, Enums.Clase.cazador, "Cazador");
             this.modificarSlotInput($sel, id, Enums.Clase.trabajador, "Trabajador");
             this.modificarSlotInput($sel, id, Enums.Clase.pirata, "Pirata");
@@ -136,36 +141,6 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
                 var cabeza = self._getCabezaNum(self.offsetSelectedCabeza);
 
                 self.dialogCrearPersonaje.show(raza, genero, clase, ciudad, cabeza);
-                //
-                // var nombre = $("#crearNombreInput").val();
-                // var password = $("#crearPasswordInput").val();
-                // var password2 = $("#crearRepetirPasswordInput").val();
-                // var mail = $("#crearMailInput").val();
-
-                //
-                // if (!cabeza) {
-                //     self.mensaje.show("Debes elegir una cabeza");
-                // }
-                //
-                // if (!(nombre && password && password2 && raza && genero && clase && cabeza && mail && ciudad)) {
-                //     self.mensaje.show("Debes completar todos los campos");
-                //     return;
-                // }
-                // if (!self.emailValido(mail)) {
-                //     self.mensaje.show("Mail invalido");
-                //     return;
-                // }
-                // if (!self.passwordValido(password)) {
-                //     self.mensaje.show("El password debe contener " + self.LARGO_MINIMO_PASSWORD + " o mas caracteres");
-                //     return;
-                // }
-                //
-                // if (!( password === password2)) {
-                //     self.mensaje.show("Los passwords ingresados no coinciden");
-                //     return;
-                // }
-                //
-                // cb(nombre, password, raza, genero, clase, cabeza, mail, ciudad);
             });
         }
 

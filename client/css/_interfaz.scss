@@ -20,33 +20,33 @@ $left_align_percentage: 8%;
   bottom: -13px;
   z-index: 1;
   //transition: 0.2s top ease;
-  display:none;
+  display: none;
 }
 
 #chatbox.active {
   display: inline-block;
 }
 
-#chatinputContainer{
+#chatinputContainer {
   border-bottom: 0;
 }
 
-#chatinput{
-  flex:1;
+#chatinput {
+  flex: 1;
   margin-right: 2px;
   display: inline-block;
+  color: white;
+  font-weight: normal;
 }
 
-#botonChatInput{
-  height:27px;
-  width:52px;
+#botonChatInput {
+  height: 27px;
+  width: 52px;
   margin-right: 5px;
   background-image: url('../imagenes/botones/chat_send_btn.png');
   background-size: 100% 100%;
-  display:inline-block;
+  display: inline-block;
 }
-
-
 
 #menuJuego span {
   cursor: default;
@@ -78,8 +78,8 @@ $left_align_percentage: 8%;
 
 #botonInventario {
   position: absolute;
-  left: 0%;
-  top: 0%;
+  left: 0;
+  top: 0;
   width: 48.5%;
   height: 14.2%;
 }
@@ -117,7 +117,7 @@ $left_align_percentage: 8%;
   display: none;
 }
 
-#itemsGrid li {
+#itemsGrid > li {
   width: 20%;
   height: 20%;
 }
@@ -153,15 +153,18 @@ $left_align_percentage: 8%;
 }
 
 #barras span {
-  color: white;
   display: inline-block;
   position: absolute;
+  margin: auto;
+  text-align: center;
+}
+
+#barraEnergiaTexto, #barraExpTexto, #barraHambreTexto, #barraManaTexto, #barraSaludTexto, #barraSedTexto{
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  margin: auto;
-  text-align: center;
+  color: white;
 }
 
 #barraEnergia, #barraMana, #barraSalud, #barraHambre, #barraSed, #barraExp {
@@ -200,7 +203,7 @@ $left_align_percentage: 8%;
 }
 
 #barraExp {
-  top:2%;
+  top: 2%;
 }
 
 #barraEnergiaUsada, #barraManaUsada, #barraSaludUsada, #barraHambreUsada, #barraSedUsada, #barraExpUsada {
@@ -235,6 +238,15 @@ $left_align_percentage: 8%;
 #barraExpUsada {
   background-image: url('../imagenes/interfaz/barras/barra_experiencia.png');
 
+}
+
+#labelEnergia, #labelHambre, #labelMana, #labelSalud, #labelSed {
+  color: $menu_background_color !important;
+  position: absolute;
+  top: -18px;
+  bottom:0;
+  left: 0;
+  right: 0;
 }
 
 #indicadorNivel {
@@ -341,8 +353,8 @@ $left_align_percentage: 8%;
 #menuJuegoBotonMenu {
   position: absolute;
   background-image: url("../imagenes/botones/menu.png");
-  width:18%;
-  height:6%;
-  top: 93% ;
-  left:4%;
+  width: 18%;
+  height: 6%;
+  top: 93%;
+  left: 4%;
 }

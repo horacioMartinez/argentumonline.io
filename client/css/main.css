@@ -7567,6 +7567,10 @@ button.close {
   margin-top: 14px;
   margin-bottom: 14px; }
 
+.margenInput {
+  margin-top: 10px;
+  margin-bottom: 10px; }
+
 /*input {
   @extend .form-control;
 }*/
@@ -7827,6 +7831,10 @@ span {
 .margenBoton, .form-horizontal .btn {
   margin-top: 14px;
   margin-bottom: 14px; }
+
+.margenInput {
+  margin-top: 10px;
+  margin-bottom: 10px; }
 
 /*input {
   @extend .form-control;
@@ -8140,7 +8148,9 @@ footer a {
 #chatinput {
   flex: 1;
   margin-right: 2px;
-  display: inline-block; }
+  display: inline-block;
+  color: white;
+  font-weight: normal; }
 
 #botonChatInput {
   height: 27px;
@@ -8172,8 +8182,8 @@ footer a {
 
 #botonInventario {
   position: absolute;
-  left: 0%;
-  top: 0%;
+  left: 0;
+  top: 0;
   width: 48.5%;
   height: 14.2%; }
 
@@ -8206,7 +8216,7 @@ footer a {
   height: 56.74%;
   display: none; }
 
-#itemsGrid li {
+#itemsGrid > li {
   width: 20%;
   height: 20%; }
 
@@ -8232,15 +8242,17 @@ footer a {
   display: inline-block; }
 
 #barras span {
-  color: white;
   display: inline-block;
   position: absolute;
+  margin: auto;
+  text-align: center; }
+
+#barraEnergiaTexto, #barraExpTexto, #barraHambreTexto, #barraManaTexto, #barraSaludTexto, #barraSedTexto {
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  margin: auto;
-  text-align: center; }
+  color: white; }
 
 #barraEnergia, #barraMana, #barraSalud, #barraHambre, #barraSed, #barraExp {
   position: absolute;
@@ -8292,6 +8304,14 @@ footer a {
 
 #barraExpUsada {
   background-image: url("../imagenes/interfaz/barras/barra_experiencia.png"); }
+
+#labelEnergia, #labelHambre, #labelMana, #labelSalud, #labelSed {
+  color: #846f62 !important;
+  position: absolute;
+  top: -18px;
+  bottom: 0;
+  left: 0;
+  right: 0; }
 
 #indicadorNivel {
   top: 0%;
@@ -8394,26 +8414,31 @@ footer a {
   padding: 0;
   width: 160px; }
 
-.itemgrid li {
+.itemgrid > li {
   background-size: 100% 100%;
   background-color: rgba(255, 255, 255, 0.1);
   float: left;
   width: 5vh;
-  color: white;
   height: 5vh;
   border-color: rgba(255, 255, 255, 0.5);
-  font-size: 2vh;
-  text-align: left;
-  vertical-align: text-top;
   cursor: default;
   border-style: solid;
   border-width: 1px;
   margin: 1px; }
 
+.itemgrid > li > li {
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+  border: 0;
+  margin: 0;
+  color: white;
+  font-size: 2vh;
+  text-align: left;
+  vertical-align: text-top; }
+
 .itemgrid li.equiped {
-  background-color: rgba(138, 243, 255, 0.5);
-  border-style: solid;
-  border-width: 1px; }
+  background-color: rgba(123, 214, 224, 0.5); }
 
 .itemgrid li.selected {
   border-color: limegreen;

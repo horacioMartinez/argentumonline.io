@@ -61,7 +61,7 @@ define(["text!../../../menus/carpinteria.html!strip", 'ui/popups/popup'], functi
                 $row.append($cellRequerimientos);
 
                 var $cellConstruir = $('<td></td>');
-                var $botonConstruir = $('<button class="botonNormal" >CONSTRUIR</button>');
+                var $botonConstruir = $('<button class="btn btn-default" >CONSTRUIR</button>');
 
                 $botonConstruir.data("itemIndex", item.ObjCarpinteroIndex);
                 $botonConstruir.click(function () {

@@ -77,7 +77,7 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
         }
 
         resetSelectedSlotInventario() {
-            this.inventarioGrid.resetSelectedSlot();
+            this.inventarioGrid.deselect();
         }
 
         getSelectedSlotInventario() {

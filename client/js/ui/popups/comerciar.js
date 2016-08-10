@@ -18,8 +18,8 @@ define(["text!../../../menus/comerciar.html!strip", 'ui/popups/popup', 'ui/game/
             this.game = game;
             this.acciones = acciones;
 
-            this.shopGrid = new ItemGrid("comerciarGridComprar", false);
-            this.userGrid = new ItemGrid("comerciarGridVender", true);
+            this.shopGrid = new ItemGrid("comerciarGridComprar");
+            this.userGrid = new ItemGrid("comerciarGridVender");
 
             /*$("#comerciarGridComprar").$( "#droppable" ).droppable({ // <-- TODO: grid dropeables
              activeClass: "ui-state-default",
@@ -43,8 +43,8 @@ define(["text!../../../menus/comerciar.html!strip", 'ui/popups/popup', 'ui/game/
                     var numGraf = self.game.assetManager.getNumGraficoFromGrh(slot.grh);
                     self.userGrid.modificarSlot(slot.numero, slot.cantidad, numGraf);
                 });
-            this.shopGrid.resetSelectedSlot();
-            this.userGrid.resetSelectedSlot();
+            this.shopGrid.deselect();
+            this.userGrid.deselect();
         }
 
         hide(incomingFromServer) {

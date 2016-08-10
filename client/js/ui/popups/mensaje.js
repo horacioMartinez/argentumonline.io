@@ -7,8 +7,8 @@ define(["text!../../../menus/mensajeGlobal.html!strip", 'ui/popups/popup'], func
     class Mensaje extends PopUp {
         constructor() {
             var options = {
-                width: 350,
-                height: 200,
+                width: 300,
+                height: 280,
                 minWidth: 200,
                 minHeight: 150
             };

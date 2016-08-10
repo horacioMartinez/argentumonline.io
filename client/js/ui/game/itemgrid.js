@@ -3,22 +3,20 @@
  */
 
 define(['jquery-ui'], function () {
-    
+
     class ItemGrid {
-        constructor(gridID, sortable) {
+        constructor(gridID, dragAndDropable) {
             this.MAX_DELAY_DOUBLE_CLICK = 400;
+
+            this.dragAndDropable = dragAndDropable;
 
             this.id = gridID;
             this.$this = $("#" + this.id);
-            if (sortable) {
-                this.$this.sortable({
-                    distance: 20,
-                    cursor: "move"
-                });
-            }
             this._selectedSlot = null;
             this._selectionCallback = null;
             this._doubleClickCallback = null;
+            this.cantidadSlots = 20;
+            this.crearSlots();
         }
 
         setSelectionCallback(f) {
@@ -33,16 +31,42 @@ define(['jquery-ui'], function () {
             return this._selectedSlot;
         }
 
-        resetSelectedSlot() {
-            this._selectedSlot = null;
-            this.$this.children().removeClass("selected");
+        crearSlots() {
+            for (let i = 0; i < this.cantidadSlots; i++) {
+                var $slot = $('<li></li>').appendTo(this.$this);
+                $slot.data("slotNumber", i + 1);
+                if (this.dragAndDropable) {
+                    $slot.droppable({
+                        hoverClass: 'ui-state-highlight', //TODO
+                        drop: function (event, ui) {
+                            let targetSlot = $(this),
+                                draggedItem = $(ui.draggable),
+                                originalSlot = draggedItem.parent(),
+                                targetSlotItem = targetSlot.children();
+
+                            // swap items
+                            if (targetSlotItem.length > 0) {
+                                targetSlotItem.appendTo(originalSlot);
+                            }
+                            draggedItem.appendTo(targetSlot);
+
+                            //swap slot numbers TODO: tener cuidado en dropear del inventario a un grid de comerciar (o viceversa) !!
+                            let targetSlotNumber = targetSlot.data("slotNumber"),
+                                originalSlotNumber = originalSlot.data("slotNumber");
+                            targetSlot.data("slotNumber", originalSlotNumber);
+                            originalSlot.data("slotNumber", targetSlotNumber);
+
+                        }
+                    });
+                }
+            }
         }
 
         modificarSlot(numSlot, cantidad, numGraf, equiped) {
             var $item = this._getItem(numSlot);
-            if (!$item) {
-                $item = this._crearItem();
-                $item.data("slot", numSlot);
+            if (!$item.length) {
+                $item = this._crearItem(numSlot);
+                //$item.data("slot", numSlot);
             }
 
             $item.text(cantidad + "");
@@ -55,28 +79,55 @@ define(['jquery-ui'], function () {
             }
         }
 
-        _getItem(numSlot) {
-            //var listItems = $("#" + this.id + " li");
-            var listItems = this.$this.children();
-            var res = null;
-            listItems.each(function (idx, li) {
-                var $item = $(li);
-                if ($item.data("slot") === numSlot) {
-                    res = $item;
+        deselect() {
+            if (this._selectedSlot) {
+                this._getItem(this._selectedSlot).removeClass("selected");
+            }
+            this._selectedSlot = null;
+        }
+
+        _getSlot(numSlot) {
+            let $resSlot = null;
+            this.$this.children().each(function () {
+                var $slot = $(this);
+                if ($slot.data("slotNumber") === numSlot) {
+                    $resSlot = $slot;
                     return false;
                 }
             });
-            return res;
+            if (!$resSlot) {
+                throw new Error("Numero de slot invalido: " + numSlot);
+            }
+            return $resSlot;
         }
 
-        _crearItem() {
-            var $item = $('<li></li>').appendTo(this.$this);
+        _getItem(numSlot) {
+            return this._getSlot(numSlot).children();
+        }
+
+        _crearItem(numSlot) {
+            let $parentSlot = this._getSlot(numSlot);
+            var $item = $('<li></li>').appendTo($parentSlot);
+            if (this.dragAndDropable) {
+                $item.draggable({
+                    distance: 15,
+                    //cursor: "move", // TODO <-- (anda bugeado)
+                    helper: 'clone',
+                    revert: 'invalid',
+                    start: function (event, ui) { //cambio tamaño helper asi no se expande
+                        let $itemHelper = $(ui.helper);
+                        $itemHelper.width($parentSlot.width());
+                        $itemHelper.height($parentSlot.height());
+                    }
+                });
+            }
+
             var self = this;
             $item.mousedown(function () {
                 var $currentItem = $(this);
+                self.deselect();
                 $currentItem.addClass("selected");
-                $currentItem.siblings().removeClass("selected");
-                self._selectedSlot = $currentItem.data("slot");
+                self._selectedSlot = $currentItem.parent().data("slotNumber");
                 if (self._selectionCallback) {
                     self._selectionCallback(self._selectedSlot);
                 }

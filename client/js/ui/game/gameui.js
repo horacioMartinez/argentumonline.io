@@ -16,38 +16,12 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
                 var game = gameManager.game;
                 var acciones = gameManager.acciones;
                 var comandosChat = gameManager.comandosChat;
+                
                 this.acciones = acciones;
                 this.game = game;
                 this.storage = storage;
 
-                let showMensajeFunction = this.showMensaje.bind(this);
-
-                this.inGameMensaje = new InGameMensaje();
-                this.comerciar = new Comerciar(game, acciones);
-                this.tirar = new Tirar(game, acciones);
-                this.boveda = new Boveda(game, acciones);
-                this.guiaMapa = new GuiaMapa();
-
-                this.opciones = new Opciones(game, storage, this.updateKeysCallback.bind(this), showMensajeFunction);
-                this.skills = new popUpSkills(game);
-
-                this.menu = new Menu(game,this.showMapa.bind(this),this.showEstadisticas.bind(this), 
-                    this.showClanes.bind(this),this.showOpciones.bind(this));
-
-                this.detallesClan = new DetallesClan(game, this._showSolicitudClan.bind(this));
-                this.clanes = new Clanes(game, this.detallesClan, showMensajeFunction, this._showSolicitudClan.bind(this));
-                this.solicitudClan = new SolicitudClan(game);
-                this.eleccionFaccionClan = new EleccionFaccionClan(game);
-                this.crearClan = new CrearClan(game, showMensajeFunction);
-                this.noticiasClan = new NoticiasClan();
-                this.detallesPersonaje = new DetallesPersonaje();
-
-                this.estadisticas = new Estadisticas(game);
-                this.partyLider = new PartyLider(game, showMensajeFunction);
-                this.partyMiembro= new PartyMiembro(game, showMensajeFunction);
-
-                this.carpinteria = new Carpinteria(game);
-                this.herreria = new Herreria(game);
+                this.showMensajeFunction = this.showMensaje.bind(this);
 
                 this.interfaz = new Interfaz(game, acciones);
                 this.keyMouseListener = new KeyMouseListener(game, acciones, storage.getKeys(), comandosChat);
@@ -155,15 +129,15 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
                 this.estadisticas.show();
             }
 
-            showParty(esLider, data, exp){
+            showParty(esLider, data, exp) {
                 if (esLider) {
                     this.partyLider.show(data, exp);
                 } else {
-                    this.partyMiembro.show(data,exp);
+                    this.partyMiembro.show(data, exp);
                 }
             }
 
-            showMenu(){
+            showMenu() {
                 this.menu.show();
             }
 
@@ -230,6 +204,106 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
                 }
             }
 
+
+            get inGameMensaje() {
+                this._inGameMensaje = this._inGameMensaje || new InGameMensaje();
+                return this._inGameMensaje;
+            }
+
+            get comerciar() {
+                this._comerciar = this._comerciar || new Comerciar(this.game, this.acciones);
+                return this._comerciar;
+            }
+
+            get tirar() {
+                this._tirar = this._tirar || new Tirar(this.game, this.acciones);
+                return this._tirar;
+            }
+
+            get boveda() {
+                this._boveda = this._boveda || new Boveda(this.game, this.acciones);
+                return this._boveda;
+            }
+
+            get guiaMapa() {
+                this._guiaMapa = this._guiaMapa || new GuiaMapa();
+                return this._guiaMapa;
+            }
+
+            get opciones() {
+                this._opciones = this._opciones || new Opciones(this.game, this.storage, this.updateKeysCallback.bind(this), this.showMensajeFunction);
+                return this._opciones;
+            }
+
+            get skills() {
+                this._skills = this._skills || new popUpSkills(this.game);
+                return this._skills;
+            }
+
+            get menu() {
+                this._menu = this._menu || new Menu(this.game, this.showMapa.bind(this), this.showEstadisticas.bind(this), this.showClanes.bind(this), this.showOpciones.bind(this));
+                return this._menu;
+            }
+
+            get detallesClan() {
+                this._detallesClan = this._detallesClan || new DetallesClan(this.game, this._showSolicitudClan.bind(this));
+                return this._detallesClan;
+            }
+
+            get clanes() {
+                this._clanes = this._clanes || new Clanes(this.game, this.detallesClan, this.showMensajeFunction, this._showSolicitudClan.bind(this));
+                return this._clanes;
+            }
+
+            get solicitudClan() {
+                this._solicitudClan = this._solicitudClan || new SolicitudClan(this.game);
+                return this._solicitudClan;
+            }
+
+            get eleccionFaccionClan() {
+                this._eleccionFaccionClan = this._eleccionFaccionClan || new EleccionFaccionClan(this.game);
+                return this._eleccionFaccionClan;
+            }
+
+            get crearClan() {
+                this._crearClan = this._crearClan || new CrearClan(this.game, this.showMensajeFunction);
+                return this._crearClan;
+            }
+
+            get noticiasClan() {
+                this._noticiasClan = this._noticiasClan || new NoticiasClan();
+                return this._noticiasClan;
+            }
+
+            get detallesPersonaje() {
+                this._detallesPersonaje = this._detallesPersonaje || new DetallesPersonaje();
+                return this._detallesPersonaje;
+            }
+
+            get estadisticas() {
+                this._estadisticas = this._estadisticas || new Estadisticas(this.game);
+                return this._estadisticas;
+            }
+
+            get partyLider() {
+                this._partyLider = this._partyLider || new PartyLider(this.game, this.showMensajeFunction);
+                return this._partyLider;
+            }
+
+            get partyMiembro() {
+                this._partyMiembro = this._partyMiembro || new PartyMiembro(this.game, this.showMensajeFunction);
+                return this._partyMiembro;
+            }
+
+            get carpinteria() {
+                this._carpinteria = this._carpinteria || new Carpinteria(this.game);
+                return this._carpinteria;
+            }
+
+            get herreria() {
+                this._herreria = this._herreria || new Herreria(this.game);
+                return this._herreria;
+            }
         }
 
         return GameUI;
