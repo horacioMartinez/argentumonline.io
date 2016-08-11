@@ -14,6 +14,8 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
             this._prevKeyDown = [];
             this.$gameCanvas = $('#gamecanvas');
             this.$chatButton = $('#botonChatInput');
+            this.$chatbox = $('#chatbox');
+            this.$chatinput = $('#chatinput');
 
             this.talkingToClan = false;
 
@@ -26,13 +28,13 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
         }
 
         showChat() {
-            $('#chatbox').addClass('active');
-            $('#chatinput').focus();
+            this.$chatbox.addClass('active');
+            this.$chatinput.focus();
         }
 
         hideChat() {
-            $('#chatbox').removeClass('active');
-            $('#chatinput').blur();
+            this.$chatbox.removeClass('active');
+            this.$chatinput.blur();
         }
 
         updateGameMouseCoordinates(game, event, $gameCanvas) {
@@ -75,7 +77,7 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
 
         initListeners() {
             var self = this;
-            //$('#chatbox').attr('value', '');
+            //this.$chatbox.attr('value', '');
             this._initMouseListeners();
             this._initDocumentKeysListeners();
             this._initChatKeyListener();
@@ -119,7 +121,7 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
 
                 // lo de abajo se ejecuta solo si no hay un pop up abierto
 
-                var $chatb = $('#chatbox');
+                var $chatb = self.$chatbox;
 
                 if (key === self.keys.chat) {
                     if ($chatb.hasClass('active')) {
@@ -147,8 +149,6 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
                     self._downKey(key);
 
                     return self.inputHandler.keyDown(key); // << return false previene el default y hace que no se propague mas
-                    // TODO: hacer algo como lo anterior para los popUps, por ejemplo si tenes configurado el F5 en meditar prevenir que se recargue la pagina (lo hace devolviendo false)
-                    //TODO?: directamente desactivar todos los Fs, asi se evita que apretes uno sin querer?
                 }
             });
 
@@ -166,7 +166,7 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
         }
 
         _trySendingChat() {
-            var $chat = $('#chatinput');
+            var $chat = this.$chatinput;
             if ($chat.attr('value') !== '') {
                 if (this.game.player) {
                     var chat = $chat.val();
@@ -188,7 +188,7 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
         _initChatKeyListener() {
             var self = this;
 
-            $('#chatinput').keydown(function (e) {
+            this.$chatinput.keydown(function (e) {
 
                 var key = e.which;
 

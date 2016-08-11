@@ -19,7 +19,23 @@ define(["text!../../../menus/menu.html!strip", 'ui/popups/popup'], function (DOM
             this.showClanesCb = showClanesCb;
             this.showOpcionesCb = showOpcionesCb;
 
+            this._lastClosedTime = 0;
             this.initCallbacks();
+        }
+
+        hide(){
+            super.hide();
+            this._lastClosedTime = Date.now();
+        }
+
+        show(fromEscapeKey){
+            // fromEscapeKey: fix feo para poder mostrar y ocultar con la tecla esc
+            if (fromEscapeKey){
+                if (this._lastClosedTime > Date.now() - 20 ){
+                    return;
+                }
+            }
+            super.show();
         }
 
         initCallbacks() {

@@ -29,8 +29,8 @@ define(["utils/charcodemap"], function (CharCodeMap) {
             domar: getKeyNumber("D"),
             robar: getKeyNumber("R"),
             macroHechizos: getKeyNumber("F7"),
-            macroTrabajo: getKeyNumber("F8")
-
+            macroTrabajo: getKeyNumber("F8"),
+            mostrarMenu: getKeyNumber("ESCAPE")
         },
         audio: {
             soundMuted: false,

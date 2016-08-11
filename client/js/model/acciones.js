@@ -273,6 +273,11 @@ define(['enums', 'font', 'model/macros'], function (Enums, Font, Macros) {
             this.macros.desactivarMacros();
         }
 
+        mostrarMenu(){
+            if (!this.game.gameUI.hayPopUpActivo()){
+                this.game.gameUI.showMenu(true);
+            }
+        }
     }
 
     return Acciones;

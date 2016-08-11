@@ -5,7 +5,7 @@
 define(['jquery-ui'], function () {
 
     class PopUp {
-        constructor(DOMdata, addiotionalOptions, general) { // los pop ups generales se ven en todas las pantallas (no solo juego) y estan centrados en el medio
+        constructor(DOMdata, addiotionalOptions, general, modal) { // los pop ups generales se ven en todas las pantallas (no solo juego) y estan centrados en el medio
             if (!DOMdata) {
                 throw new Error("DOMdata required");
             }
@@ -16,6 +16,7 @@ define(['jquery-ui'], function () {
             this.options = {
                 appendTo: self.parentID,
                 autoOpen: false,
+                modal: modal,
                 dialogClass: 'dialog_default',
                 close: function (event, ui) {
                     self.hide();

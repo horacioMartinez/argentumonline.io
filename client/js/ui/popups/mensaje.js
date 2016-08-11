@@ -12,7 +12,7 @@ define(["text!../../../menus/mensajeGlobal.html!strip", 'ui/popups/popup'], func
                 minWidth: 200,
                 minHeight: 150
             };
-            super(DOMdata, options, true);
+            super(DOMdata, options, true, true);
             this.initCallbacks();
         }
 

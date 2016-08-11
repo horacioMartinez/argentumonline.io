@@ -145,8 +145,8 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
                 }
             }
 
-            showMenu() {
-                this.menu.show();
+            showMenu(fromEscapeKey) {
+                this.menu.show(fromEscapeKey);
             }
 
             setAtributosInfo(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion) {

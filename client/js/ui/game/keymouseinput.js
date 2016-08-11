@@ -124,7 +124,10 @@ define(['enums', 'utils/charcodemap'], function (Enums, CharcodeMap) {
                 case keys.robar:
                     acciones.robar();
                     break;
-
+                case keys.mostrarMenu:
+                    acciones.mostrarMenu();
+                    continuar = true;
+                    break;
                 default:
                     continuar = true;
                     break;
