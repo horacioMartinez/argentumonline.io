@@ -5,17 +5,18 @@
 define(['jquery-ui'], function () {
 
     class ItemGrid {
-        constructor(gridID, dragAndDropable) {
+        constructor(gridID, cantidadSlots, dragAndDropable) {
+            this.cantidadSlots = cantidadSlots;
+            this.dragAndDropable = dragAndDropable;
             this.MAX_DELAY_DOUBLE_CLICK = 400;
 
-            this.dragAndDropable = dragAndDropable;
 
             this.id = gridID;
             this.$this = $("#" + this.id);
             this._selectedSlot = null;
             this._selectionCallback = null;
             this._doubleClickCallback = null;
-            this.cantidadSlots = 20;
+            
             this.crearSlots();
         }
 

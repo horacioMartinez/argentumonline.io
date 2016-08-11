@@ -16,7 +16,8 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
                 var game = gameManager.game;
                 var acciones = gameManager.acciones;
                 var comandosChat = gameManager.comandosChat;
-                
+                this.popUps = [];
+
                 this.acciones = acciones;
                 this.game = game;
                 this.storage = storage;
@@ -45,8 +46,15 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
                 this.keyMouseListener.setKeys(keys);
             }
 
-            hayPopUpActivo() {
-                return ($('#container').children('.ui-dialog:visible').length != 0)
+            hayPopUpActivo() { // TODO: ponerlo en uimanager o en otro lado, esto sirve tambien para los popups globales
+                                // no usar el vector popUps de aca porque solo contiene a los pop ups del juego
+                return ($('#container').children('.ui-dialog:visible').length !== 0)
+            }
+
+            hideGamePopUps() {
+                this.popUps.forEach((popUp) => {
+                    popUp.hide();
+                });
             }
 
             showComerciar() {
@@ -204,104 +212,108 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
                 }
             }
 
+            _storePopUp(popUp) {
+                this.popUps.push(popUp);
+                return popUp;
+            }
 
             get inGameMensaje() {
-                this._inGameMensaje = this._inGameMensaje || new InGameMensaje();
+                this._inGameMensaje = this._inGameMensaje || this._storePopUp(new InGameMensaje());
                 return this._inGameMensaje;
             }
 
             get comerciar() {
-                this._comerciar = this._comerciar || new Comerciar(this.game, this.acciones);
+                this._comerciar = this._comerciar || this._storePopUp(new Comerciar(this.game, this.acciones));
                 return this._comerciar;
             }
 
             get tirar() {
-                this._tirar = this._tirar || new Tirar(this.game, this.acciones);
+                this._tirar = this._tirar || this._storePopUp(new Tirar(this.game, this.acciones));
                 return this._tirar;
             }
 
             get boveda() {
-                this._boveda = this._boveda || new Boveda(this.game, this.acciones);
+                this._boveda = this._boveda || this._storePopUp(new Boveda(this.game, this.acciones));
                 return this._boveda;
             }
 
             get guiaMapa() {
-                this._guiaMapa = this._guiaMapa || new GuiaMapa();
+                this._guiaMapa = this._guiaMapa || this._storePopUp(new GuiaMapa());
                 return this._guiaMapa;
             }
 
             get opciones() {
-                this._opciones = this._opciones || new Opciones(this.game, this.storage, this.updateKeysCallback.bind(this), this.showMensajeFunction);
+                this._opciones = this._opciones || this._storePopUp(new Opciones(this.game, this.storage, this.updateKeysCallback.bind(this), this.showMensajeFunction));
                 return this._opciones;
             }
 
             get skills() {
-                this._skills = this._skills || new popUpSkills(this.game);
+                this._skills = this._skills || this._storePopUp(new popUpSkills(this.game));
                 return this._skills;
             }
 
             get menu() {
-                this._menu = this._menu || new Menu(this.game, this.showMapa.bind(this), this.showEstadisticas.bind(this), this.showClanes.bind(this), this.showOpciones.bind(this));
+                this._menu = this._menu || this._storePopUp(new Menu(this.game, this.showMapa.bind(this), this.showEstadisticas.bind(this), this.showClanes.bind(this), this.showOpciones.bind(this)));
                 return this._menu;
             }
 
             get detallesClan() {
-                this._detallesClan = this._detallesClan || new DetallesClan(this.game, this._showSolicitudClan.bind(this));
+                this._detallesClan = this._detallesClan || this._storePopUp(new DetallesClan(this.game, this._showSolicitudClan.bind(this)));
                 return this._detallesClan;
             }
 
             get clanes() {
-                this._clanes = this._clanes || new Clanes(this.game, this.detallesClan, this.showMensajeFunction, this._showSolicitudClan.bind(this));
+                this._clanes = this._clanes || this._storePopUp(new Clanes(this.game, this.detallesClan, this.showMensajeFunction, this._showSolicitudClan.bind(this)));
                 return this._clanes;
             }
 
             get solicitudClan() {
-                this._solicitudClan = this._solicitudClan || new SolicitudClan(this.game);
+                this._solicitudClan = this._solicitudClan || this._storePopUp(new SolicitudClan(this.game));
                 return this._solicitudClan;
             }
 
             get eleccionFaccionClan() {
-                this._eleccionFaccionClan = this._eleccionFaccionClan || new EleccionFaccionClan(this.game);
+                this._eleccionFaccionClan = this._eleccionFaccionClan || this._storePopUp(new EleccionFaccionClan(this.game));
                 return this._eleccionFaccionClan;
             }
 
             get crearClan() {
-                this._crearClan = this._crearClan || new CrearClan(this.game, this.showMensajeFunction);
+                this._crearClan = this._crearClan || this._storePopUp(new CrearClan(this.game, this.showMensajeFunction));
                 return this._crearClan;
             }
 
             get noticiasClan() {
-                this._noticiasClan = this._noticiasClan || new NoticiasClan();
+                this._noticiasClan = this._noticiasClan || this._storePopUp(new NoticiasClan());
                 return this._noticiasClan;
             }
 
             get detallesPersonaje() {
-                this._detallesPersonaje = this._detallesPersonaje || new DetallesPersonaje();
+                this._detallesPersonaje = this._detallesPersonaje || this._storePopUp(new DetallesPersonaje());
                 return this._detallesPersonaje;
             }
 
             get estadisticas() {
-                this._estadisticas = this._estadisticas || new Estadisticas(this.game);
+                this._estadisticas = this._estadisticas || this._storePopUp(new Estadisticas(this.game));
                 return this._estadisticas;
             }
 
             get partyLider() {
-                this._partyLider = this._partyLider || new PartyLider(this.game, this.showMensajeFunction);
+                this._partyLider = this._partyLider || this._storePopUp(new PartyLider(this.game, this.showMensajeFunction));
                 return this._partyLider;
             }
 
             get partyMiembro() {
-                this._partyMiembro = this._partyMiembro || new PartyMiembro(this.game, this.showMensajeFunction);
+                this._partyMiembro = this._partyMiembro || this._storePopUp(new PartyMiembro(this.game, this.showMensajeFunction));
                 return this._partyMiembro;
             }
 
             get carpinteria() {
-                this._carpinteria = this._carpinteria || new Carpinteria(this.game);
+                this._carpinteria = this._carpinteria || this._storePopUp(new Carpinteria(this.game));
                 return this._carpinteria;
             }
 
             get herreria() {
-                this._herreria = this._herreria || new Herreria(this.game);
+                this._herreria = this._herreria || this._storePopUp(new Herreria(this.game));
                 return this._herreria;
             }
         }

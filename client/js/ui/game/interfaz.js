@@ -8,7 +8,7 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
         constructor(game, acciones) {
             this.acciones = acciones;
             this.game = game;
-            this.inventarioGrid = new ItemGrid("itemsGrid", true);
+            this.inventarioGrid = new ItemGrid("itemsGrid", 20, true);
             var self = this;
             this.inventarioGrid.setDobleClickCallback(function (slot) {
                 self.acciones.usarConDobleClick(slot);

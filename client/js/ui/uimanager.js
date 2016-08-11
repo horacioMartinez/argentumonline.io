@@ -29,6 +29,9 @@ define(['ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mensaje'], fu
             $body.addClass('login');
             this.loginUI.setPlayButtonState(true);
             this.loginUI.setCrearButtonState(true);
+            if (this.gameUI) {
+                this.gameUI.hideGamePopUps();
+            }
         }
 
         setCrearPJScreen() {

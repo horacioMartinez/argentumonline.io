@@ -18,8 +18,8 @@ define(["text!../../../menus/comerciar.html!strip", 'ui/popups/popup', 'ui/game/
             this.game = game;
             this.acciones = acciones;
 
-            this.shopGrid = new ItemGrid("comerciarGridComprar");
-            this.userGrid = new ItemGrid("comerciarGridVender");
+            this.shopGrid = new ItemGrid("comerciarGridComprar",20);
+            this.userGrid = new ItemGrid("comerciarGridVender",20);
 
             /*$("#comerciarGridComprar").$( "#droppable" ).droppable({ // <-- TODO: grid dropeables
              activeClass: "ui-state-default",

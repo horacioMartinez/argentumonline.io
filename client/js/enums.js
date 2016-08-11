@@ -66,6 +66,22 @@ define({
         pirata: 12
     },
 
+// TODO: buscar forma de usar directamnete el num de clase desde el enum (idem fontindex)
+    NombreClase: {
+        1: "Mago",
+        2: "Clérigo",
+        3: "Guerrero",
+        4: "Asesino",
+        5: "Ladrón",
+        6: "Bardo",
+        7: "Druida",
+        8: "Bandido",
+        9: "Paladín",
+        10: "Cazador",
+        11: "Trabajador",
+        12: "Pirata"
+    },
+
     Genero: {
         hombre: 1,
         mujer: 2

@@ -56,18 +56,18 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
 
             id = "crearSelectClase";
             $sel = $('#' + id);
-            this.modificarSlotInput($sel, id, Enums.Clase.clerigo, "Clérigo");
-            this.modificarSlotInput($sel, id, Enums.Clase.guerrero, "Guerrero");
-            this.modificarSlotInput($sel, id, Enums.Clase.mago, "Mago");
-            this.modificarSlotInput($sel, id, Enums.Clase.paladin, "Paladín");
-            this.modificarSlotInput($sel, id, Enums.Clase.asesino, "Asesino");
-            this.modificarSlotInput($sel, id, Enums.Clase.ladron, "Ladrón");
-            this.modificarSlotInput($sel, id, Enums.Clase.bardo, "Bardo");
-            this.modificarSlotInput($sel, id, Enums.Clase.druida, "Druida");
-            this.modificarSlotInput($sel, id, Enums.Clase.bandido, "Bandido");
-            this.modificarSlotInput($sel, id, Enums.Clase.cazador, "Cazador");
-            this.modificarSlotInput($sel, id, Enums.Clase.trabajador, "Trabajador");
-            this.modificarSlotInput($sel, id, Enums.Clase.pirata, "Pirata");
+            this.modificarSlotInput($sel, id, Enums.Clase.clerigo, Enums.NombreClase[Enums.Clase.clerigo]);
+            this.modificarSlotInput($sel, id, Enums.Clase.guerrero, Enums.NombreClase[Enums.Clase.guerrero]);
+            this.modificarSlotInput($sel, id, Enums.Clase.mago, Enums.NombreClase[Enums.Clase.mago]);
+            this.modificarSlotInput($sel, id, Enums.Clase.paladin, Enums.NombreClase[Enums.Clase.paladin]);
+            this.modificarSlotInput($sel, id, Enums.Clase.asesino, Enums.NombreClase[Enums.Clase.asesino]);
+            this.modificarSlotInput($sel, id, Enums.Clase.ladron, Enums.NombreClase[Enums.Clase.ladron]);
+            this.modificarSlotInput($sel, id, Enums.Clase.bardo, Enums.NombreClase[Enums.Clase.bardo]);
+            this.modificarSlotInput($sel, id, Enums.Clase.druida, Enums.NombreClase[Enums.Clase.druida]);
+            this.modificarSlotInput($sel, id, Enums.Clase.bandido, Enums.NombreClase[Enums.Clase.bandido]);
+            this.modificarSlotInput($sel, id, Enums.Clase.cazador, Enums.NombreClase[Enums.Clase.cazador]);
+            this.modificarSlotInput($sel, id, Enums.Clase.trabajador, Enums.NombreClase[Enums.Clase.trabajador]);
+            this.modificarSlotInput($sel, id, Enums.Clase.pirata, Enums.NombreClase[Enums.Clase.pirata]);
 
             $("#crearBotonGeneroMasculino").addClass('selected');
             $("#crearBotonGeneroFemenino").removeClass('selected');

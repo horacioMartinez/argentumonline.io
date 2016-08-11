@@ -2,7 +2,7 @@
  * Created by horacio on 7/10/16.
  */
 
-define(["text!../../../menus/estadisticas.html!strip", 'ui/popups/popup'], function (DOMdata, PopUp) {
+define(["text!../../../menus/estadisticas.html!strip", 'ui/popups/popup', 'enums'], function (DOMdata, PopUp, Enums) {
 
     class Estadisticas extends PopUp {
         constructor(game) {
@@ -61,7 +61,7 @@ define(["text!../../../menus/estadisticas.html!strip", 'ui/popups/popup'], funct
             $("#estadisticas_criminalesMatados").text(CriminalesMatados);
             $("#estadisticas_usuariosMatados").text(UsuariosMatados);
             $("#estadisticas_criaturasMatadas").text(NpcsMuertos);
-            $("#estadisticas_clase").text(Clase);
+            $("#estadisticas_clase").text(Enums.NombreClase[Clase]);
             $("#estadisticas_tiempoRestanteCarcel").text(Pena);
         }
 
