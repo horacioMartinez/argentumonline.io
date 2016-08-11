@@ -44,7 +44,7 @@
     </div>
 
     <!-- Pantalla de crear PJ -->
-    <div id="crearPJ" style="width:100%; height:100%;" class="exterior_border_default background_default">
+    <div id="crearPJ" style="width:100%; height:100%;">
         <div class="container">
             <div class="row" style="display: flex; align-items: center; margin-top:10vh;">
                 <div class="col-xs-4">
@@ -121,9 +121,13 @@
                 </div>
             </div>
             <div class="row" style="margin-top:10vh;">
-                <div class="horizontal_center">
-                    <button id="crearBotonVolver" class="btn btn-default" style="margin-right: 200px;">Volver</button>
-                    <button id="crearBotonCrear" class="btn btn-primary">Crear personaje</button>
+                <div class="col-xs-4 col-xs-offset-4">
+                    <div class="exterior_border_default background_default horizontal_center">
+                        <button id="crearBotonVolver" class="btn btn-default margenBoton" style="margin-right:50px;">
+                            Volver
+                        </button>
+                        <button id="crearBotonCrear" class="btn btn-primary margenBoton">Crear personaje</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -146,14 +150,14 @@
             <button id="botonAsignarSkills" class="botonImagen"></button>
             <span id="indicadorNivel"></span>
             <button id="menuJuegoBotonMenu" class="botonImagen"></button>
-            <div id="InventarioHechizos">
-                <ul id="itemsGrid" class="itemgrid"></ul>
-                <select id="hechizos" size="2"></select>
-                <button id="botonInventario" class="btn btn-default">Inventario</button>
-                <button id="botonHechizos" class="btn btn-default">Hechizos</button>
-                <button id="botonLanzar" class="btn btn-default">Lanzar</button>
-                <button id="botonInfo" class="btn btn-default">Info</button>
-            </div>
+
+            <ul id="itemsGrid" class="itemgrid"></ul>
+            <select id="hechizos" size="2"></select>
+
+            <button id="botonInventario" class="btn btn-default">Inventario</button>
+            <button id="botonHechizos" class="btn btn-default">Hechizos</button>
+            <button id="botonLanzar" class="btn btn-default">Lanzar</button>
+            <button id="botonInfo" class="btn btn-default">Info</button>
             <div id="barras">
                 <div id="barraExp">
                     <div id="barraExpUsada"></div>

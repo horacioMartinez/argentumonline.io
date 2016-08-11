@@ -8172,14 +8172,6 @@ footer a {
   display: inline-block;
   position: relative; }
 
-#InventarioHechizos {
-  background-size: 100% 100%;
-  position: absolute;
-  width: 80.816%;
-  height: 56.4%;
-  left: 10.61%;
-  top: 2.8%; }
-
 #botonInventario {
   position: absolute;
   left: 0;
@@ -8211,14 +8203,15 @@ footer a {
 #itemsGrid {
   position: absolute;
   left: 8%;
-  top: 15%;
-  width: 80.9%;
-  height: 56.74%;
-  display: none; }
+  top: 19%;
+  width: 85%;
+  height: 45%;
+  display: none;
+  outline: 1px green dashed; }
 
 #itemsGrid > li {
-  width: 20%;
-  height: 20%; }
+  width: 19%;
+  height: 11%; }
 
 #hechizos {
   color: white;
@@ -8259,51 +8252,39 @@ footer a {
   left: 8%;
   width: 84.6%;
   height: 2.5%;
-  background-size: 100% 100%;
-  background-image: url("../imagenes/interfaz/barras/barra_background.png"); }
+  background-size: 100% 100%; }
 
 #barraEnergia {
+  background-image: url("../imagenes/interfaz/barras/barra_energia.png");
   top: 68.6%; }
 
 #barraMana {
+  background-image: url("../imagenes/interfaz/barras/barra_mana.png");
   top: 73.4%; }
 
 #barraSalud {
+  background-image: url("../imagenes/interfaz/barras/barra_vida.png");
   top: 77.6%; }
 
 #barraHambre {
+  background-image: url("../imagenes/interfaz/barras/barra_hambre.png");
   top: 82.2%; }
 
 #barraSed {
+  background-image: url("../imagenes/interfaz/barras/barra_sed.png");
   top: 86.4%; }
 
 #barraExp {
+  background-image: url("../imagenes/interfaz/barras/barra_experiencia.png");
   top: 2%; }
 
 #barraEnergiaUsada, #barraManaUsada, #barraSaludUsada, #barraHambreUsada, #barraSedUsada, #barraExpUsada {
   background-size: 100% 100%;
   transition: width 0.5s;
-  float: left;
+  float: right;
   height: 100%;
-  width: 30%; }
-
-#barraEnergiaUsada {
-  background-image: url("../imagenes/interfaz/barras/barra_energia.png"); }
-
-#barraManaUsada {
-  background-image: url("../imagenes/interfaz/barras/barra_mana.png"); }
-
-#barraSaludUsada {
-  background-image: url("../imagenes/interfaz/barras/barra_vida.png"); }
-
-#barraHambreUsada {
-  background-image: url("../imagenes/interfaz/barras/barra_hambre.png"); }
-
-#barraSedUsada {
-  background-image: url("../imagenes/interfaz/barras/barra_sed.png"); }
-
-#barraExpUsada {
-  background-image: url("../imagenes/interfaz/barras/barra_experiencia.png"); }
+  width: 30%;
+  background-image: url("../imagenes/interfaz/barras/barra_background.png"); }
 
 #labelEnergia, #labelHambre, #labelMana, #labelSalud, #labelSed {
   color: #846f62 !important;

@@ -58,7 +58,7 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
                 self.acciones.toggleMacroTrabajo();
             });
 
-            $("#menuJuegoBotonMenu").click(function(){
+            $("#menuJuegoBotonMenu").click(function () {
                 self.game.gameUI.showMenu();
             });
 
@@ -120,13 +120,13 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
             $("#indicadorOro").text(oro);
         }
 
-        _updateBarra(cant, max, $barra, $label, invertida) {
+        _updateBarra(cant, max, $barra, $label, noInvertida) {
             var porcentaje = 100;
             if (max) {
-                if (invertida) {
-                    porcentaje = 100 - Math.floor((cant / max) * 100);
-                } else {
+                if (noInvertida) {
                     porcentaje = Math.floor((cant / max) * 100);
+                } else {
+                    porcentaje = 100 - Math.floor((cant / max) * 100);
                 }
             }
             $barra.css("width", porcentaje + "%");

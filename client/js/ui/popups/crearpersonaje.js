@@ -7,8 +7,8 @@ define(["text!../../../menus/crearPersonaje.html!strip", 'ui/popups/popup'], fun
     class CrearPersonaje extends PopUp {
         constructor(showMensajeCb) {
             var options = {
-                width: 220,
-                height: 300,
+                width: 280,
+                height: 400,
                 minWidth: 150,
                 minHeight: 280
             };
