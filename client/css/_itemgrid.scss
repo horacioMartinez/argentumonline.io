@@ -8,14 +8,12 @@
 //slots
 .itemgrid > li {
   background-size: 100% 100%;
-  background-color:  rgba(255, 255, 255, 0.1);
+  background-image: url('../imagenes/slot.png');;
   float: left;
   width: $anchoItems;
   height: $altoItems;
-  border-color: rgba(255, 255, 255, 0.5);
   cursor: default;
-  border-style: solid;
-  border-width: 1px;
+  border:none;
   margin: 1px;
 }
 
@@ -24,20 +22,20 @@
   width:100%;
   height:100%;
   background-size: 100% 100%;
-  border: 0;
-  margin : 0;
   color: white;
   font-size: 2vh;
   text-align: left;
   vertical-align: text-top;
+  margin : 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 1px;
 }
 
 .itemgrid li.equiped {
-  background-color: rgba(123, 214, 224, 0.5);
+  background-color: rgba(222, 139, 71, 0.4);
 }
 
 .itemgrid li.selected {
   border-color: limegreen;
-  border-style: solid;
-  border-width: 1px;
 }

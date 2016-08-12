@@ -38,7 +38,7 @@ define(['jquery-ui'], function () {
                 $slot.data("slotNumber", i + 1);
                 if (this.dragAndDropable) {
                     $slot.droppable({
-                        hoverClass: 'ui-state-highlight', //TODO
+                        hoverClass: 'ui-state-highlight', //TODO !!!
                         drop: function (event, ui) {
                             let targetSlot = $(this),
                                 draggedItem = $(ui.draggable),
