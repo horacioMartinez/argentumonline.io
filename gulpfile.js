@@ -41,7 +41,8 @@ gulp.task('uglify', function() {
         .pipe(uglify({
             compress: {
                 pure_funcs: ['console.log', 'log.error']
-            }
+            },
+            mangle: true
         }))
         .pipe(gulp.dest('dakara-client-build'));
 });

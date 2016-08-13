@@ -115,8 +115,9 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
 
         setBotonTirarDadosCallback(cb) {
 
-            $('#crearBotonTirarDados').click(function () {
+            $('#crearBotonTirarDados').click(() => {
                 cb();
+                this.assetManager.audio.playSound(Enums.SONIDOS.dados);
             });
         }
 

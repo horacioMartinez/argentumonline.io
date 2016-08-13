@@ -1,7 +1,7 @@
 /**
  * Created by horacio on 4/6/16.
  */
-define(['ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mensaje'], function (LoginUI, CrearPjUI, GameUI, Mensaje) {
+define(['enums', 'ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mensaje'], function (Enums, LoginUI, CrearPjUI, GameUI, Mensaje) {
 
     class UIManager {
         constructor(assetManager) {
@@ -9,6 +9,7 @@ define(['ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mensaje'], fu
             this.mensaje = new Mensaje();
             this.loginUI = new LoginUI();
             this.crearPjUI = new CrearPjUI(this.assetManager, this.mensaje);
+            this.playSonidoClick = this._createPlaySonidoCallback();
 
             this.gameUI = null;
 
@@ -16,6 +17,16 @@ define(['ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mensaje'], fu
             this.widthMenuJuego = 154;
             this.widthJuego = 17 * 32;
             this.heightJuego = 13 * 32;
+        }
+
+        _createPlaySonidoCallback() {
+            var self = this;
+            var sonidoCb = function ($boton) {
+                if (!$boton.hasClass('noClickSound')) {
+                    self.assetManager.audio.playSound(Enums.SONIDOS.click);
+                }
+            };
+            return sonidoCb;
         }
 
         center() {
@@ -105,6 +116,9 @@ define(['ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mensaje'], fu
                 resizeCallback();
             }, 100));
 
+            $("button").click(function(event) {
+                self.playSonidoClick($(this));
+            });
         }
 
         getEscala() {
@@ -132,7 +146,7 @@ define(['ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mensaje'], fu
         }
 
         inicializarGameUI(gameManager, storage /*SACAME!*/) {
-            this.gameUI = new GameUI(gameManager, storage);
+            this.gameUI = new GameUI(gameManager, storage, this.playSonidoClick);
             return this.gameUI;
         }
 

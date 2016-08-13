@@ -55,6 +55,13 @@ define(['jquery-ui'], function () {
             });
         }
 
+
+        initButtonsSound(playSoundCallback){
+            this.$this.find("button").click(function(event) {
+                playSoundCallback($(this));
+            });
+        }
+
         _inicializarTabDesactivable($tab) {
             $tab.click(function () {
                 if ($(this).hasClass('disabled')) {

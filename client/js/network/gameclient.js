@@ -535,10 +535,12 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleTradeOK() {
+            this.game.assetManager.audio.playSound(Enums.SONIDOS.comprar_vender);
             console.log("TODO: handleTradeOK ");
         }
 
         handleBankOK() {
+            this.game.assetManager.audio.playSound(Enums.SONIDOS.retirar_depositar);
             console.log("TODO: handleBankOK ");
         }
 
