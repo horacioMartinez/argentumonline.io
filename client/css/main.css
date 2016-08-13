@@ -1632,7 +1632,6 @@ body .ui-tooltip {
  * Copyright 2011-2015 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
-/*(por ej NIVEL 1 nivel en esta font y 1 en bold y blanco)*/
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 html {
   font-family: sans-serif;
@@ -7439,7 +7438,6 @@ button.close {
 @media print {
   .hidden-print {
     display: none !important; } }
-/*(por ej NIVEL 1 nivel en esta font y 1 en bold y blanco)*/
 .horizontal_center, #crearPjDiv select {
   text-align: center;
   display: block;
@@ -7562,7 +7560,6 @@ button.close {
   left: 0;
   width: 6px; }
 
-/*(por ej NIVEL 1 nivel en esta font y 1 en bold y blanco)*/
 .margenBoton, .form-horizontal .btn {
   margin-top: 14px;
   margin-bottom: 14px; }
@@ -7718,20 +7715,19 @@ span {
 .secondaryColor {
   color: #BBBDBF; }
 
-.buttonFont, .defaults_boton, .dialog_default .ui-dialog-titlebar-close, .botonNormal {
+.buttonFont, .defaults_boton, .dialog_default .ui-dialog-titlebar-close, .botonNormal, .botonCuadrado {
   font-weight: bold; }
 
 .headingFont, .dialog_default .ui-dialog-titlebar {
   color: #bda186;
   font-weight: bold; }
 
-.defaults_boton, .dialog_default .ui-dialog-titlebar-close, .botonNormal {
+.defaults_boton, .dialog_default .ui-dialog-titlebar-close, .botonNormal, .botonCuadrado {
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75); }
 
-.botonNormal {
+.botonNormal, .botonCuadrado {
   background-image: url("../imagenes/botones/boton_normal.png");
   background-size: 100% 100%;
-  border: none;
   text-decoration: none;
   color: white;
   margin-top: 3px;
@@ -7740,17 +7736,30 @@ span {
   cursor: pointer;
   text-align: center;
   width: 121px;
-  height: 44px; }
+  height: 44px;
+  outline: none !important;
+  border: none !important; }
 
-.botonNormal:hover {
-  background-image: url("../imagenes/botones/boton_normal_hover.png");
+.botonNormal:hover, .botonCuadrado:hover {
+  background: url("../imagenes/botones/boton_normal.png") no-repeat;
+  /* fallback */
+  background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/boton_normal.png") no-repeat;
+  background-size: 100% 100%;
   color: white;
   /* background-color: #FFFFFF;*/ }
 
-.botonNormal:active {
-  background-image: url("../imagenes/botones/boton_normal_push.png");
+.botonNormal:active, .botonCuadrado:active {
   color: white;
   /*text-shadow: none;*/ }
+
+.botonCuadrado {
+  background-image: url("../imagenes/botones/bg_square_button.png"); }
+
+.botonCuadrado:hover {
+  background: url("../imagenes/botones/bg_square_button.png") no-repeat;
+  /* fallback */
+  background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/bg_square_button.png") no-repeat;
+  background-size: 100% 100%; }
 
 .botonTest {
   box-shadow: inset 0px 1px 0px 0px #a6827e;
@@ -8160,6 +8169,12 @@ footer a {
   background-size: 100% 100%;
   display: inline-block; }
 
+#botonChatInput:hover {
+  background: url("../imagenes/botones/chat_send_btn.png") no-repeat;
+  /* fallback */
+  background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/chat_send_btn.png") no-repeat;
+  background-size: 100% 100%; }
+
 #menuJuego span {
   cursor: default;
   font-weight: bold; }
@@ -8176,17 +8191,29 @@ footer a {
 
 #botonInventario {
   position: absolute;
-  left: 8%;
-  top: 8.5%;
-  width: 42%;
-  height: 5%; }
+  left: 5.7%;
+  top: 7.5%;
+  width: 44%;
+  height: 5.4%; }
 
 #botonHechizos {
   position: absolute;
-  left: 50.8%;
-  top: 8.5%;
-  width: 42%;
-  height: 5%; }
+  left: 50.4%;
+  top: 7.5%;
+  width: 44%;
+  height: 5.4%; }
+
+#imagenTabActiva {
+  position: absolute;
+  background-size: contain;
+  background-image: url("../imagenes/active_tab.png");
+  height: 5.4%;
+  width: 44%;
+  top: 12.2%;
+  left: 50.4%; }
+
+.inventarioActivo #imagenTabActiva {
+  left: 5.7%; }
 
 #iconoBotonInventario {
   background-image: url("../imagenes/interfaz/iconos/swords_button_icon.png");
@@ -8198,53 +8225,41 @@ footer a {
   width: 100%;
   height: 100%; }
 
-#imagenTabActiva {
-  position: absolute;
-  background-size: contain;
-  background-image: url("../imagenes/active_tab.png");
-  height: 5%;
-  width: 42%;
-  top: 12.8%;
-  left: 50.8%; }
-
-.inventarioActivo #imagenTabActiva {
-  left: 8%; }
-
 #botonLanzar {
   position: absolute;
-  left: 0%;
-  top: 82%;
-  width: 50%;
-  height: 12%; }
+  left: 10.2%;
+  top: 50%;
+  width: 60%;
+  height: 5.4%; }
 
 #botonInfo {
   position: absolute;
-  left: 50%;
-  top: 82%;
-  width: 50%;
-  height: 12%; }
+  left: 70.9%;
+  top: 50%;
+  width: 20%;
+  height: 5.4%; }
 
 #itemsGrid {
   position: absolute;
-  left: 10%;
-  top: 16%;
+  left: 10.3%;
+  top: 15.5%;
   width: 85%;
   height: 45%;
   display: none; }
 
 #itemsGrid > li {
-  margin: 3px;
+  margin: 1.25%;
   width: 21%;
   height: 13.36%; }
 
 #hechizos {
   color: white;
-  background: black;
+  background: rgba(0, 0, 0, 0.2);
   position: absolute;
-  left: 5.6%;
-  top: 14.19%;
-  width: 90%;
-  height: 63.8%; }
+  left: 10.2%;
+  top: 15.5%;
+  width: 81%;
+  height: 33%; }
 
 .inventarioActivo #botonInfo {
   display: none; }
@@ -8280,27 +8295,27 @@ footer a {
 
 #barraEnergia {
   background-image: url("../imagenes/interfaz/barras/barra_energia.png");
-  top: 68.6%; }
+  top: 67.6%; }
 
 #barraMana {
   background-image: url("../imagenes/interfaz/barras/barra_mana.png");
-  top: 73.4%; }
+  top: 72.8%; }
 
 #barraSalud {
   background-image: url("../imagenes/interfaz/barras/barra_vida.png");
-  top: 77.6%; }
+  top: 78%; }
 
 #barraHambre {
   background-image: url("../imagenes/interfaz/barras/barra_hambre.png");
-  top: 82.2%; }
+  top: 83.2%; }
 
 #barraSed {
   background-image: url("../imagenes/interfaz/barras/barra_sed.png");
-  top: 86.4%; }
+  top: 88.4%; }
 
 #barraExp {
   background-image: url("../imagenes/interfaz/barras/barra_experiencia.png");
-  top: 2%; }
+  top: 4%; }
 
 #barraEnergiaUsada, #barraManaUsada, #barraSaludUsada, #barraHambreUsada, #barraSedUsada, #barraExpUsada {
   background-size: 100% 100%;
@@ -8313,89 +8328,44 @@ footer a {
 #labelEnergia, #labelHambre, #labelMana, #labelSalud, #labelSed {
   color: #846f62 !important;
   position: absolute;
-  top: -18px;
+  top: -20px;
   bottom: 0;
   left: 0;
   right: 0; }
 
-#indicadorNivel {
-  top: 0%;
-  left: 20%;
-  position: absolute;
-  color: yellow; }
-
-#indicadorAgilidad, #indicadorFuerza, #indicadorOro, #indicadorMapa {
+#indicadorAgilidad, #indicadorFuerza, #indicadorOro, #indicadorNivel {
   position: absolute;
   text-align: center; }
 
+#indicadorNivel {
+  top: 2%;
+  left: 40%; }
+
 #indicadorOro {
   left: 17%;
-  top: 61.6%;
+  top: 62%;
   color: #a88954;
   text-align: left; }
 
 #indicadorFuerza {
-  left: 67.5%;
-  top: 60.6%;
-  color: #B8860B; }
+  left: 60.5%;
+  top: 62%;
+  color: #79a660; }
 
 #indicadorAgilidad {
-  left: 67.5%;
-  top: 63.5%;
-  color: #D2691E; }
-
-#indicadorMapa {
-  left: 11%;
-  top: 93%;
-  color: yellow;
-  white-space: pre; }
+  left: 78%;
+  top: 62%;
+  color: #B8860B; }
 
 #botonTirarOro {
+  border: none !important;
+  outline: none !important;
   position: absolute;
   left: 8%;
   top: 61%;
   width: 11%;
   height: 3.5%;
   background-image: url("../imagenes/interfaz/iconos/coin.png"); }
-
-#botonSeguroResucitar {
-  position: absolute;
-  left: 50.8%;
-  top: 90.6%;
-  width: 10.3%;
-  height: 6%;
-  background-image: none; }
-
-#botonSeguroResucitar.seguroOff {
-  background-image: url("../imagenes/interfaz/resucitationSafeOff.png"); }
-
-#botonSeguroAtacar {
-  border: dashed 2px green;
-  position: absolute;
-  left: 60.1%;
-  top: 90.5%;
-  width: 11%;
-  height: 6.1%;
-  background-image: none; }
-
-#botonSeguroAtacar.seguroOff {
-  background-image: url("../imagenes/interfaz/attackSafeOff.png"); }
-
-#botonMacroHechizos {
-  position: absolute;
-  left: 70%;
-  top: 90.6%;
-  width: 10.3%;
-  height: 6%;
-  background-image: url("../imagenes/interfaz/macroHechizos.jpg"); }
-
-#botonMacroTrabajo {
-  position: absolute;
-  left: 80%;
-  top: 90.6%;
-  width: 10.3%;
-  height: 6%;
-  background-image: url("../imagenes/interfaz/macroTrabajo.jpg"); }
 
 #botonAsignarSkills {
   position: absolute;
@@ -8405,13 +8375,59 @@ footer a {
   width: 15%;
   height: 2%; }
 
-#menuJuegoBotonMenu {
+#menuJuegoBotonMenu, #botonSeguroResucitar, #botonSeguroAtacar, #botonMacroHechizos, #botonMacroTrabajo {
   position: absolute;
-  background-image: url("../imagenes/botones/menu.png");
-  width: 18%;
-  height: 6%;
+  width: 15%;
+  height: 5%;
   top: 93%;
-  left: 4%; }
+  border: 2px transparent solid !important; }
+
+#menuJuegoBotonMenu {
+  background: url("../imagenes/botones/chat_send_btn.png") no-repeat;
+  /* fallback */
+  background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/menu.png") no-repeat;
+  background-size: 100% 100%;
+  left: 8%; }
+
+#botonSeguroAtacar {
+  left: 25%;
+  background: url("../imagenes/botones/chat_send_btn.png") no-repeat;
+  /* fallback */
+  background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/seguroAtaque.png") no-repeat;
+  background-size: 100% 100%; }
+
+#botonSeguroResucitar {
+  left: 42%;
+  background: url("../imagenes/botones/chat_send_btn.png") no-repeat;
+  /* fallback */
+  background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/seguroResucitacion.png") no-repeat;
+  background-size: 100% 100%; }
+
+#botonMacroTrabajo {
+  left: 59%;
+  background: url("../imagenes/botones/chat_send_btn.png") no-repeat;
+  /* fallback */
+  background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/macroTrabajo.png") no-repeat;
+  background-size: 100% 100%; }
+
+#botonMacroHechizos {
+  left: 76%;
+  background: url("../imagenes/botones/chat_send_btn.png") no-repeat;
+  /* fallback */
+  background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/macroHechizos.png") no-repeat;
+  background-size: 100% 100%; }
+
+#botonSeguroResucitar.seguroOff {
+  border: 2px #a8524c solid !important; }
+
+#botonSeguroAtacar.seguroOff {
+  border: 2px #a8524c solid !important; }
+
+#botonMacroHechizos.macroActivado {
+  border: 2px #a8524c solid !important; }
+
+#botonMacroTrabajo.macroActivado {
+  border: 2px #a8524c solid !important; }
 
 .itemgrid {
   list-style-type: none;
@@ -8446,7 +8462,7 @@ footer a {
   background-color: rgba(222, 139, 71, 0.4); }
 
 .itemgrid li.selected {
-  border-color: limegreen; }
+  border-color: #FF9800; }
 
 #comerciarGridComprar {
   flex: 1;

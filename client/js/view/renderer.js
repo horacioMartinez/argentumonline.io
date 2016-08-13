@@ -1,5 +1,7 @@
-define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'view/charactername', 'view/consola', 'view/charactertext', 'view/spritegrh', 'view/containerordenado'],
-    function (Enums, Utils, Font, PIXI, Camera, CharacterSprites, CharacterName, Consola, CharacterText, SpriteGrh, ContainerOrdenado) {
+define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'view/charactername',
+    'view/consola', 'view/charactertext', 'view/spritegrh', 'view/containerordenado','view/indicadormapa'],
+    function (Enums, Utils, Font, PIXI, Camera, CharacterSprites, CharacterName, Consola, CharacterText, SpriteGrh,
+              ContainerOrdenado, IndicadorMapa) {
 
         class Renderer {
             constructor(assetManager, escala) {
@@ -54,8 +56,10 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                 this.layer4 = new PIXI.Container();
                 this.gameChat = new PIXI.Container();
                 this.consola = new Consola(this.escala);
+                this.indicadorMapa = new IndicadorMapa(this.escala);
                 this.stage.addChild(this.gameStage);
                 this.stage.addChild(this.consola);
+                this.stage.addChild(this.indicadorMapa);
                 this.gameStage.addChild(this.layer1);
                 this.gameStage.addChild(this.layer2);
                 this.gameStage.addChild(this.gameNames);
@@ -117,6 +121,10 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
 
             agregarTextoConsola(texto, font) {
                 this.consola.agregarTexto(texto, font);
+            }
+
+            actualizarIndicadorMapa(numMap,x,y){
+                this.indicadorMapa.actualizar(numMap,x,y);
             }
 
             agregarItem(item, numGrh) {
@@ -310,6 +318,9 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                     name.setEscala(escala);
                 }
                 this.consola.setEscala(escala);
+                this.indicadorMapa.x = Math.floor((17*32-65)*escala);
+                this.indicadorMapa.y = Math.floor((13*32-12)*escala);
+                this.indicadorMapa.setEscala(escala);
             }
 
             clean(escala) {

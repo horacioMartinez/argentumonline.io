@@ -373,7 +373,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
             }
 
             actualizarIndicadorPosMapa() {
-                this.gameUI.interfaz.updateIndicadorPosMapa(this.map.numero, this.player.gridX, this.player.gridY);
+                this.renderer.actualizarIndicadorMapa(this.map.numero,this.player.gridX,this.player.gridY);
             }
 
             cambiarArea(gridX, gridY) {

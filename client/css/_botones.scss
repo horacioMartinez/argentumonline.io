@@ -8,7 +8,6 @@
   @extend .defaults_boton;
   background-image: url('../imagenes/botones/boton_normal.png');
   background-size: 100% 100%;
-  border: none;
   text-decoration: none;
   color: $boton_normal_texto;
   margin-top: 3px;
@@ -20,18 +19,36 @@
   text-align: center;
   width: 121px;
   height:44px;
+
+  outline:none !important;
+  border: none !important;
 }
 
 .botonNormal:hover {
-  background-image: url('../imagenes/botones/boton_normal_hover.png');
+  background: url('../imagenes/botones/boton_normal.png') no-repeat; /* fallback */
+  background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/boton_normal.png') no-repeat;
+  background-size: 100% 100%;
+
   color: $boton_normal_texto_hover;
   /* background-color: #FFFFFF;*/
 }
 
 .botonNormal:active {
-  background-image: url('../imagenes/botones/boton_normal_push.png');
-  color: $boton_normal_texto_pressed;
+  //background: url('../imagenes/botones/boton_normal.png') no-repeat; /* fallback */
+  //background: url('../imagenes/darken.png') repeat, url('../imagenes/botones/boton_normal.png') no-repeat;
+  color: $boton_normal_texto_pressed ;
   /*text-shadow: none;*/
+}
+
+.botonCuadrado {
+  @extend .botonNormal;
+  background-image: url('../imagenes/botones/bg_square_button.png');
+}
+
+.botonCuadrado:hover {
+  background: url('../imagenes/botones/bg_square_button.png') no-repeat; /* fallback */
+  background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/bg_square_button.png') no-repeat;
+  background-size: 100% 100%;
 }
 
 //.botonTest  {

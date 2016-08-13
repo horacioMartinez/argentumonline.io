@@ -48,6 +48,12 @@ $left_align_percentage: 8%;
   display: inline-block;
 }
 
+#botonChatInput:hover{
+  background: url('../imagenes/botones/chat_send_btn.png') no-repeat; /* fallback */
+  background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/chat_send_btn.png') no-repeat;
+  background-size: 100% 100%;
+}
+
 #menuJuego span {
   cursor: default;
   font-weight: bold;
@@ -65,92 +71,97 @@ $left_align_percentage: 8%;
   position: relative;
 }
 
-
-$width_inv_h : 42%;
-$height_inv_h : 5%;
-$top_inv_h : 8.5%;
+$width_inv_h: 44%;
+$height_inv_h: 5.4%;
+$top_inv_h: 7.5%;
+$separacion_botones: 0.7%;
+$left_inv_h : $left_align_percentage - 2.3%;
 
 #botonInventario {
   position: absolute;
-  left: $left_align_percentage;
-  top: $top_inv_h;
-  width: $width_inv_h ;
-  height: $height_inv_h ;
-}
-
-#botonHechizos {
-  position: absolute;
-  left: $left_align_percentage + $width_inv_h + 0.8%;
+  left: $left_inv_h ;
   top: $top_inv_h;
   width: $width_inv_h;
   height: $height_inv_h;
 }
 
-#iconoBotonInventario{
+#botonHechizos {
+  position: absolute;
+  left: $left_inv_h  + $width_inv_h + $separacion_botones;
+  top: $top_inv_h;
+  width: $width_inv_h;
+  height: $height_inv_h;
+}
+
+#imagenTabActiva {
+  position: absolute;
+  background-size: contain;
+  background-image: url('../imagenes/active_tab.png');
+  height: $height_inv_h;
+  width: $width_inv_h;
+  top: $top_inv_h +  $height_inv_h - 0.7%;
+  left: $left_inv_h  + $width_inv_h + $separacion_botones;
+}
+
+.inventarioActivo #imagenTabActiva {
+  left: $left_inv_h;
+}
+
+#iconoBotonInventario {
   background-image: url('../imagenes/interfaz/iconos/swords_button_icon.png');
   width: 100%;
   height: 100%;
 }
 
-#iconoBotonHechizos{
+#iconoBotonHechizos {
   background-image: url('../imagenes/interfaz/iconos/book_button_icon.png');
   width: 100%;
   height: 100%;
 }
 
-#imagenTabActiva{
-  position:absolute;
-  background-size: contain;
-  background-image: url('../imagenes/active_tab.png');
-  height: $height_inv_h ;
-  width: $width_inv_h ;
-  top: $top_inv_h +  $height_inv_h - 0.7%;
-  left: $left_align_percentage + $width_inv_h + 0.8%;
-}
 
-.inventarioActivo #imagenTabActiva{
-  left: $left_align_percentage;
-}
+
+
 
 #botonLanzar {
   position: absolute;
-  left: 0%;
-  top: 82%;
-  width: 50%;
-  height: 12%;
+  left: $left_align_percentage + 2.2%;
+  top: 50%;
+  width: 60%;
+  height: $height_inv_h;
 }
 
 #botonInfo {
   position: absolute;
-  left: 50%;
-  top: 82%;
-  width: 50%;
-  height: 12%;
+  left: $left_align_percentage + 2.2% + 60% + $separacion_botones;
+  top: 50%;
+  width: 20%;
+  height: $height_inv_h;
 }
 
 #itemsGrid {
   position: absolute;
-  left: $left_align_percentage +2%;
-  top: 16%;
+  left: $left_align_percentage + 2.3%;
+  top: 15.5%;
   width: 85%;
   height: 45%;
   display: none;
 }
 
 #itemsGrid > li {
-  margin: 3px;
+  margin: 1.25%; //3px;
   width: 21%;
-  height: 13.36% ;
+  height: 13.36%;
 }
 
 #hechizos {
   color: white;
-  background: black;
+  background: rgba(0, 0, 0, 0.2);
   position: absolute;
-  left: 5.6%;
-  top: 14.19%;
-  width: 90%;
-  height: 63.8%;
+  left: $left_align_percentage + 2.2%;
+  top: 15.5%;
+  width: 81%;
+  height: 33%;
 }
 
 .inventarioActivo #botonInfo {
@@ -176,7 +187,7 @@ $top_inv_h : 8.5%;
   text-align: center;
 }
 
-#barraEnergiaTexto, #barraExpTexto, #barraHambreTexto, #barraManaTexto, #barraSaludTexto, #barraSedTexto{
+#barraEnergiaTexto, #barraExpTexto, #barraHambreTexto, #barraManaTexto, #barraSaludTexto, #barraSedTexto {
   top: 0;
   bottom: 0;
   left: 0;
@@ -193,34 +204,36 @@ $top_inv_h : 8.5%;
   background-size: 100% 100%;
 }
 
+$top_primer_barra: 67.6%;
+$separacion_barras: 5.2%;
 #barraEnergia {
   background-image: url('../imagenes/interfaz/barras/barra_energia.png');
-  top: 68.6%;
+  top: $top_primer_barra;
 }
 
 #barraMana {
   background-image: url('../imagenes/interfaz/barras/barra_mana.png');
-  top: 73.4%;
+  top: $top_primer_barra + $separacion_barras;
 }
 
 #barraSalud {
   background-image: url('../imagenes/interfaz/barras/barra_vida.png');
-  top: 77.6%;
+  top: $top_primer_barra + $separacion_barras*2;
 }
 
 #barraHambre {
   background-image: url('../imagenes/interfaz/barras/barra_hambre.png');
-  top: 82.2%;
+  top: $top_primer_barra + $separacion_barras*3;
 }
 
 #barraSed {
   background-image: url('../imagenes/interfaz/barras/barra_sed.png');
-  top: 86.4%;
+  top: $top_primer_barra + $separacion_barras*4;
 }
 
 #barraExp {
   background-image: url('../imagenes/interfaz/barras/barra_experiencia.png');
-  top: 2%;
+  top: 4%;
 }
 
 #barraEnergiaUsada, #barraManaUsada, #barraSaludUsada, #barraHambreUsada, #barraSedUsada, #barraExpUsada {
@@ -233,105 +246,57 @@ $top_inv_h : 8.5%;
   background-image: url('../imagenes/interfaz/barras/barra_background.png');
 }
 
-#labelEnergia, #labelHambre, #labelMana, #labelSalud, #labelSed {
+#labelEnergia, #labelHambre, #labelMana, #labelSalud, #labelSed{
   color: $menu_background_color !important;
   position: absolute;
-  top: -18px;
-  bottom:0;
+  top: -20px;
+  bottom: 0;
   left: 0;
   right: 0;
 }
 
-#indicadorNivel {
-  top: 0%;
-  left: 20%;
-  position: absolute;
-  color: yellow
-}
 
-#indicadorAgilidad, #indicadorFuerza, #indicadorOro, #indicadorMapa {
+#indicadorAgilidad, #indicadorFuerza, #indicadorOro, #indicadorNivel {
   position: absolute;
   text-align: center;
 }
 
+#indicadorNivel{
+  top:2%;
+  left:40% ;
+}
+
+$ind_top: 62%;
+
 #indicadorOro { //TODO: corregir esto, ponerlo con la imagen en una div y posicionar absolutamente esa div
   left: 17%;
-  top: 61.6%;
+  top: $ind_top;
   color: $gold_currency_color;
   text-align: left;
 }
 
 #indicadorFuerza {
-  left: 67.5%;
-  top: 60.6%;
-  color: #B8860B;
+  left: 60.5%;
+  top: $ind_top;
+  color: #79a660;
 }
 
 #indicadorAgilidad {
-  left: 67.5%;
-  top: 63.5%;
-  color: #D2691E;
-}
-
-#indicadorMapa {
-  left: 11%;
-  top: 93%;
-  color: yellow;
-  white-space: pre;
+  left: 78% ;
+  top: $ind_top;
+  color: #B8860B;
 }
 
 #botonTirarOro {
+  border: none !important;
+  outline: none !important;
+
   position: absolute;
   left: $left_align_percentage;
   top: 61%;
   width: 11%;
   height: 3.5%;
   background-image: url("../imagenes/interfaz/iconos/coin.png");
-}
-
-#botonSeguroResucitar {
-  position: absolute;
-  left: 50.8%;
-  top: 90.6%;
-  width: 10.3%;
-  height: 6%;
-  background-image: none
-}
-
-#botonSeguroResucitar.seguroOff {
-  background-image: url("../imagenes/interfaz/resucitationSafeOff.png");
-}
-
-#botonSeguroAtacar {
-  border: dashed 2px green;
-  position: absolute;
-  left: 60.1%;
-  top: 90.5%;
-  width: 11%;
-  height: 6.1%;
-  background-image: none
-}
-
-#botonSeguroAtacar.seguroOff {
-  background-image: url("../imagenes/interfaz/attackSafeOff.png");
-}
-
-#botonMacroHechizos {
-  position: absolute;
-  left: 70%;
-  top: 90.6%;
-  width: 10.3%;
-  height: 6%;
-  background-image: url("../imagenes/interfaz/macroHechizos.jpg");
-}
-
-#botonMacroTrabajo {
-  position: absolute;
-  left: 80%;
-  top: 90.6%;
-  width: 10.3%;
-  height: 6%;
-  background-image: url("../imagenes/interfaz/macroTrabajo.jpg");
 }
 
 #botonAsignarSkills {
@@ -343,11 +308,68 @@ $top_inv_h : 8.5%;
   height: 2%
 }
 
-#menuJuegoBotonMenu {
+$separacion_botenes_bottom: 17%;
+#menuJuegoBotonMenu, #botonSeguroResucitar, #botonSeguroAtacar, #botonMacroHechizos, #botonMacroTrabajo {
   position: absolute;
-  background-image: url("../imagenes/botones/menu.png");
-  width: 18%;
-  height: 6%;
+  width: 15%;
+  height: 5%;
   top: 93%;
-  left: 4%;
+  border: 2px transparent solid !important;
+}
+
+#menuJuegoBotonMenu {
+  background: url('../imagenes/botones/chat_send_btn.png') no-repeat; /* fallback */
+  background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/menu.png') no-repeat;
+  background-size: 100% 100%;
+  left: $left_align_percentage;
+}
+
+#botonSeguroAtacar {
+  left: $left_align_percentage + $separacion_botenes_bottom;
+  background: url('../imagenes/botones/chat_send_btn.png') no-repeat; /* fallback */
+  background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/seguroAtaque.png') no-repeat;
+  background-size: 100% 100%;
+}
+
+
+
+#botonSeguroResucitar {
+  left: $left_align_percentage + $separacion_botenes_bottom*2;
+  background: url('../imagenes/botones/chat_send_btn.png') no-repeat; /* fallback */
+  background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/seguroResucitacion.png') no-repeat;
+  background-size: 100% 100%;
+}
+
+
+#botonMacroTrabajo {
+  left: $left_align_percentage + $separacion_botenes_bottom*3;
+  background: url('../imagenes/botones/chat_send_btn.png') no-repeat; /* fallback */
+  background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/macroTrabajo.png') no-repeat;
+  background-size: 100% 100%;
+}
+
+#botonMacroHechizos {
+  left: $left_align_percentage + $separacion_botenes_bottom*4;
+  background: url('../imagenes/botones/chat_send_btn.png') no-repeat; /* fallback */
+  background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/macroHechizos.png') no-repeat;
+  background-size: 100% 100%;
+}
+
+
+$activo_border: 2px #a8524c solid !important;
+
+#botonSeguroResucitar.seguroOff {
+  border: $activo_border;
+}
+
+#botonSeguroAtacar.seguroOff {
+  border: $activo_border;
+}
+
+#botonMacroHechizos.macroActivado {
+  border: $activo_border;
+}
+
+#botonMacroTrabajo.macroActivado{
+  border: $activo_border;
 }

@@ -38,7 +38,7 @@ define(['enums', 'font', 'lib/pixi'], function (Enums, Font, PIXI) {
                 this.game.escribirMsgConsola(Enums.MensajeConsola.MACRO_TABAJO_REQUIERE_EQUIPAR, Font.WARNING);
                 return;
             }
-
+            this.game.gameUI.interfaz.setMacroTrabajo(true);
             this.game.escribirMsgConsola(Enums.MensajeConsola.MACRO_TRABAJO_ACTIVADO, Font.WARNING);
 
             PIXI.ticker.shared.add(this._updateTrabajar, this);
@@ -49,6 +49,8 @@ define(['enums', 'font', 'lib/pixi'], function (Enums, Font, PIXI) {
             if (!this.trabajando) {
                 return;
             }
+
+            this.game.gameUI.interfaz.setMacroTrabajo(false);
             this.game.escribirMsgConsola(Enums.MensajeConsola.MACRO_TRABAJO_DESACTIVADO, Font.WARNING);
 
             PIXI.ticker.shared.remove(this._updateTrabajar, this);
@@ -74,7 +76,7 @@ define(['enums', 'font', 'lib/pixi'], function (Enums, Font, PIXI) {
                 this.game.escribirMsgConsola(Enums.MensajeConsola.MACRO_HECHIZOS_REQUIRE_SELECCIONAR, Font.WARNING);
                 return;
             }
-
+            this.game.gameUI.interfaz.setMacroHechizos(true);
             this.game.escribirMsgConsola(Enums.MensajeConsola.MACRO_HECHIZOS_ACTIVADO, Font.WARNING);
             PIXI.ticker.shared.add(this._updateHechizos, this);
             this.lanzandoHechizo = true;
@@ -84,6 +86,7 @@ define(['enums', 'font', 'lib/pixi'], function (Enums, Font, PIXI) {
             if (!this.lanzandoHechizo) {
                 return;
             }
+            this.game.gameUI.interfaz.setMacroHechizos(false);
             this.game.escribirMsgConsola(Enums.MensajeConsola.MACRO_HECHIZOS_DESACTIVADO, Font.WARNING);
             PIXI.ticker.shared.remove(this._updateHechizos, this);
             this.lanzandoHechizo = false;

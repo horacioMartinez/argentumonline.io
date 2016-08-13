@@ -42,11 +42,11 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
                 self.game.gameUI.showSkills();
             });
 
-            $("#botonSeguroResucitar").dblclick(function () {
+            $("#botonSeguroResucitar").click(function () {
                 self.game.toggleSeguroResucitar();
             });
 
-            $("#botonSeguroAtacar").dblclick(function () {
+            $("#botonSeguroAtacar").click(function () {
                 self.game.toggleSeguroAtacar();
             });
 
@@ -161,10 +161,6 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
             $("#indicadorNivel").text("Nivel " + nivel);
         }
 
-        updateIndicadorPosMapa(mapa, x, y) {
-            $("#indicadorMapa").text("Mapa " + mapa + "  X: " + x + " Y: " + y);
-        }
-
         setMouseCrosshair(visible) {
             if (visible) {
                 $("#gamecanvas").addClass("crosshair");
@@ -189,7 +185,22 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
                 $("#botonSeguroAtacar").removeClass("seguroOff");
             }
         }
+        
+        setMacroTrabajo(activado){
+            if (activado) {
+                $("#botonMacroTrabajo").addClass("macroActivado");
+            } else {
+                $("#botonMacroTrabajo").removeClass("macroActivado");
+            }
+        }
 
+        setMacroHechizos(activado){
+            if (activado) {
+                $("#botonMacroHechizos").addClass("macroActivado");
+            } else {
+                $("#botonMacroHechizos").removeClass("macroActivado");
+            }
+        }
         setHechizosScrollFirefoxFix(self) {
             var $hechizos = $("#hechizos");
             self.hechizos_realSelectedSlot = 1;
