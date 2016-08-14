@@ -78,6 +78,8 @@ $separacion_botones: 0.7%;
 $left_inv_h : $left_align_percentage - 2.3%;
 
 #botonInventario {
+  background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/boton_inventario.png') no-repeat;
+  background-size: 100% 100%;
   position: absolute;
   left: $left_inv_h ;
   top: $top_inv_h;
@@ -86,6 +88,8 @@ $left_inv_h : $left_align_percentage - 2.3%;
 }
 
 #botonHechizos {
+  background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/boton_hechizos.png') no-repeat;
+  background-size: 100% 100%;
   position: absolute;
   left: $left_inv_h  + $width_inv_h + $separacion_botones;
   top: $top_inv_h;
@@ -107,19 +111,6 @@ $left_inv_h : $left_align_percentage - 2.3%;
   left: $left_inv_h;
 }
 
-#iconoBotonInventario {
-  background-image: url('../imagenes/interfaz/iconos/swords_button_icon.png');
-  width: 100%;
-  height: 100%;
-}
-
-#iconoBotonHechizos {
-  background-image: url('../imagenes/interfaz/iconos/book_button_icon.png');
-  width: 100%;
-  height: 100%;
-}
-
-
 
 #botonLanzar {
   position: absolute;
@@ -133,8 +124,28 @@ $left_inv_h : $left_align_percentage - 2.3%;
   position: absolute;
   left: $left_align_percentage + 2.2% + 60% + $separacion_botones;
   top: 50%;
-  width: 20%;
+  width: 10%;
   height: $height_inv_h;
+}
+
+#botonMoverHechizoArriba{
+  background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/boton_arriba_inventario.png') no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  left: $left_align_percentage + 2.2% + 60% + $separacion_botones + 10% + $separacion_botones/2;
+  top: 50%;
+  width: 10%;
+  height: $height_inv_h/2 - 0.1%;
+}
+
+#botonMoverHechizoAbajo{
+  background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/boton_abajo_inventario.png') no-repeat;
+  background-size: 100% 100% ;
+  position: absolute;
+  left: $left_align_percentage + 2.2% + 60% + $separacion_botones + 10% + $separacion_botones/2;
+  top: 50% + $height_inv_h/2;
+  width: 10%;
+  height: $height_inv_h/2 - 0.1%;
 }
 
 #itemsGrid {
@@ -175,6 +186,13 @@ $left_inv_h : $left_align_percentage - 2.3%;
 
 .inventarioActivo #hechizos {
   display: none;
+}
+
+.inventarioActivo #botonMoverHechizoArriba {
+  display:none;
+}
+.inventarioActivo #botonMoverHechizoAbajo{
+  display:none;
 }
 
 .inventarioActivo #itemsGrid {
@@ -263,7 +281,7 @@ $separacion_barras: 5.2%;
 }
 
 #indicadorNivel{
-  top:2%;
+  top:1%;
   left:40% ;
 }
 
@@ -303,9 +321,9 @@ $ind_top: 62%;
 #botonAsignarSkills {
   position: absolute;
   background-image: url("../imagenes/interfaz/botonAsignarSkills.png");
-  left: 75%;
-  top: 1%;
-  width: 15%;
+  left: 64%;
+  top: 1.2%;
+  width: 10%;
   height: 2%
 }
 
@@ -319,7 +337,6 @@ $separacion_botenes_bottom: 17%;
 }
 
 #menuJuegoBotonMenu {
-  background: url('../imagenes/botones/chat_send_btn.png') no-repeat; /* fallback */
   background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/menu.png') no-repeat;
   background-size: 100% 100%;
   left: $left_align_percentage;
@@ -327,7 +344,6 @@ $separacion_botenes_bottom: 17%;
 
 #botonSeguroAtacar {
   left: $left_align_percentage + $separacion_botenes_bottom;
-  background: url('../imagenes/botones/chat_send_btn.png') no-repeat; /* fallback */
   background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/seguroAtaque.png') no-repeat;
   background-size: 100% 100%;
 }
@@ -336,7 +352,6 @@ $separacion_botenes_bottom: 17%;
 
 #botonSeguroResucitar {
   left: $left_align_percentage + $separacion_botenes_bottom*2;
-  background: url('../imagenes/botones/chat_send_btn.png') no-repeat; /* fallback */
   background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/seguroResucitacion.png') no-repeat;
   background-size: 100% 100%;
 }
@@ -344,14 +359,12 @@ $separacion_botenes_bottom: 17%;
 
 #botonMacroTrabajo {
   left: $left_align_percentage + $separacion_botenes_bottom*3;
-  background: url('../imagenes/botones/chat_send_btn.png') no-repeat; /* fallback */
   background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/macroTrabajo.png') no-repeat;
   background-size: 100% 100%;
 }
 
 #botonMacroHechizos {
   left: $left_align_percentage + $separacion_botenes_bottom*4;
-  background: url('../imagenes/botones/chat_send_btn.png') no-repeat; /* fallback */
   background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/macroHechizos.png') no-repeat;
   background-size: 100% 100%;
 }

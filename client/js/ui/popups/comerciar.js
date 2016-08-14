@@ -8,7 +8,7 @@ define(["text!../../../menus/comerciar.html!strip", 'ui/popups/popup', 'ui/game/
         constructor(game, acciones) {
 
             var options = {
-                width: 568,
+                width: 577,
                 height: 410,
                 minWidth: 250,
                 minHeight: 200

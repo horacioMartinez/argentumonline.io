@@ -7937,16 +7937,19 @@ body {
   display: flex;
   flex-direction: row; }
 
-/* Tamaño contenedor (width seteado en js) */
+/* Tama├▒o contenedor (width seteado en js) */
+@media screen and (min-aspect-ratio: 8 / 5) {
+  #container {
+    height: 88%; } }
 @media screen and (min-aspect-ratio: 7 / 5) and (max-aspect-ratio: 8 / 5) {
   #container {
-    height: 85%; } }
+    height: 80%; } }
 @media screen and (min-aspect-ratio: 13 / 10) and (max-aspect-ratio: 7 / 5) {
   #container {
-    height: 80%; } }
+    height: 75%; } }
 @media screen and (min-aspect-ratio: 6 / 5) and (max-aspect-ratio: 13 / 10) {
   #container {
-    height: 75%; } }
+    height: 70%; } }
 @media screen and (max-aspect-ratio: 6 / 5) {
   #container {
     height: 65%; } }
@@ -8190,6 +8193,8 @@ footer a {
   position: relative; }
 
 #botonInventario {
+  background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/boton_inventario.png") no-repeat;
+  background-size: 100% 100%;
   position: absolute;
   left: 5.7%;
   top: 7.5%;
@@ -8197,6 +8202,8 @@ footer a {
   height: 5.4%; }
 
 #botonHechizos {
+  background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/boton_hechizos.png") no-repeat;
+  background-size: 100% 100%;
   position: absolute;
   left: 50.4%;
   top: 7.5%;
@@ -8215,16 +8222,6 @@ footer a {
 .inventarioActivo #imagenTabActiva {
   left: 5.7%; }
 
-#iconoBotonInventario {
-  background-image: url("../imagenes/interfaz/iconos/swords_button_icon.png");
-  width: 100%;
-  height: 100%; }
-
-#iconoBotonHechizos {
-  background-image: url("../imagenes/interfaz/iconos/book_button_icon.png");
-  width: 100%;
-  height: 100%; }
-
 #botonLanzar {
   position: absolute;
   left: 10.2%;
@@ -8236,8 +8233,26 @@ footer a {
   position: absolute;
   left: 70.9%;
   top: 50%;
-  width: 20%;
+  width: 10%;
   height: 5.4%; }
+
+#botonMoverHechizoArriba {
+  background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/boton_arriba_inventario.png") no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  left: 81.25%;
+  top: 50%;
+  width: 10%;
+  height: 2.6%; }
+
+#botonMoverHechizoAbajo {
+  background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/boton_abajo_inventario.png") no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  left: 81.25%;
+  top: 52.7%;
+  width: 10%;
+  height: 2.6%; }
 
 #itemsGrid {
   position: absolute;
@@ -8271,6 +8286,12 @@ footer a {
   display: none; }
 
 .inventarioActivo #hechizos {
+  display: none; }
+
+.inventarioActivo #botonMoverHechizoArriba {
+  display: none; }
+
+.inventarioActivo #botonMoverHechizoAbajo {
   display: none; }
 
 .inventarioActivo #itemsGrid {
@@ -8341,7 +8362,7 @@ footer a {
   text-align: center; }
 
 #indicadorNivel {
-  top: 2%;
+  top: 1%;
   left: 40%; }
 
 #indicadorOro {
@@ -8373,9 +8394,9 @@ footer a {
 #botonAsignarSkills {
   position: absolute;
   background-image: url("../imagenes/interfaz/botonAsignarSkills.png");
-  left: 75%;
-  top: 1%;
-  width: 15%;
+  left: 64%;
+  top: 1.2%;
+  width: 10%;
   height: 2%; }
 
 #menuJuegoBotonMenu, #botonSeguroResucitar, #botonSeguroAtacar, #botonMacroHechizos, #botonMacroTrabajo {
@@ -8386,37 +8407,27 @@ footer a {
   border: 2px transparent solid !important; }
 
 #menuJuegoBotonMenu {
-  background: url("../imagenes/botones/chat_send_btn.png") no-repeat;
-  /* fallback */
   background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/menu.png") no-repeat;
   background-size: 100% 100%;
   left: 8%; }
 
 #botonSeguroAtacar {
   left: 25%;
-  background: url("../imagenes/botones/chat_send_btn.png") no-repeat;
-  /* fallback */
   background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/seguroAtaque.png") no-repeat;
   background-size: 100% 100%; }
 
 #botonSeguroResucitar {
   left: 42%;
-  background: url("../imagenes/botones/chat_send_btn.png") no-repeat;
-  /* fallback */
   background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/seguroResucitacion.png") no-repeat;
   background-size: 100% 100%; }
 
 #botonMacroTrabajo {
   left: 59%;
-  background: url("../imagenes/botones/chat_send_btn.png") no-repeat;
-  /* fallback */
   background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/macroTrabajo.png") no-repeat;
   background-size: 100% 100%; }
 
 #botonMacroHechizos {
   left: 76%;
-  background: url("../imagenes/botones/chat_send_btn.png") no-repeat;
-  /* fallback */
   background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/macroHechizos.png") no-repeat;
   background-size: 100% 100%; }
 

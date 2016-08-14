@@ -7,8 +7,8 @@ define(["text!../../../menus/skills.html!strip", 'ui/popups/popup'], function (D
     class popUpSkills extends PopUp {
         constructor(game) {
             var options = {
-                width: 200,
-                height: 500,
+                width: 300,
+                height: 600,
                 minWidth: 150,
                 minHeight: 250
             };
