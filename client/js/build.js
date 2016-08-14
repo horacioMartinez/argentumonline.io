@@ -8,7 +8,7 @@
     modules: [
         {
             name: "main",
-            exclude: ["detect"]
+            exclude: ["detect","jquery","lib/jquery"]
             // exclude: ["lib/pixi", "lib/websock", "lib/howler", "lib/jquery", "lib/jquery-ui", "lib/bootstrap", "text", "json"]
         },
         {
