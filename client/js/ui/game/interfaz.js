@@ -62,6 +62,24 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
                 self.game.gameUI.showMenu();
             });
 
+            $("#botonMoverHechizoArriba").click(function () {
+                let slot = self.game.gameUI.interfaz.getSelectedSlotHechizo();
+                if (!slot || slot === 1) {
+                    return;
+                }
+                self.game.client.sendMoveSpell(true, slot);
+                self.game.swapSlotHechizos(slot, slot - 1);
+            });
+
+            $("#botonMoverHechizoAbajo").click(function () {
+                let slot = self.game.gameUI.interfaz.getSelectedSlotHechizo();
+                if (!slot) { // TODO: checkear que no sea el ultimo!!!
+                    return;
+                }
+                self.game.client.sendMoveSpell(false, slot);
+                self.game.swapSlotHechizos(slot, slot + 1);
+            });
+
             //FIX bug firefox que no previene movimiento scroll hehcizos
             if (Detect.isFirefox()) {
                 self.setHechizosScrollFirefoxFix(self);
@@ -88,7 +106,7 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
         }
 
         getSelectedSlotHechizo() {
-            var res = $('#hechizos').val();
+            var res = parseInt($('#hechizos').val());
             if (res) {
                 return res;
             }
@@ -185,8 +203,8 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
                 $("#botonSeguroAtacar").removeClass("seguroOff");
             }
         }
-        
-        setMacroTrabajo(activado){
+
+        setMacroTrabajo(activado) {
             if (activado) {
                 $("#botonMacroTrabajo").addClass("macroActivado");
             } else {
@@ -194,13 +212,14 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
             }
         }
 
-        setMacroHechizos(activado){
+        setMacroHechizos(activado) {
             if (activado) {
                 $("#botonMacroHechizos").addClass("macroActivado");
             } else {
                 $("#botonMacroHechizos").removeClass("macroActivado");
             }
         }
+
         setHechizosScrollFirefoxFix(self) {
             var $hechizos = $("#hechizos");
             self.hechizos_realSelectedSlot = 1;

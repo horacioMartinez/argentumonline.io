@@ -21,17 +21,6 @@ define(["text!../../../menus/comerciar.html!strip", 'ui/popups/popup', 'ui/game/
             this.shopGrid = new ItemGrid("comerciarGridComprar",20);
             this.userGrid = new ItemGrid("comerciarGridVender",20);
 
-            /*$("#comerciarGridComprar").$( "#droppable" ).droppable({ // <-- TODO: grid dropeables
-             activeClass: "ui-state-default",
-             hoverClass: "ui-state-hover",
-             drop: function( event, ui ) {
-             $( this )
-             .addClass( "ui-state-highlight" )
-             .find( "p" )
-             .html( "Dropped!" );
-             }
-             });*/
-
             this.initCallbacks();
         }
 

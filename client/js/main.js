@@ -7,7 +7,7 @@
  *
  */
 
-define(['app', 'assets/assetmanager', 'ui/uimanager', 'storage/storage'], function (App, AssetManager, UIManager, Storage) {
+define(['app', 'assets/assetmanager', 'ui/uimanager', 'storage/storage', 'lib/lodash', 'lib/stacktrace','utils/log', 'detect'], function (App, AssetManager, UIManager, Storage, __globals__) {
     var app, uiManager, assetManager, storage;
 
     function setupAudio(audio, storage) {
@@ -17,6 +17,7 @@ define(['app', 'assets/assetmanager', 'ui/uimanager', 'storage/storage'], functi
         audio.setSoundVolume(storage.getSoundVolume());
         audio.setMusic("intro");
     }
+
 
     var initApp = function () {
         $(document).ready(function () {

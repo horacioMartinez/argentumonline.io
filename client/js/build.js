@@ -6,10 +6,11 @@
     removeCombined: true,
     fileExclusionRegExp: /^(build)\.js$/,
     modules: [
-        /*{
+        {
             name: "main",
-            exclude: ["lib/pixi", "lib/websock", "lib/howler", "lib/jquery", "lib/jquery-ui", "lib/bootstrap", "text", "json"]
-        },*/
+            exclude: ["detect"]
+            // exclude: ["lib/pixi", "lib/websock", "lib/howler", "lib/jquery", "lib/jquery-ui", "lib/bootstrap", "text", "json"]
+        },
         {
             name: "home",
             exclude: ["detect"]

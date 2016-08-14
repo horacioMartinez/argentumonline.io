@@ -319,6 +319,13 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                  this.uiRenderer.modificarSlotHechizos(slot, nombre);*/
             }
 
+            swapSlotHechizos(slot1, slot2) {
+                let auxSpellID = this.hechizos[slot1].id;
+                let auxNombre = this.hechizos[slot1].nombre;
+                this.cambiarSlotHechizos(slot1,  this.hechizos[slot2].id,  this.hechizos[slot2].nombre);
+                this.cambiarSlotHechizos(slot2, auxSpellID, auxNombre);
+            }
+
             resetPosCharacter(charIndex, gridX, gridY, noReDraw) {
                 let c = this.world.getCharacter(charIndex);
                 if (!c) {
@@ -373,7 +380,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
             }
 
             actualizarIndicadorPosMapa() {
-                this.renderer.actualizarIndicadorMapa(this.map.numero,this.player.gridX,this.player.gridY);
+                this.renderer.actualizarIndicadorMapa(this.map.numero, this.player.gridX, this.player.gridY);
             }
 
             cambiarArea(gridX, gridY) {
