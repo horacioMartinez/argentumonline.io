@@ -1,5 +1,5 @@
 require.config({
-    urlArgs: "bust=v0.0.1",
+    urlArgs: "bust=v0.1.0",
     paths: {
         "jquery": "lib/jquery",
         "jquery-ui": "lib/jquery-ui",
@@ -19,7 +19,7 @@ require.config({
     }
 });
 
-define(['lib/lodash', 'lib/stacktrace'], function () {
-    require(['bootstrap']);
-    require(["main"]);
+define(['lib/lodash', 'lib/stacktrace','utils/log','detect','bootstrap','main'], function () {
+    //require(['bootstrap']);
+    //require(["main"]);
 });

@@ -38,11 +38,19 @@ var uglify = require('gulp-uglify');
 
 gulp.task('uglify', function() {
     return gulp.src('dakara-client-build/**/*.js')
-        .pipe(uglify({
+       .pipe(uglify({
             compress: {
-                pure_funcs: ['console.log', 'log.error']
-            },
-            mangle: true
+               pure_funcs: ['console.log', 'log.error', 'log.info']
+           },/*
+               mangle: {
+                toplevel: true,
+                sort: true,
+                eval: true,
+                props: true,
+                r :'$,require,exports'
+            },*/
+            comments : 'license',
+            lint: true
         }))
         .pipe(gulp.dest('dakara-client-build'));
 });
