@@ -1,5 +1,5 @@
 /*!
- *  howler.js v2.0.0-rc2
+ *  howler.js v2.0.0
  *  howlerjs.com
  *
  *  (c) 2013-2016, James Simpson of GoldFire Studios
@@ -652,7 +652,7 @@
           if (typeof node.bufferSource.start === 'undefined') {
             sound._loop ? node.bufferSource.noteGrainOn(0, seek, 86400) : node.bufferSource.noteGrainOn(0, seek, duration);
           } else {
-            sound._loop ? node.bufferSource.start(0, seek/*, 86400*/) : node.bufferSource.start(0, seek, duration);
+            sound._loop ? node.bufferSource.start(0, seek, 86400) : node.bufferSource.start(0, seek, duration);
           }
 
           // Start a new timer if none is present.
@@ -2162,7 +2162,7 @@
 /*!
  *  Spatial Plugin - Adds support for stereo and 3D audio where Web Audio is supported.
  *  
- *  howler.js v2.0.0-rc2
+ *  howler.js v2.0.0
  *  howlerjs.com
  *
  *  (c) 2013-2016, James Simpson of GoldFire Studios
