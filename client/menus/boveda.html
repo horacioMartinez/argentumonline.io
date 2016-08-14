@@ -14,41 +14,48 @@
 
 <article id="boveda" title="BOVEDA">
     <div class="dialogContent">
-        <div style="text-align: center;">
-            <button id="bovedaBotonRetirarOro" class="botonImagen"></button>
-            <div style="display:inline-block;text-align: center;">
-                <div style="margin-bottom:5px;">
+        <div>
+
+            <div class="horizontal_center" style="margin:8px 0;">
+                <div>
                     <span id="bovedaOroDisponibleLabel" class="secondaryColor">ORO DISPONIBLE</span>
                     <span id="bovedaOroDisponibleVal" class="everywhereBoldFont activeColor">834</span>
                 </div>
-                <input id="bovedaInputCantidadOro" type="number" value="1">
             </div>
-            <button id="bovedaBotonDepositarOro" class="botonImagen"></button>
-        </div>
 
-        <div style="text-align:center; margin: 5px 0;">
-            <span id="bovedaNombreLabel" class="secondaryColor">NOMBRE</span>
-            <span id="bovedaNombreVal" class="activeColor">Pollo</span>
-        </div>
-        <div>
-            <span id="bovedaMinLabel" class="secondaryColor">MIN</span>
-            <span id="bovedaMinVal" class="everywhereBoldFont activeColor">1</span>
-            <span id="bovedaMaxVal" class="everywhereBoldFont activeColor">3</span>
-            <span id="bovedaMaxLabel" class="secondaryColor">MAX</span>
-        </div>
+            <div style="display: flex; justify-content: space-around; margin-bottom: 15px;">
+                <button id="bovedaBotonRetirarOro" class="btn btn-default">Retirar oro</button>
+                <input id="bovedaInputCantidadOro" class="form-control" type="number" value="1">
+                <button id="bovedaBotonDepositarOro" class="btn btn-default">Depositar oro</button>
+            </div>
 
-        <div style="margin:10px auto; width:100%; display:flex; flex:1;">
-            <ul id="bovedaGridComprar" class="itemgrid"></ul>
-            <ul id="bovedaGridVender" class="itemgrid"></ul>
-        </div>
+            <div style="text-align:center; margin: 5px 0;">
+                <span id="bovedaNombreLabel" class="secondaryColor">NOMBRE: </span>
+                <span id="bovedaNombreVal" class="activeColor">Pollo</span>
+            </div>
+            <div style="display: flex; justify-content: space-around;">
+                <div>
+                    <span id="bovedaMinLabel" class="secondaryColor">MIN</span>
+                    <span id="bovedaMinVal" class="everywhereBoldFont activeColor">1</span>
+                </div>
+                <div>
+                    <span id="bovedaMaxVal" class="everywhereBoldFont activeColor">3</span>
+                    <span id="bovedaMaxLabel" class="secondaryColor">MAX</span>
+                </div>
+            </div>
 
-        <div style="text-align: center;">
-            <button id="bovedaBotonRetirarItem" class="btn btn-default noClickSound">Retirar</button>
-            <button id="bovedaBotonDepositarItem" class="btn btn-default noClickSound">Depositar</button>
-            <input id="bovedaInputCantidadItem" type="number" value="1">
+            <div class="scrollFlex" style="margin:10px auto; width:100%; display:flex;">
+                <ul id="bovedaGridComprar" class="itemgrid"></ul>
+                <ul id="bovedaGridVender" class="itemgrid"></ul>
+            </div>
+
+            <div style="display: flex; justify-content: space-around;">
+                <button id="bovedaBotonRetirarItem" class="btn btn-default noClickSound">Retirar</button>
+                <input id="bovedaInputCantidadItem" class="form-control" type="number" value="1">
+                <button id="bovedaBotonDepositarItem" class="btn btn-default noClickSound">Depositar</button>
+            </div>
         </div>
     </div>
-
 </article>
 
 </body>

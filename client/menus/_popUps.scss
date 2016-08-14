@@ -21,14 +21,6 @@
   flex-direction: column;
 }
 
-.dialogContent .itemgrid {
-  border: 1px solid #BBBDBF;
-}
-
-.dialogContent .itemgrid li {
-  font-size: 13px;
-}
-
 .tabsContainer {
   @extend .inner_border_default;
   box-sizing: border-box;

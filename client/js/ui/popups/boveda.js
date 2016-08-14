@@ -7,10 +7,10 @@ define(["text!../../../menus/boveda.html!strip", 'ui/popups/popup', 'ui/game/ite
     class Boveda extends PopUp {
         constructor(game, acciones) {
             var options = {
-                width: 500,
-                height: 400,
+                width: 570,
+                height: 510,
                 minWidth: 250,
-                minHeight: 300
+                minHeight: 200
             };
             super(DOMdata, options);
             this.game = game;
@@ -150,8 +150,7 @@ define(["text!../../../menus/boveda.html!strip", 'ui/popups/popup', 'ui/game/ite
             if (!maxLabel) {
                 maxVal = "";
             }
-
-            $('#bovedaNombreLabel').text("NOMBRE");
+            
             $('#bovedaNombreVal').text(nombreVal);
             $('#bovedaMinLabel').text(minLabel);
             $('#bovedaMinVal').text(minVal);

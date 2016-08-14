@@ -8245,6 +8245,9 @@ footer a {
   top: 15.5%;
   width: 85%;
   height: 45%;
+  margin: 0;
+  padding: 0;
+  border: none;
   display: none; }
 
 #itemsGrid > li {
@@ -8431,9 +8434,12 @@ footer a {
 
 .itemgrid {
   list-style-type: none;
-  margin: 0;
-  padding: 0;
-  width: 160px; }
+  padding: 3px;
+  width: 160px;
+  border: 1px solid #978471; }
+
+.dialogContent .itemgrid li {
+  font-size: 13px; }
 
 .itemgrid > li {
   background-size: 100% 100%;
@@ -8464,6 +8470,9 @@ footer a {
 .itemgrid li.selected {
   border-color: #FF9800; }
 
+.itemgrid-container {
+  padding: 3px; }
+
 #comerciarGridComprar {
   flex: 1;
   margin-right: 10px; }
@@ -8493,13 +8502,8 @@ footer a {
 #comerciarMin {
   margin-right: 5px; }
 
-#comerciarBotonComprar {
-  float: left;
-  margin: auto; }
-
-#comerciarBotonVender {
-  float: right;
-  margin: auto; }
+#comerciarInputCantidad {
+  width: 100px; }
 
 #mensajeContenido {
   text-align: left;
@@ -8517,31 +8521,13 @@ footer a {
   flex: 1; }
 
 #bovedaBotonRetirarOro {
-  float: left;
-  width: 50px;
-  height: 50px;
-  transform: scaleX(-1);
-  background-image: url("../imagenes/oro_bolsa.svg"); }
-
-#bovedaBotonRetirarOro:hover {
-  background-image: url("../imagenes/oro_bolsa_hover.svg"); }
+  float: left; }
 
 #bovedaBotonDepositarOro {
-  float: right;
-  width: 50px;
-  height: 50px;
-  background-image: url("../imagenes/oro_bolsa.svg"); }
+  float: right; }
 
-#bovedaBotonDepositarOro:hover {
-  background-image: url("../imagenes/oro_bolsa_hover.svg"); }
-
-#bovedaBotonRetirarItem {
-  float: left;
-  margin: auto; }
-
-#bovedaBotonDepositarItem {
-  float: right;
-  margin: auto; }
+#bovedaInputCantidadOro {
+  width: 100px; }
 
 #bovedaOroDisponibleLabel {
   font-size: 16px;
@@ -8551,7 +8537,7 @@ footer a {
   font-size: 16px; }
 
 #bovedaInputCantidadItem {
-  font-size: 14px; }
+  width: 100px; }
 
 #bovedaOroDisponible {
   display: block;
@@ -8710,12 +8696,6 @@ footer a {
   height: 100%;
   display: flex;
   flex-direction: column; }
-
-.dialogContent .itemgrid {
-  border: 1px solid #BBBDBF; }
-
-.dialogContent .itemgrid li {
-  font-size: 13px; }
 
 .tabsContainer {
   box-sizing: border-box;

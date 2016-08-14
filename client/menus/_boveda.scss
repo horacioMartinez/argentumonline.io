@@ -4,40 +4,19 @@
 }
 
 #bovedaGridVender {
-  flex: 1;
+  flex: 1 ;
 }
 
 #bovedaBotonRetirarOro {
   float: left;
-  width: 50px;
-  height: 50px;
-  transform: scaleX(-1);
-  background-image: url('../imagenes/oro_bolsa.svg');
-}
-
-#bovedaBotonRetirarOro:hover {
-  background-image: url('../imagenes/oro_bolsa_hover.svg');
 }
 
 #bovedaBotonDepositarOro {
   float: right;
-  width: 50px;
-  height: 50px;
-  background-image: url('../imagenes/oro_bolsa.svg');
 }
 
-#bovedaBotonDepositarOro:hover {
-  background-image: url('../imagenes/oro_bolsa_hover.svg');
-}
-
-#bovedaBotonRetirarItem {
-  float: left;
-  margin: auto;
-}
-
-#bovedaBotonDepositarItem {
-  float: right;
-  margin: auto;
+#bovedaInputCantidadOro{
+  width:100px;
 }
 
 #bovedaOroDisponibleLabel {
@@ -50,7 +29,7 @@
 }
 
 #bovedaInputCantidadItem {
-  font-size: 14px;
+  width:100px;
 }
 
 #bovedaOroDisponible {

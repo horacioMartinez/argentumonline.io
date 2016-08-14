@@ -1,9 +1,14 @@
 .itemgrid {
   list-style-type: none;
-  margin: 0;
-  padding: 0;
+  padding: 3px;
   width: 160px;
+  border: 1px solid $border_focus_color; // TODO: mismo interfaz
 }
+
+.dialogContent .itemgrid li {
+  font-size: 13px;
+}
+
 
 //slots
 .itemgrid > li {
@@ -38,4 +43,8 @@
 
 .itemgrid li.selected {
   border-color: #FF9800;
+}
+
+.itemgrid-container {
+  padding: 3px;
 }
