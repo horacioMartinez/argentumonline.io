@@ -8,19 +8,26 @@
 
 <article id="herreria" title="HERRERIA">
     <div class="dialogContent">
+        <h4>Construccion</h4>
+        <p>Items disponibles para construir:</p>
 
-        <table id="herreriaContenedorItems" class="table table-striped table-hover">
-            <!-- Ejemplo de llenado
-            <tr>
-                <td>[imagen] objeto</td>
-                <td>requerimientos</td>
-                <td>botons construir</td>
-            </tr>
--->
-        </table>
-        <div class="form-group">
+        <div class="scrollFlex">
+            <table id="herreriaContenedorItems" class="table table-striped table-hover">
+                <!-- Ejemplo de llenado
+                <tr>
+                    <td>[imagen] objeto</td>
+                    <td>requerimientos</td>
+                    <td>botons construir</td>
+                </tr>
+    -->
+            </table>
+        </div>
+
+        <div class="form-inline modal-footer">
             <label for="herreriaCantidadAConstruir">Cantidad:</label>
-            <input id="herreriaCantidadAConstruir" type="number" class="form-control" min="1">
+            <div class="form-group">
+                <input id="herreriaCantidadAConstruir" type="number" class="form-control" min="1">
+            </div>
         </div>
     </div>
 </article>

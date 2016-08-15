@@ -208,7 +208,7 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
             let raza = this._getRaza();
 
             var HUMANO_H_PRIMER_CABEZA = 1;
-            var HUMANO_H_ULTIMA_CABEZA = 51;
+            var HUMANO_H_ULTIMA_CABEZA = 40;//TODO: deberia ser 51 pero el sv las toma como invalidas
             var ELFO_H_PRIMER_CABEZA = 101;
             var ELFO_H_ULTIMA_CABEZA = 122;
             var DROW_H_PRIMER_CABEZA = 201;
