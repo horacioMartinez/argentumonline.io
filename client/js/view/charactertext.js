@@ -44,12 +44,12 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
                 stroke: baseFont.stroke,
                 strokeThickness: baseFont.strokeThickness * escala
             };
-        };
+        }
 
         setPosition(x, y) {
             this.x = Math.round(x * this._escala);
             this.y = Math.round(y * this._escala);
-        };
+        }
 
         _formatearChat(str) {
             var resultado = [];
@@ -70,7 +70,7 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
             }
             resultado.push(str);
             return resultado;
-        };
+        }
 
         setChat(chat, color) {
             this.removerChat();
@@ -91,7 +91,7 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
             this.addChild(this._chat);
             this._chat.x = Math.round(32 * this._escala / 2 - this._chat.width / 2);
             this._chat.y = Math.round(-28 * this._escala - this._chat.height);
-        };
+        }
 
         removerChat() {
             if (this._chat) {
@@ -100,7 +100,7 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
                 this._chat.destroy();
             }
             this._chat = null;
-        };
+        }
 
         //TODO: ordenar codigo repetido y animacion bien hecha (ademas en el chat animarlo cuando aparece, como que suba un poco)
         setHoveringInfo(value, font, duration) {
@@ -129,7 +129,7 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
             this.addChild(info);
             info.y = -16 * this._escala - info.height;
             info.x = 32 * this._escala / 2 - info.width / 2;
-        };
+        }
 
         destroy() {
             // hay que destruir los childs de este tambien
@@ -142,7 +142,7 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
                 hijo.destroy();
             });
             super.destroy();
-        };
+        }
     }
 
     return CharacterText;

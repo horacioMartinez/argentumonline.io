@@ -14,13 +14,13 @@ define(['enums'],
             getCharacter(CharIndex) {
                 return this.characters.find((char) => {
                     return char.id === CharIndex;
-                })
+                });
             }
 
             getCharacterInGridPos(gridX, gridY) {
                 return this.characters.find((char) => {
                     return ((char.gridX === gridX) && (char.gridY === gridY));
-                })
+                });
             }
 
             addCharacter(char) {
@@ -32,7 +32,7 @@ define(['enums'],
                 let index = this.characters.indexOf(c);
                 if (index > -1) {
                     this.renderer.sacarCharacter(c);
-                    this.characters.splice(index, 1)
+                    this.characters.splice(index, 1);
                 }
             }
 
@@ -52,7 +52,7 @@ define(['enums'],
             getItemInGridPos(gridX, gridY) {
                 return this.items.find((item) => {
                     return ((item.gridX === gridX) && (item.gridY === gridY));
-                })
+                });
             }
 
             forEachEntity(callback) { // loopeo al revez asi permite remover items en callback

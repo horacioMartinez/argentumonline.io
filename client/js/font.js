@@ -186,5 +186,5 @@ define(["utils/palette"], function (Palette) {
             fill: "rgb(80, 80, 255)",
             stroke: "rgb(50, 50, 255)"
         }
-    }
+    };
 });

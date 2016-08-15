@@ -15,7 +15,7 @@ define(['utils/charcodemap', 'ui/popups/popup'], function (CharCodeMap, PopUp) {
         }
 
         onShow() {
-            this.nuevasKeys = jQuery.extend({}, this.storage.getKeys()); // clonar
+            this.nuevasKeys = $.extend(true,{}, this.storage.getKeys()); // clonar
             this.displayKeys();
         }
 

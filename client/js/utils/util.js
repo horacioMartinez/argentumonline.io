@@ -16,7 +16,7 @@ define(function () {
         joinNullArray: function (array) {
             return array.join("\u0000");
         }
-    }
+    };
 });
 /*
  // busqueda binaria que devuelve {found,index} donde index es el index donde esta o si no lo encontro donde estaria

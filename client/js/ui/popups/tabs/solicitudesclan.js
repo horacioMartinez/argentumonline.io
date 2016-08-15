@@ -42,7 +42,7 @@ define([], function () {
             this.$botonDetalles.click(() => {
                 this._ejecutarConSolicitante(
                     function (pj) {
-                        this.game.client.sendGuildMemberInfo(pj)
+                        this.game.client.sendGuildMemberInfo(pj);
                     }.bind(this));
             });
 

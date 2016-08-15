@@ -17,7 +17,7 @@
 
         keys = [];
 
-        for (var key in obj) {
+        for (key in obj) {
             if (obj.hasOwnProperty(key)) {
                 keys.push(key);
             }
@@ -377,7 +377,7 @@
             colors = keys(this.palette);
             color = colors[random(0, colors.length - 1)];
 
-            if (shade == null) {
+            if (!shade) {
                 shades = keys(color);
                 shade = shades[random(0, shades.length - 1)];
             }

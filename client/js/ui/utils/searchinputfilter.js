@@ -15,5 +15,5 @@ define(function () {
                 }).hide();
             });
         }
-    }
+    };
 });

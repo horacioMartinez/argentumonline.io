@@ -38,17 +38,14 @@ define(["text!../../../menus/crearPersonaje.html!strip", 'ui/popups/popup'], fun
         }
 
         initCallbacks() {
-            var self = this;
-
             $("#botonCrearPersonajeCrear").click(()=> {
                 let nombre = $("#crearNombreInput").val();
                 let password = $("#crearPasswordInput").val();
                 let password2 = $("#crearRepetirPasswordInput").val();
                 let mail = $("#crearMailInput").val();
 
-
-                if (!(nombre && password && password2 && this.raza && this.genero && this.clase
-                        && this.cabeza && mail && this.ciudad)) {
+                if (!(nombre && password && password2 && this.raza && this.genero && this.clase &&
+                    this.cabeza && mail && this.ciudad)) {
                     this.showMensajeCb.show("Debes completar todos los campos");
                     return;
                 }
@@ -61,7 +58,7 @@ define(["text!../../../menus/crearPersonaje.html!strip", 'ui/popups/popup'], fun
                     return;
                 }
 
-                if (!( password === password2)) {
+                if (password !== password2) {
                     this.showMensajeCb.show("Los passwords ingresados no coinciden");
                     return;
                 }
@@ -78,7 +75,7 @@ define(["text!../../../menus/crearPersonaje.html!strip", 'ui/popups/popup'], fun
         }
 
         passwordValido(pw) {
-            return (!(pw.length < this.LARGO_MINIMO_PASSWORD));
+            return (pw.length >= this.LARGO_MINIMO_PASSWORD);
         }
     }
 

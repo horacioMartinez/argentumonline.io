@@ -83,7 +83,7 @@ define(['enums', 'ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mens
 
             newwindow = window.open(url, 'name', 'height=' + popupHeight + ',width=' + popupWidth + ',top=' + top + ',left=' + left);
             if (window.focus) {
-                newwindow.focus()
+                newwindow.focus();
             }
         }
 

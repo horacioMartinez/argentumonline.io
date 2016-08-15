@@ -72,7 +72,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
             }
             else {
                 callback();
-                this.sendThrowDices()
+                this.sendThrowDices();
             }
         }
 
@@ -692,7 +692,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
                     this.game.escribirMsgConsola(Enums.MensajeConsola.TRABAJO_DOMAR, Font.SKILLINFO);
                     break;
                 default:
-                    log.error("Numero de skill invalido: " + skill)
+                    log.error("Numero de skill invalido: " + skill);
             }
             this.game.setTrabajoPendiente(skill);
         }

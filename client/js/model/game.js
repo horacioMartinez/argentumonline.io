@@ -478,7 +478,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                         }
                         else {
                             // tienen que estar o ambos en agua o ambos en tierra (player y casper)
-                            if (!(this.map.hayAgua(x, y) === this.map.hayAgua(this.player.gridX, this.player.gridY))) {
+                            if (this.map.hayAgua(x, y) !== this.map.hayAgua(this.player.gridX, this.player.gridY)) {
                                 return false;
                             }
                         }

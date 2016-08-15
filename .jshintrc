@@ -1,0 +1,8 @@
+{
+	"esversion": 6,
+	"globals":{
+		"define": false,
+		"$": false,
+		"log":false
+	}
+}

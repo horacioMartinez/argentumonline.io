@@ -43,28 +43,28 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
     Consola.prototype.agregarTexto = function (texto, font) {
 
         var estilo = $.extend({}, this.baseFont, font);
-        var texto = new PIXI.Text(texto, estilo);
+        let nuevoTexto = new PIXI.Text(texto, estilo);
 
         if (this.children.length > this.CANT_LINEAS - 1) {
-            this._removerTexto(this.children[0])
+            this._removerTexto(this.children[0]);
         }
         var y = 0;
         if (this.children[0]) {
             y = this.children[0].height * this.children.length;
         }
-        texto.y = y;
-        texto.duracion = 1000;
-        texto.tiempoPasado = 0;
+        nuevoTexto.y = y;
+        nuevoTexto.duracion = 1000;
+        nuevoTexto.tiempoPasado = 0;
         var self = this;
-        texto.updateChat = function (delta) {
+        nuevoTexto.updateChat = function (delta) {
             this.tiempoPasado += delta;
             if (this.tiempoPasado > this.duracion) {
                 self._removerTexto(this);
             }
-        }.bind(texto);
-        PIXI.ticker.shared.add(texto.updateChat, texto);
+        }.bind(nuevoTexto);
+        PIXI.ticker.shared.add(nuevoTexto.updateChat, nuevoTexto);
 
-        this.addChild(texto);
+        this.addChild(nuevoTexto);
     };
 
     return Consola;

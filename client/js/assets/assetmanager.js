@@ -5,8 +5,8 @@ define(['json!../../indices/graficos.json',
         'json!../../indices/cuerpos.json',
         'json!../../indices/escudos.json',
         'json!../../indices/fxs.json',
-        'lib/pixi', 'assets/preloader', 'assets/audio', 'enums'],
-    function (jsonGraficos, jsonArmas, jsonCabezas, jsonCascos, jsonCuerpos, jsonEscudos, jsonFxs, PIXI, Preloader, Audio, Enums) {
+        'lib/pixi', 'assets/preloader', 'assets/audio'],
+    function (jsonGraficos, jsonArmas, jsonCabezas, jsonCascos, jsonCuerpos, jsonEscudos, jsonFxs, PIXI, Preloader, Audio) {
 
         class AssetManager {
             constructor() {
@@ -103,7 +103,7 @@ define(['json!../../indices/graficos.json',
             _loadGrhGrafico(grh) {
                 var numGrafico = this.indices[grh].grafico;
                 if (!this._baseTextures[numGrafico]) { // cargar basetexture
-                    this._baseTextures[numGrafico] = new PIXI.BaseTexture.fromImage("graficos/" + numGrafico + ".png")
+                    this._baseTextures[numGrafico] = new PIXI.BaseTexture.fromImage("graficos/" + numGrafico + ".png");
                 }
                 this.grhs[grh] = new PIXI.Texture(this._baseTextures[numGrafico], new PIXI.Rectangle(this.indices[grh].offX, this.indices[grh].offY, this.indices[grh].width, this.indices[grh].height));
             }

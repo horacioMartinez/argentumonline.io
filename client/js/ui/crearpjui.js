@@ -268,7 +268,7 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
                         return {primera: GNOMO_M_PRIMER_CABEZA, ultima: GNOMO_M_ULTIMA_CABEZA};
                         break;
                     default:
-                        log.error("raza invalida")
+                        log.error("raza invalida");
                 }
             }
         }
@@ -306,7 +306,7 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
                         return GNOMO_H_CUERPO_DESNUDO;
                         break;
                     default:
-                        log.error("raza invalida")
+                        log.error("raza invalida");
                 }
             }
             if (genero === Enums.Genero.mujer) {
@@ -327,7 +327,7 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
                         return GNOMO_M_CUERPO_DESNUDO;
                         break;
                     default:
-                        log.error("raza invalida")
+                        log.error("raza invalida");
                 }
             }
 

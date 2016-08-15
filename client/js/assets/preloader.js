@@ -17,7 +17,7 @@ define(['lib/howler', 'lib/pixi'],
                     if (!this.assetManager.audio.sounds[i]) {
                         this.assetManager.audio.sounds[i] = new Howl({
                             urls: ['audio/sonidos/' + i + '.m4a']
-                        })
+                        });
                     }
                 }
 
@@ -96,10 +96,11 @@ define(['lib/howler', 'lib/pixi'],
 
             preloadAll(terminar_callback) {
                 var maxMapa = 312;
-                for (var i = 1; i <= maxMapa; i++) {
+                var i;
+                for (i = 1; i <= maxMapa; i++) {
                     this.PRELOAD_MAPAS.push(i);
                 }
-                for (var i = 0; i < this.assetManager.indices.length; i++) {
+                for (i = 0; i < this.assetManager.indices.length; i++) {
                     if (this.assetManager.indices[i]) {
                         this.PRELOAD_GRHS.push(i);
                     }

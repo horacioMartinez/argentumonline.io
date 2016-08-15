@@ -23,7 +23,7 @@ define(['enums', 'font'], function (Enums, Font) {
             if (message[0] === '/') {
                 var args = message.match(/\S+/g);
                 var valido = true;
-                if (args != undefined) {
+                if (args !== undefined) {
                     var comando = args[0].toUpperCase();
                     args.shift();
                     switch (comando) {

@@ -269,7 +269,7 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
             this.headSprite.setPosition(this.headOffX, this.headOffY);
         }
         if (this.helmetSprite) {
-            this.helmetSprite.setPosition(this.headOffX, this.headOffY)
+            this.helmetSprite.setPosition(this.headOffX, this.headOffY);
         }
 
     };

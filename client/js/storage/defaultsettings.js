@@ -38,5 +38,5 @@ define(["utils/charcodemap"], function (CharCodeMap) {
             soundVolume: 1.0,
             musicVolume: 1.0
         }
-    }
+    };
 });

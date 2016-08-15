@@ -51,7 +51,7 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
 
             hayPopUpActivo() { // TODO: ponerlo en uimanager o en otro lado, esto sirve tambien para los popups globales
                 // no usar el vector popUps de aca porque solo contiene a los pop ups del juego
-                return ($('#container').children('.ui-dialog:visible').length !== 0)
+                return ($('#container').children('.ui-dialog:visible').length !== 0);
             }
 
             hideGamePopUps() {
