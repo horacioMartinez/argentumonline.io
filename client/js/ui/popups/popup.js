@@ -96,6 +96,7 @@ define(['jquery-ui'], function () {
         clearDom() { // todo: ver esto
             //this.$this.find('span').text('');
             this.$this.find('input').val('');
+            this.$this.find('input[type=number]').val(1);
         }
 
     }

@@ -7472,6 +7472,10 @@ button.close {
   overflow-y: auto;
   padding-right: 2px; }
 
+.justifiedContainer {
+  display: flex;
+  justify-content: space-around; }
+
 .dialog_default {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
   padding: 0;
@@ -8193,7 +8197,7 @@ footer a {
   position: relative; }
 
 #botonInventario {
-  background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/boton_inventario.png") no-repeat;
+  background: url("../imagenes/botones/boton_inventario.png") no-repeat;
   background-size: 100% 100%;
   position: absolute;
   left: 5.7%;
@@ -8201,14 +8205,22 @@ footer a {
   width: 44%;
   height: 5.4%; }
 
+#botonInventario:hover {
+  background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/boton_inventario.png") no-repeat;
+  background-size: 100% 100%; }
+
 #botonHechizos {
-  background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/boton_hechizos.png") no-repeat;
+  background: url("../imagenes/botones/boton_hechizos.png") no-repeat;
   background-size: 100% 100%;
   position: absolute;
   left: 50.4%;
   top: 7.5%;
   width: 44%;
   height: 5.4%; }
+
+#botonHechizos:hover {
+  background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/boton_hechizos.png") no-repeat;
+  background-size: 100% 100%; }
 
 #imagenTabActiva {
   position: absolute;
@@ -8237,7 +8249,7 @@ footer a {
   height: 5.4%; }
 
 #botonMoverHechizoArriba {
-  background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/boton_arriba_inventario.png") no-repeat;
+  background: url("../imagenes/botones/boton_arriba_inventario.png") no-repeat;
   background-size: 100% 100%;
   position: absolute;
   left: 81.25%;
@@ -8245,14 +8257,22 @@ footer a {
   width: 10%;
   height: 2.6%; }
 
+#botonMoverHechizoArriba:hover {
+  background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/boton_arriba_inventario.png") no-repeat;
+  background-size: 100% 100%; }
+
 #botonMoverHechizoAbajo {
-  background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/boton_abajo_inventario.png") no-repeat;
+  background: url("../imagenes/botones/boton_abajo_inventario.png") no-repeat;
   background-size: 100% 100%;
   position: absolute;
   left: 81.25%;
   top: 52.7%;
   width: 10%;
   height: 2.6%; }
+
+#botonMoverHechizoAbajo:hover {
+  background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/boton_abajo_inventario.png") no-repeat;
+  background-size: 100% 100%; }
 
 #itemsGrid {
   position: absolute;
@@ -8407,27 +8427,47 @@ footer a {
   border: 2px transparent solid !important; }
 
 #menuJuegoBotonMenu {
-  background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/menu.png") no-repeat;
+  background: url("../imagenes/botones/menu.png") no-repeat;
   background-size: 100% 100%;
   left: 8%; }
 
+#menuJuegoBotonMenu:hover {
+  background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/menu.png") no-repeat;
+  background-size: 100% 100%; }
+
 #botonSeguroAtacar {
   left: 25%;
+  background: url("../imagenes/botones/seguroAtaque.png") no-repeat;
+  background-size: 100% 100%; }
+
+#botonSeguroAtacar:hover {
   background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/seguroAtaque.png") no-repeat;
   background-size: 100% 100%; }
 
 #botonSeguroResucitar {
   left: 42%;
+  background: url("../imagenes/botones/seguroResucitacion.png") no-repeat;
+  background-size: 100% 100%; }
+
+#botonSeguroResucitar:hover {
   background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/seguroResucitacion.png") no-repeat;
   background-size: 100% 100%; }
 
 #botonMacroTrabajo {
   left: 59%;
+  background: url("../imagenes/botones/macroTrabajo.png") no-repeat;
+  background-size: 100% 100%; }
+
+#botonMacroTrabajo:hover {
   background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/macroTrabajo.png") no-repeat;
   background-size: 100% 100%; }
 
 #botonMacroHechizos {
   left: 76%;
+  background: url("../imagenes/botones/macroHechizos.png") no-repeat;
+  background-size: 100% 100%; }
+
+#botonMacroHechizos:hover {
   background: url("../imagenes/lighten.png") repeat, url("../imagenes/botones/macroHechizos.png") no-repeat;
   background-size: 100% 100%; }
 
@@ -8444,9 +8484,12 @@ footer a {
   border: 2px #a8524c solid !important; }
 
 .itemgrid {
+  flex: 1;
+  overflow-y: auto;
   list-style-type: none;
   padding: 3px;
   width: 160px;
+  height: 100%;
   border: 1px solid #978471; }
 
 .dialogContent .itemgrid li {

@@ -1,7 +1,10 @@
 .itemgrid {
+  flex: 1;
+  overflow-y: auto;
   list-style-type: none;
   padding: 3px;
   width: 160px;
+  height:100%;
   border: 1px solid $border_focus_color; // TODO: mismo interfaz
 }
 

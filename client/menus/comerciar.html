@@ -14,33 +14,34 @@
 <body>
 
 <article id="comerciar" title="COMERCIAR">
-        <div class="dialogContent">
-            <div>
-                <div style="margin: 5px 25px;">
-                    <span id="comerciarNombre" class="secondaryColor">NOMBRE</span>
-                    <span id="comerciarNombreValor" class="activeColor">Pollo</span>
-                    <span id="comerciarPrecioValor" class="everywhereBoldFont activeColor">343</span>
-                    <span id="comerciarPrecio" class="secondaryColor">PRECIO</span>
-                </div>
-                <div style="margin: 5px 25px;">
-                    <span id="comerciarMin" class="secondaryColor">MIN</span>
-                    <span id="comerciarMinValor" class="everywhereBoldFont activeColor">1</span>
-                    <span id="comerciarMaxValor" class="everywhereBoldFont activeColor">3</span>
-                    <span id="comerciarMax" class="secondaryColor">MAX</span>
-                </div>
+    <div class="dialogContent">
+        <div>
+            <div style="margin: 5px 25px;">
+                <span id="comerciarNombre" class="secondaryColor">NOMBRE</span>
+                <span id="comerciarNombreValor" class="activeColor">Pollo</span>
+                <span id="comerciarPrecioValor" class="everywhereBoldFont activeColor">343</span>
+                <span id="comerciarPrecio" class="secondaryColor">PRECIO</span>
             </div>
-            <div class="scrollFlex" style="margin:10px auto; width:100%; display:flex;">
-                <ul id="comerciarGridComprar" class="itemgrid"></ul>
-                <ul id="comerciarGridVender" class="itemgrid"></ul>
+            <div style="margin: 5px 25px;">
+                <span id="comerciarMin" class="secondaryColor">MIN</span>
+                <span id="comerciarMinValor" class="everywhereBoldFont activeColor">1</span>
+                <span id="comerciarMaxValor" class="everywhereBoldFont activeColor">3</span>
+                <span id="comerciarMax" class="secondaryColor">MAX</span>
             </div>
-
-            <div style="display: flex; justify-content: space-around;">
-                <button id="comerciarBotonComprar" class="btn btn-default noClickSound">Comprar</button>
-                <input id="comerciarInputCantidad" class="form-control" type="number" value="1">
-                <button id="comerciarBotonVender" class="btn btn-default noClickSound">Vender</button>
-            </div>
-
         </div>
+
+        <div style="margin:10px auto; width:100%; display:flex; flex:1;">
+            <ul id="comerciarGridComprar" class="itemgrid"></ul>
+            <ul id="comerciarGridVender" class="itemgrid"></ul>
+        </div>
+
+        <div class="modal-footer justifiedContainer">
+            <button id="comerciarBotonComprar" class="btn btn-default noClickSound">Comprar</button>
+            <input id="comerciarInputCantidad" class="form-control" type="number" value="1">
+            <button id="comerciarBotonVender" class="btn btn-default noClickSound">Vender</button>
+        </div>
+
+    </div>
 </article>
 
 

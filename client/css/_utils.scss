@@ -36,3 +36,8 @@
   overflow-y: auto;
   padding-right: 2px;
 }
+
+.justifiedContainer {
+  display: flex;
+  justify-content: space-around;
+}

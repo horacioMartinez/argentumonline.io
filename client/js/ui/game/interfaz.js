@@ -69,6 +69,7 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
                 }
                 self.game.client.sendMoveSpell(true, slot);
                 self.game.swapSlotHechizos(slot, slot - 1);
+                self.setSelectedSlotHechizo(slot - 1);
             });
 
             $("#botonMoverHechizoAbajo").click(function () {
@@ -78,6 +79,7 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
                 }
                 self.game.client.sendMoveSpell(false, slot);
                 self.game.swapSlotHechizos(slot, slot + 1);
+                self.setSelectedSlotHechizo(slot + 1);
             });
 
             //FIX bug firefox que no previene movimiento scroll hehcizos
@@ -113,6 +115,10 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
             else {
                 return 0;
             }
+        }
+
+        setSelectedSlotHechizo(slot) {
+            $('#hechizos').val(parseInt(slot));
         }
 
         modificarSlotHechizo(slot, texto) {

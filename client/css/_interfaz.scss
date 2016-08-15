@@ -78,7 +78,7 @@ $separacion_botones: 0.7%;
 $left_inv_h : $left_align_percentage - 2.3%;
 
 #botonInventario {
-  background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/boton_inventario.png') no-repeat;
+  background: url('../imagenes/botones/boton_inventario.png') no-repeat;
   background-size: 100% 100%;
   position: absolute;
   left: $left_inv_h ;
@@ -87,14 +87,24 @@ $left_inv_h : $left_align_percentage - 2.3%;
   height: $height_inv_h;
 }
 
+#botonInventario:hover {
+  background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/boton_inventario.png') no-repeat;
+  background-size: 100% 100%;
+}
+
 #botonHechizos {
-  background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/boton_hechizos.png') no-repeat;
+  background: url('../imagenes/botones/boton_hechizos.png') no-repeat;
   background-size: 100% 100%;
   position: absolute;
   left: $left_inv_h  + $width_inv_h + $separacion_botones;
   top: $top_inv_h;
   width: $width_inv_h;
   height: $height_inv_h;
+}
+
+#botonHechizos:hover{
+  background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/boton_hechizos.png') no-repeat;
+  background-size: 100% 100%;
 }
 
 #imagenTabActiva {
@@ -129,7 +139,7 @@ $left_inv_h : $left_align_percentage - 2.3%;
 }
 
 #botonMoverHechizoArriba{
-  background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/boton_arriba_inventario.png') no-repeat;
+  background: url('../imagenes/botones/boton_arriba_inventario.png') no-repeat;
   background-size: 100% 100%;
   position: absolute;
   left: $left_align_percentage + 2.2% + 60% + $separacion_botones + 10% + $separacion_botones/2;
@@ -138,14 +148,24 @@ $left_inv_h : $left_align_percentage - 2.3%;
   height: $height_inv_h/2 - 0.1%;
 }
 
+#botonMoverHechizoArriba:hover{
+  background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/boton_arriba_inventario.png') no-repeat;
+  background-size: 100% 100%;
+}
+
 #botonMoverHechizoAbajo{
-  background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/boton_abajo_inventario.png') no-repeat;
+  background: url('../imagenes/botones/boton_abajo_inventario.png') no-repeat;
   background-size: 100% 100% ;
   position: absolute;
   left: $left_align_percentage + 2.2% + 60% + $separacion_botones + 10% + $separacion_botones/2;
   top: 50% + $height_inv_h/2;
   width: 10%;
   height: $height_inv_h/2 - 0.1%;
+}
+
+#botonMoverHechizoAbajo:hover{
+  background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/boton_abajo_inventario.png') no-repeat;
+  background-size: 100% 100%;
 }
 
 #itemsGrid {
@@ -337,21 +357,34 @@ $separacion_botenes_bottom: 17%;
 }
 
 #menuJuegoBotonMenu {
-  background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/menu.png') no-repeat;
+  background: url('../imagenes/botones/menu.png') no-repeat;
   background-size: 100% 100%;
   left: $left_align_percentage;
 }
 
+#menuJuegoBotonMenu:hover{
+  background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/menu.png') no-repeat;
+  background-size: 100% 100%;
+}
+
 #botonSeguroAtacar {
   left: $left_align_percentage + $separacion_botenes_bottom;
+  background: url('../imagenes/botones/seguroAtaque.png') no-repeat;
+  background-size: 100% 100%;
+}
+
+#botonSeguroAtacar:hover{
   background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/seguroAtaque.png') no-repeat;
   background-size: 100% 100%;
 }
 
-
-
 #botonSeguroResucitar {
   left: $left_align_percentage + $separacion_botenes_bottom*2;
+  background: url('../imagenes/botones/seguroResucitacion.png') no-repeat;
+  background-size: 100% 100%;
+}
+
+#botonSeguroResucitar:hover{
   background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/seguroResucitacion.png') no-repeat;
   background-size: 100% 100%;
 }
@@ -359,16 +392,26 @@ $separacion_botenes_bottom: 17%;
 
 #botonMacroTrabajo {
   left: $left_align_percentage + $separacion_botenes_bottom*3;
+  background: url('../imagenes/botones/macroTrabajo.png') no-repeat;
+  background-size: 100% 100%;
+}
+
+
+#botonMacroTrabajo:hover{
   background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/macroTrabajo.png') no-repeat;
   background-size: 100% 100%;
 }
 
 #botonMacroHechizos {
   left: $left_align_percentage + $separacion_botenes_bottom*4;
-  background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/macroHechizos.png') no-repeat;
+  background: url('../imagenes/botones/macroHechizos.png') no-repeat;
   background-size: 100% 100%;
 }
 
+#botonMacroHechizos:hover {
+  background: url('../imagenes/lighten.png') repeat, url('../imagenes/botones/macroHechizos.png') no-repeat;
+  background-size: 100% 100%;
+}
 
 $activo_border: 2px #a8524c solid !important;
 

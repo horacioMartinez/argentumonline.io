@@ -8,19 +8,24 @@
 
 <article id="carpinteria" title="CARPINTERIA">
     <div class="dialogContent">
+        <h4>Construccion</h4>
+        <span id="carpinteriaTexto"></span>
 
-        <table id="carpinteriaContenedorItems" class="table table-striped">
-            <!-- Ejemplo de llenado
-            <tr>
-                <td>[imagen] objeto</td>
-                <td>requerimientos</td>
-                <td>botons construir</td>
-            </tr>
--->
-        </table>
-        <div class="form-group">
+        <div class="scrollFlex">
+            <table id="carpinteriaContenedorItems" class="table table-striped">
+                <!-- Ejemplo de llenado
+                <tr>
+                    <td>[imagen] objeto</td>
+                    <td>requerimientos</td>
+                    <td>botons construir</td>
+                </tr>-->
+            </table>
+        </div>
+        <div class="form-inline modal-footer">
             <label for="carpinteriaCantidadAConstruir">Cantidad:</label>
-            <input id="carpinteriaCantidadAConstruir" type="number" class="form-control" min="1">
+            <div class="form-group">
+                <input id="carpinteriaCantidadAConstruir" style="width:100px;" type="number" class="form-control" min="1">
+            </div>
         </div>
     </div>
 </article>

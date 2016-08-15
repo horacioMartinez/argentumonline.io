@@ -18,6 +18,7 @@ define(["text!../../../menus/carpinteria.html!strip", 'ui/popups/popup'], functi
             this.game = game;
             this.initCallbacks();
             this.$itemsContainer = $("#carpinteriaContenedorItems");
+            this.$carpinteriaTexto = $("#carpinteriaTexto");
         }
 
         /* Items contiene
@@ -33,11 +34,14 @@ define(["text!../../../menus/carpinteria.html!strip", 'ui/popups/popup'], functi
             super.show();
             this.setItems(items);
         }
-        
+
         setItems(items) {
             //TODO objUpgrade
             if (items.length < 1) {
+                this.$carpinteriaTexto.text("No puedes construir ningun objeto porque no tienes suficientes puntos en carpinteria")
                 // TODO: decir que no peude construir items pq le falta skills
+            } else{
+                this.$carpinteriaTexto.text("");
             }
 
             var self = this;
@@ -61,7 +65,7 @@ define(["text!../../../menus/carpinteria.html!strip", 'ui/popups/popup'], functi
                 $row.append($cellRequerimientos);
 
                 var $cellConstruir = $('<td></td>');
-                var $botonConstruir = $('<button class="btn btn-default" >CONSTRUIR</button>');
+                var $botonConstruir = $('<button class="btn btn-default" >Construir</button>');
 
                 $botonConstruir.data("itemIndex", item.ObjCarpinteroIndex);
                 $botonConstruir.click(function () {
