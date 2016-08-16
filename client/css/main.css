@@ -7885,6 +7885,19 @@ input:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px #191411 inset;
   -webkit-text-fill-color: #9f8e80 !important; }
 
+/* scrollbars webkit */
+::-webkit-scrollbar-track {
+  border-radius: 4px;
+  background-color: #2c2720; }
+
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: #704628; }
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: #5c3a21; }
+
 /* General Layout */
 .background_default, .dialog_default {
   background: url("../imagenes/background.png") repeat; }
@@ -7941,7 +7954,7 @@ body {
   display: flex;
   flex-direction: row; }
 
-/* Tama├▒o contenedor (width seteado en js) */
+/* Tamaño contenedor (width seteado en js) */
 @media screen and (min-aspect-ratio: 8 / 5) {
   #container {
     height: 88%; } }
