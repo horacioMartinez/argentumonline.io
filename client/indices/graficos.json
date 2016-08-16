@@ -197420,5 +197420,13 @@
         "offY": 0, 
         "width": 48, 
         "height": 48
+    },
+    {
+        "id": 24209, 
+        "grafico": 25006, 
+        "offX": 0, 
+        "offY": 0, 
+        "width": 3, 
+        "height": 20
     }
 ]

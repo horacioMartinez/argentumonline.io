@@ -606,7 +606,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                     anguloBase = -anguloBase;
                 }
                 for (var i = 0; i < cantidadGotas; ++i) {
-                    var gota = new PIXI.Sprite.fromImage("graficos/extras/gota.png");
+                    var gota = new SpriteGrh(this.assetManager.getGrh(24209)); // TODO: usar directamente sprite
 
                     gota.x = Math.random() * this.pixiRenderer.width;
                     gota.y = Math.random() * this.pixiRenderer.height;
