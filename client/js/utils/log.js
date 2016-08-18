@@ -25,6 +25,14 @@ Logger.prototype.debug = function (message) {
     }
 };
 
+Logger.prototype.network = function (message) {
+    if (this.level === "debug" || this.level === "info") {
+        if (window.console) {
+            console.log(message);
+        }
+    }
+};
+
 Logger.prototype.error = function (message, stacktrace) {
     if (window.console) {
         console.error(message);

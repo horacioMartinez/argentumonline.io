@@ -1,12 +1,13 @@
 /**
  * Created by horacio on 4/6/16.
  */
-define(['enums', 'ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mensaje'], function (Enums, LoginUI, CrearPjUI, GameUI, Mensaje) {
+define(['enums', 'ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mensaje', 'ui/introui'], function (Enums, LoginUI, CrearPjUI, GameUI, Mensaje, IntroUI) {
 
     class UIManager {
         constructor(assetManager) {
             this.assetManager = assetManager;
             this.mensaje = new Mensaje();
+            this.introUI = new IntroUI();
             this.loginUI = new LoginUI();
             this.crearPjUI = new CrearPjUI(this.assetManager, this.mensaje);
             this.playSonidoClick = this._createPlaySonidoCallback();

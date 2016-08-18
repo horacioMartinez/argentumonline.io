@@ -97,21 +97,23 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleRemoveDialogs() {
-            console.log("TODO: handleRemoveDialogs ");
+            log.network("TODO: handleRemoveDialogs ");
+            this.game.sacarAllCharacterChats();
         }
 
         handleRemoveCharDialog(CharIndex) {
-            console.log("TODO: handleRemoveCharDialog ");
+            log.network("TODO: handleRemoveCharDialog ");
+            this.game.sacarChatCharacterByID(CharIndex);
         }
 
         handleNavigateToggle() {
             this.game.playerState.navegando = !this.game.playerState.navegando;
-            console.log("TODO: handleNavigateToggle ");
+            log.network("TODO: handleNavigateToggle ");
         }
 
         handleDisconnect() {
             this._desconectar();
-            console.log("TODO: handleDisconnect ");
+            log.network("TODO: handleDisconnect ");
         }
 
         handleCommerceEnd() {
@@ -129,31 +131,31 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         handleBankInit(Banco) {
             this.gameUI.showBoveda();
             this.gameUI.boveda.setOroDisponible(Banco);
-            console.log("TODO: handleBankInit ");
+            log.network("TODO: handleBankInit ");
         }
 
         handleUserCommerceInit(DestUserName) {
-            console.log("TODO: handleUserCommerceInit ");
+            log.network("TODO: handleUserCommerceInit ");
         }
 
         handleUserCommerceEnd() {
-            console.log("TODO: handleUserCommerceEnd ");
+            log.network("TODO: handleUserCommerceEnd ");
         }
 
         handleUserOfferConfirm() {
-            console.log("TODO: handleUserOfferConfirm ");
+            log.network("TODO: handleUserOfferConfirm ");
         }
 
         handleCommerceChat(Chat, FontIndex) {
-            console.log("TODO: handleCommerceChat ");
+            log.network("TODO: handleCommerceChat ");
         }
 
         handleShowBlacksmithForm() {
-            console.log("TODO: handleShowBlacksmithForm ");
+            log.network("TODO: handleShowBlacksmithForm ");
         }
 
         handleShowCarpenterForm() {
-            console.log("TODO: handleShowCarpenterForm ");
+            log.network("TODO: handleShowCarpenterForm ");
         }
 
         handleUpdateSta(Value) {
@@ -162,42 +164,42 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleUpdateMana(Value) {
             this.game.atributos.setMana(Value);
-            console.log("TODO: handleUpdateMana ");
+            log.network("TODO: handleUpdateMana ");
         }
 
         handleUpdateHP(Value) {
             this.game.atributos.setVida(Value);
-            console.log("TODO: handleUpdateHP ");
+            log.network("TODO: handleUpdateHP ");
         }
 
         handleUpdateGold(Value) {
             this.game.atributos.setOro(Value);
-            console.log("TODO: handleUpdateGold ");
+            log.network("TODO: handleUpdateGold ");
         }
 
         handleUpdateBankGold(Value) {
             this.gameUI.boveda.setOroDisponible(Value);
-            console.log("TODO: handleUpdateBankGold ");
+            log.network("TODO: handleUpdateBankGold ");
         }
 
         handleUpdateExp(Value) {
             this.game.atributos.setExp(Value);
-            console.log("TODO: handleUpdateExp ");
+            log.network("TODO: handleUpdateExp ");
         }
 
         handleChangeMap(Map, Version) {
             this.game.cambiarMapa(Map);
-            console.log("TODO: handleChangeMap ");
+            log.network("TODO: handleChangeMap ");
         }
 
         handlePosUpdate(X, Y) {
             this.game.resetPosCharacter(this.game.player.id, X, Y);
-            console.log("TODO: handlePosUpdate ");
+            log.network("TODO: handlePosUpdate ");
         }
 
         handleChatOverHead(Chat, CharIndex, R, G, B) {
             this.game.escribirChat(Chat, CharIndex, R, G, B);
-            console.log("TODO: handleChatOverHead ");
+            log.network("TODO: handleChatOverHead ");
         }
 
         handleConsoleMsg(Chat, FontIndex) {
@@ -206,16 +208,16 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleGuildChat(Chat) {
             this.game.escribirMsgConsola(Chat, Font.CLAN_CHAT);
-            console.log("TODO: handleGuildChat ");
+            log.network("TODO: handleGuildChat ");
         }
 
         handleShowMessageBox(Chat) {
             this.uiManager.showMensaje(Chat);
-            console.log("TODO: handleShowMessageBox ");
+            log.network("TODO: handleShowMessageBox ");
         }
 
         handleUserIndexInServer(UserIndex) {
-            console.log("TODO: handleUserIndexInServer ");
+            log.network("TODO: handleUserIndexInServer ");
         }
 
         handleUserCharIndexInServer(CharIndex) {
@@ -233,11 +235,11 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
             } else {
                 this.game.sacarEntity(c);
             }
-            console.log("TODO: handleCharacterRemove ");
+            log.network("TODO: handleCharacterRemove ");
         }
 
         handleCharacterChangeNick(CharIndex, NewName) {
-            console.log("TODO: handleCharacterChangeNick ");
+            log.network("TODO: handleCharacterChangeNick ");
         }
 
         handleCharacterMove(CharIndex, X, Y) {
@@ -277,7 +279,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleGuildList(Data) {
-            console.log("TODO: handleGuildList ");
+            log.network("TODO: handleGuildList ");
             var nombres = Utils.splitNullArray(Data);
             this.game.gameUI.setNombresClanes(nombres);
         }
@@ -328,7 +330,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleChangeBankSlot(Slot, ObjIndex, ObjName, Amount, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) {
             this.game.cambiarSlotRetirar(Slot, ObjIndex, ObjName, Amount, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice);
-            console.log("TODO: handleChangeBankSlot ");
+            log.network("TODO: handleChangeBankSlot ");
         }
 
         handleChangeSpellSlot(Slot, SpellID, Name) {
@@ -337,7 +339,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleAtributes(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion) {
             this.game.gameUI.setAtributosInfo(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion);
-            console.log("TODO: handleAtributes ");
+            log.network("TODO: handleAtributes ");
         }
 
         handleBlacksmithWeapons(Items) {
@@ -352,7 +354,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
              */
             this.game.gameUI.herreria.setWeapons(Items);
             this.game.gameUI.showHerreria();
-            console.log("TODO: handleBlacksmithWeapons ");
+            log.network("TODO: handleBlacksmithWeapons ");
         }
 
         handleBlacksmithArmors(Items) {
@@ -367,7 +369,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
              */
             this.game.gameUI.herreria.setArmors(Items);
             this.game.gameUI.showHerreria();
-            console.log("TODO: handleBlacksmithArmors ");
+            log.network("TODO: handleBlacksmithArmors ");
         }
 
         handleCarpenterObjects(Items) {
@@ -380,29 +382,29 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
              ObjUpgrade: ObjUpgrade,
              */
             this.game.gameUI.showCarpinteria(Items);
-            console.log("TODO: handleCarpenterObjects ");
+            log.network("TODO: handleCarpenterObjects ");
         }
 
         handleRestOK() {
-            console.log("TODO: handleRestOK ");
+            log.network("TODO: handleRestOK ");
         }
 
         handleErrorMsg(Message) {
             this._desconectar();
             this.uiManager.showMensaje(Message);
-            console.log("TODO: handleErrorMsg ");
+            log.network("TODO: handleErrorMsg ");
         }
 
         handleBlind() {
-            console.log("TODO: handleBlind ");
+            log.network("TODO: handleBlind ");
         }
 
         handleDumb() {
-            console.log("TODO: handleDumb ");
+            log.network("TODO: handleDumb ");
         }
 
         handleShowSignal(Texto, Grh) {
-            console.log("TODO: handleShowSignal ");
+            log.network("TODO: handleShowSignal ");
         }
 
         handleChangeNPCInventorySlot(Slot, ObjName, Amount, Price, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef) {
@@ -416,25 +418,25 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleFame(Asesino, Bandido, Burgues, Ladron, Noble, Plebe, Promedio) {
             this.game.gameUI.setFameInfo(Asesino, Bandido, Burgues, Ladron, Noble, Plebe, Promedio);
-            console.log("TODO: handleFame ");
+            log.network("TODO: handleFame ");
         }
 
         handleMiniStats(CiudadanosMatados, CriminalesMatados, UsuariosMatados, NpcsMuertos, Clase, Pena) {
             this.game.gameUI.setMiniStats(CiudadanosMatados, CriminalesMatados, UsuariosMatados, NpcsMuertos, Clase, Pena);
-            console.log("TODO: handleMiniStats ");
+            log.network("TODO: handleMiniStats ");
         }
 
         handleLevelUp(SkillPoints) {
             this.game.skills.agregarSkillsLibres(SkillPoints);
-            console.log("TODO: handleLevelUp ");
+            log.network("TODO: handleLevelUp ");
         }
 
         handleAddForumMsg(ForumType, Title, Author, Message) {
-            console.log("TODO: handleAddForumMsg ");
+            log.network("TODO: handleAddForumMsg ");
         }
 
         handleShowForumForm(Visibilidad, CanMakeSticky) {
-            console.log("TODO: handleShowForumForm ");
+            log.network("TODO: handleShowForumForm ");
         }
 
         handleSetInvisible(charIndex, invisible) {
@@ -450,51 +452,51 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleMeditateToggle() {
             this.game.playerState.meditando = !this.game.playerState.meditando;
-            console.log("TODO: handleMeditateToggle ");
+            log.network("TODO: handleMeditateToggle ");
         }
 
         handleBlindNoMore() {
-            console.log("TODO: handleBlindNoMore ");
+            log.network("TODO: handleBlindNoMore ");
         }
 
         handleDumbNoMore() {
-            console.log("TODO: handleDumbNoMore ");
+            log.network("TODO: handleDumbNoMore ");
         }
 
         handleSendSkills(Skills) {
             this.game.skills.setSkills(Skills);
             this.uiManager.gameUI.updateSkillsData();
-            console.log("TODO: handleSendSkills ");
+            log.network("TODO: handleSendSkills ");
         }
 
         handleTrainerCreatureList(Data) {
-            console.log("TODO: handleTrainerCreatureList ");
+            log.network("TODO: handleTrainerCreatureList ");
         }
 
         handleGuildNews(News, EnemiesList, AlliesList) {
             let enemigos = Utils.splitNullArray(EnemiesList);
             let aliados = Utils.splitNullArray(AlliesList);
             this.game.gameUI.showNoticiasClan(News, enemigos, aliados);
-            console.log("TODO: handleGuildNews ");
+            log.network("TODO: handleGuildNews ");
         }
 
         handleOfferDetails(Details) {
-            console.log("TODO: handleOfferDetails ");
+            log.network("TODO: handleOfferDetails ");
         }
 
         handleAlianceProposalsList(Data) {
-            console.log("TODO: handleAlianceProposalsList ");
+            log.network("TODO: handleAlianceProposalsList ");
         }
 
         handlePeaceProposalsList(Data) {
-            console.log("TODO: handlePeaceProposalsList ");
+            log.network("TODO: handlePeaceProposalsList ");
         }
 
         handleCharacterInfo(CharName, Race, Class, Gender, Level, Gold, Bank, Reputation, PreviousPetitions, CurrentGuild, PreviousGuilds, RoyalArmy, ChaosLegion, CiudadanosMatados, CriminalesMatados) {
             let previousGuilds = /*Utils.joinNullArray*/(PreviousGuilds);
             let previousPetitions = /*Utils.joinNullArray*/(PreviousPetitions);
             this.game.gameUI.showDetallesPersonaje(CharName, Race, Class, Gender, Level, Gold, Bank, Reputation, previousPetitions, CurrentGuild, previousGuilds, RoyalArmy, ChaosLegion, CiudadanosMatados, CriminalesMatados);
-            console.log("TODO: handleCharacterInfo ");
+            log.network("TODO: handleCharacterInfo ");
         }
 
         handleGuildLeaderInfo(GuildList, MemberList, GuildNews, JoinRequests) {
@@ -506,14 +508,14 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
             if (aspirantes[0]) {
                 this.game.gameUI.clanes.setNombresSolicitantes(aspirantes);
             }
-            console.log("TODO: handleGuildLeaderInfo ");
+            log.network("TODO: handleGuildLeaderInfo ");
         }
 
         handleGuildMemberInfo(GuildList, MemberList) {
             this.handleGuildList(GuildList);
             var nombresMiembros = Utils.splitNullArray(MemberList);
             this.game.gameUI.clanes.setNombresMiembros(nombresMiembros);
-            console.log("TODO: handleGuildMemberInfo ");
+            log.network("TODO: handleGuildMemberInfo ");
         }
 
         handleGuildDetails(GuildName, Founder, FoundationDate, Leader, URL, MemberCount, ElectionsOpen, Aligment, EnemiesCount, AlliesCount, AntifactionPoints, Codex, GuildDesc) {
@@ -522,38 +524,38 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleShowGuildFundationForm() {
             this.game.gameUI.showCrearClan();
-            console.log("TODO: handleShowGuildFundationForm ");
+            log.network("TODO: handleShowGuildFundationForm ");
         }
 
         handleParalizeOK() {
             this.game.playerState.paralizado = !this.game.playerState.paralizado;
-            console.log("TODO: handleParalizeOK ");
+            log.network("TODO: handleParalizeOK ");
         }
 
         handleShowUserRequest(Details) {
-            console.log("TODO: handleShowUserRequest ");
+            log.network("TODO: handleShowUserRequest ");
         }
 
         handleTradeOK() {
             this.game.assetManager.audio.playSound(Enums.SONIDOS.comprar_vender);
-            console.log("TODO: handleTradeOK ");
+            log.network("TODO: handleTradeOK ");
         }
 
         handleBankOK() {
             this.game.assetManager.audio.playSound(Enums.SONIDOS.retirar_depositar);
-            console.log("TODO: handleBankOK ");
+            log.network("TODO: handleBankOK ");
         }
 
         handleChangeUserTradeSlot(OfferSlot, ObjIndex, Amount, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, Price, ObjName) {
-            console.log("TODO: handleChangeUserTradeSlot ");
+            log.network("TODO: handleChangeUserTradeSlot ");
         }
 
         handleSendNight(Night) {
-            console.log("TODO: handleSendNight ");
+            log.network("TODO: handleSendNight ");
         }
 
         handlePong() {
-            console.log("TODO: handlePong ");
+            log.network("TODO: handlePong ");
         }
 
         handleUpdateTagAndStatus(CharIndex, NickColor, Tag) {
@@ -574,70 +576,70 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
             }
             char.setName(nombre, clan, NickColor);
 
-            console.log("TODO: handleUpdateTagAndStatus ");
+            log.network("TODO: handleUpdateTagAndStatus ");
         }
 
         handleSpawnList(Data) {
-            console.log("TODO: handleSpawnList ");
+            log.network("TODO: handleSpawnList ");
         }
 
         handleShowSOSForm(Data) {
-            console.log("TODO: handleShowSOSForm ");
+            log.network("TODO: handleShowSOSForm ");
         }
 
         handleShowMOTDEditionForm(Data) {
-            console.log("TODO: handleShowMOTDEditionForm ");
+            log.network("TODO: handleShowMOTDEditionForm ");
         }
 
         handleShowGMPanelForm() {
-            console.log("TODO: handleShowGMPanelForm ");
+            log.network("TODO: handleShowGMPanelForm ");
         }
 
         handleUserNameList(Data) {
-            console.log("TODO: handleUserNameList ");
+            log.network("TODO: handleUserNameList ");
         }
 
         handleShowDenounces(Data) {
-            console.log("TODO: handleShowDenounces ");
+            log.network("TODO: handleShowDenounces ");
         }
 
         handleRecordList(Items) {
-            console.log("TODO: handleRecordList ");
+            log.network("TODO: handleRecordList ");
         }
 
         handleRecordDetails(Creador, Motivo, Online, IP, OnlineTime, Obs) {
-            console.log("TODO: handleRecordDetails ");
+            log.network("TODO: handleRecordDetails ");
         }
 
         handleShowGuildAlign() {
             this.game.gameUI.showEleccionFaccionClan();
-            console.log("TODO: handleShowGuildAlign ");
+            log.network("TODO: handleShowGuildAlign ");
         }
 
         handleShowPartyForm(EsLider, Data, Exp) {
             Data = Utils.splitNullArray(Data);
             this.game.gameUI.showParty(EsLider, Data, Exp);
-            console.log("TODO: handleShowPartyForm ");
+            log.network("TODO: handleShowPartyForm ");
         }
 
         handleUpdateStrenghtAndDexterity(Fuerza, Agilidad) {
             this.gameUI.interfaz.updateAgilidad(Agilidad);
             this.gameUI.interfaz.updateFuerza(Fuerza);
-            console.log("TODO: handleUpdateStrenghtAndDexterity ");
+            log.network("TODO: handleUpdateStrenghtAndDexterity ");
         }
 
         handleUpdateStrenght(Fuerza) {
             this.gameUI.interfaz.updateFuerza(Fuerza);
-            console.log("TODO: handleUpdateStrenght ");
+            log.network("TODO: handleUpdateStrenght ");
         }
 
         handleUpdateDexterity(Agilidad) {
             this.gameUI.interfaz.updateAgilidad(Agilidad);
-            console.log("TODO: handleUpdateDexterity ");
+            log.network("TODO: handleUpdateDexterity ");
         }
 
         handleAddSlots(Mochila) {
-            console.log("TODO: handleAddSlots ");
+            log.network("TODO: handleAddSlots ");
         }
 
         handleNPCHitUser(parteCuerpo, danio) {
@@ -652,17 +654,17 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
             let attackerName = this.game.world.getCharacter(attackerIndex).nombre;
             let text = Enums.MensajeConsola.MENSAJE_1 + attackerName + Enums.MensajeConsola.ATAQUE_FALLO;
             this.game.escribirMsgConsola(text, Font.FIGHT);
-            console.log("TODO: handleUserAttackedSwing");
+            log.network("TODO: handleUserAttackedSwing");
         }
 
         handleUserHittedByUser(attackerIndex, bodyPart, danio) {
-            console.log("TODO: handleUserHittedByUser");
+            log.network("TODO: handleUserHittedByUser");
             this.game.recibirDanioUser(bodyPart, danio, attackerIndex);
         }
 
         handleUserHittedUser(victimIndex, bodyPart, danio) {
             this.game.realizarDanioPlayer(danio, bodyPart, victimIndex);
-            console.log("TODO: handleUserHittedUser");
+            log.network("TODO: handleUserHittedUser");
         }
 
         handleWorkRequestTarget(skill) {
@@ -702,11 +704,22 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
             this.game.escribirMsgConsola(Enums.MensajeConsola.HAS_MATADO_A + victimName + Enums.MensajeConsola.MENSAJE_22, Font.FIGHT);
             this.game.escribirMsgConsola(Enums.MensajeConsola.HAS_GANADO_EXPE_1 + exp + Enums.MensajeConsola.HAS_GANADO_EXPE_2, Font.FIGHT);
 
-            console.log("TODO: handleHaveKilledUser");
+            log.network("TODO: handleHaveKilledUser");
         }
 
-        handleHome(a, b, c) {
-            console.log("TODO:handleHome ");
+        handleHome(distancia, tiempoEnSegundos, hogar) {
+            let minutes = Math.floor(tiempoEnSegundos / 60);
+            let seconds = tiempoEnSegundos - minutes * 60;
+            let msg;
+            if (minutes) {
+                msg = minutes + " minutos y " + seconds + " segundos.";
+            } else {
+                msg = seconds + " segundos.";
+            }
+
+            this.game.escribirMsgConsola("Te encuentras a " + distancia + " mapas de la " + hogar + ", este viaje durará " + msg, Font.INFO);
+            this.game.playerMovement.disable();
+            log.network("TODO:handleHome ");
         }
 
         handleDontSeeAnything() {
@@ -716,7 +729,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         handleUserKill(attackerIndex) {
             let attackerName = this.game.world.getCharacter(attackerIndex).nombre;
             this.game.escribirMsgConsola(attackerName + Enums.MensajeConsola.TE_HA_MATADO, Font.FIGHT);
-            console.log("TODO: handleUserKill");
+            log.network("TODO: handleUserKill");
         }
 
         handleNPCSwing() {
@@ -743,28 +756,28 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
             this.game.seguroAtacarActivado = true;
             this.gameUI.interfaz.setSeguroAtacar(true);
             this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_ACTIVADO, Font.WARNING);
-            console.log("TODO: handleResuscitationSafeOff");
+            log.network("TODO: handleResuscitationSafeOff");
         }
 
         handleSafeModeOff() {
             this.game.seguroAtacarActivado = false;
             this.gameUI.interfaz.setSeguroAtacar(false);
             this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_DESACTIVADO, Font.WARNING);
-            console.log("TODO: handleResuscitationSafeOn");
+            log.network("TODO: handleResuscitationSafeOn");
         }
 
         handleResuscitationSafeOff() {
             this.game.seguroResucitacionActivado = false;
             this.gameUI.interfaz.setSeguroResucitacion(false);
             this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_RESU_OFF, Font.WARNING);
-            console.log("TODO: handleResuscitationSafeOff");
+            log.network("TODO: handleResuscitationSafeOff");
         }
 
         handleResuscitationSafeOn() {
             this.game.seguroResucitacionActivado = true;
             this.gameUI.interfaz.setSeguroResucitacion(true);
             this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_RESU_ON, Font.WARNING);
-            console.log("TODO: handleResuscitationSafeOn");
+            log.network("TODO: handleResuscitationSafeOn");
         }
 
         handleNobilityLost() {
@@ -776,23 +789,27 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleEarnExp() {
-            console.log("TODO: handleEarnExp");
+            log.network("TODO: handleEarnExp");
         }
 
         handleFinishHome() {
-            console.log("TODO: handleFinishHome");
+            this.game.escribirMsgConsola(Enums.MensajeConsola.MENSAJE_HOGAR, Font.INFO);
+            this.game.playerMovement.enable();
+            log.network("TODO: handleFinishHome");
         }
 
         handleCancelHome() {
-            console.log("TODO: handleCancelHome");
+            this.game.escribirMsgConsola(Enums.MensajeConsola.MENSAJE_HOGAR_CANCEL, Font.INFO);
+            this.game.playerMovement.enable();
+            log.network("TODO: handleCancelHome");
         }
 
         handleStopWorking() {
-            console.log("TODO: handleStopWorking ");
+            log.network("TODO: handleStopWorking ");
         }
 
         handleCancelOfferItem(Slot) {
-            console.log("TODO: handleCancelOfferItem ");
+            log.network("TODO: handleCancelOfferItem ");
         }
 
         sendLoginExistingChar(UserName, Password) {

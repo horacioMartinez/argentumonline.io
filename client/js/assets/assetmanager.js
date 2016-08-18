@@ -1,18 +1,17 @@
-define(['json!../../indices/graficos.json',
-        'json!../../indices/armas.json',
+define(['json!../../indices/armas.json',
         'json!../../indices/cabezas.json',
         'json!../../indices/cascos.json',
         'json!../../indices/cuerpos.json',
         'json!../../indices/escudos.json',
         'json!../../indices/fxs.json',
         'lib/pixi', 'assets/preloader', 'assets/audio'],
-    function (jsonGraficos, jsonArmas, jsonCabezas, jsonCascos, jsonCuerpos, jsonEscudos, jsonFxs, PIXI, Preloader, Audio) {
+    function ( jsonArmas, jsonCabezas, jsonCascos, jsonCuerpos, jsonEscudos, jsonFxs, PIXI, Preloader, Audio) {
 
         class AssetManager {
             constructor() {
                 this.audio = new Audio();
 
-                this.indices = jsonGraficos;
+                this.indices = null;
                 this.armas = jsonArmas;
                 this.cabezas = jsonCabezas;
                 this.cascos = jsonCascos;
@@ -129,7 +128,11 @@ define(['json!../../indices/graficos.json',
             }
 
             preload(terminar_callback) {
-                this.preloader.preload(terminar_callback);
+                let cb = function(indices){
+                    this.indices = indices;
+                    terminar_callback();
+                }.bind(this);
+                this.preloader.preload(cb);
             }
 
             getIndices() {

@@ -191,6 +191,8 @@ define({
         MACRO_HECHIZOS_ACTIVADO: "Auto lanzar hechizos activado haz click sobre el objetivo",
         MACRO_HECHIZOS_DESACTIVADO: "Auto lanzar hechizos desactivado",
         MACRO_HECHIZOS_REQUIRE_SELECCIONAR: "Necesitas seleccionar que hechizo lanzar",
+        MENSAJE_HOGAR : "Has llegado a tu hogar. El viaje ha finalizado.",
+        MENSAJE_HOGAR_CANCEL : "Tu viaje ha sido cancelado."
     },
 
     Intervalo: {

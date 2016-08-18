@@ -19,15 +19,25 @@ define([], function () {
 
             //this.moveSpeed = 230; // usar la del character?
 
-            this._enabled = true;
+            this._enabled = 1;
+        }
+
+        get enabled() {
+            return this._enabled > 0;
+        }
+
+        get disabled(){
+            return !this.enabled;
         }
 
         enable() {
-            this._enabled = true;
+            if (this._enabled < 1) {
+                this._enabled++;
+            }
         }
 
         disable() {
-            this._enabled = false;
+            this._enabled--;
         }
 
         // TODO: aceleracion al comenzar y terminar de caminar ?
@@ -50,10 +60,10 @@ define([], function () {
         setOnMoverseUpdate(callback) { // cb params: x,y
             this._moverseUpdateCallback = callback;
         }
-        
+
         _tratarDeCaminar() {
 
-            if (!this.getDirMov() || !this._enabled) {
+            if (!this.getDirMov() || !this.enabled) {
                 return false;
             }
             if (this.puedeCaminarCallback(this.getDirMov())) {

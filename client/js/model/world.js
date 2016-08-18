@@ -55,14 +55,23 @@ define(['enums'],
                 });
             }
 
-            forEachEntity(callback) { // loopeo al revez asi permite remover items en callback
+            forEachCharacter(callback){ // loopeo al revez asi permite remover items en callback
                 let i;
                 for (i = this.characters.length - 1; i >= 0; i--) {
                     callback(this.characters[i], i);
                 }
+            }
+
+            forEachItem(callback){
+                let i;
                 for (i = this.items.length - 1; i >= 0; i--) {
                     callback(this.items[i], i);
                 }
+            }
+
+            forEachEntity(callback) {
+                this.forEachCharacter(callback);
+                this.forEachItem(callback);
             }
         }
 

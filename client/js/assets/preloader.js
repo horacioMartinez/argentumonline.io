@@ -2,26 +2,14 @@
  * Created by horacio on 3/22/16.
  */
 
-define(['lib/howler', 'lib/pixi'],
-    function (Howler, PIXI) {
+define(['lib/howler', 'lib/pixi', 'json!../../preload_config/preload_sounds.json'],
+    function (Howler, PIXI, PreloadSounds) {
 
         class Preloader {
             constructor(assetManager) {
                 this.assetManager = assetManager;
                 this.PRELOAD_GRHS = [];
                 this.PRELOAD_MAPAS = [];
-            }
-
-            _loadSounds() {
-                for (var i = 1; i < 212; i++) { // <-- todo numero hardcodeado!
-                    if (!this.assetManager.audio.sounds[i]) {
-                        this.assetManager.audio.sounds[i] = new Howl({
-                            urls: ['audio/sonidos/' + i + '.m4a']
-                        });
-                    }
-                }
-
-                log.info("Sonidos cargados!");
             }
 
             copiarLoadedAssets(resources, baseTextures, mapas) {
@@ -68,15 +56,40 @@ define(['lib/howler', 'lib/pixi'],
                 this._initGrhsPreload();
             }
 
+            _preloadSoundsAsync(){
+                for (let sound of PreloadSounds) { //preload async, no necesariamente los termina de cargar antes de  empezar
+                    this.assetManager.audio.cargarSonido(sound);
+                }
+            }
+
             preload(terminar_callback) {
-                //this._loadSounds();
+                this._preloadSoundsAsync();
+
+                let loader = PIXI.loader;
+
+                loader.add("indices", "indices/graficos.json");
+
+                loader.on('progress', function (loader, loadedResource) {
+                    console.log('Progress:', loader.progress + '%');
+                });
+
+                loader.load(function (loader, resources) {
+                    terminar_callback(resources.indices.data);
+                });
+
+                return;
+
+
+
+                //viejo:
+
 
                 if ((this.PRELOAD_GRHS.length < 1) || (this.PRELOAD_MAPAS.length < 1)) { // no hay nada que cargar
                     terminar_callback();
                     return;
                 }
 
-                var loader = PIXI.loader;
+                /*var*/ loader = PIXI.loader;
                 this._agregarPreloadMapas(loader);
                 this._agregarPreloadGrhs(loader, this.assetManager.indices);
 

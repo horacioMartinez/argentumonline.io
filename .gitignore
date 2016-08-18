@@ -7,5 +7,6 @@ config_local*
 *.swp
 .project
 .idea
+client/graficos/
 *.sublime-project
 *.sublime-workspace

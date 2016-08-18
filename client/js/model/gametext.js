@@ -118,6 +118,16 @@ define(['enums', 'font'],
                     this.renderer.setCharacterChat(c, chat, r, g, b);
                 }
             }
+
+            removeCharacterChat (character){
+                this.renderer.removerChat(character);
+            }
+    /*
+            removeAllChats(){
+                this.world.forEachCharacter( () => {
+                    this.renderer.sacar
+                })
+            }*/
         }
 
         return GameText;

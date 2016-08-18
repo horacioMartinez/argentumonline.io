@@ -40,7 +40,7 @@ gulp.task('uglify', function() {
     return gulp.src('dakara-client-build/**/*.js')
        .pipe(uglify({
             compress: {
-               pure_funcs: ['console.log', 'log.error', 'log.info']
+               pure_funcs: ['console.log', 'log.error', 'log.info','log.network']
            },/*
                mangle: {
                 toplevel: true,

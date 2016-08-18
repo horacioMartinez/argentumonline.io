@@ -7892,7 +7892,7 @@ input:-webkit-autofill:focus {
 
 ::-webkit-scrollbar {
   width: 8px;
-  background-color: #704628; }
+  background-color: #5c3a21; }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 4px;
@@ -8029,9 +8029,31 @@ footer a {
   transform: scale(1); }
 
 #intro {
+  display: none;
   transition: 0.4s opacity linear; }
 
-.intro #container {
+#loadingBar {
+  outline: 2px green solid;
+  width: 300px;
+  height: 30px;
+  background: url("../imagenes/interfaz/barras/barra_mana.png");
+  background-size: 100% 100%; }
+
+#loadingBarUsada {
+  transition: width 0.5s;
+  background: url("../imagenes/interfaz/barras/barra_background.png");
+  background-size: 100% 100%; }
+
+.intro #intro {
+  display: block; }
+
+.intro #conectar {
+  display: none; }
+
+.intro #crearPJ {
+  display: none; }
+
+.intro #juego {
   display: none; }
 
 #conectar {
@@ -8110,7 +8132,7 @@ footer a {
   display: inline-block;
   width: 28px;
   height: 33px;
-  background-size: 400%;
+  background-size: 100%;
   margin-right: 4px;
   margin-left: 4px; }
 
@@ -8119,7 +8141,7 @@ footer a {
   display: inline-block;
   width: 34px;
   height: 40px;
-  background-size: 400%;
+  background-size: 100%;
   margin-right: 4px;
   margin-left: 4px; }
 
@@ -8128,7 +8150,7 @@ footer a {
   display: inline-block;
   width: 28px;
   height: 33px;
-  background-size: 400%;
+  background-size: 100%;
   margin-right: 4px;
   margin-left: 4px; }
 
@@ -8136,7 +8158,7 @@ footer a {
   display: inline-block;
   width: 50px;
   height: 90px;
-  background-size: 600%;
+  background-size: 100%;
   margin-top: 11px; }
 
 #crearPjImagenCabezaPersonaje {
@@ -8145,7 +8167,7 @@ footer a {
   right: 11px;
   width: 28px;
   height: 33px;
-  background-size: 400%; }
+  background-size: 100%; }
 
 #crearPjImagenCabezaPersonaje.petizo {
   margin-top: 19px; }

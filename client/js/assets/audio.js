@@ -53,14 +53,15 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
             if (this.soundEnabled) {
                 volume = volume || 1;
                 if (!this.sounds[nombre]) {
-                    this._cargarSonido(nombre, loop, onEnd);
+                    this.cargarSonido(nombre, onEnd);
                 }
+                this.sounds[nombre].loop(loop);
                 this.sounds[nombre].volume(this.soundVolume * volume);
                 this.sounds[nombre].play();
             }
         }
 
-        _cargarSonido(nombre, loop, onEnd, sprite) {
+        cargarSonido(nombre, onEnd, sprite) {
             if (this.sounds[nombre]) {
                 return;
             }
@@ -69,10 +70,6 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
                 src: [this.SOUND_PATH + nombre + this.MAIN_EXTENSION, this.SOUND_PATH + nombre + this.SECONDARY_EXTENSION],
                 sprite: sprite
             });
-
-            if (loop) {
-                this.sounds[nombre].loop(loop);
-            }
             if (onEnd) {
                 this.sounds[nombre].on("onend", onEnd);
             }
@@ -121,8 +118,9 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
             }
 
             if (!this.sounds[nombre]) { //cargar con sprite para que loopee bien
-                this._cargarSonido(nombre, true, null, sprite);
+                this.cargarSonido(nombre, null, sprite);
             }
+            this.sounds[nombre].loop(true);
             this.sounds[nombre].volume(0.4 * this.soundVolume);
             this.sounds[nombre].play("lluvia");
         }

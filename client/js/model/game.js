@@ -84,6 +84,19 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 this.gameText.chat(c, chat, r, g, b);
             }
 
+            sacarChatCharacterByID(charID) {
+                let char = this.world.getCharacter(charID);
+                if (char) {
+                    this.gameText.removeCharacterChat(char);
+                }
+            }
+
+            sacarAllCharacterChats() {
+                this.world.forEachCharacter((char) => {
+                    this.gameText.removeCharacterChat(char);
+                });
+            }
+
             actualizarBajoTecho() {
                 this.map.onceLoaded((mapa) => {
                     var bajoTecho = this.map.isBajoTecho(this.player.gridX, this.player.gridY);
@@ -207,7 +220,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                     if (CharIndex === this.player.id) { //"cambio de mapa", TODO: ver bien esto
                         // setear cosas que pueden cambiar al cambiar mapa (color nombre, sacar chat,pos)
                         this.player.setName(nombre, clan, NickColor);
-                        this.renderer.removerChat(this.player);
+                        this.gameText.removeCharacterChat(this.player);
                         this.resetPosCharacter(this.player.id, X, Y, true);
                         return;
                     }
@@ -322,7 +335,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
             swapSlotHechizos(slot1, slot2) {
                 let auxSpellID = this.hechizos[slot1].id;
                 let auxNombre = this.hechizos[slot1].nombre;
-                this.cambiarSlotHechizos(slot1,  this.hechizos[slot2].id,  this.hechizos[slot2].nombre);
+                this.cambiarSlotHechizos(slot1, this.hechizos[slot2].id, this.hechizos[slot2].nombre);
                 this.cambiarSlotHechizos(slot2, auxSpellID, auxNombre);
             }
 

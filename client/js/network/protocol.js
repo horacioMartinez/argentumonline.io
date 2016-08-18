@@ -2806,7 +2806,7 @@ function GMCommands (buffer) {
     this.dispatch = function (d){
         d.handleGMCommands(this);
 
-    }
+    };
 }
 
 function InitCrafting (buffer) {
@@ -3126,7 +3126,7 @@ function GMMessage (buffer) {
 
     this.dispatch = function (d){
         d.handleGMMessage(this);
-    }
+    };
 }
 
 
@@ -3146,7 +3146,7 @@ function ShowName (buffer) {
 
     this.dispatch = function (d){
         d.handleShowName(this);
-    }
+    };
 }
 
 
@@ -3166,7 +3166,7 @@ function OnlineRoyalArmy (buffer) {
 
     this.dispatch = function (d){
         d.handleOnlineRoyalArmy(this);
-    }
+    };
 }
 
 
@@ -3186,7 +3186,7 @@ function OnlineChaosLegion (buffer) {
 
     this.dispatch = function (d){
         d.handleOnlineChaosLegion(this);
-    }
+    };
 }
 
 
@@ -3208,7 +3208,7 @@ function GoNearby (buffer) {
 
     this.dispatch = function (d){
         d.handleGoNearby(this);
-    }
+    };
 }
 
 
@@ -3230,7 +3230,7 @@ function Comment (buffer) {
 
     this.dispatch = function (d){
         d.handleComment(this);
-    }
+    };
 }
 
 
@@ -3250,7 +3250,7 @@ function ServerTime (buffer) {
 
     this.dispatch = function (d){
         d.handleServerTime(this);
-    }
+    };
 }
 
 
@@ -3272,7 +3272,7 @@ function Where (buffer) {
 
     this.dispatch = function (d){
         d.handleWhere(this);
-    }
+    };
 }
 
 
@@ -3294,7 +3294,7 @@ function CreaturesInMap (buffer) {
 
     this.dispatch = function (d){
         d.handleCreaturesInMap(this);
-    }
+    };
 }
 
 
@@ -3314,7 +3314,7 @@ function WarpMeToTarget (buffer) {
 
     this.dispatch = function (d){
         d.handleWarpMeToTarget(this);
-    }
+    };
 }
 
 
@@ -3342,7 +3342,7 @@ function WarpChar (buffer) {
 
     this.dispatch = function (d){
         d.handleWarpChar(this);
-    }
+    };
 }
 
 
@@ -3364,7 +3364,7 @@ function Silence (buffer) {
 
     this.dispatch = function (d){
         d.handleSilence(this);
-    }
+    };
 }
 
 
@@ -3384,7 +3384,7 @@ function SOSShowList (buffer) {
 
     this.dispatch = function (d){
         d.handleSOSShowList(this);
-    }
+    };
 }
 
 
@@ -3406,7 +3406,7 @@ function SOSRemove (buffer) {
 
     this.dispatch = function (d){
         d.handleSOSRemove(this);
-    }
+    };
 }
 
 
@@ -3428,7 +3428,7 @@ function GoToChar (buffer) {
 
     this.dispatch = function (d){
         d.handleGoToChar(this);
-    }
+    };
 }
 
 
@@ -3448,7 +3448,7 @@ function Invisible (buffer) {
 
     this.dispatch = function (d){
         d.handleInvisible(this);
-    }
+    };
 }
 
 
@@ -3468,7 +3468,7 @@ function GMPanel (buffer) {
 
     this.dispatch = function (d){
         d.handleGMPanel(this);
-    }
+    };
 }
 
 
@@ -3488,7 +3488,7 @@ function RequestUserList (buffer) {
 
     this.dispatch = function (d){
         d.handleRequestUserList(this);
-    }
+    };
 }
 
 
@@ -3508,7 +3508,7 @@ function Working (buffer) {
 
     this.dispatch = function (d){
         d.handleWorking(this);
-    }
+    };
 }
 
 
@@ -3528,7 +3528,7 @@ function Hiding (buffer) {
 
     this.dispatch = function (d){
         d.handleHiding(this);
-    }
+    };
 }
 
 
@@ -3554,7 +3554,7 @@ function Jail (buffer) {
 
     this.dispatch = function (d){
         d.handleJail(this);
-    }
+    };
 }
 
 
@@ -3574,7 +3574,7 @@ function KillNPC (buffer) {
 
     this.dispatch = function (d){
         d.handleKillNPC(this);
-    }
+    };
 }
 
 
@@ -3598,7 +3598,7 @@ function WarnUser (buffer) {
 
     this.dispatch = function (d){
         d.handleWarnUser(this);
-    }
+    };
 }
 
 
@@ -3626,7 +3626,7 @@ function EditChar (buffer) {
 
     this.dispatch = function (d){
         d.handleEditChar(this);
-    }
+    };
 }
 
 
@@ -3648,7 +3648,7 @@ function RequestCharInfo (buffer) {
 
     this.dispatch = function (d){
         d.handleRequestCharInfo(this);
-    }
+    };
 }
 
 
@@ -3670,7 +3670,7 @@ function RequestCharStats (buffer) {
 
     this.dispatch = function (d){
         d.handleRequestCharStats(this);
-    }
+    };
 }
 
 
@@ -3692,7 +3692,7 @@ function RequestCharGold (buffer) {
 
     this.dispatch = function (d){
         d.handleRequestCharGold(this);
-    }
+    };
 }
 
 
@@ -3714,7 +3714,7 @@ function RequestCharInventory (buffer) {
 
     this.dispatch = function (d){
         d.handleRequestCharInventory(this);
-    }
+    };
 }
 
 
@@ -3736,7 +3736,7 @@ function RequestCharBank (buffer) {
 
     this.dispatch = function (d){
         d.handleRequestCharBank(this);
-    }
+    };
 }
 
 
@@ -3758,7 +3758,7 @@ function RequestCharSkills (buffer) {
 
     this.dispatch = function (d){
         d.handleRequestCharSkills(this);
-    }
+    };
 }
 
 
@@ -3780,7 +3780,7 @@ function ReviveChar (buffer) {
 
     this.dispatch = function (d){
         d.handleReviveChar(this);
-    }
+    };
 }
 
 
@@ -3800,7 +3800,7 @@ function OnlineGM (buffer) {
 
     this.dispatch = function (d){
         d.handleOnlineGM(this);
-    }
+    };
 }
 
 
@@ -3822,7 +3822,7 @@ function OnlineMap (buffer) {
 
     this.dispatch = function (d){
         d.handleOnlineMap(this);
-    }
+    };
 }
 
 
@@ -3844,7 +3844,7 @@ function Forgive (buffer) {
 
     this.dispatch = function (d){
         d.handleForgive(this);
-    }
+    };
 }
 
 
@@ -3866,7 +3866,7 @@ function Kick (buffer) {
 
     this.dispatch = function (d){
         d.handleKick(this);
-    }
+    };
 }
 
 
@@ -3888,7 +3888,7 @@ function Execute (buffer) {
 
     this.dispatch = function (d){
         d.handleExecute(this);
-    }
+    };
 }
 
 
@@ -3912,7 +3912,7 @@ function BanChar (buffer) {
 
     this.dispatch = function (d){
         d.handleBanChar(this);
-    }
+    };
 }
 
 
@@ -3934,7 +3934,7 @@ function UnbanChar (buffer) {
 
     this.dispatch = function (d){
         d.handleUnbanChar(this);
-    }
+    };
 }
 
 
@@ -3954,7 +3954,7 @@ function NPCFollow (buffer) {
 
     this.dispatch = function (d){
         d.handleNPCFollow(this);
-    }
+    };
 }
 
 
@@ -3976,7 +3976,7 @@ function SummonChar (buffer) {
 
     this.dispatch = function (d){
         d.handleSummonChar(this);
-    }
+    };
 }
 
 
@@ -3996,7 +3996,7 @@ function SpawnListRequest (buffer) {
 
     this.dispatch = function (d){
         d.handleSpawnListRequest(this);
-    }
+    };
 }
 
 
@@ -4018,7 +4018,7 @@ function SpawnCreature (buffer) {
 
     this.dispatch = function (d){
         d.handleSpawnCreature(this);
-    }
+    };
 }
 
 
@@ -4038,7 +4038,7 @@ function ResetNPCInventory (buffer) {
 
     this.dispatch = function (d){
         d.handleResetNPCInventory(this);
-    }
+    };
 }
 
 
@@ -4058,7 +4058,7 @@ function CleanWorld (buffer) {
 
     this.dispatch = function (d){
         d.handleCleanWorld(this);
-    }
+    };
 }
 
 
@@ -4080,7 +4080,7 @@ function ServerMessage (buffer) {
 
     this.dispatch = function (d){
         d.handleServerMessage(this);
-    }
+    };
 }
 
 
@@ -4102,7 +4102,7 @@ function NickToIP (buffer) {
 
     this.dispatch = function (d){
         d.handleNickToIP(this);
-    }
+    };
 }
 
 
@@ -4130,7 +4130,7 @@ function IPToNick (buffer) {
 
     this.dispatch = function (d){
         d.handleIPToNick(this);
-    }
+    };
 }
 
 
@@ -4152,7 +4152,7 @@ function GuildOnlineMembers (buffer) {
 
     this.dispatch = function (d){
         d.handleGuildOnlineMembers(this);
-    }
+    };
 }
 
 
@@ -4180,7 +4180,7 @@ function TeleportCreate (buffer) {
 
     this.dispatch = function (d){
         d.handleTeleportCreate(this);
-    }
+    };
 }
 
 
@@ -4200,7 +4200,7 @@ function TeleportDestroy (buffer) {
 
     this.dispatch = function (d){
         d.handleTeleportDestroy(this);
-    }
+    };
 }
 
 
@@ -4220,7 +4220,7 @@ function RainToggle (buffer) {
 
     this.dispatch = function (d){
         d.handleRainToggle(this);
-    }
+    };
 }
 
 
@@ -4242,7 +4242,7 @@ function SetCharDescription (buffer) {
 
     this.dispatch = function (d){
         d.handleSetCharDescription(this);
-    }
+    };
 }
 
 
@@ -4266,7 +4266,7 @@ function ForceMIDIToMap (buffer) {
 
     this.dispatch = function (d){
         d.handleForceMIDIToMap(this);
-    }
+    };
 }
 
 
@@ -4294,7 +4294,7 @@ function ForceWAVEToMap (buffer) {
 
     this.dispatch = function (d){
         d.handleForceWAVEToMap(this);
-    }
+    };
 }
 
 
@@ -4316,7 +4316,7 @@ function RoyalArmyMessage (buffer) {
 
     this.dispatch = function (d){
         d.handleRoyalArmyMessage(this);
-    }
+    };
 }
 
 
@@ -4338,7 +4338,7 @@ function ChaosLegionMessage (buffer) {
 
     this.dispatch = function (d){
         d.handleChaosLegionMessage(this);
-    }
+    };
 }
 
 
@@ -4360,7 +4360,7 @@ function CitizenMessage (buffer) {
 
     this.dispatch = function (d){
         d.handleCitizenMessage(this);
-    }
+    };
 }
 
 
@@ -4382,7 +4382,7 @@ function CriminalMessage (buffer) {
 
     this.dispatch = function (d){
         d.handleCriminalMessage(this);
-    }
+    };
 }
 
 
@@ -4404,7 +4404,7 @@ function TalkAsNPC (buffer) {
 
     this.dispatch = function (d){
         d.handleTalkAsNPC(this);
-    }
+    };
 }
 
 
@@ -4424,7 +4424,7 @@ function DestroyAllItemsInArea (buffer) {
 
     this.dispatch = function (d){
         d.handleDestroyAllItemsInArea(this);
-    }
+    };
 }
 
 
@@ -4446,7 +4446,7 @@ function AcceptRoyalCouncilMember (buffer) {
 
     this.dispatch = function (d){
         d.handleAcceptRoyalCouncilMember(this);
-    }
+    };
 }
 
 
@@ -4468,7 +4468,7 @@ function AcceptChaosCouncilMember (buffer) {
 
     this.dispatch = function (d){
         d.handleAcceptChaosCouncilMember(this);
-    }
+    };
 }
 
 
@@ -4488,7 +4488,7 @@ function ItemsInTheFloor (buffer) {
 
     this.dispatch = function (d){
         d.handleItemsInTheFloor(this);
-    }
+    };
 }
 
 
@@ -4510,7 +4510,7 @@ function MakeDumb (buffer) {
 
     this.dispatch = function (d){
         d.handleMakeDumb(this);
-    }
+    };
 }
 
 
@@ -4532,7 +4532,7 @@ function MakeDumbNoMore (buffer) {
 
     this.dispatch = function (d){
         d.handleMakeDumbNoMore(this);
-    }
+    };
 }
 
 
@@ -4552,7 +4552,7 @@ function DumpIPTables (buffer) {
 
     this.dispatch = function (d){
         d.handleDumpIPTables(this);
-    }
+    };
 }
 
 
@@ -4574,7 +4574,7 @@ function CouncilKick (buffer) {
 
     this.dispatch = function (d){
         d.handleCouncilKick(this);
-    }
+    };
 }
 
 
@@ -4596,7 +4596,7 @@ function SetTrigger (buffer) {
 
     this.dispatch = function (d){
         d.handleSetTrigger(this);
-    }
+    };
 }
 
 
@@ -4616,7 +4616,7 @@ function AskTrigger (buffer) {
 
     this.dispatch = function (d){
         d.handleAskTrigger(this);
-    }
+    };
 }
 
 
@@ -4636,7 +4636,7 @@ function BannedIPList (buffer) {
 
     this.dispatch = function (d){
         d.handleBannedIPList(this);
-    }
+    };
 }
 
 
@@ -4656,7 +4656,7 @@ function BannedIPReload (buffer) {
 
     this.dispatch = function (d){
         d.handleBannedIPReload(this);
-    }
+    };
 }
 
 
@@ -4678,7 +4678,7 @@ function GuildMemberList (buffer) {
 
     this.dispatch = function (d){
         d.handleGuildMemberList(this);
-    }
+    };
 }
 
 
@@ -4700,7 +4700,7 @@ function GuildBan (buffer) {
 
     this.dispatch = function (d){
         d.handleGuildBan(this);
-    }
+    };
 }
 
 
@@ -4724,7 +4724,7 @@ function BanIP (buffer) {
 
     this.dispatch = function (d){
         d.handleBanIP(this);
-    }
+    };
 }
 
 
@@ -4746,7 +4746,7 @@ function UnbanIP (buffer) {
 
     this.dispatch = function (d){
         d.handleUnbanIP(this);
-    }
+    };
 }
 
 
@@ -4768,7 +4768,7 @@ function CreateItem (buffer) {
 
     this.dispatch = function (d){
         d.handleCreateItem(this);
-    }
+    };
 }
 
 
@@ -4788,7 +4788,7 @@ function DestroyItems (buffer) {
 
     this.dispatch = function (d){
         d.handleDestroyItems(this);
-    }
+    };
 }
 
 
@@ -4812,7 +4812,7 @@ function ChaosLegionKick (buffer) {
 
     this.dispatch = function (d){
         d.handleChaosLegionKick(this);
-    }
+    };
 }
 
 
@@ -4836,7 +4836,7 @@ function RoyalArmyKick (buffer) {
 
     this.dispatch = function (d){
         d.handleRoyalArmyKick(this);
-    }
+    };
 }
 
 
@@ -4858,7 +4858,7 @@ function ForceMIDIAll (buffer) {
 
     this.dispatch = function (d){
         d.handleForceMIDIAll(this);
-    }
+    };
 }
 
 
@@ -4880,7 +4880,7 @@ function ForceWAVEAll (buffer) {
 
     this.dispatch = function (d){
         d.handleForceWAVEAll(this);
-    }
+    };
 }
 
 
@@ -4906,7 +4906,7 @@ function RemovePunishment (buffer) {
 
     this.dispatch = function (d){
         d.handleRemovePunishment(this);
-    }
+    };
 }
 
 
@@ -4926,7 +4926,7 @@ function TileBlockedToggle (buffer) {
 
     this.dispatch = function (d){
         d.handleTileBlockedToggle(this);
-    }
+    };
 }
 
 
@@ -4946,7 +4946,7 @@ function KillNPCNoRespawn (buffer) {
 
     this.dispatch = function (d){
         d.handleKillNPCNoRespawn(this);
-    }
+    };
 }
 
 
@@ -4966,7 +4966,7 @@ function KillAllNearbyNPCs (buffer) {
 
     this.dispatch = function (d){
         d.handleKillAllNearbyNPCs(this);
-    }
+    };
 }
 
 
@@ -4988,7 +4988,7 @@ function LastIP (buffer) {
 
     this.dispatch = function (d){
         d.handleLastIP(this);
-    }
+    };
 }
 
 
@@ -5008,7 +5008,7 @@ function ChangeMOTD (buffer) {
 
     this.dispatch = function (d){
         d.handleChangeMOTD(this);
-    }
+    };
 }
 
 
@@ -5030,7 +5030,7 @@ function SetMOTD (buffer) {
 
     this.dispatch = function (d){
         d.handleSetMOTD(this);
-    }
+    };
 }
 
 
@@ -5052,7 +5052,7 @@ function SystemMessage (buffer) {
 
     this.dispatch = function (d){
         d.handleSystemMessage(this);
-    }
+    };
 }
 
 
@@ -5074,7 +5074,7 @@ function CreateNPC (buffer) {
 
     this.dispatch = function (d){
         d.handleCreateNPC(this);
-    }
+    };
 }
 
 
@@ -5096,7 +5096,7 @@ function CreateNPCWithRespawn (buffer) {
 
     this.dispatch = function (d){
         d.handleCreateNPCWithRespawn(this);
-    }
+    };
 }
 
 
@@ -5120,7 +5120,7 @@ function ImperialArmour (buffer) {
 
     this.dispatch = function (d){
         d.handleImperialArmour(this);
-    }
+    };
 }
 
 
@@ -5144,7 +5144,7 @@ function ChaosArmour (buffer) {
 
     this.dispatch = function (d){
         d.handleChaosArmour(this);
-    }
+    };
 }
 
 
@@ -5164,7 +5164,7 @@ function NavigateToggle (buffer) {
 
     this.dispatch = function (d){
         d.handleNavigateToggle(this);
-    }
+    };
 }
 
 
@@ -5184,7 +5184,7 @@ function ServerOpenToUsersToggle (buffer) {
 
     this.dispatch = function (d){
         d.handleServerOpenToUsersToggle(this);
-    }
+    };
 }
 
 
@@ -5204,7 +5204,7 @@ function TurnOffServer (buffer) {
 
     this.dispatch = function (d){
         d.handleTurnOffServer(this);
-    }
+    };
 }
 
 
@@ -5226,7 +5226,7 @@ function TurnCriminal (buffer) {
 
     this.dispatch = function (d){
         d.handleTurnCriminal(this);
-    }
+    };
 }
 
 
@@ -5248,7 +5248,7 @@ function ResetFactions (buffer) {
 
     this.dispatch = function (d){
         d.handleResetFactions(this);
-    }
+    };
 }
 
 
@@ -5270,7 +5270,7 @@ function RemoveCharFromGuild (buffer) {
 
     this.dispatch = function (d){
         d.handleRemoveCharFromGuild(this);
-    }
+    };
 }
 
 
@@ -5292,7 +5292,7 @@ function RequestCharMail (buffer) {
 
     this.dispatch = function (d){
         d.handleRequestCharMail(this);
-    }
+    };
 }
 
 
@@ -5316,7 +5316,7 @@ function AlterPassword (buffer) {
 
     this.dispatch = function (d){
         d.handleAlterPassword(this);
-    }
+    };
 }
 
 
@@ -5340,7 +5340,7 @@ function AlterMail (buffer) {
 
     this.dispatch = function (d){
         d.handleAlterMail(this);
-    }
+    };
 }
 
 
@@ -5364,7 +5364,7 @@ function AlterName (buffer) {
 
     this.dispatch = function (d){
         d.handleAlterName(this);
-    }
+    };
 }
 
 
@@ -5384,7 +5384,7 @@ function ToggleCentinelActivated (buffer) {
 
     this.dispatch = function (d){
         d.handleToggleCentinelActivated(this);
-    }
+    };
 }
 
 
@@ -5404,7 +5404,7 @@ function DoBackUp (buffer) {
 
     this.dispatch = function (d){
         d.handleDoBackUp(this);
-    }
+    };
 }
 
 
@@ -5426,7 +5426,7 @@ function ShowGuildMessages (buffer) {
 
     this.dispatch = function (d){
         d.handleShowGuildMessages(this);
-    }
+    };
 }
 
 
@@ -5446,7 +5446,7 @@ function SaveMap (buffer) {
 
     this.dispatch = function (d){
         d.handleSaveMap(this);
-    }
+    };
 }
 
 
@@ -5468,7 +5468,7 @@ function ChangeMapInfoPK (buffer) {
 
     this.dispatch = function (d){
         d.handleChangeMapInfoPK(this);
-    }
+    };
 }
 
 
@@ -5490,7 +5490,7 @@ function ChangeMapInfoBackup (buffer) {
 
     this.dispatch = function (d){
         d.handleChangeMapInfoBackup(this);
-    }
+    };
 }
 
 
@@ -5512,7 +5512,7 @@ function ChangeMapInfoRestricted (buffer) {
 
     this.dispatch = function (d){
         d.handleChangeMapInfoRestricted(this);
-    }
+    };
 }
 
 
@@ -5534,7 +5534,7 @@ function ChangeMapInfoNoMagic (buffer) {
 
     this.dispatch = function (d){
         d.handleChangeMapInfoNoMagic(this);
-    }
+    };
 }
 
 
@@ -5556,7 +5556,7 @@ function ChangeMapInfoNoInvi (buffer) {
 
     this.dispatch = function (d){
         d.handleChangeMapInfoNoInvi(this);
-    }
+    };
 }
 
 
@@ -5578,7 +5578,7 @@ function ChangeMapInfoNoResu (buffer) {
 
     this.dispatch = function (d){
         d.handleChangeMapInfoNoResu(this);
-    }
+    };
 }
 
 
@@ -5600,7 +5600,7 @@ function ChangeMapInfoLand (buffer) {
 
     this.dispatch = function (d){
         d.handleChangeMapInfoLand(this);
-    }
+    };
 }
 
 
@@ -5622,7 +5622,7 @@ function ChangeMapInfoZone (buffer) {
 
     this.dispatch = function (d){
         d.handleChangeMapInfoZone(this);
-    }
+    };
 }
 
 
@@ -5644,7 +5644,7 @@ function ChangeMapInfoStealNpc (buffer) {
 
     this.dispatch = function (d){
         d.handleChangeMapInfoStealNpc(this);
-    }
+    };
 }
 
 
@@ -5666,7 +5666,7 @@ function ChangeMapInfoNoOcultar (buffer) {
 
     this.dispatch = function (d){
         d.handleChangeMapInfoNoOcultar(this);
-    }
+    };
 }
 
 
@@ -5688,7 +5688,7 @@ function ChangeMapInfoNoInvocar (buffer) {
 
     this.dispatch = function (d){
         d.handleChangeMapInfoNoInvocar(this);
-    }
+    };
 }
 
 
@@ -5708,7 +5708,7 @@ function SaveChars (buffer) {
 
     this.dispatch = function (d){
         d.handleSaveChars(this);
-    }
+    };
 }
 
 
@@ -5728,7 +5728,7 @@ function CleanSOS (buffer) {
 
     this.dispatch = function (d){
         d.handleCleanSOS(this);
-    }
+    };
 }
 
 
@@ -5748,7 +5748,7 @@ function ShowServerForm (buffer) {
 
     this.dispatch = function (d){
         d.handleShowServerForm(this);
-    }
+    };
 }
 
 
@@ -5768,7 +5768,7 @@ function Night (buffer) {
 
     this.dispatch = function (d){
         d.handleNight(this);
-    }
+    };
 }
 
 
@@ -5788,7 +5788,7 @@ function KickAllChars (buffer) {
 
     this.dispatch = function (d){
         d.handleKickAllChars(this);
-    }
+    };
 }
 
 
@@ -5808,7 +5808,7 @@ function ReloadNPCs (buffer) {
 
     this.dispatch = function (d){
         d.handleReloadNPCs(this);
-    }
+    };
 }
 
 
@@ -5828,7 +5828,7 @@ function ReloadServerIni (buffer) {
 
     this.dispatch = function (d){
         d.handleReloadServerIni(this);
-    }
+    };
 }
 
 
@@ -5848,7 +5848,7 @@ function ReloadSpells (buffer) {
 
     this.dispatch = function (d){
         d.handleReloadSpells(this);
-    }
+    };
 }
 
 
@@ -5868,7 +5868,7 @@ function ReloadObjects (buffer) {
 
     this.dispatch = function (d){
         d.handleReloadObjects(this);
-    }
+    };
 }
 
 
@@ -5888,7 +5888,7 @@ function Restart (buffer) {
 
     this.dispatch = function (d){
         d.handleRestart(this);
-    }
+    };
 }
 
 
@@ -5908,7 +5908,7 @@ function ResetAutoUpdate (buffer) {
 
     this.dispatch = function (d){
         d.handleResetAutoUpdate(this);
-    }
+    };
 }
 
 
@@ -5934,7 +5934,7 @@ function ChatColor (buffer) {
 
     this.dispatch = function (d){
         d.handleChatColor(this);
-    }
+    };
 }
 
 
@@ -5954,7 +5954,7 @@ function Ignored (buffer) {
 
     this.dispatch = function (d){
         d.handleIgnored(this);
-    }
+    };
 }
 
 
@@ -5978,7 +5978,7 @@ function CheckSlot (buffer) {
 
     this.dispatch = function (d){
         d.handleCheckSlot(this);
-    }
+    };
 }
 
 
@@ -6004,7 +6004,7 @@ function SetIniVar (buffer) {
 
     this.dispatch = function (d){
         d.handleSetIniVar(this);
-    }
+    };
 }
 
 
@@ -6030,7 +6030,7 @@ function CreatePretorianClan (buffer) {
 
     this.dispatch = function (d){
         d.handleCreatePretorianClan(this);
-    }
+    };
 }
 
 
@@ -6052,7 +6052,7 @@ function RemovePretorianClan (buffer) {
 
     this.dispatch = function (d){
         d.handleRemovePretorianClan(this);
-    }
+    };
 }
 
 
@@ -6072,7 +6072,7 @@ function EnableDenounces (buffer) {
 
     this.dispatch = function (d){
         d.handleEnableDenounces(this);
-    }
+    };
 }
 
 
@@ -6092,7 +6092,7 @@ function ShowDenouncesList (buffer) {
 
     this.dispatch = function (d){
         d.handleShowDenouncesList(this);
-    }
+    };
 }
 
 
@@ -6114,7 +6114,7 @@ function MapMessage (buffer) {
 
     this.dispatch = function (d){
         d.handleMapMessage(this);
-    }
+    };
 }
 
 
@@ -6136,7 +6136,7 @@ function SetDialog (buffer) {
 
     this.dispatch = function (d){
         d.handleSetDialog(this);
-    }
+    };
 }
 
 
@@ -6156,7 +6156,7 @@ function Impersonate (buffer) {
 
     this.dispatch = function (d){
         d.handleImpersonate(this);
-    }
+    };
 }
 
 
@@ -6176,7 +6176,7 @@ function Imitate (buffer) {
 
     this.dispatch = function (d){
         d.handleImitate(this);
-    }
+    };
 }
 
 
@@ -6200,7 +6200,7 @@ function RecordAdd (buffer) {
 
     this.dispatch = function (d){
         d.handleRecordAdd(this);
-    }
+    };
 }
 
 
@@ -6222,7 +6222,7 @@ function RecordRemove (buffer) {
 
     this.dispatch = function (d){
         d.handleRecordRemove(this);
-    }
+    };
 }
 
 
@@ -6246,7 +6246,7 @@ function RecordAddObs (buffer) {
 
     this.dispatch = function (d){
         d.handleRecordAddObs(this);
-    }
+    };
 }
 
 
@@ -6266,7 +6266,7 @@ function RecordListRequest (buffer) {
 
     this.dispatch = function (d){
         d.handleRecordListRequest(this);
-    }
+    };
 }
 
 
@@ -6288,7 +6288,7 @@ function RecordDetailsRequest (buffer) {
 
     this.dispatch = function (d){
         d.handleRecordDetailsRequest(this);
-    }
+    };
 }
 
 
@@ -6312,7 +6312,7 @@ function AlterGuildName (buffer) {
 
     this.dispatch = function (d){
         d.handleAlterGuildName(this);
-    }
+    };
 }
 
 
@@ -6334,13 +6334,14 @@ function HigherAdminsMessage (buffer) {
 
     this.dispatch = function (d){
         d.handleHigherAdminsMessage(this);
-    }
+    };
 }
 
 
 function ServerPacketDecodeAndDispatch(buffer, handler) {
     if (buffer.length() < 1) return;
     var PacketID = buffer.ReadByte();
+
     switch (PacketID) {
 
         case 0:
@@ -6796,6 +6797,8 @@ function ServerPacketDecodeAndDispatch(buffer, handler) {
 
         case 42:
         {
+                
+
             handler.handlePauseToggle(  );
 
             break;

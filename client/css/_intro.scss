@@ -1,7 +1,37 @@
 #intro {
+  display: none;
   transition: 0.4s opacity linear;
 }
 
-.intro #container {
+#loadingBar {
+  outline: 2px green solid;
+  width:300px;
+  height:30px;
+  background: url('../imagenes/interfaz/barras/barra_mana.png');
+  background-size: 100% 100%;
+}
+
+#loadingBarUsada {
+  transition: width 0.5s;
+  background: url('../imagenes/interfaz/barras/barra_background.png');
+  background-size:100% 100%;
+}
+
+#loadingBarTexto {
+}
+
+.intro #intro {
+  display: block;
+}
+
+.intro #conectar {
+  display: none;
+}
+
+.intro #crearPJ {
+  display: none;
+}
+
+.intro #juego {
   display: none;
 }
