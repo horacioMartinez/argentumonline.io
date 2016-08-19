@@ -8132,7 +8132,7 @@ footer a {
   display: inline-block;
   width: 28px;
   height: 33px;
-  background-size: 100%;
+  background-size: 400%;
   margin-right: 4px;
   margin-left: 4px; }
 
@@ -8141,7 +8141,7 @@ footer a {
   display: inline-block;
   width: 34px;
   height: 40px;
-  background-size: 100%;
+  background-size: 400%;
   margin-right: 4px;
   margin-left: 4px; }
 
@@ -8150,7 +8150,7 @@ footer a {
   display: inline-block;
   width: 28px;
   height: 33px;
-  background-size: 100%;
+  background-size: 400%;
   margin-right: 4px;
   margin-left: 4px; }
 
@@ -8158,7 +8158,7 @@ footer a {
   display: inline-block;
   width: 50px;
   height: 90px;
-  background-size: 100%;
+  background-size: 600%;
   margin-top: 11px; }
 
 #crearPjImagenCabezaPersonaje {
@@ -8167,7 +8167,7 @@ footer a {
   right: 11px;
   width: 28px;
   height: 33px;
-  background-size: 100%; }
+  background-size: 400%; }
 
 #crearPjImagenCabezaPersonaje.petizo {
   margin-top: 19px; }

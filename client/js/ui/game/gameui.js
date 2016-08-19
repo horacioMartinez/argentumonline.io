@@ -167,7 +167,7 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
 
             updateSlotUser(numSlot, slot) { //todo: feo todo esto!
                 if (slot) {
-                    var numGrafico = this.game.assetManager.getNumGraficoFromGrh(slot.grh);
+                    var numGrafico = this.game.assetManager.getNumCssGraficoFromGrh(slot.grh);
                     this.interfaz.cambiarSlotInventario(numSlot, slot.cantidad, numGrafico, slot.equipado);
                     if (this.comerciar.visible) {
                         this.comerciar.cambiarSlotVenta(numSlot, slot.cantidad, numGrafico);
@@ -189,7 +189,7 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
 
             updateSlotShop(numSlot, slot) {
                 if (slot) {
-                    var numGrafico = this.game.assetManager.getNumGraficoFromGrh(slot.grh);
+                    var numGrafico = this.game.assetManager.getNumCssGraficoFromGrh(slot.grh);
                     this.comerciar.cambiarSlotCompra(numSlot, slot.cantidad, numGrafico);
                 }
                 else {
@@ -199,7 +199,7 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
 
             updateSlotBank(numSlot, slot) {
                 if (slot) {
-                    var numGrafico = this.game.assetManager.getNumGraficoFromGrh(slot.grh);
+                    var numGrafico = this.game.assetManager.getNumCssGraficoFromGrh(slot.grh);
                     this.boveda.cambiarSlotRetirar(numSlot, slot.cantidad, numGrafico);
                 } else {
                     this.boveda.borrarSlotRetirar(numSlot);

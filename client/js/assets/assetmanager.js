@@ -5,13 +5,13 @@ define(['json!../../indices/armas.json',
         'json!../../indices/escudos.json',
         'json!../../indices/fxs.json',
         'lib/pixi', 'assets/preloader', 'assets/audio'],
-    function ( jsonArmas, jsonCabezas, jsonCascos, jsonCuerpos, jsonEscudos, jsonFxs, PIXI, Preloader, Audio) {
+    function (jsonArmas, jsonCabezas, jsonCascos, jsonCuerpos, jsonEscudos, jsonFxs, PIXI, Preloader, Audio) {
 
         class AssetManager {
             constructor() {
                 this.audio = new Audio();
 
-                this.indices = null;
+                this.indices = null; // cargados por el preloader
                 this.armas = jsonArmas;
                 this.cabezas = jsonCabezas;
                 this.cascos = jsonCascos;
@@ -26,15 +26,15 @@ define(['json!../../indices/armas.json',
                 //PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.NEAREST;
             }
 
-            getNumGraficoFromGrh(grh) {
+            getNumCssGraficoFromGrh(grh) {
                 if (!this.indices[grh]) {
                     return null;
                 }
-                if (this.indices[grh].grafico) {
-                    return this.indices[grh].grafico;
+                if (this.indices[grh].css) {
+                    return this.indices[grh].css;
                 }
                 // animacion, devuelvo grafico del primer frame
-                return this.getNumGraficoFromGrh(this.indices[grh].frames[0]);
+                return this.getNumCssGraficoFromGrh(this.indices[grh].frames[0]);
             }
 
             getFaceGrafFromNum(numHead) {
@@ -42,7 +42,7 @@ define(['json!../../indices/armas.json',
                     return;
                 }
                 var grh = this.cabezas[numHead].down;
-                return this.getNumGraficoFromGrh(grh);
+                return this.getNumCssGraficoFromGrh(grh);
             }
 
             getBodyGrafFromNum(numCuerpo) {
@@ -50,7 +50,7 @@ define(['json!../../indices/armas.json',
                     return;
                 }
                 var grh = this.cuerpos[numCuerpo].down;
-                return this.getNumGraficoFromGrh(grh);
+                return this.getNumCssGraficoFromGrh(grh);
             }
 
             getGrh(grh) {
@@ -60,7 +60,7 @@ define(['json!../../indices/armas.json',
                 return this.grhs[grh];
             }
 
-            getTerrenoGrh(grh) { // TODO: si se implemente con rendertexture el mapa, sacar esto y usar getgrh, sirve para que el grid del terreno no se vea discontinuo
+            getTerrenoGrh(grh) {
                 if (!this.grhs[grh]) {
                     this.loadGrh(grh);
                 }
@@ -100,12 +100,17 @@ define(['json!../../indices/armas.json',
             }
 
             _loadGrhGrafico(grh) {
-                var numGrafico = this.indices[grh].grafico;
-                if (!this._baseTextures[numGrafico]) { // cargar basetexture
-                    this._baseTextures[numGrafico] = new PIXI.BaseTexture.fromImage("graficos/" + numGrafico + ".png");
+                var nombreGrafico = this.indices[grh].grafico;
+                if (!this._baseTextures[nombreGrafico]) { // cargar basetexture
+                    this._setBaseTexture(nombreGrafico,new PIXI.BaseTexture.fromImage("graficos/" + nombreGrafico + ".png"));
                 }
-                this.grhs[grh] = new PIXI.Texture(this._baseTextures[numGrafico], new PIXI.Rectangle(this.indices[grh].offX, this.indices[grh].offY, this.indices[grh].width, this.indices[grh].height));
+                this.grhs[grh] = new PIXI.Texture(this._baseTextures[nombreGrafico], new PIXI.Rectangle(this.indices[grh].offX, this.indices[grh].offY, this.indices[grh].width, this.indices[grh].height));
             }
+
+            _setBaseTexture(nombreGrafico, baseTexture) {
+                this._baseTextures[nombreGrafico] = baseTexture;
+            }
+
 
             getMapaASync(numMapa, completeCallback) {
                 if (!this.dataMapas[numMapa]) {
@@ -128,11 +133,7 @@ define(['json!../../indices/armas.json',
             }
 
             preload(terminar_callback) {
-                let cb = function(indices){
-                    this.indices = indices;
-                    terminar_callback();
-                }.bind(this);
-                this.preloader.preload(cb);
+                this.preloader.preload(terminar_callback);
             }
 
             getIndices() {

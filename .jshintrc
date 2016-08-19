@@ -4,5 +4,6 @@
 		"define": false,
 		"$": false,
 		"log":false
-	}
+	},
+	"-W027": false
 }

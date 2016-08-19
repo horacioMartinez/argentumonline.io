@@ -174,7 +174,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                 char.emit('nameChanged');
 
                 var sprite = new CharacterSprites();
-                sprite.setSombraSprite(this.assetManager.getGrh(24208));
+                sprite.setSombraSprite(this.assetManager.getGrh(23651));
 
                 this.layer3.addChild(sprite);
 
@@ -606,7 +606,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                     anguloBase = -anguloBase;
                 }
                 for (var i = 0; i < cantidadGotas; ++i) {
-                    var gota = new SpriteGrh(this.assetManager.getGrh(24209)); // TODO: usar directamente sprite
+                    var gota = new SpriteGrh(this.assetManager.getGrh(23652)); // TODO: usar directamente sprite
 
                     gota.x = Math.random() * this.pixiRenderer.width;
                     gota.y = Math.random() * this.pixiRenderer.height;

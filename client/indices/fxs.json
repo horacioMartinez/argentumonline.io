@@ -210,22 +210,7 @@
         "id": 35, 
         "animacion": 20503
     }, 
-    {
-        "offY": 0, 
-        "offX": 0, 
-        "id": 36, 
-        "animacion": 24120
-    }, 
-    {
-        "offY": 0, 
-        "offX": 0, 
-        "id": 37, 
-        "animacion": 24132
-    }, 
-    {
-        "offY": 0, 
-        "offX": 0, 
-        "id": 38, 
-        "animacion": 24142
-    }
+    0, 
+    0, 
+    0
 ]

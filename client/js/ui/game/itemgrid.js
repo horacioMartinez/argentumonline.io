@@ -71,7 +71,7 @@ define(['jquery-ui'], function () {
             }
 
             $item.text(cantidad + "");
-            var url = 'url(graficos/' + numGraf + '.png)';
+            var url = 'url(graficos/css/' + numGraf + '.png)';
             $item.css('background-image', url);
             if (equiped) {
                 $item.addClass("equiped");

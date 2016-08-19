@@ -36,7 +36,7 @@ define(["text!../../../menus/herreria.html!strip", 'ui/popups/popup'], function 
             for (var item of items) {
                 var $row = $('<tr></tr>');
 
-                var numGraf = this.game.assetManager.getNumGraficoFromGrh(item.GrhIndex);
+                var numGraf = this.game.assetManager.getNumCssGraficoFromGrh(item.GrhIndex);
                 var url = "url(graficos/" + numGraf + ".png)";
 
                 var $cell = $('<td></td>');

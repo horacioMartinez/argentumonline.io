@@ -49,7 +49,7 @@ define(["text!../../../menus/carpinteria.html!strip", 'ui/popups/popup'], functi
 
                 var $row = $('<tr></tr>');
 
-                var numGraf = this.game.assetManager.getNumGraficoFromGrh(item.GrhIndex);
+                var numGraf = this.game.assetManager.getNumCssGraficoFromGrh(item.GrhIndex);
                 var url = "url(graficos/" + numGraf + ".png)";
 
                 var $cell = $('<td></td>');

@@ -176,11 +176,11 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
             var numGrafCentro = this.assetManager.getFaceGrafFromNum(cabezaCentro);
             var numGrafDer = this.assetManager.getFaceGrafFromNum(cabezaDer);
 
-            var url = "url(graficos/" + numGrafIzq + ".png)";
+            var url = "url(graficos/css/" + numGrafIzq + ".png)";
             this.$imgCabezaIzq.css('background-image', url);
-            url = "url(graficos/" + numGrafDer + ".png)";
+            url = "url(graficos/css/" + numGrafDer + ".png)";
             this.$imgCabezaDer.css('background-image', url);
-            url = "url(graficos/" + numGrafCentro + ".png)";
+            url = "url(graficos/css/" + numGrafCentro + ".png)";
             this.$imgCabezaCentro.css('background-image', url);
             this.$imagenCabezaCuerpo.css('background-image', url);
         }
@@ -191,7 +191,7 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
 
             var numCuerpo = this._getCuerpoNum(genero, raza);
             var numGraf = this.assetManager.getBodyGrafFromNum(numCuerpo);
-            var url = "url(graficos/" + numGraf + ".png)";
+            var url = "url(graficos/css/" + numGraf + ".png)";
             this.$imagenCuerpo.css('background-image', url);
         }
 
@@ -247,7 +247,7 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
                         return {primera: GNOMO_H_PRIMER_CABEZA, ultima: GNOMO_H_ULTIMA_CABEZA};
                         break;
                     default:
-                        log.error("raza invalida")
+                        log.error("raza invalida");
                 }
             }
             if (genero === Enums.Genero.mujer) {
