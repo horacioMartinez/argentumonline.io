@@ -18,7 +18,7 @@ define(['lib/pixi', 'json!../../preload_config/preload_sounds.json','json!../../
             }
 
 
-            preload(terminar_callback) {
+            preload(terminar_callback, progress_callback) {
                 this._preloadSoundsAsync();
 
                 let self = this;
@@ -31,7 +31,7 @@ define(['lib/pixi', 'json!../../preload_config/preload_sounds.json','json!../../
                 }
 
                 loader.on('progress', function (loader, loadedResource) {
-                    console.log('Progress:', loader.progress + '%');
+                    progress_callback(loader.progress);
                 });
 
                 loader.load(function (loader, resources) {

@@ -21,12 +21,6 @@ define(['app', 'assets/assetmanager', 'ui/uimanager', 'storage/storage', 'lib/lo
     var initApp = function () {
         $(document).ready(function () {
 
-            /*$(function() {
-             $( "#progressbar" ).progressbar({
-             value: 37
-             });
-             });*/
-
             storage = new Storage();
             assetManager = new AssetManager();
             setupAudio(assetManager.audio, storage);
@@ -36,13 +30,16 @@ define(['app', 'assets/assetmanager', 'ui/uimanager', 'storage/storage', 'lib/lo
             uiManager.resizeUi();
             uiManager.initDOM();
 
-            assetManager.preload(function () {
-                // TODO: sacar timeout ... ?
-                setTimeout(function () {
-                    app.start();
-                }, 500);
-
-            });
+            assetManager.preload(
+                () => {
+                    // TODO: sacar timeout ... ?
+                    setTimeout(function () {
+                        app.start();
+                    }, 1200);
+                },
+                (porcentajeCargado) => {
+                    uiManager.introUI.updateLoadingBar(porcentajeCargado);
+                });
         });
     };
 

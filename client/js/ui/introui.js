@@ -6,16 +6,10 @@ define([], function () {
     class IntroUI {
         constructor(assetManager, showMensajeCb) {
             this.loadingBarUsada = $("#loadingBarUsada");
-            this.loadingBarTexto = $("#loadingBarTexto");
         }
 
-        updateLoadingBar(cant, max, noInvertida) {
-            let $barra =this.loadingBarUsada;
-            let $label = this.loadingBarTexto;
-            porcentaje = 100 - Math.floor((cant / max) * 100);
-
-            $barra.css("width", porcentaje + "%");
-            $label.text(porcentaje + "%");
+        updateLoadingBar(porcentajeCargado) {
+            this.loadingBarUsada.css("width", porcentajeCargado + "%");
         }
 
     }

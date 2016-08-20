@@ -1,23 +1,23 @@
 #intro {
   display: none;
-  transition: 0.4s opacity linear;
+  //transition: 0.4s opacity linear;
 }
 
 #loadingBar {
-  outline: 2px green solid;
-  width:300px;
-  height:30px;
-  background: url('../imagenes/interfaz/barras/barra_mana.png');
-  background-size: 100% 100%;
+  display:block;
+  width:600px;
+  height:37px;
+  background: url('../imagenes/barras/barra_cargando_vacia.png') no-repeat;
+  background-size:cover;
 }
 
 #loadingBarUsada {
-  transition: width 0.5s;
-  background: url('../imagenes/interfaz/barras/barra_background.png');
-  background-size:100% 100%;
-}
-
-#loadingBarTexto {
+  transition: width 1s;
+  background: url('../imagenes/barras/barra_cargando_llena.png') no-repeat;
+  background-size:cover;
+  width:0%;
+  height:100%;
+  float:left;
 }
 
 .intro #intro {

@@ -65,16 +65,19 @@ define(['json!../../indices/armas.json',
                     this.loadGrh(grh);
                 }
                 var res = this.grhs[grh];
-                if (!res.scaleModeSeteado) {
+
+                return res; // TODO!!!!!!!!!!!!!!!!!!!!!
+
+                if (!res.baseTexture.scaleModeSeteado) {
                     if (!res.frames) {
-                        res.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+                        res.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST; // TODO: esto le cambia el scaleMode a TODA la textura, los spritesheets pasan todos a nearest
                     }
                     else {
                         for (var i = 0; i < res.frames.length; i++) {
                             res.frames[i].baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
                         }
                     }
-                    res.scaleModeSeteado = true;
+                    res.baseTexture.scaleModeSeteado = true;
                 }
                 return res;
             }
@@ -132,8 +135,8 @@ define(['json!../../indices/armas.json',
                 }
             }
 
-            preload(terminar_callback) {
-                this.preloader.preload(terminar_callback);
+            preload(terminar_callback, progress_callback) {
+                this.preloader.preload(terminar_callback, progress_callback);
             }
 
             getIndices() {
