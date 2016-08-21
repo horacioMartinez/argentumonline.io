@@ -2,16 +2,17 @@
  * Created by horacio on 8/20/16.
  */
 
-define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'view/charactername',
-        'view/consola', 'view/charactertext', 'view/spritegrh', 'view/containerordenado', 'view/indicadormapa'],
-    function (Enums, Utils, Font, PIXI, Camera, CharacterSprites, CharacterName, Consola, CharacterText, SpriteGrh,
-              ContainerOrdenado, IndicadorMapa) {
+define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'view/charactername',
+        'view/charactertext', 'view/spritegrh'],
+    function (Enums, Utils, Font, PIXI, CharacterSprites, CharacterName, CharacterText, SpriteGrh) {
 
         class EntityRenderer {
-            constructor(escala, entityContainer, entityNamesContainer, entityChatContainer,camera, assetManager, /*TEMPORAL*/gameStage/*TEMPORAL*/) {
+            constructor(escala, entityContainer, entityNamesContainer, entityChatContainer, camera, assetManager, /*TEMPORAL*/gameStage/*TEMPORAL*/) {
 
-                /*TEMPORAL*/ this.gameStage = gameStage; /*TEMPORAL*/
-                
+                /*TEMPORAL*/
+                this.gameStage = gameStage;
+                /*TEMPORAL*/
+
                 this.escala = escala;
                 this.entityContainer = entityContainer;
                 this.entityNamesContainer = entityNamesContainer;
@@ -29,7 +30,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                 this.fxs = assetManager.getFxs();
             }
 
-            rescale(escala){ //TEMPORAL
+            rescale(escala) { //TEMPORAL
                 this.escala = escala;
             }
 
