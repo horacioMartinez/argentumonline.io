@@ -1,7 +1,8 @@
 define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/charactersprites', 'view/charactername',
-    'view/consola', 'view/charactertext', 'view/spritegrh', 'view/containerordenado','view/indicadormapa'],
+        'view/consola', 'view/charactertext', 'view/spritegrh', 'view/containerordenado', 'view/indicadormapa',
+        'view/entityrenderer', 'view/climarenderer'],
     function (Enums, Utils, Font, PIXI, Camera, CharacterSprites, CharacterName, Consola, CharacterText, SpriteGrh,
-              ContainerOrdenado, IndicadorMapa) {
+              ContainerOrdenado, IndicadorMapa, EntityRenderer, ClimaRenderer) {
 
         class Renderer {
             constructor(assetManager, escala) {
@@ -27,17 +28,22 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
 
                 this.rescale(escala);
 
-                //this.tablet = Detect.isTablet(window.innerWidth);
-
                 this._spritesLayer2 = [];
                 this._spritesLayer3 = [];
                 this._spritesLayer4 = [];
 
                 this._lowestRowTerreno = null;
                 this._lowestColTerreno = null;
+
+                this.entityRenderer = new EntityRenderer(this.escala, this.layer3, this.gameNames, this.gameChat, this.camera, this.assetManager, this.gameStage);
+                this.climaRenderer = new ClimaRenderer(this.escala, this.climaContainer, assetManager, this.pixiRenderer);
             }
 
             _inicializarPixi() {
+                PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.NEAREST;
+                PIXI.MIPMAP_TEXTURES = false;
+                //PIXI.GC_MODES.DEFAULT = PIXI.GC_MODES.AUTO; // todo: para mobile... algun dia..
+
                 this.pixiRenderer = new PIXI.autoDetectRenderer(this.camera.gridW * this.tilesize, this.camera.gridH * this.tilesize);
                 $(this.pixiRenderer.view).css('position', 'relative');
                 $(this.pixiRenderer.view).css('display', 'block');
@@ -48,6 +54,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
             _initStage() {
                 this.stage = new PIXI.Container();
                 this.gameStage = new PIXI.Container();
+                this.climaContainer = new PIXI.Container();
                 this.layer1 = new PIXI.Container();
                 this.layer2 = new PIXI.Container();
                 this.gameNames = new PIXI.Container();
@@ -58,6 +65,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                 this.consola = new Consola(this.escala);
                 this.indicadorMapa = new IndicadorMapa(this.escala);
                 this.stage.addChild(this.gameStage);
+                this.stage.addChild(this.climaContainer);
                 this.stage.addChild(this.consola);
                 this.stage.addChild(this.indicadorMapa);
                 this.gameStage.addChild(this.layer1);
@@ -101,200 +109,56 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                 }
             }
 
-            _getHeadingsGrhs(varIndice, num) {
-                if (!num) {
-                    return null;
-                }
-                if (!varIndice[num]) {
-                    return null;
-                }
-                if (!varIndice[num].down) {
-                    return null;
-                }
-                var res = [];
-                res[Enums.Heading.norte] = this.assetManager.getGrh(varIndice[num].up);
-                res[Enums.Heading.este] = this.assetManager.getGrh(varIndice[num].right);
-                res[Enums.Heading.sur] = this.assetManager.getGrh(varIndice[num].down);
-                res[Enums.Heading.oeste] = this.assetManager.getGrh(varIndice[num].left);
-                return res;
-            }
-
             agregarTextoConsola(texto, font) {
                 this.consola.agregarTexto(texto, font);
             }
 
-            actualizarIndicadorMapa(numMap,x,y){
-                this.indicadorMapa.actualizar(numMap,x,y);
+            actualizarIndicadorMapa(numMap, x, y) {
+                this.indicadorMapa.actualizar(numMap, x, y);
             }
 
             agregarItem(item, numGrh) {
-                if (!this.assetManager.getGrh(numGrh)) {
-                    log.error("grh de item invalido!");
-                    return;
-                }
-                item.sprite = new SpriteGrh(this.assetManager.getGrh(numGrh));
-                item.sprite.zOffset = -50; // para que item quede debajo de chars en misma cord Y ( para todo X)
-                this.layer3.addChild(item.sprite);
-                item.sprite.setPosition(item.x, item.y);
+                this.entityRenderer.agregarItem(item, numGrh);
             }
 
             sacarItem(item) {
-                if (!item.sprite) {
-                    return;
-                }
-                this.layer3.removeChild(item.sprite);
-                item.sprite = null;
+                this.entityRenderer.sacarItem(item);
             }
 
             agregarCharacter(char) {
-                var self = this;               
-
-                let f = function () {
-                    var char = this;
-                    var nombre = char.nombre;
-                    var clan = char.clan;
-                    var color = char.nickColor;
-                    if (char.spriteNombre) {
-                        self.gameNames.removeChild(char.spriteNombre);
-                        char.spriteNombre = null;
-                    }
-                    if (!nombre.trim()) {
-                        return;
-                    }
-                    var fontColor = color ? Font.NickColor[Font.NickColorIndex[color]] : Font.NickColor.CIUDADANO;
-                    var font = Font.NOMBRE;
-                    font.fill = fontColor;
-                    var nuevoNombre = new CharacterName(nombre, clan, font, self.escala);
-                    self.gameNames.addChild(nuevoNombre);
-                    char.spriteNombre = nuevoNombre;
-                };
-
-                char.on('nameChanged', f);
-
-                char.emit('nameChanged');
-
-                var sprite = new CharacterSprites();
-                sprite.setSombraSprite(this.assetManager.getGrh(23651));
-
-                this.layer3.addChild(sprite);
-
-                sprite.setSpeed(char.moveSpeed);
-
-                sprite.zOffset = -30; // para que quede debajo de los objetos del mapa en el mismo y
-                char.sprite = sprite;
-
-                char.texto = new CharacterText(this.escala);
-                this.gameChat.addChild(char.texto);
-
-                char.on('positionChanged', function () {
-                    var spriteX = this.x;
-                    var spriteY = this.y;
-                    if (this.sprite) {//sacar
-                        this.sprite.setPosition(spriteX, spriteY);
-                    }
-                    if (this.spriteNombre) {
-                        this.spriteNombre.setPosition(spriteX, spriteY);
-                    }
-                    if (this.texto) {
-                        this.texto.setPosition(spriteX, spriteY);
-                    }
-                });
-
-                char.emit('positionChanged');
-
-                char.on('headingChanged', function () {
-                    char.sprite.cambiarHeading(char.heading);
-                });
-
-                char.emit('headingChanged');
-
-                char.on('bodyChanged', function () {
-                    var Body = char.body;
-                    var bodys = self._getHeadingsGrhs(self.cuerpos, Body);
-                    var headOffX = 0;
-                    var headOffY = 0;
-                    if (self.cuerpos[Body]) {
-                        headOffX = self.cuerpos[Body].offHeadX;
-                        headOffY = self.cuerpos[Body].offHeadY;
-                    }
-                    char.sprite.setBodys(bodys, headOffX, headOffY);
-                });
-
-                char.emit('bodyChanged');
-
-                char.on('headChanged', function () {
-                    var Head = char.head;
-                    var heads = self._getHeadingsGrhs(self.cabezas, Head);
-                    char.sprite.setHeads(heads);
-                });
-
-                char.emit('headChanged');
-
-                char.on('weaponChanged', function () {
-                    var Weapon = char.weapon;
-                    var weapons = self._getHeadingsGrhs(self.armas, Weapon);
-                    char.sprite.setWeapons(weapons);
-                });
-
-                char.emit('weaponChanged');
-
-                char.on('shieldChanged', function () {
-                    var Shield = char.shield;
-                    var shields = self._getHeadingsGrhs(self.escudos, Shield);
-                    char.sprite.setShields(shields);
-                });
-
-                char.emit('shieldChanged');
-
-                char.on('helmetChanged', function () {
-                    var Helmet = char.helmet;
-                    var helmets = self._getHeadingsGrhs(self.cascos, Helmet);
-                    char.sprite.setHelmets(helmets);
-                });
-
-                char.emit('helmetChanged');
-
+                this.entityRenderer.agregarCharacter(char);
             }
 
             sacarCharacter(char) {
-                this.layer3.removeChild(char.sprite);
-                this.gameChat.removeChild(char.texto);
-                if (char.spriteNombre) {
-                    this.gameNames.removeChild(char.spriteNombre);
-                    char.spriteNombre.destroy();
-                    char.spriteNombre = null;
-                }
-                /* destroy necesario en textos y meshes
-                 http://www.html5gamedevs.com/topic/19815-correct-way-of-deleting-a-display-object/
-                 */
-                char.texto.destroy();
-                char.texto = null;
-                char.sprite = null;
+                this.entityRenderer.sacarCharacter(char);
             }
 
             setCharacterChat(char, chat, r, g, b) {
-                var color = "rgb(" + r + "," + g + "," + b + ")";
-                char.texto.setChat(chat, color);
+                this.entityRenderer.setCharacterChat(char, chat, r, g, b);
             }
 
-            removerChat(char){
-                char.texto.removerChat();
+            removerChat(char) {
+                this.entityRenderer.removerChat(char);
             }
 
             setCharVisible(char, visible) {
-                char.sprite.setVisible(visible);
-                if (char.spriteNombre) {
-                    char.spriteNombre.setVisible(visible);
-                }
+                this.entityRenderer.setCharVisible(char, visible);
             }
 
             agregarCharacterHoveringInfo(char, valor, font, duracion) {
-                char.texto.setHoveringInfo(valor, font, duracion);
+                this.entityRenderer.agregarCharacterHoveringInfo(char, valor, font, duracion);
             }
 
             setCharacterFX(char, FX, FXLoops) {
-                var grh = this.assetManager.getGrh(this.fxs[FX].animacion);
-                char.sprite.setFX(grh, this.fxs[FX].offX, this.fxs[FX].offY, FXLoops);
+                this.entityRenderer.setCharacterFX(char, FX, FXLoops);
+            }
+
+            entityVisiblePorCamara(entity, heightTileOffset) {
+                return this.entityRenderer.entityVisiblePorCamara(entity, heightTileOffset);
+            }
+
+            entityEnTileVisible(entity) { // puede que no este en un tile visible pero si sea visible la entidad (para eso usar el de arriba)
+                return this.entityRenderer.entityEnTileVisible(entity);
             }
 
             rescale(escala) {
@@ -318,9 +182,18 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                     name.setEscala(escala);
                 }
                 this.consola.setEscala(escala);
-                this.indicadorMapa.x = Math.floor((17*32-65)*escala);
-                this.indicadorMapa.y = Math.floor((13*32-12)*escala);
+                this.indicadorMapa.x = Math.floor((17 * 32 - 65) * escala);
+                this.indicadorMapa.y = Math.floor((13 * 32 - 12) * escala);
                 this.indicadorMapa.setEscala(escala);
+
+                /* TEMPORAL */
+                if (this.entityRenderer) {
+                    this.entityRenderer.rescale(escala);
+                }
+                if (this.climaRenderer){
+                    this.climaRenderer.escala = escala;
+                }
+                /* TEMPORAL */
             }
 
             clean(escala) {
@@ -358,28 +231,6 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                 this.gameStage.y = -Math.round(this.camera.y * this.escala);
             }
 
-            entityVisiblePorCamara(entity, heightTileOffset) {
-                if (!entity.sprite) {
-                    return false;
-                }
-
-                var entityRect = entity.sprite.getBounds().clone();
-                if (!entityRect.width) {
-                    entityRect.x = entity.x;
-                    entityRect.y = entity.y;
-                }
-                else {
-                    entityRect.width /= this.escala;
-                    entityRect.height = (entityRect.height / this.escala) + this.tilesize * heightTileOffset * 2;
-                    entityRect.x = (-this.gameStage.x + entityRect.x) / this.escala;
-                    entityRect.y = (-this.gameStage.y + entityRect.y) / this.escala - this.tilesize * heightTileOffset;
-                }
-                return this.camera.rectVisible(entityRect);
-            }
-
-            entityEnTileVisible(entity) { // puede que no este en un tile visible pero si sea visible la entidad (para eso usar el de arriba)
-                return this.camera.isVisiblePosition(entity.gridX, entity.gridY, 0, 0);
-            }
 
             moverPosition(x, y) {
                 this.camera.mover(x, y);
@@ -571,76 +422,12 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/camera', 'view/characte
                 this.drawMapaIni(gridX, gridY);
             }
 
-            toggleLluvia() {
-                if (this.containerLluvia) {
-                    this.removeLluvia();
-                } else {
-                    this.createLluvia();
-                }
-            }
-
             removeLluvia() {
-                if (!this.containerLluvia) {
-                    return;
-                }
-                PIXI.ticker.shared.remove(this._updateGotas, this);
-                this.stage.removeChild(this.containerLluvia);
-                this.gotas = null;
-                this.containerLluvia = null;
+                this.climaRenderer.removeLluvia();
             }
 
             createLluvia() {
-                if (this.containerLluvia) {
-                    return;
-                }
-                this.gotas = [];
-                this.containerLluvia = new PIXI.ParticleContainer();
-                var indice = this.stage.getChildIndex(this.gameStage) + 1;
-                this.stage.addChildAt(this.containerLluvia, indice);
-
-                var anguloBase = Math.random() * (Math.PI / 12) + Math.PI / 12;
-
-                var velocidad = 7 + Math.pow(anguloBase, 2) * 15;
-                var cantidadGotas = Math.floor((100 + anguloBase * 250) * this.escala);
-                if (Math.random() < 0.5) {
-                    anguloBase = -anguloBase;
-                }
-                for (var i = 0; i < cantidadGotas; ++i) {
-                    var gota = new SpriteGrh(this.assetManager.getGrh(23652)); // TODO: usar directamente sprite
-
-                    gota.x = Math.random() * this.pixiRenderer.width;
-                    gota.y = Math.random() * this.pixiRenderer.height;
-                    gota.rotation = anguloBase + Math.random() * Math.PI / 16;
-                    gota.velocidad = velocidad;
-
-                    gota.height = (4 + 6 * Math.random()) * this.escala;
-                    gota.alpha = 0.4;
-                    this.gotas.push(gota);
-                    this.containerLluvia.addChild(gota);
-                }
-                PIXI.ticker.shared.add(this._updateGotas, this);
-            }
-
-            _updateGotas(delta) {
-                // iterate through the sprites and update their position
-                for (var i = 0; i < this.gotas.length; i++) {
-                    var gota = this.gotas[i];
-                    gota.position.x -= Math.sin(gota.rotation) * (gota.velocidad) * delta;
-                    gota.position.y += Math.cos(gota.rotation) * (gota.velocidad) * delta;
-
-                    if (gota.position.x > this.pixiRenderer.width + 20) {
-                        gota.position.x = 0 - 20;
-                        gota.y = Math.random() * this.pixiRenderer.height;
-                    }
-                    else if (gota.position.x < 0 - 20) {
-                        gota.position.x = this.pixiRenderer.width + 20;
-                        gota.y = Math.random() * this.pixiRenderer.height;
-                    }
-                    if (gota.position.y > this.pixiRenderer.height) {
-                        gota.position.y = 0 - 20;
-                        gota.x = Math.random() * this.pixiRenderer.width;
-                    }
-                }
+                this.climaRenderer.createLluvia();
             }
 
             renderFrame() {
