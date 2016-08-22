@@ -7,25 +7,19 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
     class CharacterText extends PIXI.Container {
         constructor(escala) {
             super();
-            this.estiloChat = null;
-            this.estiloHovering = null;
+            this.estiloChat = $.extend({}, Font.TALK_BASE_FONT);
+            this.estiloHovering = $.extend({}, Font.HOVERING_BASE_FONT);
+
             this._chat = null;
-            this._escala = escala ? escala : 1;
+            this._escala = escala || 1;
             this.setEscala(escala);
             this.MAXIMO_LARGO_CHAT = 15;
         }
 
         setEscala(escala) {
-            var baseFont = Font.BASE_FONT;
-            var fuente = baseFont._weight + ' ' + Math.round(baseFont._size * escala) + 'px ' + baseFont.font;
-            var aux = {
-                font: fuente,
-                align: "center",
-                stroke: baseFont.stroke,
-                strokeThickness: baseFont.strokeThickness * escala
-            };
+            this.estiloChat.fontSize = Math.round(Font.TALK_BASE_FONT.fontSize * escala);
+            this.estiloHovering.fontSize = Math.round(Font.HOVERING_BASE_FONT.fontSize * escala);
 
-            this.estiloChat = $.extend({}, aux, Font.TALK);
             if (this._chat) {
                 this._chat.style = this.estiloChat;
                 this._chat.x = Math.round(this._chat.x * (escala / this._escala));
@@ -35,15 +29,6 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
             this.y = Math.round(this.y * (escala / this._escala));
 
             this._escala = escala;
-
-            baseFont = Font.HOVERING_BASE_FONT;
-            fuente = baseFont._weight + ' ' + Math.round(baseFont._size * escala) + 'px ' + baseFont.font;
-            this.estiloHovering = {
-                font: fuente,
-                align: "center",
-                stroke: baseFont.stroke,
-                strokeThickness: baseFont.strokeThickness * escala
-            };
         }
 
         setPosition(x, y) {
@@ -78,6 +63,7 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
             this.estiloChat.fill = color;
             this._chat = new PIXI.Text(chat.join('\n'), this.estiloChat);
             var self = this;
+
             this._chat.duracion = 1000;
             this._chat.tiempoPasado = 0;
             this._chat.updateChat = function (delta) {
@@ -132,8 +118,6 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
         }
 
         destroy() {
-            // hay que destruir los childs de este tambien
-            // TODO: emprolijar
             this.removerChat();
             this.children.forEach((hijo, num) => {
                 if (hijo.updateInfo) {

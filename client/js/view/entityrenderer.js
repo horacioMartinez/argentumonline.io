@@ -87,7 +87,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
                         return;
                     }
                     var fontColor = color ? Font.NickColor[Font.NickColorIndex[color]] : Font.NickColor.CIUDADANO;
-                    var font = Font.NOMBRE;
+                    var font = Font.NOMBRE_BASE_FONT;
                     font.fill = fontColor;
                     var nuevoNombre = new CharacterName(nombre, clan, font, self.escala);
                     self.entityNamesContainer.addChild(nuevoNombre);

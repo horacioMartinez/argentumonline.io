@@ -21,8 +21,8 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         _connect(conectarse_callback) {
-            this.ws.open("ws://ec2-54-94-134-88.sa-east-1.compute.amazonaws.com:8666");
-            //this.ws.open("ws://localhost:8666");
+            //this.ws.open("ws://ec2-54-94-134-88.sa-east-1.compute.amazonaws.com:8666");
+            this.ws.open("ws://localhost:8666");
             var self = this;
             this.ws.on('open', function () {
                 self.conectado = true;
@@ -35,8 +35,8 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
                         self.protocolo.ServerPacketDecodeAndDispatch(self.byteQueue, self);
                     }
                 } catch (e) {
-                    //alert(' Protocolo - ' + e.name + ': ' + e.message + " - " + e.stack); // TODO: DESCOMENTAR
-                    log.error(' Protocolo - ' + e.name + ': ' + e.message + " - " + e.stack);
+                    alert(' Reporte de error - ' + e.name + ': ' + e.message + " - " + e.stack); // TODO: DESCOMENTAR
+                    log.error(' Reporte de error - ' + e.name + ': ' + e.message + " - " + e.stack);
                 }
             });
             this.ws.on('close', function () {
@@ -537,7 +537,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleTradeOK() {
-            this.game.assetManager.audio.playSound(Enums.SONIDOS.comprar_vender);
+            //this.game.assetManager.audio.playSound(Enums.SONIDOS.comprar_vender);
             log.network("TODO: handleTradeOK ");
         }
 

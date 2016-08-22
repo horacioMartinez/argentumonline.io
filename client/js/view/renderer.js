@@ -17,14 +17,9 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
 
                 this.tilesize = 32;
                 this.camera = new Camera(this.tilesize);
+
                 this._inicializarPixi();
-
                 this.rescale(escala);
-
-
-                this.entityRenderer = new EntityRenderer(this.escala, this.layer3, this.gameNames, this.gameChat, this.camera, this.assetManager, this.gameStage);
-                this.climaRenderer = new ClimaRenderer(this.escala, this.climaContainer, assetManager, this.pixiRenderer);
-                this.mapaRenderer = new MapaRenderer(this.camera, this.assetManager, this.layer1, this.layer2, this.layer3, this.layer4);
             }
 
             _inicializarPixi() {
@@ -62,7 +57,10 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
                 this.gameStage.addChild(this.layer3);
                 this.gameStage.addChild(this.layer4);
                 this.gameStage.addChild(this.gameChat); // todo? gametext abajo o arriba de layer4?
-                // this.mapaRenderer._initTerrenoSpriteGrid();
+
+                this.entityRenderer = new EntityRenderer(this.escala, this.layer3, this.gameNames, this.gameChat, this.camera, this.assetManager, this.gameStage);
+                this.climaRenderer = new ClimaRenderer(this.escala, this.climaContainer, this.assetManager, this.pixiRenderer);
+                this.mapaRenderer = new MapaRenderer(this.camera, this.assetManager, this.layer1, this.layer2, this.layer3, this.layer4);
             }
 
 
@@ -139,7 +137,7 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
                     name.setEscala(escala);
                 }
                 this.consola.setEscala(escala);
-                this.indicadorMapa.x = Math.floor((17 * 32 - 65) * escala);
+                this.indicadorMapa.x = Math.floor((17 * 32 - 75) * escala);
                 this.indicadorMapa.y = Math.floor((13 * 32 - 12) * escala);
                 this.indicadorMapa.setEscala(escala);
 
@@ -157,7 +155,9 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
                 while (this.stage.children.length > 0) {
                     var child = this.stage.getChildAt(0);
                     this.stage.removeChild(child);
+                    child.destroy();
                 }
+
                 this._initStage();
                 this.rescale(escala);
             }

@@ -152,6 +152,8 @@ define(['enums'], function (Enums) {
         }
 
         isVisiblePosition(gridX, gridY, extraX, extraY) {
+            extraX = extraX || 0;
+            extraY = extraY || 0;
             if (gridY >= this.gridY && gridY < (this.gridY + this.gridH + extraY)
                 && gridX >= (this.gridX - extraX) && gridX < (this.gridX + this.gridW + extraX)) {
                 return true;

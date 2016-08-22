@@ -38,28 +38,38 @@ define(["utils/palette"], function (Palette) {
             20: "DIOS"
         },
 
-        BASE_FONT: {
-            font: 'Arial',
-            _weight: '600',
-            _size: '12',
+        RENDERER_BASE_FONT: {
+            fontFamily: 'Arial',
+            fontWeight: '600',
+            fontSize: '12',
             stroke: "black",
             strokeThickness: 0.2,
         },
 
         HOVERING_BASE_FONT: {
-            font: 'Arial',
-            _weight: '400',
-            _size: '14',
+            fontFamily: 'Arial',
+            fontWeight: '900',
+            fontSize: '14',
             stroke: "black",
             strokeThickness: 0.8,
         },
 
-        NOMBRE: {
-            font: '900 14px Arial',
+        NOMBRE_BASE_FONT: {
+            fontFamily: 'Arial',
+            fontWeight: '600',
+            fontSize: '12',
             stroke: "black",
-            strokeThickness: 0.2
+            strokeThickness: 0.2,
+            align: 'center'
         },
-        TALK: {
+
+        TALK_BASE_FONT: {
+            fontFamily: 'Arial',
+            fontWeight: '600',
+            fontSize: '12',
+            stroke: "black",
+            strokeThickness: 0.2,
+            align: 'center',
             fill: Palette.get('white')
         },
 
@@ -185,6 +195,15 @@ define(["utils/palette"], function (Palette) {
         CANVAS_EXP: {
             fill: "rgb(80, 80, 255)",
             stroke: "rgb(50, 50, 255)"
-        }
+        },
+
+        INDICADOR_MAPA: {
+            fill: Palette.get('yellow'),
+            fontFamily: 'Arial',
+            fontWeight: '600',
+            fontSize: '7',
+            stroke: "black",
+            strokeThickness: 0.2,
+        },
     };
 });

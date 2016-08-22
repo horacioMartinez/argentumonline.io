@@ -6,7 +6,8 @@ define(['font', 'lib/pixi', 'utils/palette'], function (Font, PIXI, Palette) {
 
     class IndicadorMapa extends PIXI.Text {
         constructor(escala) {
-            super(" ");
+            let style = $.extend({}, Font.INDICADOR_MAPA);
+            super(" ",style);
             this.setEscala(escala);
         }
 
@@ -15,17 +16,7 @@ define(['font', 'lib/pixi', 'utils/palette'], function (Font, PIXI, Palette) {
         }
 
         setEscala(escala){
-            /* copiado de consola */
-            var BASE_FONT = Font.BASE_FONT;
-            var fuente = BASE_FONT._weight + ' ' + Math.round(BASE_FONT._size * escala / 1.85) + 'px ' + BASE_FONT.font;
-            this.style = {
-                font: fuente,
-                align: "left",
-                fill: Palette.get('yellow'),
-                stroke: BASE_FONT.stroke,
-                strokeThickness: BASE_FONT.strokeThickness * escala
-            };
-            this.dirty = true;
+            this.style.fontSize = Math.round(Font.INDICADOR_MAPA.fontSize * escala);
         }
 
     }
