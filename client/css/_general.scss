@@ -29,24 +29,18 @@ body {
 
 /* States & Transitions */
 #container {
-  z-index: 10;
   background: rgba(0, 0, 0, 0);
   transition: 1s opacity linear 0.5s;
 }
 
 #container {
-  width: 100%;
-  height: 90%;
   position: absolute;
   top: 0;
-  bottom: 5%;
+  bottom: 4%;
   left: 0;
   right: 0;
   margin: auto;
 }
-
-
-/* el width de setea para que quede del ratio adecaudo en el programa de js */
 
 .login #container, .jugar #container, .crear #container {
   display: block;
@@ -76,36 +70,7 @@ body {
   display: flex;
   flex-direction: row;
 }
-/* Tamaño contenedor (width seteado en js) */
 
-@media screen and (min-aspect-ratio: 8/5){
-  #container {
-    height: 88% ;
-  }
-}
-@media screen and (min-aspect-ratio: 7/5) and (max-aspect-ratio: 8/5) {
-  #container {
-    height: 80% ;
-  }
-}
-
-@media screen and (min-aspect-ratio: 13/10) and (max-aspect-ratio: 7/5) {
-  #container {
-    height: 75%;
-  }
-}
-
-@media screen and (min-aspect-ratio: 6/5) and (max-aspect-ratio: 13/10) {
-  #container {
-    height: 70%;
-  }
-}
-
-@media screen and (max-aspect-ratio: 6/5) {
-  #container {
-    height: 65%;
-  }
-}
 
 /* Footer */
 
@@ -119,7 +84,7 @@ body {
 
 footer {
   position: absolute;
-  bottom: 3%;
+  bottom: 1%;
   left: 0;
   text-align: center;
   width: 100%;

@@ -98,22 +98,6 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
             sprite.play();
         });
     };
-    /*
-     CharacterSprites.prototype.setNombre = function (nombre, clan, font) {
-     if (this._nombre) {
-     this.removeChild(this._nombre);
-     this._nombre = null;
-     }
-     if (clan)
-     nombre = nombre + "\n" + clan;
-
-     if (nombre) {
-     this._nombre = new PIXI.Text(nombre, font);
-     this.addChild(this._nombre);
-     this._nombre.y = 32;
-     this._nombre.x = this.bodySprite.x + 32 / 2 - this._nombre.width / 2;
-     }
-     };*/
 
     CharacterSprites.prototype.cambiarHeading = function (heading) {
         if (this.heading === heading) {
@@ -269,7 +253,7 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
             this.headSprite.setPosition(this.headOffX, this.headOffY);
         }
         if (this.helmetSprite) {
-            this.helmetSprite.setPosition(this.headOffX, this.headOffY);
+            this.helmetSprite.setPosition(this.headOffX, this.headOffY + this.OFFSET_HEAD);
         }
 
     };

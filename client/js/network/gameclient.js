@@ -17,12 +17,12 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
             this.protocolo = new Protocolo();
             this.ws = new Websock();
             this.byteQueue = new ByteQueue(this.ws);
-
+            
         }
-
+        
         _connect(conectarse_callback) {
-            //this.ws.open("ws://ec2-54-94-134-88.sa-east-1.compute.amazonaws.com:8666");
-            this.ws.open("ws://localhost:8666");
+            this.ws.open("ws://ec2-54-94-134-88.sa-east-1.compute.amazonaws.com:8666");
+            //this.ws.open("ws://localhost:8666");
             var self = this;
             this.ws.on('open', function () {
                 self.conectado = true;

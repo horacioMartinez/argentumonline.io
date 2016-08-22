@@ -12,7 +12,7 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
         
         escala = escala || 1;
 
-        this.baseFont = $.extend({}, Font.RENDERER_BASE_FONT);
+        this.baseFont = $.extend({}, Font.CONSOLA_BASE_FONT);
         this.setEscala(escala);
         this._initUpdater();
 
@@ -23,7 +23,7 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
     Consola.constructor = Consola;
 
     Consola.prototype.setEscala = function (escala) {
-        this.baseFont.fontSize = Math.round(Font.RENDERER_BASE_FONT.fontSize * escala);
+        this.baseFont.fontSize = Math.round(Font.CONSOLA_BASE_FONT.fontSize * escala);
 
         for (var i = 0; i < this.children.length; i++) {
             $.extend(this.children[i].style, this.children[i].style, this.baseFont); // OJO ANDA ESTO??? TODO

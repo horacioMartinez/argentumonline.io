@@ -115,6 +115,7 @@ define(['lib/pixi'], function (PIXI) {
             this._grh = grh;
         }
         //<<temporal
+
         if (!grh) {
             this.gotoAndStop(0);
             return;
@@ -127,7 +128,9 @@ define(['lib/pixi'], function (PIXI) {
             aux.push(grh);
             this.textures = aux;
         }
-        this.gotoAndStop(0);
+        if (!this.playing) {
+            this.gotoAndStop(0);
+        }
         this._posicionarGrafico();
         if (grh.frames && this.loop) {
             this.play();

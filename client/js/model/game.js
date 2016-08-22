@@ -229,8 +229,8 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 }
 
                 var c = new Character(CharIndex, X, Y, Heading, nombre, clan, Body, Head, Weapon, Shield, Helmet, FX, FXLoops, NickColor);
-                this.setCharacterFX(CharIndex, FX, FXLoops);
                 this.world.addCharacter(c);
+                this.setCharacterFX(CharIndex, FX, FXLoops);
 
                 if ((!this.player) && ( this.username.toUpperCase() === nombre.toUpperCase())) { // mal esto, se deberia hacer comparando el charindex pero no se puede porque el server manda el char index del pj despues de crear los chars
                     this.player = c;

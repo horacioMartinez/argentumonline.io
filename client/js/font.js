@@ -38,20 +38,12 @@ define(["utils/palette"], function (Palette) {
             20: "DIOS"
         },
 
-        RENDERER_BASE_FONT: {
+        CONSOLA_BASE_FONT: {
             fontFamily: 'Arial',
             fontWeight: '600',
             fontSize: '12',
             stroke: "black",
             strokeThickness: 0.2,
-        },
-
-        HOVERING_BASE_FONT: {
-            fontFamily: 'Arial',
-            fontWeight: '900',
-            fontSize: '14',
-            stroke: "black",
-            strokeThickness: 0.8,
         },
 
         NOMBRE_BASE_FONT: {
@@ -71,6 +63,14 @@ define(["utils/palette"], function (Palette) {
             strokeThickness: 0.2,
             align: 'center',
             fill: Palette.get('white')
+        },
+        
+        HOVERING_BASE_FONT: {
+            fontFamily: 'Arial',
+            fontWeight: '900',
+            fontSize: '14',
+            stroke: "black",
+            strokeThickness: 0.8,
         },
 
         CLAN_CHAT: {

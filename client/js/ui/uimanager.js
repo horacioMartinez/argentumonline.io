@@ -117,7 +117,7 @@ define(['enums', 'ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mens
                 resizeCallback();
             }, 100));
 
-            $("button").click(function(event) {
+            $("button").click(function (event) {
                 self.playSonidoClick($(this));
             });
         }
@@ -125,12 +125,32 @@ define(['enums', 'ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mens
         getEscala() {
             // el height del container se setea por media querys y a partir de eso sale la escala de lo demas
             // escala = 1 <=> height = this.heightJuego
+
             return $('#container').height() / this.heightJuego;
         }
 
         resizeUi() {
-            var escala = this.getEscala();
-            $('#container').width(escala * (this.widthJuego + this.widthMenuJuego) + $('#menuJuego').css("border-left-width"));
+            let menuBorderWidth = parseInt($('#menuJuego').css("border-left-width")); // solo borde izq, los demas valen 0
+            let containerBorderWidth = parseInt($('#container').css("border-left-width")); // 4 bordes iguales pero hay que pasar alguno para el ancho
+            let gameWidth = this.widthMenuJuego + this.widthJuego + menuBorderWidth + containerBorderWidth * 2;
+            let gameHeight = this.heightJuego + containerBorderWidth * 2;
+
+            let gameRatio = gameWidth / gameHeight;
+
+            let windowWidth = parseInt($(window).width())- 10;
+            let windowHeight = parseInt($(window).height()) - 90; // footer
+            let windowRatio = windowWidth / windowHeight;
+
+            let escala;
+            if (gameRatio > windowRatio) { // limita el width
+                escala = windowWidth / gameWidth;
+            } else {
+                escala = windowHeight / gameHeight;
+            }
+
+            $('#container').width(Math.floor(escala * gameWidth));
+            $('#container').height(Math.floor(escala * gameHeight));
+
             $('#chatbox input').css("font-size", Math.floor(12 * escala) + 'px');
 
             if (this.gameUI) {
