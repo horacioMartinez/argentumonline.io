@@ -18,6 +18,10 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
                 this.tilesize = 32;
                 this.camera = new Camera(this.tilesize);
 
+                this.entityRenderer = null;
+                this.mapaRenderer = null;
+                this.climaRenderer = null;
+
                 this._inicializarPixi();
                 this.rescale(escala);
             }
@@ -63,6 +67,13 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
                 this.mapaRenderer = new MapaRenderer(this.camera, this.assetManager, this.layer1, this.layer2, this.layer3, this.layer4);
             }
 
+            update(delta){
+                //this.entityRenderer.update(delta);
+                this.climaRenderer.update(delta);
+                //this.mapaRenderer.update(delta);
+                this.consola.update(delta);
+            }
+
 
             agregarTextoConsola(texto, font) {
                 this.consola.agregarTexto(texto, font);
@@ -100,8 +111,8 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
                 this.entityRenderer.setCharVisible(char, visible);
             }
 
-            agregarCharacterHoveringInfo(char, valor, font, duracion) {
-                this.entityRenderer.agregarCharacterHoveringInfo(char, valor, font, duracion);
+            agregarCharacterHoveringInfo(char, valor, font) {
+                this.entityRenderer.agregarCharacterHoveringInfo(char, valor, font);
             }
 
             setCharacterFX(char, FX, FXLoops) {

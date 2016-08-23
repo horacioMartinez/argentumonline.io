@@ -7,14 +7,13 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
     function Consola(escala) {
         PIXI.Container.call(this);
         
-        this.DURACION_TEXTO = 700;
+        this.DURACION_TEXTO = 7000;
         this.CANT_LINEAS = 7;
         
         escala = escala || 1;
 
         this.baseFont = $.extend({}, Font.CONSOLA_BASE_FONT);
         this.setEscala(escala);
-        this._initUpdater();
 
         this._elapsedTime = 0;
     }
@@ -32,16 +31,7 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
         }
     };
 
-    Consola.prototype._initUpdater = function () {
-        PIXI.ticker.shared.add(this._update, this);
-    };
-
-    Consola.prototype.destroy = function() {
-        PIXI.ticker.shared.remove(this._update, this);
-        PIXI.Container.prototype.destroy.call(this);
-    };
-
-    Consola.prototype._update = function (delta) {
+    Consola.prototype.update = function (delta) {
         this._elapsedTime += delta;
 
         //solo checkeo primer item porque fue el primero en aparecer
@@ -58,9 +48,14 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
     Consola.prototype._removerTexto = function (spriteTexto) {
         for (var i = 0; i < this.children.length; i++) {
             this.children[i].y -= spriteTexto.height;
+            // aumento el tiempo restante de los que tienen poco asi no se van todos de una
+            let tiempoRestante = this.children[i].tiempoInicial + this.DURACION_TEXTO - this._elapsedTime;
+            if (tiempoRestante < this.DURACION_TEXTO/5 ){
+                this.children[i].tiempoInicial += this.DURACION_TEXTO/5;
+            }
         }
         this.removeChild(spriteTexto);
-        spriteTexto.destroy();
+        spriteTexto.destroy(true);
     };
 
     Consola.prototype.agregarTexto = function (texto, font) {

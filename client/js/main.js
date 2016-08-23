@@ -27,7 +27,6 @@ define(['app', 'assets/assetmanager', 'ui/uimanager', 'storage/storage', 'lib/lo
 
             uiManager = new UIManager(assetManager);
             app = new App(assetManager, uiManager, storage);
-            uiManager.resizeUi();
             uiManager.initDOM();
 
             assetManager.preload(

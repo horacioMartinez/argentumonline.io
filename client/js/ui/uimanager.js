@@ -18,6 +18,9 @@ define(['enums', 'ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mens
             this.widthMenuJuego = 154;
             this.widthJuego = 17 * 32;
             this.heightJuego = 13 * 32;
+
+            this.escala = null;
+            this.resizeUi();
         }
 
         _createPlaySonidoCallback() {
@@ -122,13 +125,6 @@ define(['enums', 'ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mens
             });
         }
 
-        getEscala() {
-            // el height del container se setea por media querys y a partir de eso sale la escala de lo demas
-            // escala = 1 <=> height = this.heightJuego
-
-            return $('#container').height() / this.heightJuego;
-        }
-
         resizeUi() {
             let menuBorderWidth = parseInt($('#menuJuego').css("border-left-width")); // solo borde izq, los demas valen 0
             let containerBorderWidth = parseInt($('#container').css("border-left-width")); // 4 bordes iguales pero hay que pasar alguno para el ancho
@@ -141,20 +137,19 @@ define(['enums', 'ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mens
             let windowHeight = parseInt($(window).height()) - 90; // footer
             let windowRatio = windowWidth / windowHeight;
 
-            let escala;
             if (gameRatio > windowRatio) { // limita el width
-                escala = windowWidth / gameWidth;
+                this.escala = windowWidth / gameWidth;
             } else {
-                escala = windowHeight / gameHeight;
+                this.escala = windowHeight / gameHeight;
             }
+            
+            $('#container').width(Math.floor(this.escala * gameWidth));
+            $('#container').height(Math.floor(this.escala * gameHeight));
 
-            $('#container').width(Math.floor(escala * gameWidth));
-            $('#container').height(Math.floor(escala * gameHeight));
-
-            $('#chatbox input').css("font-size", Math.floor(12 * escala) + 'px');
+            $('#chatbox input').css("font-size", Math.floor(12 * this.escala) + 'px');
 
             if (this.gameUI) {
-                this.gameUI.resize(escala);
+                this.gameUI.resize(this.escala);
             }
         }
 

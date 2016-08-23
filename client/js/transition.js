@@ -30,8 +30,7 @@ define(function () {
                     if (this.stopFunction) {
                         this.stopFunction();
                     }
-                }
-                else if (this.updateFunction) {
+                } else if (this.updateFunction) {
                     this.updateFunction(i);
                 }
             }

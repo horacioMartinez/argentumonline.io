@@ -57,6 +57,15 @@ define(['enums', 'font', 'lib/pixi'], function (Enums, Font, PIXI) {
             this.trabajando = false;
         }
 
+        // update(delta){
+        //     if (this.trabajando){
+        //         this._updateTrabajar();
+        //     }
+        //     if (this.lanzandoHechizo){
+        //         this._updateHechizos();
+        //     }
+        // }
+
         _updateTrabajar() { // TODO: que no checkee cada vez ? funcion on timer...
             if (!this.intervalos.requestMacroTrabajo()) {
                 return;

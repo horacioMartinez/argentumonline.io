@@ -192,14 +192,17 @@ define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh'],
                 this.camera.forEachVisibleLastLinea(dir, function (i, j) {
                     if (self._spritesLayer2[i][j]) {
                         self.layer2.removeChild(self._spritesLayer2[i][j]);
+                        self._spritesLayer2[i][j].destroy();
                         self._spritesLayer2[i][j] = null;
                     }
                     if (self._spritesLayer3[i][j]) {
                         self.layer3.removeChild(self._spritesLayer3[i][j]);
+                        self._spritesLayer3[i][j].destroy();
                         self._spritesLayer3[i][j] = null;
                     }
                     if (self._spritesLayer4[i][j]) {
                         self.layer4.removeChild(self._spritesLayer4[i][j]);
+                        self._spritesLayer4[i][j].destroy();
                         self._spritesLayer4[i][j] = null;
                     }
                 }, this.POSICIONES_EXTRA_RENDER_X, this.POSICIONES_EXTRA_RENDER_Y);
@@ -210,6 +213,7 @@ define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh'],
                     _.each(fila, function (hijo) {
                         if (hijo) {
                             padre.removeChild(hijo);
+                            hijo.destroy();
                         }
                     });
                 });

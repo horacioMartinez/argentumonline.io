@@ -1,4 +1,4 @@
-define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Transition, PIXI, Enums) {
+define(['model/entity', 'transition', 'lib/pixi', 'enums', 'model/charactermovement'], function (Entity, Transition, PIXI, Enums, CharacterMovement) {
 
     class Character extends Entity {
         constructor(CharIndex, gridX, gridY, Heading, Name, clan, Body, Head, Weapon, Shield, Helmet, FX, FXLoops, NickColor) {
@@ -11,18 +11,18 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
                 this.moveSpeed = 200;
             }// bicho (duracion de movimiento en ms, animaciones de mov se setean automaticamnete a esta vel (abajo) )
             else {
-                this.moveSpeed = 230;
+                this.moveSpeed = 210;
             } // PJ TODO: setear bien estos valores, fijarse que en lo posible no haya resetmovements (esto pasa si la animacion es mas lenta que el llamado a cambiar de pos)
 
             this.id = CharIndex;
 
             this._heading = Heading;
 
-            this.movementTransition = new Transition();
             this.sprite = null;
             this.spriteNombre = null;
             this.texto = null;
 
+            this.movement = new CharacterMovement(this);
             this._nombre = Name;
             this._clan = clan;
             this._body = Body;
@@ -35,165 +35,53 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums'], function (Entity, Tr
             this._nickColor = NickColor;
         }
 
+        update(delta){
+            this.movement.update(delta);
+
+            //todo: todos los de abajo en una sola clase
+            //this.sprite.update(delta);
+            //if (this.spriteNombre){
+            //    this.spriteNombre.update(delta);
+            //}
+            if (this.texto){
+                this.texto.update(delta);
+            }
+        }
 
         mover(dir, movimientoCallback, finMovimientoCallback) {
-            switch (dir) {  // Se setea la pos del grid nomas porque la (x,y) la usa para la animacion el character ( y la va actualizando)
-                case  Enums.Heading.oeste:
-                    this.setGridPositionOnly(this.gridX - 1, this.gridY);
-                    break;
-                case  Enums.Heading.este:
-                    this.setGridPositionOnly(this.gridX + 1, this.gridY);
-                    break;
-                case  Enums.Heading.norte:
-                    this.setGridPositionOnly(this.gridX, this.gridY - 1);
-                    break;
-                case  Enums.Heading.sur:
-                    this.setGridPositionOnly(this.gridX, this.gridY + 1);
-                    break;
-                default:
-                    log.error(" Direccion de movimiento invalida!");
-            }
-            
-            this.resetMovement();
-            this.heading = dir;
-            this._crearMovimiento(movimientoCallback, finMovimientoCallback);
-        }
-
-        _crearMovimiento(callback_mov, finMovimientoCallback) {
             this._animarMovimiento();
-
-            var self = this;
-            var distPrimerFrame = 0; //32 / (this.moveSpeed / (1000 / 60));
-
-            if (self.heading === Enums.Heading.oeste) {
-
-                self.movementTransition.start(
-                    function (x) {
-                        self.setPosition(x, self.y);
-                        if (callback_mov) {
-                            callback_mov(self.x, self.y);
-                        }
-                    },
-                    function () {
-                        self.setPosition(self.movementTransition.endValue, self.y);
-                        if (callback_mov) {
-                            callback_mov(self.x, self.y);
-                        }
-                        self._hasMoved();
-
-                        if (finMovimientoCallback) {
-                            finMovimientoCallback();
-                        }
-                    },
-                    self.x - distPrimerFrame,
-                    self.x - 32,
-                    self.moveSpeed);
-            }
-            else if (self.heading === Enums.Heading.este) {
-                self.movementTransition.start(
-                    function (x) {
-                        self.setPosition(x, self.y);
-                        if (callback_mov) {
-                            callback_mov(self.x, self.y);
-                        }
-                    },
-                    function () {
-                        self.setPosition(self.movementTransition.endValue, self.y);
-                        if (callback_mov) {
-                            callback_mov(self.x, self.y);
-                        }
-                        self._hasMoved();
-                        if (finMovimientoCallback) {
-                            finMovimientoCallback();
-                        }
-                    },
-                    self.x + distPrimerFrame,
-                    self.x + 32,
-                    self.moveSpeed);
-            }
-            else if (self.heading === Enums.Heading.norte) {
-                self.movementTransition.start(
-                    function (y) {
-                        self.setPosition(self.x, y);
-                        if (callback_mov) {
-                            callback_mov(self.x, self.y);
-                        }
-                    },
-                    function () {
-                        self.setPosition(self.x, self.movementTransition.endValue);
-                        if (callback_mov) {
-                            callback_mov(self.x, self.y);
-                        }
-                        self._hasMoved();
-                        if (finMovimientoCallback) {
-                            finMovimientoCallback();
-                        }
-                    },
-                    self.y - distPrimerFrame,
-                    self.y - 32,
-                    self.moveSpeed);
-            }
-            else if (self.heading === Enums.Heading.sur) {
-                self.movementTransition.start(
-                    function (y) {
-                        self.setPosition(self.x, y);
-                        if (callback_mov) {
-                            callback_mov(self.x, self.y);
-                        }
-                    },
-                    function () {
-                        self.setPosition(self.x, self.movementTransition.endValue);
-                        if (callback_mov) {
-                            callback_mov(self.x, self.y);
-                        }
-                        self._hasMoved();
-                        if (finMovimientoCallback) {
-                            finMovimientoCallback();
-                        }
-                    },
-                    self.y + distPrimerFrame,
-                    self.y + 32,
-                    self.moveSpeed);
-            }
-
-            PIXI.ticker.shared.add(this._updateMovement, this);
+            let finCb = () => {
+                this._finAnimarMovimiento();
+                if (finMovimientoCallback) {
+                    finMovimientoCallback();
+                }
+            };
+            return this.movement.mover(dir, movimientoCallback, finCb);
         }
-
 
         estaMoviendose(){
-            return this.movementTransition.inProgress;
-        }
-
-        // TODO (MUY IMPORTANTE) reveer esto de movimientos,  usar aceleracion ? mov del player en 1 solo event
-
-        _updateMovement(delta) {
-            if (this.estaMoviendose()) {
-                this.movementTransition.step(delta * (1 / 60) * 1000);
-            }
-        }
-
-        _hasMoved() { // se ejecuta al finalizar de caminar
-            PIXI.ticker.shared.remove(this._updateMovement, this);
+            return this.movement.estaMoviendose();
         }
 
         resetMovement() {
-            if (this.estaMoviendose()) {
-                log.error("reset movement!!!");
-                this.movementTransition.stop();
-                if (this.movementTransition.stopFunction) {
-                    this.movementTransition.stopFunction();
-                }
-            }
+            return this.movement.resetMovement();
         }
 
         _animarMovimiento() {
             if (this.sprite) {
+                this.sprite.loop(true);
                 this.sprite.play();
             }
         }
 
+        _finAnimarMovimiento() {
+            if (this.sprite) {
+                this.sprite.loop(false);
+            }
+        }
+
         get muerto(){
-            return !((this._head !== Enums.Muerto.cabezaCasper) && (this._body !== Enums.Muerto.cuerpoFragataFantasmal));
+            return (this.head === Enums.Muerto.cabezaCasper) || (this.body === Enums.Muerto.cuerpoFragataFantasmal);
         }
 
         get heading(){

@@ -19,7 +19,6 @@ define(['enums', 'lib/pixi','view/spritegrh'], function (Enums, PIXI, SpriteGrh)
             if (!this.containerLluvia) {
                 return;
             }
-            PIXI.ticker.shared.remove(this._updateGotas, this);
             this.parentContainer.removeChild(this.containerLluvia);
             this.gotas = null;
             this.containerLluvia = null;
@@ -35,7 +34,7 @@ define(['enums', 'lib/pixi','view/spritegrh'], function (Enums, PIXI, SpriteGrh)
 
             var anguloBase = Math.random() * (Math.PI / 12) + Math.PI / 12;
 
-            var velocidad = 7 + Math.pow(anguloBase, 2) * 15;
+            var velocidad = 0.5 + Math.pow(anguloBase, 2) * 1.2;
             var cantidadGotas = Math.floor((100 + anguloBase * 250) * this.escala);
             if (Math.random() < 0.5) {
                 anguloBase = -anguloBase;
@@ -53,9 +52,13 @@ define(['enums', 'lib/pixi','view/spritegrh'], function (Enums, PIXI, SpriteGrh)
                 this.gotas.push(gota);
                 this.containerLluvia.addChild(gota);
             }
-            PIXI.ticker.shared.add(this._updateGotas, this);
         }
 
+        update(delta){
+            if (this.containerLluvia) {
+                this._updateGotas(delta);
+            }
+        }
         _updateGotas(delta) {
             for (var i = 0; i < this.gotas.length; i++) {
                 var gota = this.gotas[i];

@@ -5,16 +5,25 @@ define([], function () {
             this.game = game;
         }
 
-        update() {
+        update(delta) {
             if (this.game.logeado) {
                 if (this.game.player) {
                     this.updateComenzarMovimientoPlayer();
                 }
+                this.updateCharacters(delta);
+                this.game.renderer.update(delta);
+                //this.game.macros.update(delta);
             }
         }
 
-        updateComenzarMovimientoPlayer() { // todo: hacerlo dentro de player y sacar por completo esta clase
+        updateComenzarMovimientoPlayer() {
             this.game.playerMovement.tratarDeMover();
+        }
+
+        updateCharacters(delta) {
+            this.game.world.forEachCharacter((character) => {
+                character.update(delta);
+            });
         }
 
     }

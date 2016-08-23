@@ -10,10 +10,13 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
             this.estiloChat = $.extend({}, Font.TALK_BASE_FONT);
             this.estiloHovering = $.extend({}, Font.HOVERING_BASE_FONT);
 
+            this.infos = [];
             this._chat = null;
             this._escala = escala || 1;
             this.setEscala(escala);
-            this.MAXIMO_LARGO_CHAT = 15;
+            this.MAXIMO_LARGO_LINEA_CHAT = 15;
+            this.DURACION_CHAT = 5000;
+            this.DURACION_INFO = 2000;
         }
 
         setEscala(escala) {
@@ -39,10 +42,10 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
         _formatearChat(str) {
             var resultado = [];
             str = str.trim();
-            while ((str.length > this.MAXIMO_LARGO_CHAT) && (str.indexOf(' ') > (-1))) {
+            while ((str.length > this.MAXIMO_LARGO_LINEA_CHAT) && (str.indexOf(' ') > (-1))) {
                 var idx = str.indexOf(' ');
                 var posUltimoEspacioPrimerBloque = idx;
-                while ((idx != -1) && (idx < this.MAXIMO_LARGO_CHAT - 1 )) {
+                while ((idx != -1) && (idx < this.MAXIMO_LARGO_LINEA_CHAT - 1 )) {
                     idx = str.indexOf(' ', idx + 1);
                     if (idx > 0) {
                         posUltimoEspacioPrimerBloque = idx;
@@ -62,17 +65,8 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
             chat = this._formatearChat(chat);
             this.estiloChat.fill = color;
             this._chat = new PIXI.Text(chat.join('\n'), this.estiloChat);
-            var self = this;
 
-            this._chat.duracion = 1000;
             this._chat.tiempoPasado = 0;
-            this._chat.updateChat = function (delta) {
-                this.tiempoPasado += delta;
-                if (this.tiempoPasado > this.duracion) {
-                    self.removerChat();
-                }
-            }.bind(this._chat);
-            PIXI.ticker.shared.add(this._chat.updateChat, this._chat);
 
             this.addChild(this._chat);
             this._chat.x = Math.round(32 * this._escala / 2 - this._chat.width / 2);
@@ -81,50 +75,69 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
 
         removerChat() {
             if (this._chat) {
-                PIXI.ticker.shared.remove(this._chat.updateChat, this._chat);
                 this.removeChild(this._chat);
-                this._chat.destroy();
+                this._chat.destroy(true);
             }
             this._chat = null;
         }
 
         //TODO: ordenar codigo repetido y animacion bien hecha (ademas en el chat animarlo cuando aparece, como que suba un poco)
-        setHoveringInfo(value, font, duration) {
-
-            duration = duration ? duration : 125;
-
+        addHoveringInfo(value, font) {
             var estilo = $.extend({}, this.estiloHovering, font);
             var info = new PIXI.Text(value, estilo);
 
-            info.duracion = duration;
             info.tiempoPasado = 0;
-            var self = this;
-            info.updateInfo = function (delta) {
-                this.tiempoPasado += delta;
-                this.y -= delta / 5;
-                var alpha = ((this.duracion - this.tiempoPasado) / this.duracion );
-                if (alpha >= 0) {
-                    this.alpha = alpha;
-                }
-                if (this.tiempoPasado > this.duracion) {
-                    PIXI.ticker.shared.remove(this.updateInfo, this);
-                    self.removeChild(this);
-                }
-            }.bind(info);
-            PIXI.ticker.shared.add(info.updateInfo, info);
             this.addChild(info);
+            this.infos.push(info);
+            
             info.y = -16 * this._escala - info.height;
             info.x = 32 * this._escala / 2 - info.width / 2;
         }
 
+        _removerInfo(info) {
+            let index = this.infos.indexOf(info);
+            if (index > -1) {
+                this.infos.splice(index, 1);
+                this.removeChild(info);
+                info.destroy(true);
+            }
+        }
+
+        update(delta) {
+            this._updateChat(delta);
+            this._updateInfos(delta);
+        }
+
+        _updateChat(delta) {
+            if (!this._chat)
+                return;
+            this._chat.tiempoPasado += delta;
+            if (this._chat.tiempoPasado > this.DURACION_CHAT) {
+                this.removerChat();
+            }
+        }
+
+        _updateInfos(delta) {
+            let i;
+            for (i = this.infos.length - 1; i >= 0; i--) {
+                let info = this.infos[i];
+                info.tiempoPasado += delta;
+                info.y -= delta / 50;
+                var alpha = ((this.DURACION_INFO - info.tiempoPasado) / this.DURACION_INFO );
+                if (alpha >= 0) {
+                    info.alpha = alpha;
+                }
+                if (info.tiempoPasado > this.DURACION_INFO) {
+                    this._removerInfo(info);
+                }
+            }
+        }
+
         destroy() {
             this.removerChat();
-            this.children.forEach((hijo, num) => {
-                if (hijo.updateInfo) {
-                    PIXI.ticker.shared.remove(hijo.updateInfo, hijo);
-                }
-                hijo.destroy();
-            });
+            for (let i = this.infos.length - 1; i >= 0; i--) {
+                this._removerInfo(this.infos[i]);
+            }
             super.destroy();
         }
     }

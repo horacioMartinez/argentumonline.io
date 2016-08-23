@@ -1,6 +1,7 @@
 define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atributos', 'model/inventario', 'model/skills',
-        'model/playerstate', 'model/playermovement', 'enums', 'model/world', 'model/gametext'],
-    function (Mapa, Updater, Item, Character, Atributos, Inventario, Skills, PlayerState, PlayerMovement, Enums, World, GameText) {
+        'model/playerstate', 'model/playermovement', 'enums', 'model/world', 'model/gametext', 'lib/pixi'],
+    function (Mapa, Updater, Item, Character, Atributos, Inventario, Skills, PlayerState, PlayerMovement, Enums, World,
+              GameText, PIXI) {
         class Game {
             constructor(assetManager) {
                 this.init(assetManager);
@@ -473,7 +474,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                             y++;
                             break;
                         default:
-                            log.error("Direccion invalida!");
+                            throw new Error("Direccion invalida!");
                     }
 
                     if (this.map.isBlocked(x, y)) {
@@ -557,18 +558,15 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
             }
 
             tick() {
-                this.currentTime = Date.now();
-                if (this.started) {
-
-                    this.renderer.renderFrame();
-                    if (!this.isPaused) {
-                        this.updater.update();
+                PIXI.ticker.shared.add((delta) => {
+                    if (this.started && !this.isStopped) {
+                        this.renderer.renderFrame();
+                        if (!this.isPaused) {
+                            let deltaMS = delta * (1 / 60) * 1000;
+                            this.updater.update(deltaMS );
+                        }
                     }
-                }
-
-                if (!this.isStopped) {
-                    requestAnimFrame(this.tick.bind(this));
-                }
+                });
             }
 
             start() {

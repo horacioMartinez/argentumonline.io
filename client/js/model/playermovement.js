@@ -62,7 +62,7 @@ define([], function () {
         }
 
         _tratarDeCaminar() {
-
+            this.game.player.moveSpeed = 230; // TODO
             if (!this.getDirMov() || !this.enabled) {
                 return false;
             }

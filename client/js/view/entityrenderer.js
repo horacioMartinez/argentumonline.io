@@ -68,6 +68,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
                     return;
                 }
                 this.entityContainer.removeChild(item.sprite);
+                item.sprite.destroy();
                 item.sprite = null;
             }
 
@@ -81,6 +82,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
                     var color = char.nickColor;
                     if (char.spriteNombre) {
                         self.entityNamesContainer.removeChild(char.spriteNombre);
+                        char.spriteNombre.destroy();
                         char.spriteNombre = null;
                     }
                     if (!nombre.trim()) {
@@ -103,7 +105,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
 
                 this.entityContainer.addChild(sprite);
 
-                sprite.setSpeed(char.moveSpeed);
+                sprite.setSpeed(char.moveSpeed); // ANIMACIONES char se setean a misma velocidad que su movimiento !!
 
                 sprite.zOffset = -30; // para que quede debajo de los objetos del mapa en el mismo y
                 char.sprite = sprite;
@@ -186,15 +188,13 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
                 this.entityChatContainer.removeChild(char.texto);
                 if (char.spriteNombre) {
                     this.entityNamesContainer.removeChild(char.spriteNombre);
-                    char.spriteNombre.destroy();
+                    char.spriteNombre.destroy(true);
                     char.spriteNombre = null;
                 }
-                /* destroy necesario en textos y meshes
-                 http://www.html5gamedevs.com/topic/19815-correct-way-of-deleting-a-display-object/
-                 */
-                char.texto.destroy();
-                char.texto = null;
+                char.sprite.destroy();
                 char.sprite = null;
+                char.texto.destroy(true);
+                char.texto = null;
             }
 
             setCharacterChat(char, chat, r, g, b) {
@@ -213,8 +213,8 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
                 }
             }
 
-            agregarCharacterHoveringInfo(char, valor, font, duracion) {
-                char.texto.setHoveringInfo(valor, font, duracion);
+            agregarCharacterHoveringInfo(char, valor, font) {
+                char.texto.addHoveringInfo(valor, font);
             }
 
             setCharacterFX(char, FX, FXLoops) {
@@ -222,7 +222,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
                 char.sprite.setFX(grh, this.fxs[FX].offX, this.fxs[FX].offY, FXLoops);
             }
 
-            entityVisiblePorCamara(entity, heightTileOffset) {
+            entityVisiblePorCamara(entity, heightTileOffset) { // TODO: arreglar
                 if (!entity.sprite) {
                     return false;
                 }
@@ -234,6 +234,12 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
                 }
                 else {
                     entityRect.width /= this.escala;
+                    // TODO
+                    // log.error("------------------------s-----------------");
+                    // log.error(entityRect.width);
+                    // log.error(entityRect.width /= this.escala);
+                    // log.error(entity.sprite.getLocalBounds().width);
+                    // log.error("------------------------------------------");
                     entityRect.height = (entityRect.height / this.escala) + this.tilesize * heightTileOffset * 2;
                     entityRect.x = (-this.gameStage.x + entityRect.x) / this.escala;
                     entityRect.y = (-this.gameStage.y + entityRect.y) / this.escala - this.tilesize * heightTileOffset;

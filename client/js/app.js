@@ -38,7 +38,7 @@ define(['model/gamemanager', 'view/renderer', 'network/gameclient'], function (G
             client.setDisconnectCallback(function () {
                 self.uiManager.setLoginScreen();
                 self.assetManager.audio.stopMusic();
-                self.gameManager.resetGame(self.uiManager.getEscala());
+                self.gameManager.resetGame(self.uiManager.escala);
                 self.starting = false;
             });
 
@@ -55,7 +55,7 @@ define(['model/gamemanager', 'view/renderer', 'network/gameclient'], function (G
         }
 
         inicializarGame() {
-            var renderer = new Renderer(this.assetManager, this.uiManager.getEscala());
+            var renderer = new Renderer(this.assetManager, this.uiManager.escala);
             this.gameManager = new GameManager(this.assetManager, renderer);
 
             var gameUI = this.uiManager.inicializarGameUI(this.gameManager, this.storage);
