@@ -2,8 +2,8 @@
  * Created by horacio on 8/21/16.
  */
 
-define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh'],
-    function (Enums, Utils, PIXI, SpriteGrh) {
+define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh', 'view/rendererutils'],
+    function (Enums, Utils, PIXI, SpriteGrh, RendererUtils) {
 
         class MapaRenderer {
             constructor(camera, assetManager, layer1Container, layer2Container, layer3Container, layer4Container) {
@@ -191,18 +191,15 @@ define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh'],
 
                 this.camera.forEachVisibleLastLinea(dir, function (i, j) {
                     if (self._spritesLayer2[i][j]) {
-                        self.layer2.removeChild(self._spritesLayer2[i][j]);
-                        self._spritesLayer2[i][j].destroy();
+                        RendererUtils.removePixiChild(self.layer2, self._spritesLayer2[i][j]);
                         self._spritesLayer2[i][j] = null;
                     }
                     if (self._spritesLayer3[i][j]) {
-                        self.layer3.removeChild(self._spritesLayer3[i][j]);
-                        self._spritesLayer3[i][j].destroy();
+                        RendererUtils.removePixiChild(self.layer3, self._spritesLayer3[i][j]);
                         self._spritesLayer3[i][j] = null;
                     }
                     if (self._spritesLayer4[i][j]) {
-                        self.layer4.removeChild(self._spritesLayer4[i][j]);
-                        self._spritesLayer4[i][j].destroy();
+                        RendererUtils.removePixiChild(self.layer4, self._spritesLayer4[i][j]);
                         self._spritesLayer4[i][j] = null;
                     }
                 }, this.POSICIONES_EXTRA_RENDER_X, this.POSICIONES_EXTRA_RENDER_Y);
@@ -212,8 +209,7 @@ define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh'],
                 _.each(gridHijos, function (fila) {
                     _.each(fila, function (hijo) {
                         if (hijo) {
-                            padre.removeChild(hijo);
-                            hijo.destroy();
+                            RendererUtils.removePixiChild(padre,hijo);
                         }
                     });
                 });

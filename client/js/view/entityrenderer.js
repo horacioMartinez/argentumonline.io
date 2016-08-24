@@ -3,22 +3,19 @@
  */
 
 define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'view/charactername',
-        'view/charactertext', 'view/spritegrh'],
-    function (Enums, Utils, Font, PIXI, CharacterSprites, CharacterName, CharacterText, SpriteGrh) {
+        'view/charactertext', 'view/spritegrh', 'view/rendererutils'],
+    function (Enums, Utils, Font, PIXI, CharacterSprites, CharacterName, CharacterText, SpriteGrh, RendererUtils) {
 
         class EntityRenderer {
-            constructor(escala, entityContainer, entityNamesContainer, entityChatContainer, camera, assetManager, /*TEMPORAL*/gameStage/*TEMPORAL*/) {
-
-                /*TEMPORAL*/
-                this.gameStage = gameStage;
-                /*TEMPORAL*/
-
+            constructor(escala, entityContainer, entityNamesContainer, entityChatContainer, camera, assetManager) {
                 this.escala = escala;
                 this.entityContainer = entityContainer;
                 this.entityNamesContainer = entityNamesContainer;
                 this.entityChatContainer = entityChatContainer;
                 this.camera = camera;
                 this.assetManager = assetManager;
+
+                this.tilesize = 32;
 
                 this.grhs = assetManager.grhs;
                 this.indices = assetManager.getIndices();
@@ -67,8 +64,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
                 if (!item.sprite) {
                     return;
                 }
-                this.entityContainer.removeChild(item.sprite);
-                item.sprite.destroy();
+                RendererUtils.removePixiChild(this.entityContainer, item.sprite);
                 item.sprite = null;
             }
 
@@ -81,8 +77,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
                     var clan = char.clan;
                     var color = char.nickColor;
                     if (char.spriteNombre) {
-                        self.entityNamesContainer.removeChild(char.spriteNombre);
-                        char.spriteNombre.destroy();
+                        RendererUtils.removePixiChild(self.entityNamesContainer, char.spriteNombre);
                         char.spriteNombre = null;
                     }
                     if (!nombre.trim()) {
@@ -184,17 +179,15 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
             }
 
             sacarCharacter(char) {
-                this.entityContainer.removeChild(char.sprite);
-                this.entityChatContainer.removeChild(char.texto);
+                RendererUtils.removePixiChild(this.entityContainer, char.sprite);
+                char.sprite = null;
+                RendererUtils.removePixiChild(this.entityChatContainer, char.texto);
+                char.texto = null;
+
                 if (char.spriteNombre) {
-                    this.entityNamesContainer.removeChild(char.spriteNombre);
-                    char.spriteNombre.destroy(true);
+                    RendererUtils.removePixiChild(this.entityNamesContainer, char.spriteNombre);
                     char.spriteNombre = null;
                 }
-                char.sprite.destroy();
-                char.sprite = null;
-                char.texto.destroy(true);
-                char.texto = null;
             }
 
             setCharacterChat(char, chat, r, g, b) {
@@ -222,33 +215,27 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
                 char.sprite.setFX(grh, this.fxs[FX].offX, this.fxs[FX].offY, FXLoops);
             }
 
-            entityVisiblePorCamara(entity, heightTileOffset) { // TODO: arreglar
+            entityVisiblePorCamara(entity) { // TODO: arreglar
                 if (!entity.sprite) {
                     return false;
                 }
+                let entityRect = entity.sprite.getLocalBounds().clone();
 
-                var entityRect = entity.sprite.getBounds().clone();
-                if (!entityRect.width) {
-                    entityRect.x = entity.x;
-                    entityRect.y = entity.y;
-                }
-                else {
-                    entityRect.width /= this.escala;
-                    // TODO
-                    // log.error("------------------------s-----------------");
-                    // log.error(entityRect.width);
-                    // log.error(entityRect.width /= this.escala);
-                    // log.error(entity.sprite.getLocalBounds().width);
-                    // log.error("------------------------------------------");
-                    entityRect.height = (entityRect.height / this.escala) + this.tilesize * heightTileOffset * 2;
-                    entityRect.x = (-this.gameStage.x + entityRect.x) / this.escala;
-                    entityRect.y = (-this.gameStage.y + entityRect.y) / this.escala - this.tilesize * heightTileOffset;
-                }
+                entityRect.x = entity.x;
+                entityRect.y = entity.y;
+
+                RendererUtils.posicionarRectEnTile(entityRect);
                 return this.camera.rectVisible(entityRect);
+
+                // var graphics = new PIXI.Graphics();
+                // graphics.beginFill(0xFFFF00);
+                // graphics.lineStyle(5, 0xFF0000);
+                // graphics.drawRect(entityRect.x, entityRect.y, entityRect.width, entityRect.height);
+                // this.gameStage.addChild(graphics);
             }
 
             entityEnTileVisible(entity) { // puede que no este en un tile visible pero si sea visible la entidad (para eso usar el de arriba)
-                return this.camera.isVisiblePosition(entity.gridX, entity.gridY, 0, 0);
+                return this.camera.isVisiblePosition(entity.gridX, entity.gridY);
             }
 
         }

@@ -15,7 +15,7 @@ define(function () {
 
         joinNullArray: function (array) {
             return array.join("\u0000");
-        }
+        },
     };
 });
 /*

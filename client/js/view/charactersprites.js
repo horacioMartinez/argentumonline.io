@@ -36,13 +36,6 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
         }
     };
 
-    CharacterSprites.prototype.destroy = function(){
-        this.children.forEach((child)=>{
-            child.destroy();
-        });
-        PIXI.Container.prototype.destroy.call(this);
-    };
-
     CharacterSprites.prototype.setSombraSprite = function (grh) {
         if (this._sombraSprite) {
             return;

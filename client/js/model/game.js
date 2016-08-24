@@ -150,7 +150,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                         return;
                     }
                     var dir = c.esPosAdyacente(gridX, gridY);
-                    if (dir && this.renderer.entityVisiblePorCamara(c, 1)) {
+                    if (dir && this.renderer.entityVisiblePorCamara(c)) {
                         c.mover(dir);
                         this.playSonidoPaso(c);
                     }

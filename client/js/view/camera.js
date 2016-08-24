@@ -13,6 +13,8 @@ define(['enums'], function (Enums) {
             this.gridW = 17;
             this.gridH = 13;
 
+            this.height = this.gridH * this.tilesize;
+            this.width = this.gridW * this.tilesize;
         }
 
         setPosition(x, y) {
@@ -162,7 +164,7 @@ define(['enums'], function (Enums) {
             }
         }
 
-        rectVisible(rect) {
+        rectVisible(rect) { // eje x,y en esquina izquierda superior de rect
             return !((this.x > rect.x + rect.width) ||
             (this.x + this.width < rect.x) ||
             (this.y > rect.y + rect.height) ||

@@ -76,7 +76,7 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
         removerChat() {
             if (this._chat) {
                 this.removeChild(this._chat);
-                this._chat.destroy(true);
+                this._chat.destroy();
             }
             this._chat = null;
         }
@@ -99,7 +99,7 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
             if (index > -1) {
                 this.infos.splice(index, 1);
                 this.removeChild(info);
-                info.destroy(true);
+                info.destroy();
             }
         }
 
@@ -133,12 +133,12 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
             }
         }
 
-        destroy() {
+        destroy(options) {
             this.removerChat();
             for (let i = this.infos.length - 1; i >= 0; i--) {
                 this._removerInfo(this.infos[i]);
             }
-            super.destroy();
+            super.destroy(options);
         }
     }
 

@@ -2,7 +2,7 @@
  * Created by horacio on 3/8/16.
  */
 
-define(['font', 'lib/pixi'], function (Font, PIXI) {
+define(['font', 'lib/pixi', 'view/rendererutils'], function (Font, PIXI, rendererUtils) {
 
     function Consola(escala) {
         PIXI.Container.call(this);
@@ -54,8 +54,7 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
                 this.children[i].tiempoInicial += this.DURACION_TEXTO/5;
             }
         }
-        this.removeChild(spriteTexto);
-        spriteTexto.destroy(true);
+        rendererUtils.removePixiChild(this,spriteTexto);
     };
 
     Consola.prototype.agregarTexto = function (texto, font) {

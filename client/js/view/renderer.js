@@ -1,6 +1,7 @@
 define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerordenado', 'view/indicadormapa',
-        'view/entityrenderer', 'view/climarenderer', 'view/maparenderer'],
-    function (Enums, PIXI, Camera, Consola, ContainerOrdenado, IndicadorMapa, EntityRenderer, ClimaRenderer, MapaRenderer) {
+        'view/entityrenderer', 'view/climarenderer', 'view/maparenderer','view/rendererutils'],
+    function (Enums, PIXI, Camera, Consola, ContainerOrdenado, IndicadorMapa, EntityRenderer, ClimaRenderer,
+              MapaRenderer, RendererUtils) {
 
         class Renderer {
             constructor(assetManager, escala) {
@@ -62,7 +63,7 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
                 this.gameStage.addChild(this.layer4);
                 this.gameStage.addChild(this.gameChat); // todo? gametext abajo o arriba de layer4?
 
-                this.entityRenderer = new EntityRenderer(this.escala, this.layer3, this.gameNames, this.gameChat, this.camera, this.assetManager, this.gameStage);
+                this.entityRenderer = new EntityRenderer(this.escala, this.layer3, this.gameNames, this.gameChat, this.camera, this.assetManager);
                 this.climaRenderer = new ClimaRenderer(this.escala, this.climaContainer, this.assetManager, this.pixiRenderer);
                 this.mapaRenderer = new MapaRenderer(this.camera, this.assetManager, this.layer1, this.layer2, this.layer3, this.layer4);
             }
@@ -119,8 +120,8 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
                 this.entityRenderer.setCharacterFX(char, FX, FXLoops);
             }
 
-            entityVisiblePorCamara(entity, heightTileOffset) {
-                return this.entityRenderer.entityVisiblePorCamara(entity, heightTileOffset);
+            entityVisiblePorCamara(entity) {
+                return this.entityRenderer.entityVisiblePorCamara(entity);
             }
 
             entityEnTileVisible(entity) { // puede que no este en un tile visible pero si sea visible la entidad (para eso usar el de arriba)
@@ -165,8 +166,7 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
             clean(escala) {
                 while (this.stage.children.length > 0) {
                     var child = this.stage.getChildAt(0);
-                    this.stage.removeChild(child);
-                    child.destroy();
+                    RendererUtils.removePixiChild(this.stage,child);
                 }
 
                 this._initStage();
