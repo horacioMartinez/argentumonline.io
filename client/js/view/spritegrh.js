@@ -108,13 +108,11 @@ define(['lib/pixi'], function (PIXI) {
     };
 
     SpriteGrh.prototype.cambiarGrh = function (grh) {
-        //temporal
         if (this._grh === grh) {
             return;
         } else {
             this._grh = grh;
         }
-        //<<temporal
 
         if (!grh) {
             this.gotoAndStop(0);
@@ -130,6 +128,9 @@ define(['lib/pixi'], function (PIXI) {
         }
         if (!this.playing) {
             this.gotoAndStop(0);
+        } else {
+            this.gotoAndStop(this.currentFrame);
+            PIXI.extras.MovieClip.prototype.play.call(this);
         }
         this._posicionarGrafico();
         if (grh.frames && this.loop) {

@@ -62,10 +62,11 @@ define([], function () {
         }
 
         _tratarDeCaminar() {
-            this.game.player.moveSpeed = 230; // TODO
             if (!this.getDirMov() || !this.enabled) {
                 return false;
             }
+            this.game.player.setSpeed(230); // TODO: una sola vez en otro lugar
+
             if (this.puedeCaminarCallback(this.getDirMov())) {
                 if (this.forcedCaminarQueue.length > 0) {
                     this.caminandoForzado = true;

@@ -35,6 +35,10 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums', 'model/charactermovem
             this._nickColor = NickColor;
         }
 
+        setSpeed(speed){
+            this.movementSpeed = speed;
+            this.sprite.setSpeed(speed);
+        }
         update(delta){
             this.movement.update(delta);
 
