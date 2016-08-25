@@ -563,7 +563,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                         this.renderer.renderFrame();
                         if (!this.isPaused) {
                             let deltaMS = delta * (1 / 60) * 1000;
-                            this.updater.update(deltaMS );
+                            this.updater.update(deltaMS);
                         }
                     }
                 });

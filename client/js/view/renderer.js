@@ -129,7 +129,12 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
             }
 
             rescale(escala) {
+                // calcular escala que no haga quedar a los tiles en posiciones no enteras:
+                let newTilesize = Math.floor(escala * this.tilesize);
+                escala = newTilesize / this.tilesize;
+
                 this.escala = escala;
+
                 this.pixiRenderer.resize(Math.round(this.camera.gridW * this.tilesize * escala), Math.round(this.camera.gridH * this.tilesize * escala));
                 this.gameStage.scale.x = escala;
                 this.gameStage.scale.y = escala;

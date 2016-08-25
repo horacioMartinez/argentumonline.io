@@ -36,9 +36,10 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums', 'model/charactermovem
         }
 
         setSpeed(speed){
-            this.movementSpeed = speed;
+            this.moveSpeed = speed;
             this.sprite.setSpeed(speed);
         }
+        
         update(delta){
             this.movement.update(delta);
 

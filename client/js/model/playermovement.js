@@ -78,6 +78,7 @@ define([], function () {
             else {
                 if (this.game.player.heading !== this.getDirMov()) {
                     this.game.player.heading = this.getDirMov();
+                    this.game.player.sprite.stopAnimations();
                     this.cambioHeadingCallback(this.game.player.heading);
                 }
                 return false;

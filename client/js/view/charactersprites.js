@@ -290,5 +290,11 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
         }
     };
 
+    CharacterSprites.prototype.stopAnimations = function () {
+        this._forEachHeadingSprite((child) => {
+            child.gotoAndStop(0);
+        });
+    };
+
     return CharacterSprites;
 });

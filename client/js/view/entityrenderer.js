@@ -111,9 +111,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
                 char.on('positionChanged', function () {
                     var spriteX = this.x;
                     var spriteY = this.y;
-                    if (this.sprite) {//sacar
-                        this.sprite.setPosition(spriteX, spriteY);
-                    }
+                    this.sprite.setPosition(spriteX, spriteY);
                     if (this.spriteNombre) {
                         this.spriteNombre.setPosition(spriteX, spriteY);
                     }
@@ -215,10 +213,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
                 char.sprite.setFX(grh, this.fxs[FX].offX, this.fxs[FX].offY, FXLoops);
             }
 
-            entityVisiblePorCamara(entity) { // TODO: arreglar
-                if (!entity.sprite) {
-                    return false;
-                }
+            entityVisiblePorCamara(entity) {
                 let entityRect = entity.sprite.getLocalBounds().clone();
 
                 entityRect.x = entity.x;
