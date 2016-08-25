@@ -8016,7 +8016,13 @@ footer a {
   width: 600px;
   height: 37px;
   background: url("../imagenes/barras/barra_cargando_vacia.png") no-repeat;
-  background-size: cover; }
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto; }
 
 #loadingBarUsada {
   transition: width 1s;

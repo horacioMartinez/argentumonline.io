@@ -31,7 +31,6 @@ define(['app', 'assets/assetmanager', 'ui/uimanager', 'storage/storage', 'lib/lo
 
             assetManager.preload(
                 () => {
-                    // TODO: sacar timeout ... ?
                     setTimeout(function () {
                         app.start();
                     }, 1200);
