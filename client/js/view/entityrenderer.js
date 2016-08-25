@@ -57,7 +57,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
                 item.sprite = new SpriteGrh(this.assetManager.getGrh(numGrh));
                 item.sprite.zOffset = -50; // para que item quede debajo de chars en misma cord Y ( para todo X)
                 this.entityContainer.addChild(item.sprite);
-                item.sprite.setPosition(item.x, item.y);
+                item.sprite.setPosition(Math.round(item.x), Math.round(item.y));
             }
 
             sacarItem(item) {
@@ -111,6 +111,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
                 char.on('positionChanged', function () {
                     var spriteX = this.x;
                     var spriteY = this.y;
+
                     this.sprite.setPosition(spriteX, spriteY);
                     if (this.spriteNombre) {
                         this.spriteNombre.setPosition(spriteX, spriteY);

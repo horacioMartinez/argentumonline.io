@@ -557,16 +557,19 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 this.ready = true;
             }
 
-            tick() {
-                PIXI.ticker.shared.add((delta) => {
-                    if (this.started && !this.isStopped) {
-                        this.renderer.renderFrame();
-                        if (!this.isPaused) {
-                            let deltaMS = delta * (1 / 60) * 1000;
-                            this.updater.update(deltaMS);
-                        }
+            initGameTick() {
+                PIXI.ticker.shared.remove(this._gameTick, this);
+                PIXI.ticker.shared.add(this._gameTick, this);
+            }
+
+            _gameTick(delta) {
+                if (this.started && !this.isStopped) {
+                    this.renderer.renderFrame();
+                    if (!this.isPaused) {
+                        var deltaMS = delta * (1 / 60) * 1000;
+                        this.updater.update(deltaMS);
                     }
-                });
+                }
             }
 
             start() {
@@ -577,7 +580,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
 
                 this.logeado = true;
                 this.started = true;
-                this.tick();
+                this.initGameTick();
                 log.info("Game loop started.");
             }
 
