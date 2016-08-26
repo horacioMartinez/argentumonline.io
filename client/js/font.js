@@ -3,6 +3,9 @@
  */
 
 define(["utils/palette"], function (Palette) {
+
+    var FONT_FAMILY = 'Myriad Pro';
+
     return {
         NickColorIndex: {
             1: "CRIMINAL",
@@ -39,16 +42,16 @@ define(["utils/palette"], function (Palette) {
         },
 
         CONSOLA_BASE_FONT: {
-            fontFamily: 'Arial',
-            fontWeight: '600',
+            fontFamily: FONT_FAMILY,
+            fontWeight: 'bold',
             fontSize: '12',
             stroke: "black",
             strokeThickness: 0.2,
         },
 
         NOMBRE_BASE_FONT: {
-            fontFamily: 'Arial',
-            fontWeight: '600',
+            fontFamily: FONT_FAMILY,
+            fontWeight: 'bold',
             fontSize: '12',
             stroke: "black",
             strokeThickness: 0.2,
@@ -56,21 +59,30 @@ define(["utils/palette"], function (Palette) {
         },
 
         TALK_BASE_FONT: {
-            fontFamily: 'Arial',
-            fontWeight: '600',
+            fontFamily: FONT_FAMILY,
+            fontWeight: 'bold',
             fontSize: '12',
             stroke: "black",
             strokeThickness: 0.2,
             align: 'center',
             fill: Palette.get('white')
         },
-        
+
         HOVERING_BASE_FONT: {
-            fontFamily: 'Arial',
+            fontFamily: FONT_FAMILY,
             fontWeight: '900',
             fontSize: '14',
             stroke: "black",
-            strokeThickness: 0.8,
+            strokeThickness: 1,
+        },
+
+        INDICADOR_MAPA: {
+            fontFamily: FONT_FAMILY,
+            fontWeight: '600',
+            fontSize: '7',
+            stroke: "black",
+            strokeThickness: 0.2,
+            fill: Palette.get('yellow'),
         },
 
         CLAN_CHAT: {
@@ -195,15 +207,6 @@ define(["utils/palette"], function (Palette) {
         CANVAS_EXP: {
             fill: "rgb(80, 80, 255)",
             stroke: "rgb(50, 50, 255)"
-        },
-
-        INDICADOR_MAPA: {
-            fill: Palette.get('yellow'),
-            fontFamily: 'Arial',
-            fontWeight: '600',
-            fontSize: '7',
-            stroke: "black",
-            strokeThickness: 0.2,
         },
     };
 });

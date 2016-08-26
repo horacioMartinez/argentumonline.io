@@ -69,6 +69,8 @@ $left_align_percentage: 8%;
   flex: 1;
   display: inline-block;
   position: relative;
+
+  font-size:1.5vh;
 }
 
 $width_inv_h: 44%;
@@ -288,7 +290,7 @@ $separacion_barras: 5.2%;
 #labelEnergia, #labelHambre, #labelMana, #labelSalud, #labelSed{
   color: $menu_background_color !important;
   position: absolute;
-  top: -20px;
+  top: -90%;
   bottom: 0;
   left: 0;
   right: 0;
@@ -332,7 +334,7 @@ $ind_top: 62%;
 
   position: absolute;
   left: $left_align_percentage;
-  top: 61%;
+  top: 61.4%;
   width: 11%;
   height: 3.5%;
   background-image: url("../imagenes/interfaz/iconos/coin.png");

@@ -19,7 +19,19 @@ define(['lib/pixi', 'json!../../preload_config/preload_sounds.json','json!../../
 
 
             preload(terminar_callback, progress_callback) {
+
+                // fonts: // OJO: si se usan web fonts sacar esto y el script del index
+                WebFont.load({
+                    custom: {
+                        families: ['Myriad Pro:n4,n7,i4,i7']
+                    }
+                });
+
+                //sounds:
+
                 this._preloadSoundsAsync();
+
+                // graficos:
 
                 let self = this;
                 let loader = this.loader;

@@ -7676,9 +7676,9 @@ span {
   /*box-sizing: border-box;*/ }
 
 .selected_border, #crearBotonGeneroFemenino, #crearBotonGeneroFemenino.selected, #crearBotonGeneroMasculino, #crearBotonGeneroMasculino.selected {
-  border-color: white;
+  border-color: #ffffff;
   border-style: solid;
-  border-width: 2px; }
+  border-width: 1px; }
 
 @font-face {
   font-family: 'Myriad Pro';
@@ -8217,7 +8217,8 @@ footer a {
   border-bottom-width: 0px;
   flex: 1;
   display: inline-block;
-  position: relative; }
+  position: relative;
+  font-size: 1.5vh; }
 
 #botonInventario {
   background: url("../imagenes/botones/boton_inventario.png") no-repeat;
@@ -8395,7 +8396,7 @@ footer a {
 #labelEnergia, #labelHambre, #labelMana, #labelSalud, #labelSed {
   color: #846f62 !important;
   position: absolute;
-  top: -20px;
+  top: -90%;
   bottom: 0;
   left: 0;
   right: 0; }
@@ -8429,7 +8430,7 @@ footer a {
   outline: none !important;
   position: absolute;
   left: 8%;
-  top: 61%;
+  top: 61.4%;
   width: 11%;
   height: 3.5%;
   background-image: url("../imagenes/interfaz/iconos/coin.png"); }
