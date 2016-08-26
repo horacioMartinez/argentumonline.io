@@ -72,11 +72,19 @@ define(['enums'], function (Enums) {
             }
         }
 
-        forEachVisibleNextLinea(direccion, callback, extraX, extraY) { // x,y en la proxima "linea" del grid en la direccion direccion
-            var topGridY = this.gridY;
-            var botGridY = this.gridY + this.gridH - 1 + extraY;
-            var izqGridX = this.gridX - extraX;
-            var derGridX = this.gridX + this.gridW - 1 + extraX;
+        forEachVisibleNextLinea(direccion, callback, extraX, extraY, offsetX, offsetY) { // x,y en la proxima "linea" del grid en la direccion direccion
+            extraX = extraX || 0;
+            extraY = extraY || 0;
+            offsetX = offsetX || 0;
+            offsetY = offsetY || 0;
+            
+            var cameraGridX = this.gridX + offsetX;
+            var cameraGridY = this.gridY + offsetY;
+            
+            var topGridY = cameraGridY;
+            var botGridY = cameraGridY + this.gridH - 1 + extraY;
+            var izqGridX = cameraGridX - extraX;
+            var derGridX = cameraGridX + this.gridW - 1 + extraX;
 
             if (topGridY < 1) {
                 topGridY = 1;
@@ -129,28 +137,33 @@ define(['enums'], function (Enums) {
                     }
                     break;
                 default:
-                    log.error("Heading invalido");
+                    throw new Error("Heading invalido");
             }
         }
 
-        //TODO: algunos siguen quedando visibles por ir caminando en zig zag con offsets distintos
         forEachVisibleLastLinea(direccion, callback, extraX, extraY) {
             var dirInversa;
+            var offsetY = 0;
+            var offsetX = 0; //offset para dar la ultima de las visible, no la anterior ("next") a la ultima visibles
             switch (direccion) {
                 case Enums.Heading.oeste:
                     dirInversa = Enums.Heading.este;
+                    offsetX = -1;
                     break;
                 case Enums.Heading.este:
                     dirInversa = Enums.Heading.oeste;
+                    offsetX = 1;
                     break;
                 case Enums.Heading.norte:
                     dirInversa = Enums.Heading.sur;
+                    offsetY = -1;
                     break;
                 case Enums.Heading.sur:
                     dirInversa = Enums.Heading.norte;
+                    offsetY = 1;
                     break;
             }
-            this.forEachVisibleNextLinea(dirInversa, callback, extraX, extraY);
+            this.forEachVisibleNextLinea(dirInversa, callback, extraX, extraY, offsetX, offsetY);
         }
 
         isVisiblePosition(gridX, gridY, extraX, extraY) {

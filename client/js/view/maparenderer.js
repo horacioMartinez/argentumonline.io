@@ -7,8 +7,8 @@ define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh', 'view/rendererutils
 
         class MapaRenderer {
             constructor(camera, assetManager, layer1Container, layer2Container, layer3Container, layer4Container) {
-                this.POSICIONES_EXTRA_RENDER_X = 3;// afecta a izq y derecha (osea, el doble de tiles se agregan)
-                this.POSICIONES_EXTRA_RENDER_Y = 7;// solo afecta hacia abajo
+                this.POSICIONES_EXTRA_RENDER_X = 3/*3*/;// afecta a izq y derecha (osea, el doble de tiles se agregan)
+                this.POSICIONES_EXTRA_RENDER_Y = 7/*7*/;// solo afecta hacia abajo
                 this.POSICIONES_EXTRA_TERRENO = 1; // no deberia ser necesario mas de una. (una pos extra en cada una de las 4 direcciones)
 
                 this.camera = camera;
@@ -60,7 +60,6 @@ define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh', 'view/rendererutils
                     }
                 }
             }
-
 
             drawMapaIni(gridX, gridY) { // SOLO USARLO EN CAMBIO DE MAPA, SINO USAR RESETPOS. Limpia vectores, dibuja el terreno del mapa, almacena los tiles animados
                 log.error("dibujando inicialmente mapa, solo deberia pasar en cambio de map");
@@ -190,6 +189,9 @@ define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh', 'view/rendererutils
                 }, this.POSICIONES_EXTRA_RENDER_X, this.POSICIONES_EXTRA_RENDER_Y);
 
                 this.camera.forEachVisibleLastLinea(dir, function (i, j) {
+
+                    //self._drawDebugTile(i * self.tilesize, j * self.tilesize);
+
                     if (self._spritesLayer2[i][j]) {
                         RendererUtils.removePixiChild(self.layer2, self._spritesLayer2[i][j]);
                         self._spritesLayer2[i][j] = null;
@@ -209,7 +211,7 @@ define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh', 'view/rendererutils
                 _.each(gridHijos, function (fila) {
                     _.each(fila, function (hijo) {
                         if (hijo) {
-                            RendererUtils.removePixiChild(padre,hijo);
+                            RendererUtils.removePixiChild(padre, hijo);
                         }
                     });
                 });
@@ -256,6 +258,14 @@ define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh', 'view/rendererutils
 
             cambiarMapa(mapa) {
                 this.mapa = mapa;
+            }
+
+            _drawDebugTile(x, y) {
+                var graphics = new PIXI.Graphics();
+                graphics.beginFill(0xFFFF00);
+                graphics.lineStyle(5, 0xFF0000);
+                graphics.drawRect(x, y, this.tilesize, this.tilesize);
+                this.layer4.addChild(graphics);
             }
 
         }

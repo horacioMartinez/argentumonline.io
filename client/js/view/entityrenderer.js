@@ -222,12 +222,6 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
 
                 RendererUtils.posicionarRectEnTile(entityRect);
                 return this.camera.rectVisible(entityRect);
-
-                // var graphics = new PIXI.Graphics();
-                // graphics.beginFill(0xFFFF00);
-                // graphics.lineStyle(5, 0xFF0000);
-                // graphics.drawRect(entityRect.x, entityRect.y, entityRect.width, entityRect.height);
-                // this.gameStage.addChild(graphics);
             }
 
             entityEnTileVisible(entity) { // puede que no este en un tile visible pero si sea visible la entidad (para eso usar el de arriba)
