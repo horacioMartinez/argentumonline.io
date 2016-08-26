@@ -2,6 +2,13 @@ define(['enums'], function (Enums) {
 
     class Camera {
         constructor(tilesize) {
+            this.DEFAULT_EXTRA_POSITIONS = {
+                norte:0,
+                sur:0,
+                este:0,
+                oeste:0
+            };
+
             this.tilesize = tilesize;
             this.x = 0;
             this.y = 0;
@@ -46,13 +53,19 @@ define(['enums'], function (Enums) {
             }
         }
 
-        forEachVisiblePosition(callback, extraX, extraY) { // TODO: poner mas extra en el eje y?
-            extraX = extraX || 0;
-            extraY = extraY || 0;
-            var gridIniY = this.gridY;
-            var maxY = this.gridY + this.gridH + extraY;
-            var gridiniX = this.gridX - extraX;
-            var maxX = this.gridX + this.gridW + extraX;
+        forEachVisiblePosition(callback, extraPositions) {
+            extraPositions = extraPositions || this.DEFAULT_EXTRA_POSITIONS;
+
+            let extraXEste = extraPositions.este,
+                extraXOeste = extraPositions.oeste,
+                extraYSur = extraPositions.sur,
+                extraYNorte = extraPositions.norte;
+
+            var gridIniY = this.gridY - extraYNorte;
+            var maxY = this.gridY + this.gridH + extraYSur;
+            var gridiniX = this.gridX - extraXOeste;
+            var maxX = this.gridX + this.gridW + extraXEste;
+
             if (gridIniY < 1) {
                 gridIniY = 1;
             }
@@ -72,19 +85,24 @@ define(['enums'], function (Enums) {
             }
         }
 
-        forEachVisibleNextLinea(direccion, callback, extraX, extraY, offsetX, offsetY) { // x,y en la proxima "linea" del grid en la direccion direccion
-            extraX = extraX || 0;
-            extraY = extraY || 0;
+        forEachVisibleNextLinea(direccion, callback, extraPositions, offsetX, offsetY) { // x,y en la proxima "linea" del grid en la direccion direccion
+            extraPositions = extraPositions || this.DEFAULT_EXTRA_POSITIONS;
+
+            let extraXEste = extraPositions.este,
+                extraXOeste = extraPositions.oeste,
+                extraYSur = extraPositions.sur,
+                extraYNorte = extraPositions.norte;
+
             offsetX = offsetX || 0;
             offsetY = offsetY || 0;
-            
+
             var cameraGridX = this.gridX + offsetX;
             var cameraGridY = this.gridY + offsetY;
-            
-            var topGridY = cameraGridY;
-            var botGridY = cameraGridY + this.gridH - 1 + extraY;
-            var izqGridX = cameraGridX - extraX;
-            var derGridX = cameraGridX + this.gridW - 1 + extraX;
+
+            var topGridY = cameraGridY - extraYNorte;
+            var botGridY = cameraGridY + this.gridH - 1 + extraYSur;
+            var izqGridX = cameraGridX - extraXOeste;
+            var derGridX = cameraGridX + this.gridW - 1 + extraXEste;
 
             if (topGridY < 1) {
                 topGridY = 1;
@@ -119,7 +137,7 @@ define(['enums'], function (Enums) {
                     }
                     break;
                 case Enums.Heading.norte:
-                    topGridY -= 1; //extras en el norte se ignoran
+                    topGridY -= 1;
                     if (topGridY < 1) {
                         return;
                     }
@@ -141,10 +159,10 @@ define(['enums'], function (Enums) {
             }
         }
 
-        forEachVisibleLastLinea(direccion, callback, extraX, extraY) {
-            var dirInversa;
-            var offsetY = 0;
-            var offsetX = 0; //offset para dar la ultima de las visible, no la anterior ("next") a la ultima visibles
+        forEachVisibleLastLinea(direccion, callback, extraPositions) {
+            let dirInversa;
+            let offsetY = 0;
+            let offsetX = 0; //offset para dar la ultima de las visible, no la anterior ("next") a la ultima visibles
             switch (direccion) {
                 case Enums.Heading.oeste:
                     dirInversa = Enums.Heading.este;
@@ -163,14 +181,18 @@ define(['enums'], function (Enums) {
                     offsetY = 1;
                     break;
             }
-            this.forEachVisibleNextLinea(dirInversa, callback, extraX, extraY, offsetX, offsetY);
+            this.forEachVisibleNextLinea(dirInversa, callback, extraPositions, offsetX, offsetY);
         }
 
-        isVisiblePosition(gridX, gridY, extraX, extraY) {
-            extraX = extraX || 0;
-            extraY = extraY || 0;
-            if (gridY >= this.gridY && gridY < (this.gridY + this.gridH + extraY)
-                && gridX >= (this.gridX - extraX) && gridX < (this.gridX + this.gridW + extraX)) {
+        isVisiblePosition(gridX, gridY, extraPositions) {
+            extraPositions = extraPositions || this.DEFAULT_EXTRA_POSITIONS;
+
+            let extraXEste = extraPositions.este,
+                extraXOeste = extraPositions.oeste,
+                extraYSur = extraPositions.sur,
+                extraYNorte = extraPositions.norte;
+            if ( (gridY >= (this.gridY - extraYNorte) ) && (gridY < (this.gridY + this.gridH + extraYSur))
+                && (gridX >= (this.gridX - extraXOeste) ) &&  ( gridX < (this.gridX + this.gridW + extraXEste))) {
                 return true;
             } else {
                 return false;

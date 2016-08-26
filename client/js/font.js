@@ -4,7 +4,7 @@
 
 define(["utils/palette"], function (Palette) {
 
-    var FONT_FAMILY = 'Myriad Pro';
+    var FONT_FAMILY = 'Myriad Pro, Arial';
 
     return {
         NickColorIndex: {

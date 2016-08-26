@@ -272,8 +272,13 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handlePlayWave(WaveID, X, Y) {
             //TODO : reveer esto !!
-            if (( X < 0 ) || (Y < 0) || this.game.renderer.camera.isVisiblePosition(X, Y + 2, 2, 4)) // +2 porque extraY de visible no checkea para arriba
-            {
+            let extraGridPositios ={
+                norte:2,
+                sur:2,
+                este:2,
+                oeste:2
+            };
+            if (( X < 0 ) || (Y < 0) || this.game.renderer.camera.isVisiblePosition(X, Y, extraGridPositios)) {
                 this.game.assetManager.audio.playSound(WaveID);
             }
         }

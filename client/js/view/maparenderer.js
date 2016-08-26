@@ -7,8 +7,13 @@ define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh', 'view/rendererutils
 
         class MapaRenderer {
             constructor(camera, assetManager, layer1Container, layer2Container, layer3Container, layer4Container) {
-                this.POSICIONES_EXTRA_RENDER_X = 3/*3*/;// afecta a izq y derecha (osea, el doble de tiles se agregan)
-                this.POSICIONES_EXTRA_RENDER_Y = 7/*7*/;// solo afecta hacia abajo
+
+                this.POSICIONES_EXTRA_RENDER = {
+                    norte:1,
+                    sur:7,
+                    este:4,
+                    oeste:4
+                };
                 this.POSICIONES_EXTRA_TERRENO = 1; // no deberia ser necesario mas de una. (una pos extra en cada una de las 4 direcciones)
 
                 this.camera = camera;
@@ -186,7 +191,7 @@ define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh', 'view/rendererutils
                         nuevoSprite.setPosition(screenX, screenY);
                         self._spritesLayer4[i][j] = (nuevoSprite);
                     }
-                }, this.POSICIONES_EXTRA_RENDER_X, this.POSICIONES_EXTRA_RENDER_Y);
+                }, this.POSICIONES_EXTRA_RENDER );
 
                 this.camera.forEachVisibleLastLinea(dir, function (i, j) {
 
@@ -204,7 +209,7 @@ define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh', 'view/rendererutils
                         RendererUtils.removePixiChild(self.layer4, self._spritesLayer4[i][j]);
                         self._spritesLayer4[i][j] = null;
                     }
-                }, this.POSICIONES_EXTRA_RENDER_X, this.POSICIONES_EXTRA_RENDER_Y);
+                }, this.POSICIONES_EXTRA_RENDER);
             }
 
             _removeChilds(padre, gridHijos) {
@@ -253,7 +258,7 @@ define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh', 'view/rendererutils
                         self.layer4.addChild(nuevoSprite);
                         self._spritesLayer4[i][j] = nuevoSprite;
                     }
-                }, this.POSICIONES_EXTRA_RENDER_X, this.POSICIONES_EXTRA_RENDER_Y);
+                },  this.POSICIONES_EXTRA_RENDER);
             }
 
             cambiarMapa(mapa) {
