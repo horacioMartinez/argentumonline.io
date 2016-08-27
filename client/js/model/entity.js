@@ -41,6 +41,7 @@ define(['enums', 'lib/pixi'], function (Enums, PIXI) {
         setGridPositionOnly(gridX, gridY) {
             this._gridX = gridX;
             this._gridY = gridY;
+            this.emit('gridPositionChanged');
         }
 
         esPosAdyacente(gridX, gridY) { // devulve el heading si la pos es adyacente, sino 0

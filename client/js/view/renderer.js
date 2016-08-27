@@ -184,6 +184,7 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
 
             updateTilesMov(dir) {
                 this.mapaRenderer.updateTilesMov(dir);
+                this.entityRenderer.updateEntitiesMov();
             }
 
             cambiarMapa(mapa) {
@@ -198,6 +199,7 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
 
             resetCameraPosition(gridX, gridY) {
                 this.camera.lookAtGridPos(gridX, gridY);
+                this.entityRenderer.updateSpritesClippin();
             }
 
             _syncGamePosition() {

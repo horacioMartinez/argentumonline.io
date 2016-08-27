@@ -54,10 +54,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
                     log.error("grh de item invalido!");
                     return;
                 }
-                item.sprite = new SpriteGrh(this.assetManager.getGrh(numGrh));
-                item.sprite.zOffset = -50; // para que item quede debajo de chars en misma cord Y ( para todo X)
-                this.entityContainer.addChild(item.sprite);
-                item.sprite.setPosition(Math.round(item.x), Math.round(item.y));
+                item.sprite = this._crearSprite(this.entityContainer,numGrh,Math.round(item.x),Math.round(item.y), -50);
             }
 
             sacarItem(item) {
@@ -95,16 +92,13 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
 
                 char.emit('nameChanged');
 
-                var sprite = new CharacterSprites();
-                sprite.setSombraSprite(this.assetManager.getGrh(23651));
 
-                this.entityContainer.addChild(sprite);
-
+                var sprite = this._crearCharacterSprites(this.entityContainer,char.x,char.y, -30);
                 sprite.setSpeed(char.moveSpeed); // ANIMACIONES char se setean a misma velocidad que su movimiento !!
 
-                sprite.zOffset = -30; // para que quede debajo de los objetos del mapa en el mismo y
                 char.sprite = sprite;
 
+                // TODO!!! nombre clippping
                 char.texto = new CharacterText(this.escala);
                 this.entityChatContainer.addChild(char.texto);
 
@@ -119,6 +113,10 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
                     if (this.texto) {
                         this.texto.setPosition(spriteX, spriteY);
                     }
+                });
+
+                char.on('gridPositionChanged', function(){
+                    self._setSpriteClipping(this.sprite);
                 });
 
                 char.emit('positionChanged');
@@ -189,6 +187,46 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
                 }
             }
 
+            _crearSprite(parentLayer, grh, x, y, zIndex) {
+                let nuevoSprite = new SpriteGrh(this.assetManager.getGrh(grh));
+                nuevoSprite.zOffset = zIndex || 0;
+                parentLayer.addChild(nuevoSprite); // ojo tiene que estar en este orden sino no anda el z-index(TODO)
+                nuevoSprite.setPosition(x, y);
+                this._setSpriteClipping(nuevoSprite);
+                return nuevoSprite;
+            }
+
+            _crearCharacterSprites(parentLayer,x,y, zIndex) {
+                let sprite = new CharacterSprites();
+                sprite.setSombraSprite(this.assetManager.getGrh(23651));
+                parentLayer.addChild(sprite);
+                sprite.setPosition(x,y);
+                this._setSpriteClipping(sprite);
+                sprite.zOffset = zIndex;
+                return sprite;
+            }
+
+            updateEntitiesMov(entities){
+                this.updateSpritesClippin();
+            }
+
+            updateSpritesClippin(){
+                for (var i = 0; i< this.entityContainer.children.length; i++){
+                    this._setSpriteClipping(this.entityContainer.children[i]);
+                }
+            }
+
+            _setSpriteClipping(sprite) {
+                // TODO (importante): cuando no esta visible, desactivar animaciones de sprite (sirve tambien para no tener que recalcular los bounds). Hacerlo directamnete en spritegrh?
+                let spriteRect = sprite.getLocalBounds().clone();
+
+                spriteRect.x = sprite.x;
+                spriteRect.y = sprite.y;
+
+                RendererUtils.posicionarRectEnTile(spriteRect);
+                sprite.visible = this.camera.rectVisible(spriteRect);
+            }
+
             setCharacterChat(char, chat, r, g, b) {
                 var color = "rgb(" + r + "," + g + "," + b + ")";
                 char.texto.setChat(chat, color);
@@ -199,7 +237,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
             }
 
             setCharVisible(char, visible) {
-                char.sprite.setVisible(visible);
+                char.sprite.setCharVisible(visible);
                 if (char.spriteNombre) {
                     char.spriteNombre.setVisible(visible);
                 }
