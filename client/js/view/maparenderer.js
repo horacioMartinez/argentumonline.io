@@ -8,13 +8,17 @@ define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh', 'view/rendererutils
         class MapaRenderer {
             constructor(camera, assetManager, layer1Container, layer2Container, layer3Container, layer4Container) {
 
+                // posiciones extra que se analizan para ver si lo que hay en ellas es visible o no
+                // (si es algo visible pero tan grande que cuando esta lejos no entra en estas posiciones no se ve)
                 this.POSICIONES_EXTRA_RENDER = {
-                    norte:1,
-                    sur:7,
-                    este:4,
-                    oeste:4
+                    norte: 1,
+                    sur: 7,
+                    este: 4,
+                    oeste: 4
                 };
-                this.POSICIONES_EXTRA_TERRENO = 1; // no deberia ser necesario mas de una. (una pos extra en cada una de las 4 direcciones)
+
+                // posiciones extras que se renderizan del terreno (no deberia ser necesaria mas de 1 por el movimiento)
+                this.POSICIONES_EXTRA_TERRENO = 1;
 
                 this.camera = camera;
                 this.assetManager = assetManager;
@@ -32,7 +36,32 @@ define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh', 'view/rendererutils
                 this._spritesLayer3 = [];
                 this._spritesLayer4 = [];
 
+                this._clippedSprites = [];
+
                 this._initTerrenoSpriteGrid();
+            }
+
+            cambiarMapa(mapa) {
+                this.mapa = mapa;
+            }
+
+            drawMapaIni(gridX, gridY) { // SOLO USARLO EN CAMBIO DE MAPA, SINO USAR RESETPOS. Limpia vectores, dibuja el terreno del mapa, almacena los tiles animados
+                log.error("dibujando inicialmente mapa, solo deberia pasar en cambio de map");
+
+                if (!this.mapa.isLoaded) {
+                    log.error("DRAW MAPA INI SIN QUE ESTE CARGADO");
+                    return;
+                }
+                this._drawSpritesIni();
+                this._drawTerrenoIni();
+            }
+
+            updateTilesMov(dir) {
+                if (!this.mapa.isLoaded) {
+                    return;
+                }
+                this._updateTerrenoMov(dir);
+                this._updateLayersMov(dir);
             }
 
             _initTerrenoSpriteGrid() {
@@ -64,25 +93,6 @@ define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh', 'view/rendererutils
                         }
                     }
                 }
-            }
-
-            drawMapaIni(gridX, gridY) { // SOLO USARLO EN CAMBIO DE MAPA, SINO USAR RESETPOS. Limpia vectores, dibuja el terreno del mapa, almacena los tiles animados
-                log.error("dibujando inicialmente mapa, solo deberia pasar en cambio de map");
-
-                if (!this.mapa.isLoaded) {
-                    log.error("DRAW MAPA INI SIN QUE ESTE CARGADO");
-                    return;
-                }
-                this._drawSpritesIni();
-                this._drawTerrenoIni();
-            }
-
-            updateTilesMov(dir) {
-                if (!this.mapa.isLoaded) {
-                    return;
-                }
-                this._updateTerrenoMov(dir);
-                this._updateLayersMov(dir);
             }
 
             _updateTerrenoMov(dir) { // al moverse mueve la columna/fila que queda atras al frente de todo
@@ -155,73 +165,6 @@ define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh', 'view/rendererutils
                 }
             }
 
-            _updateLayersMov(dir) {
-                var self = this;
-                this.camera.forEachVisibleNextLinea(dir, function (i, j) {
-                    var screenX = i * self.tilesize;
-                    var screenY = j * self.tilesize;
-                    var grh2 = self.mapa.getGrh2(i, j);
-                    var grh3 = self.mapa.getGrh3(i, j);
-                    var grh4 = self.mapa.getGrh4(i, j);
-                    var nuevoSprite;
-                    if (grh2) {
-                        if (self._spritesLayer2[i][j]) {
-                            return;
-                        }
-                        nuevoSprite = new SpriteGrh(self.assetManager.getTerrenoGrh(grh2));
-                        self.layer2.addChild(nuevoSprite);
-                        nuevoSprite.setPosition(screenX, screenY);
-                        self._spritesLayer2[i][j] = (nuevoSprite);
-                    }
-                    if (grh3) {
-                        if (self._spritesLayer3[i][j]) {
-                            return;
-                        }
-                        nuevoSprite = new SpriteGrh(self.assetManager.getGrh(grh3));
-                        self.layer3.addChild(nuevoSprite);
-                        nuevoSprite.setPosition(screenX, screenY);
-                        self._spritesLayer3[i][j] = (nuevoSprite);
-                    }
-                    if (grh4) {
-                        if (self._spritesLayer4[i][j]) {
-                            return;
-                        }
-                        nuevoSprite = new SpriteGrh(self.assetManager.getGrh(grh4));
-                        self.layer4.addChild(nuevoSprite);
-                        nuevoSprite.setPosition(screenX, screenY);
-                        self._spritesLayer4[i][j] = (nuevoSprite);
-                    }
-                }, this.POSICIONES_EXTRA_RENDER );
-
-                this.camera.forEachVisibleLastLinea(dir, function (i, j) {
-
-                    //self._drawDebugTile(i * self.tilesize, j * self.tilesize);
-
-                    if (self._spritesLayer2[i][j]) {
-                        RendererUtils.removePixiChild(self.layer2, self._spritesLayer2[i][j]);
-                        self._spritesLayer2[i][j] = null;
-                    }
-                    if (self._spritesLayer3[i][j]) {
-                        RendererUtils.removePixiChild(self.layer3, self._spritesLayer3[i][j]);
-                        self._spritesLayer3[i][j] = null;
-                    }
-                    if (self._spritesLayer4[i][j]) {
-                        RendererUtils.removePixiChild(self.layer4, self._spritesLayer4[i][j]);
-                        self._spritesLayer4[i][j] = null;
-                    }
-                }, this.POSICIONES_EXTRA_RENDER);
-            }
-
-            _removeChilds(padre, gridHijos) {
-                _.each(gridHijos, function (fila) {
-                    _.each(fila, function (hijo) {
-                        if (hijo) {
-                            RendererUtils.removePixiChild(padre, hijo);
-                        }
-                    });
-                });
-            }
-
             _drawSpritesIni() {
                 this._removeChilds(this.layer2, this._spritesLayer2);
                 this._removeChilds(this.layer3, this._spritesLayer3);
@@ -241,28 +184,105 @@ define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh', 'view/rendererutils
                     var grh3 = self.mapa.getGrh3(i, j);
                     var grh4 = self.mapa.getGrh4(i, j);
                     if (grh2) {
-                        nuevoSprite = new SpriteGrh(self.assetManager.getTerrenoGrh(grh2));
-                        nuevoSprite.setPosition(screenX, screenY);
-                        self.layer2.addChild(nuevoSprite);
-                        self._spritesLayer2[i][j] = nuevoSprite;
+                        self._spritesLayer2[i][j] = self._crearSprite(self.layer2, grh2, screenX, screenY);
                     }
                     if (grh3) {
-                        nuevoSprite = new SpriteGrh(self.assetManager.getGrh(grh3));
-                        self.layer3.addChild(nuevoSprite);
-                        nuevoSprite.setPosition(screenX, screenY);
-                        self._spritesLayer3[i][j] = nuevoSprite;
+                        self._spritesLayer3[i][j] = self._crearSprite(self.layer3, grh3, screenX, screenY);
                     }
                     if (grh4) {
-                        nuevoSprite = new SpriteGrh(self.assetManager.getGrh(grh4));
-                        nuevoSprite.setPosition(screenX, screenY);
-                        self.layer4.addChild(nuevoSprite);
-                        self._spritesLayer4[i][j] = nuevoSprite;
+                        self._spritesLayer4[i][j] = self._crearSprite(self.layer4, grh4, screenX, screenY);
                     }
-                },  this.POSICIONES_EXTRA_RENDER);
+                }, this.POSICIONES_EXTRA_RENDER);
             }
 
-            cambiarMapa(mapa) {
-                this.mapa = mapa;
+            _updateLayersMov(dir) {
+                var self = this;
+                this.camera.forEachVisibleNextLinea(dir, function (i, j) {
+                    var screenX = i * self.tilesize;
+                    var screenY = j * self.tilesize;
+                    var grh2 = self.mapa.getGrh2(i, j);
+                    var grh3 = self.mapa.getGrh3(i, j);
+                    var grh4 = self.mapa.getGrh4(i, j);
+                    var nuevoSprite;
+                    if (grh2) {
+                        if (self._spritesLayer2[i][j]) {
+                            return;
+                        }
+                        self._spritesLayer2[i][j] = self._crearSprite(self.layer2, grh2, screenX, screenY);
+                    }
+                    if (grh3) {
+                        if (self._spritesLayer3[i][j]) {
+                            return;
+                        }
+                        self._spritesLayer3[i][j] = self._crearSprite(self.layer3, grh3, screenX, screenY);
+                    }
+                    if (grh4) {
+                        if (self._spritesLayer4[i][j]) {
+                            return;
+                        }
+                        self._spritesLayer4[i][j] = self._crearSprite(self.layer4, grh4, screenX, screenY);
+                    }
+                }, this.POSICIONES_EXTRA_RENDER);
+
+                this.camera.forEachVisibleLastLinea(dir, function (i, j) {
+
+                    if (self._spritesLayer2[i][j]) {
+                        RendererUtils.removePixiChild(self.layer2, self._spritesLayer2[i][j]);
+                        self._spritesLayer2[i][j] = null;
+                    }
+                    if (self._spritesLayer3[i][j]) {
+                        RendererUtils.removePixiChild(self.layer3, self._spritesLayer3[i][j]);
+                        self._spritesLayer3[i][j] = null;
+                    }
+                    if (self._spritesLayer4[i][j]) {
+                        RendererUtils.removePixiChild(self.layer4, self._spritesLayer4[i][j]);
+                        self._spritesLayer4[i][j] = null;
+                    }
+                }, this.POSICIONES_EXTRA_RENDER);
+
+                this.camera.forEachVisiblePosition(function (i, j) { // TODO: iterar solo por los que hagan falta
+                    if (self._spritesLayer2[i][j]) {
+                        self._setSpriteClipping(self._spritesLayer2[i][j]);
+                    }
+                    if (self._spritesLayer3[i][j]) {
+                        self._setSpriteClipping(self._spritesLayer3[i][j]);
+                    }
+
+                    if (self._spritesLayer4[i][j]) {
+                        self._setSpriteClipping(self._spritesLayer4[i][j]);
+                    }
+
+                }, this.POSICIONES_EXTRA_RENDER);
+
+            }
+
+            _crearSprite(parentLayer, grh, x, y) {
+                let nuevoSprite = new SpriteGrh(this.assetManager.getGrh(grh));
+                parentLayer.addChild(nuevoSprite); // ojo tiene que estar en este orden sino no anda el z-index(TODO)
+                nuevoSprite.setPosition(x, y);
+                this._setSpriteClipping(nuevoSprite);
+                return nuevoSprite;
+            }
+
+            _setSpriteClipping(sprite) {
+                // TODO (importante): cuando no esta visible, desactivar animaciones de sprite (sirve tambien para no tener que recalcular los bounds). Hacerlo directamnete en spritegrh?
+                let entityRect = sprite.getLocalBounds().clone();
+
+                entityRect.x = sprite.x;
+                entityRect.y = sprite.y;
+
+                RendererUtils.posicionarRectEnTile(entityRect);
+                sprite.visible = this.camera.rectVisible(entityRect);
+            }
+
+            _removeChilds(padre, gridHijos) {
+                _.each(gridHijos, function (fila) {
+                    _.each(fila, function (hijo) {
+                        if (hijo) {
+                            RendererUtils.removePixiChild(padre, hijo);
+                        }
+                    });
+                });
             }
 
             _drawDebugTile(x, y) {
