@@ -150,11 +150,11 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                         return;
                     }
                     var dir = c.esPosAdyacente(gridX, gridY);
-                    if (dir && this.renderer.entityVisiblePorCamara(c)) {
+                    if (dir && c.sprite.visible) { //sprite no visible es que esta clipeado, no que el pj este invisible (eso es charvisible) // TODO: refactorizar esto
                         c.mover(dir);
-                        this.playSonidoPaso(c);
+                        this.playSonidoPaso(c); // TODO: mas offset para los pasos?
                     }
-                    else { // posicion no adyacente, entonces resetear la posicion (no hacerlo caminar)
+                    else { // posicion no adyacente, entonces resetear la posicion directamente (no hacerlo caminar)
                         this.resetPosCharacter(CharIndex, gridX, gridY);
                     }
                     /* TODO:
@@ -170,7 +170,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
             }
 
             playSonidoPaso(char) {
-                if (char.muerto || !this.renderer.entityEnTileVisible(char)) {
+                if (char.muerto) {
                     return;
                 }
                 if (this.playerState.navegando) { //todo: que sea dependiendo si el char navega, no el player
@@ -436,12 +436,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                     this.renderer.updateBeforeMovementBegins(direccion);
                 }.bind(this));
 
-                this.playerMovement.setOnceMovementBegan( // esto es despues de que cambie el grid pos al siguiente (apenas comienza el mov)
-                    function (direccion) {
-                        this.renderer.updateOnceMovementBeganAndGridPosChanged(direccion);
-                        this.actualizarIndicadorPosMapa();
-                    }.bind(this));
-
                 this.playerMovement.setOnCambioHeading(function (direccion) {
                     this.client.sendChangeHeading(direccion);
                 }.bind(this));
@@ -510,6 +504,10 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                         this.renderer.moverPosition(x - this.renderer.camera.centerPosX, y - this.renderer.camera.centerPosY);
                     }.bind(this));
 
+                this.playerMovement.setOnFinMovimiento( // se ejecuta una vez que llega a cada tile
+                    function () {
+                        this.actualizarIndicadorPosMapa();
+                    }.bind(this));
             }
 
             setTrabajoPendiente(skill) {

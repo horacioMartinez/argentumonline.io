@@ -8,6 +8,13 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
 
         class EntityRenderer {
             constructor(escala, entityContainer, entityNamesContainer, entityChatContainer, camera, assetManager) {
+
+                this.CLIPPING_EXTRA_POSITIONS = {
+                    norte: 0,
+                    sur: 1,
+                    este: 1,
+                    oeste: 1
+                };
                 this.escala = escala;
                 this.entityContainer = entityContainer;
                 this.entityNamesContainer = entityNamesContainer;
@@ -206,7 +213,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
                 return sprite;
             }
 
-            updateEntitiesMov(entities){
+            updateEntitiesMov(direccion){
                 this.updateSpritesClipping();
             }
 
@@ -224,12 +231,9 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
                 spriteRect.y = sprite.y;
                 spriteRect.width = sprite.width;
                 spriteRect.height = sprite.height;
-                let y = this.camera.gridY + 6;
-                let x = this.camera.gridX + 8;
-                log.error("X: " + x + " Y: " + y);
 
                 RendererUtils.posicionarRectEnTile(spriteRect);
-                sprite.visible = this.camera.rectVisible(spriteRect);
+                sprite.visible = this.camera.rectVisible(spriteRect, this.CLIPPING_EXTRA_POSITIONS);
             }
 
             setCharacterChat(char, chat, r, g, b) {
@@ -269,13 +273,15 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
             }
 
             entityVisiblePorCamara(entity) {
-                let entityRect = entity.sprite.getLocalBounds().clone();
+                let entityRect = {};
 
                 entityRect.x = entity.x;
                 entityRect.y = entity.y;
+                entityRect.width = entity.sprite.width;
+                entityRect.height = entity.sprite.height;
 
                 RendererUtils.posicionarRectEnTile(entityRect);
-                return this.camera.rectVisible(entityRect);
+                return this.camera.rectVisible(entityRect,this.CLIPPING_EXTRA_POSITIONS);
             }
 
             entityEnTileVisible(entity) { // puede que no este en un tile visible pero si sea visible la entidad (para eso usar el de arriba)

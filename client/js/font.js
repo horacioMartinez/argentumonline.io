@@ -108,7 +108,7 @@ define(["utils/palette"], function (Palette) {
         },
 
         INFOBOLD: {
-            fill: Palette.get('teal', '300'),
+            fill: Palette.get('teal', 'A400'),
             bold: 1
         },
 

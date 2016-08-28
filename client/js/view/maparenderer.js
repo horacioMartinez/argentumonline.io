@@ -266,10 +266,12 @@ define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh', 'view/rendererutils
 
             _setSpriteClipping(sprite) {
                 // TODO (importante): cuando no esta visible, desactivar animaciones de sprite (sirve tambien para no tener que recalcular los bounds). Hacerlo directamnete en spritegrh?
-                let spriteRect = sprite.getLocalBounds().clone();
+                let spriteRect = {};
 
                 spriteRect.x = sprite.x;
                 spriteRect.y = sprite.y;
+                spriteRect.width = sprite.width;
+                spriteRect.height = sprite.height;
 
                 RendererUtils.posicionarRectEnTile(spriteRect);
                 sprite.visible = this.camera.rectVisible(spriteRect);

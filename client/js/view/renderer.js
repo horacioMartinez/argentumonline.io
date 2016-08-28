@@ -184,11 +184,9 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
 
             updateBeforeMovementBegins(dir) {
                 this.mapaRenderer.updateTilesMov(dir);
+                this.entityRenderer.updateEntitiesMov(dir);
             }
 
-            updateOnceMovementBeganAndGridPosChanged(dir) {
-                this.entityRenderer.updateEntitiesMov();
-            }
 
             cambiarMapa(mapa) {
                 this.mapaRenderer.cambiarMapa(mapa);

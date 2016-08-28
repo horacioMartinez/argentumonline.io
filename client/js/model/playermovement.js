@@ -26,7 +26,7 @@ define([], function () {
             return this._enabled > 0;
         }
 
-        get disabled(){
+        get disabled() {
             return !this.enabled;
         }
 
@@ -61,8 +61,8 @@ define([], function () {
             this._moverseUpdateCallback = callback;
         }
 
-        setOnceMovementBegan(callback) { //cb params: direccion
-            this._onceMovementBeganCallback = callback;
+        setOnFinMovimiento(callback) {
+            this._finMovimientoCallback = callback;
         }
 
         _tratarDeCaminar() {
@@ -107,6 +107,7 @@ define([], function () {
                 this.forcedCaminarQueue.shift(); // remueve primer index, ForcedCaminar es una cola con los mensajes de caminar forzado que llegaron
                 this.caminandoForzado = false;
             }
+            this._finMovimientoCallback();
         }
 
         tratarDeMover() {
@@ -114,7 +115,6 @@ define([], function () {
                 if (this._tratarDeCaminar()) {
                     let dir = this.getDirMov();
                     this.game.player.mover(dir, this._moverseUpdateCallback, this._hasMoved.bind(this));
-                    this._onceMovementBeganCallback(dir);
                     return true;
                 }
             }

@@ -3,17 +3,15 @@ define(['enums'], function (Enums) {
     class Camera {
         constructor(tilesize) {
             this.DEFAULT_EXTRA_POSITIONS = {
-                norte:0,
-                sur:0,
-                este:0,
-                oeste:0
+                norte: 0,
+                sur: 0,
+                este: 0,
+                oeste: 0
             };
 
             this.tilesize = tilesize;
             this.x = 0;
             this.y = 0;
-            this.centerPosX = 0;
-            this.centerPosY = 0;
             this.gridX = 0;
             this.gridY = 0;
 
@@ -24,15 +22,28 @@ define(['enums'], function (Enums) {
             this.width = this.gridW * this.tilesize;
         }
 
+        get centerPosX() {
+            return this.x + (Math.floor(this.gridW / 2) * this.tilesize);
+        }
+
+        get centerPosY() {
+            return this.y + (Math.floor(this.gridH / 2) * this.tilesize);
+        }
+
+        get centerGridX() {
+            return this.gridX + Math.floor(this.gridW / 2);
+        }
+
+        get centerGridY() {
+            return this.gridY + Math.floor(this.gridH / 2);
+        }
+
         setPosition(x, y) {
             this.x = x;
             this.y = y;
 
             this.gridX = Math.floor(x / this.tilesize);
             this.gridY = Math.floor(y / this.tilesize);
-
-            this.centerPosX = this.x + (Math.floor(this.gridW / 2) * this.tilesize);
-            this.centerPosY = this.y + (Math.floor(this.gridH / 2) * this.tilesize);
         }
 
         setGridPosition(gridX, gridY) {
@@ -191,19 +202,21 @@ define(['enums'], function (Enums) {
                 extraXOeste = extraPositions.oeste,
                 extraYSur = extraPositions.sur,
                 extraYNorte = extraPositions.norte;
-            if ( (gridY >= (this.gridY - extraYNorte) ) && (gridY < (this.gridY + this.gridH + extraYSur))
-                && (gridX >= (this.gridX - extraXOeste) ) &&  ( gridX < (this.gridX + this.gridW + extraXEste))) {
+            if ((gridY >= (this.gridY - extraYNorte) ) && (gridY < (this.gridY + this.gridH + extraYSur))
+                && (gridX >= (this.gridX - extraXOeste) ) && ( gridX < (this.gridX + this.gridW + extraXEste))) {
                 return true;
             } else {
                 return false;
             }
         }
 
-        rectVisible(rect) { // eje x,y en esquina izquierda superior de rect
-            return !((this.x > rect.x + rect.width) ||
-            (this.x + this.width < rect.x) ||
-            (this.y > rect.y + rect.height) ||
-            (this.y + this.height < rect.y));
+        rectVisible(rect, extraPositions) { // eje x,y en esquina izquierda superior de rect
+            extraPositions = extraPositions || this.DEFAULT_EXTRA_POSITIONS;
+
+            return !((this.x > rect.x + rect.width + +extraPositions.oeste * this.tilesize ) ||
+            (this.x + this.width + extraPositions.este * this.tilesize < rect.x) ||
+            (this.y > rect.y + rect.height + extraPositions.oeste * this.tilesize) ||
+            (this.y + this.height + extraPositions.sur * this.tilesize < rect.y));
         }
 
         focusEntity(entity) {
