@@ -9,13 +9,26 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
             /*
              Body, Head,Weapon,Shield,Helmet: vector con los grhs de los 4 headings. Cada uno de los headings puede contener un solo numero de grh frames de grhs + vel
              */
-            // Clase que hereda de container de pixi
             super();
             
             // charVisible solo incluye al personaje, la clase esta ademas incluye a los fxs, etc
             this._charVisible = true;
             this.OFFSET_HEAD = -34;
             this._fxsInfinitos = [];
+        }
+
+        get width(){ // ignoro tamaño de la cabeza, ver si hace diferencia
+            if (this.bodySprite){
+                return this.bodySprite.width;
+            }
+            return 0;
+        }
+
+        get height(){
+            if (this.bodySprite){
+                return this.bodySprite.height;
+            }
+            return 0;
         }
 
         setFX(grh, offX, offY, loops) {

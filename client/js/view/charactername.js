@@ -32,10 +32,6 @@ define(['enums', 'lib/pixi', 'font'], function (Enums, PIXI, Font) {
             this._escala = nuevaEscala;
         }
 
-        setVisible(visible) {
-            this.visible = visible;
-        }
-
     }
 
     return CharacterName;

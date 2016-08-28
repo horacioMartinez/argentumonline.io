@@ -63,7 +63,7 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
                 this.gameStage.addChild(this.layer4);
                 this.gameStage.addChild(this.gameChat); // todo? gametext abajo o arriba de layer4?
 
-                this.entityRenderer = new EntityRenderer(this.escala, this.layer3, this.gameNames, this.gameChat, this.camera, this.assetManager);
+                this.entityRenderer = new EntityRenderer(this.escala, this.layer3, this.gameNames, this.gameChat, this.camera, this.assetManager, this.gameStage);
                 this.climaRenderer = new ClimaRenderer(this.escala, this.climaContainer, this.assetManager, this.pixiRenderer);
                 this.mapaRenderer = new MapaRenderer(this.camera, this.assetManager, this.layer1, this.layer2, this.layer3, this.layer4);
             }
@@ -182,8 +182,11 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
                 this.layer4.visible = !bajoT;
             }
 
-            updateTilesMov(dir) {
+            updateBeforeMovementBegins(dir) {
                 this.mapaRenderer.updateTilesMov(dir);
+            }
+
+            updateOnceMovementBeganAndGridPosChanged(dir) {
                 this.entityRenderer.updateEntitiesMov();
             }
 
@@ -199,7 +202,7 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
 
             resetCameraPosition(gridX, gridY) {
                 this.camera.lookAtGridPos(gridX, gridY);
-                this.entityRenderer.updateSpritesClippin();
+                this.entityRenderer.updateSpritesClipping();
             }
 
             _syncGamePosition() {

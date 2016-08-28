@@ -33,15 +33,15 @@ define(['enums', 'lib/pixi'], function (Enums, PIXI) {
             this.emit('positionChanged');
         }
 
-        setGridPosition(gridX, gridY) {
-            this.setGridPositionOnly(gridX,gridY);
-            this.setPosition(gridX*32,gridY*32);
-        }
-
         setGridPositionOnly(gridX, gridY) {
             this._gridX = gridX;
             this._gridY = gridY;
             this.emit('gridPositionChanged');
+        }
+        
+        setGridPosition(gridX, gridY) {
+            this.setGridPositionOnly(gridX,gridY);
+            this.setPosition(gridX*32,gridY*32);
         }
 
         esPosAdyacente(gridX, gridY) { // devulve el heading si la pos es adyacente, sino 0
@@ -58,21 +58,6 @@ define(['enums', 'lib/pixi'], function (Enums, PIXI) {
                 return Enums.Heading.sur;
             }
             return 0;
-        }
-
-        blink(speed, callback) {
-            var self = this;
-
-            this.blinking = setInterval(function () {
-                self.toggleVisibility();
-            }, speed);
-        }
-
-        stopBlinking() {
-            if (this.blinking) {
-                clearInterval(this.blinking);
-            }
-            this.setVisible(true);
         }
     }
 

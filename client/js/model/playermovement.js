@@ -61,6 +61,10 @@ define([], function () {
             this._moverseUpdateCallback = callback;
         }
 
+        setOnceMovementBegan(callback) { //cb params: direccion
+            this._onceMovementBeganCallback = callback;
+        }
+
         _tratarDeCaminar() {
             if (!this.getDirMov() || !this.enabled) {
                 return false;
@@ -110,6 +114,7 @@ define([], function () {
                 if (this._tratarDeCaminar()) {
                     let dir = this.getDirMov();
                     this.game.player.mover(dir, this._moverseUpdateCallback, this._hasMoved.bind(this));
+                    this._onceMovementBeganCallback(dir);
                     return true;
                 }
             }

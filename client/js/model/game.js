@@ -423,20 +423,24 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
 
             initPlayerMovementCallbacks() {
                 this.playerMovement.setOnCaminar(function (direccion, forced) {
-                    {
-                        if (!forced) {
-                            this.client.sendWalk(direccion);
-                        }
-                        this.actualizarBajoTecho();
-                        if (this.ignorarProximoSonidoPaso) {
-                            this.ignorarProximoSonidoPaso = false;
-                        } else {
-                            this.playSonidoPaso(this.player);
-                        }
-                        this.actualizarIndicadorPosMapa();
-                        this.renderer.updateTilesMov(direccion);
+                    if (!forced) {
+                        this.client.sendWalk(direccion);
                     }
+                    this.actualizarBajoTecho();
+                    if (this.ignorarProximoSonidoPaso) {
+                        this.ignorarProximoSonidoPaso = false;
+                    } else {
+                        this.playSonidoPaso(this.player);
+                    }
+
+                    this.renderer.updateBeforeMovementBegins(direccion);
                 }.bind(this));
+
+                this.playerMovement.setOnceMovementBegan( // esto es despues de que cambie el grid pos al siguiente (apenas comienza el mov)
+                    function (direccion) {
+                        this.renderer.updateOnceMovementBeganAndGridPosChanged(direccion);
+                        this.actualizarIndicadorPosMapa();
+                    }.bind(this));
 
                 this.playerMovement.setOnCambioHeading(function (direccion) {
                     this.client.sendChangeHeading(direccion);
@@ -497,8 +501,8 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                             }
                         }
                     }
-
                     return true;
+
                 }.bind(this));
 
                 this.playerMovement.setOnMoverseUpdate(

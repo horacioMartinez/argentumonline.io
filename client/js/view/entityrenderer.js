@@ -98,7 +98,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
 
                 char.sprite = sprite;
 
-                // TODO!!! nombre clippping
+                // TODO!!! nombre clippping y textos de chat clipping !!!
                 char.texto = new CharacterText(this.escala);
                 this.entityChatContainer.addChild(char.texto);
 
@@ -207,10 +207,10 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
             }
 
             updateEntitiesMov(entities){
-                this.updateSpritesClippin();
+                this.updateSpritesClipping();
             }
 
-            updateSpritesClippin(){
+            updateSpritesClipping(){
                 for (var i = 0; i< this.entityContainer.children.length; i++){
                     this._setSpriteClipping(this.entityContainer.children[i]);
                 }
@@ -219,9 +219,14 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
             _setSpriteClipping(sprite) {
                 // TODO (importante): cuando no esta visible, desactivar animaciones de sprite (sirve tambien para no tener que recalcular los bounds). Hacerlo directamnete en spritegrh?
                 let spriteRect = sprite.getLocalBounds().clone();
-
+                spriteRect = {};
                 spriteRect.x = sprite.x;
                 spriteRect.y = sprite.y;
+                spriteRect.width = sprite.width;
+                spriteRect.height = sprite.height;
+                let y = this.camera.gridY + 6;
+                let x = this.camera.gridX + 8;
+                log.error("X: " + x + " Y: " + y);
 
                 RendererUtils.posicionarRectEnTile(spriteRect);
                 sprite.visible = this.camera.rectVisible(spriteRect);
@@ -239,7 +244,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
             setCharVisible(char, visible) {
                 char.sprite.setCharVisible(visible);
                 if (char.spriteNombre) {
-                    char.spriteNombre.setVisible(visible);
+                    char.spriteNombre.visible = visible;
                 }
             }
 
@@ -250,6 +255,17 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
             setCharacterFX(char, FX, FXLoops) {
                 var grh = this.assetManager.getGrh(this.fxs[FX].animacion);
                 char.sprite.setFX(grh, this.fxs[FX].offX, this.fxs[FX].offY, FXLoops);
+            }
+
+            _drawDebugTile(x, y) {
+                var graphics = new PIXI.Graphics();
+                graphics.beginFill(0xFFFF00);
+                graphics.lineStyle(5, 0xFF0000);
+                graphics.drawRect(x, y, this.tilesize, this.tilesize);
+                graphics.setGridPositionChangeCallback = function (a){
+                    return;
+                };
+                this.entityNamesContainer.addChild(graphics);
             }
 
             entityVisiblePorCamara(entity) {
