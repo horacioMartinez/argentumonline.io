@@ -43,10 +43,9 @@ define(["utils/palette"], function (Palette) {
 
         CONSOLA_BASE_FONT: {
             fontFamily: FONT_FAMILY,
-            fontWeight: 'bold',
             fontSize: '12',
             stroke: "black",
-            strokeThickness: 0.2,
+            strokeThickness: 5,
         },
 
         NOMBRE_BASE_FONT: {
@@ -58,7 +57,7 @@ define(["utils/palette"], function (Palette) {
             align: 'center',
             dropShadow: true,
             dropShadowDistance: 0,
-            dropShadowBlur: 5
+            dropShadowBlur: 3
         },
 
         TALK_BASE_FONT: {

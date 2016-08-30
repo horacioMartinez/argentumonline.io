@@ -2,17 +2,16 @@
  * Created by horacio on 3/8/16.
  */
 
-define(['font', 'lib/pixi', 'view/rendererutils'], function (Font, PIXI, rendererUtils) {
+define(['font', 'lib/pixi', 'view/rendererutils', 'view/textstyle'], function (Font, PIXI, rendererUtils, TextStyle) {
 
     function Consola(escala) {
         PIXI.Container.call(this);
         
         this.DURACION_TEXTO = 7000;
         this.CANT_LINEAS = 7;
-        
-        escala = escala || 1;
 
-        this.baseFont = $.extend({}, Font.CONSOLA_BASE_FONT);
+        escala = escala || 1;
+        this._escala = escala;
         this.setEscala(escala);
 
         this._elapsedTime = 0;
@@ -22,13 +21,11 @@ define(['font', 'lib/pixi', 'view/rendererutils'], function (Font, PIXI, rendere
     Consola.constructor = Consola;
 
     Consola.prototype.setEscala = function (escala) {
-        this.baseFont.fontSize = Math.round(Font.CONSOLA_BASE_FONT.fontSize * escala);
-
         for (var i = 0; i < this.children.length; i++) {
-            $.extend(this.children[i].style, this.children[i].style, this.baseFont); // OJO ANDA ESTO??? TODO
-            this.children[i].dirty = true;
+            this.children[i].style.setEscala(escala);
             this.children[i].y = this.children[0].height * i;
         }
+        this._escala = escala;
     };
 
     Consola.prototype.update = function (delta) {
@@ -58,8 +55,7 @@ define(['font', 'lib/pixi', 'view/rendererutils'], function (Font, PIXI, rendere
     };
 
     Consola.prototype.agregarTexto = function (texto, font) {
-
-        var estilo = $.extend({}, this.baseFont, font);
+        let estilo = new TextStyle(Font.CONSOLA_BASE_FONT,this._escala,font);
         let nuevoTexto = new PIXI.Text(texto, estilo);
 
         if (this.children.length > this.CANT_LINEAS - 1) {

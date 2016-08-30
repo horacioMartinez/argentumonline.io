@@ -73,6 +73,10 @@ define(['enums'],
                 this.forEachCharacter(callback);
                 this.forEachItem(callback);
             }
+
+            getEntities(){
+                return this.characters.concat(this.items);
+            }
         }
 
         return World;

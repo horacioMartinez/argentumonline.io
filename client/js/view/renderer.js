@@ -182,9 +182,9 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
                 this.layer4.visible = !bajoT;
             }
 
-            updateBeforeMovementBegins(dir) {
+            updateBeforeMovementBegins(dir,entities) {
                 this.mapaRenderer.updateTilesMov(dir);
-                this.entityRenderer.updateEntitiesMov(dir);
+                this.entityRenderer.updateEntitiesMov(dir,entities);
             }
 
 
@@ -192,15 +192,15 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
                 this.mapaRenderer.cambiarMapa(mapa);
             }
 
-            drawMapaIni(gridX, gridY) {
-                this.resetCameraPosition(gridX, gridY);
+            drawMapaIni(gridX, gridY, entities) {
+                this.resetCameraPosition(gridX, gridY,entities);
                 this._syncGamePosition();
                 this.mapaRenderer.drawMapaIni(gridX, gridY);
             }
 
-            resetCameraPosition(gridX, gridY) {
+            resetCameraPosition(gridX, gridY, entities) {
                 this.camera.lookAtGridPos(gridX, gridY);
-                this.entityRenderer.updateSpritesClipping();
+                this.entityRenderer.updateEntitiesClipping(entities);
             }
 
             _syncGamePosition() {
@@ -213,8 +213,8 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
                 this._syncGamePosition();
             }
 
-            resetPos(gridX, gridY) {
-                this.drawMapaIni(gridX, gridY);
+            resetPos(gridX, gridY, entities) {
+                this.drawMapaIni(gridX, gridY, entities);
             }
 
             removeLluvia() {

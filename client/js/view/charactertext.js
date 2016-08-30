@@ -2,13 +2,12 @@
  * Created by horacio on 3/9/16.
  */
 
-define(['font', 'lib/pixi'], function (Font, PIXI) {
+define(['font', 'lib/pixi', 'view/textstyle'], function (Font, PIXI, TextStyle) {
 
     class CharacterText extends PIXI.Container {
         constructor(escala) {
             super();
-            this.estiloChat = $.extend({}, Font.TALK_BASE_FONT);
-            this.estiloHovering = $.extend({}, Font.HOVERING_BASE_FONT);
+            this.estiloChat = new TextStyle(Font.TALK_BASE_FONT,escala);
 
             this.infos = [];
             this._chat = null;
@@ -20,11 +19,10 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
         }
 
         setEscala(escala) {
-            this.estiloChat.fontSize = Math.round(Font.TALK_BASE_FONT.fontSize * escala);
-            this.estiloHovering.fontSize = Math.round(Font.HOVERING_BASE_FONT.fontSize * escala);
+            this.estiloChat.setEscala(escala);
 
             if (this._chat) {
-                this._chat.style = this.estiloChat;
+                //this._chat.style = this.estiloChat;
                 this._chat.x = Math.round(this._chat.x * (escala / this._escala));
                 this._chat.y = Math.round(this._chat.y * (escala / this._escala));
             }
@@ -83,7 +81,7 @@ define(['font', 'lib/pixi'], function (Font, PIXI) {
 
         //TODO: ordenar codigo repetido y animacion bien hecha (ademas en el chat animarlo cuando aparece, como que suba un poco)
         addHoveringInfo(value, font) {
-            var estilo = $.extend({}, this.estiloHovering, font);
+            var estilo = new TextStyle(Font.HOVERING_BASE_FONT,this._escala,font);
             var info = new PIXI.Text(value, estilo);
 
             info.tiempoPasado = 0;

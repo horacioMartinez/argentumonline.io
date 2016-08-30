@@ -20,7 +20,6 @@ define(['enums', 'ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mens
             this.heightJuego = 13 * 32;
 
             this.escala = null;
-            this.resizeUi();
         }
 
         _createPlaySonidoCallback() {
@@ -92,6 +91,8 @@ define(['enums', 'ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mens
         }
 
         initDOM() {
+            this.resizeUi();
+
             var self = this;
 
             $('.clickable').click(function (event) {

@@ -2,11 +2,11 @@
  * Created by horacio on 13/08/2016.
  */
 
-define(['font', 'lib/pixi', 'utils/palette'], function (Font, PIXI, Palette) {
+define(['font', 'lib/pixi', 'utils/palette', 'view/textstyle'], function (Font, PIXI, Palette, TextStyle) {
 
     class IndicadorMapa extends PIXI.Text {
         constructor(escala) {
-            let style = $.extend({}, Font.INDICADOR_MAPA);
+            let style = new TextStyle(Font.INDICADOR_MAPA,escala);
             super(" ",style);
             this.setEscala(escala);
         }
@@ -16,7 +16,7 @@ define(['font', 'lib/pixi', 'utils/palette'], function (Font, PIXI, Palette) {
         }
 
         setEscala(escala){
-            this.style.fontSize = Math.round(Font.INDICADOR_MAPA.fontSize * escala);
+            this.style.setEscala(escala);
         }
 
     }

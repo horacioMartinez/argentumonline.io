@@ -306,7 +306,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                     }
 
                     this.resetPosCharacter(this.player.id, X, Y, true);
-                    this.renderer.drawMapaIni(this.player.gridX, this.player.gridY);
+                    this.renderer.drawMapaIni(this.player.gridX, this.player.gridY, this.world.getEntities());
                 };
                 this.map.onceLoaded((mapa) => {
                     f();
@@ -357,7 +357,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 if (c === this.player) {
                     log.error(" reseteando pos player");
                     if (!noReDraw) {
-                        this.renderer.resetPos(gridX, gridY);
+                        this.renderer.resetPos(gridX, gridY, this.world.getEntities());
                     }
                     this.actualizarBajoTecho();
                     this.actualizarIndicadorPosMapa();
@@ -437,7 +437,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                         this.playSonidoPaso(this.player);
                     }
 
-                    this.renderer.updateBeforeMovementBegins(direccion);
+                    this.renderer.updateBeforeMovementBegins(direccion,this.world.getEntities());
                 }.bind(this));
 
                 this.playerMovement.setOnCambioHeading(function (direccion) {

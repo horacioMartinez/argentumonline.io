@@ -44,22 +44,22 @@ define(['lib/pixi'], function (PIXI) {
             this.width = w;
             this.height = h;
             this._posicionarGrafico();
-        };
+        }
 
         play() {
             if (this.textures.length > 1) {
                 this._playedLoops = 1;
                 this._play();
             }
-        };
+        }
 
         _play() {
             super.play();
-        };
+        }
 
         setOnComplete(cb) {
             this._realOnComplete = cb;
-        };
+        }
 
         _setSpeed(velocidad) {
             var duracion;
@@ -70,16 +70,16 @@ define(['lib/pixi'], function (PIXI) {
             }
             var fps = (this.textures.length / duracion) * 1000;
             this.animationSpeed = fps / 60;
-        };
+        }
 
         setSpeed(vel) {
             this._velocidadSeteada = vel;
             this._setSpeed();
-        };
+        }
 
         setGridPositionChangeCallback(callback) {
             this._onGridPositionChange = callback;
-        };
+        }
 
         setPosition(x, y) {
             this.x = x;
@@ -93,13 +93,13 @@ define(['lib/pixi'], function (PIXI) {
                     this._onGridPositionChange();
                 }
             }
-        };
+        }
 
         _posicionarGrafico() {
             var x = ( (this.width - 32) / 2 ) / this.width;
             var y = (this.height - 32) / this.height;
             this.anchor.set(x, y);
-        };
+        }
 
         cambiarGrh(grh) {
             if (this._grh === grh) {
@@ -133,7 +133,7 @@ define(['lib/pixi'], function (PIXI) {
             if (grhAnimacion && this.loop) {
                 this.play();
             }
-        };
+        }
     }
 
     return SpriteGrh;

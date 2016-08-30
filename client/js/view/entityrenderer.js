@@ -212,18 +212,17 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
                 return sprite;
             }
 
-            updateEntitiesMov(direccion) {
-                this.updateSpritesClipping();
+            updateEntitiesMov(direccion,entities) {
+                this.updateEntitiesClipping(entities);
             }
 
-            updateSpritesClipping() {
-                for (var i = 0; i < this.entityContainer.children.length; i++) {
-                    this._setSpriteClipping(this.entityContainer.children[i]);
+            updateEntitiesClipping(entities) {
+                for (var i = 0; i < entities.length; i++) {
+                    this._setSpriteClipping(entities[i].sprite);
                 }
             }
 
             _setSpriteClipping(sprite) {
-                // TODO (importante): cuando no esta visible, desactivar animaciones de sprite (sirve tambien para no tener que recalcular los bounds). Hacerlo directamnete en spritegrh?
                 sprite.visible = this._spriteVisiblePorCamara(sprite, this.CLIPPING_EXTRA_POSITIONS);
             }
 

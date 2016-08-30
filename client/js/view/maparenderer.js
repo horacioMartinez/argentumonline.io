@@ -36,8 +36,6 @@ define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh', 'view/rendererutils
                 this._spritesLayer3 = [];
                 this._spritesLayer4 = [];
 
-                this._clippedSprites = [];
-
                 this._initTerrenoSpriteGrid();
             }
 
@@ -240,7 +238,7 @@ define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh', 'view/rendererutils
                     }
                 }, this.POSICIONES_EXTRA_RENDER);
 
-                this.camera.forEachVisiblePosition(function (i, j) { // TODO: iterar solo por los que hagan falta
+                this.camera.forEachVisiblePosition(function (i, j) {
                     if (self._spritesLayer2[i][j]) {
                         self._setSpriteClipping(self._spritesLayer2[i][j]);
                     }
