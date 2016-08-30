@@ -120,8 +120,8 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
                 this.entityRenderer.setCharacterFX(char, FX, FXLoops);
             }
 
-            entityVisiblePorCamara(entity) {
-                return this.entityRenderer.entityVisiblePorCamara(entity);
+            entityVisiblePorCamara(entity, extraPositions) {
+                return this.entityRenderer.entityVisiblePorCamara(entity,extraPositions);
             }
 
             entityEnTileVisible(entity) { // puede que no este en un tile visible pero si sea visible la entidad (para eso usar el de arriba)

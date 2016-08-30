@@ -265,7 +265,6 @@ define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh', 'view/rendererutils
             }
 
             _setSpriteClipping(sprite) {
-                // TODO (importante): cuando no esta visible, desactivar animaciones de sprite (sirve tambien para no tener que recalcular los bounds). Hacerlo directamnete en spritegrh?
                 let spriteRect = {};
 
                 spriteRect.x = sprite.x;

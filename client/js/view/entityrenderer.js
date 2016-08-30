@@ -11,7 +11,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
 
                 this.CLIPPING_EXTRA_POSITIONS = {
                     norte: 0,
-                    sur: 1,
+                    sur: 2,
                     este: 1,
                     oeste: 1
                 };
@@ -61,7 +61,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
                     log.error("grh de item invalido!");
                     return;
                 }
-                item.sprite = this._crearSprite(this.entityContainer,numGrh,Math.round(item.x),Math.round(item.y), -50);
+                item.sprite = this._crearSprite(this.entityContainer, numGrh, Math.round(item.x), Math.round(item.y), -50);
             }
 
             sacarItem(item) {
@@ -99,8 +99,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
 
                 char.emit('nameChanged');
 
-
-                var sprite = this._crearCharacterSprites(this.entityContainer,char.x,char.y, -30);
+                var sprite = this._crearCharacterSprites(this.entityContainer, char.x, char.y, -30);
                 sprite.setSpeed(char.moveSpeed); // ANIMACIONES char se setean a misma velocidad que su movimiento !!
 
                 char.sprite = sprite;
@@ -122,7 +121,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
                     }
                 });
 
-                char.on('gridPositionChanged', function(){
+                char.on('gridPositionChanged', function () {
                     self._setSpriteClipping(this.sprite);
                 });
 
@@ -203,37 +202,55 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
                 return nuevoSprite;
             }
 
-            _crearCharacterSprites(parentLayer,x,y, zIndex) {
+            _crearCharacterSprites(parentLayer, x, y, zIndex) {
                 let sprite = new CharacterSprites();
                 sprite.setSombraSprite(this.assetManager.getGrh(23651));
                 parentLayer.addChild(sprite);
-                sprite.setPosition(x,y);
+                sprite.setPosition(x, y);
                 this._setSpriteClipping(sprite);
                 sprite.zOffset = zIndex;
                 return sprite;
             }
 
-            updateEntitiesMov(direccion){
+            updateEntitiesMov(direccion) {
                 this.updateSpritesClipping();
             }
 
-            updateSpritesClipping(){
-                for (var i = 0; i< this.entityContainer.children.length; i++){
+            updateSpritesClipping() {
+                for (var i = 0; i < this.entityContainer.children.length; i++) {
                     this._setSpriteClipping(this.entityContainer.children[i]);
                 }
             }
 
             _setSpriteClipping(sprite) {
                 // TODO (importante): cuando no esta visible, desactivar animaciones de sprite (sirve tambien para no tener que recalcular los bounds). Hacerlo directamnete en spritegrh?
-                let spriteRect = sprite.getLocalBounds().clone();
-                spriteRect = {};
-                spriteRect.x = sprite.x;
-                spriteRect.y = sprite.y;
-                spriteRect.width = sprite.width;
-                spriteRect.height = sprite.height;
+                sprite.visible = this._spriteVisiblePorCamara(sprite, this.CLIPPING_EXTRA_POSITIONS);
+            }
 
-                RendererUtils.posicionarRectEnTile(spriteRect);
-                sprite.visible = this.camera.rectVisible(spriteRect, this.CLIPPING_EXTRA_POSITIONS);
+            entityVisiblePorCamara(entity, extraPositions) {
+                let finalExtraPositions;
+                if (extraPositions) {
+                    finalExtraPositions = {};
+                    finalExtraPositions.norte = extraPositions.norte + this.CLIPPING_EXTRA_POSITIONS.norte;
+                    finalExtraPositions.sur = extraPositions.sur + this.CLIPPING_EXTRA_POSITIONS.sur;
+                    finalExtraPositions.este = extraPositions.este + this.CLIPPING_EXTRA_POSITIONS.este;
+                    finalExtraPositions.oeste = extraPositions.oeste + this.CLIPPING_EXTRA_POSITIONS.oeste;
+                } else {
+                    finalExtraPositions = this.CLIPPING_EXTRA_POSITIONS;
+                }
+                return this._spriteVisiblePorCamara(entity.sprite,finalExtraPositions);
+            }
+
+            _spriteVisiblePorCamara(sprite, extraPositions) {
+                let entityRect = {};
+
+                entityRect.x = sprite.x;
+                entityRect.y = sprite.y;
+                entityRect.width = sprite.width;
+                entityRect.height = sprite.height;
+
+                RendererUtils.posicionarRectEnTile(entityRect);
+                return this.camera.rectVisible(entityRect, extraPositions);
             }
 
             setCharacterChat(char, chat, r, g, b) {
@@ -259,29 +276,6 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
             setCharacterFX(char, FX, FXLoops) {
                 var grh = this.assetManager.getGrh(this.fxs[FX].animacion);
                 char.sprite.setFX(grh, this.fxs[FX].offX, this.fxs[FX].offY, FXLoops);
-            }
-
-            _drawDebugTile(x, y) {
-                var graphics = new PIXI.Graphics();
-                graphics.beginFill(0xFFFF00);
-                graphics.lineStyle(5, 0xFF0000);
-                graphics.drawRect(x, y, this.tilesize, this.tilesize);
-                graphics.setGridPositionChangeCallback = function (a){
-                    return;
-                };
-                this.entityNamesContainer.addChild(graphics);
-            }
-
-            entityVisiblePorCamara(entity) {
-                let entityRect = {};
-
-                entityRect.x = entity.x;
-                entityRect.y = entity.y;
-                entityRect.width = entity.sprite.width;
-                entityRect.height = entity.sprite.height;
-
-                RendererUtils.posicionarRectEnTile(entityRect);
-                return this.camera.rectVisible(entityRect,this.CLIPPING_EXTRA_POSITIONS);
             }
 
             entityEnTileVisible(entity) { // puede que no este en un tile visible pero si sea visible la entidad (para eso usar el de arriba)

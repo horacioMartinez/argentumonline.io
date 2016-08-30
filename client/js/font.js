@@ -55,7 +55,10 @@ define(["utils/palette"], function (Palette) {
             fontSize: '12',
             stroke: "black",
             strokeThickness: 0.2,
-            align: 'center'
+            align: 'center',
+            dropShadow: true,
+            dropShadowDistance: 0,
+            dropShadowBlur: 5
         },
 
         TALK_BASE_FONT: {

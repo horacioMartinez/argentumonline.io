@@ -38,6 +38,8 @@ define(['lib/pixi'], function (PIXI) {
             this._posicionarGrafico();
         }
 
+        // TODO (poco importante): desactivar animaciones cuando no este visible
+        
         setSize(w, h) {
             this.width = w;
             this.height = h;

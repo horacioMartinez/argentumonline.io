@@ -223,7 +223,7 @@ define({
         lluvia_end_outdoor: "lluviaoutend",
         comprar_vender: 'sell_buy_item',
         retirar_depositar: 'withdraw_deposit_item',
-        click: 'click2',
+        click: 'click',
         dados: 'cupdice'
     },
 

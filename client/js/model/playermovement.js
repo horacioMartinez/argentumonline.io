@@ -18,6 +18,8 @@ define([], function () {
             this.cambioHeadingCallback = null;
 
             //this.moveSpeed = 230; // usar la del character?
+            this.prevGridPosX = null;
+            this.prevGridPosY = null;
 
             this._enabled = 1;
         }
@@ -113,6 +115,8 @@ define([], function () {
         tratarDeMover() {
             if ((this.estaCaminando() && !this.game.player.estaMoviendose())) {
                 if (this._tratarDeCaminar()) {
+                    this.prevGridPosX = this.game.player.gridX;
+                    this.prevGridPosY = this.game.player.gridY;
                     let dir = this.getDirMov();
                     this.game.player.mover(dir, this._moverseUpdateCallback, this._hasMoved.bind(this));
                     return true;

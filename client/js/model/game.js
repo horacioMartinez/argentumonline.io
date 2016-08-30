@@ -4,6 +4,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
               GameText, PIXI) {
         class Game {
             constructor(assetManager) {
+                this.POSICIONES_EXTRA_SONIDO = {norte: 1, sur: 1, este: 3, oeste: 3};
                 this.init(assetManager);
             }
 
@@ -150,21 +151,24 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                         return;
                     }
                     var dir = c.esPosAdyacente(gridX, gridY);
-                    if (dir && c.sprite.visible) { //sprite no visible es que esta clipeado, no que el pj este invisible (eso es charvisible) // TODO: refactorizar esto
+                    if (dir && this.renderer.entityVisiblePorCamara(c)) {
                         c.mover(dir);
-                        this.playSonidoPaso(c); // TODO: mas offset para los pasos?
-                    }
-                    else { // posicion no adyacente, entonces resetear la posicion directamente (no hacerlo caminar)
+                    } else { // posicion no adyacente o fuera de camara, entonces resetear la posicion directamente (no hacerlo caminar)
                         this.resetPosCharacter(CharIndex, gridX, gridY);
                     }
-                    /* TODO:
-                     * // si esta el jugador en la pos destino, lo  vuelvo una atras
-                     * // esto pasa cuando uno trata de caminar y llega tarde un msj
-                     * // del server para mover el char a donde ibas a caminar
-                     * if (this.player.gridX === gridX && this.player.gridY === gridY){
-                     *     this.playerMovement.rollbackLastMovement();
-                     * }
-                     */
+                    if (dir && this.renderer.entityVisiblePorCamara(c, this.POSICIONES_EXTRA_SONIDO)) {
+                        this.playSonidoPaso(c);
+                    }
+                    
+                     // si esta el jugador en la pos destino, lo  vuelvo una atras
+                     // esto pasa cuando uno trata de caminar y llega un msj
+                     // del server para mover el char a donde ibas a caminar
+                     if (this.player.gridX === gridX && this.player.gridY === gridY && this.playerMovement.prevGridPosX){
+                         let prevX = this.playerMovement.prevGridPosX;
+                         let prevY = this.playerMovement.prevGridPosY;
+                         this.resetPosCharacter(this.player.id,prevX,prevY);
+                     }
+                    
                 }
 
             }
@@ -591,7 +595,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 this.isStopped = true;
             }
 
-            getMouseGridPosition() { // TODO: usar InteractionManager para detectar sprite clickeado y rederigir a ese tile???
+            getMouseGridPosition() {
                 var ts = this.renderer.tilesize,
                     c = this.renderer.camera,
                     mx = this.mouse.x / this.renderer.escala,
