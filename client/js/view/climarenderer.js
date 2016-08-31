@@ -59,6 +59,7 @@ define(['enums', 'lib/pixi','view/spritegrh'], function (Enums, PIXI, SpriteGrh)
                 this._updateGotas(delta);
             }
         }
+
         _updateGotas(delta) {
             for (var i = 0; i < this.gotas.length; i++) {
                 var gota = this.gotas[i];

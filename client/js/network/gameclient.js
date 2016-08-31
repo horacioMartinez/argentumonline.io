@@ -292,17 +292,16 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleRainToggle() {
             this.game.lloviendo = !this.game.lloviendo;
+            this.game.assetManager.audio.clima.toogleLluvia();
             this.game.map.onceLoaded((mapa) => {
                 var bajoTecho = this.game.bajoTecho;
                 if (this.game.lloviendo) {
                     if (this.game.map.mapaOutdoor()) {
-                        this.game.assetManager.audio.IniciarSonidoLluvia(bajoTecho);
                         this.game.renderer.createLluvia();
                     }
                 }
                 else {
                     if (this.game.map.mapaOutdoor()) {
-                        this.game.assetManager.audio.finalizarSonidoLluvia(bajoTecho);
                         this.game.renderer.removeLluvia();
                     }
                 }

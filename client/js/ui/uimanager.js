@@ -63,6 +63,7 @@ define(['enums', 'ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mens
         }
 
         openPage(type, url) {
+
             var h = $(window).height(),
                 w = $(window).width(),
                 popupHeight,
@@ -72,19 +73,19 @@ define(['enums', 'ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mens
 
             switch (type) {
                 case 'twitter':
-                    popupHeight = 450;
-                    popupWidth = 550;
+                    popupHeight = h *2/3;
+                    popupWidth = Math.min(580,w/2);
                     break;
                 case 'facebook':
-                    popupHeight = 400;
-                    popupWidth = 580;
+                    popupHeight = h *3/4;
+                    popupWidth = Math.min(980,w/1.5);
                     break;
             }
 
             top = (h / 2) - (popupHeight / 2);
             left = (w / 2) - (popupWidth / 2);
 
-            newwindow = window.open(url, 'name', 'height=' + popupHeight + ',width=' + popupWidth + ',top=' + top + ',left=' + left);
+            let newwindow = window.open(url, 'name', 'height=' + popupHeight + ',width=' + popupWidth + ',top=' + top + ',left=' + left);
             if (window.focus) {
                 newwindow.focus();
             }

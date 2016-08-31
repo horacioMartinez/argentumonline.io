@@ -2,16 +2,18 @@
  * Created by horacio on 4/20/16.
  */
 
-define(['enums', 'lib/howler'], function (Enums, Howler) {
+define(['enums', 'lib/howler', 'assets/audioclima'], function (Enums, Howler, AudioClima) {
 
     class Audio {
         constructor() {
+            this.clima = new AudioClima(this);
+
             this.currentMusic = null;
             this.soundEnabled = true;
             this.musicEnabled = true;
             this.soundVolume = 1.0;
             this.musicVolume = 1.0;
-            this.sounds = [];
+            this._sounds = {};
 
             this.MUSIC_PATH = 'audio/musica/';
             this.SOUND_PATH = 'audio/sonidos/';
@@ -21,8 +23,20 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
             this.currentMusicName = null;
         }
 
+        reset() {
+            for (let sound in this._sounds) {
+                if (this._sounds.hasOwnProperty(sound)) {
+                    this._sounds[sound].stop();
+                }
+            }
+            if (this.currentMusic) {
+                this.currentMusic.stop();
+            }
+            this.clima.reset();
+        }
+
         setMusic(nombre) { // todo: unload cada vez que cmabia??
-            if (nombre === this.currentMusicName){
+            if (!nombre || (nombre === this.currentMusicName && this.currentMusicName.playing())) {
                 return;
             }
             this.currentMusicName = nombre;
@@ -49,110 +63,63 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
             }
         }
 
-        playSound(nombre, loop, onEnd, volume) {
+        playSound(nombre, loop, onEnd, volume, spriteNameToPlay) {
             if (this.soundEnabled) {
                 volume = volume || 1;
-                if (!this.sounds[nombre]) {
+                if (!this._sounds[nombre]) {
                     this.cargarSonido(nombre, onEnd);
                 }
-                this.sounds[nombre].loop(loop);
-                this.sounds[nombre].volume(this.soundVolume * volume);
-                this.sounds[nombre].play();
+                this._sounds[nombre].loop(loop);
+                this._sounds[nombre].volume(this.soundVolume * volume);
+                if (spriteNameToPlay){
+                    this._sounds[nombre].play(spriteNameToPlay);
+                } else {
+                    this._sounds[nombre].play();
+                }
+            }
+        }
+
+        stopSound(nombre){
+            if (this._sounds[nombre]){
+                this._sounds[nombre].stop();
             }
         }
 
         cargarSonido(nombre, onEnd, sprite) {
-            if (this.sounds[nombre]) {
+            if (this._sounds[nombre]) {
                 return;
             }
 
-            this.sounds[nombre] = new Howler.Howl({
+            this._sounds[nombre] = new Howler.Howl({
                 src: [this.SOUND_PATH + nombre + this.MAIN_EXTENSION, this.SOUND_PATH + nombre + this.SECONDARY_EXTENSION],
                 sprite: sprite
             });
             if (onEnd) {
-                this.sounds[nombre].on("onend", onEnd);
+                this._sounds[nombre].on("onend", onEnd);
             }
         }
 
-        finalizarSonidoLluvia(bajoTecho) {
-            this.stopLluvia();
-            if (!this.soundEnabled) {
-                return;
-            }
-            var nombre;
-            if (bajoTecho) {
-                nombre = Enums.SONIDOS.lluvia_end_indoor;
-            } else {
-                nombre = Enums.SONIDOS.lluvia_end_outdoor;
-            }
-            this.playSound(nombre, false, null, 0.2);
-        }
-
-        IniciarSonidoLluvia(bajoTecho) {
-            var nombre;
-            if (!this.soundEnabled) {
-                return;
-            }
-            if (bajoTecho) {
-                nombre = Enums.SONIDOS.lluvia_start_indoor;
-            } else {
-                nombre = Enums.SONIDOS.lluvia_start_outdoor;
-            }
-            this.playSound(nombre, false, this.playLoopLluvia(bajoTecho), 0.2);
-        }
-
-        playLoopLluvia(bajoTecho) {
-            this.stopLluvia();
-            if (!this.soundEnabled) {
-                return;
-            }
-            var nombre, sprite;
-            if (bajoTecho) {
-                nombre = Enums.SONIDOS.lluvia_indoor;
-                sprite = {lluvia: [130, 7900]};
-            }
-            else {
-                nombre = Enums.SONIDOS.lluvia_outdoor;
-                sprite = {lluvia: [100, 4200]};
-            }
-
-            if (!this.sounds[nombre]) { //cargar con sprite para que loopee bien
-                this.cargarSonido(nombre, null, sprite);
-            }
-            this.sounds[nombre].loop(true);
-            this.sounds[nombre].volume(0.4 * this.soundVolume);
-            this.sounds[nombre].play("lluvia");
-        }
-
-        stopLluvia() {
-            if (this.sounds[Enums.SONIDOS.lluvia_indoor]) {
-                this.sounds[Enums.SONIDOS.lluvia_indoor].stop();
-            }
-            if (this.sounds[Enums.SONIDOS.lluvia_outdoor]) {
-                this.sounds[Enums.SONIDOS.lluvia_outdoor].stop();
-            }
+        isLoaded(nombre){
+            return !!this._sounds[nombre];
         }
 
         toggleSound() {
             if (this.soundEnabled) {
-
                 this.soundEnabled = false;
-                if (this.currentMusic) {
-                    this.currentMusic.pause();
-                }
+                this.setMusicMuted(false);
 
             } else {
                 this.soundEnabled = true;
-
-                if (this.currentMusic) {
-                    this.currentMusic.play();
-                }
+                this.setMusicMuted(true);
             }
         }
 
         setSoundMuted(muted) {
             this.soundEnabled = !muted;
+        }
+
+        setSoundVolume(volume) {
+            this.soundVolume = volume;
         }
 
         setMusicMuted(muted) {
@@ -170,10 +137,6 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
 
         setGlobalVolume(volume) {
             Howler.Howler.volume(volume); // afecta tambien a los que no esten al maximo, ej global = 0.5 -> lluvia de 0.4 a 0.2
-        }
-
-        setSoundVolume(volume) {
-            this.soundVolume = volume;
         }
 
         setMusicVolume(volume) {

@@ -58,7 +58,7 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
             this._sombraSprite.zIndex = -1;
             this._updateOrdenHijos();
             this._updateSombraSpriteSize();
-        };
+        }
 
         _updateSombraSpriteSize() {
             if (this._sombraSprite) {
@@ -72,18 +72,18 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
                     this._sombraSprite.setSize(w, w);
                 }
             }
-        };
+        }
 
         removerFxsInfinitos() {
             for (var i = 0; i < this._fxsInfinitos.length; i++) {
                 this.removeChild(this._fxsInfinitos[i]);
             }
             this._fxsInfinitos = [];
-        };
+        }
 
         setGridPositionChangeCallback(callback) {
             this._onGridPositionChange = callback;
-        };
+        }
 
         setPosition(x, y) { // TODO: usar los getters y setters de x e y como en sprite
             this.x = Math.round(x);
@@ -97,26 +97,26 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
                     this._onGridPositionChange();
                 }
             }
-        };
+        }
 
         setSpeed(vel) {
             this._velocidad = vel;
             this._forEachHeadingSprite(function (sprite) {
                 sprite.setSpeed(vel);
             });
-        };
+        }
 
         play() {
             this._forEachHeadingSprite(function (sprite) {
                 sprite.play();
             });
-        };
+        }
 
         loop(loop) {
             this._forEachHeadingSprite(function (sprite) {
                 sprite.loop = loop;
             });
-        };
+        }
 
         cambiarHeading(heading) {
             if (this.heading === heading) {
@@ -132,7 +132,7 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
 
             this._updateOrdenHijos();
             this._updateSombraSpriteSize();
-        };
+        }
 
         setBodys(bodys, headOffX, headOffY) {
             this.bodys = bodys;
@@ -160,7 +160,7 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
                 }
                 this._updateSombraSpriteSize();
             }
-        };
+        }
 
         setHeads(heads) {
             this.heads = heads;
@@ -169,7 +169,7 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
                 this.headSprite.zIndex = 4;
                 this.headSprite.setPosition(this.headOffX, this.headOffY);
             }
-        };
+        }
 
         setWeapons(weapons) {
             this.weapons = weapons;
@@ -193,7 +193,7 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
                         break;
                 }
             }
-        };
+        }
 
         setShields(shields) {
             this.shields = shields;
@@ -217,7 +217,7 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
                         break;
                 }
             }
-        };
+        }
 
         setHelmets(helmets) {
             this.helmets = helmets;
@@ -226,7 +226,7 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
                 this.helmetSprite.zIndex = 5;
                 this.helmetSprite.setPosition(this.headOffX, this.headOffY + this.OFFSET_HEAD);
             }
-        };
+        }
 
 
         setCharVisible(visible) {
@@ -238,7 +238,7 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
             if (this._nombre) {
                 this._nombre.visible = visible;
             }
-        };
+        }
 
         _setHeadingSprite(varSprite, grhs) {
             if (!grhs) {
@@ -258,7 +258,7 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
             }
             nuevoSprite.visible = this._charVisible;
             return nuevoSprite;
-        };
+        }
 
         _setHeadOffset(headOffX, headOffY) {
             if (this.headOffX) {
@@ -276,7 +276,7 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
                 this.helmetSprite.setPosition(this.headOffX, this.headOffY + this.OFFSET_HEAD);
             }
 
-        };
+        }
 
         _updateOrdenHijos() { // TODO: al agregar en vez de esto hacer insercion por busqueda binaria con lso z index
             this.children.sort(function (a, b) {
@@ -284,7 +284,7 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
                 b.zIndex = b.zIndex || 0;
                 return a.zIndex - b.zIndex;
             });
-        };
+        }
 
         _forEachHeadingSprite(callback) {
             if (this.bodySprite) {
@@ -302,13 +302,13 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
             if (this.helmetSprite) {
                 callback(this.helmetSprite);
             }
-        };
+        }
 
         stopAnimations() {
             this._forEachHeadingSprite((child) => {
                 child.gotoAndStop(0);
             });
-        };
+        }
     }
 
     return CharacterSprites;

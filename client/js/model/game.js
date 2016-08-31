@@ -105,9 +105,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                     if (this.bajoTecho !== bajoTecho) {
                         this.bajoTecho = bajoTecho;
                         this.renderer.setBajoTecho(bajoTecho);
-                        if (this.lloviendo && this.map.mapaOutdoor()) {
-                            this.assetManager.audio.playLoopLluvia(bajoTecho);
-                        }
+                        this.assetManager.audio.clima.setBajoTecho(bajoTecho);
                     }
                 });
             }
@@ -159,7 +157,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                     if (dir && this.renderer.entityVisiblePorCamara(c, this.POSICIONES_EXTRA_SONIDO)) {
                         this.playSonidoPaso(c);
                     }
-                    
+
                      // si esta el jugador en la pos destino, lo  vuelvo una atras
                      // esto pasa cuando uno trata de caminar y llega un msj
                      // del server para mover el char a donde ibas a caminar
@@ -168,7 +166,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                          let prevY = this.playerMovement.prevGridPosY;
                          this.resetPosCharacter(this.player.id,prevX,prevY);
                      }
-                    
+
                 }
 
             }
@@ -384,12 +382,11 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 this.playerMovement.disable();
                 this.map.onceLoaded((mapa) => {
                     this.playerMovement.enable();
+                    this.assetManager.audio.clima.setOutdoor(this.map.mapaOutdoor());
                     if (this.lloviendo) {
                         if (this.map.mapaOutdoor()) {
-                            this.assetManager.audio.IniciarSonidoLluvia();
                             this.renderer.createLluvia();
                         } else {
-                            this.assetManager.audio.finalizarSonidoLluvia();
                             this.renderer.removeLluvia();
                         }
                     }
