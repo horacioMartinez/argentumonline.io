@@ -32,11 +32,12 @@ define(['enums', 'lib/howler', 'assets/audioclima'], function (Enums, Howler, Au
             if (this.currentMusic) {
                 this.currentMusic.stop();
             }
-            this.clima.reset();
+            this.currentMusicName = null;
+            // this.clima.reset();
         }
 
         setMusic(nombre) { // todo: unload cada vez que cmabia??
-            if (!nombre || (nombre === this.currentMusicName && this.currentMusicName.playing())) {
+            if (!nombre || (nombre === this.currentMusicName && this.currentMusic && this.currentMusic.playing())) {
                 return;
             }
             this.currentMusicName = nombre;
@@ -71,7 +72,7 @@ define(['enums', 'lib/howler', 'assets/audioclima'], function (Enums, Howler, Au
                 }
                 this._sounds[nombre].loop(loop);
                 this._sounds[nombre].volume(this.soundVolume * volume);
-                if (spriteNameToPlay){
+                if (spriteNameToPlay) {
                     this._sounds[nombre].play(spriteNameToPlay);
                 } else {
                     this._sounds[nombre].play();
@@ -79,8 +80,8 @@ define(['enums', 'lib/howler', 'assets/audioclima'], function (Enums, Howler, Au
             }
         }
 
-        stopSound(nombre){
-            if (this._sounds[nombre]){
+        stopSound(nombre) {
+            if (this._sounds[nombre]) {
                 this._sounds[nombre].stop();
             }
         }
@@ -99,7 +100,7 @@ define(['enums', 'lib/howler', 'assets/audioclima'], function (Enums, Howler, Au
             }
         }
 
-        isLoaded(nombre){
+        isLoaded(nombre) {
             return !!this._sounds[nombre];
         }
 

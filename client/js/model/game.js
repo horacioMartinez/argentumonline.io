@@ -1,6 +1,6 @@
 define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atributos', 'model/inventario', 'model/skills',
-        'model/playerstate', 'model/playermovement', 'enums', 'model/world', 'model/gametext', 'lib/pixi'],
-    function (Mapa, Updater, Item, Character, Atributos, Inventario, Skills, PlayerState, PlayerMovement, Enums, World,
+        'model/playerstate', 'model/playermovement', 'enums', 'model/world', 'model/worldstate', 'model/gametext', 'lib/pixi'],
+    function (Mapa, Updater, Item, Character, Atributos, Inventario, Skills, PlayerState, PlayerMovement, Enums, World, WorldState,
               GameText, PIXI) {
         class Game {
             constructor(assetManager) {
@@ -37,16 +37,15 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 this.seguroResucitacionActivado = null;
                 this.seguroAtacarActivado = null;
 
-                this.lloviendo = false;
-                this.bajoTecho = false;
                 this.ignorarProximoSonidoPaso = false;
             }
 
-            setup(client, gameUI, renderer) {
+            setup(client, gameUI, renderer, audio) {
                 this.client = client;
                 this.gameUI = gameUI;
                 this.renderer = renderer;
                 this.world = new World(renderer);
+                this.worldState = new WorldState(renderer, audio);
                 this.gameText = new GameText(renderer);
             }
 
@@ -101,12 +100,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
 
             actualizarBajoTecho() {
                 this.map.onceLoaded((mapa) => {
-                    var bajoTecho = this.map.isBajoTecho(this.player.gridX, this.player.gridY);
-                    if (this.bajoTecho !== bajoTecho) {
-                        this.bajoTecho = bajoTecho;
-                        this.renderer.setBajoTecho(bajoTecho);
-                        this.assetManager.audio.clima.setBajoTecho(bajoTecho);
-                    }
+                    this.worldState.bajoTecho = this.map.isBajoTecho(this.player.gridX, this.player.gridY);
                 });
             }
 
@@ -158,14 +152,14 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                         this.playSonidoPaso(c);
                     }
 
-                     // si esta el jugador en la pos destino, lo  vuelvo una atras
-                     // esto pasa cuando uno trata de caminar y llega un msj
-                     // del server para mover el char a donde ibas a caminar
-                     if (this.player.gridX === gridX && this.player.gridY === gridY && this.playerMovement.prevGridPosX){
-                         let prevX = this.playerMovement.prevGridPosX;
-                         let prevY = this.playerMovement.prevGridPosY;
-                         this.resetPosCharacter(this.player.id,prevX,prevY);
-                     }
+                    // si esta el jugador en la pos destino, lo  vuelvo una atras
+                    // esto pasa cuando uno trata de caminar y llega un msj
+                    // del server para mover el char a donde ibas a caminar
+                    if (this.player.gridX === gridX && this.player.gridY === gridY && this.playerMovement.prevGridPosX) {
+                        let prevX = this.playerMovement.prevGridPosX;
+                        let prevY = this.playerMovement.prevGridPosY;
+                        this.resetPosCharacter(this.player.id, prevX, prevY);
+                    }
 
                 }
 
@@ -382,14 +376,15 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 this.playerMovement.disable();
                 this.map.onceLoaded((mapa) => {
                     this.playerMovement.enable();
-                    this.assetManager.audio.clima.setOutdoor(this.map.mapaOutdoor());
-                    if (this.lloviendo) {
-                        if (this.map.mapaOutdoor()) {
-                            this.renderer.createLluvia();
-                        } else {
-                            this.renderer.removeLluvia();
-                        }
-                    }
+                    this.worldState.outdoor = this.map.mapaOutdoor();
+                    // this.assetManager.audio.clima.setOutdoor(this.map.mapaOutdoor());
+                    // if (this.lloviendo) {
+                    //     if (this.map.mapaOutdoor()) {
+                    //         this.renderer.createLluvia();
+                    //     } else {
+                    //         this.renderer.removeLluvia();
+                    //     }
+                    // }
                 });
                 this._removeAllEntities();
             }
@@ -434,7 +429,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                         this.playSonidoPaso(this.player);
                     }
 
-                    this.renderer.updateBeforeMovementBegins(direccion,this.world.getEntities());
+                    this.renderer.updateBeforeMovementBegins(direccion, this.world.getEntities());
                 }.bind(this));
 
                 this.playerMovement.setOnCambioHeading(function (direccion) {

@@ -7,57 +7,12 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
     class AudioClima {
         constructor(audio) {
             this.audio = audio;
-
-            this._bajoTecho = null;
-            this._outdoor = null;
-            this._lloviendo = false;
         }
 
-        reset() {
-            this._lloviendo = false;
-            //this._stopLluvia();
-        }
-
-        setBajoTecho(bajoTecho) {
-            if (this._bajoTecho !== bajoTecho) {
-                this._bajoTecho = bajoTecho;
-                if (this._lloviendo) {
-                    this._playLoopLluvia();
-                }
-            }
-        }
-
-        setOutdoor(outdoor) {
-            if (this._outdoor !== outdoor) {
-                this._outdoor = outdoor;
-                if (this._outdoor) {
-                    if (this._lloviendo) {
-                        this._playLoopLluvia();
-                    }
-                } else {
-                    if (this._lloviendo) {
-                        this._finLluvia();
-                    }
-                }
-            }
-        }
-
-        toogleLluvia() {
-            this._lloviendo = !this._lloviendo;
-            if (this._lloviendo) {
-                this._iniciarLluvia();
-            } else {
-                this._finLluvia();
-            }
-        }
-
-        _finLluvia() {
+        finalizarLluvia(bajoTecho) {
             this._stopLluvia();
-            if (!this._outdoor) {
-                return;
-            }
             var nombre;
-            if (this._bajoTecho) {
+            if (bajoTecho) {
                 nombre = Enums.SONIDOS.lluvia_end_indoor;
             } else {
                 nombre = Enums.SONIDOS.lluvia_end_outdoor;
@@ -65,23 +20,20 @@ define(['enums', 'lib/howler'], function (Enums, Howler) {
             this.audio.playSound(nombre, false, null, 0.2);
         }
 
-        _iniciarLluvia() {
-            if (!this._outdoor) {
-                return;
-            }
+        iniciarLluvia(bajoTecho) {
             var nombre;
-            if (this._bajoTecho) {
+            if (bajoTecho) {
                 nombre = Enums.SONIDOS.lluvia_start_indoor;
             } else {
                 nombre = Enums.SONIDOS.lluvia_start_outdoor;
             }
-            this.audio.playSound(nombre, false, this._playLoopLluvia(), 0.2);
+            this.audio.playSound(nombre, false, this.playLoopLluvia(bajoTecho), 0.2);
         }
 
-        _playLoopLluvia() {
+        playLoopLluvia(bajoTecho) {
             this._stopLluvia();
             var nombre, sprite;
-            if (this._bajoTecho) {
+            if (bajoTecho) {
                 nombre = Enums.SONIDOS.lluvia_indoor;
                 sprite = {lluvia: [130, 7900]};
             }

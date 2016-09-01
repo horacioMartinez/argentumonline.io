@@ -291,21 +291,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleRainToggle() {
-            this.game.lloviendo = !this.game.lloviendo;
-            this.game.assetManager.audio.clima.toogleLluvia();
-            this.game.map.onceLoaded((mapa) => {
-                var bajoTecho = this.game.bajoTecho;
-                if (this.game.lloviendo) {
-                    if (this.game.map.mapaOutdoor()) {
-                        this.game.renderer.createLluvia();
-                    }
-                }
-                else {
-                    if (this.game.map.mapaOutdoor()) {
-                        this.game.renderer.removeLluvia();
-                    }
-                }
-            });
+            this.game.worldState.lloviendo = !this.game.worldState.lloviendo;
         }
 
         handleCreateFX(CharIndex, FX, FXLoops) {
