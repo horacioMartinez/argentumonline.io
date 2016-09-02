@@ -154,6 +154,7 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
                     name.setEscala(escala);
                 }
                 this.consola.setEscala(escala);
+                
                 this.indicadorMapa.x = Math.floor((17 * 32 - 75) * escala);
                 this.indicadorMapa.y = Math.floor((13 * 32 - 12) * escala);
                 this.indicadorMapa.setEscala(escala);

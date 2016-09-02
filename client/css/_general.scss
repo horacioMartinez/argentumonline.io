@@ -3,12 +3,13 @@
   background: url("../imagenes/background.png") repeat;
 }
 
-//html, body {
-//  height: 100%;
-//}
-
 #menuJuego, #chatbox, footer, #container {
   @extend .noselect;
+}
+
+html, body {
+  width:100%;
+  height: 100%;
 }
 
 body {

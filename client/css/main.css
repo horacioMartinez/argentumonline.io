@@ -7902,6 +7902,10 @@ input:-webkit-autofill:focus {
 .background_default, .dialog_default {
   background: url("../imagenes/background.png") repeat; }
 
+html, body {
+  width: 100%;
+  height: 100%; }
+
 body {
   padding: 0;
   margin: 0;
