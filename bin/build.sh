@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 TOPLEVELDIR="`dirname $0`/.."
-BUILDDIR="$TOPLEVELDIR/dakara-client-build/build"
+BUILDDIR="$TOPLEVELDIR/dakara-client-build"
 TEMP_CLIENTDIR="$TOPLEVELDIR/client-temp"
 PROJECTDIR="$TEMP_CLIENTDIR/js"
 
@@ -15,7 +15,8 @@ gulp es6toes5-tempclient
 
 
 echo "Deleting previous build directory........"
-rm -rf "$BUILDDIR"
+#rm -rf "$BUILDDIR"
+find "$BUILDDIR" -mindepth 1 -maxdepth 1 -not -name '.git' -not -name '.gitignore' | xargs rm -rf
 
 echo "Building client with RequireJS........"
 node "$TOPLEVELDIR/bin/r.js" -o "$PROJECTDIR/build.js"
