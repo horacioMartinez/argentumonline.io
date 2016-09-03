@@ -7,7 +7,7 @@ define(['font', 'lib/pixi', 'view/rendererutils', 'view/textstyle'], function (F
     function Consola(escala) {
         PIXI.Container.call(this);
         
-        this.DURACION_TEXTO = 7000;
+        this.DURACION_TEXTO = 5000;
         this.CANT_LINEAS = 7;
 
         escala = escala || 1;

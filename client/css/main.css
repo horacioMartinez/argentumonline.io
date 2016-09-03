@@ -8228,7 +8228,7 @@ footer a {
   background: url("../imagenes/botones/boton_inventario.png") no-repeat;
   background-size: 100% 100%;
   position: absolute;
-  left: 5.7%;
+  left: 5.8%;
   top: 7.5%;
   width: 44%;
   height: 5.4%; }
@@ -8241,7 +8241,7 @@ footer a {
   background: url("../imagenes/botones/boton_hechizos.png") no-repeat;
   background-size: 100% 100%;
   position: absolute;
-  left: 50.4%;
+  left: 50.5%;
   top: 7.5%;
   width: 44%;
   height: 5.4%; }
@@ -8257,10 +8257,10 @@ footer a {
   height: 5.4%;
   width: 44%;
   top: 12.2%;
-  left: 50.4%; }
+  left: 50.5%; }
 
 .inventarioActivo #imagenTabActiva {
-  left: 5.7%; }
+  left: 5.8%; }
 
 #botonLanzar {
   position: absolute;

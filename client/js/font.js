@@ -45,7 +45,7 @@ define(["utils/palette"], function (Palette) {
             fontFamily: FONT_FAMILY,
             fontSize: '12',
             stroke: "black",
-            strokeThickness: 5,
+            strokeThickness: 2,
         },
 
         NOMBRE_BASE_FONT: {
