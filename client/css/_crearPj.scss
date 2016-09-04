@@ -54,7 +54,6 @@
 #crearPjSeleccionCabezaBotonIzq {
   display:inline-block;
   vertical-align:top;
-  margin-top:4px;
   width: 40px;
   height: 40px;
   background-image: url('../imagenes/botones/arrow_left.png');
@@ -63,7 +62,6 @@
 #crearPjSeleccionCabezaBotonDer {
   display:inline-block;
   vertical-align: top;
-  margin-top:4px;
   width: 40px;
   height: 40px;
   background-image: url('../imagenes/botones/arrow_right.png');
@@ -72,11 +70,10 @@
 #crearPjSeleccionCabezaImagenIzq {
   box-sizing:content-box;
   display:inline-block;
+  margin-top:6px;
   width: 28px;
   height: 33px;
   background-size: 400%;
-  margin-right: 4px;
-  margin-left: 4px;
 }
 
 #crearPjSeleccionCabezaImagenCenter {
@@ -85,18 +82,15 @@
   width: 34px;
   height: 40px;
   background-size: 400%;
-  margin-right: 4px;
-  margin-left: 4px;
 }
 
 #crearPjSeleccionCabezaImagenDer {
   box-sizing:content-box;
   display:inline-block;
+  margin-top:6px;
   width: 28px;
   height: 33px;
   background-size: 400%;
-  margin-right: 4px;
-  margin-left: 4px;
 }
 
 #crearPjImagenPersonaje { // 30x 45

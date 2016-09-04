@@ -7443,10 +7443,12 @@ button.close {
   display: block;
   margin: 0 auto; }
 
-.vcenter {
-  display: inline-block;
-  vertical-align: middle;
-  float: none; }
+.vertical_center_container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column; }
 
 .noselect, #menuJuego, #chatbox, footer, #container {
   user-select: none;
@@ -7939,7 +7941,7 @@ body {
   display: none; }
 
 .login #conectar {
-  display: block; }
+  display: flex; }
 
 .crear #juego, .crear #conectar {
   display: none; }
@@ -7954,7 +7956,6 @@ body {
   display: flex;
   flex-direction: row; }
 
-/* Footer */
 .facebook {
   background: url("../imagenes/facebook.png"); }
 
@@ -7968,17 +7969,18 @@ footer {
   text-align: center;
   width: 100%;
   color: #c6c0a3;
+  display: none;
   transition: 0.2s opacity linear; }
 
 footer:hover {
   opacity: 1; }
 
 footer div {
-  font-size: 16px;
+  font-size: 14px;
   display: inline-block; }
 
 footer a {
-  font-size: 16px; }
+  font-size: 14px; }
 
 #sharing a {
   display: block;
@@ -7987,15 +7989,15 @@ footer a {
   top: -2px; }
 
 #sharing .facebook {
-  height: 22px;
-  width: 22px;
-  background-size: cover;
+  height: 20px;
+  width: 20px;
+  background-size: 100% 100%;
   margin: 0 12px 0 12px; }
 
 #sharing .twitter {
-  height: 22px;
-  width: 32px;
-  background-size: cover;
+  height: 20px;
+  width: 20px;
+  background-size: 100% 100%;
   margin: 0 12px 0 0; }
 
 #legal-link a, #credits-link a, #privacy-link a {
@@ -8048,24 +8050,33 @@ footer a {
 .intro #juego {
   display: none; }
 
-#conectar {
-  margin-top: 9vh; }
+#logo {
+  background: url("../imagenes/logo.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 25%;
+  min-height: 180px;
+  max-height: 240px; }
 
 #loginBox {
-  margin-top: 6vh;
-  width: 300px; }
+  margin-top: 8vh;
+  width: 20%;
+  min-width: 200px;
+  max-width: 300px; }
 
 #loginNombre {
   width: 70%;
-  margin-top: 20px; }
+  margin-top: 2vh; }
 
 #loginContrasenia {
   width: 70%;
-  margin-top: 10px;
-  margin-bottom: 24px; }
+  margin-top: 1vh;
+  margin-bottom: 2.4vh; }
 
 #botonCrearPJ {
-  margin-bottom: 16px; }
+  margin-bottom: 1.6vh; }
 
 #crearPjDiv select {
   max-width: 180px;
@@ -8106,7 +8117,6 @@ footer a {
 #crearPjSeleccionCabezaBotonIzq {
   display: inline-block;
   vertical-align: top;
-  margin-top: 4px;
   width: 40px;
   height: 40px;
   background-image: url("../imagenes/botones/arrow_left.png"); }
@@ -8114,7 +8124,6 @@ footer a {
 #crearPjSeleccionCabezaBotonDer {
   display: inline-block;
   vertical-align: top;
-  margin-top: 4px;
   width: 40px;
   height: 40px;
   background-image: url("../imagenes/botones/arrow_right.png"); }
@@ -8122,29 +8131,25 @@ footer a {
 #crearPjSeleccionCabezaImagenIzq {
   box-sizing: content-box;
   display: inline-block;
+  margin-top: 6px;
   width: 28px;
   height: 33px;
-  background-size: 400%;
-  margin-right: 4px;
-  margin-left: 4px; }
+  background-size: 400%; }
 
 #crearPjSeleccionCabezaImagenCenter {
   box-sizing: content-box;
   display: inline-block;
   width: 34px;
   height: 40px;
-  background-size: 400%;
-  margin-right: 4px;
-  margin-left: 4px; }
+  background-size: 400%; }
 
 #crearPjSeleccionCabezaImagenDer {
   box-sizing: content-box;
   display: inline-block;
+  margin-top: 6px;
   width: 28px;
   height: 33px;
-  background-size: 400%;
-  margin-right: 4px;
-  margin-left: 4px; }
+  background-size: 400%; }
 
 #crearPjImagenPersonaje {
   display: inline-block;
@@ -8193,7 +8198,8 @@ footer a {
   margin-right: 2px;
   display: inline-block;
   color: white;
-  font-weight: normal; }
+  font-weight: normal;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black !important; }
 
 #botonChatInput {
   height: 27px;
@@ -8518,7 +8524,9 @@ footer a {
   padding: 3px;
   width: 160px;
   height: 100%;
-  border: 1px solid #978471; }
+  border: 1px solid #978471;
+  margin-top: 0;
+  margin-bottom: 0; }
 
 .dialogContent .itemgrid li {
   font-size: 13px; }

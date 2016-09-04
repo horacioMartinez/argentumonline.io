@@ -1,0 +1,70 @@
+.facebook {
+  background: url('../imagenes/facebook.png');
+}
+
+.twitter {
+  background: url('../imagenes/twitter.png');
+}
+
+footer {
+  position: absolute;
+  bottom: 1%;
+  left: 0;
+  text-align: center;
+  width: 100%;
+  color: #c6c0a3;
+  display:none;
+  transition: 0.2s opacity linear;
+}
+
+footer:hover {
+  opacity: 1;
+}
+
+footer div {
+  font-size: 14px;
+  display: inline-block;
+}
+
+footer a {
+  font-size: 14px;
+}
+
+#sharing a {
+  display: block;
+  float: right;
+  position: relative;
+  top: -2px;
+}
+
+#sharing .facebook {
+  height: 20px;
+  width: 20px;
+  background-size: 100% 100%;
+  margin: 0 12px 0 12px;
+}
+
+#sharing .twitter {
+  height: 20px;
+  width: 20px;
+  background-size: 100% 100%;
+  margin: 0 12px 0 0;
+}
+
+#legal-link a, #credits-link a, #privacy-link a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#credits-link a:hover, #privacy-link a:hover, #legal-link a:hover {
+  color: #fcda5c;
+  cursor: pointer;
+}
+
+#sharing a:hover {
+  transform: scale(1.2);
+}
+
+#sharing a:active {
+  transform: scale(1);
+}

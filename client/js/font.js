@@ -62,10 +62,10 @@ define(["utils/palette"], function (Palette) {
 
         TALK_BASE_FONT: {
             fontFamily: FONT_FAMILY,
-            fontWeight: 'bold',
+            /*fontWeight: 'bold',*/
             fontSize: '12',
             stroke: "black",
-            strokeThickness: 0.2,
+            strokeThickness: 2,
             align: 'center',
             fill: Palette.get('white')
         },

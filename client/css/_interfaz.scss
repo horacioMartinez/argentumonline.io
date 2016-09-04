@@ -37,6 +37,8 @@ $left_align_percentage: 8%;
   display: inline-block;
   color: white;
   font-weight: normal;
+  //stroke:
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black !important;
 }
 
 #botonChatInput {

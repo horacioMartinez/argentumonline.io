@@ -18,6 +18,7 @@ define(['enums', 'ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mens
             this.widthMenuJuego = 154;
             this.widthJuego = 17 * 32;
             this.heightJuego = 13 * 32;
+            this.FOOTER_HEIGHT = 60;
 
             this.escala = null;
         }
@@ -73,12 +74,12 @@ define(['enums', 'ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mens
 
             switch (type) {
                 case 'twitter':
-                    popupHeight = h *2/3;
-                    popupWidth = Math.min(580,w/2);
+                    popupHeight = h * 2 / 3;
+                    popupWidth = Math.min(580, w / 2);
                     break;
                 case 'facebook':
-                    popupHeight = h *3/4;
-                    popupWidth = Math.min(980,w/1.5);
+                    popupHeight = h * 3 / 4;
+                    popupWidth = Math.min(980, w / 1.5);
                     break;
             }
 
@@ -127,6 +128,24 @@ define(['enums', 'ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mens
             });
         }
 
+        setFooterHiden(gameRatio, windowWidth, windowHeight) {
+
+            windowHeight -= this.FOOTER_HEIGHT;
+            let windowRatio = windowWidth / windowHeight;
+
+            if (gameRatio * 0.8 > windowRatio) { // limita el width
+                $('footer').show();
+                return false;
+            }
+            if (windowHeight < 600) {
+                $('footer').hide();
+                return true;
+            }
+            $('footer').show();
+            return false;
+
+        }
+
         resizeUi() {
             let menuBorderWidth = parseInt($('#menuJuego').css("border-left-width")); // solo borde izq, los demas valen 0
             let containerBorderWidth = parseInt($('#container').css("border-left-width")); // 4 bordes iguales pero hay que pasar alguno para el ancho
@@ -135,16 +154,20 @@ define(['enums', 'ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mens
 
             let gameRatio = gameWidth / gameHeight;
 
-            let windowWidth = parseInt($(window).width())- 10;
-            let windowHeight = parseInt($(window).height()) - 90; // footer
+            let windowWidth = parseInt($(window).width()) - 10;
+            let windowHeight = parseInt($(window).height()) - 30;
             let windowRatio = windowWidth / windowHeight;
+
+            if (!this.setFooterHiden(gameRatio, windowWidth, windowHeight)) {
+                windowHeight -= this.FOOTER_HEIGHT;
+            }
 
             if (gameRatio > windowRatio) { // limita el width
                 this.escala = windowWidth / gameWidth;
             } else {
                 this.escala = windowHeight / gameHeight;
             }
-            
+
             $('#container').width(Math.floor(this.escala * gameWidth));
             $('#container').height(Math.floor(this.escala * gameHeight));
 

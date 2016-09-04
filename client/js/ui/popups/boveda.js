@@ -7,7 +7,7 @@ define(["text!../../../menus/boveda.html!strip", 'ui/popups/popup', 'ui/game/ite
     class Boveda extends PopUp {
         constructor(game, acciones) {
             var options = {
-                width: 570,
+                width: 630,
                 height: 510,
                 minWidth: 250,
                 minHeight: 200

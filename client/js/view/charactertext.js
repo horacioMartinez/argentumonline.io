@@ -13,7 +13,7 @@ define(['font', 'lib/pixi', 'view/textstyle'], function (Font, PIXI, TextStyle) 
             this._chat = null;
             this._escala = escala || 1;
             this.setEscala(escala);
-            this.MAXIMO_LARGO_LINEA_CHAT = 15;
+            this.MAXIMO_LARGO_LINEA_CHAT = 18;
             this.DURACION_CHAT = 15000;
             this.DURACION_INFO = 2000;
         }

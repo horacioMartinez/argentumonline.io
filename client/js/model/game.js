@@ -4,7 +4,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
               GameText, PIXI) {
         class Game {
             constructor(assetManager) {
-                this.POSICIONES_EXTRA_SONIDO = {norte: 1, sur: 1, este: 3, oeste: 3};
+                this.POSICIONES_EXTRA_SONIDO = {norte: 0, sur: 0, este: 3, oeste: 3};
                 this.init(assetManager);
             }
 
