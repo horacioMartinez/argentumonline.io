@@ -31,15 +31,15 @@ define(['../../utils/searchinputfilter'], function (SearchInputFilter) {
             }
         }
 
-        _getClanSeleccionado(){
-            return  this.$clanesNameList.find('option:selected').text();
+        _getClanSeleccionado() {
+            return this.$clanesNameList.find('option:selected').text();
         }
-        
+
         initCallbacks() {
             var self = this;
 
 
-            SearchInputFilter.makeInputFilterElement(this.$inputClanName, this.$clanesNameList, 'option' );
+            SearchInputFilter.makeInputFilterElement(this.$inputClanName, this.$clanesNameList, 'option');
 
             this.$botonDetallesClan.click(function () {
                 var clanSeleccionado = self._getClanSeleccionado();
@@ -49,7 +49,7 @@ define(['../../utils/searchinputfilter'], function (SearchInputFilter) {
                     self.detallesClan.show(clanSeleccionado);
                 }
             });
-            this.$botonIngresarClan.click(function(){
+            this.$botonIngresarClan.click(function () {
                 var clanSeleccionado = self._getClanSeleccionado();
                 if (!clanSeleccionado) {
                     self.showMensajeCb("Debes seleccionar un clan");
@@ -57,10 +57,9 @@ define(['../../utils/searchinputfilter'], function (SearchInputFilter) {
                     self.solicitudClanCb(clanSeleccionado);
                 }
             });
-            this.$botonCrearClan.click(function(){
+            this.$botonCrearClan.click(function () {
                 if (self.game.atributos.nivel > 24) { // todo: checkear skills ?
                     self.game.client.sendGuildFundate();
-                    self.hide();
                 } else {
                     self.showMensajeCb("Para fundar un clan tienes que ser nivel 25 y tener 90 skills en liderazgo.");
                 }

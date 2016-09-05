@@ -12,12 +12,9 @@
         <div class="tabsContainer" style="display: flex; flex-direction: column;">
             <ul class="nav nav-pills nav-stacked">
                 <li id="clanesMainTabButton" class="icon-menu active" href="#clanesSearchTab" data-toggle="tab"></li>
-                <li id="clanesMiembrosTabButton" class="icon-menu disabled" href="#clanesMiembrosTab"
-                    data-toggle="tab"></li>
-                <li id="clanesSolicitudesTabButton" class="icon-menu disabled" href="#clanesSolicitudesTab"
-                    data-toggle="tab"></li>
-                <li id="clanesSettingsTabButton" class="icon-menu disabled" href="#clanesSettingsTab"
-                    data-toggle="tab"></li>
+                <li id="clanesMiembrosTabButton" class="icon-menu disabled" href="#clanesMiembrosTab" data-toggle="tab"></li>
+                <li id="clanesSolicitudesTabButton" class="icon-menu disabled" href="#clanesSolicitudesTab" data-toggle="tab"></li>
+                <li id="clanesSettingsTabButton" class="icon-menu disabled" href="#clanesSettingsTab" data-toggle="tab"></li>
             </ul>
             <div class="tabsFiller"></div>
         </div>
@@ -25,28 +22,18 @@
 
         <div class="tab-content dialogContent" style="flex: 1;">
             <div id="clanesSearchTab" class="tab-pane active">
+                <h4>Clanes</h4>
                 <div class="form-group">
                     <div class="input-group">
-                        <input type="Search" placeholder="Nombre" class="form-control"
-                               id="clanesSearchTabInputNombre" aria-describedby="clanesSearchTabClanSearchIcon"/>
+                        <input type="Search" placeholder="Nombre" class="form-control" id="clanesSearchTabInputNombre" aria-describedby="clanesSearchTabClanSearchIcon"/>
                     <span class="input-group-addon glyphicon glyphicon-search"
                           id="clanesSearchTabClanSearchIcon"></span>
                     </div>
                 </div>
-
                 <select multiple id="clanesSearchListaClanes" class="form-control">
                     <!-- <option>CLAN UNO</option> -->
                 </select>
-
-                <!---
-                <div style="display:flex; flex:1;">
-                    <div class="list-group">
-                        <a href="#" class="list-group-item active">Ejemplo Clan</a>
-                        <a href="#" class="list-group-item">Second item</a>
-                        <a href="#" class="list-group-item">Third item</a>
-                    </div>
-                </div> -->
-                <div class="btn-toolbar">
+                <div class="btn-toolbar margenBoton">
                     <button id="clanesSearchBotonCrear" class="btn btn-primary">Crear</button>
                     <button id="clanesSearchBotonDetalles" class="btn btn-default">Detalles</button>
                     <button id="clanesSearchBotonIngresar" class="btn btn-primary">Aplicarse</button>
@@ -55,14 +42,12 @@
             </div>
 
             <div id="clanesMiembrosTab" class="tab-pane">
-
-
-
-                <button id="clanesMiembrosBotonNoticias" class="btn btn-default">Noticias</button>
+                <h4>Noticias</h4>
+                <button id="clanesMiembrosBotonNoticias" class="btn btn-default">Ver noticias</button>
+                <h4>Miembros</h4>
                 <div class="form-group">
                     <div class="input-group">
-                        <input type="Search" placeholder="Nombre" class="form-control"
-                               id="clanesMiembrosTabInputNombre"/>
+                        <input type="Search" placeholder="Nombre" class="form-control" id="clanesMiembrosTabInputNombre"/>
                         <span class="input-group-addon glyphicon glyphicon-search"></span>
                     </div>
                 </div>
@@ -70,27 +55,32 @@
                 <select multiple id="clanesMembersList" class="form-control">
                 </select>
 
-                <button id="clanesMiembrosBotonDetalles" class="btn btn-default">Detalles</button>
-                <button id="clanesMiembrosBotonHechar" class="btn btn-primary">Hechar</button>
+                <div class="btn-toolbar margenBoton">
+                    <button id="clanesMiembrosBotonDetalles" class="btn btn-default">Detalles</button>
+                    <button id="clanesMiembrosBotonHechar" class="btn btn-primary">Hechar</button>
+                </div>
             </div>
 
             <div id="clanesSolicitudesTab" class="tab-pane">
+                <h4>Solicitudes de ingreso</h4>
                 <select id="clanesMembershipRequestList" class="form-control" size="4"></select>
 
-                <button id="clanesLiderBotonVerPeticion" class="btn btn-default">VER PETICION</button>
-                <button id="clanesLiderBotonDetalles" class="btn btn-default">DETALLES</button>
-                <button id="clanesLiderBotonAceptar" class="btn btn-default">ACEPTAR SOLICITUD</button>
-                <button id="clanesLiderBotonRechazar" class="btn btn-default">RECHAZAR SOLICITUD</button>
+                <div class="btn-toolbar margenBoton">
+                    <button id="clanesLiderBotonVerPeticion" class="btn btn-default pull-left">Ver mensaje</button>
+                    <button id="clanesLiderBotonDetalles" class="btn btn-default pull-left">Mas detalles</button>
+                    <button id="clanesLiderBotonAceptar" class="btn btn-primary pull-right">Aceptar</button>
+                    <button id="clanesLiderBotonRechazar" class="btn btn-primary pull-right">Rechazar</button>
+                </div>
             </div>
 
             <div id="clanesSettingsTab" class="tab-pane">
+                <p>NO IMPLEMENTADO!</p>
                 TODO: hacerlo igual al menu que se muestra al crear y que lo edites directamente de ahi, no con botones
-                <button id="TBD_1" class="btn btn-default">EDITAR CODEX</button>
-                <button id="TBD_2" class="btn btn-default">EDITAR NOTICIAS</button>
-                <button id="TBD_3" class="btn btn-default">EDITAR DESCRIPCION</button>
-                <button id="TBD_4" class="btn btn-default">EDITAR WEBSITE</button>
-                <button id="TBD_5" class="btn btn-default">PROPUESTA DE PAZ</button>
-                <button id="TBD_6" class="btn btn-default">PROPUESTA DE ALUMNOS</button>
+                <button id="TBD_1" class="btn btn-default">Editar codex</button>
+                <button id="TBD_2" class="btn btn-default">Editar noticias</button>
+                <button id="TBD_3" class="btn btn-default">Editar descripcion</button>
+                <button id="TBD_4" class="btn btn-default">Editar website</button>
+                <button id="TBD_5" class="btn btn-default">Propuestas de paz</button>
             </div>
         </div>
 

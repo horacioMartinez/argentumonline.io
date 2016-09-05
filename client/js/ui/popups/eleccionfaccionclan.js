@@ -8,8 +8,8 @@ define(["text!../../../menus/eleccionFaccionClan.html!strip", 'enums','ui/popups
         constructor(game) {
 
             var options = {
-                width: 150,
-                height: 300,
+                width: 550,
+                height: 500,
                 minWidth: 50,
                 minHeight: 200
             };

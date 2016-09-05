@@ -21,8 +21,8 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
         
         _connect(conectarse_callback) {
-            this.ws.open("wss://dakaraonline.tk");
-            //this.ws.open("ws://localhost:8666");
+            //this.ws.open("wss://dakaraonline.tk");
+            this.ws.open("ws://localhost:8666");
             var self = this;
             this.ws.on('open', function () {
                 self.conectado = true;
@@ -484,12 +484,15 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleGuildLeaderInfo(GuildList, MemberList, GuildNews, JoinRequests) {
             //TODO: usar GuildNews
+            log.error("asdad");
 
             this.handleGuildMemberInfo(GuildList, MemberList);
             log.error(aspirantes);
             var aspirantes = Utils.splitNullArray(JoinRequests);
             if (aspirantes[0]) {
                 this.game.gameUI.clanes.setNombresSolicitantes(aspirantes);
+            } else{
+                this.game.gameUI.clanes.setNombresSolicitantes([]);
             }
             log.network("TODO: handleGuildLeaderInfo ");
         }

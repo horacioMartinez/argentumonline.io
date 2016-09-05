@@ -11,7 +11,7 @@ define(["text!../../../menus/clanes.html!strip", 'ui/popups/popup', 'ui/popups/t
         constructor(game, detallesClan, showMensajeCb, solicitudClanCb) {
 
             var options = {
-                width: 450,
+                width: 550,
                 height: 500,
                 minWidth: 250,
                 minHeight: 150

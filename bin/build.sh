@@ -38,11 +38,12 @@ gulp uglify
 echo "Autoprefixer........"
 gulp autoprefixer
 
-echo "Comprimiendo........"
 
-{
-	find "$BUILDDIR" \( -name '*.css' -o -name '*.html' -o -name '*.xml' -o -name '*.json' -o -name '*.js' \) -exec gzip --verbose --keep --best --force {} \;
-} &>> "$BUILDDIR/build.txt"
+#echo "Comprimiendo........"
+
+#{
+#	find "$BUILDDIR" \( -name '*.css' -o -name '*.html' -o -name '*.xml' -o -name '*.json' -o -name '*.js' \) -exec gzip --verbose --keep --best --force {} \;
+#} &>> "$BUILDDIR/build.txt"
 
 echo "Borrando scss y map........"
 find "$BUILDDIR" \( -name '*.scss' -o -name '*.map' \) -type f -delete

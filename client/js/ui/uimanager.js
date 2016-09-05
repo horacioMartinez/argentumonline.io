@@ -171,7 +171,7 @@ define(['enums', 'ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mens
             $('#container').width(Math.floor(this.escala * gameWidth));
             $('#container').height(Math.floor(this.escala * gameHeight));
 
-            $('#chatbox input').css("font-size", Math.floor(12 * this.escala) + 'px');
+            $('#chatbox input').css("font-size", Math.max(14,Math.floor(12 * this.escala)) + 'px');
 
             if (this.gameUI) {
                 this.gameUI.resize(this.escala);
