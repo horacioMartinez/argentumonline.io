@@ -19,6 +19,7 @@ define(["text!../../../menus/boveda.html!strip", 'ui/popups/popup', 'ui/game/ite
             this.shopGrid = new ItemGrid("bovedaGridComprar",40);
             this.userGrid = new ItemGrid("bovedaGridVender",40);
             this.initCallbacks();
+            this.completarLabels("","","","","","");
         }
 
         show() {

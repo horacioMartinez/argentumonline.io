@@ -34,6 +34,7 @@ define(["text!../../../menus/comerciar.html!strip", 'ui/popups/popup', 'ui/game/
                 });
             this.shopGrid.deselect();
             this.userGrid.deselect();
+            this.completarLabels("", "","", "", "", "");
         }
 
         hide(incomingFromServer) {

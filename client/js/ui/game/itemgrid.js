@@ -126,9 +126,10 @@ define(['jquery-ui'], function () {
             var self = this;
             $item.mousedown(function () {
                 var $currentItem = $(this);
+                var $currentSlot = $currentItem.parent();
                 self.deselect();
                 $currentItem.addClass("selected");
-                self._selectedSlot = $currentItem.parent().data("slotNumber");
+                self._selectedSlot = $currentSlot.data("slotNumber");
                 if (self._selectionCallback) {
                     self._selectionCallback(self._selectedSlot);
                 }

@@ -8,7 +8,7 @@ define(["text!../../../menus/tirar.html!strip", 'ui/popups/popup', 'ui/popups/po
         constructor(game, acciones) {
             var options = {
                 width: 250,
-                height: 150,
+                height: 160,
                 minWidth: 100,
                 minHeight: 200
             };
