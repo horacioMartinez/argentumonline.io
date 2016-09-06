@@ -2,7 +2,7 @@
  * Created by horacio on 4/6/16.
  **/
 
-define(['ui/game/keymouseinput'], function (KeyMouseInput) {
+define(['ui/game/keymouseinput', 'utils/charcodemap'], function (KeyMouseInput, CharcodeMap) {
     class KeyMouseListener {
 
         constructor(game, acciones, keys, comandosChat) {
@@ -107,12 +107,11 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
                         self.inputHandler.keyDown(key);
                         self._downKey(key);
                     }
-                    if (!self.game.gameUI.hayPopUpActivo()) { // si hay un popup abierto dejar que siga la tecla al pop up, sino no
+                    // si es una flecha y no hay popUp abierto, no deja que siga al input del chat
+                    if (!self.game.gameUI.hayPopUpActivo() && self._isArrowKey(key)) {
                         return false;
                     }
-                    else {
-                        return;
-                    }
+                    return;
                 }
 
                 if (self.game.isPaused || (self.game.gameUI.hayPopUpActivo())) {
@@ -246,6 +245,11 @@ define(['ui/game/keymouseinput'], function (KeyMouseInput) {
             //  });
             // ----------------------------------- NO SACAR----------------------------------- :
 
+        }
+
+        _isArrowKey(key) {
+            return ( key === CharcodeMap.keys.indexOf("LEFT") || key === CharcodeMap.keys.indexOf("UP") ||
+            key === CharcodeMap.keys.indexOf("DOWN") || key === CharcodeMap.keys.indexOf("RIGHT") );
         }
 
         _downKey(key) {

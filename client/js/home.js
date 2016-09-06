@@ -1,5 +1,5 @@
 require.config({
-    urlArgs: "bust=v0.2.1",
+    urlArgs: "bust=v0.2.2",
     paths: {
         "jquery": "lib/jquery",
         "jquery-ui": "lib/jquery-ui",
