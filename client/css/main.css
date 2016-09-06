@@ -8535,8 +8535,8 @@ footer a {
   background-size: 100% 100%;
   background-image: url("../imagenes/slot.png");
   float: left;
-  width: 5vh;
-  height: 5vh;
+  width: 50px;
+  height: 50px;
   cursor: default;
   border: none;
   margin: 1px; }

@@ -25,6 +25,7 @@ define(["text!../../../menus/boveda.html!strip", 'ui/popups/popup', 'ui/game/ite
         show() {
             super.show();
             var self = this;
+            this.userGrid.clear();
 
             this.game.inventario.forEachSlot(
                 function (slot) {
@@ -52,11 +53,11 @@ define(["text!../../../menus/boveda.html!strip", 'ui/popups/popup', 'ui/game/ite
         }
 
         borrarSlotRetirar(slot) {
-            this.shopGrid.borrarSlot(slot);
+            this.shopGrid.borrarItem(slot);
         }
 
         borrarSlotDepositar(slot) {
-            this.userGrid.borrarSlot(slot);
+            this.userGrid.borrarItem(slot);
         }
 
         setOroDisponible(oro) {

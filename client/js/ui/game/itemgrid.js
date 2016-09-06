@@ -149,7 +149,7 @@ define(['jquery-ui'], function () {
             return $item;
         }
 
-        borrarSlot(numSlot) {
+        borrarItem(numSlot) {
             var $item = this._getItem(numSlot);
             if ($item) {
                 $item.remove();
@@ -157,7 +157,9 @@ define(['jquery-ui'], function () {
         }
 
         clear() {
-            this.$this.empty();
+            this.$this.children().each(function () {
+                $(this).empty(); // "$(this)" = slot
+            });
         }
     }
 

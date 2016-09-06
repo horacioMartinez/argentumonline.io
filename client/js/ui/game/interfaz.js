@@ -93,7 +93,7 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
         }
 
         borrarSlotInventario(slot) {
-            this.inventarioGrid.borrarSlot(slot);
+            this.inventarioGrid.borrarItem(slot);
         }
 
         resetSelectedSlotInventario() {

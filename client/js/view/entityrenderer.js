@@ -227,6 +227,9 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
             }
 
             entityVisiblePorCamara(entity, extraPositions) {
+                if (!entity.sprite){
+                    return false;
+                }
                 let finalExtraPositions;
                 if (extraPositions) {
                     finalExtraPositions = {};
