@@ -30,7 +30,7 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
             _inicializarPixi() {
                 PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.NEAREST;
                 PIXI.MIPMAP_TEXTURES = false;
-                //PIXI.GC_MODES.DEFAULT = PIXI.GC_MODES.AUTO; // todo: para mobile... algun dia..
+                PIXI.GC_MODES.DEFAULT = PIXI.GC_MODES.MANUAL;
 
                 this.pixiRenderer = new PIXI.autoDetectRenderer(this.camera.gridW * this.tilesize, this.camera.gridH * this.tilesize);
                 $(this.pixiRenderer.view).css('position', 'relative');

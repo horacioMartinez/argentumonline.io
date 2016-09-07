@@ -12,6 +12,7 @@ define(['app', 'assets/assetmanager', 'ui/uimanager', 'storage/storage', 'lib/lo
 
     function setupAudio(audio, storage) {
         audio.setSoundMuted(storage.getSoundMuted());
+        log.error("MUSIC MUTED? " + storage.getMusicMuted());
         audio.setMusicMuted(storage.getMusicMuted());
         audio.setMusicVolume(storage.getMusicVolume());
         audio.setSoundVolume(storage.getSoundVolume());
