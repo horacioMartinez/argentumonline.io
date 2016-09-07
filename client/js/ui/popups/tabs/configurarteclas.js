@@ -6,8 +6,8 @@
 define(['utils/charcodemap', 'ui/popups/popup'], function (CharCodeMap, PopUp) {
 
     class ConfigurarTeclas {
-        constructor(storage, updateKeysCb, showMensajeCb) {
-            this.storage = storage;
+        constructor(settings, updateKeysCb, showMensajeCb) {
+            this.settings = settings;
             this.nuevasKeys = null;
             this.updateKeysCb = updateKeysCb;
             this.showMensajeCb = showMensajeCb;
@@ -15,7 +15,7 @@ define(['utils/charcodemap', 'ui/popups/popup'], function (CharCodeMap, PopUp) {
         }
 
         onShow() {
-            this.nuevasKeys = $.extend(true,{}, this.storage.getKeys()); // clonar
+            this.nuevasKeys = $.extend(true,{}, this.settings.getKeys()); // clonar
             this.displayKeys();
         }
 
@@ -63,12 +63,12 @@ define(['utils/charcodemap', 'ui/popups/popup'], function (CharCodeMap, PopUp) {
             });
 
             $("#configurarTeclasRestaurarDefault").click(function () {
-                self.nuevasKeys = self.storage.getDefaultKeys();
+                self.nuevasKeys = self.settings.getDefaultKeys();
                 self.displayKeys();
             });
 
             $("#configurarTeclasGuardarYSalir").click(function () {
-                self.storage.setKeys(self.nuevasKeys);
+                self.settings.setKeys(self.nuevasKeys);
                 self.updateKeysCb(self.nuevasKeys);
                 self._cerrarCallback();
             });

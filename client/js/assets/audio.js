@@ -51,7 +51,6 @@ define(['enums', 'lib/howler', 'assets/audioclima'], function (Enums, Howler, Au
                     });
                     //this.currentMusic.stop();
                 }
-                log.error("NUEVA MUSICA");
                 this.currentMusic = new Howler.Howl({
                     src: [this.MUSIC_PATH + nombre + this.MAIN_EXTENSION, this.MUSIC_PATH + nombre + this.SECONDARY_EXTENSION],
                     loop: true

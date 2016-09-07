@@ -7,27 +7,26 @@
  *
  */
 
-define(['app', 'assets/assetmanager', 'ui/uimanager', 'storage/storage', 'lib/lodash', 'lib/stacktrace', 'utils/log', 'detect'], function (App, AssetManager, UIManager, Storage, __globals__) {
-    var app, uiManager, assetManager, storage;
+define(['app', 'assets/assetmanager', 'ui/uimanager', 'storage/settings', 'lib/lodash', 'lib/stacktrace', 'utils/log', 'detect'], function (App, AssetManager, UIManager, Settings, __globals__) {
+    var app, uiManager, assetManager, settings;
 
-    function setupAudio(audio, storage) {
-        audio.setSoundMuted(storage.getSoundMuted());
-        log.error("MUSIC MUTED? " + storage.getMusicMuted());
-        audio.setMusicMuted(storage.getMusicMuted());
-        audio.setMusicVolume(storage.getMusicVolume());
-        audio.setSoundVolume(storage.getSoundVolume());
+    function setupAudio(audio, settings) {
+        audio.setSoundMuted(settings.getSoundMuted());
+        audio.setMusicMuted(settings.getMusicMuted());
+        audio.setMusicVolume(settings.getMusicVolume());
+        audio.setSoundVolume(settings.getSoundVolume());
         audio.setMusic("intro");
     }
 
     var initApp = function () {
         $(document).ready(function () {
 
-            storage = new Storage();
+            settings = new Settings();
             assetManager = new AssetManager();
-            setupAudio(assetManager.audio, storage);
+            setupAudio(assetManager.audio, settings);
 
             uiManager = new UIManager(assetManager);
-            app = new App(assetManager, uiManager, storage);
+            app = new App(assetManager, uiManager, settings);
             uiManager.initDOM();
 
             assetManager.preload(

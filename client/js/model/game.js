@@ -49,10 +49,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 this.gameText = new GameText(renderer);
             }
 
-            setStorage(storage) {
-                this.storage = storage;
-            }
-
             setUpdater(updater) {
                 this.updater = updater;
             }

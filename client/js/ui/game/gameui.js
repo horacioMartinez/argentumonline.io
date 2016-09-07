@@ -12,7 +12,7 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
               DetallesPersonaje, Estadisticas, PartyLider, PartyMiembro, Menu) {
 
         class GameUI {
-            constructor(gameManager, storage, playSonidoClickCb) {
+            constructor(gameManager, settings, playSonidoClickCb) {
 
                 this.playSonidoClickCb = playSonidoClickCb;
 
@@ -23,12 +23,12 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
 
                 this.acciones = acciones;
                 this.game = game;
-                this.storage = storage;
+                this.settings = settings;
 
                 this.showMensajeFunction = this.showMensaje.bind(this);
 
                 this.interfaz = new Interfaz(game, acciones);
-                this.keyMouseListener = new KeyMouseListener(game, acciones, storage.getKeys(), comandosChat);
+                this.keyMouseListener = new KeyMouseListener(game, acciones, settings.getKeys(), comandosChat);
                 this.initDOM();
             }
 
@@ -250,7 +250,7 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
             }
 
             get opciones() {
-                this._opciones = this._opciones || this._initPopUp(new Opciones(this.game, this.storage, this.updateKeysCallback.bind(this), this.showMensajeFunction));
+                this._opciones = this._opciones || this._initPopUp(new Opciones(this.game, this.settings, this.updateKeysCallback.bind(this), this.showMensajeFunction));
                 return this._opciones;
             }
 

@@ -5,25 +5,25 @@
 define([], function () {
 
     class AudioTab {
-        constructor(game, storage) {
+        constructor(game, settings) {
             this.game = game;
-            this.storage = storage;
+            this.settings = settings;
             this.initCallbacks();
         }
 
         onHide() {
-            this.storage.setMusicMuted(!this.game.assetManager.audio.musicEnabled);
-            this.storage.setSoundMuted(!this.game.assetManager.audio.soundEnabled);
-            this.storage.setMusicVolume(this.game.assetManager.audio.musicVolume);
-            this.storage.setSoundVolume(this.game.assetManager.audio.soundVolume);
+            this.settings.setMusicMuted(!this.game.assetManager.audio.musicEnabled);
+            this.settings.setSoundMuted(!this.game.assetManager.audio.soundEnabled);
+            this.settings.setMusicVolume(this.game.assetManager.audio.musicVolume);
+            this.settings.setSoundVolume(this.game.assetManager.audio.soundVolume);
         }
 
         onShow() {
-            $("#sliderMusica").slider('value', this.storage.getMusicVolume() * 100);
-            $("#sliderSonido").slider('value', this.storage.getSoundVolume() * 100);
+            $("#sliderMusica").slider('value', this.settings.getMusicVolume() * 100);
+            $("#sliderSonido").slider('value', this.settings.getSoundVolume() * 100);
 
-            $("#checkboxMusica").prop('checked', !this.storage.getMusicMuted());
-            $("#checkboxSonido").prop('checked', !this.storage.getSoundMuted());
+            $("#checkboxMusica").prop('checked', !this.settings.getMusicMuted());
+            $("#checkboxSonido").prop('checked', !this.settings.getSoundMuted());
         }
 
         initCallbacks() {

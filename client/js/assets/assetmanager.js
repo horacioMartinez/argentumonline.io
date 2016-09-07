@@ -23,6 +23,7 @@ define(['json!../../indices/armas.json',
                 this.grhs = [];
                 this.dataMapas = [];
                 this.preloader = new Preloader(this);
+                
                 PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.NEAREST;
                 PIXI.MIPMAP_TEXTURES = false;
                 PIXI.GC_MODES.DEFAULT = PIXI.GC_MODES.MANUAL;

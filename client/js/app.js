@@ -1,12 +1,12 @@
 define(['model/gamemanager', 'view/renderer', 'network/gameclient'], function (GameManager, Renderer, GameClient) {
 
     class App {
-        constructor(assetManager, uiManager, storage) {
+        constructor(assetManager, uiManager, settings) {
             this.assetManager = assetManager;
             this.uiManager = uiManager;
             this.client = null;
             this.ready = false;
-            this.storage = storage;
+            this.settings = settings;
         }
 
         _initLoginCallbacks() {
@@ -58,7 +58,7 @@ define(['model/gamemanager', 'view/renderer', 'network/gameclient'], function (G
             var renderer = new Renderer(this.assetManager, this.uiManager.escala);
             this.gameManager = new GameManager(this.assetManager, renderer);
 
-            var gameUI = this.uiManager.inicializarGameUI(this.gameManager, this.storage);
+            var gameUI = this.uiManager.inicializarGameUI(this.gameManager, this.settings);
             this.client = new GameClient(this.gameManager.game, this.uiManager, gameUI, this.host, this.port);
             this._initClientCallbacks(this.client);
             this.gameManager.setup(this.client, gameUI);
