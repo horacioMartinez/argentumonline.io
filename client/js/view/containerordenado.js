@@ -27,7 +27,7 @@ define(['lib/pixi'], function (PIXI) {
         var gridY = Math.round(hijo.y / 32);
         hijo.zIndex = gridY * (this._mapWidth + 1) + ((this._mapWidth + 1) - gridX) + (hijo.zOffset || 0);
 
-        this._reordenarTodo(); // todo <- busqueda bin y insercion
+        this._reordenarTodo();
     };
 
     ContainerOrdenado.prototype._reordenarTodo = function () { // TODO: no ordenar cada vez, sino insertar con una busqueda binaria

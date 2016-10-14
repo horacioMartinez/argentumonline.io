@@ -112,7 +112,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
             sacarEntity(entity) {
                 if (entity instanceof Character) {
                     if (entity === this.player) {
-                        log.error("TRATANDO DE SACAR AL PLAYER!");
                         return;
                     }
                     this.world.sacarCharacter(entity);
@@ -130,7 +129,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 if (CharIndex === this.player.id) {
                     if ((X !== this.player.gridX) || (Y !== this.player.gridY)) {
                         this.resetPosCharacter(CharIndex, X, Y);
-                        log.error("moverCharacter: cambiar pos player a x:" + X + " y:" + Y);
                     }
                 } else {
                     var c = this.world.getCharacter(CharIndex);
@@ -178,7 +176,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 }
             }
 
-            cambiarCharacter(CharIndex, Body, Head, Heading, Weapon, Shield, Helmet, FX, FXLoops) { // TODO: que solo cambie los que son diferentes!
+            cambiarCharacter(CharIndex, Body, Head, Heading, Weapon, Shield, Helmet, FX, FXLoops) {
                 var c = this.world.getCharacter(CharIndex);
 
                 if (!c) {
@@ -217,7 +215,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                         this.resetPosCharacter(this.player.id, X, Y, true);
                         return;
                     }
-                    log.error("tratando de agregar character habiendo un character con mismo charindex existente");
                     return;
                 }
 
@@ -232,8 +229,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
             }
 
             agregarItem(grhIndex, gridX, gridY) {
-                // TODO: reveer esto de sacar cuando agrega
-
                 let viejoItem = this.world.getItemInGridPos(gridX, gridY);
                 if (viejoItem) {
                     this.sacarEntity(viejoItem);
@@ -252,7 +247,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
 
             changePlayerIndex(CharIndex) {
                 if (this.player.id !== CharIndex) {
-                    log.error("NUEVO PLAYER INDEX: " + CharIndex);
                     var prevPlayerCharacter = this.player;
                     this.player = this.world.getCharacter(CharIndex);
                     this.sacarEntity(prevPlayerCharacter);
@@ -264,7 +258,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
             inicializarPlayerEnMapa() {
                 var X = this.player.gridX;
                 var Y = this.player.gridY;
-                log.error("DRAW MAPA INICIAL!!! MAPA:" + this.map.numero + " X: " + X + " Y: " + Y);
                 // --- esto para que se setee al player una pos "anterior" a la del cambio de mapa para que de la ilusion que avanza un tile (sino se deberia quedar quieto esperando el intervalo o traeria problemas en mapas donde entras mirando la salida (ademas de que pasarias siempre en la 2da pos)) ---
                 let f = () => {
                     if (this.playerMovement.estaCaminando()) {
@@ -335,7 +328,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
             resetPosCharacter(charIndex, gridX, gridY, noReDraw) {
                 let c = this.world.getCharacter(charIndex);
                 if (!c) {
-                    log.error(" Reset pos de character no existente, charindex=" + charIndex);
                     return;
                 }
 
@@ -343,7 +335,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 c.setGridPosition(gridX, gridY);
 
                 if (c === this.player) {
-                    log.error(" reseteando pos player");
                     if (!noReDraw) {
                         this.renderer.resetPos(gridX, gridY, this.world.getEntities());
                     }
@@ -353,8 +344,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
             }
 
             cambiarMapa(numeroMapa) {
-                /* todo: cambiar esto si deja de ser sync: */
-                //this._removeAllEntitys();
                 if (!this.map.isLoaded) {
                     this.map.removeCallbacks();
                 }
@@ -532,7 +521,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
             setCharacterFX(CharIndex, FX, FXLoops) {
                 let c = this.world.getCharacter(CharIndex);
                 if (!c) {
-                    log.error("crear fx en character inexistente");
                     return;
                 }
                 if (FX === 0) {

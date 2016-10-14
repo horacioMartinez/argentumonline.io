@@ -79,7 +79,7 @@ define(['font', 'lib/pixi', 'view/textstyle'], function (Font, PIXI, TextStyle) 
             this._chat = null;
         }
 
-        //TODO: ordenar codigo repetido y animacion bien hecha (ademas en el chat animarlo cuando aparece, como que suba un poco)
+
         addHoveringInfo(value, font) {
             var estilo = new TextStyle(Font.HOVERING_BASE_FONT,this._escala,font);
             var info = new PIXI.Text(value, estilo);

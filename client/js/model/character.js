@@ -43,7 +43,7 @@ define(['model/entity', 'transition', 'lib/pixi', 'enums', 'model/charactermovem
         update(delta){
             this.movement.update(delta);
 
-            //todo: todos los de abajo en una sola clase
+
             //this.sprite.update(delta);
             //if (this.spriteNombre){
             //    this.spriteNombre.update(delta);

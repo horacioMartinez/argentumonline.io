@@ -8,7 +8,7 @@ define(['model/game', 'model/intervalos', 'model/acciones', 'model/comandoschat'
         constructor(assetManager, renderer) {
             this.renderer = renderer; // temporal, pasarselo directamente al constructor de game ?
             this.assetManaget = assetManager;
-            this.game = new Game(assetManager); // todo: esta clase deberia llamarse world y solo encargarse de agregar, sacar cosas del mundo y ese tipo de cosas
+            this.game = new Game(assetManager);
 
             this.intervalos = new Intervalos();
             this.acciones = new Acciones(this.game, this.intervalos);

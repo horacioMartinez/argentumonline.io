@@ -178,7 +178,7 @@ define(['enums', 'ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mens
             }
         }
 
-        hideIntro() { // TODO
+        hideIntro() {
             $('body').removeClass('intro');
             /*setTimeout(function () {
              $('body').addClass('login');

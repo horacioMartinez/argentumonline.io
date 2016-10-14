@@ -25,9 +25,6 @@ node "$TOPLEVELDIR/bin/r.js" -o "$PROJECTDIR/build.js"
 echo "Uglifycando........"
 gulp uglify
 
-#echo "Obfuscando........"
-#python "$TOPLEVELDIR/bin/obfuscador.py" "$BUILDDIR/js"
-
 echo "Autoprefixer........"
 gulp autoprefixer
 

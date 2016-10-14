@@ -104,7 +104,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
 
                 char.sprite = sprite;
 
-                // TODO!!! nombre clippping y textos de chat clipping !!!
+                // TODO! nombre clippping y textos de chat clipping !
                 char.texto = new CharacterText(this.escala);
                 this.entityChatContainer.addChild(char.texto);
 

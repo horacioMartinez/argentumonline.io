@@ -1,27 +1,26 @@
-define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue', 'lib/websock'], function (Utils, Enums, Font, Protocolo, ByteQueue, __websock) {
+define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue', 'lib/websock', 'json!../../config.json'], function (Utils, Enums, Font, Protocolo, ByteQueue, __websock, config) {
 
     class GameClient {
-        constructor(game, uiManager, gameUI, host, port) {
-            this.VER_A = 0;
-            this.VER_B = 13;
-            this.VER_C = 2;
+        constructor(game, uiManager, gameUI) {
+            this.VER_A = config.version.split(".")[0];
+            this.VER_B = config.version.split(".")[1];
+            this.VER_C = config.version.split(".")[2];
 
             this.game = game;
 
             this.uiManager = uiManager;
             this.gameUI = gameUI;
-            this.host = host;
-            this.port = port;
             this.conectado = false;
 
             this.protocolo = new Protocolo();
             this.ws = new Websock();
             this.byteQueue = new ByteQueue(this.ws);
-            
+
         }
-        
+
         _connect(conectarse_callback) {
-            this.ws.open("wss://dakaraonline.tk");
+            this.ws.open("ws://" + config.ip + ":" + config.port);
+            //this.ws.open("wss://dakaraonline.tk:443");
             //this.ws.open("ws://localhost:8666");
             var self = this;
             this.ws.on('open', function () {
@@ -97,23 +96,19 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleRemoveDialogs() {
-            log.network("TODO: handleRemoveDialogs ");
             this.game.sacarAllCharacterChats();
         }
 
         handleRemoveCharDialog(CharIndex) {
-            log.network("TODO: handleRemoveCharDialog ");
             this.game.sacarChatCharacterByID(CharIndex);
         }
 
         handleNavigateToggle() {
             this.game.playerState.navegando = !this.game.playerState.navegando;
-            log.network("TODO: handleNavigateToggle ");
         }
 
         handleDisconnect() {
             this._desconectar();
-            log.network("TODO: handleDisconnect ");
         }
 
         handleCommerceEnd() {
@@ -131,7 +126,6 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         handleBankInit(Banco) {
             this.gameUI.showBoveda();
             this.gameUI.boveda.setOroDisponible(Banco);
-            log.network("TODO: handleBankInit ");
         }
 
         handleUserCommerceInit(DestUserName) {
@@ -164,42 +158,34 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleUpdateMana(Value) {
             this.game.atributos.setMana(Value);
-            log.network("TODO: handleUpdateMana ");
         }
 
         handleUpdateHP(Value) {
             this.game.atributos.setVida(Value);
-            log.network("TODO: handleUpdateHP ");
         }
 
         handleUpdateGold(Value) {
             this.game.atributos.setOro(Value);
-            log.network("TODO: handleUpdateGold ");
         }
 
         handleUpdateBankGold(Value) {
             this.gameUI.boveda.setOroDisponible(Value);
-            log.network("TODO: handleUpdateBankGold ");
         }
 
         handleUpdateExp(Value) {
             this.game.atributos.setExp(Value);
-            log.network("TODO: handleUpdateExp ");
         }
 
         handleChangeMap(Map, Version) {
             this.game.cambiarMapa(Map);
-            log.network("TODO: handleChangeMap ");
         }
 
         handlePosUpdate(X, Y) {
             this.game.resetPosCharacter(this.game.player.id, X, Y);
-            log.network("TODO: handlePosUpdate ");
         }
 
         handleChatOverHead(Chat, CharIndex, R, G, B) {
             this.game.escribirChat(Chat, CharIndex, R, G, B);
-            log.network("TODO: handleChatOverHead ");
         }
 
         handleConsoleMsg(Chat, FontIndex) {
@@ -208,16 +194,14 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleGuildChat(Chat) {
             this.game.escribirMsgConsola(Chat, Font.CLAN_CHAT);
-            log.network("TODO: handleGuildChat ");
         }
 
         handleShowMessageBox(Chat) {
             this.uiManager.showMensaje(Chat);
-            log.network("TODO: handleShowMessageBox ");
         }
 
         handleUserIndexInServer(UserIndex) {
-            log.network("TODO: handleUserIndexInServer ");
+            return;
         }
 
         handleUserCharIndexInServer(CharIndex) {
@@ -235,7 +219,6 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
             } else {
                 this.game.sacarEntity(c);
             }
-            log.network("TODO: handleCharacterRemove ");
         }
 
         handleCharacterChangeNick(CharIndex, NewName) {
@@ -277,7 +260,6 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         }
 
         handleGuildList(Data) {
-            log.network("TODO: handleGuildList ");
             var nombres = Utils.splitNullArray(Data);
             this.game.gameUI.setNombresClanes(nombres);
         }
@@ -313,7 +295,6 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleChangeBankSlot(Slot, ObjIndex, ObjName, Amount, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice) {
             this.game.cambiarSlotRetirar(Slot, ObjIndex, ObjName, Amount, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, ObjSalePrice);
-            log.network("TODO: handleChangeBankSlot ");
         }
 
         handleChangeSpellSlot(Slot, SpellID, Name) {
@@ -322,7 +303,6 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleAtributes(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion) {
             this.game.gameUI.setAtributosInfo(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion);
-            log.network("TODO: handleAtributes ");
         }
 
         handleBlacksmithWeapons(Items) {
@@ -337,7 +317,6 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
              */
             this.game.gameUI.herreria.setWeapons(Items);
             this.game.gameUI.showHerreria();
-            log.network("TODO: handleBlacksmithWeapons ");
         }
 
         handleBlacksmithArmors(Items) {
@@ -352,7 +331,6 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
              */
             this.game.gameUI.herreria.setArmors(Items);
             this.game.gameUI.showHerreria();
-            log.network("TODO: handleBlacksmithArmors ");
         }
 
         handleCarpenterObjects(Items) {
@@ -365,7 +343,6 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
              ObjUpgrade: ObjUpgrade,
              */
             this.game.gameUI.showCarpinteria(Items);
-            log.network("TODO: handleCarpenterObjects ");
         }
 
         handleRestOK() {
@@ -375,7 +352,6 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         handleErrorMsg(Message) {
             this._desconectar();
             this.uiManager.showMensaje(Message);
-            log.network("TODO: handleErrorMsg ");
         }
 
         handleBlind() {
@@ -401,17 +377,14 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleFame(Asesino, Bandido, Burgues, Ladron, Noble, Plebe, Promedio) {
             this.game.gameUI.setFameInfo(Asesino, Bandido, Burgues, Ladron, Noble, Plebe, Promedio);
-            log.network("TODO: handleFame ");
         }
 
         handleMiniStats(CiudadanosMatados, CriminalesMatados, UsuariosMatados, NpcsMuertos, Clase, Pena) {
             this.game.gameUI.setMiniStats(CiudadanosMatados, CriminalesMatados, UsuariosMatados, NpcsMuertos, Clase, Pena);
-            log.network("TODO: handleMiniStats ");
         }
 
         handleLevelUp(SkillPoints) {
             this.game.skills.agregarSkillsLibres(SkillPoints);
-            log.network("TODO: handleLevelUp ");
         }
 
         handleAddForumMsg(ForumType, Title, Author, Message) {
@@ -435,7 +408,6 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleMeditateToggle() {
             this.game.playerState.meditando = !this.game.playerState.meditando;
-            log.network("TODO: handleMeditateToggle ");
         }
 
         handleBlindNoMore() {
@@ -449,7 +421,6 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         handleSendSkills(Skills) {
             this.game.skills.setSkills(Skills);
             this.uiManager.gameUI.updateSkillsData();
-            log.network("TODO: handleSendSkills ");
         }
 
         handleTrainerCreatureList(Data) {
@@ -460,7 +431,6 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
             let enemigos = Utils.splitNullArray(EnemiesList);
             let aliados = Utils.splitNullArray(AlliesList);
             this.game.gameUI.showNoticiasClan(News, enemigos, aliados);
-            log.network("TODO: handleGuildNews ");
         }
 
         handleOfferDetails(Details) {
@@ -479,13 +449,10 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
             let previousGuilds = /*Utils.joinNullArray*/(PreviousGuilds);
             let previousPetitions = /*Utils.joinNullArray*/(PreviousPetitions);
             this.game.gameUI.showDetallesPersonaje(CharName, Race, Class, Gender, Level, Gold, Bank, Reputation, previousPetitions, CurrentGuild, previousGuilds, RoyalArmy, ChaosLegion, CiudadanosMatados, CriminalesMatados);
-            log.network("TODO: handleCharacterInfo ");
         }
 
         handleGuildLeaderInfo(GuildList, MemberList, GuildNews, JoinRequests) {
             //TODO: usar GuildNews
-            log.error("asdad");
-
             this.handleGuildMemberInfo(GuildList, MemberList);
             log.error(aspirantes);
             var aspirantes = Utils.splitNullArray(JoinRequests);
@@ -494,14 +461,12 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
             } else{
                 this.game.gameUI.clanes.setNombresSolicitantes([]);
             }
-            log.network("TODO: handleGuildLeaderInfo ");
         }
 
         handleGuildMemberInfo(GuildList, MemberList) {
             this.handleGuildList(GuildList);
             var nombresMiembros = Utils.splitNullArray(MemberList);
             this.game.gameUI.clanes.setNombresMiembros(nombresMiembros);
-            log.network("TODO: handleGuildMemberInfo ");
         }
 
         handleGuildDetails(GuildName, Founder, FoundationDate, Leader, URL, MemberCount, ElectionsOpen, Aligment, EnemiesCount, AlliesCount, AntifactionPoints, Codex, GuildDesc) {
@@ -510,12 +475,10 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleShowGuildFundationForm() {
             this.game.gameUI.showCrearClan();
-            log.network("TODO: handleShowGuildFundationForm ");
         }
 
         handleParalizeOK() {
             this.game.playerState.paralizado = !this.game.playerState.paralizado;
-            log.network("TODO: handleParalizeOK ");
         }
 
         handleShowUserRequest(Details) {
@@ -529,7 +492,6 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleBankOK() {
             this.game.assetManager.audio.playSound(Enums.SONIDOS.retirar_depositar);
-            log.network("TODO: handleBankOK ");
         }
 
         handleChangeUserTradeSlot(OfferSlot, ObjIndex, Amount, GrhIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, Price, ObjName) {
@@ -562,7 +524,6 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
             }
             char.setName(nombre, clan, NickColor);
 
-            log.network("TODO: handleUpdateTagAndStatus ");
         }
 
         handleSpawnList(Data) {
@@ -599,29 +560,24 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         handleShowGuildAlign() {
             this.game.gameUI.showEleccionFaccionClan();
-            log.network("TODO: handleShowGuildAlign ");
         }
 
         handleShowPartyForm(EsLider, Data, Exp) {
             Data = Utils.splitNullArray(Data);
             this.game.gameUI.showParty(EsLider, Data, Exp);
-            log.network("TODO: handleShowPartyForm ");
         }
 
         handleUpdateStrenghtAndDexterity(Fuerza, Agilidad) {
             this.gameUI.interfaz.updateAgilidad(Agilidad);
             this.gameUI.interfaz.updateFuerza(Fuerza);
-            log.network("TODO: handleUpdateStrenghtAndDexterity ");
         }
 
         handleUpdateStrenght(Fuerza) {
             this.gameUI.interfaz.updateFuerza(Fuerza);
-            log.network("TODO: handleUpdateStrenght ");
         }
 
         handleUpdateDexterity(Agilidad) {
             this.gameUI.interfaz.updateAgilidad(Agilidad);
-            log.network("TODO: handleUpdateDexterity ");
         }
 
         handleAddSlots(Mochila) {
@@ -640,17 +596,14 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
             let attackerName = this.game.world.getCharacter(attackerIndex).nombre;
             let text = Enums.MensajeConsola.MENSAJE_1 + attackerName + Enums.MensajeConsola.ATAQUE_FALLO;
             this.game.escribirMsgConsola(text, Font.FIGHT);
-            log.network("TODO: handleUserAttackedSwing");
         }
 
         handleUserHittedByUser(attackerIndex, bodyPart, danio) {
-            log.network("TODO: handleUserHittedByUser");
             this.game.recibirDanioUser(bodyPart, danio, attackerIndex);
         }
 
         handleUserHittedUser(victimIndex, bodyPart, danio) {
             this.game.realizarDanioPlayer(danio, bodyPart, victimIndex);
-            log.network("TODO: handleUserHittedUser");
         }
 
         handleWorkRequestTarget(skill) {
@@ -690,7 +643,6 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
             this.game.escribirMsgConsola(Enums.MensajeConsola.HAS_MATADO_A + victimName + Enums.MensajeConsola.MENSAJE_22, Font.FIGHT);
             this.game.escribirMsgConsola(Enums.MensajeConsola.HAS_GANADO_EXPE_1 + exp + Enums.MensajeConsola.HAS_GANADO_EXPE_2, Font.FIGHT);
 
-            log.network("TODO: handleHaveKilledUser");
         }
 
         handleHome(distancia, tiempoEnSegundos, hogar) {
@@ -705,7 +657,6 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
             this.game.escribirMsgConsola("Te encuentras a " + distancia + " mapas de la " + hogar + ", este viaje durará " + msg, Font.INFO);
             this.game.playerMovement.disable();
-            log.network("TODO:handleHome ");
         }
 
         handleDontSeeAnything() {
@@ -715,7 +666,6 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         handleUserKill(attackerIndex) {
             let attackerName = this.game.world.getCharacter(attackerIndex).nombre;
             this.game.escribirMsgConsola(attackerName + Enums.MensajeConsola.TE_HA_MATADO, Font.FIGHT);
-            log.network("TODO: handleUserKill");
         }
 
         handleNPCSwing() {
@@ -742,28 +692,24 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
             this.game.seguroAtacarActivado = true;
             this.gameUI.interfaz.setSeguroAtacar(true);
             this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_ACTIVADO, Font.WARNING);
-            log.network("TODO: handleResuscitationSafeOff");
         }
 
         handleSafeModeOff() {
             this.game.seguroAtacarActivado = false;
             this.gameUI.interfaz.setSeguroAtacar(false);
             this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_DESACTIVADO, Font.WARNING);
-            log.network("TODO: handleResuscitationSafeOn");
         }
 
         handleResuscitationSafeOff() {
             this.game.seguroResucitacionActivado = false;
             this.gameUI.interfaz.setSeguroResucitacion(false);
             this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_RESU_OFF, Font.WARNING);
-            log.network("TODO: handleResuscitationSafeOff");
         }
 
         handleResuscitationSafeOn() {
             this.game.seguroResucitacionActivado = true;
             this.gameUI.interfaz.setSeguroResucitacion(true);
             this.game.escribirMsgConsola(Enums.MensajeConsola.SEGURO_RESU_ON, Font.WARNING);
-            log.network("TODO: handleResuscitationSafeOn");
         }
 
         handleNobilityLost() {
@@ -781,13 +727,11 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         handleFinishHome() {
             this.game.escribirMsgConsola(Enums.MensajeConsola.MENSAJE_HOGAR, Font.INFO);
             this.game.playerMovement.enable();
-            log.network("TODO: handleFinishHome");
         }
 
         handleCancelHome() {
             this.game.escribirMsgConsola(Enums.MensajeConsola.MENSAJE_HOGAR_CANCEL, Font.INFO);
             this.game.playerMovement.enable();
-            log.network("TODO: handleCancelHome");
         }
 
         handleStopWorking() {

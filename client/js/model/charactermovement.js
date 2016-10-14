@@ -138,7 +138,6 @@ define(['transition', 'lib/pixi', 'enums'], function (Transition, PIXI, Enums) {
 
         resetMovement() {
             if (this.estaMoviendose()) {
-                log.error("reset movement!!!");
                 this.movementTransition.stop();
                 if (this.movementTransition.stopFunction) {
                     this.movementTransition.stopFunction();

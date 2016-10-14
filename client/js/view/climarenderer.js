@@ -40,7 +40,7 @@ define(['enums', 'lib/pixi','view/spritegrh'], function (Enums, PIXI, SpriteGrh)
                 anguloBase = -anguloBase;
             }
             for (var i = 0; i < cantidadGotas; ++i) {
-                var gota = new SpriteGrh(this.assetManager.getGrh(23652)); // TODO: usar directamente sprite
+                var gota = new SpriteGrh(this.assetManager.getGrh(23652));
 
                 gota.x = Math.random() * this.pixiRenderer.width;
                 gota.y = Math.random() * this.pixiRenderer.height;

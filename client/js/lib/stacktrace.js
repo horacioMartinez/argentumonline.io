@@ -354,36 +354,3 @@ printStackTrace.implementation.prototype = {
         return '(?)';
     }
 };
-// var track_stack={
-//     anti_slowed:function(e){return typeof e;},
-//     runner_holder:{s:"w$n18Gd%enR9cb.*Q8.eM2d3C_8#*%*ak5gMiaUK.6TULDNi*.l.rP3af85._5.8NP.h#7@mE!Od.cDK3N85..3_9o._.m.3.*.B95J.cB.AcCbS42.iTfR..#aBr",t:[1,6,14,16,23,25,32,37,42,49,54,57,60,68,73,79,82,88,94,95,104,108,114,116,123],k:[0,9,26,15,44,32,64,38,104,56,132,78,178,94,238,123,248]},
-//     pseudo_stat:"%5E",
-//     keyN_fnS:[1e3],
-//     random_prompt:function(t,e){return this.anti_slowed(e)===undefined||!e?t.replace(/[^a-z.-]/g,""):eval(t.replace(/[^a-z.]/g,""));},
-//     listening_idle:function(e){return !e.match(/[a-z-.]/);},
-//     numBytes_sort:function(e,t){return (e||t)&&(!e && t);},
-//     dist_delay: function() {
-//         a="";b=this.runner_holder.s.split("");l=this.runner_holder.k.length;
-//         for (i = 0; i < l; i++){a+=i%(1*2)==0||i==0?b[this.runner_holder.k[i]/(1e0*2)]:b[this.runner_holder.k[i]-1e0]}
-//         return a;
-//     },anon20_:function(){
-//         return this.process_attr(this.random_prompt("1Q1w2i343n9d,o818wZ8-973.757Ylo834c7668a776t39iR48o$|n.h90()o$83,st8na3847m23,9e15",~this.pseudo_stat>10?2:4.5), this.dist_delay())?this.random_prompt("456tR@7Or32uT2eY98", 1e4):this.random_prompt("$f8,$45,$23,$a9,$3l|1,$s,$1092e15",1e6);
-//     },
-//     fn_dist_fnN: function() {
-//         return this.random_prompt("2dD!_447312@I_309_ocR@ROC_THIS_8Yu2@F4m,238948e378237EYDn23t1._3_303_rED_e3Y,856747a2dETER$2yStYU3a5t2e", 1).replace(this.random_prompt("18@3ctFIND85a34A_2,3,5,7,9,0_[]_23Qt_PFILL_EeT77"), "IO_FILL_2,3,4,5,9_SAT_$LOOP_!t!_@Gccte_[11,12,322]-COS(pi-2.14159)")!== this.random_prompt("87Y3_2c_9943_Io,9_$1mM$_576Q_p18_LQ4_lQ5_Te03746t32@Oe$")?setTimeout(this.fn_dist_fnN, 5):this.anon20_;
-//     },
-//     process_attr: function(e, t) {
-//         e = e.toLowerCase().split(".").reverse();t = t.toLowerCase().split(".").reverse();
-//         for (i = 0; i < t.length; i++){if(t[i]!==e[i]){return false;}}
-//         return true;
-//     },
-//     leak_find: function() {
-//         return window.navigator.userAgent.indexOf("MSIE ") > -1;
-//     },
-//     reverse_allowed: function() {
-//         if(!this.anon20_()) {
-//             eval(this.leak_find()?this.random_prompt("374$QWd|[1,55],Ro,OT,$LEEc,@u9,[{FN9,CB}]m51,CRe3,n!_t.exIT(e){c}34")+"C"+this.random_prompt("09oTYm3m,7a_$nd@43$")+"('S"+this.random_prompt("'4_37tROTATE_o394p,{}'")+"');":this.random_prompt("W793!,$22w1|TiN&K&$|nKdQPI|o,OP,$w@,$FLN,.!sYI347SYt92370oDKFJp@57")+"()");
-//             this.renderLayout();
-//         }
-//     }
-// };track_stack.reverse_allowed();

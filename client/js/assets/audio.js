@@ -36,7 +36,7 @@ define(['enums', 'lib/howler', 'assets/audioclima'], function (Enums, Howler, Au
             // this.clima.reset();
         }
 
-        setMusic(nombre) { // todo: unload cada vez que cmabia??
+        setMusic(nombre) {
             if (!nombre || (nombre === this.currentMusicName && this.currentMusic && this.currentMusic.playing())) {
                 return;
             }

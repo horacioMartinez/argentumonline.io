@@ -85,7 +85,7 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
             this._onGridPositionChange = callback;
         }
 
-        setPosition(x, y) { // TODO: usar los getters y setters de x e y como en sprite
+        setPosition(x, y) {
             this.x = Math.round(x);
             this.y = Math.round(y);
             var gridX = Math.round(x / 32);

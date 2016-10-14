@@ -61,7 +61,7 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
                 this.gameStage.addChild(this.gameNames);
                 this.gameStage.addChild(this.layer3);
                 this.gameStage.addChild(this.layer4);
-                this.gameStage.addChild(this.gameChat); // todo? gametext abajo o arriba de layer4?
+                this.gameStage.addChild(this.gameChat);
 
                 this.entityRenderer = new EntityRenderer(this.escala, this.layer3, this.gameNames, this.gameChat, this.camera, this.assetManager, this.gameStage);
                 this.climaRenderer = new ClimaRenderer(this.escala, this.climaContainer, this.assetManager, this.pixiRenderer);

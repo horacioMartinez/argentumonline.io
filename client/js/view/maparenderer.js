@@ -44,10 +44,9 @@ define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh', 'view/rendererutils
             }
 
             drawMapaIni(gridX, gridY) { // SOLO USARLO EN CAMBIO DE MAPA, SINO USAR RESETPOS. Limpia vectores, dibuja el terreno del mapa, almacena los tiles animados
-                log.error("dibujando inicialmente mapa, solo deberia pasar en cambio de map");
 
                 if (!this.mapa.isLoaded) {
-                    log.error("DRAW MAPA INI SIN QUE ESTE CARGADO");
+                    throw new Error("DRAW MAPA INI SIN QUE ESTE CARGADO");
                     return;
                 }
                 this._drawSpritesIni();
@@ -67,7 +66,7 @@ define(['enums', 'utils/util', 'lib/pixi', 'view/spritegrh', 'view/rendererutils
                 for (var i = 0; i < this.camera.gridW + this.POSICIONES_EXTRA_TERRENO * 2; i++) {
                     this.terreno[i] = [];
                     for (var j = 0; j < this.camera.gridH + this.POSICIONES_EXTRA_TERRENO * 2; j++) {
-                        this.terreno[i][j] = new SpriteGrh(this.assetManager.getTerrenoGrh(1)); // grh null <-- todo (poco importante) arreglar esto?
+                        this.terreno[i][j] = new SpriteGrh(this.assetManager.getTerrenoGrh(1)); // grh null
                         this.layer1.addChild(this.terreno[i][j]);
                     }
                 }

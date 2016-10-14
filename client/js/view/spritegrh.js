@@ -10,14 +10,14 @@ define(['lib/pixi'], function (PIXI) {
             nullFrames[0] = {texture: null};
             super(nullFrames);
 
-            cantLoops = cantLoops || 0; // OJO; por default hace play apenas lo creas
+            cantLoops = cantLoops || 0;
 
             this._velocidadSeteada = false;
             this._playedLoops = 0;
             this._cantLoops = cantLoops;
             this._realOnComplete = null;
 
-            this.loop = ( cantLoops <= 0 );
+            this.loop = ( cantLoops <= 0 ); // OJO; si loopea por default hace play apenas lo creas
 
             this.cambiarGrh(grh);
 
@@ -38,8 +38,6 @@ define(['lib/pixi'], function (PIXI) {
             this._posicionarGrafico();
         }
 
-        // TODO (poco importante): desactivar animaciones cuando no este visible
-        
         setSize(w, h) {
             this.width = w;
             this.height = h;
@@ -104,9 +102,8 @@ define(['lib/pixi'], function (PIXI) {
         cambiarGrh(grh) {
             if (this._grh === grh) {
                 return;
-            } else {
-                this._grh = grh;
             }
+            this._grh = grh;
 
             if (!grh) {
                 this.gotoAndStop(0);

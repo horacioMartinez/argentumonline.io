@@ -59,7 +59,7 @@ define(['model/gamemanager', 'view/renderer', 'network/gameclient'], function (G
             this.gameManager = new GameManager(this.assetManager, renderer);
 
             var gameUI = this.uiManager.inicializarGameUI(this.gameManager, this.settings);
-            this.client = new GameClient(this.gameManager.game, this.uiManager, gameUI, this.host, this.port);
+            this.client = new GameClient(this.gameManager.game, this.uiManager, gameUI);
             this._initClientCallbacks(this.client);
             this.gameManager.setup(this.client, gameUI);
             this.ready = true;

@@ -274,7 +274,6 @@ define(['enums', 'font', 'model/macros'], function (Enums, Font, Macros) {
         }
 
         mostrarMenu(){
-            log.error(this.game.gameUI.hayPopUpActivo());
             if (!this.game.gameUI.hayPopUpActivo()){
                 this.game.gameUI.showMenu(true);
             }
