@@ -6,11 +6,27 @@ Cliente web del MMORPG Argentum Online, escrito desde cero en Javascript.
 
 # Ejecutar
 
-Solo es necesario hostear la carpeta client -que contiene el index.html-, en un servidor web, como si se tratase de cualquier pagina web.
+Solo es necesario hostear la carpeta client -que contiene el index.html-, en un servidor local http, como si se tratase de cualquier pagina web. Un programa simple para hacer esto es [http-server](https://github.com/indexzero/http-server)
 
-# Ejecutable minimizado
+# Configuración cliente
 
-Si bien alcanza..
+Para configurar el cliente usar el archivo config.json, donde se indica puerto, ip y version del servidor al cual se conectará:
+
+```json
+{
+    "version":"0.13.2",
+    "ip":"dakaraonline.tk",
+    "port":"443"
+}
+```
+
+# Cliente minificado
+
+No hace falta hacer esto, pero es recomandable, ya que crea una version del codigo compatible con navegadores viejos, disminuye el tamaño del codigo y junta los distintos archivos en uno solo. VER MAS
+
+Ir a la carpeta bin y ejecutar build.sh. Es necesario estar corriendo linux, tener node, gulp y varias cosas mas que no tengo ganas de fijarme.
+
+El cliente minificado se crea en una nueva carpeta 'dakara-client-build/build'.
 
 # Hostear servidor propio
 
@@ -19,7 +35,7 @@ Sin embargo para hacerlo es necesario ejecutar [websockify](https://github.com/k
 
 Que hace y porque es necesario websockify? Al correr el cliente desde un navegador, no es posible utilizar las conecciones de TCP "puro" que utilizan las aplicaciones de escritorio, sino que es necesario usar WebSockets, un protocolo adicional encima de TCP.
 
-Entonces, Para que el servidor de Argentum pueda entender estas conexiones de WebSockets, websockify se encarga de traducirlas a TCP "puro" y comunicarselo al servidor.
+Entonces, Para que el servidor de Argentum pueda entender estas conexiones de WebSockets, websockify se encarga de traducirlas y comunicarselo al servidor.
 
 Se trata de un esquema asi:
 
@@ -51,7 +67,7 @@ Por lo tanto, desde el cliente web nos conectamos al puerto 443:
 "port":"443"
 }
 
-Y desde el cliente de escritorio, nos vamos podremos conectar al puerto 7666.
+Y si se quiere conectar desde el cliente de escritorio, se debe hacerlo al puerto 7666.
 
 
 

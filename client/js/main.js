@@ -1,11 +1,3 @@
-/**
- * @license
- * Copyright (C) Horacio Martinez - All Rights Reserved
- * Unauthorized copying of this file, via any medium is strictly prohibited
- * Proprietary and confidential
- * Written by Horacio Martinez <hmk142@hotmail.com>, May 2016
- *
- */
 
 define(['app', 'assets/assetmanager', 'ui/uimanager', 'storage/settings', 'lib/lodash', 'lib/stacktrace', 'utils/log', 'detect'], function (App, AssetManager, UIManager, Settings, __globals__) {
     var app, uiManager, assetManager, settings;
