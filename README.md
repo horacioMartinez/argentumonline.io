@@ -69,6 +69,9 @@ Por lo tanto, desde el cliente web nos conectamos al puerto 443:
 
 Y si se quiere conectar desde el cliente de escritorio, se debe hacerlo al puerto 7666.
 
+### License ###
+
+This content is released under the (http://opensource.org/licenses/MIT) MIT License.
 
 
 
