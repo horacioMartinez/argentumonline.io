@@ -12,7 +12,6 @@ define([], function () {
                 }
                 this.updateCharacters(delta);
                 this.game.renderer.update(delta);
-                //this.game.macros.update(delta);
             }
         }
 

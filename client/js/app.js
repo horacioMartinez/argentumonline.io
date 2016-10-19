@@ -98,7 +98,6 @@ define(['model/gamemanager', 'view/renderer', 'network/gameclient'], function (G
             if (this.gameManager.game.started) {
                 return;
             }
-            //this.center();
             this.gameManager.game.inicializar(username);
             if (!newChar) {
                 this.client.intentarLogear(username, userpw);

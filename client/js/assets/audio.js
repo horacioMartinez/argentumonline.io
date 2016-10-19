@@ -33,7 +33,6 @@ define(['enums', 'lib/howler', 'assets/audioclima'], function (Enums, Howler, Au
                 this.currentMusic.stop();
             }
             this.currentMusicName = null;
-            // this.clima.reset();
         }
 
         setMusic(nombre) {
@@ -49,15 +48,12 @@ define(['enums', 'lib/howler', 'assets/audioclima'], function (Enums, Howler, Au
                     fadingOutMusic.once("fade", () => {
                         fadingOutMusic.stop();
                     });
-                    //this.currentMusic.stop();
                 }
                 this.currentMusic = new Howler.Howl({
                     src: [this.MUSIC_PATH + nombre + this.MAIN_EXTENSION, this.MUSIC_PATH + nombre + this.SECONDARY_EXTENSION],
                     loop: true
                 });
 
-                // TODO: fade y que se ejecuten los dos la mismo tiempo? (por alguna rezon no anda)
-                //this.currentMusic.fade(0,this.musicVolume,1000);
                 this.currentMusic.volume(this.musicVolume);
                 this.currentMusic.play();
             }

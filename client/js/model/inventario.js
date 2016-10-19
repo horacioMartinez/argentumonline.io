@@ -7,8 +7,6 @@ define([], function () {
     class Inventario {
         constructor() {
             this._slots = [];
-            this._cambioSlotCallback = null;
-            this._borrarSlotCallback = null;
         }
 
         cambiarSlot(numSlot, ObjName, Amount, Price, GrhIndex, ObjIndex, ObjType, MaxHit, MinHit, MaxDef, MinDef, Equiped) {

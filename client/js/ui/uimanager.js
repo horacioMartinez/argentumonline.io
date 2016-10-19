@@ -180,9 +180,6 @@ define(['enums', 'ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mens
 
         hideIntro() {
             $('body').removeClass('intro');
-            /*setTimeout(function () {
-             $('body').addClass('login');
-             }, 500);*/
             this.setLoginScreen();
         }
 

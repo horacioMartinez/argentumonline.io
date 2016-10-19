@@ -42,7 +42,6 @@ define([], function () {
             this._enabled--;
         }
 
-        // TODO: aceleracion al comenzar y terminar de caminar ?
         comenzarCaminar(direccion) {
             this.dirPressedStack.push(direccion);
         }

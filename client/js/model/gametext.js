@@ -122,12 +122,6 @@ define(['enums', 'font'],
             removeCharacterChat (character){
                 this.renderer.removerChat(character);
             }
-    /*
-            removeAllChats(){
-                this.world.forEachCharacter( () => {
-                    this.renderer.sacar
-                })
-            }*/
         }
 
         return GameText;

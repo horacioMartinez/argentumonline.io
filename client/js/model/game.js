@@ -362,14 +362,6 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 this.map.onceLoaded((mapa) => {
                     this.playerMovement.enable();
                     this.worldState.outdoor = this.map.mapaOutdoor();
-                    // this.assetManager.audio.clima.setOutdoor(this.map.mapaOutdoor());
-                    // if (this.lloviendo) {
-                    //     if (this.map.mapaOutdoor()) {
-                    //         this.renderer.createLluvia();
-                    //     } else {
-                    //         this.renderer.removeLluvia();
-                    //     }
-                    // }
                 });
                 this._removeAllEntities();
             }
