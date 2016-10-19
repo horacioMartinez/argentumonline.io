@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
 
 TOPLEVELDIR="`dirname $0`/.."
 BUILDDIR="$TOPLEVELDIR/dakara-client-build/build"
@@ -25,9 +25,6 @@ node "$TOPLEVELDIR/bin/r.js" -o "$PROJECTDIR/build.js"
 echo "Uglifycando........"
 gulp uglify
 
-echo "Autoprefixer........"
-gulp autoprefixer
-
 #echo "Comprimiendo........"
 #{
 #	find "$BUILDDIR" \( -name '*.css' -o -name '*.html' -o -name '*.xml' -o -name '*.json' -o -name '*.js' \) -exec gzip --verbose --keep --best -n --force {} \;
@@ -38,7 +35,6 @@ find "$BUILDDIR" \( -name '*.scss' -o -name '*.map' \) -type f -delete
 
 echo "Moving build.txt to current dir........"
 mv "$BUILDDIR/build.txt" "$TOPLEVELDIR"
-
 
 echo "borrando cliente temporal......"
 rm -rf "$TEMP_CLIENTDIR"

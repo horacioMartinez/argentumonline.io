@@ -1,24 +1,9 @@
 require('es6-promise').polyfill();
 var gulp = require('gulp');
 
-gulp.task('autoprefixer', function() {
-    var postcss = require('gulp-postcss');
-    var sourcemaps = require('gulp-sourcemaps');
-    var autoprefixer = require('autoprefixer');
-
-    return gulp.src('dakara-client-build/**/*.css')
-        .pipe(sourcemaps.init())
-        .pipe(postcss([autoprefixer({
-            browsers: ['last 5 versions']
-        })]))
-        .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('dakara-client-build'));
-});
-
-
 const babel = require('gulp-babel');
 
-gulp.task('es6toes5', function() { /* librerias no compilarlas*/
+gulp.task('es6toes5', function() {
     return gulp.src(['dakara-client-build/**/*.js','!client-temp/**/lib/*','!client-temp/**/build.js','!client-temp/**/home.js'])
         .pipe(babel({
             presets: ['es2015']
@@ -41,14 +26,7 @@ gulp.task('uglify', function() {
        .pipe(uglify({
             compress: {
                pure_funcs: ['console.log', 'log.error', 'log.info','log.network']
-           },/*
-               mangle: {
-                toplevel: true,
-                sort: true,
-                eval: true,
-                props: true,
-                r :'$,require,exports'
-            },*/
+           },
             comments : 'license',
             lint: true
         }))
