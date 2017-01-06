@@ -2,8 +2,6 @@
 
 Dakara Online is a HTML5/Javascript MMORPG.
 
-[Play it now.](http://web.dakara.com.ar/)
-
 [Server code.](https://github.com/DakaraOnline/dakara-server)
 
 
