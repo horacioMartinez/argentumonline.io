@@ -30,7 +30,7 @@ define(["text!../../../menus/comerciar.html!strip", 'ui/popups/popup', 'ui/game/
             this.userGrid.clear();
             this.game.inventario.forEachSlot(
                 function (slot) {
-                    var numGraf = self.game.assetManager.getNumCssGraficoFromGrh(slot.grh);
+                    var numGraf = self.game.assetManager.getNumGraficoFromGrh(slot.grh);
                     self.userGrid.modificarSlot(slot.numero, slot.cantidad, numGraf);
                 });
             this.shopGrid.deselect();

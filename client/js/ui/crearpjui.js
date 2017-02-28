@@ -176,11 +176,11 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
             var numGrafCentro = this.assetManager.getFaceGrafFromNum(cabezaCentro);
             var numGrafDer = this.assetManager.getFaceGrafFromNum(cabezaDer);
 
-            var url = "url(graficos/css/" + numGrafIzq + ".png)";
+            var url = "url(graficos/" + numGrafIzq + ".png)";
             this.$imgCabezaIzq.css('background-image', url);
-            url = "url(graficos/css/" + numGrafDer + ".png)";
+            url = "url(graficos/" + numGrafDer + ".png)";
             this.$imgCabezaDer.css('background-image', url);
-            url = "url(graficos/css/" + numGrafCentro + ".png)";
+            url = "url(graficos/" + numGrafCentro + ".png)";
             this.$imgCabezaCentro.css('background-image', url);
             this.$imagenCabezaCuerpo.css('background-image', url);
         }
@@ -191,7 +191,7 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
 
             var numCuerpo = this._getCuerpoNum(genero, raza);
             var numGraf = this.assetManager.getBodyGrafFromNum(numCuerpo);
-            var url = "url(graficos/css/" + numGraf + ".png)";
+            var url = "url(graficos/" + numGraf + ".png)";
             this.$imagenCuerpo.css('background-image', url);
         }
 
