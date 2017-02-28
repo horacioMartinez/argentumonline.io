@@ -1,5 +1,5 @@
 {
 	"version":"0.13.2",
-	"ip":"dakaraonline.tk",
-	"port":"443"
+	"ip":"ec2-54-153-92-114.us-west-1.compute.amazonaws.com",
+	"port":"80"
 }
