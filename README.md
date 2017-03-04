@@ -37,7 +37,7 @@ This content is released under the (http://opensource.org/licenses/MIT) MIT Lice
 
 # Dakara-client (Español)
 
-[Jugar!](http://web.dakara.com.ar/)
+###[Jugar.](http://horaciomartinez.github.io/dakara-client/)
 
 Cliente web del MMORPG Argentum Online, escrito desde cero en Javascript.
 
