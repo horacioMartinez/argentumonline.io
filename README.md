@@ -24,7 +24,7 @@ The server version, ip and port can be configured in the file 'config.json':
 
 ### Client build ###
 
-This step is not necessary, but it is recommended to transpile the code to es5 syntax to support older browsers, and to minify the code, you can achieve this running the script 'build.sh' inside the bin folder.
+This step is not necessary, but it is recommended to transpile the code to es5 syntax to support older browsers, and to minify the code, you can achieve this by running the script 'build.sh' inside the bin folder.
 
 ### Hosting server ###
 
