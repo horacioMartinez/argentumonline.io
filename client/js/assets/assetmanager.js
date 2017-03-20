@@ -29,15 +29,15 @@ define(['json!../../indices/armas.json',
                 PIXI.GC_MODES.DEFAULT = PIXI.GC_MODES.MANUAL;
             }
 
-            getNumCssGraficoFromGrh(grh) {
+            getNumGraficoFromGrh(grh) {
                 if (!this.indices[grh]) {
                     return null;
                 }
-                if (this.indices[grh].css) {
-                    return this.indices[grh].css;
+                if (this.indices[grh].grafico) {
+                    return this.indices[grh].grafico;
                 }
                 // animacion, devuelvo grafico del primer frame
-                return this.getNumCssGraficoFromGrh(this.indices[grh].frames[0]);
+                return this.getNumGraficoFromGrh(this.indices[grh].frames[0]);
             }
 
             getFaceGrafFromNum(numHead) {
@@ -45,7 +45,7 @@ define(['json!../../indices/armas.json',
                     return;
                 }
                 var grh = this.cabezas[numHead].down;
-                return this.getNumCssGraficoFromGrh(grh);
+                return this.getNumGraficoFromGrh(grh);
             }
 
             getBodyGrafFromNum(numCuerpo) {
@@ -53,7 +53,7 @@ define(['json!../../indices/armas.json',
                     return;
                 }
                 var grh = this.cuerpos[numCuerpo].down;
-                return this.getNumCssGraficoFromGrh(grh);
+                return this.getNumGraficoFromGrh(grh);
             }
 
             getGrh(grh) {

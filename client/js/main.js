@@ -25,7 +25,7 @@ define(['app', 'assets/assetmanager', 'ui/uimanager', 'storage/settings', 'lib/l
                 () => {
                     setTimeout(function () {
                         app.start();
-                    }, 1200);
+                    }, 800);
                 },
                 (porcentajeCargado) => {
                     uiManager.introUI.updateLoadingBar(porcentajeCargado);
