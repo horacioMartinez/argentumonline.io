@@ -43,7 +43,6 @@ define(['enums', 'ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mens
             $body.removeClass('crear');
             $body.addClass('login');
             this.loginUI.setPlayButtonState(true);
-            this.loginUI.setCrearButtonState(true);
             if (this.gameUI) {
                 this.gameUI.hideGamePopUps();
             }

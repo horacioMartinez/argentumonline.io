@@ -20,8 +20,6 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
 
         _connect(conectarse_callback) {
             this.ws.open("ws://" + config.ip + ":" + config.port);
-            //this.ws.open("wss://dakaraonline.tk:443");
-            //this.ws.open("ws://localhost:8666");
             var self = this;
             this.ws.on('open', function () {
                 self.conectado = true;

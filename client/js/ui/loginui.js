@@ -14,12 +14,6 @@ define(['utils/charcodemap'], function (CharcodeMap) {
             });
         }
 
-        setBotonCrearCallback(cb) {
-            $('#botonCrearPJ').click(function () {
-                cb();
-            });
-        }
-
         enableLoginPressingEnter() {
 
             let loginKeyPressFunc = (keyNumber) => {
@@ -49,16 +43,6 @@ define(['utils/charcodemap'], function (CharcodeMap) {
                 $playButton.prop('disabled', false);
             } else {
                 $playButton.prop('disabled', true);
-            }
-        }
-
-        setCrearButtonState(enabled) {
-            var $crearButton = $('#botonCrearPJ');
-
-            if (enabled) {
-                $crearButton.prop('disabled', false);
-            } else {
-                $crearButton.prop('disabled', true);
             }
         }
 
