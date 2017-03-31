@@ -3306,7 +3306,7 @@ function WarpMeToTarget (buffer) {
 
         }
     this.serialize = function(buffer) {
-        buffer.WriteByte(ClientPacketID_GMCommands);
+        buffer.WriteByte(122);
         buffer.WriteByte(ClientGMPacketID.WarpMeToTarget); /* PacketID: 10 */
 
         buffer.flush();
@@ -3330,7 +3330,7 @@ function WarpChar (buffer) {
 
         }
     this.serialize = function(buffer) {
-        buffer.WriteByte(ClientPacketID_GMCommands);
+        buffer.WriteByte(122);
         buffer.WriteByte(ClientGMPacketID.WarpChar); /* PacketID: 11 */
         buffer.WriteUnicodeString(this.UserName);
         buffer.WriteInteger(this.Map);

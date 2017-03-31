@@ -50,7 +50,7 @@ define(['enums', 'font'], function (Enums, Font) {
                                 this.game.client.sendRequestAccountState();
                             }
                             break;
-                        
+
                         case "/QUIETO":
                             if (!this._checkearYescribirMuerto()) {
                                 this.game.client.sendPetStand();
@@ -183,6 +183,14 @@ define(['enums', 'font'], function (Enums, Font) {
                             }
 
                             break;
+                      case "/TELEPLOC":
+                        this.game.client.sendWarpMeToTarget();
+                        break;
+
+                      case "/TELEP":
+                        this.game.client.sendWarpChar(args[0],args[1],args[2],args[3]);
+                        break;
+
                         case "/CMSG":
                             if (args.length) {
                                 this.game.client.sendGuildMessage(args.join(" "));
