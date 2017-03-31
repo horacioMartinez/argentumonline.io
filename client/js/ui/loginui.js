@@ -30,10 +30,6 @@ define(['utils/charcodemap'], function (CharcodeMap) {
             $('#loginNombre').keypress(function (e) {
                 loginKeyPressFunc(e.which);
             });
-
-            $('#loginContrasenia').keypress(function (e) {
-                loginKeyPressFunc(e.which);
-            });
         }
 
         setPlayButtonState(enabled) {
@@ -48,10 +44,6 @@ define(['utils/charcodemap'], function (CharcodeMap) {
 
         getUsername() {
             return $('#loginNombre').val();
-        }
-
-        getPassword() {
-            return $('#loginContrasenia').val();
         }
     }
     return LoginUI;

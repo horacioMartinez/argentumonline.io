@@ -11,9 +11,11 @@ define(['model/gamemanager', 'view/renderer', 'network/gameclient'], function (G
 
         _initLoginCallbacks() {
             var self = this;
-            this.uiManager.loginUI.setBotonJugarCallback(function () {
-                //self.tryStartingGame();
-                self.setCrearPJ();
+            this.uiManager.loginUI.setBotonJugarCallback(() => {
+                let username = this.uiManager.loginUI.getUsername();
+                if (username) {
+                  self.setCrearPJ(username);
+                }
             });
         }
 
@@ -63,7 +65,8 @@ define(['model/gamemanager', 'view/renderer', 'network/gameclient'], function (G
             this.ready = true;
         }
 
-        setCrearPJ() {
+        setCrearPJ(username) {
+            this.uiManager.crearPjUI.username = username;
             this.uiManager.crearPjUI.inicializar();
             this.uiManager.loginUI.setPlayButtonState(false);
             var self = this;

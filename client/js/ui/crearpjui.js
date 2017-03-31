@@ -19,6 +19,7 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
             this.$imagenCabezaCuerpo = $('#crearPjImagenCabezaPersonaje');
 
             this._dialogCrearPersonaje = null;
+            this.username = null;
         }
 
         get dialogCrearPersonaje() {
@@ -130,19 +131,19 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
         }
 
         setBotonCrearCallback(cb) {
-            var self = this;
+          var self = this;
+          $('#crearBotonCrear').click(function () {
+            var raza = self._getRaza();
+            var genero = self._getGenero();
+            var clase = $("#crearSelectClase").val();
+            var ciudad = $("#crearSelectCiudad").val();
+            var cabeza = self._getCabezaNum(self.offsetSelectedCabeza);
 
-            self.dialogCrearPersonaje.crearCb = cb;
+            let password = "fromweb";
+            let mail = "from@web.com";
 
-            $('#crearBotonCrear').click(function () {
-                var raza = self._getRaza();
-                var genero = self._getGenero();
-                var clase = $("#crearSelectClase").val();
-                var ciudad = $("#crearSelectCiudad").val();
-                var cabeza = self._getCabezaNum(self.offsetSelectedCabeza);
-
-                self.dialogCrearPersonaje.show(raza, genero, clase, ciudad, cabeza);
-            });
+            cb(self.username, password, raza, genero, clase, cabeza, mail, ciudad);
+          });
         }
 
         _getCabezaNum(offset) {
