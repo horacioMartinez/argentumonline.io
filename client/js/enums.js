@@ -205,7 +205,7 @@ define({
         hechizoAtaque: 600,
         trabajar: 700,
         usarItemConU: 380,
-        usarItemConDobleClick: 400,
+        usarItemConDobleClick: 430,
         requestPostionUpdate: 2000,
         domar: 700,
         robar: 700
