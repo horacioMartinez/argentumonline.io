@@ -229,16 +229,6 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
 
             renderFrame() {
                 this.pixiRenderer.render(this.stage);
-                /*
-                 let testPosEnteras = (c) => {
-                 if ( (Math.round(c.x) !== c.x) || (Math.round(c.y) !== c.y) ){
-                 log.error(c._grh);
-                 throw new Error("ERROR!!!!!!!!!!!: X:" + c.x+ " Y:" + c.y);
-                 }
-                 c.children.forEach(testPosEnteras);
-                 };
-                 testPosEnteras(this.stage);
-                 */
             }
 
 

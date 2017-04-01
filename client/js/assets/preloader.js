@@ -39,7 +39,7 @@ define(['lib/pixi', 'json!../../preload_config/preload_sounds.json','json!../../
                 loader.add("indices", "indices/graficos.json");
 
                 for (let grafico of PreloadGraficos) {
-                    loader.add(grafico, "graficos/" + grafico + ".png");
+                    loader.add("" + grafico, "graficos/" + grafico + ".png");
                 }
 
                 loader.on('progress', function (loader, loadedResource) {
