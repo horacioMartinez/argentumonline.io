@@ -198,14 +198,14 @@ define({
     Intervalo: {
         macroHechizos: 2788,
         macroTrabajo: 900,
-        ataque: 00,
+        ataque: 900,
         ataqueConArco: 1000,
         hechizo: 1000,
         ataqueHechizo: 600,
         hechizoAtaque: 600,
         trabajar: 700,
         usarItemConU: 380,
-        usarItemConDobleClick: 430,
+        usarItemConDobleClick: 400,
         requestPostionUpdate: 2000,
         domar: 700,
         robar: 700
