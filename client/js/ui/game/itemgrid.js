@@ -70,7 +70,7 @@ define(['jquery-ui'], function () {
                 //$item.data("slot", numSlot);
             }
 
-            $item.text(cantidad + "");
+            $item.text("");
             var url = 'url(graficos/' + numGraf + '.png)';
             $item.css('background-image', url);
             if (equiped) {

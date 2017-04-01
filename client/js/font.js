@@ -43,7 +43,7 @@ define(["utils/palette"], function (Palette) {
 
         CONSOLA_BASE_FONT: {
             fontFamily: FONT_FAMILY,
-            fontSize: '12',
+            fontSize: '10',
             stroke: "black",
             strokeThickness: 2,
         },
@@ -51,19 +51,19 @@ define(["utils/palette"], function (Palette) {
         NOMBRE_BASE_FONT: {
             fontFamily: FONT_FAMILY,
             fontWeight: 'bold',
-            fontSize: '12',
+            fontSize: '11',
             stroke: "black",
             strokeThickness: 0.2,
             align: 'center',
             dropShadow: true,
             dropShadowDistance: 0,
-            dropShadowBlur: 3
+            dropShadowBlur: 1
         },
 
         TALK_BASE_FONT: {
             fontFamily: FONT_FAMILY,
             /*fontWeight: 'bold',*/
-            fontSize: '12',
+            fontSize: '10',
             stroke: "black",
             strokeThickness: 2,
             align: 'center',
@@ -73,7 +73,7 @@ define(["utils/palette"], function (Palette) {
         HOVERING_BASE_FONT: {
             fontFamily: FONT_FAMILY,
             fontWeight: '900',
-            fontSize: '14',
+            fontSize: '12',
             stroke: "black",
             strokeThickness: 1,
         },

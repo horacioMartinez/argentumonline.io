@@ -81,6 +81,7 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
             }
 
             actualizarIndicadorMapa(numMap, x, y) {
+                return;
                 this.indicadorMapa.actualizar(numMap, x, y);
             }
 
