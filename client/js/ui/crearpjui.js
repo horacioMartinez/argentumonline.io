@@ -67,7 +67,7 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
             this.modificarSlotInput($sel, id, Enums.Clase.druida, Enums.NombreClase[Enums.Clase.druida]);
             this.modificarSlotInput($sel, id, Enums.Clase.bandido, Enums.NombreClase[Enums.Clase.bandido]);
             this.modificarSlotInput($sel, id, Enums.Clase.cazador, Enums.NombreClase[Enums.Clase.cazador]);
-            this.modificarSlotInput($sel, id, Enums.Clase.trabajador, Enums.NombreClase[Enums.Clase.trabajador]);
+            //this.modificarSlotInput($sel, id, Enums.Clase.trabajador, Enums.NombreClase[Enums.Clase.trabajador]);
             this.modificarSlotInput($sel, id, Enums.Clase.pirata, Enums.NombreClase[Enums.Clase.pirata]);
 
             $("#crearBotonGeneroMasculino").addClass('selected');
