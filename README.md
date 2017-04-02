@@ -1,6 +1,6 @@
 # ArgentumOnline.io
 
-### [Play it now.](http://horaciomartinez.github.io/dakara-client/)
+### [Play it now.](http://argentumonline.io/)
 
 .io spin-off of the popular argentinian MMORPG [Argentum Online](https://es.wikipedia.org/wiki/Argentum_Online)
 
