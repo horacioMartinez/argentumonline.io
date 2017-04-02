@@ -193,6 +193,10 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
                 c.helmet = Helmet;
                 c.fx = FX;
                 c.fxLoops = FXLoops;
+
+                if (c === this.player && c.muerto){
+                    this.renderer.setDeadState(true);
+                }
             }
 
             agregarCharacter(CharIndex, Body, Head, Heading, X, Y, Weapon, Shield, Helmet, FX, FXLoops, Name,
@@ -224,6 +228,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
 
                 if ((!this.player) && ( this.username.toUpperCase() === nombre.toUpperCase())) { // mal esto, se deberia hacer comparando el charindex pero no se puede porque el server manda el char index del pj despues de crear los chars
                     this.player = c;
+                    this.renderer.setDeadState(false);
                     this.actualizarIndicadorPosMapa();
                 }
             }

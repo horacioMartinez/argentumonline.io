@@ -70,7 +70,7 @@ define(['enums', 'utils/charcodemap'], function (Enums, CharcodeMap) {
             var acciones = this.acciones;
             var keys = this.keys;
 
-            if (!game.started) {
+            if (!game.started || this.game.player.muerto) {
                 return;
             }
 

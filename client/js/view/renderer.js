@@ -231,6 +231,16 @@ define(['enums', 'lib/pixi', 'view/camera', 'view/consola', 'view/containerorden
                 this.pixiRenderer.render(this.stage);
             }
 
+            setDeadState(dead) {
+                if (dead) {
+                    let matrixFilter = new PIXI.filters.ColorMatrixFilter();
+                    matrixFilter.desaturate();
+                    this.stage.filters = [matrixFilter];
+                } else {
+                    this.stage.filters = [];
+                }
+            }
+
 
         }
         return Renderer;
