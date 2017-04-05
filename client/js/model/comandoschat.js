@@ -279,7 +279,7 @@ define(['enums', 'font'], function (Enums, Font) {
 
                             break;
                         case "/CONTRASEÑA":
-                            this.game.client.frmNewPassword.Show(vbModal, frmMain);
+                            //this.game.client.frmNewPassword.Show(vbModal, frmMain);
 
                             break;
                         case "/APOSTAR":
