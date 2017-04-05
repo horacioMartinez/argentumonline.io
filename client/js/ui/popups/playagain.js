@@ -5,7 +5,7 @@
 define(["text!../../../menus/playAgain.html!strip", 'ui/popups/popup'], function (DOMdata, PopUp) {
 
   class playAgain extends PopUp {
-    constructor(game) {
+    constructor(game, setCrearPjScreenCb) {
       var options = {
         width: 220,
         height: 240,
@@ -14,6 +14,7 @@ define(["text!../../../menus/playAgain.html!strip", 'ui/popups/popup'], function
       };
       super(DOMdata, options);
       this.game = game;
+      this.setCrearPjScreenCb = setCrearPjScreenCb;
       this.$playAgain = $("#playAgain");
       this.$changeCharacter = $("#changeCharacter");
       this.$back = $("#playAgainBack");
@@ -34,7 +35,7 @@ define(["text!../../../menus/playAgain.html!strip", 'ui/popups/popup'], function
 
       this.$changeCharacter.click(() => {
         this.game.client._desconectar();
-
+        this.setCrearPjScreenCb();
         this.hide();
       });
 

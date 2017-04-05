@@ -182,8 +182,8 @@ define(['enums', 'ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mens
             this.setLoginScreen();
         }
 
-        inicializarGameUI(gameManager, storage /*SACAME!*/) {
-            this.gameUI = new GameUI(gameManager, storage, this.playSonidoClick);
+        inicializarGameUI(gameManager, storage, setCrearPjScreenCallback) {
+            this.gameUI = new GameUI(gameManager, storage, this.playSonidoClick, setCrearPjScreenCallback);
             return this.gameUI;
         }
 

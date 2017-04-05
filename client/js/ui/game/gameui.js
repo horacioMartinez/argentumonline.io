@@ -12,9 +12,10 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
               DetallesPersonaje, Estadisticas, PartyLider, PartyMiembro,PlayAgain, Menu) {
 
         class GameUI {
-            constructor(gameManager, settings, playSonidoClickCb) {
+            constructor(gameManager, settings, playSonidoClickCb, setCrearPjScreenCallback) {
 
                 this.playSonidoClickCb = playSonidoClickCb;
+                this.setCrearPjScreenCb = setCrearPjScreenCallback;
 
                 var game = gameManager.game;
                 var acciones = gameManager.acciones;
@@ -329,7 +330,7 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
             }
 
             get playAgain() {
-                this._playAgain = this._playAgain || this._initPopUp(new PlayAgain(this.game));
+                this._playAgain = this._playAgain || this._initPopUp(new PlayAgain(this.game, this.setCrearPjScreenCb));
                 return this._playAgain;
             }
         }

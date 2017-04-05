@@ -55,10 +55,14 @@ define(['model/gamemanager', 'view/renderer', 'network/gameclient'], function (G
         }
 
         inicializarGame() {
+            let setCrearPjScreenCallback = () => {
+              this.setCrearPJ(this.uiManager.crearPjUI.username);
+            };
+
             var renderer = new Renderer(this.assetManager, this.uiManager.escala);
             this.gameManager = new GameManager(this.assetManager, renderer);
 
-            var gameUI = this.uiManager.inicializarGameUI(this.gameManager, this.settings);
+            var gameUI = this.uiManager.inicializarGameUI(this.gameManager, this.settings, setCrearPjScreenCallback);
             this.client = new GameClient(this.gameManager.game, this.uiManager, gameUI);
             this._initClientCallbacks(this.client);
             this.gameManager.setup(this.client, gameUI);
