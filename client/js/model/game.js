@@ -196,6 +196,7 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
 
                 if (c === this.player && c.muerto){
                     this.renderer.setDeadState(true);
+                    this.gameUI.showPlayAgain(this);
                 }
             }
 

@@ -6,10 +6,10 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
         'ui/game/interfaz', 'ui/popups/tirar', 'ui/popups/boveda', 'ui/popups/guiamapa', 'ui/popups/opciones', 'ui/popups/carpinteria',
         'ui/popups/herreria', 'ui/popups/clanes', 'ui/popups/detallesclan', 'ui/popups/solicitudclan', 'ui/popups/eleccionfaccionclan',
         'ui/popups/crearclan', 'ui/popups/noticiasclan', 'ui/popups/detallespersonaje', 'ui/popups/estadisticas', 'ui/popups/partylider',
-        'ui/popups/partymiembro', 'ui/popups/menu'],
+        'ui/popups/partymiembro', 'ui/popups/playagain', 'ui/popups/menu'],
     function (Enums, KeyMouseListener, popUpSkills, Comerciar, InGameMensaje, Interfaz, Tirar, Boveda, GuiaMapa, Opciones,
               Carpinteria, Herreria, Clanes, DetallesClan, SolicitudClan, EleccionFaccionClan, CrearClan, NoticiasClan,
-              DetallesPersonaje, Estadisticas, PartyLider, PartyMiembro, Menu) {
+              DetallesPersonaje, Estadisticas, PartyLider, PartyMiembro,PlayAgain, Menu) {
 
         class GameUI {
             constructor(gameManager, settings, playSonidoClickCb) {
@@ -146,6 +146,10 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
                 } else {
                     this.partyMiembro.show(data, exp);
                 }
+            }
+
+            showPlayAgain(){
+                this.playAgain.show();
             }
 
             showMenu(fromEscapeKey) {
@@ -322,6 +326,11 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
             get herreria() {
                 this._herreria = this._herreria || this._initPopUp(new Herreria(this.game));
                 return this._herreria;
+            }
+
+            get playAgain() {
+                this._playAgain = this._playAgain || this._initPopUp(new PlayAgain(this.game));
+                return this._playAgain;
             }
         }
 
