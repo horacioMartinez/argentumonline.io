@@ -27,17 +27,19 @@ define(["text!../../../menus/playAgain.html!strip", 'ui/popups/popup'], function
 
     initCallbacks() {
       this.$playAgain.click(() => {
-
+        this.game.client._desconectar();
+        $('#crearBotonCrear').trigger("click");
         this.hide();
       });
 
       this.$changeCharacter.click(() => {
+        this.game.client._desconectar();
 
         this.hide();
       });
 
       this.$back.click(() => {
-        this.game.client.sendQuit();
+        this.game.client._desconectar();
         this.hide();
       });
 

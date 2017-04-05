@@ -23,11 +23,12 @@ define(['model/game', 'model/intervalos', 'model/acciones', 'model/comandoschat'
             this.renderer.clean(escala);
             var ui = this.game.gameUI;
             var client = this.game.client;
-            
+
             this.assetManaget.audio.reset();
             this.game.init(this.assetManaget);
             this.game.setup(client, ui, this.renderer, this.assetManaget.audio);
         }
+
 
     }
     return GameManager;
