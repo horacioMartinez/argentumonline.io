@@ -51,6 +51,14 @@ define({
         enano: 5
     },
 
+    NombreRaza: {
+        1: "Humano",
+        2: "Elfo",
+        3: "Elfo Oscuro",
+        4: "Gnomo",
+        5: "Enano"
+    },
+
     Clase: {
         mago: 1,
         clerigo: 2,

@@ -10,6 +10,11 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
 
             this._inicializado = false;
             this.offsetSelectedCabeza = 0;
+            this.offsetSelectedClase = 0;
+            this.offsetSelectedRaza = 0;
+
+            this.$spanClase = $('#crearPjSpanClase');
+            this.$spanRaza = $('#crearPjSpanRaza');
 
             this.$imgCabezaIzq = $('#crearPjSeleccionCabezaImagenIzq');
             this.$imgCabezaCentro = $('#crearPjSeleccionCabezaImagenCenter');
@@ -93,6 +98,27 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
                 this.offsetSelectedCabeza++;
                 this._updatePJ();
             });
+
+            $('#crearPjSeleccionRazaBotonIzq').click(() => {
+                this.offsetSelectedRaza--;
+                this._updatePJ();
+            });
+
+            $('#crearPjSeleccionRazaBotonDer').click(() => {
+                this.offsetSelectedRaza++;
+                this._updatePJ();
+              });
+
+            $('#crearPjSeleccionClaseBotonIzq').click(() => {
+                this.offsetSelectedClase--;
+                this._updatePJ();
+            });
+
+            $('#crearPjSeleccionClaseBotonDer').click(() => {
+                this.offsetSelectedClase++;
+                this._updatePJ();
+            });
+
             this._updatePJ();
         }
 
@@ -156,6 +182,8 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
             this._actualizarAlturaPJ();
             this._updateCabezas();
             this._updateCuerpo();
+            this._updateRaza();
+            this._updateClase();
         }
 
         _actualizarAlturaPJ() {
@@ -201,6 +229,21 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
             $('#crearDadoInteligencia').text("Inteligencia: " + Inteligencia);
             $('#crearDadoCarisma').text("Carisma: " + Carisma);
             $('#crearDadoConstitucion').text("Constitucion: " + Constitucion);
+        }
+
+        _updateRaza(){
+            let cantRazas = Object.keys(Enums.Raza).length;
+            let selectedRaza = Utils.modulo(this.offsetSelectedRaza,cantRazas);
+            let nombreRaza = Enums.NombreRaza[selectedRaza+1];
+            console.log(nombreRaza);
+            this.$spanRaza.text(nombreRaza);
+        }
+
+        _updateClase(){
+            let cantClases = Object.keys(Enums.Clase).length;
+            let selectedClase = Utils.modulo(this.offsetSelectedClase,cantClases);
+            let nombreClase = Enums.NombreClase[selectedClase+1];
+            this.$spanClase.text(nombreClase);
         }
 
         getPrimerYUltimaCabezaNum() {
