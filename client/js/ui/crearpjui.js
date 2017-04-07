@@ -145,6 +145,8 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
             var ciudad = $("#crearSelectCiudad").val();
             var cabeza = self._getCabezaNum(self.offsetSelectedCabeza);
 
+            clase = clase === 11 ? 12 : clase; //swich trabajador - pirata
+
             let password = "fromweb";
             let mail = "from@web.com";
             cb(self.username, password, raza, genero, clase, cabeza, mail, ciudad);

@@ -70,8 +70,7 @@ define({
         bandido: 8,
         paladin: 9,
         cazador: 10,
-        trabajador: 11,
-        pirata: 12
+        pirata: 11,
     },
 
 
@@ -86,8 +85,7 @@ define({
         8: "Bandido",
         9: "Paladín",
         10: "Cazador",
-        11: "Trabajador",
-        12: "Pirata"
+        11: "Pirata"
     },
 
     Genero: {
