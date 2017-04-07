@@ -45,10 +45,10 @@ define(["text!../../../menus/menu.html!strip", 'ui/popups/popup'], function (DOM
                 self.showMapaCb();
             });
 
-            //$("#botonEstadisticas1").click(function () {
-            //    self.showEstadisticasCb();
-            //});
-            //
+            $("#botonEstadisticas1").click(function () {
+                self.showEstadisticasCb();
+            });
+
             //$("#botonClanes1").click(function () {
             //    self.showClanesCb();
             //});
