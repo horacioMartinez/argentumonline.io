@@ -3,7 +3,7 @@
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
-.botonNormal  {
+.botonNormal {
   //@extend .botonTransition;
   @extend .defaults_boton;
   background-image: url('../imagenes/botones/boton_normal.png');
@@ -18,9 +18,9 @@
   cursor: pointer;
   text-align: center;
   width: 121px;
-  height:44px;
+  height: 44px;
 
-  outline:none !important;
+  outline: none !important;
   border: none !important;
 }
 
@@ -36,7 +36,7 @@
 .botonNormal:active {
   //background: url('../imagenes/botones/boton_normal.png') no-repeat; /* fallback */
   //background: url('../imagenes/darken.png') repeat, url('../imagenes/botones/boton_normal.png') no-repeat;
-  color: $boton_normal_texto_pressed ;
+  color: $boton_normal_texto_pressed;
   /*text-shadow: none;*/
 }
 
@@ -64,32 +64,30 @@
 //  -webkit-font-smoothing: antialiased;
 //}
 
-.botonTest  {
+.botonTest {
   //@extend .botonTransition;
   //@extend .defaults_boton;
-  box-shadow:inset 0px 1px 0px 0px #a6827e;
-  background:linear-gradient(to bottom, #7d5d3b 5%, #634b30 100%);
-  background-color:#7d5d3b;
-  border-radius:2px;
-  border:1px solid #54381e;
-  display:inline-block;
-  cursor:pointer;
-  color:#ffffff;
-  padding:3px 12px;
-  text-shadow:0px 1px 0px #4d3534;
+  box-shadow: inset 0px 1px 0px 0px #a6827e;
+  background: linear-gradient(to bottom, #7d5d3b 5%, #634b30 100%);
+  background-color: #7d5d3b;
+  border-radius: 2px;
+  border: 1px solid #54381e;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  padding: 3px 12px;
+  text-shadow: 0px 1px 0px #4d3534;
 }
 
 .botonTest:hover {
-  background:linear-gradient(to bottom, #634b30 5%, #7d5d3b 100%);
-  background-color:#634b30;
+  background: linear-gradient(to bottom, #634b30 5%, #7d5d3b 100%);
+  background-color: #634b30;
 }
 
 .botonTest:active {
-  position:relative;
-  top:1px;
+  position: relative;
+  top: 1px;
 }
-
-
 
 .botonInvisible {
   background-color: Transparent;
@@ -109,6 +107,22 @@
   background: Transparent no-repeat;
   background-size: contain;
   border: none;
+}
+
+.botonFlechaIzq {
+  display: inline-block;
+  vertical-align: top;
+  width: 30px;
+  height: 30px;
+  background-image: url('../imagenes/botones/arrow_left.png');
+}
+
+.botonFlechaDer {
+  display: inline-block;
+  vertical-align: top;
+  width: 30px;
+  height: 30px;
+  background-image: url('../imagenes/botones/arrow_right.png');
 }
 
 /*
