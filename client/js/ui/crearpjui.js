@@ -49,32 +49,6 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
             this.modificarSlotInput($sel, id, Enums.Ciudad.Lindos, "Lindos");
             this.modificarSlotInput($sel, id, Enums.Ciudad.Arghal, "Arghal");
 
-            id = "crearSelectRaza";
-            $sel = $('#' + id);
-            this.modificarSlotInput($sel, id, Enums.Raza.humano, "Humano");
-            this.modificarSlotInput($sel, id, Enums.Raza.elfo, "Elfo");
-            this.modificarSlotInput($sel, id, Enums.Raza.elfoOscuro, "Elfo Oscuro");
-            this.modificarSlotInput($sel, id, Enums.Raza.gnomo, "Gnomo");
-            this.modificarSlotInput($sel, id, Enums.Raza.enano, "Enano");
-            $sel.change(function () {
-                self._updatePJ();
-            });
-
-            id = "crearSelectClase";
-            $sel = $('#' + id);
-            this.modificarSlotInput($sel, id, Enums.Clase.clerigo, Enums.NombreClase[Enums.Clase.clerigo]);
-            this.modificarSlotInput($sel, id, Enums.Clase.guerrero, Enums.NombreClase[Enums.Clase.guerrero]);
-            this.modificarSlotInput($sel, id, Enums.Clase.mago, Enums.NombreClase[Enums.Clase.mago]);
-            this.modificarSlotInput($sel, id, Enums.Clase.paladin, Enums.NombreClase[Enums.Clase.paladin]);
-            this.modificarSlotInput($sel, id, Enums.Clase.asesino, Enums.NombreClase[Enums.Clase.asesino]);
-            this.modificarSlotInput($sel, id, Enums.Clase.ladron, Enums.NombreClase[Enums.Clase.ladron]);
-            this.modificarSlotInput($sel, id, Enums.Clase.bardo, Enums.NombreClase[Enums.Clase.bardo]);
-            this.modificarSlotInput($sel, id, Enums.Clase.druida, Enums.NombreClase[Enums.Clase.druida]);
-            this.modificarSlotInput($sel, id, Enums.Clase.bandido, Enums.NombreClase[Enums.Clase.bandido]);
-            this.modificarSlotInput($sel, id, Enums.Clase.cazador, Enums.NombreClase[Enums.Clase.cazador]);
-            //this.modificarSlotInput($sel, id, Enums.Clase.trabajador, Enums.NombreClase[Enums.Clase.trabajador]);
-            this.modificarSlotInput($sel, id, Enums.Clase.pirata, Enums.NombreClase[Enums.Clase.pirata]);
-
             $("#crearBotonGeneroMasculino").addClass('selected');
             $("#crearBotonGeneroFemenino").removeClass('selected');
 
@@ -127,7 +101,13 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
         }
 
         _getRaza() {
-            return parseInt($("#crearSelectRaza").val());
+            let cantRazas = Object.keys(Enums.Raza).length;
+            return Utils.modulo(this.offsetSelectedRaza,cantRazas) +1;
+        }
+
+        _getClase() {
+            let cantClases = Object.keys(Enums.Clase).length;
+            return Utils.modulo(this.offsetSelectedClase,cantClases) +1;
         }
 
         modificarSlotInput($sel, id, slot, texto) {
@@ -161,7 +141,7 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
           $('#crearBotonCrear').click(function () {
             var raza = self._getRaza();
             var genero = self._getGenero();
-            var clase = $("#crearSelectClase").val();
+            var clase = self._getClase();
             var ciudad = $("#crearSelectCiudad").val();
             var cabeza = self._getCabezaNum(self.offsetSelectedCabeza);
 
@@ -232,17 +212,14 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
         }
 
         _updateRaza(){
-            let cantRazas = Object.keys(Enums.Raza).length;
-            let selectedRaza = Utils.modulo(this.offsetSelectedRaza,cantRazas);
-            let nombreRaza = Enums.NombreRaza[selectedRaza+1];
-            console.log(nombreRaza);
+            let selectedRaza = this._getRaza();
+            let nombreRaza = Enums.NombreRaza[selectedRaza];
             this.$spanRaza.text(nombreRaza);
         }
 
         _updateClase(){
-            let cantClases = Object.keys(Enums.Clase).length;
-            let selectedClase = Utils.modulo(this.offsetSelectedClase,cantClases);
-            let nombreClase = Enums.NombreClase[selectedClase+1];
+            let selectedClase = this._getClase();
+            let nombreClase = Enums.NombreClase[selectedClase];
             this.$spanClase.text(nombreClase);
         }
 
