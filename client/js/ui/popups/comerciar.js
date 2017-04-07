@@ -39,10 +39,10 @@ define(["text!../../../menus/comerciar.html!strip", 'ui/popups/popup', 'ui/game/
         }
 
         hide(incomingFromServer) {
+            if ( this.visible && !incomingFromServer) {
+                this.acciones.cerrarComerciar();
+            }
             super.hide();
-            //if (!incomingFromServer) { // TODO: (en comerciar y en boveda!!) que el cliente no le tenga que mandar al sv cuando cierra, esta accion no deberia estar
-            //    this.acciones.cerrarComerciar();
-            //}
         }
 
         cambiarSlotCompra(Slot, Amount, numGrafico) {

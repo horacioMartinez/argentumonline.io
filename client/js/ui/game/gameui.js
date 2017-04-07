@@ -57,7 +57,7 @@ define(['enums', 'ui/game/keymouselistener', 'ui/popups/popupskills', 'ui/popups
 
             hideGamePopUps() {
                 this.popUps.forEach((popUp) => {
-                    popUp.hide();
+                  popUp.hide();
                 });
             }
 
