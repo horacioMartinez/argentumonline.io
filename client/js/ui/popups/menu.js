@@ -8,7 +8,7 @@ define(["text!../../../menus/menu.html!strip", 'ui/popups/popup'], function (DOM
         constructor(game, showMapaCb, showEstadisticasCb, showClanesCb, showOpcionesCb) {
             var options = {
                 width: 220,
-                height: 300,
+                height: 225,
                 minWidth: 150,
                 minHeight: 280
             };
@@ -45,13 +45,13 @@ define(["text!../../../menus/menu.html!strip", 'ui/popups/popup'], function (DOM
                 self.showMapaCb();
             });
 
-            $("#botonEstadisticas1").click(function () {
-                self.showEstadisticasCb();
-            });
-
-            $("#botonClanes1").click(function () {
-                self.showClanesCb();
-            });
+            //$("#botonEstadisticas1").click(function () {
+            //    self.showEstadisticasCb();
+            //});
+            //
+            //$("#botonClanes1").click(function () {
+            //    self.showClanesCb();
+            //});
 
             $("#botonParty1").click(function () {
                 self.game.client.sendRequestPartyForm();
