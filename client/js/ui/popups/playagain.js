@@ -27,15 +27,32 @@ define(["text!../../../menus/playAgain.html!strip", 'ui/popups/popup'], function
     }
 
     initCallbacks() {
+      let client = this.game.client;
+
       this.$playAgain.click(() => {
+
+        this.game.client.onDisconnect = () => {
+          setTimeout(() => {
+            client._connect(() => {
+              client.sendThrowDices();
+              $('#crearBotonCrear').trigger("click");
+            });
+          },1);
+        };
         this.game.client._desconectar();
-        $('#crearBotonCrear').trigger("click");
         this.hide();
       });
 
       this.$changeCharacter.click(() => {
+        this.game.client.onDisconnect = () => {
+          setTimeout(() => {
+            client._connect(() => {
+              client.sendThrowDices();
+              this.setCrearPjScreenCb();
+            });
+          },1);
+        };
         this.game.client._desconectar();
-        this.setCrearPjScreenCb();
         this.hide();
       });
 

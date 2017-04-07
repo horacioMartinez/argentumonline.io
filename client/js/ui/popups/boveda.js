@@ -39,9 +39,9 @@ define(["text!../../../menus/boveda.html!strip", 'ui/popups/popup', 'ui/game/ite
 
         hide(incomingFromServer) {
             super.hide();
-            if (!incomingFromServer) {
-                this.acciones.cerrarBoveda();
-            }
+            //if (!incomingFromServer) {
+            //    this.acciones.cerrarBoveda();
+            //}
         }
 
         cambiarSlotRetirar(Slot, Amount, numGrafico) {

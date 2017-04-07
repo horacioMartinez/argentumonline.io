@@ -141,7 +141,6 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
 
             let password = "fromweb";
             let mail = "from@web.com";
-
             cb(self.username, password, raza, genero, clase, cabeza, mail, ciudad);
           });
         }

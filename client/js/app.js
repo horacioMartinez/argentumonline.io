@@ -35,8 +35,10 @@ define(['model/gamemanager', 'view/renderer', 'network/gameclient'], function (G
         _initClientCallbacks(client) {
             var self = this;
 
-            client.setDisconnectCallback(function () {
-                self.uiManager.setLoginScreen();
+            client.setDisconnectCallback(function (goToLoginScreen) {
+                if (goToLoginScreen) {
+                  self.uiManager.setLoginScreen();
+                }
                 self.assetManager.audio.stopMusic();
                 self.gameManager.resetGame(self.uiManager.escala);
                 self.starting = false;

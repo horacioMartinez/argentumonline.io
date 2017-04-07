@@ -16,6 +16,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
             this.ws = new Websock();
             this.byteQueue = new ByteQueue(this.ws);
 
+            this.onDisconnect = null;
         }
 
         _connect(conectarse_callback) {
@@ -38,7 +39,11 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
             });
             this.ws.on('close', function () {
                 self.conectado = false;
-                self.disconnect_callback();
+                self.disconnect_callback(!self.onDisconnect);
+                if (self.onDisconnect){
+                  self.onDisconnect();
+                  self.onDisconnect = null;
+                }
             });
 
         }
