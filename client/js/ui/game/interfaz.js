@@ -74,7 +74,7 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
 
             $("#botonMoverHechizoAbajo").click(function () {
                 let slot = self.game.gameUI.interfaz.getSelectedSlotHechizo();
-                if (!slot) { // TODO: checkear que no sea el ultimo!!!
+                if (!slot) {
                     return;
                 }
                 self.game.client.sendMoveSpell(false, slot);
@@ -242,24 +242,7 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
 
             $hechizos.change(function () {
                 $hechizos.blur();
-                //setTimeout(function () {
-                //    $hechizos.val(self.hechizos_realSelectedSlot);
-                //},50);
             });
-            //$hechizos.keydown(function (e) {
-            //    var key = e.which;
-            //    switch (key) {
-            //        case up:
-            //        case down:
-            //        case left:
-            //        case right:
-            //            $hechizos.blur();
-            //            setTimeout(function () {
-            //                $hechizos.val(self.hechizos_realSelectedSlot);
-            //            });
-            //            break;
-            //    }
-            //});
 
         }
 
