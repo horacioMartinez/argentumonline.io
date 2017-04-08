@@ -24,6 +24,11 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
 
             $("#botonHechizos").click(function () {
                 $('body').removeClass('inventarioActivo');
+                //temp fix scroll hechizos
+                if (!self.scrollHechizosFixed) {
+                  self.setSelectedSlotHechizo(35);
+                  self.scrollHechizosFixed = true;
+                }
             });
 
             $("#botonLanzar").click(function () {
