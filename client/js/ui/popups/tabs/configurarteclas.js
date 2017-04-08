@@ -44,7 +44,7 @@ define(['utils/charcodemap', 'ui/popups/popup'], function (CharCodeMap, PopUp) {
             for (var prop in this.nuevasKeys) {
                 if (this.nuevasKeys.hasOwnProperty(prop)) {
                     if (this.nuevasKeys[prop] === c) {
-                        return true;
+                        return prop;
                     }
                 }
             }
@@ -81,10 +81,9 @@ define(['utils/charcodemap', 'ui/popups/popup'], function (CharCodeMap, PopUp) {
                     return;
                 }
                 var nuevaKey = event.which;
-                if (self.keyRepetida(nuevaKey)) {
-                    self.showMensajeCb("Esa tecla ya pertenece a otro comando");
-                    self.displayKeys();
-                    return false;
+                var oldAction = self.keyRepetida(nuevaKey);
+                if (oldAction) {
+                    self.nuevasKeys[oldAction] = 1;
                 }
                 self.nuevasKeys[accion] = nuevaKey;
                 self.displayKeys();
