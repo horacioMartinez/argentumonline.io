@@ -9,7 +9,7 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
             this.showMensajeCb = showMensajeCb;
 
             this._inicializado = false;
-            this.offsetSelectedCabeza = 0;
+            this.offsetSelectedCabeza = Math.floor(Math.random()*100);
             this.offsetSelectedClase = 0;
             this.offsetSelectedRaza = 0;
 
