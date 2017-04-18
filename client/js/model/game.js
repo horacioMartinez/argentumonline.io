@@ -73,7 +73,9 @@ define(['model/mapa', 'updater', 'model/item', 'model/character', 'model/atribut
             }
 
             escribirMsgConsola(texto, font) {
-                this.gameText.consoleMsg(texto, font);
+                if (texto) {
+                  this.gameText.consoleMsg(texto, font);
+                }
             }
 
             escribirChat(chat, charIndex, r, g, b) {

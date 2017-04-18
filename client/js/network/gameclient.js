@@ -218,7 +218,7 @@ define(['../utils/util', 'enums', 'font', 'network/protocol', 'network/bytequeue
         handleCharacterRemove(CharIndex) {
             let c = this.game.world.getCharacter(CharIndex);
             if (!c) {
-                log.error("trato de sacar character inexistente");
+                //log.error("trato de sacar character inexistente");
             } else {
                 this.game.sacarEntity(c);
             }
