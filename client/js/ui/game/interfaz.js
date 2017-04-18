@@ -36,7 +36,7 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
             });
 
             $("#botonInfo").click(function () {
-                self.acciones.requestInfoHechizo();
+                self.game.escribirMsgConsola("To cast a spell, select from the list, click on cast, and then click on the target");
             });
 
             $("#botonTirarOro").click(function () {

@@ -18,7 +18,7 @@ define(["utils/charcodemap"], function (CharCodeMap) {
             caminarSur: getKeyNumber("S"),
             caminarOeste: getKeyNumber("A"),
             caminarEste: getKeyNumber("D"),
-            agarrar: getKeyNumber("I"),
+            agarrar: "",
             seguro: "",
             equipar: getKeyNumber("E"),
             deslagear: getKeyNumber("L"),

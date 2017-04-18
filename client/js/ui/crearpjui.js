@@ -2,7 +2,7 @@
  * Created by horacio on 2/27/16.
  */
 
-define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Utils, DialogCrearPersonaje) {
+define(['enums', 'utils/util', 'ui/popups/crearpersonaje', 'ui/popups/controlshelper'], function (Enums, Utils, DialogCrearPersonaje, ControlsHelper) {
     class CrearPjUI {
         constructor(assetManager, showMensajeCb) {
             this.assetManager = assetManager;
@@ -139,17 +139,26 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
         setBotonCrearCallback(cb) {
           var self = this;
           $('#crearBotonCrear').click(function () {
-            var raza = self._getRaza();
-            var genero = self._getGenero();
-            var clase = self._getClase();
-            var ciudad = $("#crearSelectCiudad").val();
-            var cabeza = self._getCabezaNum(self.offsetSelectedCabeza);
+            let exec = () => {
+              var raza = self._getRaza();
+              var genero = self._getGenero();
+              var clase = self._getClase();
+              var ciudad = $("#crearSelectCiudad").val();
+              var cabeza = self._getCabezaNum(self.offsetSelectedCabeza);
 
-            clase = clase === 11 ? 12 : clase; //swich trabajador - pirata
+              clase = clase === 11 ? 12 : clase; //swich trabajador - pirata
 
-            let password = "fromweb";
-            let mail = "from@web.com";
-            cb(self.username, password, raza, genero, clase, cabeza, mail, ciudad);
+              let password = "fromweb";
+              let mail = "from@web.com";
+              cb(self.username, password, raza, genero, clase, cabeza, mail, ciudad);
+            };
+            if (!localStorage['controlsShown']) {
+              localStorage.setItem('controlsShown', "yes");
+              let controlesHelper = new ControlsHelper();
+              controlesHelper.show(exec);
+            } else {
+              exec();
+            }
           });
         }
 

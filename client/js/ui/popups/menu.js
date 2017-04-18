@@ -2,13 +2,13 @@
  * Created by horacio on 07/08/2016.
  */
 
-define(["text!../../../menus/menu.html!strip", 'ui/popups/popup'], function (DOMdata, PopUp) {
+define(["text!../../../menus/menu.html!strip", 'ui/popups/popup', 'ui/popups/controls'], function (DOMdata, PopUp, Controls) {
 
     class Menu extends PopUp {
         constructor(game, showMapaCb, showEstadisticasCb, showClanesCb, showOpcionesCb) {
             var options = {
                 width: 220,
-                height: 225,
+                height: 185,
                 minWidth: 150,
                 minHeight: 280
             };
@@ -18,6 +18,7 @@ define(["text!../../../menus/menu.html!strip", 'ui/popups/popup'], function (DOM
             this.showEstadisticasCb = showEstadisticasCb;
             this.showClanesCb = showClanesCb;
             this.showOpcionesCb = showOpcionesCb;
+            this.controls = new Controls();
 
             this._lastClosedTime = 0;
             this.initCallbacks();
@@ -49,10 +50,6 @@ define(["text!../../../menus/menu.html!strip", 'ui/popups/popup'], function (DOM
                 self.showEstadisticasCb();
             });
 
-            //$("#botonClanes1").click(function () {
-            //    self.showClanesCb();
-            //});
-
             $("#botonParty1").click(function () {
                 self.game.client.sendRequestPartyForm();
             });
@@ -61,17 +58,9 @@ define(["text!../../../menus/menu.html!strip", 'ui/popups/popup'], function (DOM
                 self.showOpcionesCb();
             });
 
-            // $("#comerciarBotonComprar").click(function () {
-            //     var slot = self.shopGrid.getSelectedSlot();
-            //     if (slot) {
-            //         var inputCantidad = $("#comerciarInputCantidad").val();
-            //         if (!isNaN(inputCantidad)) {
-            //             if (inputCantidad > 0) {
-            //                 self.acciones.comprar(slot, inputCantidad);
-            //             }
-            //         }
-            //     }
-            // });
+            $("#botonControles").click(() => {
+              this.controls.show();
+            });
         }
     }
 
