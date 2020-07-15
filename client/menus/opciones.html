@@ -12,8 +12,7 @@
 
         <div class="tabsContainer" style="display: flex; flex-direction: column;">
             <ul class="nav nav-pills nav-stacked">
-                <li class="icon-menu active" id="opcionesIconoMenuWrench" href="#popUpOpcionesOpcionesGenerales"
-                    data-toggle="tab"></li>
+                <!-- <li class="icon-menu active" id="opcionesIconoMenuWrench" href="#popUpOpcionesOpcionesGenerales"data-toggle="tab"></li> -->
                 <li class="icon-menu" id="opcionesIconoMenuAudio" href="#popUpOpcionesTabsAudio" data-toggle="tab"></li>
                 <li class="icon-menu" id="opcionesIconoMenuTeclado" href="#configurarTeclas" data-toggle="tab"></li>
             </ul>
@@ -23,7 +22,7 @@
 
         <div class="tab-content dialogContent" style="flex: 1;">
 
-            <div id="popUpOpcionesOpcionesGenerales" class="tab-pane active">
+            <div id="popUpOpcionesOpcionesGenerales" class="tab-pane">
                 <div class="form-horizontal">
                     <h4>Pantalla</h4>
                     <div class="form-group">
@@ -76,7 +75,7 @@
                 </div>
             </div>
 
-            <div id="popUpOpcionesTabsAudio" class="tab-pane">
+            <div id="popUpOpcionesTabsAudio" class="tab-pane active">
                 <div class="form-horizontal">
                     <div class="checkbox">
                         <label><input id="checkboxMusica" type="checkbox" value="">Musica activada</label>
@@ -90,6 +89,7 @@
                     <div class="checkbox">
                         <label><input type="checkbox" value="">Silenciar cuando la ventana esta oculta</label>
                     </div>
+                    <br>
 
                     <div class="form-group">
                         <label for="sliderMusica" class="col-sm-6 control-label">Volumen Musica:</label>
@@ -112,7 +112,6 @@
                             <div id="sliderVolumenUI"></div>
                         </div>
                     </div> -->
-                    <button class="btn btn-default">Restaurar defaults</button>
                 </div>
             </div>
 
@@ -249,7 +248,7 @@
                     <div class="modal-footer">
                         <div class="btn-toolbar">
                             <button id="configurarTeclasRestaurarDefault" class="btn btn-default pull-left">Restaurar
-                                Default
+                                Defaults
                             </button>
                             <button id="configurarTeclasGuardarYSalir" class="btn btn-primary pull-right">Guardar y
                                 salir

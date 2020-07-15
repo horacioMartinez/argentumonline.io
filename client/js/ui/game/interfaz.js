@@ -56,11 +56,11 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
             });
 
             $("#botonMacroHechizos").click(function () {
-                self.acciones.toggleMacroHechizos();
+                //self.acciones.toggleMacroHechizos();
             });
 
             $("#botonMacroTrabajo").click(function () {
-                self.acciones.toggleMacroTrabajo();
+                //self.acciones.toggleMacroTrabajo();
             });
 
             $("#menuJuegoBotonMenu").click(function () {

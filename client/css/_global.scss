@@ -1,6 +1,5 @@
-// cambair el default, que usa el de webkit (-webkit-focus-ring-color) (que es azul) a $border_focus_color
-// >>>>>>>>>>>>>> ¡¡OJO!! !important <<<<<<<<<<<<<<<<
 :focus {
+  outline: none !important;
   outline-color: $border_focus_color !important;
 }
 

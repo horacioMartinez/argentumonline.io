@@ -13,8 +13,11 @@ define(['model/gamemanager', 'view/renderer', 'network/gameclient'], function (G
             var self = this;
             this.uiManager.loginUI.setBotonJugarCallback(() => {
                 let username = this.uiManager.loginUI.getUsername();
-                if (username) {
+                const validName = username && username.match("^[A-Za-z0-9]+$");
+                if (validName) {
                   self.setCrearPJ(username);
+                } else {
+                    this.uiManager.showMensaje('Nombre invalido');
                 }
             });
         }

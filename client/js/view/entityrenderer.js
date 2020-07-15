@@ -140,7 +140,7 @@ define(['enums', 'utils/util', 'font', 'lib/pixi', 'view/charactersprites', 'vie
                     var headOffY = 0;
                     if (self.cuerpos[Body]) {
                         headOffX = self.cuerpos[Body].offHeadX;
-                        headOffY = self.cuerpos[Body].offHeadY;
+                        headOffY = self.cuerpos[Body].offHeadY + 1;
                     }
                     char.sprite.setBodys(bodys, headOffX, headOffY);
                 });

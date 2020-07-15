@@ -8,7 +8,7 @@ define(['enums', 'ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mens
             this.assetManager = assetManager;
             this.mensaje = new Mensaje();
             this.introUI = new IntroUI();
-            this.loginUI = new LoginUI();
+            this.loginUI = new LoginUI(this.mensaje);
             this.crearPjUI = new CrearPjUI(this.assetManager, this.mensaje);
             this.playSonidoClick = this._createPlaySonidoCallback();
 
@@ -161,8 +161,8 @@ define(['enums', 'ui/loginui', 'ui/crearpjui', 'ui/game/gameui', 'ui/popups/mens
                 windowHeight -= this.FOOTER_HEIGHT;
             }
 
-            if (gameRatio > windowRatio) { // limita el width
-                this.escala = windowWidth / gameWidth;
+            if (gameRatio > windowRatio) {
+                this.escala = (windowWidth - 100) / gameWidth;
             } else {
                 this.escala = windowHeight / gameHeight;
             }

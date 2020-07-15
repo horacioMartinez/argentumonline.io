@@ -13,7 +13,7 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
             
             // charVisible solo incluye al personaje, la clase esta ademas incluye a los fxs, etc
             this._charVisible = true;
-            this.OFFSET_HEAD = -34;
+            this.OFFSET_HEAD = -33;
             this._fxsInfinitos = [];
         }
 
@@ -35,7 +35,7 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
             var nuevoSprite = new SpriteGrh(grh, loops);
             this.addChild(nuevoSprite);
             nuevoSprite.setPosition(offX, offY);
-            nuevoSprite.zIndex = 7;
+            nuevoSprite.zIndex = 10;
             if (loops > 0) {
                 nuevoSprite.play();
                 var self = this;
@@ -146,19 +146,20 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
                         this.bodySprite.zIndex = 3;
                         break;
                     case Enums.Heading.sur:
-                        this.bodySprite.zIndex = 1;
+                        this.bodySprite.zIndex = 3;
                         break;
                     case Enums.Heading.este:
-                        this.bodySprite.zIndex = 2;
+                        this.bodySprite.zIndex = 3;
                         break;
                     case Enums.Heading.oeste:
-                        this.bodySprite.zIndex = 1;
+                        this.bodySprite.zIndex = 3;
                         break;
                     default:
                         log.error("character heading invalido");
                         break;
                 }
                 this._updateSombraSpriteSize();
+                this._updateOrdenHijos();
             }
         }
 
@@ -168,6 +169,7 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
             if (this.headSprite) {
                 this.headSprite.zIndex = 4;
                 this.headSprite.setPosition(this.headOffX, this.headOffY);
+                this._updateOrdenHijos();
             }
         }
 
@@ -177,21 +179,22 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
             if (this.weaponSprite) {
                 switch (this.heading) {
                     case Enums.Heading.norte:
-                        this.weaponSprite.zIndex = 2;
+                        this.weaponSprite.zIndex = 1;
                         break;
                     case Enums.Heading.sur:
-                        this.weaponSprite.zIndex = 2;
+                        this.weaponSprite.zIndex = 7;
                         break;
                     case Enums.Heading.este:
-                        this.weaponSprite.zIndex = 3;
+                        this.weaponSprite.zIndex = 5;
                         break;
                     case Enums.Heading.oeste:
-                        this.weaponSprite.zIndex = 2;
+                        this.weaponSprite.zIndex = 1;
                         break;
                     default:
                         log.error("character heading invalido");
                         break;
                 }
+                this._updateOrdenHijos();
             }
         }
 
@@ -201,21 +204,22 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
             if (this.shieldSprite) {
                 switch (this.heading) {
                     case Enums.Heading.norte:
-                        this.shieldSprite.zIndex = 1;
+                        this.shieldSprite.zIndex = 2;
                         break;
                     case Enums.Heading.sur:
-                        this.shieldSprite.zIndex = 3;
+                        this.shieldSprite.zIndex = 6;
                         break;
                     case Enums.Heading.este:
                         this.shieldSprite.zIndex = 1;
                         break;
                     case Enums.Heading.oeste:
-                        this.shieldSprite.zIndex = 3;
+                        this.shieldSprite.zIndex = 6;
                         break;
                     default:
                         log.error("character heading invalido");
                         break;
                 }
+                this._updateOrdenHijos();
             }
         }
 
@@ -225,6 +229,7 @@ define(['enums', 'lib/pixi', 'view/spritegrh'], function (Enums, PIXI, SpriteGrh
             if (this.helmetSprite) {
                 this.helmetSprite.zIndex = 5;
                 this.helmetSprite.setPosition(this.headOffX, this.headOffY + this.OFFSET_HEAD);
+                this._updateOrdenHijos();
             }
         }
 

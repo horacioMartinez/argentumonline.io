@@ -4,12 +4,17 @@
 
 define(['utils/charcodemap'], function (CharcodeMap) {
     class LoginUI {
-        constructor() {
+        constructor(mensaje) {
             this.enableLoginPressingEnter();
+            this.mensaje = mensaje;
         }
 
         setBotonJugarCallback(cb) {
-            $('#botonJugar').click(function () {
+            $('#botonJugar').click(() => {
+                if (Detect.isMobileOrTablet()){
+                    this.mensaje.show('Solo es posible jugar en navegadores de escritorio :(.');
+                    return;
+                }
                 cb();
             });
         }
