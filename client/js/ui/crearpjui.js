@@ -2,6 +2,9 @@
  * Created by horacio on 2/27/16.
  */
 
+const cabeza = localStorage.getItem("cabeza") || Math.floor(Math.random()*100);
+localStorage.setItem("cabeza", cabeza);
+
 define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Utils, DialogCrearPersonaje) {
     class CrearPjUI {
         constructor(assetManager, showMensajeCb) {
@@ -9,7 +12,7 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
             this.showMensajeCb = showMensajeCb;
 
             this._inicializado = false;
-            this.offsetSelectedCabeza = 0;
+            this.offsetSelectedCabeza = cabeza;
             this.offsetSelectedClase = 0;
             this.offsetSelectedRaza = 0;
 
@@ -66,10 +69,12 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
 
             $('#crearPjSeleccionCabezaBotonIzq').click(() => {
                 this.offsetSelectedCabeza--;
+                localStorage.setItem("cabeza", this.offsetSelectedCabeza);
                 this._updatePJ();
             });
             $('#crearPjSeleccionCabezaBotonDer').click(() => {
                 this.offsetSelectedCabeza++;
+                localStorage.setItem("cabeza", this.offsetSelectedCabeza);
                 this._updatePJ();
             });
 

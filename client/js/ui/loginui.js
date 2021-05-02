@@ -11,7 +11,7 @@ define(['utils/charcodemap'], function (CharcodeMap) {
 
         setBotonJugarCallback(cb) {
             $('#botonJugar').click(() => {
-                if (Detect.isMobileOrTablet()){
+                if (Detect && Detect.isMobileOrTablet()){
                     this.mensaje.show('Solo es posible jugar en navegadores de escritorio :(.');
                     return;
                 }

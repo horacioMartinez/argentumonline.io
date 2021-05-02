@@ -150,10 +150,7 @@ define(['enums', 'font', 'model/macros'], function (Enums, Font, Macros) {
             }
         }
 
-        lanzarHechizo() { /*todo: slot por parametro*/
-            if (!this.intervalos.requestLanzarHechizo()) {
-                return;
-            }
+        lanzarHechizo() {
             var slot = this.game.gameUI.interfaz.getSelectedSlotHechizo();
             if (!slot) {
                 return;

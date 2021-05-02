@@ -88,7 +88,7 @@ define(['utils/charcodemap', 'ui/game/itemgrid'], function (CharCodeMap, ItemGri
             });
 
             //FIX bug firefox que no previene movimiento scroll hehcizos
-            if (Detect.isFirefox()) {
+            if (Detect && Detect.isFirefox()) {
                 self.setHechizosScrollFirefoxFix(self);
             }
         }
