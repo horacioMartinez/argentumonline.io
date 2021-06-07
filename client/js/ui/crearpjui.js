@@ -4,6 +4,10 @@
 
 const cabeza = localStorage.getItem("cabeza") || Math.floor(Math.random()*100);
 localStorage.setItem("cabeza", cabeza);
+const clase = localStorage.getItem("clase") || 0;
+localStorage.setItem("clase", clase);
+const raza = localStorage.getItem("raza") || 0;
+localStorage.setItem("raza", raza);
 
 define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Utils, DialogCrearPersonaje) {
     class CrearPjUI {
@@ -13,8 +17,8 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
 
             this._inicializado = false;
             this.offsetSelectedCabeza = cabeza;
-            this.offsetSelectedClase = 0;
-            this.offsetSelectedRaza = 0;
+            this.offsetSelectedClase = clase;
+            this.offsetSelectedRaza = raza;
 
             this.$spanClase = $('#crearPjSpanClase');
             this.$spanRaza = $('#crearPjSpanRaza');
@@ -80,21 +84,25 @@ define(['enums', 'utils/util', 'ui/popups/crearpersonaje'], function (Enums, Uti
 
             $('#crearPjSeleccionRazaBotonIzq').click(() => {
                 this.offsetSelectedRaza--;
+                localStorage.setItem("raza", this.offsetSelectedRaza);
                 this._updatePJ();
             });
 
             $('#crearPjSeleccionRazaBotonDer').click(() => {
                 this.offsetSelectedRaza++;
+                localStorage.setItem("raza", this.offsetSelectedRaza);
                 this._updatePJ();
               });
 
             $('#crearPjSeleccionClaseBotonIzq').click(() => {
                 this.offsetSelectedClase--;
+                localStorage.setItem("clase", this.offsetSelectedClase);
                 this._updatePJ();
             });
 
             $('#crearPjSeleccionClaseBotonDer').click(() => {
                 this.offsetSelectedClase++;
+                localStorage.setItem("clase", this.offsetSelectedClase);
                 this._updatePJ();
             });
 
