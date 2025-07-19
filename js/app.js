@@ -1,0 +1,153 @@
+import GameManager from './model/gamemanager.js';
+import Renderer from './view/renderer.js';
+import GameClient from './network/gameclient.js';
+
+class App {
+        constructor(assetManager, uiManager, settings) {
+            this.assetManager = assetManager;
+            this.uiManager = uiManager;
+            this.client = null;
+            this.ready = false;
+            this.settings = settings;
+        }
+
+        _initLoginCallbacks() {
+            var self = this;
+            this.uiManager.loginUI.setBotonJugarCallback(() => {
+                let username = this.uiManager.loginUI.getUsername();
+                const validName = username && username.match("^[A-Za-z0-9]+$");
+                if (validName) {
+                  self.setCrearPJ(username);
+                } else {
+                    this.uiManager.showMensaje('Nombre invalido');
+                }
+            });
+        }
+
+        _initCrearPjCallbacks() {
+            var self = this;
+            this.uiManager.crearPjUI.setBotonTirarDadosCallback(function () {
+                self.client.sendThrowDices();
+            });
+            this.uiManager.crearPjUI.setBotonVolverCallback(function () {
+                self.uiManager.setLoginScreen();
+            });
+            this.uiManager.crearPjUI.setBotonCrearCallback(function (nombre, password, raza, genero, clase, cabeza, mail, ciudad) {
+                self.startGame(true, nombre, password, raza, genero, clase, cabeza, mail, ciudad);
+            });
+        }
+
+        _initClientCallbacks(client) {
+            var self = this;
+
+            client.setDisconnectCallback(function (goToLoginScreen) {
+                if (goToLoginScreen) {
+                  self.uiManager.setLoginScreen();
+                }
+                self.assetManager.audio.stopMusic();
+                self.gameManager.resetGame(self.uiManager.escala);
+                self.starting = false;
+            });
+
+            client.setLogeadoCallback(function () {
+                self.gameManager.game.start();
+                self.uiManager.setGameScreen();
+                self.starting = false;
+            });
+
+            client.setDadosCallback(function (Fuerza, Agilidad, Inteligencia, Carisma, Constitucion) {
+                self.uiManager.crearPjUI.updateDados(Fuerza, Agilidad, Inteligencia, Carisma, Constitucion);
+            });
+
+        }
+
+        inicializarGame() {
+            let setCrearPjScreenCallback = () => {
+              this.setCrearPJ(this.uiManager.crearPjUI.username);
+            };
+
+            var renderer = new Renderer(this.assetManager, this.uiManager.escala);
+            this.gameManager = new GameManager(this.assetManager, renderer);
+
+            var gameUI = this.uiManager.inicializarGameUI(this.gameManager, this.settings, setCrearPjScreenCallback);
+            this.client = new GameClient(this.gameManager.game, this.uiManager, gameUI);
+            this._initClientCallbacks(this.client);
+            this.gameManager.setup(this.client, gameUI);
+            this.ready = true;
+        }
+
+        setCrearPJ(username) {
+            this.uiManager.crearPjUI.username = username;
+            this.uiManager.crearPjUI.inicializar();
+            this.uiManager.loginUI.setPlayButtonState(false);
+            var self = this;
+
+            if (this.client) {
+                this.client.intentarCrearPersonaje(function () {
+                    self.uiManager.setCrearPJScreen();
+                    self.uiManager.loginUI.setPlayButtonState(true);
+                });
+            } else {
+                // If client is not yet initialized, just show the create character screen
+                self.uiManager.setCrearPJScreen();
+                self.uiManager.loginUI.setPlayButtonState(true);
+            }
+        }
+
+        tryStartingGame() {
+            if (this.starting) {
+                return;
+            }
+
+            log.info(" Trying to start game...");
+
+            var username = this.uiManager.loginUI.getUsername();
+            var userpw = this.uiManager.loginUI.getPassword();
+            if (!this.validarLogin(username, userpw)) {
+                return;
+            }
+
+            this.starting = true;
+            this.uiManager.loginUI.setPlayButtonState(false);
+            this.startGame(false, username, userpw);
+        }
+
+        startGame(newChar, username, userpw, raza, genero, clase, cabeza, mail, ciudad) {
+            if (this.gameManager.game.started) {
+                return;
+            }
+            this.gameManager.game.inicializar(username);
+            if (!newChar) {
+                this.client.intentarLogear(username, userpw);
+            }
+            else {
+                this.client.sendLoginNewChar(username, userpw, raza, genero, clase, cabeza, mail, ciudad);
+            }
+        }
+
+        start() {
+            this._initLoginCallbacks();
+            this._initCrearPjCallbacks();
+            this.uiManager.hideIntro();
+            this.inicializarGame();
+
+            log.info("App initialized.");
+        }
+
+        validarLogin(username, userpw) {
+            if (!username) {
+                this.uiManager.showMensaje("Debes ingresar un usuario");
+                return false;
+            }
+
+            if (!userpw) {
+                this.uiManager.showMensaje("Debes ingresar un password");
+                return false;
+            }
+
+            return true;
+        }
+
+    }
+
+export default App;

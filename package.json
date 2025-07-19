@@ -1,0 +1,35 @@
+{
+  "name": "argentum-babylon",
+  "version": "1.0.0",
+  "description": "Argentum Online Web Client",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "glob": "^10.4.5",
+    "sass": "^1.69.5",
+    "terser": "^5.26.0",
+    "vite": "^5.0.10"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "bootstrap": "^3.4.1",
+    "howler": "^2.2.4",
+    "jquery": "^3.7.1",
+    "jquery-ui": "^1.14.1",
+    "lodash": "^4.17.21",
+    "pixi.js": "^7.3.3",
+    "screenfull": "^6.0.2",
+    "webfontloader": "^1.6.28"
+  },
+  "browserslist": [
+    "> 0.5%",
+    "last 2 versions",
+    "Firefox ESR",
+    "not dead"
+  ]
+}
